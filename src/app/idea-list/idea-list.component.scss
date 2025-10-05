@@ -1,0 +1,86 @@
+.upvote-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.2);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.upvoted-button {
+  background: linear-gradient(135deg, #ec4899 0%, #9333ea 100%);
+  color: white;
+  border: 1px solid #f472b6;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// Enhanced hover effects
+.group:hover {
+  .group-hover\:scale-110 {
+    transform: scale(1.1);
+  }
+}
+
+// Confetti animation trigger
+@keyframes confetti-burst {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.confetti-trigger {
+  animation: confetti-burst 0.3s ease-out;
+}
+
+// Trending badge animation
+@keyframes trending-glow {
+  0%, 100% {
+    text-shadow: 0 0 5px currentColor;
+  }
+  50% {
+    text-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+}
+
+.animate-trending {
+  animation: trending-glow 2s ease-in-out infinite;
+}
+
+// Ensure card links look like cards (no default anchor styling)
+.card-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+// Tweak typography spacing inside cards
+.card-modern h4 {
+  margin: 0;
+}
+
+.card-modern .body-medium {
+  letter-spacing: 0.1px;
+}

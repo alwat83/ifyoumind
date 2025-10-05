@@ -1,0 +1,52 @@
+rules_version = '2';
+
+// Firebase Storage Security Rules for ifyoumind.com
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Profile pictures storage rules
+    match /profile-pictures/{userId}/{fileName} {
+      // Users can only upload to their own folder
+      allow read: if request.auth != null;
+      allow write: if request.auth != null 
+        && request.auth.uid == userId
+        && isValidProfilePicture(request.resource);
+    }
+    
+    // Future: Idea attachments and other file uploads
+    match /idea-attachments/{userId}/{fileName} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null 
+        && request.auth.uid == userId
+        && isValidAttachment(request.resource);
+    }
+    
+    // Future: Idea images and media
+    match /idea-media/{userId}/{fileName} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null 
+        && request.auth.uid == userId
+        && isValidMediaFile(request.resource);
+    }
+  }
+}
+
+// Helper functions for file validation
+function isValidProfilePicture(resource) {
+  return resource.size < 5 * 1024 * 1024  // 5MB limit
+    && resource.contentType.matches('image/.*')
+    && resource.contentType in ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+}
+
+function isValidAttachment(resource) {
+  return resource.size < 10 * 1024 * 1024  // 10MB limit
+    && resource.contentType.matches('(image|application|text)/.*');
+}
+
+function isValidMediaFile(resource) {
+  return resource.size < 20 * 1024 * 1024  // 20MB limit
+    && resource.contentType.matches('(image|video|audio)/.*');
+}
+
+
+

@@ -1,0 +1,132 @@
+.fab-button {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 40;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.fab-main {
+  width: 3.5rem;
+  height: 3.5rem;
+  background: linear-gradient(135deg, #0ea5e9 0%, #a855f7 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.fab-button:hover .fab-main {
+  transform: scale(1.1);
+  box-shadow: 0 12px 35px rgba(14, 165, 233, 0.4);
+}
+
+.fab-button:active .fab-main {
+  transform: scale(0.95);
+}
+
+.fab-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.6s ease-out;
+}
+
+.fab-button:hover .fab-ripple {
+  width: 120%;
+  height: 120%;
+}
+
+.fab-tooltip {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  margin-right: 0.75rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.fab-tooltip-arrow {
+  position: absolute;
+  top: 50%;
+  right: -0.25rem;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 0.25rem solid transparent;
+  border-bottom: 0.25rem solid transparent;
+  border-left: 0.25rem solid rgba(0, 0, 0, 0.8);
+}
+
+.fab-button:hover .fab-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Pulse animation */
+.fab-main::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0ea5e9 0%, #a855f7 100%);
+  animation: pulse-ring 2s infinite;
+  z-index: -1;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .fab-button {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+  
+  .fab-main {
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .fab-tooltip {
+    display: none;
+  }
+}
+
+
+

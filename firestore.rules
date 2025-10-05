@@ -1,0 +1,122 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Ideas collection rules
+    match /ideas/{ideaId} {
+      // Anyone can read public ideas
+      allow read: if resource.data.isPublic == true;
+      
+      // Only authenticated users can create ideas
+      allow create: if request.auth != null 
+        && request.auth.uid == resource.data.authorId
+        && validateIdeaData(request.resource.data);
+      
+      // Only the author can update their own ideas
+      allow update: if request.auth != null 
+        && request.auth.uid == resource.data.authorId
+        && validateIdeaUpdate(request.resource.data, resource.data);
+      
+      // Only the author can delete their own ideas
+      allow delete: if request.auth != null 
+        && request.auth.uid == resource.data.authorId;
+    }
+    
+    // Users collection rules (for user profiles)
+    match /users/{userId} {
+      // Users can read their own profile and public profiles
+      allow read: if request.auth != null 
+        && (request.auth.uid == userId || resource.data.isPublic == true);
+      
+      // Users can create their own profile
+      allow create: if request.auth != null 
+        && request.auth.uid == userId
+        && validateUserData(request.resource.data);
+      
+      // Users can update their own profile
+      allow update: if request.auth != null 
+        && request.auth.uid == userId
+        && validateUserUpdate(request.resource.data, resource.data);
+      
+      // Users can delete their own profile
+      allow delete: if request.auth != null 
+        && request.auth.uid == userId;
+    }
+    
+    // Comments collection rules
+    match /comments/{commentId} {
+      // Anyone can read comments
+      allow read: if true;
+      
+      // Only authenticated users can create comments
+      allow create: if request.auth != null 
+        && request.auth.uid == resource.data.authorId
+        && validateCommentData(request.resource.data);
+      
+      // Only the author can update their own comments
+      allow update: if request.auth != null 
+        && request.auth.uid == resource.data.authorId;
+      
+      // Only the author can delete their own comments
+      allow delete: if request.auth != null 
+        && request.auth.uid == resource.data.authorId;
+    }
+    
+    // Helper functions for data validation
+    function validateIdeaData(data) {
+      return data.keys().hasAll(['problem', 'solution', 'impact', 'authorId', 'authorName', 'createdAt', 'upvotes', 'upvotedBy', 'isPublic'])
+        && data.problem is string
+        && data.solution is string
+        && data.impact is string
+        && data.authorId is string
+        && data.authorName is string
+        && data.createdAt is timestamp
+        && data.upvotes is number
+        && data.upvotedBy is list
+        && data.isPublic is bool
+        && data.upvotes >= 0
+        && data.problem.size() > 0
+        && data.solution.size() > 0
+        && data.impact.size() > 0;
+    }
+    
+    function validateIdeaUpdate(newData, oldData) {
+      // Allow updates to upvotes, upvotedBy, trendingScore, lastActivity
+      // Prevent changes to core idea content unless it's the author
+      return (newData.problem == oldData.problem
+        && newData.solution == oldData.solution
+        && newData.impact == oldData.impact
+        && newData.authorId == oldData.authorId
+        && newData.authorName == oldData.authorName
+        && newData.createdAt == oldData.createdAt)
+        || (request.auth.uid == oldData.authorId
+        && validateIdeaData(newData));
+    }
+    
+    function validateUserData(data) {
+      return data.keys().hasAll(['uid', 'displayName', 'email', 'createdAt'])
+        && data.uid is string
+        && data.displayName is string
+        && data.email is string
+        && data.createdAt is timestamp;
+    }
+    
+    function validateUserUpdate(newData, oldData) {
+      // Prevent changes to uid, email, createdAt
+      return newData.uid == oldData.uid
+        && newData.email == oldData.email
+        && newData.createdAt == oldData.createdAt;
+    }
+    
+    function validateCommentData(data) {
+      return data.keys().hasAll(['content', 'authorId', 'authorName', 'ideaId', 'createdAt'])
+        && data.content is string
+        && data.authorId is string
+        && data.authorName is string
+        && data.ideaId is string
+        && data.createdAt is timestamp
+        && data.content.size() > 0;
+    }
+  }
+}
+

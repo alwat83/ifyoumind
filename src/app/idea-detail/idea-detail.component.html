@@ -1,0 +1,29 @@
+<div class="max-w-3xl mx-auto px-4 py-10">
+  <a routerLink="/" class="body-small text-neutral-400 hover:underline">← Back</a>
+
+  <div class="card-modern mt-4">
+    <h1 class="heading-2 mb-2">{{ idea?.problem }}</h1>
+    <div class="text-neutral-300 mb-6">{{ idea?.solution }}</div>
+    <div class="text-neutral-300">{{ idea?.impact }}</div>
+  </div>
+
+  <div class="card-modern mt-6">
+    <h2 class="heading-3 mb-4">Comments</h2>
+
+    <div class="space-y-4 mb-6" *ngIf="comments$ | async as items">
+      <div *ngFor="let c of items" class="glass-card p-4 rounded-xl">
+        <div class="body-small text-neutral-400 mb-1">{{ c.authorName }}</div>
+        <div class="text-neutral-100">{{ c.content }}</div>
+      </div>
+    </div>
+
+    <div *ngIf="currentUser$ | async as u" class="flex gap-3">
+      <input [(ngModel)]="newComment" class="input-modern" placeholder="Write a comment..." />
+      <button class="btn-primary" (click)="submitComment(u)">Post</button>
+    </div>
+    <div *ngIf="!(currentUser$ | async)" class="text-neutral-400 body-small">Sign in to comment.</div>
+  </div>
+</div>
+
+
+

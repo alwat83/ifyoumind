@@ -1,0 +1,166 @@
+<div class="min-h-screen py-12">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="text-center mb-12 animate-fade-in-up">
+      <h1 class="heading-1 mb-4 gradient-text">
+        Share Your Brilliant Idea
+      </h1>
+      <p class="body-large text-neutral-300 max-w-2xl mx-auto">
+        Help change the world, one innovative idea at a time. Be specific, be creative, be impactful.
+      </p>
+    </div>
+
+    <!-- Success Message -->
+    <div *ngIf="showSuccess" 
+         class="card-modern mb-8 text-center animate-scale-in">
+      <div class="text-6xl mb-4">🎉</div>
+      <h3 class="heading-3 mb-2 text-green-400">Idea Submitted Successfully!</h3>
+      <p class="body-medium text-neutral-300">Thank you for contributing to a better world!</p>
+    </div>
+
+    <!-- Idea Form -->
+    <form (ngSubmit)="addIdea()" 
+          class="space-y-8 animate-fade-in-up" 
+          style="animation-delay: 0.2s;">
+      
+      <!-- Problem Section -->
+      <div class="card-modern">
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="w-8 h-8 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg flex items-center justify-center">
+            <span class="text-white text-sm">🚨</span>
+          </div>
+          <h2 class="heading-3">What problem are you solving?</h2>
+        </div>
+        <p class="body-small text-neutral-400 mb-4">
+          Clearly define the challenge or issue you want to address. Be specific about who it affects and why it matters.
+        </p>
+        <textarea 
+          [(ngModel)]="problem" 
+          name="problem"
+          class="input-modern min-h-[120px] resize-none"
+          placeholder="Describe the problem you want to address... Be specific about the challenge and its impact."
+          required>
+        </textarea>
+      </div>
+
+      <!-- Solution Section -->
+      <div class="card-modern">
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
+            <span class="text-white text-sm">💡</span>
+          </div>
+          <h2 class="heading-3">What's your solution?</h2>
+        </div>
+        <p class="body-small text-neutral-400 mb-4">
+          Explain your innovative approach. How is it different from existing solutions? What makes it unique?
+        </p>
+        <textarea 
+          [(ngModel)]="solution" 
+          name="solution"
+          class="input-modern min-h-[120px] resize-none"
+          placeholder="Explain your innovative solution or approach... Be creative and specific about how it works."
+          required>
+        </textarea>
+      </div>
+
+      <!-- Impact Section -->
+      <div class="card-modern">
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
+            <span class="text-white text-sm">🌍</span>
+          </div>
+          <h2 class="heading-3">What impact will this have?</h2>
+        </div>
+        <p class="body-small text-neutral-400 mb-4">
+          Describe the positive change this could create. Think about scale, sustainability, and long-term benefits.
+        </p>
+        <textarea 
+          [(ngModel)]="impact" 
+          name="impact"
+          class="input-modern min-h-[120px] resize-none"
+          placeholder="Describe the potential positive change this could create... Think big and be specific about the impact."
+          required>
+        </textarea>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <button 
+          type="button" 
+          (click)="goBack()"
+          class="btn-secondary flex items-center justify-center space-x-2">
+          <span>←</span>
+          <span>Go Back</span>
+        </button>
+        
+        <button 
+          type="submit" 
+          [disabled]="!problem || !solution || !impact || isSubmitting"
+          [class]="(!problem || !solution || !impact || isSubmitting) ? 'btn-secondary opacity-50 cursor-not-allowed' : 'btn-primary animate-glow'">
+          <span *ngIf="!isSubmitting" class="flex items-center space-x-2">
+            <span>🚀</span>
+            <span>Submit Idea</span>
+          </span>
+          <span *ngIf="isSubmitting" class="flex items-center space-x-2">
+            <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+            <span>Submitting...</span>
+          </span>
+        </button>
+      </div>
+    </form>
+
+    <!-- Pro Tips -->
+    <div class="mt-16 animate-fade-in-up" style="animation-delay: 0.4s;">
+      <div class="card-modern">
+        <div class="flex items-center space-x-3 mb-6">
+          <div class="w-8 h-8 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center">
+            <span class="text-white text-sm">💡</span>
+          </div>
+          <h3 class="heading-3">Pro Tips for Great Ideas</h3>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="flex items-start space-x-3">
+            <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span class="text-white text-xs">✓</span>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white mb-1">Be Specific</h4>
+              <p class="body-small text-neutral-400">Clearly define the problem and provide concrete details about your solution.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start space-x-3">
+            <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span class="text-white text-xs">✓</span>
+            </div>
+            <div>
+              <h4 class="font-semibold text-white mb-1">Show Innovation</h4>
+              <p class="body-small text-neutral-400">Explain how your approach is unique or different from existing solutions.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start space-x-3">
+            <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span class="text-white text-xs">✓</span>
+    </div>
+    <div>
+              <h4 class="font-semibold text-white mb-1">Quantify Impact</h4>
+              <p class="body-small text-neutral-400">Use numbers, percentages, or metrics when possible to show potential impact.</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start space-x-3">
+            <div class="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+              <span class="text-white text-xs">✓</span>
+    </div>
+    <div>
+              <h4 class="font-semibold text-white mb-1">Think Scale</h4>
+              <p class="body-small text-neutral-400">Consider how your idea could be implemented and scaled for maximum impact.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

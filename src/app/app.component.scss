@@ -1,0 +1,29 @@
+// Logo styles to prevent color changes on click
+.logo-link {
+  &:hover {
+    opacity: 1 !important;
+  }
+  
+  &:active {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  &:focus {
+    outline: none;
+  }
+  
+  &:visited {
+    color: inherit;
+  }
+}
+
+// Prevent text selection on logo
+.logo-text {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+

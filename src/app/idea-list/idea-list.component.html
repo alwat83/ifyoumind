@@ -1,0 +1,121 @@
+<div class="min-h-screen py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div *ngIf="currentUser$ | async as user" class="text-center mb-12 animate-fade-in-up">
+      <h1 class="heading-1 mb-4">
+        Welcome back, <span class="gradient-text">{{ user.displayName }}</span>!
+      </h1>
+      <p class="body-large text-neutral-300 max-w-2xl mx-auto">
+        Discover amazing ideas that are changing the world. Upvote the ones that inspire you.
+      </p>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex flex-wrap items-center gap-3 mb-8">
+      <button class="btn-secondary" [class.animate-glow]="sortMode==='recent'" (click)="sortMode='recent'; applyFeedSource()">Recent</button>
+      <button class="btn-secondary" [class.animate-glow]="sortMode==='trending'" (click)="sortMode='trending'; applyFeedSource()">Trending</button>
+      <input class="input-modern max-w-xs" placeholder="Search ideas..." [(ngModel)]="searchTerm" (ngModelChange)="applyFeedSource()" />
+    </div>
+
+    <!-- Ideas Grid -->
+    <div class="grid-modern">
+      <a *ngFor="let idea of ideas$ | async; let i = index" 
+           class="card-modern group animate-scale-in block card-link"
+           [style.animation-delay]="(i * 0.1) + 's'"
+           [routerLink]="['/idea', idea.id]">
+        
+        <!-- Trending Badge -->
+        <div *ngIf="getTrendingBadge(idea)" 
+             class="absolute top-4 right-4 text-2xl z-10 animate-pulse">
+          {{ getTrendingBadge(idea) }}
+        </div>
+
+        <!-- Category Badge -->
+        <div class="absolute top-4 left-4 text-lg z-10">
+          {{ getCategoryIcon(idea.category) }}
+        </div>
+        
+        <!-- Author Info -->
+        <div class="flex items-center space-x-3 mb-6">
+          <div class="avatar-modern">
+            {{ (idea.authorName || '').charAt(0) || '?' }}
+          </div>
+          <div>
+            <h3 class="font-semibold text-white">{{ idea.authorName || 'Anonymous' }}</h3>
+            <p class="body-small text-neutral-400">{{ formatDate(idea.createdAt) }}</p>
+          </div>
+        </div>
+
+        <!-- Problem Section -->
+        <div class="mb-6">
+          <div class="flex items-center space-x-2 mb-3">
+            <span class="text-red-400">🚨</span>
+            <h4 class="font-semibold text-white">Problem</h4>
+          </div>
+          <p class="body-medium text-neutral-300 leading-relaxed">{{ idea.problem }}</p>
+        </div>
+
+        <!-- Solution Section -->
+        <div class="mb-6">
+          <div class="flex items-center space-x-2 mb-3">
+            <span class="text-blue-400">💡</span>
+            <h4 class="font-semibold text-white">Solution</h4>
+          </div>
+          <p class="body-medium text-neutral-300 leading-relaxed">{{ idea.solution }}</p>
+        </div>
+
+        <!-- Impact Section -->
+        <div class="mb-8">
+          <div class="flex items-center space-x-2 mb-3">
+            <span class="text-green-400">🌍</span>
+            <h4 class="font-semibold text-white">Impact</h4>
+          </div>
+          <p class="body-medium text-neutral-300 leading-relaxed">{{ idea.impact }}</p>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="flex items-center justify-between pt-6 border-t border-white/10">
+          <div class="flex items-center space-x-4">
+            <!-- Upvote Button -->
+            <button *ngIf="currentUser$ | async as user"
+                    (click)="upvoteIdea(idea, user, $event)"
+                    [class]="hasUpvoted(idea, user) ? 'upvoted-button' : 'upvote-button'"
+                    class="flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-200 hover:scale-105 active:scale-95">
+              <span class="text-lg">{{ hasUpvoted(idea, user) ? '❤️' : '🤍' }}</span>
+              <span class="font-semibold">{{ idea.upvotes || 0 }}</span>
+            </button>
+
+            <!-- Comment Button -->
+            <button class="flex items-center space-x-2 px-4 py-2 glass-modern rounded-full hover:scale-105 transition-transform">
+              <span class="text-lg">💬</span>
+              <span class="body-small text-neutral-300">Comment</span>
+            </button>
+          </div>
+
+          <!-- Share Button -->
+          <button 
+            (click)="shareIdea(idea)"
+            class="p-3 glass-modern rounded-full hover:scale-110 transition-transform group">
+            <span class="text-lg group-hover:scale-110 transition-transform">📤</span>
+          </button>
+        </div>
+      </a>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="(ideas$ | async)?.length === 0" class="text-center py-16 animate-fade-in-up">
+      <div class="card-modern max-w-md mx-auto">
+        <div class="text-6xl mb-6">💡</div>
+        <h3 class="heading-3 mb-4">No ideas yet!</h3>
+        <p class="body-medium text-neutral-400 mb-8">
+          Be the first to share an amazing idea that could change the world.
+        </p>
+        <a *ngIf="currentUser$ | async" routerLink="/submit" 
+           class="btn-primary inline-flex items-center space-x-2">
+          <span>✨</span>
+          <span>Submit Your First Idea</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

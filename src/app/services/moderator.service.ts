@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { Functions, httpsCallable } from '@angular/fire/functions';
-import { firstValueFrom } from 'rxjs';
+import { Functions, httpsCallable, HttpsCallableResult } from '@angular/fire/functions';
+import { firstValueFrom, from } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ModeratorService {
@@ -15,7 +15,8 @@ export class ModeratorService {
   }
 
   async moderateDeleteIdea(ideaId: string): Promise<void> {
-    await firstValueFrom(httpsCallable(this.functions, 'moderateDeleteIdea')({ ideaId }));
+    const callable = httpsCallable<{ ideaId: string }, { ok: boolean }>(this.functions, 'moderateDeleteIdea');
+    await firstValueFrom(from(callable({ ideaId })));
   }
 }
 

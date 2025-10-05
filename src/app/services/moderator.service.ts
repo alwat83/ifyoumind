@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Functions, httpsCallable } from '@angular/fire/functions';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ModeratorService {
@@ -13,8 +14,8 @@ export class ModeratorService {
     return httpsCallable(this.functions, 'setAdmin')({ uid, value });
   }
 
-  moderateDeleteIdea(ideaId: string) {
-    return httpsCallable(this.functions, 'moderateDeleteIdea')({ ideaId });
+  async moderateDeleteIdea(ideaId: string): Promise<void> {
+    await firstValueFrom(httpsCallable(this.functions, 'moderateDeleteIdea')({ ideaId }));
   }
 }
 

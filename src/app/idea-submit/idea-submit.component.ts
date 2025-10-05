@@ -19,6 +19,16 @@ export class IdeaSubmitComponent {
   problem = '';
   solution = '';
   impact = '';
+  selectedCategory = 'general';
+  categories = [
+    { id: 'technology', name: 'Technology', icon: '💻' },
+    { id: 'environment', name: 'Environment', icon: '🌱' },
+    { id: 'health', name: 'Health', icon: '🏥' },
+    { id: 'education', name: 'Education', icon: '📚' },
+    { id: 'social', name: 'Social', icon: '🤝' },
+    { id: 'business', name: 'Business', icon: '💼' },
+    { id: 'general', name: 'General', icon: '💡' }
+  ];
   isSubmitting = false;
   showSuccess = false;
 
@@ -47,7 +57,7 @@ export class IdeaSubmitComponent {
             problem: this.problem,
             solution: this.solution,
             impact: this.impact,
-            category: 'general', // Default category
+            category: this.selectedCategory,
             tags: [], // Will be populated later
             isPublic: true // All ideas are public by default
           }, currentUser);

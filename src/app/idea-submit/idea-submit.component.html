@@ -83,6 +83,24 @@
         </textarea>
       </div>
 
+      <!-- Category Section -->
+      <div class="card-modern">
+        <div class="flex items-center space-x-3 mb-4">
+          <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-lg flex items-center justify-center">
+            <span class="text-white text-sm">🏷️</span>
+          </div>
+          <h2 class="heading-3">Choose a category</h2>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <button type="button"
+                  *ngFor="let c of categories"
+                  (click)="selectedCategory = c.id"
+                  [class]="selectedCategory === c.id ? 'btn-primary' : 'btn-secondary'">
+            <span class="mr-2">{{ c.icon }}</span>{{ c.name }}
+          </button>
+        </div>
+      </div>
+
       <!-- Action Buttons -->
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <button 

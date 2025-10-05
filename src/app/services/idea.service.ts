@@ -15,6 +15,7 @@ import {
   addDoc,
   getDocs
 } from '@angular/fire/firestore';
+import { deleteDoc } from '@angular/fire/firestore';
 import { serverTimestamp } from '@angular/fire/firestore';
 import { Observable, of } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
@@ -154,6 +155,12 @@ export class IdeaService {
       ...updates,
       lastActivity: new Date()
     });
+  }
+
+  // Delete idea
+  async deleteIdea(ideaId: string): Promise<void> {
+    const ideaRef = doc(this.firestore, 'ideas', ideaId);
+    await deleteDoc(ideaRef);
   }
 
   // Upvote an idea

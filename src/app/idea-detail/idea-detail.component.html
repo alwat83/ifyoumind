@@ -5,6 +5,10 @@
     <h1 class="heading-2 mb-2">{{ idea?.problem }}</h1>
     <div class="text-neutral-300 mb-6">{{ idea?.solution }}</div>
     <div class="text-neutral-300">{{ idea?.impact }}</div>
+    <div class="mt-6 flex gap-3" *ngIf="currentUser$ | async as u">
+      <button class="btn-secondary" routerLink="/submit">Edit</button>
+      <button class="btn-secondary" *ngIf="canDelete(u)" (click)="deleteIdea(u)">Delete</button>
+    </div>
   </div>
 
   <div class="card-modern mt-6">

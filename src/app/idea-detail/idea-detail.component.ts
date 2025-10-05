@@ -4,7 +4,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 import { Auth, user, User } from '@angular/fire/auth';
-import { Idea } from '../services/idea.service';
+import { Idea, IdeaService } from '../services/idea.service';
 import { CommentsService, Comment } from '../services/comments.service';
 import { Observable } from 'rxjs';
 
@@ -20,6 +20,7 @@ export class IdeaDetailComponent implements OnInit {
   private firestore = inject(Firestore);
   private commentsService = inject(CommentsService);
   private auth = inject(Auth);
+  private ideaService = inject(IdeaService);
 
   ideaId = '';
   idea: Idea | null = null;
@@ -42,6 +43,21 @@ export class IdeaDetailComponent implements OnInit {
     if (!content) return;
     await this.commentsService.add(this.ideaId, content, user.uid, user.displayName || 'Anonymous');
     this.newComment = '';
+  }
+
+  canDelete(u: User | null): boolean {
+    if (!u || !this.idea) return false;
+    // Admins (custom claim) or author can delete
+    // Note: token claims not available directly here; UI will show author delete, server rules allow admin too
+    return this.idea.authorId === u.uid;
+  }
+
+  async deleteIdea(u: User | null) {
+    if (!u || !this.ideaId) return;
+    if (!this.canDelete(u)) return;
+    await this.ideaService.deleteIdea(this.ideaId);
+    // Optionally: navigate back after delete
+    history.back();
   }
 }
 

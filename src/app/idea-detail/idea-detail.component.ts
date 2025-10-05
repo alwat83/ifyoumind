@@ -6,7 +6,7 @@ import { Firestore, doc, getDoc } from '@angular/fire/firestore';
 import { Auth, user, User } from '@angular/fire/auth';
 import { Idea, IdeaService } from '../services/idea.service';
 import { CommentsService, Comment } from '../services/comments.service';
-import { Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { ModeratorService } from '../services/moderator.service';
 
 @Component({
@@ -64,7 +64,7 @@ export class IdeaDetailComponent implements OnInit {
 
   async moderateDelete(u: User | null) {
     if (!u || !this.ideaId) return;
-    await this.moderatorService.moderateDeleteIdea(this.ideaId).toPromise();
+    await firstValueFrom(this.moderatorService.moderateDeleteIdea(this.ideaId));
     history.back();
   }
 }

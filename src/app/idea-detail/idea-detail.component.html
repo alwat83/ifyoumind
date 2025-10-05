@@ -8,6 +8,7 @@
     <div class="mt-6 flex gap-3" *ngIf="currentUser$ | async as u">
       <button class="btn-secondary" routerLink="/submit">Edit</button>
       <button class="btn-secondary" *ngIf="canDelete(u)" (click)="deleteIdea(u)">Delete</button>
+      <button class="btn-secondary" (click)="moderateDelete(u)">Moderate Delete</button>
     </div>
   </div>
 

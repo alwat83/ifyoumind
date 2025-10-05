@@ -7,6 +7,7 @@ import { Auth, user, User } from '@angular/fire/auth';
 import { Idea, IdeaService } from '../services/idea.service';
 import { CommentsService, Comment } from '../services/comments.service';
 import { Observable } from 'rxjs';
+import { ModeratorService } from '../services/moderator.service';
 
 @Component({
   selector: 'app-idea-detail',
@@ -21,6 +22,7 @@ export class IdeaDetailComponent implements OnInit {
   private commentsService = inject(CommentsService);
   private auth = inject(Auth);
   private ideaService = inject(IdeaService);
+  private moderatorService = inject(ModeratorService);
 
   ideaId = '';
   idea: Idea | null = null;
@@ -57,6 +59,12 @@ export class IdeaDetailComponent implements OnInit {
     if (!this.canDelete(u)) return;
     await this.ideaService.deleteIdea(this.ideaId);
     // Optionally: navigate back after delete
+    history.back();
+  }
+
+  async moderateDelete(u: User | null) {
+    if (!u || !this.ideaId) return;
+    await this.moderatorService.moderateDeleteIdea(this.ideaId).toPromise();
     history.back();
   }
 }

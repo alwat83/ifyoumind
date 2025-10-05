@@ -17,9 +17,9 @@ service cloud.firestore {
         && request.auth.uid == resource.data.authorId
         && validateIdeaUpdate(request.resource.data, resource.data);
       
-      // Author can delete own ideas; admins can moderate delete
+      // Author can delete own ideas; admins/moderators can moderate delete
       allow delete: if request.auth != null 
-        && (request.auth.uid == resource.data.authorId || request.auth.token.admin == true);
+        && (request.auth.uid == resource.data.authorId || request.auth.token.admin == true || request.auth.token.moderator == true);
     }
     
     // Users collection rules (for user profiles)

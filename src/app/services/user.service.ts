@@ -103,29 +103,20 @@ export class UserService {
     const fileName = `avatar_${timestamp}.${this.getFileExtension(file.name)}`;
     const storageRef = ref(this.storage, `profile-pictures/${userId}/${fileName}`);
 
-    // Upload with progress tracking
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
+    // Use simple upload (avoids multipart/resumable preflight issues)
     return new Observable<UploadProgress>(observer => {
-      uploadTask.on('state_changed',
-        (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          observer.next({ progress, completed: false });
-        },
-        (error) => {
+      observer.next({ progress: 0, completed: false });
+      uploadBytes(storageRef, file, { contentType: file.type })
+        .then(async () => {
+          const url = await getDownloadURL(storageRef);
+          observer.next({ progress: 100, completed: true, url });
+          observer.complete();
+        })
+        .catch((error) => {
           console.error('Upload error:', error);
           observer.next({ progress: 0, completed: true, error: error.message });
-        },
-        async () => {
-          try {
-            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-            observer.next({ progress: 100, completed: true, url: downloadURL });
-            observer.complete();
-          } catch (error) {
-            observer.next({ progress: 0, completed: true, error: 'Failed to get download URL' });
-          }
-        }
-      );
+          observer.complete();
+        });
     });
   }
 
@@ -280,6 +271,7 @@ export class UserService {
     });
   }
 }
+
 
 
 

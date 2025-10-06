@@ -16,7 +16,8 @@ export const appConfig: ApplicationConfig = {
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage()),
+    // Explicitly bind Storage to the correct bucket to avoid legacy domain issues
+    provideStorage(() => getStorage(undefined, 'gs://ifyoumind-473fe.appspot.com')),
     provideFunctions(() => getFunctions()),
   ],
 };

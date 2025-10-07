@@ -226,17 +226,28 @@ export class IdeaService {
   /** Seed initial ideas if they don't already exist (by title). Returns inserted count. */
   async seedInitialIdeas(seedData: Partial<Idea>[], currentUser: User): Promise<{ inserted: number; skipped: number; }> {
     const ideaCollection = collection(this.firestore, 'ideas');
-    const existingSnap = await getDocs(ideaCollection);
-    const existingTitles = new Set(
-      existingSnap.docs
-        .map(d => (d.data() as any).title?.toLowerCase().trim())
-        .filter(Boolean)
-    );
-
+    const existingTitles = new Set<string>();
     let inserted = 0; let skipped = 0;
     for (const seed of seedData) {
-      const titleKey = (seed.title || '').toLowerCase().trim();
-      if (!titleKey || existingTitles.has(titleKey)) { skipped++; continue; }
+      const rawTitle = seed.title || '';
+      const titleKey = rawTitle.toLowerCase().trim();
+      if (!titleKey) { skipped++; continue; }
+      // Query for existing idea with same title (public ones only to satisfy rules)
+      try {
+        if (!existingTitles.has(titleKey)) {
+          const titleQuery = query(ideaCollection, where('title', '==', rawTitle), limit(1));
+          const snap = await getDocs(titleQuery);
+          if (!snap.empty) {
+            existingTitles.add(titleKey);
+            skipped++;
+            continue;
+          }
+        } else {
+          skipped++; continue;
+        }
+      } catch (e) {
+        console.warn('[SEED] Title lookup failed, proceeding without duplicate guard', rawTitle, e);
+      }
       try {
         await this.createIdea({ ...seed, __seed: true }, currentUser);
         existingTitles.add(titleKey);
@@ -272,9 +283,15 @@ export class IdeaService {
       return { inserted: 0, skipped: 0, alreadySeeded: true };
     }
     const ideaCollectionRef = collection(this.firestore, 'ideas');
-    const existingSnap = await getDocs(ideaCollectionRef);
-    if (existingSnap.size > 0) {
-      return { inserted: 0, skipped: existingSnap.size, alreadySeeded: true };
+    // Only check for a single public idea to avoid private doc read failures
+    try {
+      const publicOne = await getDocs(query(ideaCollectionRef, where('isPublic','==', true), limit(1)));
+      if (!publicOne.empty) {
+        return { inserted: 0, skipped: publicOne.size, alreadySeeded: true };
+      }
+    } catch (e) {
+      console.warn('[AUTO-SEED] Public idea probe failed, aborting auto-seed', e);
+      return { inserted: 0, skipped: 0, alreadySeeded: true };
     }
     console.info('[AUTO-SEED] No ideas found. Seeding now...');
     const result = await this.seedInitialIdeas(seedData, currentUser);

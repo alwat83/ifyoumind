@@ -262,15 +262,18 @@ export class IdeaService {
 
   /** Remove all seed-tagged ideas (admin-only in UI). Returns count removed. */
   async removeSeedIdeas(currentUser: User): Promise<number> {
-    // Only allow if admin claim present
-    const token = await currentUser.getIdTokenResult();
-    if (!token.claims['admin']) throw new Error('Not authorized');
     const ideaCollectionRef = collection(this.firestore, 'ideas');
-    const snap = await getDocs(ideaCollectionRef);
+    // Query for documents with __seed: true. This is still subject to security rules.
+    // If rules require other fields (like isPublic), this query might fail or return partial results.
+    const q = query(ideaCollectionRef, where('__seed', '==', true), where('isPublic', '==', true));
+    const snap = await getDocs(q);
     let removed = 0;
     for (const d of snap.docs) {
-      if ((d.data() as any).__seed) {
-        try { await deleteDoc(d.ref); removed++; } catch (e) { console.warn('Failed deleting seed doc', d.id, e); }
+      try {
+        await deleteDoc(d.ref);
+        removed++;
+      } catch (e) {
+        console.warn('Failed deleting seed doc', d.id, e);
       }
     }
     return removed;

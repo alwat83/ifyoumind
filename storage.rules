@@ -45,7 +45,6 @@ service firebase.storage {
 // Helper functions for file validation
 function isValidProfilePicture(resource) {
   return resource.size < 5 * 1024 * 1024  // 5MB limit
-    && resource.contentType.matches('image/.*')
     && resource.contentType in ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
 }
 

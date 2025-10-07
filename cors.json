@@ -1,0 +1,22 @@
+[
+  {
+    "origin": [
+      "https://ifyoumind.com",
+      "https://ifyoumind-473fe.web.app"
+    ],
+    "method": [
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "OPTIONS"
+    ],
+    "responseHeader": [
+      "Content-Type",
+      "Access-Control-Allow-Origin",
+      "X-Goog-Upload-Protocol",
+      "X-Goog-Upload-Status"
+    ],
+    "maxAgeSeconds": 3600
+  }
+]

@@ -4,8 +4,8 @@ service cloud.firestore {
     
     // Ideas collection rules
     match /ideas/{ideaId} {
-      // Anyone can read public ideas
-      allow read: if resource.data.isPublic == true;
+      // Anyone can read public ideas; admins can read all ideas
+      allow read: if resource.data.isPublic == true || (request.auth != null && request.auth.token.admin == true);
       
       // Only authenticated users can create ideas
       allow create: if request.auth != null 

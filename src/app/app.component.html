@@ -7,7 +7,7 @@
   </div>
 
   <!-- Modern Header -->
-  <header class="relative z-10 border-b border-white/10 backdrop-blur-xl bg-black/20">
+  <header class="relative z-50 border-b border-white/10 backdrop-blur-xl bg-black/20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <!-- Logo -->
@@ -23,16 +23,37 @@
 
         <!-- Navigation -->
         <div class="flex items-center space-x-4 relative">
-          <!-- About submenu -->
-          <div class="relative" (mouseleave)="closeAboutMenu()">
-            <button (click)="toggleAboutMenu()" (keyup)="onKeyClose($event)" class="btn-secondary text-xs flex items-center gap-1" aria-haspopup="true" [attr.aria-expanded]="aboutOpen">
+          <!-- About submenu (accessible, click-to-toggle, outside click closable) -->
+          <div class="relative" #aboutMenuContainer>
+            <button type="button"
+              #aboutTrigger
+              (click)="onAboutTriggerClick($event)"
+              (keydown.enter)="onAboutTriggerKey($event)"
+              (keydown.space)="onAboutTriggerKey($event)"
+              (keydown.ArrowDown)="focusFirstAboutItem($event)"
+              (keydown.Escape)="closeAboutMenu()"
+              class="btn btn-outline text-xs flex items-center gap-1"
+              aria-haspopup="true"
+              [attr.aria-expanded]="aboutOpen"
+              aria-controls="aboutMenuPanel">
               <span>About</span>
-              <span class="chevron" [class.rotate-180]="aboutOpen">▾</span>
+              <span class="chevron transition-transform duration-200" [class.rotate-180]="aboutOpen">▾</span>
             </button>
-            <div *ngIf="aboutOpen" class="submenu glass-modern mt-2" role="menu">
-              <a routerLink="/about" role="menuitem" (click)="closeAboutMenu()" class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm">About Us</a>
-              <a routerLink="/mission" role="menuitem" (click)="closeAboutMenu()" class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm">Why We Exist</a>
-              <a routerLink="/faq" role="menuitem" (click)="closeAboutMenu()" class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm">FAQ</a>
+            <div
+              *ngIf="aboutOpen"
+              id="aboutMenuPanel"
+              #aboutMenuPanel
+              class="submenu glass-modern mt-2 w-48 rounded-lg shadow-lg py-1 focus:outline-none absolute left-0 top-full z-[999] pointer-events-auto bg-slate-900/95"
+              role="menu"
+              tabindex="-1"
+              (keydown.Escape)="closeAboutMenu()"
+              (keydown.ArrowUp)="focusLastAboutItem($event)"
+              (keydown.ArrowDown)="focusNextAboutItem($event)"
+              (keydown.ArrowLeft)="closeAboutMenu()"
+              (keydown.Tab)="onAboutMenuTab($event)">
+              <a routerLink="/about" #aboutItem role="menuitem" (click)="onAboutItemClick($event)" class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm pointer-events-auto">About Us</a>
+              <a routerLink="/mission" #aboutItem role="menuitem" (click)="onAboutItemClick($event)" class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm pointer-events-auto">Why We Exist</a>
+              <a routerLink="/faq" #aboutItem role="menuitem" (click)="onAboutItemClick($event)" class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm pointer-events-auto">FAQ</a>
             </div>
           </div>
           <!-- Theme Toggle -->

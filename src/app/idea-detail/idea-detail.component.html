@@ -9,24 +9,58 @@
       <button class="btn-secondary" routerLink="/submit">Edit</button>
       <button class="btn-secondary" *ngIf="canDelete(u)" (click)="deleteIdea(u)">Delete</button>
       <button class="btn-secondary" (click)="moderateDelete(u)">Moderate Delete</button>
+      <button class="btn-secondary" (click)="toggleBookmark(u)" [attr.aria-label]="isBookmarked ? 'Remove bookmark' : 'Bookmark idea'">
+        <span class="mr-1">{{ isBookmarked ? '🔖' : '📑' }}</span>
+        {{ isBookmarked ? 'Saved' : 'Save' }}
+      </button>
     </div>
   </div>
 
   <div class="card-modern mt-6">
     <h2 class="heading-3 mb-4">Comments</h2>
 
-    <div class="space-y-4 mb-6" *ngIf="comments$ | async as items">
-      <div *ngFor="let c of items" class="glass-card p-4 rounded-xl">
-        <div class="body-small text-neutral-400 mb-1">{{ c.authorName }}</div>
-        <div class="text-neutral-100">{{ c.content }}</div>
-      </div>
+    <div class="space-y-4 mb-6" *ngIf="comments$ | async as items; else noComments">
+      <ng-container *ngIf="currentUser$ | async as u; else anonView">
+        <div *ngFor="let c of items" class="glass-card p-4 rounded-xl group">
+          <div class="flex justify-between items-start mb-1">
+            <div class="body-small text-neutral-400 flex items-center gap-2">
+              <span>{{ c.authorName }}</span>
+              <span *ngIf="c.updatedAt" class="text-xs text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full">edited</span>
+            </div>
+            <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity" *ngIf="u.uid === c.authorId">
+              <button *ngIf="editingCommentId !== c.id" (click)="startEdit(c, u)" class="body-tiny text-neutral-400 hover:text-neutral-200 underline">Edit</button>
+              <button (click)="deleteComment(c, u)" class="body-tiny text-red-400 hover:text-red-300 underline">Delete</button>
+            </div>
+          </div>
+          <div *ngIf="editingCommentId === c.id; else viewMode">
+            <textarea [(ngModel)]="editContent" class="input-modern min-h-[80px] resize-none mb-2"></textarea>
+            <div class="flex gap-2">
+              <button class="btn-primary btn-xs" (click)="saveEdit(c, u)">Save</button>
+              <button class="btn-secondary btn-xs" (click)="cancelEdit()">Cancel</button>
+            </div>
+          </div>
+          <ng-template #viewMode>
+            <div class="text-neutral-100 whitespace-pre-line">{{ c.content }}</div>
+          </ng-template>
+        </div>
+      </ng-container>
+      <ng-template #anonView>
+        <div *ngFor="let c of items" class="glass-card p-4 rounded-xl">
+          <div class="body-small text-neutral-400 mb-1 flex items-center gap-2">
+            <span>{{ c.authorName }}</span>
+            <span *ngIf="c.updatedAt" class="text-xs text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full">edited</span>
+          </div>
+          <div class="text-neutral-100 whitespace-pre-line">{{ c.content }}</div>
+        </div>
+      </ng-template>
     </div>
+    <ng-template #noComments></ng-template>
 
     <div *ngIf="currentUser$ | async as u" class="flex gap-3">
       <input [(ngModel)]="newComment" class="input-modern" placeholder="Write a comment..." />
       <button class="btn-primary" (click)="submitComment(u)">Post</button>
     </div>
-    <div *ngIf="!(currentUser$ | async)" class="text-neutral-400 body-small">Sign in to comment.</div>
+    <div *ngIf="(currentUser$ | async) === null" class="text-neutral-400 body-small">Sign in to comment.</div>
   </div>
 </div>
 

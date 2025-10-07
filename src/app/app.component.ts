@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { ToastComponent } from './components/toast/toast.component';
 import { FabComponent } from './components/fab/fab.component';
 import { IdeaWizardComponent } from './components/idea-wizard/idea-wizard.component';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ export class AppComponent {
   auth: Auth = inject(Auth);
   user$: Observable<User | null>;
   showIdeaWizard = false;
+  themeService = inject(ThemeService);
 
   constructor() {
     this.user$ = user(this.auth);
@@ -47,4 +49,6 @@ export class AppComponent {
   onWizardClosed() {
     this.showIdeaWizard = false;
   }
+
+  toggleTheme() { this.themeService.toggle(); }
 }

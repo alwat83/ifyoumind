@@ -13,7 +13,7 @@ export interface Toast {
 export class ToastService {
   private toasts: Toast[] = [];
   
-  show(message: string, type: 'success' | 'error' | 'info' | 'warning' = 'info', duration: number = 3000) {
+  show(message: string, type: 'success' | 'error' | 'info' | 'warning' = 'info', duration = 3000) {
     const toast: Toast = {
       id: Math.random().toString(36).substr(2, 9),
       message,

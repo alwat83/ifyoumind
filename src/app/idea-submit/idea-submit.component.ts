@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Auth, user, User } from '@angular/fire/auth';
@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { IdeaService } from '../services/idea.service';
 import { ConfettiService } from '../services/confetti.service';
 import { ToastService } from '../services/toast.service';
+import { AuthHelperService } from '../services/auth-helper.service';
 
 @Component({
   selector: 'app-idea-submit',
@@ -15,7 +16,7 @@ import { ToastService } from '../services/toast.service';
   templateUrl: './idea-submit.component.html',
   styleUrl: './idea-submit.component.scss'
 })
-export class IdeaSubmitComponent {
+export class IdeaSubmitComponent implements OnInit, OnDestroy {
   problem = '';
   solution = '';
   impact = '';
@@ -38,9 +39,55 @@ export class IdeaSubmitComponent {
   confettiService: ConfettiService = inject(ConfettiService);
   toastService: ToastService = inject(ToastService);
   user$: Observable<User | null>;
+  authHelper: AuthHelperService = inject(AuthHelperService);
 
   constructor() {
     this.user$ = user(this.auth);
+  }
+
+  private draftKey = 'idea_draft_v1';
+  private saveTimer: any;
+
+  ngOnInit() {
+    // Restore draft if present
+    try {
+      const raw = localStorage.getItem(this.draftKey);
+      if (raw) {
+        const draft = JSON.parse(raw);
+        this.problem = draft.problem || '';
+        this.solution = draft.solution || '';
+        this.impact = draft.impact || '';
+        this.selectedCategory = draft.selectedCategory || this.selectedCategory;
+      }
+    } catch {}
+  }
+
+  ngOnDestroy() { if (this.saveTimer) clearTimeout(this.saveTimer); }
+
+  private scheduleSave() {
+    if (this.saveTimer) clearTimeout(this.saveTimer);
+    this.saveTimer = setTimeout(() => this.persistDraft(), 500);
+  }
+
+  private persistDraft() {
+    try {
+      const hasContent = this.problem || this.solution || this.impact;
+      if (!hasContent) { localStorage.removeItem(this.draftKey); return; }
+      localStorage.setItem(this.draftKey, JSON.stringify({
+        problem: this.problem,
+        solution: this.solution,
+        impact: this.impact,
+        selectedCategory: this.selectedCategory,
+        ts: Date.now()
+      }));
+    } catch {}
+  }
+
+  onFieldChange() { this.scheduleSave(); }
+
+  clearDraft() {
+    localStorage.removeItem(this.draftKey);
+    this.problem = this.solution = this.impact = '';
   }
 
   async addIdea() {
@@ -48,9 +95,7 @@ export class IdeaSubmitComponent {
       this.isSubmitting = true;
       
       try {
-        const currentUser = await new Promise<User | null>((resolve) => {
-          const sub = this.user$.subscribe(user => { resolve(user); sub.unsubscribe(); });
-        });
+        const currentUser = await this.authHelper.getCurrentUserOnce();
 
         if (currentUser) {
           await this.ideaService.createIdea({
@@ -65,6 +110,8 @@ export class IdeaSubmitComponent {
           this.problem = '';
           this.solution = '';
           this.impact = '';
+          // Clear draft after successful submission
+          localStorage.removeItem(this.draftKey);
           this.showSuccess = true;
           
           // Trigger celebration confetti

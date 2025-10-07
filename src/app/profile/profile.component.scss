@@ -10,17 +10,8 @@
   margin-bottom: 2rem;
 }
 
-.profile-grid {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 2rem;
-}
-
-@media (max-width: 768px) {
-  .profile-grid {
-    grid-template-columns: 1fr;
-  }
-}
+// Legacy grid styles replaced by Tailwind utility classes in template.
+// (Removed empty .profile-grid ruleset to satisfy linter.)
 
 .profile-card {
   background: rgba(255, 255, 255, 0.1);

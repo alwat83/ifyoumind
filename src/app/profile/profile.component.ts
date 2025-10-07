@@ -1,11 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Auth, user, User } from '@angular/fire/auth';
-import { Firestore, doc, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
-import { Storage, ref, uploadBytesResumable, getDownloadURL, deleteObject } from '@angular/fire/storage';
-import { Observable, from, switchMap, of } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { UserService } from '../services/user.service';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,11 +14,12 @@ import { Observable, from, switchMap, of } from 'rxjs';
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   private auth: Auth = inject(Auth);
-  private firestore: Firestore = inject(Firestore);
-  private storage: Storage = inject(Storage);
   private router: Router = inject(Router);
+  private userService: UserService = inject(UserService);
+  private toast: ToastService = inject(ToastService);
+  private destroy$ = new Subject<void>();
 
   currentUser$: Observable<User | null>;
   currentUser: User | null = null;
@@ -31,14 +32,17 @@ export class ProfileComponent implements OnInit {
   totalUpvotes = 0;
   hasProfilePic = false;
   profilePicUrl = '';
+  profilePicPath = '';
   
   // UI state
   isEditing = false;
   isUploading = false;
+  uploadCancelled = false;
   uploadError = '';
   selectedFile: File | null = null;
   uploadProgress = 0;
   oldProfilePicUrl = '';
+  private uploadController: { cancel: () => void } | null = null;
   
   // Form data
   editForm = {
@@ -51,91 +55,35 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentUser$.subscribe(user => {
-      this.currentUser = user;
-      if (user) {
-        this.loadUserProfile(user.uid);
-      }
-    });
-  }
-
-  async loadUserProfile(uid: string) {
-    const isProduction = this.isProductionEnvironment();
-    
-    if (!isProduction) {
-      // Local development mode - use mock data
-      this.loadMockProfile();
-      return;
-    }
-
-    try {
-      const userDocRef = doc(this.firestore, 'users', uid);
-      const userDoc = await getDoc(userDocRef);
-      
-      if (userDoc.exists()) {
-        const userData = userDoc.data();
-        this.displayName = userData['displayName'] || this.currentUser?.displayName || 'User';
-        this.username = userData['username'] || this.currentUser?.displayName?.toLowerCase().replace(/\s+/g, '') || 'user';
-        this.bio = userData['bio'] || '';
-        this.totalIdeas = userData['totalIdeas'] || 0;
-        this.totalUpvotes = userData['totalUpvotes'] || 0;
-        this.hasProfilePic = !!userData['profilePicture'];
-        this.profilePicUrl = userData['profilePicture'] || '';
-        this.oldProfilePicUrl = userData['profilePicture'] || '';
-      } else {
-        // Create new user profile
-        await this.initializeUserProfile();
-      }
-    } catch (error) {
-      console.error('Error loading user profile:', error);
-      this.loadMockProfile();
-    }
-  }
-
-  private loadMockProfile() {
-    if (!this.currentUser) return;
-    
-    this.displayName = this.currentUser.displayName || 'User';
-    this.username = this.currentUser.displayName?.toLowerCase().replace(/\s+/g, '') || 'user';
-    this.bio = 'This is a demo profile for local development';
-    this.totalIdeas = Math.floor(Math.random() * 10);
-    this.totalUpvotes = Math.floor(Math.random() * 50);
-    this.hasProfilePic = false;
-    this.profilePicUrl = '';
-    this.oldProfilePicUrl = '';
-    
-    console.log('Loaded mock profile for local development');
-  }
-
-  async initializeUserProfile() {
-    if (!this.currentUser) return;
-    
-    this.displayName = this.currentUser.displayName || 'User';
-    this.username = this.currentUser.displayName?.toLowerCase().replace(/\s+/g, '') || 'user';
-    this.bio = '';
-    this.totalIdeas = 0;
-    this.totalUpvotes = 0;
-    this.hasProfilePic = false;
-    this.profilePicUrl = '';
-    this.oldProfilePicUrl = '';
-
-    try {
-      const userDocRef = doc(this.firestore, 'users', this.currentUser.uid);
-      await setDoc(userDocRef, {
-        uid: this.currentUser.uid,
-        displayName: this.displayName,
-        username: this.username,
-        bio: this.bio,
-        totalIdeas: this.totalIdeas,
-        totalUpvotes: this.totalUpvotes,
-        profilePicture: '',
-        createdAt: new Date(),
-        updatedAt: new Date()
+    this.currentUser$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(user => {
+        this.currentUser = user;
+        if (user) {
+          this.userService.getUserProfile(user.uid)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(profile => {
+              if (profile) {
+                this.displayName = profile.displayName || 'User';
+                this.username = profile.username || 'user';
+                this.bio = profile.bio || '';
+                this.totalIdeas = profile.totalIdeas || 0;
+                this.totalUpvotes = profile.totalUpvotes || 0;
+                this.profilePicUrl = profile.profilePicture || '';
+                this.hasProfilePic = !!profile.profilePicture;
+                this.oldProfilePicUrl = profile.profilePicture || '';
+              }
+            });
+        }
       });
-    } catch (error) {
-      console.error('Error initializing user profile:', error);
-    }
   }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+
 
   startEditing() {
     this.editForm.username = this.username;
@@ -143,34 +91,29 @@ export class ProfileComponent implements OnInit {
     this.isEditing = true;
   }
 
-  async saveProfile() {
+  saveProfile() {
     if (!this.currentUser) return;
-    
-    const isProduction = this.isProductionEnvironment();
-    
-    try {
-      this.username = this.editForm.username;
-      this.bio = this.editForm.bio;
-      
-      if (isProduction) {
-        const userDocRef = doc(this.firestore, 'users', this.currentUser.uid);
-        await updateDoc(userDocRef, {
-          username: this.username,
-          bio: this.bio,
-          updatedAt: new Date()
-        });
+
+    const profileData = {
+      username: this.editForm.username,
+      bio: this.editForm.bio
+    };
+
+    this.userService.saveUserProfile(this.currentUser.uid, profileData).subscribe({
+      next: () => {
+        this.username = this.editForm.username;
+        this.bio = this.editForm.bio;
+        this.isEditing = false;
+        this.toast.success('Profile updated successfully!');
+      },
+      error: (error) => {
+        console.error('Error updating profile:', error);
+        this.toast.error('Error updating profile. Please try again.');
       }
-      
-      this.isEditing = false;
-      const message = isProduction 
-        ? 'Profile updated successfully!' 
-        : 'Profile updated successfully! (Demo Mode - not persisted)';
-      alert(message);
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      alert('Error updating profile. Please try again.');
-    }
+    });
   }
+
+
 
   cancelEditing() {
     this.isEditing = false;
@@ -214,189 +157,82 @@ export class ProfileComponent implements OnInit {
     if (!this.selectedFile || !this.currentUser) return;
 
     this.isUploading = true;
+    this.uploadCancelled = false;
     this.uploadError = '';
     this.uploadProgress = 0;
+    this.uploadController = { cancel: () => {} };
 
-    // Check if we're running in production (has proper Firebase config)
-    const isProduction = this.isProductionEnvironment();
+  const oldImageUrl = this.oldProfilePicUrl;
+  const oldPath = this.profilePicPath;
 
-    if (!isProduction) {
-      // Local development mode - use demo upload
-      await this.demoUpload();
-    } else {
-      // Production mode - use Firebase Storage
-      await this.productionUpload();
-    }
-  }
-
-  private isProductionEnvironment(): boolean {
-    // Check if we have proper Firebase Storage configuration
-    try {
-      // Try to create a test reference to see if Storage is properly configured
-      const testRef = ref(this.storage, 'test');
-      return true;
-    } catch (error) {
-      console.log('Running in local development mode - using demo upload');
-      return false;
-    }
-  }
-
-  private async demoUpload() {
-    try {
-      // Simulate upload progress
-      for (let i = 0; i <= 100; i += 10) {
-        await new Promise(resolve => setTimeout(resolve, 100));
-        this.uploadProgress = i;
-      }
-
-      // Compress the image for demo
-      if (!this.selectedFile) {
-        throw new Error('No file selected');
-      }
-      const compressedFile = await this.compressImage(this.selectedFile);
-      
-      // Create local URL for demo
-      const downloadURL = URL.createObjectURL(compressedFile);
-      
-      // Update component state
-      this.hasProfilePic = true;
-      this.profilePicUrl = downloadURL;
-      this.oldProfilePicUrl = downloadURL;
-      this.selectedFile = null;
-      this.uploadProgress = 0;
-      this.isUploading = false;
-      
-      alert('Profile picture uploaded successfully! (Demo Mode - not persisted)');
-    } catch (error) {
-      console.error('Demo upload error:', error);
-      this.uploadError = 'Demo upload failed. Please try again.';
-      this.isUploading = false;
-    }
-  }
-
-  private async productionUpload() {
-    try {
-      // Compress the image
-      if (!this.selectedFile) {
-        throw new Error('No file selected');
-      }
-      const compressedFile = await this.compressImage(this.selectedFile);
-      
-      // Create storage reference
-      if (!this.currentUser) {
-        throw new Error('User not authenticated');
-      }
-      
-      const timestamp = Date.now();
-      const fileName = `avatar_${timestamp}.jpg`;
-      const storageRef = ref(this.storage, `profile-pictures/${this.currentUser.uid}/${fileName}`);
-      
-      // Upload file with progress tracking
-      const uploadTask = uploadBytesResumable(storageRef, compressedFile);
-      
-      uploadTask.on('state_changed',
-        (snapshot) => {
-          // Progress tracking
-          this.uploadProgress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        },
-        (error) => {
-          // Handle upload error
-          console.error('Upload error:', error);
-          this.uploadError = 'Upload failed. Please try again.';
-          this.isUploading = false;
-        },
-        async () => {
-          // Upload completed successfully
-          try {
-            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-            
-            // Update user profile with new picture URL
-            if (!this.currentUser) {
-              throw new Error('User not authenticated');
-            }
-            
-            const userDocRef = doc(this.firestore, 'users', this.currentUser.uid);
-            await updateDoc(userDocRef, {
-              profilePicture: downloadURL,
-              updatedAt: new Date()
-            });
-            
-            // Delete old profile picture if it exists
-            if (this.oldProfilePicUrl && this.oldProfilePicUrl !== downloadURL) {
-              try {
-                const oldImageRef = ref(this.storage, this.oldProfilePicUrl);
-                await deleteObject(oldImageRef);
-              } catch (deleteError) {
-                console.warn('Could not delete old profile picture:', deleteError);
+    this.userService.uploadProfilePicture(this.selectedFile, this.currentUser.uid, this.uploadController).subscribe({
+      next: (progress) => {
+        this.uploadProgress = progress.progress;
+        if (progress.completed) {
+          if (progress.cancelled) {
+            this.isUploading = false;
+            this.toast.info('Upload cancelled');
+            return;
+          }
+          if (progress.error) {
+            this.uploadError = `Upload failed (${progress.code || 'error'}): ${progress.error}`;
+            this.isUploading = false;
+            return;
+          }
+          if (progress.url) {
+            this.userService.updateProfilePicture(this.currentUser!.uid, progress.url, progress.path, oldImageUrl, oldPath).subscribe({
+              next: () => {
+                this.profilePicUrl = progress.url!;
+                if (progress.path) {
+                  this.profilePicPath = progress.path;
+                }
+                this.hasProfilePic = true;
+                this.oldProfilePicUrl = progress.url!;
+                this.isUploading = false;
+                this.selectedFile = null;
+                this.toast.success('Profile picture uploaded successfully!');
+              },
+              error: (error) => {
+                console.error('Error updating profile picture URL:', error);
+                this.uploadError = 'Failed to update profile picture URL.';
+                this.isUploading = false;
               }
-            }
-            
-            // Update component state
-            this.hasProfilePic = true;
-            this.profilePicUrl = downloadURL;
-            this.oldProfilePicUrl = downloadURL;
-            this.selectedFile = null;
-            this.uploadProgress = 0;
-            this.isUploading = false;
-            
-            alert('Profile picture uploaded successfully!');
-          } catch (error) {
-            console.error('Error updating profile with new picture:', error);
-            this.uploadError = 'Picture uploaded but failed to update profile. Please refresh the page.';
-            this.isUploading = false;
+            });
           }
         }
-      );
-    } catch (error) {
-      console.error('Error during upload process:', error);
-      this.uploadError = 'Upload failed. Please try again.';
-      this.isUploading = false;
+      },
+      error: (error) => {
+        console.error('Upload error:', error);
+        const code = (error && (error.code || error.error?.code)) ? (error.code || error.error.code) : 'unknown';
+        this.uploadError = `Upload failed (${code}). Please try again.`;
+        this.isUploading = false;
+      }
+    });
+  }
+
+  cancelUpload() {
+    if (this.isUploading && this.uploadController) {
+      this.uploadController.cancel();
+      this.uploadCancelled = true;
     }
   }
 
-  private async compressImage(file: File): Promise<File> {
-    return new Promise((resolve) => {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      const img = new Image();
-      
-      img.onload = () => {
-        // Calculate new dimensions (max 400px)
-        const maxSize = 400;
-        let { width, height } = img;
-        
-        if (width > height) {
-          if (width > maxSize) {
-            height = (height * maxSize) / width;
-            width = maxSize;
-          }
-        } else {
-          if (height > maxSize) {
-            width = (width * maxSize) / height;
-            height = maxSize;
-          }
-        }
-        
-        canvas.width = width;
-        canvas.height = height;
-        
-        // Draw and compress
-        ctx?.drawImage(img, 0, 0, width, height);
-        
-        canvas.toBlob((blob) => {
-          if (blob) {
-            const compressedFile = new File([blob], file.name, {
-              type: 'image/jpeg',
-              lastModified: Date.now()
-            });
-            resolve(compressedFile);
-          } else {
-            resolve(file);
-          }
-        }, 'image/jpeg', 0.8);
-      };
-      
-      img.src = URL.createObjectURL(file);
+  removeProfilePicture() {
+    if (!this.currentUser || !this.hasProfilePic) return;
+    const confirmDelete = confirm('Remove your profile picture?');
+    if (!confirmDelete) return;
+    this.userService.removeProfilePicture(this.currentUser.uid, this.profilePicUrl, this.profilePicPath).subscribe({
+      next: () => {
+        this.profilePicUrl = '';
+        this.profilePicPath = '';
+        this.hasProfilePic = false;
+        this.oldProfilePicUrl = '';
+        this.toast.info('Profile picture removed');
+      },
+      error: (err) => {
+        console.error('Failed to remove picture', err);
+        this.toast.error('Failed to remove picture');
+      }
     });
   }
 }

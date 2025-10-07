@@ -1,4 +1,4 @@
-import { Component, inject, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -20,7 +20,7 @@ export class CategoryFilterComponent {
   }
   
   getCategoryIcon(category: string): string {
-    const icons: { [key: string]: string } = {
+    const icons: Record<string, string> = {
       'all': '🌟',
       'technology': '💻',
       'environment': '🌱',

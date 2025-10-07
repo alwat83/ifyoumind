@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { IdeaService } from '../../services/idea.service';
 import { ConfettiService } from '../../services/confetti.service';
 import { ToastService } from '../../services/toast.service';
+import { AuthHelperService } from '../../services/auth-helper.service';
 
 @Component({
   selector: 'app-idea-wizard',
@@ -19,6 +20,7 @@ export class IdeaWizardComponent {
   private ideaService: IdeaService = inject(IdeaService);
   private confettiService: ConfettiService = inject(ConfettiService);
   private toastService: ToastService = inject(ToastService);
+  private authHelper: AuthHelperService = inject(AuthHelperService);
   
   @Output() ideaSubmitted = new EventEmitter<void>();
   @Output() wizardClosed = new EventEmitter<void>();
@@ -74,9 +76,7 @@ export class IdeaWizardComponent {
     this.isSubmitting = true;
     
     try {
-      const currentUser = await new Promise<User | null>((resolve) => {
-        this.user$.subscribe(user => resolve(user)).unsubscribe();
-      });
+      const currentUser = await this.authHelper.getCurrentUserOnce();
       
       if (currentUser) {
         await this.ideaService.createIdea({

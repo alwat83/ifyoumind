@@ -5,7 +5,7 @@
     <div class="p-6 border-b border-white/10">
       <div class="flex items-center justify-between mb-4">
         <h2 class="heading-2 gradient-text">Share Your Idea</h2>
-        <button (click)="closeWizard()" class="text-neutral-400 hover:text-white transition-colors">
+        <button (click)="closeWizard()" class="text-neutral-400 hover:text-white transition-colors" aria-label="Close idea wizard">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
           </svg>
@@ -154,7 +154,8 @@
             *ngFor="let category of categories"
             (click)="selectCategory(category.id)"
             [class]="ideaData.category === category.id ? 'category-selected' : 'category-button'"
-            class="flex items-center space-x-3 p-4 rounded-lg transition-all duration-200 hover:scale-105">
+            class="flex items-center space-x-3 p-4 rounded-lg transition-all duration-200 hover:scale-105"
+            [attr.aria-label]="'Select category ' + category.name">
             <div [class]="'w-8 h-8 bg-gradient-to-r ' + category.color + ' rounded-lg flex items-center justify-center'">
               <span class="text-white text-sm">{{ category.icon }}</span>
             </div>

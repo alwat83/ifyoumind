@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, addDoc, query, where, orderBy, limit, collectionData, serverTimestamp } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, query, where, orderBy, limit, collectionData, serverTimestamp, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 export interface Comment {
@@ -8,14 +8,15 @@ export interface Comment {
   authorId: string;
   authorName: string;
   ideaId: string;
-  createdAt: any;
+  createdAt: any; // Firestore Timestamp | Date
+  updatedAt?: any; // Firestore Timestamp | Date
 }
 
 @Injectable({ providedIn: 'root' })
 export class CommentsService {
   private firestore = inject(Firestore);
 
-  listForIdea(ideaId: string, limitCount: number = 50): Observable<Comment[]> {
+  listForIdea(ideaId: string, limitCount = 50): Observable<Comment[]> {
     const ref = collection(this.firestore, 'comments');
     const q = query(ref, where('ideaId', '==', ideaId), orderBy('createdAt', 'desc'), limit(limitCount));
     return collectionData(q, { idField: 'id' }) as Observable<Comment[]>;
@@ -30,7 +31,19 @@ export class CommentsService {
       createdAt: serverTimestamp()
     });
   }
+
+  update(commentId: string, content: string) {
+    const ref = doc(this.firestore, 'comments', commentId);
+    return updateDoc(ref, { content, updatedAt: serverTimestamp() });
+  }
+
+  delete(commentId: string) {
+    const ref = doc(this.firestore, 'comments', commentId);
+    return deleteDoc(ref);
+  }
 }
+
+
 
 
 

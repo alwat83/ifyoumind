@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Functions, httpsCallable, HttpsCallableResult } from '@angular/fire/functions';
+import { Functions, httpsCallable } from '@angular/fire/functions';
 import { firstValueFrom, from } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

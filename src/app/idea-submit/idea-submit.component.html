@@ -36,6 +36,7 @@
         </p>
         <textarea 
           [(ngModel)]="problem" 
+          (ngModelChange)="onFieldChange()"
           name="problem"
           class="input-modern min-h-[120px] resize-none"
           placeholder="Describe the problem you want to address... Be specific about the challenge and its impact."
@@ -56,6 +57,7 @@
         </p>
         <textarea 
           [(ngModel)]="solution" 
+          (ngModelChange)="onFieldChange()"
           name="solution"
           class="input-modern min-h-[120px] resize-none"
           placeholder="Explain your innovative solution or approach... Be creative and specific about how it works."
@@ -76,6 +78,7 @@
         </p>
         <textarea 
           [(ngModel)]="impact" 
+          (ngModelChange)="onFieldChange()"
           name="impact"
           class="input-modern min-h-[120px] resize-none"
           placeholder="Describe the potential positive change this could create... Think big and be specific about the impact."
@@ -92,12 +95,16 @@
           <h2 class="heading-3">Choose a category</h2>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-          <button type="button"
+    <button type="button"
                   *ngFor="let c of categories"
                   (click)="selectedCategory = c.id"
-                  [class]="selectedCategory === c.id ? 'btn-primary' : 'btn-secondary'">
+      [class]="selectedCategory === c.id ? 'btn-primary' : 'btn-secondary'"
+      [attr.aria-label]="'Select category ' + c.name">
             <span class="mr-2">{{ c.icon }}</span>{{ c.name }}
           </button>
+        <div class="col-span-2 sm:col-span-3 text-right mt-2">
+          <button type="button" class="body-small text-neutral-400 hover:text-neutral-200 underline" (click)="clearDraft()">Clear Draft</button>
+        </div>
         </div>
       </div>
 

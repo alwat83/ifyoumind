@@ -35,7 +35,7 @@ async function makeModerator(uid) {
 }
 
 // Usage examples:
-// makeAdmin('your-uid-here');
+makeAdmin('hD2auI87gCOB3kUByHFnsLIVOC32');
 // makeModerator('another-uid-here');
 
 console.log('🔧 Admin setup script loaded.');
@@ -48,3 +48,5 @@ console.log('   4. Run: node admin-setup.js');
 // Uncomment and modify these lines with actual UIDs:
 // makeAdmin('REPLACE_WITH_YOUR_UID');
 // makeModerator('REPLACE_WITH_MODERATOR_UID');
+
+

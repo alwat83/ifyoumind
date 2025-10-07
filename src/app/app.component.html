@@ -23,6 +23,12 @@
 
         <!-- Navigation -->
         <div class="flex items-center space-x-4">
+          <!-- Theme Toggle -->
+          <button (click)="toggleTheme()" class="btn-secondary text-xs flex items-center gap-1" aria-label="Toggle color theme">
+            <span *ngIf="themeService.theme()() === 'dark'">🌞</span>
+            <span *ngIf="themeService.theme()() === 'light'">🌙</span>
+            <span class="hidden sm:inline">Theme</span>
+          </button>
           <!-- Submit Button -->
           <a routerLink="/submit" 
              class="btn-primary flex items-center space-x-2 text-sm">
@@ -49,7 +55,7 @@
           </div>
 
           <!-- Login Button -->
-          <button *ngIf="!(user$ | async)" 
+          <button *ngIf="(user$ | async) === null" 
                   (click)="login()" 
                   class="btn-primary text-sm">
             Sign In

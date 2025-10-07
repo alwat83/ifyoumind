@@ -1,4 +1,4 @@
-<div class="flex flex-wrap gap-2 mb-6 justify-center">
+<div class="flex flex-wrap gap-2 mb-2 justify-center category-filter-scroll relative">
   <button 
     *ngFor="let category of categories"
     (click)="selectCategory(category)"
@@ -7,5 +7,10 @@
     <span class="text-lg">{{ getCategoryIcon(category) }}</span>
     <span class="text-sm font-medium">{{ category | titlecase }}</span>
   </button>
+</div>
+
+<div class="w-full text-center md:hidden mb-4">
+  <span class="text-[10px] tracking-wide text-neutral-400 uppercase">Swipe categories</span>
+  <div class="mx-auto mt-1 h-px w-12 bg-gradient-to-r from-transparent via-neutral-500/40 to-transparent"></div>
 </div>
 

@@ -66,6 +66,63 @@
   --space-2xl: 3rem;
 }
 
+/* Light Theme Overrides */
+[data-theme='light'] {
+  /* Invert scale but preserve semantic meaning by adding accessible aliases */
+  --neutral-50: #ffffff;
+  --neutral-100: #f8fafc;
+  --neutral-200: #f1f5f9;
+  --neutral-300: #e2e8f0;
+  --neutral-400: #cbd5e1; /* subtle borders */
+  --neutral-500: #94a3b8; /* secondary text */
+  --neutral-600: #64748b; /* medium text */
+  --neutral-700: #475569; /* strong secondary */
+  --neutral-800: #334155; /* headings */
+  --neutral-900: #0f172a; /* max contrast */
+  /* Text tokens for clarity */
+  --text-high: var(--neutral-900);
+  --text-medium: var(--neutral-700);
+  --text-low: var(--neutral-600);
+  --border-subtle: var(--neutral-300);
+  --surface-base: var(--neutral-50);
+  --surface-alt: #ffffff;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 60%, #f1f5f9 100%) !important;
+  color: var(--text-high);
+}
+
+html[data-theme='light'] body {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 60%, #f1f5f9 100%) !important;
+  color: var(--text-high);
+}
+
+html[data-theme='light'] .card-modern {
+  background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.75) 100%);
+  border-color: var(--border-subtle);
+  color: var(--text-medium);
+}
+
+html[data-theme='light'] .btn-secondary {
+  background: var(--neutral-200);
+  color: var(--text-medium);
+  border: 1px solid var(--neutral-400);
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+}
+
+html[data-theme='light'] .input-modern {
+  background: var(--neutral-100);
+  border: 1px solid var(--neutral-400);
+  color: var(--text-high);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04) inset;
+}
+
+html[data-theme='light'] .gradient-text {
+  background: linear-gradient(135deg, #0284c7 0%, #7c3aed 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 /* Global Styles */
 * {
   margin: 0;
@@ -82,6 +139,34 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* Link normalization (prevent purple visited state) */
+a, a:visited, a:active { color: var(--primary-100); text-decoration: none; }
+a:hover { color: var(--primary-500); }
+html[data-theme='light'] a, html[data-theme='light'] a:visited, html[data-theme='light'] a:active { color: var(--primary-700); }
+html[data-theme='light'] a:hover { color: var(--primary-900); }
+
+/* Light theme glass adjustments for contrast */
+html[data-theme='light'] .glass-modern {
+  background: rgba(255,255,255,0.65);
+  border: 1px solid var(--neutral-300);
+  color: var(--text-medium);
+}
+html[data-theme='light'] .glass-card {
+  background: rgba(255,255,255,0.55);
+  border: 1px solid var(--neutral-300);
+  color: var(--text-medium);
+}
+html[data-theme='light'] .glass-card:hover { border-color: var(--neutral-400); }
+
+/* Ensure primary buttons on light theme keep contrast */
+html[data-theme='light'] .btn-primary { color: #fff; }
+html[data-theme='light'] .btn-primary:focus-visible { outline: 2px solid var(--primary-700); outline-offset: 2px; }
+
+/* Utility: enforce min contrast for subtle text classes */
+html[data-theme='light'] .text-neutral-300 { color: var(--text-low) !important; }
+html[data-theme='light'] .text-neutral-400 { color: var(--text-medium) !important; }
+html[data-theme='light'] .text-neutral-100 { color: var(--text-high) !important; }
 
 /* Modern Typography */
 .heading-1 {
@@ -145,6 +230,15 @@ body {
   transform: translateY(-2px);
   box-shadow: var(--shadow-xl);
   border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Performance hints */
+.card-modern, .glass-card, .fab-button, .upvote-button, .upvoted-button { will-change: transform; }
+
+/* Reduce heavy effects on lower width devices */
+@media (max-width: 640px) {
+  .glass-modern, .glass-card { backdrop-filter: blur(10px); }
+  .card-modern { box-shadow: var(--shadow-md); }
 }
 
 /* Modern Buttons */
@@ -310,6 +404,42 @@ body {
   font-size: 1.25rem;
 }
 
+/* Hero Layout Utilities */
+.hero-wrapper { max-width: 64rem; margin-left: auto; margin-right: auto; }
+.hero-heading { font-size: clamp(2.25rem, 4vw, 3.25rem); line-height: 1.15; letter-spacing: -0.015em; }
+.hero-sub { max-width: 42rem; margin-left: auto; margin-right: auto; }
+
+/* Fluid spacing utilities */
+.pad-fluid-sm { padding: clamp(0.75rem, 1.5vw, 1.25rem); }
+.pad-fluid-md { padding: clamp(1rem, 2vw, 1.75rem); }
+.pad-fluid-lg { padding: clamp(1.5rem, 3vw, 2.5rem); }
+.gap-fluid { gap: clamp(0.75rem, 1.5vw, 1.5rem); }
+.stack-fluid > * + * { margin-top: clamp(0.75rem, 1.5vw, 1.5rem); }
+
+/* Hero vertical spacing adapts */
+.hero-vertical { padding-top: clamp(2.5rem, 6vw, 5rem); padding-bottom: clamp(2rem, 5vw, 4rem); }
+
+/* Sticky controls (only sticks after scroll a bit) */
+.sticky-controls { position: sticky; top: 0.5rem; z-index: 30; }
+
+/* Clamp text utility (multi-line clamp) */
+.clamp-4 { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; line-clamp: 4; }
+
+/* Skeleton pulse nuance */
+.animate-pulse { animation: pulse-bg 1.6s ease-in-out infinite; }
+@keyframes pulse-bg { 0%,100% { opacity: 1; } 50% { opacity: .55; } }
+
+/* Upvote micro animation */
+.upvote-anim:active { transform: scale(.9); }
+.upvoted-button { background: radial-gradient(circle at 30% 30%, #ec4899 0%, #db2777 70%); color: #fff; box-shadow: 0 0 0 0 rgba(236,72,153,0.4); animation: popIn .35s ease; }
+.upvote-button { background: rgba(255,255,255,0.08); color: #fff; }
+.upvoted-button:hover { box-shadow: 0 4px 16px -2px rgba(236,72,153,0.5); }
+@keyframes popIn { 0% { transform: scale(.6); opacity: 0; } 60% { transform: scale(1.1); opacity:1;} 100% { transform: scale(1); } }
+
+/* Avatar hover grayscale -> color */
+.avatar-hover { filter: grayscale(70%); transition: filter .4s ease, transform .3s ease; }
+.card-modern:hover .avatar-hover { filter: grayscale(0%); transform: translateY(-2px); }
+
 /* Modern Badges */
 .badge-trending {
   background: var(--gradient-secondary);
@@ -331,31 +461,113 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Modern Grid */
-.grid-modern {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+/* Light theme variants for category badges/pills */
+html[data-theme='light'] .badge-category {
+  background: var(--neutral-200);
+  color: var(--text-medium);
+  border: 1px solid var(--neutral-400);
+}
+html[data-theme='light'] .badge-category:hover {
+  background: var(--neutral-300);
+  color: var(--text-high);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+/* Modern Grid (Fluid + Responsive Enhancements) */
+.grid-modern {
+  display: grid;
+  gap: clamp(1rem, 1.5vw, 1.75rem);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr)); /* 320px min with better wrap */
+  align-items: stretch;
+}
+
+/* Wide screen enhancement: allow denser layout on very large viewports */
+@media (min-width: 1600px) {
   .grid-modern {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(22rem, 1fr));
+    gap: clamp(1.25rem, 1vw, 2rem);
   }
-  
-  .card-modern {
-    padding: 1.5rem;
+}
+
+/* Ultra-wide: spacious layout */
+@media (min-width: 2000px) {
+  .grid-modern {
+    max-width: 1800px;
+    margin-inline: auto;
   }
-  
-  .heading-1 {
-    font-size: 2.5rem;
+}
+
+/* Card padding scales with viewport */
+.card-modern {
+  padding: clamp(1.25rem, 2vw, 2.25rem);
+}
+
+/* Container utility for main content spacing */
+.app-shell {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 3rem);
+  max-width: 88rem;
+}
+
+/* Responsive action / controls bar improvements */
+.controls-bar {
+  row-gap: 0.75rem;
+}
+@media (max-width: 640px) {
+  .controls-bar {
+    flex-direction: column;
+    align-items: stretch;
   }
-  
-  .heading-2 {
-    font-size: 2rem;
+  .controls-bar .input-modern {
+    min-width: 0 !important;
   }
+}
+
+/* Category filter horizontal scroll on narrow screens */
+@media (max-width: 640px) {
+  .category-filter-scroll {
+    display: flex;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 0.5rem;
+    padding: 0.25rem 0.25rem 0.5rem;
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  }
+  .category-filter-scroll::-webkit-scrollbar { display: none; }
+  .category-filter-scroll > * { flex: 0 0 auto; }
+}
+
+/* Fluid typography tweaks (existing headings already use clamp) */
+body { font-size: clamp(15px, 0.9vw + 0.5rem, 18px); }
+
+/* Fine tune large display headings for ultra-wide */
+@media (min-width: 1800px) {
+  .heading-1 { font-size: clamp(3.5rem, 3.5vw, 5rem); }
+  .heading-2 { font-size: clamp(2.75rem, 2.5vw, 3.75rem); }
+}
+
+/* Motion Reduction */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Safe area insets for mobile devices with notches */
+.safe-area-pad-bottom {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 1rem);
+}
+@supports(padding:max(0px)) {
+  .safe-area-pad-bottom { padding-bottom: max(env(safe-area-inset-bottom), 1rem); }
+}
+
+/* Fine tune FAB spacing on very small devices */
+@media (max-width: 380px) {
+  .fab-button { bottom: 1.25rem; right: 1.25rem; }
+  .fab-main { width: 2.75rem; height: 2.75rem; }
 }
 
 /* Scrollbar Styling */

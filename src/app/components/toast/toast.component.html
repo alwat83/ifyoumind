@@ -3,7 +3,9 @@
     *ngFor="let toast of toasts" 
     class="toast-item animate-slide-in-right"
     [class]="getToastClasses(toast.type)"
-    (click)="removeToast(toast.id)">
+    (click)="removeToast(toast.id)"
+    (keydown.enter)="removeToast(toast.id)"
+    tabindex="0">
     
     <div class="flex items-center space-x-3">
       <div class="flex-shrink-0">

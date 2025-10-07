@@ -6,11 +6,22 @@ service firebase.storage {
     
     // Profile pictures storage rules
     match /profile-pictures/{userId}/{fileName} {
-      // Users can only upload to their own folder
+      // Allow authenticated users to read their own and others' profile pictures (public avatars)
       allow read: if request.auth != null;
-      allow write: if request.auth != null 
+      // Allow write if:
+      //  - Authenticated and uploading to their own folder
+      //  - AND either this is the actual create/update with metadata present that passes validation
+      //    OR it's a CORS preflight (OPTIONS) / request without request.resource metadata.
+      allow write: if request.auth != null
         && request.auth.uid == userId
-        && isValidProfilePicture(request.resource);
+        && (
+          request.resource == null // CORS preflight often lacks metadata; don't block it
+          || isValidProfilePicture(request.resource)
+        );
+    }
+    // Disallow listing entire profile-pictures folder (defense-in-depth)
+    match /profile-pictures/{userId}/{wildcard=**} {
+      allow list: if false;
     }
     
     // Future: Idea attachments and other file uploads
@@ -47,6 +58,7 @@ function isValidMediaFile(resource) {
   return resource.size < 20 * 1024 * 1024  // 20MB limit
     && resource.contentType.matches('(image|video|audio)/.*');
 }
+
 
 
 

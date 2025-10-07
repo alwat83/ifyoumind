@@ -1,26 +1,29 @@
 import { Injectable, inject } from '@angular/core';
+import { UserService } from './user.service';
 import { 
-  Firestore, 
-  collection, 
-  collectionData, 
-  doc, 
-  updateDoc, 
-  increment, 
-  arrayUnion, 
-  arrayRemove,
+  Firestore,
+  collection,
   query,
   orderBy,
   limit,
   where,
+  collectionData,
   addDoc,
-  getDocs
+  doc,
+  updateDoc,
+  deleteDoc,
+  getDocs,
+  serverTimestamp,
+  arrayUnion,
+  arrayRemove,
+  increment,
+  startAfter,
+  QueryConstraint,
+  getDocs as fetchDocs
 } from '@angular/fire/firestore';
-import { deleteDoc } from '@angular/fire/firestore';
-import { serverTimestamp } from '@angular/fire/firestore';
-import { Observable, of } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
-import { Auth, user, User } from '@angular/fire/auth';
-import { UserService } from './user.service';
+import { Auth, User } from '@angular/fire/auth';
+import { httpsCallable, Functions } from '@angular/fire/functions';
+import { Observable, map } from 'rxjs';
 
 export interface Idea {
   id?: string;
@@ -43,11 +46,10 @@ export interface Idea {
   providedIn: 'root'
 })
 export class IdeaService {
-  constructor(
-    private firestore: Firestore,
-    private auth: Auth,
-    private userService: UserService
-  ) {}
+  private firestore: Firestore = inject(Firestore);
+  private auth: Auth = inject(Auth);
+  private userService: UserService = inject(UserService);
+  private functions: Functions = inject(Functions);
 
   // Get all public ideas with optimized query
   getAllIdeas(): Observable<Idea[]> {
@@ -55,6 +57,7 @@ export class IdeaService {
     // Simplified query to avoid composite index requirement
     const ideasQuery = query(
       ideaCollection,
+      where('isPublic','==', true),
       orderBy('createdAt', 'desc'),
       limit(50)
     );
@@ -62,11 +65,12 @@ export class IdeaService {
   }
 
   // Get trending ideas (highest trending score)
-  getTrendingIdeas(limitCount: number = 10): Observable<Idea[]> {
+  getTrendingIdeas(limitCount = 10): Observable<Idea[]> {
     const ideaCollection = collection(this.firestore, 'ideas');
     // Simplified query to avoid composite index requirement
     const trendingQuery = query(
       ideaCollection,
+      where('isPublic','==', true),
       orderBy('upvotes', 'desc'),
       limit(limitCount)
     );
@@ -74,23 +78,42 @@ export class IdeaService {
   }
 
   // Get recent ideas (newest first)
-  getRecentIdeas(limitCount: number = 20): Observable<Idea[]> {
+  getRecentIdeas(limitCount = 20): Observable<Idea[]> {
     const ideaCollection = collection(this.firestore, 'ideas');
     const recentQuery = query(
       ideaCollection,
+      where('isPublic','==', true),
       orderBy('createdAt', 'desc'),
       limit(limitCount)
     );
     return collectionData(recentQuery, { idField: 'id' }) as Observable<Idea[]>;
   }
 
+  /** Paged fetch (non-reactive) for infinite scroll */
+  async getRecentIdeasPage(pageSize: number, cursor?: any, category?: string): Promise<{ ideas: Idea[]; nextCursor?: any }> {
+    const ideaCollection = collection(this.firestore, 'ideas');
+    const constraints: QueryConstraint[] = [];
+    constraints.push(where('isPublic','==', true));
+    if (category && category !== 'all') {
+      constraints.push(where('category', '==', category));
+    }
+    constraints.push(orderBy('createdAt', 'desc'), limit(pageSize));
+    if (cursor) constraints.push(startAfter(cursor));
+    const q = query(ideaCollection, ...constraints);
+    const snap = await fetchDocs(q);
+    const ideas: Idea[] = snap.docs.map(d => ({ id: d.id, ...(d.data() as any) }));
+    const nextCursor = snap.docs.length === pageSize ? snap.docs[snap.docs.length - 1] : undefined;
+    return { ideas, nextCursor };
+  }
+
   // Get ideas by category
-  getIdeasByCategory(category: string, limitCount: number = 20): Observable<Idea[]> {
+  getIdeasByCategory(category: string, limitCount = 20): Observable<Idea[]> {
     const ideaCollection = collection(this.firestore, 'ideas');
     // Simplified query to avoid composite index requirement
     const categoryQuery = query(
       ideaCollection,
       where('category', '==', category),
+      where('isPublic','==', true),
       orderBy('createdAt', 'desc'),
       limit(limitCount)
     );
@@ -103,6 +126,7 @@ export class IdeaService {
     const userQuery = query(
       ideaCollection,
       where('authorId', '==', userId),
+      where('isPublic','==', true),
       orderBy('createdAt', 'desc')
     );
     return collectionData(userQuery, { idField: 'id' }) as Observable<Idea[]>;
@@ -138,13 +162,10 @@ export class IdeaService {
     };
 
     await addDoc(collection(this.firestore, 'ideas'), idea);
-    
-    // Update user's idea count
-    this.userService.updateUserStats(currentUser.uid, { 
-      totalIdeas: 1 // This should be incremented, but we'll handle it properly in the future
-    }).subscribe({
-      next: () => console.log('User stats updated'),
-      error: (error) => console.error('Failed to update user stats:', error)
+    // Atomically increment user's idea count (fallback create if missing)
+    this.userService.incrementUserIdeaCount(currentUser.uid).subscribe({
+      next: () => console.log('User totalIdeas incremented'),
+      error: (error: unknown) => console.error('Failed to increment user idea count:', error)
     });
   }
 
@@ -164,27 +185,10 @@ export class IdeaService {
   }
 
   // Upvote an idea
-  async upvoteIdea(ideaId: string, userId: string, hasUpvoted: boolean): Promise<void> {
-    const ideaRef = doc(this.firestore, 'ideas', ideaId);
-    const now = new Date();
-    
-    if (hasUpvoted) {
-      // Remove upvote
-      await updateDoc(ideaRef, {
-        upvotes: increment(-1),
-        upvotedBy: arrayRemove(userId),
-        trendingScore: increment(-1),
-        lastActivity: now
-      });
-    } else {
-      // Add upvote
-      await updateDoc(ideaRef, {
-        upvotes: increment(1),
-        upvotedBy: arrayUnion(userId),
-        trendingScore: increment(1),
-        lastActivity: now
-      });
-    }
+  async upvoteIdea(ideaId: string): Promise<{ upvoted: boolean; upvotes: number } | void> {
+    const callable = httpsCallable<{ ideaId: string }, { upvoted: boolean; upvotes: number }>(this.functions, 'toggleUpvote');
+    const res = await callable({ ideaId });
+    return res.data;
   }
 
   // Get available categories

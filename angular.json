@@ -29,6 +29,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "sitemap.xml",
+                "input": "src",
+                "output": "/"
               }
             ],
             "styles": [

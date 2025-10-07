@@ -160,6 +160,21 @@
               <div class="text-dim body-medium">Total Upvotes</div>
             </div>
           </div>
+          <!-- Admin Tools -->
+          <div *ngIf="isAdmin" class="mt-8 border-t border-neutral-700/50 pt-6">
+            <h3 class="heading-3 mb-4 flex items-center gap-2">⚙️ Admin Utilities</h3>
+            <div class="space-y-4">
+              <button (click)="seedIdeas()" [disabled]="seeding" class="btn btn-primary-modern w-full hover-scale-sm">
+                <span *ngIf="!seeding">🌱 Seed Initial Ideas</span>
+                <span *ngIf="seeding" class="flex items-center justify-center gap-2">
+                  <span class="animate-pulse">Seeding...</span>
+                </span>
+              </button>
+              <div *ngIf="seedResult" class="text-subtle text-xs">
+                Inserted: {{ seedResult.inserted }} • Skipped: {{ seedResult.skipped }}
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Edit Profile Form -->

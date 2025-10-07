@@ -5,6 +5,8 @@ import { Router, RouterModule } from '@angular/router';
 import { Auth, user, User } from '@angular/fire/auth';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { UserService } from '../services/user.service';
+import { IdeaService } from '../services/idea.service';
+import { IDEA_SEED_DATA } from '../services/idea.seed';
 import { ToastService } from '../services/toast.service';
 
 @Component({
@@ -18,6 +20,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private auth: Auth = inject(Auth);
   private router: Router = inject(Router);
   private userService: UserService = inject(UserService);
+  private ideaService: IdeaService = inject(IdeaService);
   private toast: ToastService = inject(ToastService);
   private destroy$ = new Subject<void>();
 
@@ -43,6 +46,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   uploadProgress = 0;
   oldProfilePicUrl = '';
   private uploadController: { cancel: () => void } | null = null;
+
+  // Admin / seeding state
+  isAdmin = false;
+  seeding = false;
+  seedResult: { inserted: number; skipped: number } | null = null;
   
   // Form data
   editForm = {
@@ -60,6 +68,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .subscribe(user => {
         this.currentUser = user;
         if (user) {
+          // Check for custom admin claim
+          this.checkAdmin(user);
           this.userService.getUserProfile(user.uid)
             .pipe(takeUntil(this.destroy$))
             .subscribe(profile => {
@@ -76,6 +86,44 @@ export class ProfileComponent implements OnInit, OnDestroy {
             });
         }
       });
+  }
+
+  private async checkAdmin(user: User) {
+    try {
+      const tokenResult = await user.getIdTokenResult();
+      this.isAdmin = !!tokenResult.claims['admin'];
+    } catch (err) {
+      console.warn('Failed to read admin claim', err);
+      this.isAdmin = false;
+    }
+  }
+
+  async seedIdeas() {
+    if (!this.currentUser) {
+      this.toast.error('You must be logged in');
+      return;
+    }
+    if (!this.isAdmin) {
+      this.toast.error('Admin only action');
+      return;
+    }
+    if (this.seeding) return;
+    this.seeding = true;
+    this.seedResult = null;
+    try {
+      const result = await this.ideaService.seedInitialIdeas(IDEA_SEED_DATA, this.currentUser);
+      this.seedResult = result;
+      if (result.inserted > 0) {
+        this.toast.success(`Seeded ${result.inserted} ideas (${result.skipped} skipped)`);
+      } else {
+        this.toast.info('No new ideas to seed — all titles already exist');
+      }
+    } catch (err) {
+      console.error('Seeding failed', err);
+      this.toast.error('Seeding failed — check console');
+    } finally {
+      this.seeding = false;
+    }
   }
 
   ngOnDestroy() {

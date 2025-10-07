@@ -27,6 +27,7 @@ import { Observable, map } from 'rxjs';
 
 export interface Idea {
   id?: string;
+  title?: string;
   problem: string;
   solution: string;
   impact: string;
@@ -149,6 +150,7 @@ export class IdeaService {
   async createIdea(ideaData: Partial<Idea>, currentUser: User): Promise<{ id: string } | void> {
     const idea = {
       ...ideaData,
+      title: ideaData.title || 'Untitled Idea',
       createdAt: serverTimestamp(),
       upvotes: 0,
       upvotedBy: [],
@@ -217,5 +219,31 @@ export class IdeaService {
     // Simple trending algorithm: upvotes / (hours + 1)
     // This gives newer ideas a boost while still rewarding popular content
     return idea.upvotes / (hoursSinceCreation + 1);
+  }
+
+  /** Seed initial ideas if they don't already exist (by title). Returns inserted count. */
+  async seedInitialIdeas(seedData: Partial<Idea>[], currentUser: User): Promise<{ inserted: number; skipped: number; }> {
+    const ideaCollection = collection(this.firestore, 'ideas');
+    const existingSnap = await getDocs(ideaCollection);
+    const existingTitles = new Set(
+      existingSnap.docs
+        .map(d => (d.data() as any).title?.toLowerCase().trim())
+        .filter(Boolean)
+    );
+
+    let inserted = 0; let skipped = 0;
+    for (const seed of seedData) {
+      const titleKey = (seed.title || '').toLowerCase().trim();
+      if (!titleKey || existingTitles.has(titleKey)) { skipped++; continue; }
+      try {
+        await this.createIdea({ ...seed }, currentUser);
+        existingTitles.add(titleKey);
+        inserted++;
+      } catch (err) {
+        console.error('Seed insert failed for', seed.title, err);
+        skipped++;
+      }
+    }
+    return { inserted, skipped };
   }
 }

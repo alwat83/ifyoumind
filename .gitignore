@@ -40,3 +40,9 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Secret files
+serviceAccountKey.json
+/serviceAccountKey.json
+firebase-debug.log
+cors.json

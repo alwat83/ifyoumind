@@ -30,6 +30,9 @@ async function generateSitemap() {
   // 1. Add static routes
   urls.add(`${BASE_URL}/`);
   urls.add(`${BASE_URL}/profile`);
+  urls.add(`${BASE_URL}/about`);
+  urls.add(`${BASE_URL}/mission`);
+  urls.add(`${BASE_URL}/faq`);
   // Add other static pages if you have them
 
   // 2. Add dynamic routes from Firestore (public ideas)

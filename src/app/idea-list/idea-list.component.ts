@@ -6,6 +6,7 @@ import { CategoryFilterComponent } from '../components/category-filter/category-
 import { Subject, takeUntil } from 'rxjs';
 import { IdeaService, Idea } from '../services/idea.service';
 import { BookmarkService } from '../services/bookmark.service';
+import { AnalyticsService } from '../services/analytics.service';
 import { ConfettiService } from '../services/confetti.service';
 import { ToastService } from '../services/toast.service';
 import { Observable, of } from 'rxjs';
@@ -41,6 +42,7 @@ export class IdeaListComponent implements OnDestroy {
   private confettiService: ConfettiService = inject(ConfettiService);
   private toastService: ToastService = inject(ToastService);
   private bookmarkService: BookmarkService = inject(BookmarkService);
+  private analytics: AnalyticsService = inject(AnalyticsService);
   bookmarkedIds: Set<string> = new Set();
 
   constructor() {
@@ -141,6 +143,7 @@ export class IdeaListComponent implements OnDestroy {
       this.confettiService.triggerConfetti(button, 'upvote');
       if (result?.upvoted) {
         this.toastService.success('❤️ Idea upvoted!');
+        this.analytics.ideaUpvoted(idea.id);
       } else {
         this.toastService.info('💔 Upvote removed');
       }
@@ -150,6 +153,7 @@ export class IdeaListComponent implements OnDestroy {
       idea.upvotedBy = originalUpvotedBy;
       this.toastService.error('❌ Failed to update upvote. Please try again.');
       console.error('Upvote error:', error);
+      this.analytics.actionFailed('upvote', (error as any)?.message, { idea_id: idea.id });
     }
   }
 
@@ -172,6 +176,7 @@ export class IdeaListComponent implements OnDestroy {
         url: window.location.href
       }).then(() => {
         this.toastService.success('📤 Idea shared successfully!');
+        if (idea.id) this.analytics.ideaShared(idea.id, 'web_share');
       }).catch(() => {
         this.copyIdeaLink(idea);
       });
@@ -184,8 +189,10 @@ export class IdeaListComponent implements OnDestroy {
     const link = `${window.location.origin}/idea/${idea.id}`;
     navigator.clipboard.writeText(link).then(() => {
       this.toastService.success('🔗 Link copied to clipboard!');
+      if (idea.id) this.analytics.ideaShared(idea.id, 'clipboard');
     }).catch(() => {
       this.toastService.error('❌ Failed to copy link');
+      if (idea.id) this.analytics.actionFailed('share_copy', 'clipboard_write_failed', { idea_id: idea.id });
     });
   }
 
@@ -222,6 +229,7 @@ export class IdeaListComponent implements OnDestroy {
       if (res.bookmarked) {
         this.bookmarkedIds.add(idea.id);
         this.toastService.success('🔖 Idea bookmarked');
+        this.analytics.ideaBookmarked(idea.id);
       } else {
         this.bookmarkedIds.delete(idea.id);
         this.toastService.info('Bookmark removed');
@@ -229,6 +237,7 @@ export class IdeaListComponent implements OnDestroy {
     } catch (e) {
       this.toastService.error('Failed to toggle bookmark');
       console.error(e);
+      this.analytics.actionFailed('bookmark_toggle', (e as any)?.message, { idea_id: idea.id });
       if (!currently) this.bookmarkedIds.delete(idea.id); else this.bookmarkedIds.add(idea.id);
     }
   }

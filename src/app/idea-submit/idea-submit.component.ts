@@ -8,6 +8,7 @@ import { IdeaService } from '../services/idea.service';
 import { ConfettiService } from '../services/confetti.service';
 import { ToastService } from '../services/toast.service';
 import { AuthHelperService } from '../services/auth-helper.service';
+import { AnalyticsService } from '../services/analytics.service';
 
 @Component({
   selector: 'app-idea-submit',
@@ -40,6 +41,7 @@ export class IdeaSubmitComponent implements OnInit, OnDestroy {
   toastService: ToastService = inject(ToastService);
   user$: Observable<User | null>;
   authHelper: AuthHelperService = inject(AuthHelperService);
+  analytics: AnalyticsService = inject(AnalyticsService);
 
   constructor() {
     this.user$ = user(this.auth);
@@ -98,7 +100,7 @@ export class IdeaSubmitComponent implements OnInit, OnDestroy {
         const currentUser = await this.authHelper.getCurrentUserOnce();
 
         if (currentUser) {
-          await this.ideaService.createIdea({
+          const created = await this.ideaService.createIdea({
             problem: this.problem,
             solution: this.solution,
             impact: this.impact,
@@ -106,6 +108,9 @@ export class IdeaSubmitComponent implements OnInit, OnDestroy {
             tags: [], // Will be populated later
             isPublic: true // All ideas are public by default
           }, currentUser);
+          if (created && 'id' in created) {
+            this.analytics.ideaCreated(created.id, this.selectedCategory);
+          }
 
           this.problem = '';
           this.solution = '';
@@ -131,6 +136,7 @@ export class IdeaSubmitComponent implements OnInit, OnDestroy {
       } catch (error) {
         console.error('Error submitting idea:', error);
         this.toastService.error('❌ Failed to submit idea. Please try again.');
+        this.analytics.actionFailed('idea_create', (error as any)?.message);
       } finally {
         this.isSubmitting = false;
       }

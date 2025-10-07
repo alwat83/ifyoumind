@@ -10,6 +10,7 @@ import { Observable, Subject, takeUntil } from 'rxjs';
 import { ModeratorService } from '../services/moderator.service';
 import { BookmarkService } from '../services/bookmark.service';
 import { ToastService } from '../services/toast.service';
+import { AnalyticsService } from '../services/analytics.service';
 
 @Component({
   selector: 'app-idea-detail',
@@ -28,6 +29,7 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
   private bookmarkService = inject(BookmarkService);
   private toastService = inject(ToastService);
   private destroy$ = new Subject<void>();
+  private analytics = inject(AnalyticsService);
 
   ideaId = '';
   idea: Idea | null = null;
@@ -65,6 +67,7 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
     const content = this.newComment.trim();
     if (!content) return;
     await this.commentsService.add(this.ideaId, content, user.uid, user.displayName || 'Anonymous');
+    this.analytics.commentAdded(this.ideaId);
     this.newComment = '';
   }
 
@@ -93,6 +96,7 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
       c.content = original; // rollback
       this.toastService.error('Failed to update comment');
       console.error(e);
+      this.analytics.actionFailed('comment_update', (e as any)?.message, { idea_id: this.ideaId, comment_id: c.id });
     }
   }
 
@@ -105,6 +109,7 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
     } catch (e) {
       this.toastService.error('Failed to delete comment');
       console.error(e);
+      this.analytics.actionFailed('comment_delete', (e as any)?.message, { idea_id: this.ideaId, comment_id: c.id });
     }
   }
 
@@ -136,12 +141,14 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
       this.isBookmarked = res.bookmarked;
       if (res.bookmarked) {
         this.toastService.success('🔖 Idea bookmarked');
+        this.analytics.ideaBookmarked(this.ideaId);
       } else {
         this.toastService.info('Bookmark removed');
       }
     } catch (e) {
       this.toastService.error('Failed to toggle bookmark');
       console.error(e);
+      this.analytics.actionFailed('bookmark_toggle', (e as any)?.message, { idea_id: this.ideaId });
     }
   }
 }

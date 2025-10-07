@@ -1,34 +1,34 @@
 <div class="max-w-3xl mx-auto px-4 py-10">
-  <a routerLink="/" class="body-small text-neutral-400 hover:underline">← Back</a>
+  <a routerLink="/" class="body-small text-dim hover:underline">← Back</a>
 
-  <div class="card-modern mt-4">
-    <h1 class="heading-2 mb-2">{{ idea?.problem }}</h1>
-    <div class="text-neutral-300 mb-6">{{ idea?.solution }}</div>
-    <div class="text-neutral-300">{{ idea?.impact }}</div>
-    <div class="mt-6 flex gap-3" *ngIf="currentUser$ | async as u">
-      <button class="btn-secondary" routerLink="/submit">Edit</button>
-      <button class="btn-secondary" *ngIf="canDelete(u)" (click)="deleteIdea(u)">Delete</button>
-      <button class="btn-secondary" (click)="moderateDelete(u)">Moderate Delete</button>
-      <button class="btn-secondary" (click)="toggleBookmark(u)" [attr.aria-label]="isBookmarked ? 'Remove bookmark' : 'Bookmark idea'">
+  <div class="card-elevated mt-4">
+    <h1 class="heading-2 mb-3">{{ idea?.problem }}</h1>
+    <div class="body-medium text-subtle mb-4">{{ idea?.solution }}</div>
+    <div class="body-medium text-subtle">{{ idea?.impact }}</div>
+    <div class="mt-6 flex flex-wrap gap-3" *ngIf="currentUser$ | async as u">
+      <button class="btn btn-outline hover-scale-sm" routerLink="/submit">Edit</button>
+      <button class="btn btn-outline hover-scale-sm" *ngIf="canDelete(u)" (click)="deleteIdea(u)">Delete</button>
+      <button class="btn btn-outline hover-scale-sm" (click)="moderateDelete(u)">Moderate Delete</button>
+      <button class="btn btn-outline hover-scale-sm" (click)="toggleBookmark(u)" [attr.aria-label]="isBookmarked ? 'Remove bookmark' : 'Bookmark idea'">
         <span class="mr-1">{{ isBookmarked ? '🔖' : '📑' }}</span>
         {{ isBookmarked ? 'Saved' : 'Save' }}
       </button>
     </div>
   </div>
 
-  <div class="card-modern mt-6">
-    <h2 class="heading-3 mb-4">Comments</h2>
+  <div class="card-elevated mt-6">
+    <h2 class="heading-3 mb-5">Comments</h2>
 
     <div class="space-y-4 mb-6" *ngIf="comments$ | async as items; else noComments">
       <ng-container *ngIf="currentUser$ | async as u; else anonView">
-        <div *ngFor="let c of items" class="glass-card p-4 rounded-xl group">
+  <div *ngFor="let c of items" class="card-elevated p-4 group">
           <div class="flex justify-between items-start mb-1">
-            <div class="body-small text-neutral-400 flex items-center gap-2">
+            <div class="body-small text-dim flex items-center gap-2">
               <span>{{ c.authorName }}</span>
               <span *ngIf="c.updatedAt" class="text-xs text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full">edited</span>
             </div>
             <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity" *ngIf="u.uid === c.authorId">
-              <button *ngIf="editingCommentId !== c.id" (click)="startEdit(c, u)" class="body-tiny text-neutral-400 hover:text-neutral-200 underline">Edit</button>
+              <button *ngIf="editingCommentId !== c.id" (click)="startEdit(c, u)" class="body-tiny text-dim hover:text-neutral-200 underline">Edit</button>
               <button (click)="deleteComment(c, u)" class="body-tiny text-red-400 hover:text-red-300 underline">Delete</button>
             </div>
           </div>
@@ -40,27 +40,27 @@
             </div>
           </div>
           <ng-template #viewMode>
-            <div class="text-neutral-100 whitespace-pre-line">{{ c.content }}</div>
+            <div class="text-subtle whitespace-pre-line">{{ c.content }}</div>
           </ng-template>
         </div>
       </ng-container>
       <ng-template #anonView>
-        <div *ngFor="let c of items" class="glass-card p-4 rounded-xl">
-          <div class="body-small text-neutral-400 mb-1 flex items-center gap-2">
+        <div *ngFor="let c of items" class="card-elevated p-4">
+          <div class="body-small text-dim mb-1 flex items-center gap-2">
             <span>{{ c.authorName }}</span>
             <span *ngIf="c.updatedAt" class="text-xs text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full">edited</span>
           </div>
-          <div class="text-neutral-100 whitespace-pre-line">{{ c.content }}</div>
+          <div class="text-subtle whitespace-pre-line">{{ c.content }}</div>
         </div>
       </ng-template>
     </div>
     <ng-template #noComments></ng-template>
 
-    <div *ngIf="currentUser$ | async as u" class="flex gap-3">
+    <div *ngIf="currentUser$ | async as u" class="flex gap-3 mt-5">
       <input [(ngModel)]="newComment" class="input-modern" placeholder="Write a comment..." />
-      <button class="btn-primary" (click)="submitComment(u)">Post</button>
+      <button class="btn btn-primary-modern" (click)="submitComment(u)">Post</button>
     </div>
-    <div *ngIf="(currentUser$ | async) === null" class="text-neutral-400 body-small">Sign in to comment.</div>
+    <div *ngIf="(currentUser$ | async) === null" class="text-dim body-small mt-4">Sign in to comment.</div>
   </div>
 </div>
 

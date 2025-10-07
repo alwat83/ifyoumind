@@ -146,7 +146,7 @@ export class IdeaService {
   }
 
   // Create a new idea
-  async createIdea(ideaData: Partial<Idea>, currentUser: User): Promise<void> {
+  async createIdea(ideaData: Partial<Idea>, currentUser: User): Promise<{ id: string } | void> {
     const idea = {
       ...ideaData,
       createdAt: serverTimestamp(),
@@ -161,12 +161,13 @@ export class IdeaService {
       isPublic: ideaData.isPublic !== false // Default to true
     };
 
-    await addDoc(collection(this.firestore, 'ideas'), idea);
+  const docRef = await addDoc(collection(this.firestore, 'ideas'), idea);
     // Atomically increment user's idea count (fallback create if missing)
     this.userService.incrementUserIdeaCount(currentUser.uid).subscribe({
       next: () => console.log('User totalIdeas incremented'),
       error: (error: unknown) => console.error('Failed to increment user idea count:', error)
     });
+    return { id: docRef.id };
   }
 
   // Update idea

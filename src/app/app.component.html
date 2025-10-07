@@ -22,7 +22,19 @@
         </a>
 
         <!-- Navigation -->
-        <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-4 relative">
+          <!-- About submenu -->
+          <div class="relative" (mouseleave)="closeAboutMenu()">
+            <button (click)="toggleAboutMenu()" (keyup)="onKeyClose($event)" class="btn-secondary text-xs flex items-center gap-1" aria-haspopup="true" [attr.aria-expanded]="aboutOpen">
+              <span>About</span>
+              <span class="chevron" [class.rotate-180]="aboutOpen">▾</span>
+            </button>
+            <div *ngIf="aboutOpen" class="submenu glass-modern mt-2" role="menu">
+              <a routerLink="/about" role="menuitem" (click)="closeAboutMenu()" class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm">About Us</a>
+              <a routerLink="/mission" role="menuitem" (click)="closeAboutMenu()" class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm">Why We Exist</a>
+              <a routerLink="/faq" role="menuitem" (click)="closeAboutMenu()" class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm">FAQ</a>
+            </div>
+          </div>
           <!-- Theme Toggle -->
           <button (click)="toggleTheme()" class="btn-secondary text-xs flex items-center gap-1" aria-label="Toggle color theme">
             <span *ngIf="themeService.theme()() === 'dark'">🌞</span>

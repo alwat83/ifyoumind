@@ -2,7 +2,7 @@
   <div class="max-w-5xl mx-auto">
     <!-- Header -->
     <div class="text-center mb-8">
-      <button (click)="goBack()" class="btn-secondary mb-4">
+      <button (click)="goBack()" class="btn btn-outline hover-scale-sm mb-4">
         ← Back to Ideas
       </button>
       <h1 class="heading-1 mb-4 gradient-text">
@@ -15,7 +15,7 @@
       
       <!-- Profile Card -->
       <div class="order-2 lg:order-1">
-        <div class="card-modern h-full flex flex-col">
+  <div class="card-elevated h-full flex flex-col">
           <div class="text-center mb-6">
             <!-- Profile Picture -->
             <div class="relative inline-block mb-6">
@@ -54,7 +54,7 @@
                 </div>
                 <button 
                   (click)="fileInput.click()"
-                  class="btn-primary w-full">
+                  class="btn btn-primary-modern w-full hover-scale-sm">
                   📸 Add Profile Picture
                 </button>
               </div>
@@ -96,12 +96,12 @@
                 <div class="flex gap-3">
                   <button 
                     (click)="uploadProfilePicture()"
-                    class="btn-primary flex-1">
+                    class="btn btn-primary-modern flex-1 hover-scale-sm">
                     🚀 Upload Now
                   </button>
                   <button 
                     (click)="clearSelectedFile()"
-                    class="btn-secondary">
+                    class="btn btn-outline hover-scale-sm">
                     Cancel
                   </button>
                 </div>
@@ -111,12 +111,12 @@
               <div *ngIf="hasProfilePic && !selectedFile && !isUploading" class="text-center">
                 <button 
                   (click)="fileInput.click()"
-                  class="btn-secondary">
+                  class="btn btn-outline hover-scale-sm">
                   🔄 Change Picture
                 </button>
                 <button 
                   (click)="removeProfilePicture()"
-                  class="btn-secondary mt-3 text-red-300 hover:text-red-200">
+                  class="btn btn-outline mt-3 text-red-300 hover:text-red-200 hover-scale-sm">
                   ❌ Remove
                 </button>
               </div>
@@ -126,11 +126,11 @@
           <!-- User Info -->
           <div class="space-y-5 flex-1">
             <div>
-              <h3 class="heading-3 text-white">{{ displayName }}</h3>
-              <p class="body-medium text-neutral-400">{{ username }}</p>
+              <h3 class="heading-3">{{ displayName }}</h3>
+              <p class="body-medium text-dim">{{ username }}</p>
             </div>
             
-            <div class="text-neutral-300 body-medium">
+            <div class="text-subtle body-medium">
               {{ bio }}
             </div>
           </div>
@@ -139,7 +139,7 @@
           <div class="mt-6">
             <button 
               (click)="startEditing()"
-              class="btn-secondary w-full">
+              class="btn btn-outline w-full hover-scale-sm">
               Edit Profile
             </button>
           </div>
@@ -148,27 +148,27 @@
 
       <!-- Profile Stats -->
       <div class="order-1 lg:order-2 space-y-8">
-        <div class="card-modern">
+  <div class="card-elevated">
           <h2 class="heading-2 mb-6 gradient-text">Your Stats</h2>
           <div class="grid grid-cols-2 gap-6">
             <div class="text-center">
-              <div class="text-3xl font-bold text-white">{{ totalIdeas }}</div>
-              <div class="text-neutral-400 body-medium">Ideas Shared</div>
+              <div class="text-3xl font-bold">{{ totalIdeas }}</div>
+              <div class="text-dim body-medium">Ideas Shared</div>
             </div>
             <div class="text-center">
-              <div class="text-3xl font-bold text-white">{{ totalUpvotes }}</div>
-              <div class="text-neutral-400 body-medium">Total Upvotes</div>
+              <div class="text-3xl font-bold">{{ totalUpvotes }}</div>
+              <div class="text-dim body-medium">Total Upvotes</div>
             </div>
           </div>
         </div>
 
         <!-- Edit Profile Form -->
-  <div *ngIf="isEditing" class="card-modern">
+  <div *ngIf="isEditing" class="card-elevated">
           <h2 class="heading-2 mb-6 gradient-text">Edit Profile</h2>
           <form (ngSubmit)="saveProfile()" class="space-y-6">
             
             <div>
-              <label for="username" class="block text-neutral-300 body-medium mb-2">Username</label>
+              <label for="username" class="block text-subtle body-medium mb-2">Username</label>
               <input 
                 type="text" 
                 id="username"
@@ -179,7 +179,7 @@
             </div>
             
             <div>
-              <label for="bio" class="block text-neutral-300 body-medium mb-2">Bio</label>
+              <label for="bio" class="block text-subtle body-medium mb-2">Bio</label>
               <textarea 
                 id="bio"
                 [(ngModel)]="editForm.bio"
@@ -192,13 +192,13 @@
             <div class="flex gap-4">
               <button 
                 type="submit"
-                class="btn-primary flex-1">
+                class="btn btn-primary-modern flex-1 hover-scale-sm">
                 Save Changes
               </button>
               <button 
                 type="button"
                 (click)="cancelEditing()"
-                class="btn-secondary flex-1">
+                class="btn btn-outline flex-1 hover-scale-sm">
                 Cancel
               </button>
             </div>

@@ -13,20 +13,20 @@
   <app-category-filter (categorySelected)="onCategorySelected($event)" class="mb-4"></app-category-filter>
 
   <!-- Controls (Sticky on large screens) -->
-    <div class="controls-bar flex flex-wrap justify-center items-center gap-4 mb-8 max-w-4xl mx-auto sticky-controls">
-      <button class="btn-secondary" [class.animate-glow]="sortMode==='recent'" (click)="sortMode='recent'; applyFeedSource()" aria-label="Sort by most recent ideas">Recent</button>
-      <button class="btn-secondary" [class.animate-glow]="sortMode==='trending'" (click)="sortMode='trending'; applyFeedSource()" aria-label="Sort by trending ideas">Trending</button>
+    <div class="controls-bar flex flex-wrap justify-center items-center gap-3 mb-8 max-w-4xl mx-auto sticky-controls">
+      <button class="btn btn-outline hover-scale-sm" [class.pill-active]="sortMode==='recent'" (click)="sortMode='recent'; applyFeedSource()" aria-label="Sort by most recent ideas">Recent</button>
+      <button class="btn btn-outline hover-scale-sm" [class.pill-active]="sortMode==='trending'" (click)="sortMode='trending'; applyFeedSource()" aria-label="Sort by trending ideas">Trending</button>
       <input class="input-modern flex-1 min-w-[260px] md:min-w-[320px] lg:min-w-[400px] max-w-lg" placeholder="Search ideas..." [(ngModel)]="searchTerm" (ngModelChange)="applyFeedSource()" />
     </div>
 
     <!-- Divider -->
-    <div class="max-w-7xl mx-auto mb-8 border-t border-white/10"></div>
+  <div class="max-w-7xl mx-auto mb-8 divider-subtle"></div>
 
     <!-- Ideas Grid / Skeleton -->
     <div class="grid-modern relative" *ngIf="sortMode==='recent' && !searchTerm && !selectedCategory; else nonPagedList">
       <ng-container *ngFor="let idea of pagedIdeas; let i = index">
         <a 
-          class="card-modern group animate-scale-in block card-link hover:shadow-xl transition-shadow duration-300 relative overflow-hidden"
+          class="card-elevated group animate-scale-in block card-link relative overflow-hidden"
           [style.animation-delay]="(i * 0.05) + 's'"
           [routerLink]="['/idea', idea.id]">
           <!-- Subtle gradient overlay -->
@@ -43,66 +43,65 @@
           </div>
 
           <!-- Author Info -->
-          <div class="flex items-center space-x-3 mb-6">
+          <div class="flex items-center space-x-3 mb-5">
             <div class="avatar-modern shadow">
               {{ (idea.authorName || '').charAt(0) || '?' }}
             </div>
             <div>
-              <h3 class="font-semibold text-white leading-tight">{{ idea.authorName || 'Anonymous' }}</h3>
-              <p class="body-small text-neutral-400">{{ formatDate(idea.createdAt) }}</p>
+              <h3 class="font-semibold leading-tight">{{ idea.authorName || 'Anonymous' }}</h3>
+                <p class="body-small text-dim">{{ formatDate(idea.createdAt) }}</p>
             </div>
           </div>
 
           <!-- Problem Section -->
-          <div class="mb-5">
+          <div class="mb-4">
             <div class="flex items-center space-x-2 mb-2">
               <span class="text-red-400">🚨</span>
               <h4 class="font-semibold text-white">Problem</h4>
             </div>
-            <p class="body-medium text-neutral-300 leading-relaxed clamp-4">{{ idea.problem }}</p>
+            <p class="body-medium text-subtle leading-relaxed clamp-4">{{ idea.problem }}</p>
           </div>
 
           <!-- Solution Section -->
-          <div class="mb-5">
+          <div class="mb-4">
             <div class="flex items-center space-x-2 mb-2">
               <span class="text-blue-400">💡</span>
               <h4 class="font-semibold text-white">Solution</h4>
             </div>
-            <p class="body-medium text-neutral-300 leading-relaxed clamp-4">{{ idea.solution }}</p>
+            <p class="body-medium text-subtle leading-relaxed clamp-4">{{ idea.solution }}</p>
           </div>
 
           <!-- Impact Section -->
-          <div class="mb-6">
+          <div class="mb-5">
             <div class="flex items-center space-x-2 mb-2">
               <span class="text-green-400">🌍</span>
               <h4 class="font-semibold text-white">Impact</h4>
             </div>
-            <p class="body-medium text-neutral-300 leading-relaxed clamp-4">{{ idea.impact }}</p>
+            <p class="body-medium text-subtle leading-relaxed clamp-4">{{ idea.impact }}</p>
           </div>
 
           <!-- Action Bar -->
-          <div class="flex items-center justify-between pt-5 border-t border-white/10">
+          <div class="flex items-center justify-between pt-5 mt-2 divider-subtle">
             <div class="flex items-center space-x-4">
-              <button *ngIf="currentUser$ | async as user"
-                      (click)="upvoteIdea(idea, user, $event)"
-                      [class]="hasUpvoted(idea, user) ? 'upvoted-button' : 'upvote-button'"
-                      class="flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-200 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+        <button *ngIf="currentUser$ | async as user"
+          (click)="upvoteIdea(idea, user, $event)"
+          [class]="(hasUpvoted(idea, user) ? 'upvoted-button' : 'upvote-button') + ' hover-scale-sm focus-ring px-4 py-2 rounded-full flex items-center space-x-2'"
                       [attr.aria-label]="hasUpvoted(idea, user) ? 'Remove upvote' : 'Upvote idea'">
                 <span class="text-lg">{{ hasUpvoted(idea, user) ? '❤️' : '🤍' }}</span>
                 <span class="font-semibold">{{ idea.upvotes || 0 }}</span>
               </button>
-              <button class="flex items-center space-x-2 px-4 py-2 glass-modern rounded-full hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" aria-label="Comment on idea">
+              <button class="flex items-center space-x-2 px-4 py-2 btn-ghost hover-scale-sm rounded-full" aria-label="Comment on idea">
                 <span class="text-lg">💬</span>
                 <span class="body-small text-neutral-300">Comment</span>
               </button>
-              <button *ngIf="currentUser$ | async" (click)="toggleBookmark(idea, $event)" class="flex items-center space-x-2 px-4 py-2 glass-modern rounded-full hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" [attr.aria-label]="isBookmarked(idea.id) ? 'Remove bookmark' : 'Bookmark idea'">
+              <button *ngIf="currentUser$ | async" (click)="toggleBookmark(idea, $event)" class="flex items-center space-x-2 px-4 py-2 btn-ghost hover-scale-sm rounded-full" [attr.aria-label]="isBookmarked(idea.id) ? 'Remove bookmark' : 'Bookmark idea'">
                 <span class="text-lg">{{ isBookmarked(idea.id) ? '🔖' : '📑' }}</span>
                 <span class="body-small text-neutral-300">{{ isBookmarked(idea.id) ? 'Saved' : 'Save' }}</span>
               </button>
             </div>
             <button 
               (click)="shareIdea(idea)"
-              class="p-3 glass-modern rounded-full hover:scale-110 transition-transform group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              class="p-3 btn-ghost rounded-full hover-scale-sm group"
               aria-label="Share idea">
               <span class="text-lg group-hover:scale-110 transition-transform">📤</span>
             </button>
@@ -119,30 +118,30 @@
         <ng-container *ngFor="let idea of ideas; let i = index">
           <!-- existing card markup reused -->
           <a 
-          class="card-modern group animate-scale-in block card-link hover:shadow-xl transition-shadow duration-300 relative overflow-hidden"
+          class="card-elevated group animate-scale-in block card-link relative overflow-hidden"
           [style.animation-delay]="(i * 0.05) + 's'"
           [routerLink]="['/idea', idea.id]">
           <div class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-blue-500/10 via-transparent to-purple-600/10"></div>
           <!-- Trending Badge -->
           <div *ngIf="getTrendingBadge(idea)" class="absolute top-3 right-3 text-2xl z-10 animate-pulse drop-shadow">{{ getTrendingBadge(idea) }}</div>
           <div class="absolute top-3 left-3 text-lg z-10">{{ getCategoryIcon(idea.category) }}</div>
-          <div class="flex items-center space-x-3 mb-6">
+          <div class="flex items-center space-x-3 mb-5">
             <div class="avatar-modern shadow avatar-hover">{{ (idea.authorName || '').charAt(0) || '?' }}</div>
             <div>
-              <h3 class="font-semibold text-white leading-tight">{{ idea.authorName || 'Anonymous' }}</h3>
-              <p class="body-small text-neutral-400">{{ formatDate(idea.createdAt) }}</p>
+              <h3 class="font-semibold leading-tight">{{ idea.authorName || 'Anonymous' }}</h3>
+              <p class="body-small text-dim">{{ formatDate(idea.createdAt) }}</p>
             </div>
           </div>
-          <div class="mb-5"><div class="flex items-center space-x-2 mb-2"><span class="text-red-400">🚨</span><h4 class="font-semibold text-white">Problem</h4></div><p class="body-medium text-neutral-300 leading-relaxed clamp-4">{{ idea.problem }}</p></div>
-          <div class="mb-5"><div class="flex items-center space-x-2 mb-2"><span class="text-blue-400">💡</span><h4 class="font-semibold text-white">Solution</h4></div><p class="body-medium text-neutral-300 leading-relaxed clamp-4">{{ idea.solution }}</p></div>
-          <div class="mb-6"><div class="flex items-center space-x-2 mb-2"><span class="text-green-400">🌍</span><h4 class="font-semibold text-white">Impact</h4></div><p class="body-medium text-neutral-300 leading-relaxed clamp-4">{{ idea.impact }}</p></div>
-          <div class="flex items-center justify-between pt-5 border-t border-white/10">
+          <div class="mb-4"><div class="flex items-center space-x-2 mb-2"><span class="text-red-400">🚨</span><h4 class="font-semibold">Problem</h4></div><p class="body-medium text-subtle leading-relaxed clamp-4">{{ idea.problem }}</p></div>
+          <div class="mb-4"><div class="flex items-center space-x-2 mb-2"><span class="text-blue-400">💡</span><h4 class="font-semibold">Solution</h4></div><p class="body-medium text-subtle leading-relaxed clamp-4">{{ idea.solution }}</p></div>
+          <div class="mb-5"><div class="flex items-center space-x-2 mb-2"><span class="text-green-400">🌍</span><h4 class="font-semibold">Impact</h4></div><p class="body-medium text-subtle leading-relaxed clamp-4">{{ idea.impact }}</p></div>
+          <div class="flex items-center justify-between pt-5 mt-2 divider-subtle">
             <div class="flex items-center space-x-4">
-              <button *ngIf="currentUser$ | async as user" (click)="upvoteIdea(idea, user, $event)" [class]="hasUpvoted(idea, user) ? 'upvoted-button' : 'upvote-button'" class="flex items-center space-x-2 px-4 py-2 rounded-full transition-all duration-200 hover:scale-105 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 upvote-anim" [attr.aria-label]="hasUpvoted(idea, user) ? 'Remove upvote' : 'Upvote idea'"><span class="text-lg">{{ hasUpvoted(idea, user) ? '❤️' : '🤍' }}</span><span class="font-semibold">{{ idea.upvotes || 0 }}</span></button>
-              <button class="flex items-center space-x-2 px-4 py-2 glass-modern rounded-full hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" aria-label="Comment on idea"><span class="text-lg">💬</span><span class="body-small text-neutral-300">Comment</span></button>
-              <button *ngIf="currentUser$ | async" (click)="toggleBookmark(idea, $event)" class="flex items-center space-x-2 px-4 py-2 glass-modern rounded-full hover:scale-105 transition-transform focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" [attr.aria-label]="isBookmarked(idea.id) ? 'Remove bookmark' : 'Bookmark idea'"><span class="text-lg">{{ isBookmarked(idea.id) ? '🔖' : '📑' }}</span><span class="body-small text-neutral-300">{{ isBookmarked(idea.id) ? 'Saved' : 'Save' }}</span></button>
+              <button *ngIf="currentUser$ | async as user" (click)="upvoteIdea(idea, user, $event)" [class]="(hasUpvoted(idea, user) ? 'upvoted-button' : 'upvote-button') + ' hover-scale-sm focus-ring px-4 py-2 rounded-full flex items-center space-x-2 upvote-anim'" [attr.aria-label]="hasUpvoted(idea, user) ? 'Remove upvote' : 'Upvote idea'"><span class="text-lg">{{ hasUpvoted(idea, user) ? '❤️' : '🤍' }}</span><span class="font-semibold">{{ idea.upvotes || 0 }}</span></button>
+              <button class="flex items-center space-x-2 px-4 py-2 btn-ghost hover-scale-sm rounded-full" aria-label="Comment on idea"><span class="text-lg">💬</span><span class="body-small text-subtle">Comment</span></button>
+              <button *ngIf="currentUser$ | async" (click)="toggleBookmark(idea, $event)" class="flex items-center space-x-2 px-4 py-2 btn-ghost hover-scale-sm rounded-full" [attr.aria-label]="isBookmarked(idea.id) ? 'Remove bookmark' : 'Bookmark idea'"><span class="text-lg">{{ isBookmarked(idea.id) ? '🔖' : '📑' }}</span><span class="body-small text-subtle">{{ isBookmarked(idea.id) ? 'Saved' : 'Save' }}</span></button>
             </div>
-            <button (click)="shareIdea(idea)" class="p-3 glass-modern rounded-full hover:scale-110 transition-transform group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500" aria-label="Share idea"><span class="text-lg group-hover:scale-110 transition-transform">📤</span></button>
+            <button (click)="shareIdea(idea)" class="p-3 btn-ghost rounded-full hover-scale-sm group" aria-label="Share idea"><span class="text-lg group-hover:scale-110 transition-transform">📤</span></button>
           </div></a>
         </ng-container>
       </div>
@@ -150,14 +149,14 @@
 
     <!-- Empty State -->
   <div *ngIf="(ideas$ | async)?.length === 0 && pagedIdeas.length === 0" class="text-center py-16 animate-fade-in-up">
-      <div class="card-modern max-w-md mx-auto">
+  <div class="card-elevated max-w-md mx-auto">
         <div class="text-6xl mb-6">💡</div>
         <h3 class="heading-3 mb-4">No ideas yet!</h3>
         <p class="body-medium text-neutral-400 mb-8">
           Be the first to share an amazing idea that could change the world.
         </p>
-        <a *ngIf="currentUser$ | async" routerLink="/submit" 
-           class="btn-primary inline-flex items-center space-x-2">
+      <a *ngIf="currentUser$ | async" routerLink="/submit" 
+        class="btn btn-primary-modern inline-flex items-center space-x-2">
           <span>✨</span>
           <span>Submit Your First Idea</span>
         </a>
@@ -167,17 +166,17 @@
     <!-- Skeleton Loading -->
     <ng-template #ideasLoading>
       <div class="grid-modern">
-        <div *ngFor="let s of [1,2,3,4,5,6]" class="card-modern animate-pulse space-y-6">
-          <div class="h-4 w-1/3 bg-white/10 rounded"></div>
+        <div *ngFor="let s of [1,2,3,4,5,6]" class="card-elevated animate-pulse space-y-6 skeleton-card">
+          <div class="h-4 w-1/3 bg-white/10 rounded shimmer"></div>
           <div class="space-y-2">
-            <div class="h-3 w-full bg-white/5 rounded"></div>
-            <div class="h-3 w-5/6 bg-white/5 rounded"></div>
-            <div class="h-3 w-4/6 bg-white/5 rounded"></div>
+            <div class="h-3 w-full bg-white/5 rounded shimmer"></div>
+            <div class="h-3 w-5/6 bg-white/5 rounded shimmer"></div>
+            <div class="h-3 w-4/6 bg-white/5 rounded shimmer"></div>
           </div>
-          <div class="h-3 w-1/2 bg-white/5 rounded"></div>
+          <div class="h-3 w-1/2 bg-white/5 rounded shimmer"></div>
           <div class="flex justify-between pt-4 border-t border-white/10">
-            <div class="h-8 w-24 bg-white/10 rounded-full"></div>
-            <div class="h-8 w-8 bg-white/10 rounded-full"></div>
+            <div class="h-8 w-24 bg-white/10 rounded-full shimmer"></div>
+            <div class="h-8 w-8 bg-white/10 rounded-full shimmer"></div>
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { provideFunctions, getFunctions } from '@angular/fire/functions';
+import { provideAnalytics, getAnalytics, ScreenTrackingService, UserTrackingService } from '@angular/fire/analytics';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,5 +20,8 @@ export const appConfig: ApplicationConfig = {
     // Explicitly bind Storage to the correct bucket to avoid legacy domain issues
     provideStorage(() => getStorage(undefined, 'gs://ifyoumind-473fe.appspot.com')),
     provideFunctions(() => getFunctions()),
+    provideAnalytics(() => getAnalytics()),
+    ScreenTrackingService,
+    UserTrackingService,
   ],
 };

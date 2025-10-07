@@ -59,13 +59,15 @@
           placeholder="Be specific about the problem, who it affects, and why it matters..."
           (input)="isStepValid(1)">
         </textarea>
-        
+
         <div class="flex justify-between mt-6">
           <div></div>
           <button 
             (click)="nextStep()"
             [disabled]="!isStepValid(1)"
-            [class]="isStepValid(1) ? 'btn-primary' : 'btn-secondary opacity-50 cursor-not-allowed'">
+            class="btn btn-primary-modern"
+            [class.opacity-50]="!isStepValid(1)"
+            [class.cursor-not-allowed]="!isStepValid(1)">
             Next →
           </button>
         </div>
@@ -90,15 +92,15 @@
           placeholder="Describe your solution, how it works, and what makes it unique..."
           (input)="isStepValid(2)">
         </textarea>
-        
+
         <div class="flex justify-between mt-6">
-          <button (click)="previousStep()" class="btn-secondary">
-            ← Back
-          </button>
+          <button (click)="previousStep()" class="btn btn-outline">← Back</button>
           <button 
             (click)="nextStep()"
             [disabled]="!isStepValid(2)"
-            [class]="isStepValid(2) ? 'btn-primary' : 'btn-secondary opacity-50 cursor-not-allowed'">
+            class="btn btn-primary-modern"
+            [class.opacity-50]="!isStepValid(2)"
+            [class.cursor-not-allowed]="!isStepValid(2)">
             Next →
           </button>
         </div>
@@ -123,15 +125,15 @@
           placeholder="Think about scale, sustainability, and long-term benefits..."
           (input)="isStepValid(3)">
         </textarea>
-        
+
         <div class="flex justify-between mt-6">
-          <button (click)="previousStep()" class="btn-secondary">
-            ← Back
-          </button>
+          <button (click)="previousStep()" class="btn btn-outline">← Back</button>
           <button 
             (click)="nextStep()"
             [disabled]="!isStepValid(3)"
-            [class]="isStepValid(3) ? 'btn-primary' : 'btn-secondary opacity-50 cursor-not-allowed'">
+            class="btn btn-primary-modern"
+            [class.opacity-50]="!isStepValid(3)"
+            [class.cursor-not-allowed]="!isStepValid(3)">
             Next →
           </button>
         </div>
@@ -153,24 +155,24 @@
           <button 
             *ngFor="let category of categories"
             (click)="selectCategory(category.id)"
-            [class]="ideaData.category === category.id ? 'category-selected' : 'category-button'"
-            class="flex items-center space-x-3 p-4 rounded-lg transition-all duration-200 hover:scale-105"
+            class="pill w-full text-left flex items-center space-x-3 hover-scale-sm"
+            [class.pill-active]="ideaData.category === category.id"
             [attr.aria-label]="'Select category ' + category.name">
-            <div [class]="'w-8 h-8 bg-gradient-to-r ' + category.color + ' rounded-lg flex items-center justify-center'">
+            <div [class]="'w-8 h-8 bg-gradient-to-r ' + category.color + ' rounded-lg flex items-center justify-center shadow-inner'">
               <span class="text-white text-sm">{{ category.icon }}</span>
             </div>
             <span class="font-medium">{{ category.name }}</span>
           </button>
         </div>
-        
+
         <div class="flex justify-between mt-6">
-          <button (click)="previousStep()" class="btn-secondary">
-            ← Back
-          </button>
+          <button (click)="previousStep()" class="btn btn-outline">← Back</button>
           <button 
             (click)="submitIdea()"
             [disabled]="isSubmitting"
-            class="submit-wizard-button btn-primary animate-glow">
+            class="btn btn-primary-modern hover-scale-sm"
+            [class.opacity-50]="isSubmitting"
+            [class.cursor-not-allowed]="isSubmitting">
             <span *ngIf="!isSubmitting" class="flex items-center space-x-2">
               <span>🚀</span>
               <span>Submit Idea</span>

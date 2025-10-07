@@ -21,6 +21,7 @@ export class AppComponent {
   user$: Observable<User | null>;
   showIdeaWizard = false;
   themeService = inject(ThemeService);
+  aboutOpen = false;
 
   constructor() {
     this.user$ = user(this.auth);
@@ -51,4 +52,10 @@ export class AppComponent {
   }
 
   toggleTheme() { this.themeService.toggle(); }
+
+  toggleAboutMenu() {
+    this.aboutOpen = !this.aboutOpen;
+  }
+  closeAboutMenu() { this.aboutOpen = false; }
+  onKeyClose(e: KeyboardEvent) { if (e.key === 'Escape') this.closeAboutMenu(); }
 }

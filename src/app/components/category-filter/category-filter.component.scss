@@ -1,52 +1,13 @@
-.category-button {
-  background: rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.2s ease;
-  
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.3);
-  }
-}
+/* Using global pill styles defined in styles.scss; keep file for future component-specific overrides */
 
-/* Light theme adjustments for contrast */
-html[data-theme='light'] .category-button {
-  background: var(--neutral-200);
-  color: var(--text-medium);
-  border: 1px solid var(--neutral-400);
-  font-weight: 600;
-}
-html[data-theme='light'] .category-button:hover {
-  background: var(--neutral-300);
-  color: var(--text-high);
-  border-color: var(--neutral-500);
-}
-html[data-theme='light'] .category-button:active {
-  background: var(--neutral-400);
-  color: var(--text-high);
-}
-html[data-theme='light'] .category-button:focus-visible {
-  outline: 3px solid var(--primary-600);
-  outline-offset: 2px;
-}
+/* Accessibility: ensure active pill has sufficient contrast ring on focus */
+.pill-active:focus-visible { outline: 2px solid var(--secondary-500); outline-offset: 3px; }
 
-.category-selected {
-  background: linear-gradient(to right, #3b82f6, #9333ea);
-  color: white;
-  border: 1px solid #60a5fa;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
-
-html[data-theme='light'] .category-selected {
-  background: linear-gradient(to right, #2563eb, #7c3aed);
-  color: #fff;
-  border: 1px solid #2563eb;
-}
-html[data-theme='light'] .category-selected:hover {
-  filter: brightness(1.05);
-}
-html[data-theme='light'] .category-selected:focus-visible {
-  outline: 3px solid var(--primary-700);
-  outline-offset: 2px;
+/* Scroll hint subtle gradient (mobile) */
+.category-filter-scroll::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--surface-0) 0%, transparent 12%, transparent 88%, var(--surface-0) 100%);
 }

@@ -134,8 +134,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.toast.info('No new ideas to seed — all titles already exist');
       }
     } catch (err) {
-      console.error('Seeding failed', err);
-      this.toast.error('Seeding failed — check console');
+      console.error('Seeding failed (manual seedIdeas)', err);
+      const code = (err as any)?.code || (err as any)?.message || 'unknown';
+      this.toast.error(`Seeding failed (${code})`);
     } finally {
       this.seeding = false;
     }

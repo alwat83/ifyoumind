@@ -265,32 +265,20 @@ export class IdeaService {
     return removed;
   }
 
-  /** Auto-seed if collection empty and user is admin; sets a meta document to avoid repeats */
+  /** Auto-seed if collection empty and user is admin. No meta marker (simplified). */
   async autoSeedIfEmpty(seedData: Partial<Idea>[], currentUser: User): Promise<{ inserted: number; skipped: number; alreadySeeded: boolean; }> {
     const token = await currentUser.getIdTokenResult();
-    if (!token.claims['admin']) return { inserted: 0, skipped: 0, alreadySeeded: true };
-    // Check meta doc
-    const metaRef = doc(this.firestore, 'meta', 'seedStatus');
-    try {
-      const metaSnap: any = await getDocs(collection(this.firestore, 'meta')); // coarse check
-  const found = metaSnap.docs.find((d: any) => d.id === 'seedStatus');
-      if (found && (found.data() as any).seeded) {
-        return { inserted: 0, skipped: 0, alreadySeeded: true };
-      }
-    } catch {}
-    // Check existing ideas count quickly
+    if (!token.claims['admin']) {
+      return { inserted: 0, skipped: 0, alreadySeeded: true };
+    }
     const ideaCollectionRef = collection(this.firestore, 'ideas');
     const existingSnap = await getDocs(ideaCollectionRef);
     if (existingSnap.size > 0) {
       return { inserted: 0, skipped: existingSnap.size, alreadySeeded: true };
     }
+    console.info('[AUTO-SEED] No ideas found. Seeding now...');
     const result = await this.seedInitialIdeas(seedData, currentUser);
-    // Write marker
-    try {
-      await addDoc(collection(this.firestore, 'meta'), { seeded: true, at: serverTimestamp(), count: result.inserted });
-    } catch (e) {
-      console.warn('Failed to write seed meta doc', e);
-    }
+    console.info('[AUTO-SEED] Completed', result);
     return { ...result, alreadySeeded: false };
   }
 }

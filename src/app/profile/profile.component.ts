@@ -51,6 +51,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   isAdmin = false;
   seeding = false;
   seedResult: { inserted: number; skipped: number } | null = null;
+  removingSeeds = false;
+  autoSeedAttempted = false;
   
   // Form data
   editForm = {
@@ -70,6 +72,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
         if (user) {
           // Check for custom admin claim
           this.checkAdmin(user);
+          // Attempt auto-seed once (admin only) if collection empty
+          if (!this.autoSeedAttempted) {
+            this.autoSeedAttempted = true;
+            setTimeout(() => this.tryAutoSeed(), 0);
+          }
           this.userService.getUserProfile(user.uid)
             .pipe(takeUntil(this.destroy$))
             .subscribe(profile => {
@@ -123,6 +130,35 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.toast.error('Seeding failed — check console');
     } finally {
       this.seeding = false;
+    }
+  }
+
+  async removeSeedIdeas() {
+    if (!this.currentUser) { this.toast.error('Not logged in'); return; }
+    if (!this.isAdmin) { this.toast.error('Admin only'); return; }
+    const confirmDelete = confirm('Remove all seeded demo ideas? This cannot be undone.');
+    if (!confirmDelete) return;
+    this.removingSeeds = true;
+    try {
+      const removed = await this.ideaService.removeSeedIdeas(this.currentUser);
+      this.toast.info(`Removed ${removed} seeded ideas`);
+    } catch (e) {
+      console.error(e);
+      this.toast.error('Failed to remove seeded ideas');
+    } finally {
+      this.removingSeeds = false;
+    }
+  }
+
+  private async tryAutoSeed() {
+    if (!this.currentUser || !this.isAdmin) return;
+    try {
+      const res = await this.ideaService.autoSeedIfEmpty(IDEA_SEED_DATA, this.currentUser);
+      if (!res.alreadySeeded && res.inserted > 0) {
+        this.toast.success(`Auto-seeded ${res.inserted} demo ideas`);
+      }
+    } catch (e) {
+      console.warn('Auto-seed failed (non-fatal)', e);
     }
   }
 

@@ -170,6 +170,10 @@
                   <span class="animate-pulse">Seeding...</span>
                 </span>
               </button>
+              <button (click)="removeSeedIdeas()" [disabled]="removingSeeds" class="btn btn-outline w-full hover-scale-sm text-red-300 hover:text-red-200">
+                <span *ngIf="!removingSeeds">🧹 Remove Seeded Ideas</span>
+                <span *ngIf="removingSeeds" class="animate-pulse">Removing...</span>
+              </button>
               <div *ngIf="seedResult" class="text-subtle text-xs">
                 Inserted: {{ seedResult.inserted }} • Skipped: {{ seedResult.skipped }}
               </div>

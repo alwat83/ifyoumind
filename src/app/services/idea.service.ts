@@ -41,6 +41,8 @@ export interface Idea {
   trendingScore?: number;
   lastActivity?: Date;
   isPublic?: boolean;
+  /** Mark ideas that were inserted by seeding so they can be removed later */
+  __seed?: boolean;
 }
 
 @Injectable({
@@ -236,7 +238,7 @@ export class IdeaService {
       const titleKey = (seed.title || '').toLowerCase().trim();
       if (!titleKey || existingTitles.has(titleKey)) { skipped++; continue; }
       try {
-        await this.createIdea({ ...seed }, currentUser);
+        await this.createIdea({ ...seed, __seed: true }, currentUser);
         existingTitles.add(titleKey);
         inserted++;
       } catch (err) {
@@ -245,5 +247,50 @@ export class IdeaService {
       }
     }
     return { inserted, skipped };
+  }
+
+  /** Remove all seed-tagged ideas (admin-only in UI). Returns count removed. */
+  async removeSeedIdeas(currentUser: User): Promise<number> {
+    // Only allow if admin claim present
+    const token = await currentUser.getIdTokenResult();
+    if (!token.claims['admin']) throw new Error('Not authorized');
+    const ideaCollectionRef = collection(this.firestore, 'ideas');
+    const snap = await getDocs(ideaCollectionRef);
+    let removed = 0;
+    for (const d of snap.docs) {
+      if ((d.data() as any).__seed) {
+        try { await deleteDoc(d.ref); removed++; } catch (e) { console.warn('Failed deleting seed doc', d.id, e); }
+      }
+    }
+    return removed;
+  }
+
+  /** Auto-seed if collection empty and user is admin; sets a meta document to avoid repeats */
+  async autoSeedIfEmpty(seedData: Partial<Idea>[], currentUser: User): Promise<{ inserted: number; skipped: number; alreadySeeded: boolean; }> {
+    const token = await currentUser.getIdTokenResult();
+    if (!token.claims['admin']) return { inserted: 0, skipped: 0, alreadySeeded: true };
+    // Check meta doc
+    const metaRef = doc(this.firestore, 'meta', 'seedStatus');
+    try {
+      const metaSnap: any = await getDocs(collection(this.firestore, 'meta')); // coarse check
+  const found = metaSnap.docs.find((d: any) => d.id === 'seedStatus');
+      if (found && (found.data() as any).seeded) {
+        return { inserted: 0, skipped: 0, alreadySeeded: true };
+      }
+    } catch {}
+    // Check existing ideas count quickly
+    const ideaCollectionRef = collection(this.firestore, 'ideas');
+    const existingSnap = await getDocs(ideaCollectionRef);
+    if (existingSnap.size > 0) {
+      return { inserted: 0, skipped: existingSnap.size, alreadySeeded: true };
+    }
+    const result = await this.seedInitialIdeas(seedData, currentUser);
+    // Write marker
+    try {
+      await addDoc(collection(this.firestore, 'meta'), { seeded: true, at: serverTimestamp(), count: result.inserted });
+    } catch (e) {
+      console.warn('Failed to write seed meta doc', e);
+    }
+    return { ...result, alreadySeeded: false };
   }
 }

@@ -100,6 +100,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     try {
       const tokenResult = await user.getIdTokenResult();
       this.isAdmin = !!tokenResult.claims['admin'];
+      // Temporary fallback: treat specific email(s) as admin if claim missing
+      const fallbackAdmins = ['albertlwatson@gmail.com'];
+      if (!this.isAdmin && user.email && fallbackAdmins.includes(user.email)) {
+        this.isAdmin = true;
+        console.warn('[ADMIN-FALLBACK] Granting admin UI via email fallback (add real custom claim soon).');
+      }
+      console.debug('[ADMIN-CHECK] claims:', tokenResult.claims, 'isAdmin:', this.isAdmin);
     } catch (err) {
       console.warn('Failed to read admin claim', err);
       this.isAdmin = false;

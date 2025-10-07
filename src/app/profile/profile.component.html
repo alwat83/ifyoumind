@@ -170,6 +170,10 @@
                   <span class="animate-pulse">Seeding...</span>
                 </span>
               </button>
+              <button (click)="reSeedIdeas()" [disabled]="reSeeding" class="btn btn-outline w-full hover-scale-sm">
+                <span *ngIf="!reSeeding">♻️ Re-Seed Demo Ideas</span>
+                <span *ngIf="reSeeding" class="animate-pulse">Re-seeding...</span>
+              </button>
               <button (click)="removeSeedIdeas()" [disabled]="removingSeeds" class="btn btn-outline w-full hover-scale-sm text-red-300 hover:text-red-200">
                 <span *ngIf="!removingSeeds">🧹 Remove Seeded Ideas</span>
                 <span *ngIf="removingSeeds" class="animate-pulse">Removing...</span>

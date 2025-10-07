@@ -53,6 +53,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   seedResult: { inserted: number; skipped: number } | null = null;
   removingSeeds = false;
   autoSeedAttempted = false;
+  reSeeding = false;
   
   // Form data
   editForm = {
@@ -147,6 +148,26 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.toast.error('Failed to remove seeded ideas');
     } finally {
       this.removingSeeds = false;
+    }
+  }
+
+  async reSeedIdeas() {
+    if (!this.currentUser) { this.toast.error('Not logged in'); return; }
+    if (!this.isAdmin) { this.toast.error('Admin only'); return; }
+    if (this.reSeeding) return;
+    const confirmReset = confirm('This will remove existing seeded demo ideas and re-seed fresh copies. Continue?');
+    if (!confirmReset) return;
+    this.reSeeding = true;
+    try {
+      const removed = await this.ideaService.removeSeedIdeas(this.currentUser);
+      const result = await this.ideaService.seedInitialIdeas(IDEA_SEED_DATA, this.currentUser);
+      this.seedResult = result;
+      this.toast.success(`Re-seeded: removed ${removed}, inserted ${result.inserted}, skipped ${result.skipped}`);
+    } catch (e) {
+      console.error('Re-seed failed', e);
+      this.toast.error('Re-seed failed');
+    } finally {
+      this.reSeeding = false;
     }
   }
 

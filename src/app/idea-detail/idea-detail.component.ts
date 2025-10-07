@@ -11,6 +11,7 @@ import { ModeratorService } from '../services/moderator.service';
 import { BookmarkService } from '../services/bookmark.service';
 import { ToastService } from '../services/toast.service';
 import { AnalyticsService } from '../services/analytics.service';
+import { SeoService } from '../services/seo.service';
 
 @Component({
   selector: 'app-idea-detail',
@@ -30,6 +31,7 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
   private toastService = inject(ToastService);
   private destroy$ = new Subject<void>();
   private analytics = inject(AnalyticsService);
+  private seo = inject(SeoService);
 
   ideaId = '';
   idea: Idea | null = null;
@@ -48,6 +50,11 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
     docData(ref).subscribe((data: any) => {
       if (data) {
         this.idea = { id: this.ideaId, ...(data as Idea) };
+        // Generate SEO tags once the idea is loaded
+        this.seo.generateTags({
+          title: this.idea.title,
+          description: this.idea.problem, // Use the 'problem' as the description
+        });
       }
     });
     this.comments$ = this.commentsService.listForIdea(this.ideaId, 100);
@@ -60,7 +67,12 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() { this.destroy$.next(); this.destroy$.complete(); }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+    // Optional: Reset tags when leaving the page
+    this.seo.generateTags({});
+  }
 
   async submitComment(user: User | null) {
     if (!user || !this.ideaId) return;

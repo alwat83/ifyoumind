@@ -11,6 +11,7 @@ import { ConfettiService } from '../services/confetti.service';
 import { ToastService } from '../services/toast.service';
 import { Observable, of } from 'rxjs';
 import { Auth, User, user } from '@angular/fire/auth';
+import { SeoService } from '../services/seo.service';
 
 // Idea interface is now imported from the service
 
@@ -43,16 +44,26 @@ export class IdeaListComponent implements OnDestroy {
   private toastService: ToastService = inject(ToastService);
   private bookmarkService: BookmarkService = inject(BookmarkService);
   private analytics: AnalyticsService = inject(AnalyticsService);
+  private seo = inject(SeoService);
   bookmarkedIds: Set<string> = new Set();
 
   constructor() {
     this.currentUser$ = user(this.auth);
+    this.seo.generateTags({
+      title: 'ifyoumind | Share Your Ideas',
+      description: 'A community-driven platform to share, discover, and discuss new and innovative ideas for startups, projects, and more.'
+    });
     this.applyFeedSource();
     // Setup intersection observer for infinite scroll
     setTimeout(() => this.initObserver(), 0);
   }
 
-  ngOnDestroy() { this.destroy$.next(); this.destroy$.complete(); this.observer?.disconnect(); }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.observer?.disconnect();
+    this.seo.generateTags({}); // Reset tags when leaving
+  }
 
   applyFeedSource() {
     if (this.searchTerm?.trim()) {
@@ -80,10 +91,10 @@ export class IdeaListComponent implements OnDestroy {
       this.loadNextPage();
     } else {
       this.applyFeedSource();
-      this.bookmarkService.list().subscribe(ids => {
-        this.bookmarkedIds = new Set(ids);
-      });
     }
+    this.bookmarkService.list().subscribe(ids => {
+      this.bookmarkedIds = new Set(ids);
+    });
   }
 
   private resetPaged() {

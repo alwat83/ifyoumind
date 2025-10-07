@@ -8,6 +8,7 @@ import { UserService } from '../services/user.service';
 import { IdeaService } from '../services/idea.service';
 import { IDEA_SEED_DATA } from '../services/idea.seed';
 import { ToastService } from '../services/toast.service';
+import { SeoService } from '../services/seo.service';
 
 @Component({
   selector: 'app-profile',
@@ -23,6 +24,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private ideaService: IdeaService = inject(IdeaService);
   private toast: ToastService = inject(ToastService);
   private destroy$ = new Subject<void>();
+  private seo = inject(SeoService);
 
   currentUser$: Observable<User | null>;
   currentUser: User | null = null;
@@ -66,6 +68,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.seo.generateTags({ title: 'Your Profile' }); // Set SEO tags for the profile page
     this.currentUser$
       .pipe(takeUntil(this.destroy$))
       .subscribe(user => {
@@ -111,6 +114,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
       console.warn('Failed to read admin claim', err);
       this.isAdmin = false;
     }
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.seo.generateTags({}); // Reset tags on destroy
   }
 
   async seedIdeas() {
@@ -190,13 +199,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       console.warn('Auto-seed failed (non-fatal)', e);
     }
   }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-
 
   startEditing() {
     this.editForm.username = this.username;

@@ -42,8 +42,7 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/ngx-joyride/styles/joyride-default-theme.scss"
+              "src/styles.scss"
             ],
             "scripts": []
           },

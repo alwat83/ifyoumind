@@ -1,0 +1,6 @@
+# Allow all web crawlers to access all content
+User-agent: *
+Allow: /
+
+# Point crawlers to the sitemap
+Sitemap: https://ifyoumind.com/sitemap.xml

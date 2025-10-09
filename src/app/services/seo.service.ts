@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, Renderer2, RendererFactory2 } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,18 @@ export class SeoService {
   private readonly appDescription = 'A platform for sharing, discovering, and discussing innovative ideas.';
   private readonly appImage = 'https://ifyoumind.com/image.png'; // Default share image
   private readonly siteUrl = 'https://ifyoumind.com';
+  private renderer: Renderer2;
+  private structuredDataScript: HTMLElement | null = null;
 
   constructor(
     private title: Title,
     private meta: Meta,
-    private router: Router
-  ) { }
+    private router: Router,
+    private rendererFactory: RendererFactory2,
+    @Inject(DOCUMENT) private document: Document
+  ) {
+    this.renderer = rendererFactory.createRenderer(null, null);
+  }
 
   generateTags({
     title = '',
@@ -50,6 +57,26 @@ export class SeoService {
     this.meta.updateTag({ name: 'twitter:title', content: pageTitle });
     this.meta.updateTag({ name: 'twitter:description', content: pageDescription });
     this.meta.updateTag({ name: 'twitter:image', content: pageImage });
+  }
+
+  setStructuredData(data: object) {
+    this.removeStructuredData(); // Remove any existing script
+    try {
+      const script = this.renderer.createElement('script');
+      script.type = 'application/ld+json';
+      script.text = JSON.stringify(data);
+      this.renderer.appendChild(this.document.head, script);
+      this.structuredDataScript = script;
+    } catch (e) {
+      console.error('Error creating structured data script', e);
+    }
+  }
+
+  removeStructuredData() {
+    if (this.structuredDataScript) {
+      this.renderer.removeChild(this.document.head, this.structuredDataScript);
+      this.structuredDataScript = null;
+    }
   }
 
   // You can add methods for specific pages here if needed

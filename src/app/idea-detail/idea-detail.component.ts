@@ -55,6 +55,7 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
           title: this.idea.title,
           description: this.idea.problem, // Use the 'problem' as the description
         });
+        this.setIdeaStructuredData(this.idea);
       }
     });
     this.comments$ = this.commentsService.listForIdea(this.ideaId, 100);
@@ -72,6 +73,43 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
     // Optional: Reset tags when leaving the page
     this.seo.generateTags({});
+    this.seo.removeStructuredData();
+  }
+
+  private setIdeaStructuredData(idea: Idea) {
+    if (!idea) return;
+
+    const url = `https://ifyoumind.com/idea/${idea.id}`;
+    // Handle both Date and Firestore Timestamp for createdAt
+    const datePublished = idea.createdAt instanceof Date
+      ? idea.createdAt.toISOString()
+      : (idea.createdAt as any)?.toDate?.().toISOString() || new Date().toISOString();
+
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'TechArticle',
+      'mainEntityOfPage': {
+        '@type': 'WebPage',
+        '@id': url
+      },
+      'headline': idea.title,
+      'datePublished': datePublished,
+      'author': {
+        '@type': 'Person',
+        'name': idea.authorName || 'Anonymous'
+      },
+      'publisher': {
+        '@type': 'Organization',
+        'name': 'ifYouMind',
+        'logo': {
+          '@type': 'ImageObject',
+          'url': 'https://ifyoumind.com/image.png'
+        }
+      },
+      'description': idea.problem,
+      'articleBody': idea.solution
+    };
+    this.seo.setStructuredData(structuredData);
   }
 
   async submitComment(user: User | null) {

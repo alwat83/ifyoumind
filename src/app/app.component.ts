@@ -12,10 +12,12 @@ import { UserService } from './services/user.service';
 import { filter, switchMap, take } from 'rxjs';
 import { ChecklistComponent } from './components/checklist/checklist.component';
 
+import { BackToTopComponent } from './components/back-to-top/back-to-top.component';
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, CommonModule, ToastComponent, FabComponent, IdeaWizardComponent, ChecklistComponent],
+  imports: [RouterOutlet, RouterModule, CommonModule, ToastComponent, FabComponent, IdeaWizardComponent, ChecklistComponent, BackToTopComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -34,8 +36,15 @@ export class AppComponent {
   @ViewChildren('aboutItem') aboutItems?: QueryList<ElementRef<HTMLAnchorElement>>;
   private aboutCloseHoverTimeout: any;
 
+  showVerificationBanner = false;
+
   constructor() {
     this.user$ = user(this.auth);
+    this.user$.subscribe(user => {
+      if (user) {
+        this.showVerificationBanner = !user.emailVerified;
+      }
+    });
     this.checkAndStartTour();
   }
 

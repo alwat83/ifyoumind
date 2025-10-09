@@ -226,6 +226,44 @@
               </button>
             </div>
           </form>
+        <!-- Your Activity -->
+        <div class="card-elevated">
+          <h2 class="heading-2 mb-6 gradient-text">Your Activity</h2>
+          <div class="tabs">
+            <button class="tab" [class.active]="activeTab === 'submitted'" (click)="activeTab = 'submitted'">My Ideas</button>
+            <button class="tab" [class.active]="activeTab === 'upvoted'" (click)="activeTab = 'upvoted'">Upvoted</button>
+          </div>
+          <div *ngIf="activeTab === 'submitted'">
+            <div *ngIf="(submittedIdeas$ | async) as ideas; else loadingIdeas">
+              <div *ngIf="ideas.length > 0; else noSubmittedIdeas">
+                <div *ngFor="let idea of ideas">
+                  <app-idea-card [idea]="idea"></app-idea-card>
+                </div>
+              </div>
+              <ng-template #noSubmittedIdeas>
+                <p class="text-subtle body-medium">You haven't submitted any ideas yet.</p>
+              </ng-template>
+            </div>
+          </div>
+          <div *ngIf="activeTab === 'upvoted'">
+            <div *ngIf="(upvotedIdeas$ | async) as ideas; else loadingIdeas">
+              <div *ngIf="ideas.length > 0; else noUpvotedIdeas">
+                <div *ngFor="let idea of ideas">
+                  <app-idea-card [idea]="idea"></app-idea-card>
+                </div>
+              </div>
+              <ng-template #noUpvotedIdeas>
+                <p class="text-subtle body-medium">You haven't upvoted any ideas yet.</p>
+              </ng-template>
+            </div>
+          </div>
+          <ng-template #loadingIdeas>
+            <div class="space-y-4">
+              <div class="h-8 w-full shimmer-bg rounded"></div>
+              <div class="h-8 w-full shimmer-bg rounded"></div>
+              <div class="h-8 w-full shimmer-bg rounded"></div>
+            </div>
+          </ng-template>
         </div>
       </div>
     </div>

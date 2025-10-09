@@ -13,19 +13,18 @@ export const onboardingGuard: CanActivateFn = (route, state) => {
     first(), // take the first emission and complete
     switchMap(user => {
       if (!user) {
-        // If no user is logged in, allow access to public pages
-        // but redirect from protected routes to login.
-        // This guard assumes it's placed on routes that require auth.
-        return of(router.parseUrl('/')); // or to a login page
+        return of(true); // Allow access for non-logged-in users
       }
       // User is logged in, check their onboarding status
       return userService.getUserProfile(user.uid).pipe(
         map(profile => {
           if (profile?.hasCompletedOnboarding) {
-            // User has completed onboarding, allow access
-            return true;
+            return true; // User has completed onboarding, allow access
           } else {
             // User has not completed onboarding, redirect to the wizard
+            if (state.url === '/onboarding') {
+              return true;
+            }
             return router.parseUrl('/onboarding');
           }
         })

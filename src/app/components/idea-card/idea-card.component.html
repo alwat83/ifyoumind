@@ -1,0 +1,77 @@
+<div class="card-elevated group animate-scale-in block card-link relative overflow-hidden" (click)="navigateToIdea()">
+  <!-- Subtle gradient overlay -->
+  <div class="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-br from-blue-500/10 via-transparent to-purple-600/10"></div>
+  <!-- Trending Badge -->
+  <div *ngIf="getTrendingBadge(idea)"
+       class="absolute top-3 right-3 text-2xl z-10 animate-pulse drop-shadow">
+    {{ getTrendingBadge(idea) }}
+  </div>
+
+  <!-- Category Badge -->
+  <div class="absolute top-3 left-3 text-lg z-10">
+    {{ getCategoryIcon(idea.category) }}
+  </div>
+
+  <!-- Author Info -->
+  <div class="flex items-center space-x-3 mb-5">
+    <div class="avatar-modern shadow">
+      {{ (idea.authorName || '').charAt(0) || '?' }}
+    </div>
+    <div>
+      <h3 class="font-semibold leading-tight">{{ idea.authorName || 'Anonymous' }}</h3>
+        <p class="body-small text-dim">{{ formatDate(idea.createdAt) }}</p>
+    </div>
+  </div>
+
+  <!-- Problem Section -->
+  <div class="mb-4">
+    <div class="flex items-center space-x-2 mb-2">
+      <span class="text-red-400">🚨</span>
+      <h4 class="font-semibold text-white">Problem</h4>
+    </div>
+    <p class="body-medium text-subtle leading-relaxed clamp-4">{{ idea.problem }}</p>
+  </div>
+
+  <!-- Solution Section -->
+  <div class="mb-4">
+    <div class="flex items-center space-x-2 mb-2">
+      <span class="text-blue-400">💡</span>
+      <h4 class="font-semibold text-white">Solution</h4>
+    </div>
+    <p class="body-medium text-subtle leading-relaxed clamp-4">{{ idea.solution }}</p>
+  </div>
+
+  <!-- Impact Section -->
+  <div class="mb-5">
+    <div class="flex items-center space-x-2 mb-2">
+      <span class="text-green-400">🌍</span>
+      <h4 class="font-semibold text-white">Impact</h4>
+    </div>
+    <p class="body-medium text-subtle leading-relaxed clamp-4">{{ idea.impact }}</p>
+  </div>
+
+  <!-- Action Bar -->
+  <div class="flex items-center justify-between pt-5 mt-2 divider-subtle">
+    <div class="flex items-center space-x-4">
+<button *ngIf="currentUser$ | async as user"
+  (click)="upvoteIdea(idea, user, $event)"
+  [class]="(hasUpvoted(idea, user) ? 'upvoted-button' : 'upvote-button') + ' hover-scale-sm focus-ring px-4 py-2 rounded-full flex items-center space-x-2'"
+              [attr.aria-label]="hasUpvoted(idea, user) ? 'Remove upvote' : 'Upvote idea'">
+        <span class="text-lg">{{ hasUpvoted(idea, user) ? '❤️' : '🤍' }}</span>
+        <span class="font-semibold">{{ idea.upvotes || 0 }}</span>
+      </button>
+      <button class="flex items-center space-x-2 px-4 py-2 btn-ghost hover-scale-sm rounded-full" aria-label="Comment on idea">
+        <span class="text-lg">💬</span>
+        <span class="body-small text-neutral-300">Comment</span>
+      </button>
+                    <button *ngIf="currentUser$ | async" (click)="toggleBookmark(idea, $event)" class="flex items-center space-x-2 px-4 py-2 btn-ghost hover-scale-sm rounded-full" [attr.aria-label]="isBookmarked ? 'Remove bookmark' : 'Bookmark idea'">                        <span class="text-lg">{{ isBookmarked ? '🔖' : '📑' }}</span>
+                        <span class="body-small text-neutral-300">{{ isBookmarked ? 'Saved' : 'Save' }}</span>      </button>
+    </div>
+    <button
+      (click)="shareIdea(idea)"
+      class="p-3 btn-ghost rounded-full hover-scale-sm group"
+      aria-label="Share idea">
+      <span class="text-lg group-hover:scale-110 transition-transform">📤</span>
+    </button>
+  </div>
+</div>

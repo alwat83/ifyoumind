@@ -52,8 +52,8 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
         this.idea = { id: this.ideaId, ...(data as Idea) };
         // Generate SEO tags once the idea is loaded
         this.seo.generateTags({
-          title: this.idea.title,
-          description: this.idea.problem, // Use the 'problem' as the description
+          title: this.idea.title || 'Idea',
+          description: this.idea.solution || 'An idea from ifYouMind',
         });
         this.setIdeaStructuredData(this.idea);
       }

@@ -20,6 +20,17 @@
   transition: all 0.3s ease-in-out;
 }
 
+.video-placeholder {
+  background-color: #4b5563;
+  color: #ffffff;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    border-color: #4f46e5;
+    color: #e0e7ff;
+  }
+}
+
 .step-content {
   animation: fadeIn 0.5s ease-in-out;
 }
@@ -52,7 +63,7 @@
   &.selected {
     border-color: #4f46e5; // Indigo
     background-color: #e0e7ff;
-    color: #3730a3;
+    color: #312e81;
     font-weight: 600;
   }
 }
@@ -91,7 +102,7 @@
 
 .btn-secondary {
   background-color: #e5e7eb;
-  color: #374151;
+  color: #1f2937;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-weight: 600;

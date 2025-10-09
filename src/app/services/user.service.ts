@@ -65,6 +65,19 @@ export class UserService {
   private auth: Auth = inject(Auth);
 
   /**
+   * Create user profile in Firestore
+   */
+  createUserProfile(userId: string, profile: Partial<UserProfile>): Observable<void> {
+    const userDoc = doc(this.firestore, 'users', userId);
+    const profileData = {
+      ...profile,
+      createdAt: new Date()
+    };
+    
+    return from(setDoc(userDoc, profileData));
+  }
+
+  /**
    * Get user profile from Firestore
    */
   getUserProfile(userId: string): Observable<UserProfile | null> {

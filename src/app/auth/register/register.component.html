@@ -1,0 +1,59 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-900">
+  <div class="w-full max-w-md p-8 space-y-6 bg-gray-800 rounded-lg shadow-lg">
+    <h1 class="text-3xl font-bold text-center text-white">Create an Account</h1>
+    <form (ngSubmit)="register()" #registerForm="ngForm" class="space-y-6">
+      <div>
+        <label for="displayName" class="block text-sm font-medium text-gray-300">Display Name</label>
+        <input id="displayName" name="displayName" type="text" required [(ngModel)]="displayName" #name="ngModel"
+               class="w-full px-3 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="mt-1 text-sm text-red-400">
+          Display name is required.
+        </div>
+      </div>
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-300">Username</label>
+        <input id="username" name="username" type="text" required [(ngModel)]="username" #usernameField="ngModel"
+               class="w-full px-3 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <div *ngIf="usernameField.invalid && (usernameField.dirty || usernameField.touched)" class="mt-1 text-sm text-red-400">
+          Username is required.
+        </div>
+      </div>
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-300">Email Address</label>
+        <input id="email" name="email" type="email" required email [(ngModel)]="email" #emailField="ngModel"
+               class="w-full px-3 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <div *ngIf="emailField.invalid && (emailField.dirty || emailField.touched)" class="mt-1 text-sm text-red-400">
+          Please enter a valid email.
+        </div>
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+        <input id="password" name="password" type="password" required minlength="6" [(ngModel)]="password" #passwordField="ngModel"
+               class="w-full px-3 py-2 mt-1 text-white bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <div *ngIf="passwordField.invalid && (passwordField.dirty || passwordField.touched)" class="mt-1 text-sm text-red-400">
+          Password must be at least 6 characters long.
+        </div>
+      </div>
+      <div class="flex items-center">
+        <input id="ageVerification" name="ageVerification" type="checkbox" required [(ngModel)]="ageVerification" #ageField="ngModel"
+               class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500">
+        <label for="ageVerification" class="ml-2 block text-sm text-gray-300">
+          I confirm that I am over 14 years old.
+        </label>
+      </div>
+      <div *ngIf="ageField.invalid && (ageField.dirty || ageField.touched)" class="mt-1 text-sm text-red-400">
+        You must be over 14 to register.
+      </div>
+      <button type="submit" [disabled]="registerForm.invalid"
+              class="w-full py-2 px-4 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed">
+        Register
+      </button>
+    </form>
+    <div *ngIf="errorMessage" class="mt-4 text-center text-red-400">
+      {{ errorMessage }}
+    </div>
+    <div class="text-center text-gray-400">
+      Already have an account? <a routerLink="/" class="font-medium text-blue-400 hover:underline">Log in</a>
+    </div>
+  </div>
+</div>

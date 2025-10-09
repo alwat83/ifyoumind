@@ -90,16 +90,20 @@
             </button>
           </div>
 
-          <!-- Login Button -->
-          <button *ngIf="(user$ | async) === null" 
-                  (click)="login()" 
-                  class="btn-primary text-sm">
-            Sign In
-          </button>
+          <!-- Login Buttons -->
+          <div *ngIf="(user$ | async) === null" class="flex items-center space-x-2">
+            <a routerLink="/login" class="btn-primary text-sm">Sign In</a>
+            <a routerLink="/register" class="btn-secondary text-sm">Register</a>
+          </div>
         </div>
       </div>
     </div>
   </header>
+
+  <!-- Email Verification Banner -->
+  <div *ngIf="showVerificationBanner" class="bg-yellow-500 text-white text-center p-2">
+    Your email is not verified. <a routerLink="/verify-email" class="underline">Resend verification email</a>.
+  </div>
 
   <!-- Main Content -->
   <main class="relative z-10">
@@ -120,5 +124,6 @@
 
     <!-- Onboarding Checklist -->
     <app-checklist></app-checklist>
+    <app-back-to-top></app-back-to-top>
   </main>
 </div>

@@ -10,10 +10,12 @@ import { IDEA_SEED_DATA } from '../services/idea.seed';
 import { ToastService } from '../services/toast.service';
 import { SeoService } from '../services/seo.service';
 
+import { IdeaCardComponent } from '../components/idea-card/idea-card.component';
+
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, IdeaCardComponent],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
@@ -63,6 +65,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     bio: ''
   };
 
+  submittedIdeas$: Observable<any[]> = new Observable();
+  upvotedIdeas$: Observable<any[]> = new Observable();
+
+  activeTab = 'submitted';
+
   constructor() {
     this.currentUser$ = user(this.auth);
   }
@@ -74,6 +81,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .subscribe(user => {
         this.currentUser = user;
         if (user) {
+          this.submittedIdeas$ = this.ideaService.getUserIdeas(user.uid);
+          this.upvotedIdeas$ = this.ideaService.getUpvotedIdeasByUser(user.uid);
+
           // Check for custom admin claim
           this.checkAdmin(user);
           // Attempt auto-seed once (admin only) if collection empty

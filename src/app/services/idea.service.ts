@@ -123,16 +123,26 @@ export class IdeaService {
     return collectionData(categoryQuery, { idField: 'id' }) as Observable<Idea[]>;
   }
 
-  // Get user's ideas
+  // Get user's submitted ideas
   getUserIdeas(userId: string): Observable<Idea[]> {
     const ideaCollection = collection(this.firestore, 'ideas');
     const userQuery = query(
       ideaCollection,
       where('authorId', '==', userId),
-      where('isPublic','==', true),
       orderBy('createdAt', 'desc')
     );
     return collectionData(userQuery, { idField: 'id' }) as Observable<Idea[]>;
+  }
+
+  // Get user's upvoted ideas
+  getUpvotedIdeasByUser(userId: string): Observable<Idea[]> {
+    const ideaCollection = collection(this.firestore, 'ideas');
+    const upvotedQuery = query(
+      ideaCollection,
+      where('upvotedBy', 'array-contains', userId),
+      orderBy('createdAt', 'desc')
+    );
+    return collectionData(upvotedQuery, { idField: 'id' }) as Observable<Idea[]>;
   }
 
   // Search ideas by text (problem, solution, impact)

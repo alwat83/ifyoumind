@@ -36,6 +36,13 @@ export interface UserProfile {
   isPublic?: boolean;
   totalIdeas?: number;
   totalUpvotes?: number;
+  totalComments?: number;
+  // Onboarding fields
+  hasCompletedOnboarding?: boolean;
+  interests?: string[];
+  badges?: string[];
+  hasSeenPlatformTour?: boolean;
+  hasDismissedChecklist?: boolean;
 }
 
 export interface UploadProgress {
@@ -269,9 +276,21 @@ export class UserService {
   /**
    * Update user statistics
    */
-  updateUserStats(userId: string, stats: { totalIdeas?: number; totalUpvotes?: number }): Observable<void> {
+  updateUserStats(userId: string, stats: { totalIdeas?: number; totalUpvotes?: number, totalComments?: number }): Observable<void> {
     const userDoc = doc(this.firestore, 'users', userId);
-    return from(updateDoc(userDoc, stats));
+    
+    const updateData: { [key: string]: any } = {};
+    if (stats.totalIdeas) {
+      updateData['totalIdeas'] = increment(stats.totalIdeas);
+    }
+    if (stats.totalUpvotes) {
+      updateData['totalUpvotes'] = increment(stats.totalUpvotes);
+    }
+    if (stats.totalComments) {
+      updateData['totalComments'] = increment(stats.totalComments);
+    }
+
+    return from(updateDoc(userDoc, updateData));
   }
 
   /**
@@ -305,7 +324,14 @@ export class UserService {
       lastLogin: new Date(),
       isPublic: true,
       totalIdeas: 0,
-      totalUpvotes: 0
+      totalUpvotes: 0,
+      totalComments: 0,
+      // Initialize onboarding fields
+      hasCompletedOnboarding: false,
+      interests: [],
+      badges: [],
+      hasSeenPlatformTour: false,
+      hasDismissedChecklist: false
     };
 
     return this.saveUserProfile(user.uid, profileData);

@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, addDoc, query, where, orderBy, limit, collectionData, serverTimestamp, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
+import { UserService } from './user.service';
 
 export interface Comment {
   id?: string;
@@ -15,6 +16,7 @@ export interface Comment {
 @Injectable({ providedIn: 'root' })
 export class CommentsService {
   private firestore = inject(Firestore);
+  private userService = inject(UserService);
 
   listForIdea(ideaId: string, limitCount = 50): Observable<Comment[]> {
     const ref = collection(this.firestore, 'comments');
@@ -23,6 +25,7 @@ export class CommentsService {
   }
 
   add(ideaId: string, content: string, authorId: string, authorName: string) {
+    this.userService.updateUserStats(authorId, { totalComments: 1 });
     return addDoc(collection(this.firestore, 'comments'), {
       ideaId,
       content,

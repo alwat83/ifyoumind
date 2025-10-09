@@ -193,6 +193,12 @@ export class IdeaService {
   async upvoteIdea(ideaId: string): Promise<{ upvoted: boolean; upvotes: number } | void> {
     const callable = httpsCallable<{ ideaId: string }, { upvoted: boolean; upvotes: number }>(this.functions, 'toggleUpvote');
     const res = await callable({ ideaId });
+    if (res.data.upvoted) {
+      const userId = this.auth.currentUser?.uid;
+      if (userId) {
+        this.userService.updateUserStats(userId, { totalUpvotes: 1 });
+      }
+    }
     return res.data;
   }
 

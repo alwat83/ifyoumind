@@ -1,0 +1,30 @@
+<div class="checklist-container" *ngIf="showChecklist">
+  <div class="checklist-header">
+    <h3>Welcome to the Community!</h3>
+    <p>Complete these tasks to get started and earn your first badge.</p>
+    <button (click)="dismiss()" class="dismiss-btn">&times;</button>
+  </div>
+  <ul class="task-list">
+    <li [class.completed]="taskStatus.submitIdea">
+      <span class="task-icon">✨</span>
+      <span class="task-text">Submit your first idea</span>
+    </li>
+    <li [class.completed]="taskStatus.comment">
+      <span class="task-icon">💬</span>
+      <span class="task-text">Comment on an idea</span>
+    </li>
+    <li [class.completed]="taskStatus.upvote">
+      <span class="task-icon">👍</span>
+      <span class="task-text">Upvote an idea</span>
+    </li>
+  </ul>
+  <div class="badge-progress" *ngIf="!badgeAwarded">
+    <div class="progress-bar">
+      <div class="progress" [style.width.%]="progress"></div>
+    </div>
+    <p>{{ completedTasks }} of {{ totalTasks }} tasks completed</p>
+  </div>
+  <div class="badge-awarded" *ngIf="badgeAwarded">
+    <p>🎉 Badge Unlocked: Pioneer!</p>
+  </div>
+</div>

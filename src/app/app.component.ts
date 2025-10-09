@@ -7,11 +7,15 @@ import { ToastComponent } from './components/toast/toast.component';
 import { FabComponent } from './components/fab/fab.component';
 import { IdeaWizardComponent } from './components/idea-wizard/idea-wizard.component';
 import { ThemeService } from './services/theme.service';
+import { TourService } from './services/tour.service';
+import { UserService } from './services/user.service';
+import { filter, switchMap, take } from 'rxjs';
+import { ChecklistComponent } from './components/checklist/checklist.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, CommonModule, ToastComponent, FabComponent, IdeaWizardComponent],
+  imports: [RouterOutlet, RouterModule, CommonModule, ToastComponent, FabComponent, IdeaWizardComponent, ChecklistComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
@@ -21,6 +25,8 @@ export class AppComponent {
   user$: Observable<User | null>;
   showIdeaWizard = false;
   themeService = inject(ThemeService);
+  tourService = inject(TourService);
+  userService = inject(UserService);
   aboutOpen = false;
   // Menu element refs for accessible navigation
   @ViewChild('aboutMenuPanel') aboutMenuPanel?: ElementRef<HTMLElement>;
@@ -30,6 +36,19 @@ export class AppComponent {
 
   constructor() {
     this.user$ = user(this.auth);
+    this.checkAndStartTour();
+  }
+
+  private checkAndStartTour(): void {
+    this.user$.pipe(
+      filter(user => !!user), // Proceed only if the user is logged in
+      switchMap(user => this.userService.getUserProfile(user!.uid)),
+      filter(profile => !!profile && !profile.hasSeenPlatformTour), // Proceed only if we have a profile and the tour hasn't been seen
+      take(1) // Ensure this subscription runs only once
+    ).subscribe(() => {
+      // Use a timeout to ensure the view is initialized before starting the tour
+      setTimeout(() => this.tourService.startTour(), 500);
+    });
   }
 
   login() {

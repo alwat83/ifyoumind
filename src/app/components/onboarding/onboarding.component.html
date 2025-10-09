@@ -1,0 +1,53 @@
+<div class="onboarding-container">
+  <div class="onboarding-card">
+    <!-- Step 1: Welcome -->
+    <div *ngIf="currentStep === 1" class="step-content">
+      <h1 class="text-3xl font-bold mb-4">Welcome to ifYouMind</h1>
+      <p class="text-lg mb-6">A space where ideas grow together. Ready to turn sparks into real-world impact?</p>
+      <!-- Placeholder for intro video -->
+      <div class="video-placeholder bg-gray-200 w-full h-64 rounded-lg mb-6 flex items-center justify-center">
+        <p class="text-gray-500">Intro Video Coming Soon</p>
+      </div>
+      <button (click)="nextStep()" class="btn-primary w-full">Get Started</button>
+    </div>
+
+    <!-- Step 2: Personalize -->
+    <div *ngIf="currentStep === 2" class="step-content">
+      <h2 class="text-2xl font-bold mb-4">What kind of ideas excite you most?</h2>
+      <p class="text-md mb-6 text-gray-600">Select a few interests to help us tailor your experience.</p>
+      <div class="interests-grid">
+        <div *ngFor="let interest of interests" 
+             class="interest-item"
+             [class.selected]="interest.selected"
+             (click)="interest.selected = !interest.selected">
+          {{ interest.name }}
+        </div>
+      </div>
+      <div class="navigation-buttons mt-8 flex justify-between">
+        <button (click)="previousStep()" class="btn-secondary">Back</button>
+        <button (click)="nextStep()" class="btn-primary">Next</button>
+      </div>
+    </div>
+
+    <!-- Step 3: First Action -->
+    <div *ngIf="currentStep === 3" class="step-content text-center">
+      <h2 class="text-2xl font-bold mb-4">You're all set!</h2>
+      <p class="text-lg mb-8">What would you like to do first?</p>
+      <div class="action-buttons space-y-4">
+        <a routerLink="/submit" (click)="finishOnboarding()" class="btn-primary w-full block text-center">
+          Share Your First Idea
+        </a>
+        <a routerLink="/" (click)="finishOnboarding()" class="btn-secondary w-full block text-center">
+          Explore Ideas
+        </a>
+      </div>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-dots mt-8 flex justify-center space-x-2">
+      <span class="dot" [class.active]="currentStep === 1"></span>
+      <span class="dot" [class.active]="currentStep === 2"></span>
+      <span class="dot" [class.active]="currentStep === 3"></span>
+    </div>
+  </div>
+</div>

@@ -22,7 +22,7 @@
         </a>
 
         <!-- Navigation -->
-        <div class="flex items-center space-x-4 relative">
+        <div class="flex items-center space-x-4 relative" joyrideStep="step1" title="Welcome to ifYouMind!" text="This is the main navigation bar. You can find everything you need to get around the site right here.">
           <!-- About submenu (accessible, click-to-toggle, outside click closable) -->
           <div class="relative" #aboutMenuContainer>
             <button type="button"
@@ -64,13 +64,16 @@
           </button>
           <!-- Submit Button -->
           <a routerLink="/submit" 
-             class="btn-primary flex items-center space-x-2 text-sm">
+             class="btn-primary flex items-center space-x-2 text-sm"
+             joyrideStep="step2"
+             title="Submit Your Ideas"
+             text="Have a great idea? Click here to share it with the world!">
             <span>✨</span>
             <span class="hidden sm:inline">Submit Idea</span>
           </a>
 
           <!-- User Menu -->
-          <div *ngIf="user$ | async as user" class="flex items-center space-x-3">
+          <div *ngIf="user$ | async as user" class="flex items-center space-x-3" joyrideStep="step3" title="Your Profile" text="Manage your profile, view your ideas, and see your stats.">
             <!-- Profile Link -->
             <a routerLink="/profile" 
                class="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors">
@@ -103,7 +106,7 @@
     <!-- Toast notifications -->
     <app-toast></app-toast>
     
-    <router-outlet></router-outlet>
+    <router-outlet joyrideStep="step4" title="Main Content" text="This is where the magic happens! Browse ideas, comment, and vote on your favorites."></router-outlet>
     
     <!-- Floating Action Button for Quick Idea Submission -->
     <app-fab *ngIf="user$ | async" (quickSubmit)="onQuickSubmit()"></app-fab>
@@ -114,5 +117,8 @@
       (ideaSubmitted)="onIdeaSubmitted()" 
       (wizardClosed)="onWizardClosed()">
     </app-idea-wizard>
+
+    <!-- Onboarding Checklist -->
+    <app-checklist></app-checklist>
   </main>
 </div>

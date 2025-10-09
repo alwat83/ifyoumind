@@ -836,4 +836,4 @@ body { font-size: clamp(15px, 0.9vw + 0.5rem, 18px); }
 @keyframes shimmer { 100% { transform: translateX(100%); } }
 
 /* You can add global styles to this file, and also import other style files */
-@import 'node_modules/ngx-joyride/styles/joyride-default-theme.scss';
+@import '~ngx-joyride/styles/joyride-default-theme.scss';

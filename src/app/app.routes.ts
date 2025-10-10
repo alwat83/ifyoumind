@@ -9,6 +9,8 @@ import { RegisterComponent } from './auth/register/register.component';
 import { AboutPageComponent } from './pages/about/about-page.component';
 import { MissionPageComponent } from './pages/mission/mission-page.component';
 import { FaqPageComponent } from './pages/faq/faq-page.component';
+import { TagListComponent } from './pages/tag-list/tag-list.component';
+import { NewbieIdeasComponent } from './newbie-ideas/newbie-ideas.component';
 
 import { VerifyEmailComponent } from './auth/verify-email/verify-email.component';
 
@@ -26,4 +28,7 @@ export const routes: Routes = [
   { path: 'about', component: AboutPageComponent },
   { path: 'mission', component: MissionPageComponent },
   { path: 'faq', component: FaqPageComponent },
+  { path: 'tags', component: TagListComponent },
+  { path: 't', redirectTo: '/tags', pathMatch: 'full' },
+  { path: 'newbie-ideas', component: NewbieIdeasComponent },
 ];

@@ -33,6 +33,7 @@ export class IdeaSubmitComponent implements OnInit, OnDestroy {
   ];
   isSubmitting = false;
   showSuccess = false;
+  isHelpOpen = false;
 
   auth: Auth = inject(Auth);
   router: Router = inject(Router);
@@ -45,6 +46,10 @@ export class IdeaSubmitComponent implements OnInit, OnDestroy {
 
   constructor() {
     this.user$ = user(this.auth);
+  }
+
+  toggleHelp() {
+    this.isHelpOpen = !this.isHelpOpen;
   }
 
   private draftKey = 'idea_draft_v1';

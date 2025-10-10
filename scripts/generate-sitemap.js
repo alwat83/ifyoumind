@@ -9,14 +9,24 @@ const BASE_URL = 'https://ifyoumind.com';
 // IMPORTANT: Make sure this path is correct and the file is not publicly accessible.
 // You can also use environment variables for better security.
 try {
-  const serviceAccount = require('../serviceAccountKey.json');
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-  });
+  if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount)
+    });
+    console.log('Initialized Firebase Admin with service account from environment variable.');
+  } else {
+    const serviceAccount = require('../serviceAccountKey.json');
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount)
+    });
+    console.log('Initialized Firebase Admin with serviceAccountKey.json file.');
+  }
 } catch (error) {
-  console.error('ERROR: serviceAccountKey.json not found in root directory.');
-  console.log('Please download it from your Firebase project settings and place it in the root of the "ifyoumind" folder.');
-  process.exit(1);
+    console.error('ERROR: Firebase Admin SDK initialization failed.');
+    console.error('Please ensure you have either set the FIREBASE_SERVICE_ACCOUNT environment variable or have a valid serviceAccountKey.json file in the root directory.');
+    console.error('Original error:', error);
+    process.exit(1);
 }
 
 
@@ -33,6 +43,7 @@ async function generateSitemap() {
   urls.add(`${BASE_URL}/about`);
   urls.add(`${BASE_URL}/mission`);
   urls.add(`${BASE_URL}/faq`);
+  urls.add(`${BASE_URL}/newbie-ideas`);
   // Add other static pages if you have them
 
   // 2. Add dynamic routes from Firestore (public ideas)

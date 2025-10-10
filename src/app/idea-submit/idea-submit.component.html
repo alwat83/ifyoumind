@@ -18,6 +18,35 @@
       <p class="body-medium text-neutral-300">Thank you for contributing to a better world!</p>
     </div>
 
+    <!-- Need Help Section -->
+    <div class="mb-8">
+      <div class="card-elevated">
+        <div class="flex items-center justify-between p-4">
+          <h2 class="text-3xl font-bold text-white mb-2">Share Your Idea</h2>
+          <p class="text-neutral-400 mb-8">What if we could change the world with one idea?</p>
+        </div>
+
+        <div class="help-section" [class.open]="isHelpOpen">
+          <button (click)="toggleHelp()" class="help-toggle">
+            <span>Need Help?</span>
+            <span class="chevron">{{ isHelpOpen ? '▲' : '▼' }}</span>
+          </button>
+          <div class="help-content">
+            <h4>Tips for a Great Submission</h4>
+            <ul>
+              <li><strong>Be Specific:</strong> Clearly define the problem you're solving.</li>
+              <li><strong>Be Actionable:</strong> Describe a concrete solution.</li>
+              <li><strong>Be Inspiring:</strong> Explain the positive impact your idea could have.</li>
+            </ul>
+            <h5>Example:</h5>
+            <p><strong>Problem:</strong> "Our city's parks have a lot of litter."</p>
+            <p><strong>Solution:</strong> "Create a volunteer program with monthly park clean-up events."</p>
+            <p><strong>Impact:</strong> "Cleaner parks for everyone to enjoy and a stronger sense of community."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Idea Form -->
     <form (ngSubmit)="addIdea()" 
           class="space-y-8 animate-fade-in-up" 

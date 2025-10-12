@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "deployUrl": "/",
-            "outputPath": "dist/ifyoumind",
+            "outputPath": "dist/ifyoumind-deploy",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],

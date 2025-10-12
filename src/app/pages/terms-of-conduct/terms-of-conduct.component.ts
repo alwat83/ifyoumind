@@ -6,6 +6,7 @@ import { SeoService } from '../../services/seo.service';
   standalone: true,
   imports: [],
   templateUrl: './terms-of-conduct.component.html',
+  styleUrl: './terms-of-conduct.component.scss',
 })
 export class TermsOfConductComponent implements OnInit {
   private seoService = inject(SeoService);

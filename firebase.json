@@ -17,7 +17,7 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": "dist/ifyoumind/browser",
+    "public": "dist/ifyoumind-deploy/browser",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {

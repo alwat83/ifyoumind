@@ -12,14 +12,20 @@ export class ThemeService {
       this.setTheme(saved);
     } else {
       // Prefer system
-      const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+      const prefersLight = window.matchMedia(
+        '(prefers-color-scheme: light)',
+      ).matches;
       this.setTheme(prefersLight ? 'light' : 'dark');
     }
   }
 
-  theme(): Signal<Theme> { return this.currentTheme; }
+  theme(): Signal<Theme> {
+    return this.currentTheme;
+  }
 
-  toggle() { this.setTheme(this.currentTheme() === 'dark' ? 'light' : 'dark'); }
+  toggle() {
+    this.setTheme(this.currentTheme() === 'dark' ? 'light' : 'dark');
+  }
 
   setTheme(theme: Theme) {
     this.currentTheme.set(theme);

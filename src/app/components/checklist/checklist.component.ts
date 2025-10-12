@@ -11,7 +11,7 @@ import { switchMap, tap } from 'rxjs/operators';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './checklist.component.html',
-  styleUrl: './checklist.component.scss'
+  styleUrl: './checklist.component.scss',
 })
 export class ChecklistComponent implements OnInit {
   private auth: Auth = inject(Auth);
@@ -32,17 +32,22 @@ export class ChecklistComponent implements OnInit {
 
   ngOnInit(): void {
     this.profile$ = this.user$.pipe(
-      switchMap(user => user ? this.userService.getUserProfile(user.uid) : of(null)),
-      tap(profile => {
+      switchMap((user) =>
+        user ? this.userService.getUserProfile(user.uid) : of(null),
+      ),
+      tap((profile) => {
         if (profile) {
           this.updateChecklist(profile);
         }
-      })
+      }),
     );
   }
 
   updateChecklist(profile: UserProfile): void {
-    if (profile.hasDismissedChecklist || (profile.badges && profile.badges.includes('Pioneer'))) {
+    if (
+      profile.hasDismissedChecklist ||
+      (profile.badges && profile.badges.includes('Pioneer'))
+    ) {
       this.showChecklist = false;
       return;
     }
@@ -55,7 +60,10 @@ export class ChecklistComponent implements OnInit {
     this.completedTasks = Object.values(this.taskStatus).filter(Boolean).length;
     this.progress = (this.completedTasks / this.totalTasks) * 100;
 
-    if (this.completedTasks === this.totalTasks && (!profile.badges || !profile.badges.includes('Pioneer'))) {
+    if (
+      this.completedTasks === this.totalTasks &&
+      (!profile.badges || !profile.badges.includes('Pioneer'))
+    ) {
       this.awardBadge(profile);
       this.badgeAwarded = true;
     }
@@ -63,14 +71,18 @@ export class ChecklistComponent implements OnInit {
 
   awardBadge(profile: UserProfile): void {
     const currentBadges = profile.badges || [];
-    this.userService.saveUserProfile(profile.id!, { badges: [...currentBadges, 'Pioneer'] }).subscribe();
+    this.userService
+      .saveUserProfile(profile.id!, { badges: [...currentBadges, 'Pioneer'] })
+      .subscribe();
   }
 
   dismiss(): void {
     this.showChecklist = false;
     const userId = this.auth.currentUser?.uid;
     if (userId) {
-      this.userService.saveUserProfile(userId, { hasDismissedChecklist: true }).subscribe();
+      this.userService
+        .saveUserProfile(userId, { hasDismissedChecklist: true })
+        .subscribe();
     }
   }
 }

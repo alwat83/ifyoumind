@@ -1,39 +1,89 @@
 <div class="py-10 app-shell">
   <div>
     <!-- Hero -->
-    <div *ngIf="currentUser$ | async as user" class="hero-wrapper text-center mb-8 animate-fade-in-up">
+    <div
+      *ngIf="currentUser$ | async as user"
+      class="hero-wrapper text-center mb-8 animate-fade-in-up"
+    >
       <h1 class="heading-1 hero-heading mb-4">
-        Welcome back, <span class="gradient-text">{{ user.displayName }}</span>!
+        Welcome back, <span class="gradient-text">{{ user.displayName }}</span
+        >!
       </h1>
       <p class="body-large hero-sub text-neutral-300">
-        Discover amazing ideas that are changing the world. Upvote the ones that inspire you.
+        Discover amazing ideas that are changing the world. Upvote the ones that
+        inspire you.
       </p>
     </div>
 
-  <app-category-filter (categorySelected)="onCategorySelected($event)" class="mb-4"></app-category-filter>
+    <app-category-filter
+      (categorySelected)="onCategorySelected($event)"
+      class="mb-4"
+    ></app-category-filter>
 
-  <!-- Controls (Sticky on large screens) -->
-    <div class="controls-bar flex flex-wrap justify-center items-center gap-3 mb-8 max-w-4xl mx-auto sticky-controls">
-      <button class="btn btn-outline hover-scale-sm" [class.pill-active]="sortMode==='recent'" (click)="sortMode='recent'; applyFeedSource()" aria-label="Sort by most recent ideas">Recent</button>
-      <button class="btn btn-outline hover-scale-sm" [class.pill-active]="sortMode==='trending'" (click)="sortMode='trending'; applyFeedSource()" aria-label="Sort by trending ideas">Trending</button>
-      <input class="input-modern flex-1 min-w-[260px] md:min-w-[320px] lg:min-w-[400px] max-w-lg" placeholder="Search ideas..." [(ngModel)]="searchTerm" (ngModelChange)="applyFeedSource()" />
+    <!-- Controls (Sticky on large screens) -->
+    <div
+      class="controls-bar flex flex-wrap justify-center items-center gap-3 mb-8 max-w-4xl mx-auto sticky-controls"
+    >
+      <button
+        class="btn btn-outline hover-scale-sm"
+        [class.pill-active]="sortMode === 'recent'"
+        (click)="sortMode = 'recent'; applyFeedSource()"
+        aria-label="Sort by most recent ideas"
+      >
+        Recent
+      </button>
+      <button
+        class="btn btn-outline hover-scale-sm"
+        [class.pill-active]="sortMode === 'trending'"
+        (click)="sortMode = 'trending'; applyFeedSource()"
+        aria-label="Sort by trending ideas"
+      >
+        Trending
+      </button>
+      <input
+        class="input-modern flex-1 min-w-[260px] md:min-w-[320px] lg:min-w-[400px] max-w-lg"
+        placeholder="Search ideas..."
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="applyFeedSource()"
+      />
     </div>
 
     <!-- Divider -->
-  <div class="max-w-7xl mx-auto mb-8 divider-subtle"></div>
+    <div class="max-w-7xl mx-auto mb-8 divider-subtle"></div>
 
     <!-- Ideas Grid / Skeleton -->
-    <div class="grid-modern relative" *ngIf="sortMode==='recent' && !searchTerm && !selectedCategory; else nonPagedList">
+    <div
+      class="grid-modern relative"
+      *ngIf="
+        sortMode === 'recent' && !searchTerm && !selectedCategory;
+        else nonPagedList
+      "
+    >
       <ng-container *ngFor="let idea of pagedIdeas; let i = index">
         <app-idea-card [idea]="idea"></app-idea-card>
       </ng-container>
-      <div *ngIf="loadingPage && !endReached" class="col-span-full flex justify-center py-8"><div class="text-neutral-400 text-sm animate-pulse">Loading more ideas...</div></div>
-      <div *ngIf="endReached && pagedIdeas.length > 0" class="col-span-full flex justify-center py-6 text-neutral-500 text-xs">End of feed</div>
+      <div
+        *ngIf="loadingPage && !endReached"
+        class="col-span-full flex justify-center py-8"
+      >
+        <div class="text-neutral-400 text-sm animate-pulse">
+          Loading more ideas...
+        </div>
+      </div>
+      <div
+        *ngIf="endReached && pagedIdeas.length > 0"
+        class="col-span-full flex justify-center py-6 text-neutral-500 text-xs"
+      >
+        End of feed
+      </div>
       <div id="ideas-sentinel" class="w-full h-1 col-span-full"></div>
     </div>
 
     <ng-template #nonPagedList>
-      <div class="grid-modern" *ngIf="ideas$ | async as ideas; else ideasLoading">
+      <div
+        class="grid-modern"
+        *ngIf="ideas$ | async as ideas; else ideasLoading"
+      >
         <ng-container *ngFor="let idea of ideas; let i = index">
           <app-idea-card [idea]="idea"></app-idea-card>
         </ng-container>
@@ -41,15 +91,21 @@
     </ng-template>
 
     <!-- Empty State -->
-  <div *ngIf="(ideas$ | async)?.length === 0 && pagedIdeas.length === 0" class="text-center py-16 animate-fade-in-up">
-  <div class="card-elevated max-w-md mx-auto">
+    <div
+      *ngIf="(ideas$ | async)?.length === 0 && pagedIdeas.length === 0"
+      class="text-center py-16 animate-fade-in-up"
+    >
+      <div class="card-elevated max-w-md mx-auto">
         <div class="text-6xl mb-6">💡</div>
         <h3 class="heading-3 mb-4">No ideas yet!</h3>
         <p class="body-medium text-neutral-400 mb-8">
           Be the first to share an amazing idea that could change the world.
         </p>
-      <a *ngIf="currentUser$ | async" routerLink="/submit" 
-        class="btn btn-primary-modern inline-flex items-center space-x-2">
+        <a
+          *ngIf="currentUser$ | async"
+          routerLink="/submit"
+          class="btn btn-primary-modern inline-flex items-center space-x-2"
+        >
           <span>✨</span>
           <span>Submit Your First Idea</span>
         </a>
@@ -59,7 +115,10 @@
     <!-- Skeleton Loading -->
     <ng-template #ideasLoading>
       <div class="grid-modern">
-        <div *ngFor="let s of [1,2,3,4,5,6]" class="card-elevated animate-pulse">
+        <div
+          *ngFor="let s of [1, 2, 3, 4, 5, 6]"
+          class="card-elevated animate-pulse"
+        >
           <div class="flex items-center space-x-3 mb-5">
             <div class="avatar-modern shimmer-bg rounded-full"></div>
             <div>
@@ -91,6 +150,5 @@
         </div>
       </div>
     </ng-template>
-        
   </div>
 </div>

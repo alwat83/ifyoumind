@@ -15,7 +15,7 @@ import { AnalyticsService } from '../services/analytics.service';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './idea-submit.component.html',
-  styleUrl: './idea-submit.component.scss'
+  styleUrl: './idea-submit.component.scss',
 })
 export class IdeaSubmitComponent implements OnInit, OnDestroy {
   problem = '';
@@ -29,7 +29,7 @@ export class IdeaSubmitComponent implements OnInit, OnDestroy {
     { id: 'education', name: 'Education', icon: '📚' },
     { id: 'social', name: 'Social', icon: '🤝' },
     { id: 'business', name: 'Business', icon: '💼' },
-    { id: 'general', name: 'General', icon: '💡' }
+    { id: 'general', name: 'General', icon: '💡' },
   ];
   isSubmitting = false;
   showSuccess = false;
@@ -69,7 +69,9 @@ export class IdeaSubmitComponent implements OnInit, OnDestroy {
     } catch {}
   }
 
-  ngOnDestroy() { if (this.saveTimer) clearTimeout(this.saveTimer); }
+  ngOnDestroy() {
+    if (this.saveTimer) clearTimeout(this.saveTimer);
+  }
 
   private scheduleSave() {
     if (this.saveTimer) clearTimeout(this.saveTimer);
@@ -79,18 +81,26 @@ export class IdeaSubmitComponent implements OnInit, OnDestroy {
   private persistDraft() {
     try {
       const hasContent = this.problem || this.solution || this.impact;
-      if (!hasContent) { localStorage.removeItem(this.draftKey); return; }
-      localStorage.setItem(this.draftKey, JSON.stringify({
-        problem: this.problem,
-        solution: this.solution,
-        impact: this.impact,
-        selectedCategory: this.selectedCategory,
-        ts: Date.now()
-      }));
+      if (!hasContent) {
+        localStorage.removeItem(this.draftKey);
+        return;
+      }
+      localStorage.setItem(
+        this.draftKey,
+        JSON.stringify({
+          problem: this.problem,
+          solution: this.solution,
+          impact: this.impact,
+          selectedCategory: this.selectedCategory,
+          ts: Date.now(),
+        }),
+      );
     } catch {}
   }
 
-  onFieldChange() { this.scheduleSave(); }
+  onFieldChange() {
+    this.scheduleSave();
+  }
 
   clearDraft() {
     localStorage.removeItem(this.draftKey);
@@ -100,19 +110,22 @@ export class IdeaSubmitComponent implements OnInit, OnDestroy {
   async addIdea() {
     if (this.problem && this.solution && this.impact) {
       this.isSubmitting = true;
-      
+
       try {
         const currentUser = await this.authHelper.getCurrentUserOnce();
 
         if (currentUser) {
-          const created = await this.ideaService.createIdea({
-            problem: this.problem,
-            solution: this.solution,
-            impact: this.impact,
-            category: this.selectedCategory,
-            tags: [], // Will be populated later
-            isPublic: true // All ideas are public by default
-          }, currentUser);
+          const created = await this.ideaService.createIdea(
+            {
+              problem: this.problem,
+              solution: this.solution,
+              impact: this.impact,
+              category: this.selectedCategory,
+              tags: [], // Will be populated later
+              isPublic: true, // All ideas are public by default
+            },
+            currentUser,
+          );
           if (created && 'id' in created) {
             this.analytics.ideaCreated(created.id, this.selectedCategory);
           }
@@ -123,16 +136,20 @@ export class IdeaSubmitComponent implements OnInit, OnDestroy {
           // Clear draft after successful submission
           localStorage.removeItem(this.draftKey);
           this.showSuccess = true;
-          
+
           // Trigger celebration confetti
-          const submitButton = document.querySelector('.submit-button') as HTMLElement;
+          const submitButton = document.querySelector(
+            '.submit-button',
+          ) as HTMLElement;
           if (submitButton) {
             this.confettiService.triggerConfetti(submitButton, 'celebration');
           }
-          
+
           // Show success toast
-          this.toastService.success('🎉 Idea submitted successfully! Thank you for sharing!');
-          
+          this.toastService.success(
+            '🎉 Idea submitted successfully! Thank you for sharing!',
+          );
+
           // Navigate back after a brief delay
           setTimeout(() => {
             this.router.navigate(['/']);

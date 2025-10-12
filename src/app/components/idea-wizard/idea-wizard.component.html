@@ -1,164 +1,229 @@
-<div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-  <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden animate-scale-in">
-    
+<div
+  class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+>
+  <div
+    class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden animate-scale-in"
+  >
     <!-- Header -->
     <div class="p-6 border-b border-white/10">
       <div class="flex items-center justify-between mb-4">
         <h2 class="heading-2 gradient-text">Share Your Idea</h2>
-        <button (click)="closeWizard()" class="text-neutral-400 hover:text-white transition-colors" aria-label="Close idea wizard">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        <button
+          (click)="closeWizard()"
+          class="text-neutral-400 hover:text-white transition-colors"
+          aria-label="Close idea wizard"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
           </svg>
         </button>
       </div>
-      
+
       <!-- Progress Bar -->
       <div class="flex items-center space-x-4">
         <div class="flex-1 bg-neutral-700 rounded-full h-2">
-          <div class="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
-               [style.width.%]="getProgressPercentage()"></div>
+          <div
+            class="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
+            [style.width.%]="getProgressPercentage()"
+          ></div>
         </div>
-        <span class="text-sm text-neutral-400 font-medium">{{ currentStep }}/{{ totalSteps }}</span>
+        <span class="text-sm text-neutral-400 font-medium"
+          >{{ currentStep }}/{{ totalSteps }}</span
+        >
       </div>
-      
+
       <!-- Step Indicators -->
       <div class="flex justify-between mt-4">
-        <div *ngFor="let step of [1,2,3,4]" 
-             [class]="step <= currentStep ? 'text-blue-400' : 'text-neutral-500'"
-             class="flex items-center space-x-2">
-          <div [class]="step <= currentStep ? 'bg-blue-500' : 'bg-neutral-600'" 
-               class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">
+        <div
+          *ngFor="let step of [1, 2, 3, 4]"
+          [class]="step <= currentStep ? 'text-blue-400' : 'text-neutral-500'"
+          class="flex items-center space-x-2"
+        >
+          <div
+            [class]="step <= currentStep ? 'bg-blue-500' : 'bg-neutral-600'"
+            class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+          >
             {{ step }}
           </div>
           <span class="text-sm hidden sm:block">
-            {{ step === 1 ? 'Problem' : step === 2 ? 'Solution' : step === 3 ? 'Impact' : 'Category' }}
+            {{
+              step === 1
+                ? "Problem"
+                : step === 2
+                  ? "Solution"
+                  : step === 3
+                    ? "Impact"
+                    : "Category"
+            }}
           </span>
         </div>
       </div>
     </div>
-    
+
     <!-- Content -->
     <div class="p-6 overflow-y-auto max-h-[60vh]">
-      
       <!-- Step 1: Problem -->
       <div *ngIf="currentStep === 1" class="animate-fade-in-up">
         <div class="flex items-center space-x-3 mb-6">
-          <div class="w-10 h-10 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg flex items-center justify-center">
+          <div
+            class="w-10 h-10 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg flex items-center justify-center"
+          >
             <span class="text-white">🚨</span>
           </div>
           <div>
             <h3 class="heading-3 text-white">What problem are you solving?</h3>
-            <p class="body-small text-neutral-400">Describe the challenge you want to address</p>
+            <p class="body-small text-neutral-400">
+              Describe the challenge you want to address
+            </p>
           </div>
         </div>
-        
-        <textarea 
-          [(ngModel)]="ideaData.problem" 
+
+        <textarea
+          [(ngModel)]="ideaData.problem"
           name="problem"
           class="input-modern min-h-[120px] resize-none"
           placeholder="Be specific about the problem, who it affects, and why it matters..."
-          (input)="isStepValid(1)">
+          (input)="isStepValid(1)"
+        >
         </textarea>
 
         <div class="flex justify-between mt-6">
           <div></div>
-          <button 
+          <button
             (click)="nextStep()"
             [disabled]="!isStepValid(1)"
             class="btn btn-primary-modern"
             [class.opacity-50]="!isStepValid(1)"
-            [class.cursor-not-allowed]="!isStepValid(1)">
+            [class.cursor-not-allowed]="!isStepValid(1)"
+          >
             Next →
           </button>
         </div>
       </div>
-      
+
       <!-- Step 2: Solution -->
       <div *ngIf="currentStep === 2" class="animate-fade-in-up">
         <div class="flex items-center space-x-3 mb-6">
-          <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
+          <div
+            class="w-10 h-10 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center"
+          >
             <span class="text-white">💡</span>
           </div>
           <div>
             <h3 class="heading-3 text-white">What's your solution?</h3>
-            <p class="body-small text-neutral-400">Explain your innovative approach</p>
+            <p class="body-small text-neutral-400">
+              Explain your innovative approach
+            </p>
           </div>
         </div>
-        
-        <textarea 
-          [(ngModel)]="ideaData.solution" 
+
+        <textarea
+          [(ngModel)]="ideaData.solution"
           name="solution"
           class="input-modern min-h-[120px] resize-none"
           placeholder="Describe your solution, how it works, and what makes it unique..."
-          (input)="isStepValid(2)">
+          (input)="isStepValid(2)"
+        >
         </textarea>
 
         <div class="flex justify-between mt-6">
-          <button (click)="previousStep()" class="btn btn-outline">← Back</button>
-          <button 
+          <button (click)="previousStep()" class="btn btn-outline">
+            ← Back
+          </button>
+          <button
             (click)="nextStep()"
             [disabled]="!isStepValid(2)"
             class="btn btn-primary-modern"
             [class.opacity-50]="!isStepValid(2)"
-            [class.cursor-not-allowed]="!isStepValid(2)">
+            [class.cursor-not-allowed]="!isStepValid(2)"
+          >
             Next →
           </button>
         </div>
       </div>
-      
+
       <!-- Step 3: Impact -->
       <div *ngIf="currentStep === 3" class="animate-fade-in-up">
         <div class="flex items-center space-x-3 mb-6">
-          <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
+          <div
+            class="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center"
+          >
             <span class="text-white">🌍</span>
           </div>
           <div>
             <h3 class="heading-3 text-white">What impact will this have?</h3>
-            <p class="body-small text-neutral-400">Describe the positive change this could create</p>
+            <p class="body-small text-neutral-400">
+              Describe the positive change this could create
+            </p>
           </div>
         </div>
-        
-        <textarea 
-          [(ngModel)]="ideaData.impact" 
+
+        <textarea
+          [(ngModel)]="ideaData.impact"
           name="impact"
           class="input-modern min-h-[120px] resize-none"
           placeholder="Think about scale, sustainability, and long-term benefits..."
-          (input)="isStepValid(3)">
+          (input)="isStepValid(3)"
+        >
         </textarea>
 
         <div class="flex justify-between mt-6">
-          <button (click)="previousStep()" class="btn btn-outline">← Back</button>
-          <button 
+          <button (click)="previousStep()" class="btn btn-outline">
+            ← Back
+          </button>
+          <button
             (click)="nextStep()"
             [disabled]="!isStepValid(3)"
             class="btn btn-primary-modern"
             [class.opacity-50]="!isStepValid(3)"
-            [class.cursor-not-allowed]="!isStepValid(3)">
+            [class.cursor-not-allowed]="!isStepValid(3)"
+          >
             Next →
           </button>
         </div>
       </div>
-      
+
       <!-- Step 4: Category -->
       <div *ngIf="currentStep === 4" class="animate-fade-in-up">
         <div class="flex items-center space-x-3 mb-6">
-          <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+          <div
+            class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center"
+          >
             <span class="text-white">🏷️</span>
           </div>
           <div>
             <h3 class="heading-3 text-white">Choose a category</h3>
-            <p class="body-small text-neutral-400">Help others find your idea</p>
+            <p class="body-small text-neutral-400">
+              Help others find your idea
+            </p>
           </div>
         </div>
-        
+
         <div class="grid grid-cols-2 gap-4">
-          <button 
+          <button
             *ngFor="let category of categories"
             (click)="selectCategory(category.id)"
             class="pill w-full text-left flex items-center space-x-3 hover-scale-sm"
             [class.pill-active]="ideaData.category === category.id"
-            [attr.aria-label]="'Select category ' + category.name">
-            <div [class]="'w-8 h-8 bg-gradient-to-r ' + category.color + ' rounded-lg flex items-center justify-center shadow-inner'">
+            [attr.aria-label]="'Select category ' + category.name"
+          >
+            <div
+              [class]="
+                'w-8 h-8 bg-gradient-to-r ' +
+                category.color +
+                ' rounded-lg flex items-center justify-center shadow-inner'
+              "
+            >
               <span class="text-white text-sm">{{ category.icon }}</span>
             </div>
             <span class="font-medium">{{ category.name }}</span>
@@ -166,19 +231,24 @@
         </div>
 
         <div class="flex justify-between mt-6">
-          <button (click)="previousStep()" class="btn btn-outline">← Back</button>
-          <button 
+          <button (click)="previousStep()" class="btn btn-outline">
+            ← Back
+          </button>
+          <button
             (click)="submitIdea()"
             [disabled]="isSubmitting"
             class="btn btn-primary-modern hover-scale-sm"
             [class.opacity-50]="isSubmitting"
-            [class.cursor-not-allowed]="isSubmitting">
+            [class.cursor-not-allowed]="isSubmitting"
+          >
             <span *ngIf="!isSubmitting" class="flex items-center space-x-2">
               <span>🚀</span>
               <span>Submit Idea</span>
             </span>
             <span *ngIf="isSubmitting" class="flex items-center space-x-2">
-              <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              <div
+                class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"
+              ></div>
               <span>Submitting...</span>
             </span>
           </button>
@@ -187,5 +257,3 @@
     </div>
   </div>
 </div>
-
-

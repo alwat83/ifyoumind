@@ -9,14 +9,14 @@ import { Observable, of } from 'rxjs';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './tag-list.component.html',
-  styleUrl: './tag-list.component.scss'
+  styleUrl: './tag-list.component.scss',
 })
 export class TagListComponent implements OnInit {
   private ideaService: IdeaService = inject(IdeaService);
   categories$: Observable<string[]> = of([]);
 
   ngOnInit(): void {
-    this.ideaService.getCategories().then(categories => {
+    this.ideaService.getCategories().then((categories) => {
       this.categories$ = of(categories);
     });
   }

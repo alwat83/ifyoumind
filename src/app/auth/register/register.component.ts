@@ -2,7 +2,12 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { Auth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from '@angular/fire/auth';
+import {
+  Auth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+} from '@angular/fire/auth';
 import { UserService } from '../../services/user.service';
 
 @Component({
@@ -10,7 +15,7 @@ import { UserService } from '../../services/user.service';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
   displayName = '';
@@ -31,7 +36,11 @@ export class RegisterComponent {
     }
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(this.auth, this.email, this.password);
+      const userCredential = await createUserWithEmailAndPassword(
+        this.auth,
+        this.email,
+        this.password,
+      );
       const user = userCredential.user;
 
       await updateProfile(user, { displayName: this.displayName });

@@ -11,7 +11,7 @@ import { switchMap } from 'rxjs';
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './onboarding.component.html',
-  styleUrls: ['./onboarding.component.scss']
+  styleUrls: ['./onboarding.component.scss'],
 })
 export class OnboardingComponent implements OnInit {
   private auth: Auth = inject(Auth);
@@ -22,7 +22,11 @@ export class OnboardingComponent implements OnInit {
   interests = [
     { name: 'Technology', value: 'tech', selected: false },
     { name: 'Health & Wellness', value: 'health', selected: false },
-    { name: 'Sustainability & Environment', value: 'sustainability', selected: false },
+    {
+      name: 'Sustainability & Environment',
+      value: 'sustainability',
+      selected: false,
+    },
     { name: 'Business & Finance', value: 'business', selected: false },
     { name: 'Social Impact', value: 'social', selected: false },
     { name: 'Education', value: 'education', selected: false },
@@ -31,20 +35,22 @@ export class OnboardingComponent implements OnInit {
 
   ngOnInit(): void {
     // Prefill interests if they already exist on the user's profile
-    this.user$.pipe(
-      switchMap(user => {
-        if (!user) return [];
-        return this.userService.getUserProfile(user.uid);
-      })
-    ).subscribe(profile => {
-      if (profile?.interests) {
-        this.interests.forEach(i => {
-          if (profile.interests?.includes(i.value)) {
-            i.selected = true;
-          }
-        });
-      }
-    });
+    this.user$
+      .pipe(
+        switchMap((user) => {
+          if (!user) return [];
+          return this.userService.getUserProfile(user.uid);
+        }),
+      )
+      .subscribe((profile) => {
+        if (profile?.interests) {
+          this.interests.forEach((i) => {
+            if (profile.interests?.includes(i.value)) {
+              i.selected = true;
+            }
+          });
+        }
+      });
   }
 
   nextStep() {
@@ -61,25 +67,27 @@ export class OnboardingComponent implements OnInit {
 
   async finishOnboarding() {
     const selectedInterests = this.interests
-      .filter(i => i.selected)
-      .map(i => i.value);
+      .filter((i) => i.selected)
+      .map((i) => i.value);
 
-    this.user$.pipe(
-      switchMap(user => {
-        if (!user) throw new Error('User not logged in');
-        return this.userService.saveUserProfile(user.uid, {
-          interests: selectedInterests,
-          hasCompletedOnboarding: true
-        });
-      })
-    ).subscribe({
-      next: () => {
-        this.router.navigate(['/']); // Redirect to the main feed
-      },
-      error: (err) => {
-        console.error('Failed to save onboarding data', err);
-        // Optionally show a toast message to the user
-      }
-    });
+    this.user$
+      .pipe(
+        switchMap((user) => {
+          if (!user) throw new Error('User not logged in');
+          return this.userService.saveUserProfile(user.uid, {
+            interests: selectedInterests,
+            hasCompletedOnboarding: true,
+          });
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/']); // Redirect to the main feed
+        },
+        error: (err) => {
+          console.error('Failed to save onboarding data', err);
+          // Optionally show a toast message to the user
+        },
+      });
   }
 }

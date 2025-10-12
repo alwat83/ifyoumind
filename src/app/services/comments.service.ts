@@ -1,5 +1,18 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, addDoc, query, where, orderBy, limit, collectionData, serverTimestamp, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  addDoc,
+  query,
+  where,
+  orderBy,
+  limit,
+  collectionData,
+  serverTimestamp,
+  doc,
+  updateDoc,
+  deleteDoc,
+} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { UserService } from './user.service';
 
@@ -20,18 +33,23 @@ export class CommentsService {
 
   listForIdea(ideaId: string, limitCount = 50): Observable<Comment[]> {
     const ref = collection(this.firestore, 'comments');
-    const q = query(ref, where('ideaId', '==', ideaId), orderBy('createdAt', 'desc'), limit(limitCount));
+    const q = query(
+      ref,
+      where('ideaId', '==', ideaId),
+      orderBy('createdAt', 'desc'),
+      limit(limitCount),
+    );
     return collectionData(q, { idField: 'id' }) as Observable<Comment[]>;
   }
 
   add(ideaId: string, content: string, authorId: string, authorName: string) {
-    this.userService.updateUserStats(authorId, { totalComments: 1 });
+    this.userService.updateUserStats(authorId, { totalComments: 1, points: 2 });
     return addDoc(collection(this.firestore, 'comments'), {
       ideaId,
       content,
       authorId,
       authorName,
-      createdAt: serverTimestamp()
+      createdAt: serverTimestamp(),
     });
   }
 
@@ -45,8 +63,3 @@ export class CommentsService {
     return deleteDoc(ref);
   }
 }
-
-
-
-
-

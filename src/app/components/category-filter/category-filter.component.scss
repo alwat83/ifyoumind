@@ -1,13 +1,22 @@
 /* Using global pill styles defined in styles.scss; keep file for future component-specific overrides */
 
 /* Accessibility: ensure active pill has sufficient contrast ring on focus */
-.pill-active:focus-visible { outline: 2px solid var(--secondary-500); outline-offset: 3px; }
+.pill-active:focus-visible {
+  outline: 2px solid var(--secondary-500);
+  outline-offset: 3px;
+}
 
 /* Scroll hint subtle gradient (mobile) */
 .category-filter-scroll::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(90deg, var(--surface-0) 0%, transparent 12%, transparent 88%, var(--surface-0) 100%);
+  background: linear-gradient(
+    90deg,
+    var(--surface-0) 0%,
+    transparent 12%,
+    transparent 88%,
+    var(--surface-0) 100%
+  );
 }

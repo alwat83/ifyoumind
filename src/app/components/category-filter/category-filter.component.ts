@@ -6,31 +6,39 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './category-filter.component.html',
-  styleUrls: ['./category-filter.component.scss']
+  styleUrls: ['./category-filter.component.scss'],
 })
 export class CategoryFilterComponent {
   @Output() categorySelected = new EventEmitter<string>();
-  
-  categories = ['all', 'technology', 'environment', 'health', 'education', 'social', 'business', 'general'];
+
+  categories = [
+    'all',
+    'technology',
+    'environment',
+    'health',
+    'education',
+    'social',
+    'business',
+    'general',
+  ];
   selectedCategory = 'all';
-  
+
   selectCategory(category: string) {
     this.selectedCategory = category;
     this.categorySelected.emit(category);
   }
-  
+
   getCategoryIcon(category: string): string {
     const icons: Record<string, string> = {
-      'all': '🌟',
-      'technology': '💻',
-      'environment': '🌱',
-      'health': '🏥',
-      'education': '📚',
-      'social': '🤝',
-      'business': '💼',
-      'general': '💡'
+      all: '🌟',
+      technology: '💻',
+      environment: '🌱',
+      health: '🏥',
+      education: '📚',
+      social: '🤝',
+      business: '💼',
+      general: '💡',
     };
     return icons[category] || '💡';
   }
 }
-

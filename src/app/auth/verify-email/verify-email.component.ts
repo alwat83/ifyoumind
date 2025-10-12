@@ -8,11 +8,11 @@ import { Auth, sendEmailVerification, User } from '@angular/fire/auth';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './verify-email.component.html',
-  styleUrls: ['./verify-email.component.scss']
+  styleUrls: ['./verify-email.component.scss'],
 })
 export class VerifyEmailComponent {
   isResending = false;
-  message: { type: 'success' | 'error', text: string } | null = null;
+  message: { type: 'success' | 'error'; text: string } | null = null;
 
   private auth: Auth = inject(Auth);
   private router: Router = inject(Router);
@@ -25,9 +25,15 @@ export class VerifyEmailComponent {
     if (user) {
       try {
         await sendEmailVerification(user);
-        this.message = { type: 'success', text: 'A new verification email has been sent.' };
+        this.message = {
+          type: 'success',
+          text: 'A new verification email has been sent.',
+        };
       } catch (error) {
-        this.message = { type: 'error', text: 'An error occurred while sending the email. Please try again.' };
+        this.message = {
+          type: 'error',
+          text: 'An error occurred while sending the email. Please try again.',
+        };
       }
     } else {
       this.message = { type: 'error', text: 'You are not logged in.' };

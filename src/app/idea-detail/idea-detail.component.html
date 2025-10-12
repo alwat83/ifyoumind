@@ -6,37 +6,103 @@
     <div class="body-medium text-subtle mb-4">{{ idea?.solution }}</div>
     <div class="body-medium text-subtle">{{ idea?.impact }}</div>
     <div class="mt-6 flex flex-wrap gap-3" *ngIf="currentUser$ | async as u">
-      <button class="btn btn-outline hover-scale-sm" routerLink="/submit">Edit</button>
-      <button class="btn btn-outline hover-scale-sm" *ngIf="canDelete(u)" (click)="deleteIdea(u)">Delete</button>
-      <button class="btn btn-outline hover-scale-sm" (click)="moderateDelete(u)">Moderate Delete</button>
-      <button class="btn btn-outline hover-scale-sm" (click)="toggleBookmark(u)" [attr.aria-label]="isBookmarked ? 'Remove bookmark' : 'Bookmark idea'">
-        <span class="mr-1">{{ isBookmarked ? '🔖' : '📑' }}</span>
-        {{ isBookmarked ? 'Saved' : 'Save' }}
+      <button class="btn btn-outline hover-scale-sm" routerLink="/submit">
+        Edit
+      </button>
+      <button
+        class="btn btn-outline hover-scale-sm"
+        *ngIf="idea?.authorId === (currentUser$ | async)?.uid"
+        (click)="showTeamManager = !showTeamManager"
+      >
+        Manage Team
+      </button>
+      <button
+        class="btn btn-outline hover-scale-sm"
+        *ngIf="canDelete(u)"
+        (click)="deleteIdea(u)"
+      >
+        Delete
+      </button>
+      <button
+        class="btn btn-outline hover-scale-sm"
+        (click)="moderateDelete(u)"
+      >
+        Moderate Delete
+      </button>
+      <button
+        class="btn btn-outline hover-scale-sm"
+        (click)="toggleBookmark(u)"
+        [attr.aria-label]="isBookmarked ? 'Remove bookmark' : 'Bookmark idea'"
+      >
+        <span class="mr-1">{{ isBookmarked ? "🔖" : "📑" }}</span>
+        {{ isBookmarked ? "Saved" : "Save" }}
+      </button>
+      <button
+        class="btn btn-primary-modern hover-scale-sm"
+        (click)="requestToJoin()"
+      >
+        Request to Join
       </button>
     </div>
   </div>
 
+  <div class="card-elevated mt-6" *ngIf="idea?.collaborators?.length">
+    <h2 class="heading-3 mb-5">
+      Collaborators ({{ idea?.collaborators?.length }})
+    </h2>
+  </div>
+
+  <app-team-manager [idea]="idea" *ngIf="showTeamManager"></app-team-manager>
+
   <div class="card-elevated mt-6">
     <h2 class="heading-3 mb-5">Comments</h2>
 
-    <div class="space-y-4 mb-6" *ngIf="comments$ | async as items; else noComments">
+    <div
+      class="space-y-4 mb-6"
+      *ngIf="comments$ | async as items; else noComments"
+    >
       <ng-container *ngIf="currentUser$ | async as u; else anonView">
-  <div *ngFor="let c of items" class="card-elevated p-4 group">
+        <div *ngFor="let c of items" class="card-elevated p-4 group">
           <div class="flex justify-between items-start mb-1">
             <div class="body-small text-dim flex items-center gap-2">
               <span>{{ c.authorName }}</span>
-              <span *ngIf="c.updatedAt" class="text-xs text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full">edited</span>
+              <span
+                *ngIf="c.updatedAt"
+                class="text-xs text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full"
+                >edited</span
+              >
             </div>
-            <div class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity" *ngIf="u.uid === c.authorId">
-              <button *ngIf="editingCommentId !== c.id" (click)="startEdit(c, u)" class="body-tiny text-dim hover:text-neutral-200 underline">Edit</button>
-              <button (click)="deleteComment(c, u)" class="body-tiny text-red-400 hover:text-red-300 underline">Delete</button>
+            <div
+              class="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity"
+              *ngIf="u.uid === c.authorId"
+            >
+              <button
+                *ngIf="editingCommentId !== c.id"
+                (click)="startEdit(c, u)"
+                class="body-tiny text-dim hover:text-neutral-200 underline"
+              >
+                Edit
+              </button>
+              <button
+                (click)="deleteComment(c, u)"
+                class="body-tiny text-red-400 hover:text-red-300 underline"
+              >
+                Delete
+              </button>
             </div>
           </div>
           <div *ngIf="editingCommentId === c.id; else viewMode">
-            <textarea [(ngModel)]="editContent" class="input-modern min-h-[80px] resize-none mb-2"></textarea>
+            <textarea
+              [(ngModel)]="editContent"
+              class="input-modern min-h-[80px] resize-none mb-2"
+            ></textarea>
             <div class="flex gap-2">
-              <button class="btn-primary btn-xs" (click)="saveEdit(c, u)">Save</button>
-              <button class="btn-secondary btn-xs" (click)="cancelEdit()">Cancel</button>
+              <button class="btn-primary btn-xs" (click)="saveEdit(c, u)">
+                Save
+              </button>
+              <button class="btn-secondary btn-xs" (click)="cancelEdit()">
+                Cancel
+              </button>
             </div>
           </div>
           <ng-template #viewMode>
@@ -48,7 +114,11 @@
         <div *ngFor="let c of items" class="card-elevated p-4">
           <div class="body-small text-dim mb-1 flex items-center gap-2">
             <span>{{ c.authorName }}</span>
-            <span *ngIf="c.updatedAt" class="text-xs text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full">edited</span>
+            <span
+              *ngIf="c.updatedAt"
+              class="text-xs text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full"
+              >edited</span
+            >
           </div>
           <div class="text-subtle whitespace-pre-line">{{ c.content }}</div>
         </div>
@@ -57,12 +127,20 @@
     <ng-template #noComments></ng-template>
 
     <div *ngIf="currentUser$ | async as u" class="flex gap-3 mt-5">
-      <input [(ngModel)]="newComment" class="input-modern" placeholder="Write a comment..." />
-      <button class="btn btn-primary-modern" (click)="submitComment(u)">Post</button>
+      <input
+        [(ngModel)]="newComment"
+        class="input-modern"
+        placeholder="Write a comment..."
+      />
+      <button class="btn btn-primary-modern" (click)="submitComment(u)">
+        Post
+      </button>
     </div>
-    <div *ngIf="(currentUser$ | async) === null" class="text-dim body-small mt-4">Sign in to comment.</div>
+    <div
+      *ngIf="(currentUser$ | async) === null"
+      class="text-dim body-small mt-4"
+    >
+      Sign in to comment.
+    </div>
   </div>
 </div>
-
-
-

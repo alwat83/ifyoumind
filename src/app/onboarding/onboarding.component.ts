@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-onboarding',
   imports: [],
   templateUrl: './onboarding.component.html',
-  styleUrl: './onboarding.component.scss'
+  styleUrl: './onboarding.component.scss',
 })
-export class OnboardingComponent {
-
-}
+export class OnboardingComponent {}

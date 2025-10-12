@@ -15,9 +15,10 @@ export class ModeratorService {
   }
 
   async moderateDeleteIdea(ideaId: string): Promise<void> {
-    const callable = httpsCallable<{ ideaId: string }, { ok: boolean }>(this.functions, 'moderateDeleteIdea');
+    const callable = httpsCallable<{ ideaId: string }, { ok: boolean }>(
+      this.functions,
+      'moderateDeleteIdea',
+    );
     await firstValueFrom(from(callable({ ideaId })));
   }
 }
-
-

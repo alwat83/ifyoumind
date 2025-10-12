@@ -8,9 +8,8 @@ describe('IdeaListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IdeaListComponent]
-    })
-    .compileComponents();
+      imports: [IdeaListComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IdeaListComponent);
     component = fixture.componentInstance;

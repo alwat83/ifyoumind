@@ -17,7 +17,7 @@ import { IdeaCardComponent } from '../components/idea-card/idea-card.component';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule, IdeaCardComponent],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.scss'
+  styleUrl: './profile.component.scss',
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   private auth: Auth = inject(Auth);
@@ -30,17 +30,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   currentUser$: Observable<User | null>;
   currentUser: User | null = null;
-  
+
   // Simple properties
   displayName = '';
   username = '';
   bio = '';
   totalIdeas = 0;
   totalUpvotes = 0;
+  points = 0;
   hasProfilePic = false;
   profilePicUrl = '';
   profilePicPath = '';
-  
+
   // UI state
   isEditing = false;
   isUploading = false;
@@ -58,11 +59,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
   removingSeeds = false;
   autoSeedAttempted = false;
   reSeeding = false;
-  
+
   // Form data
   editForm = {
     username: '',
-    bio: ''
+    bio: '',
   };
 
   submittedIdeas$: Observable<any[]> = new Observable();
@@ -76,37 +77,37 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.seo.generateTags({ title: 'Your Profile' }); // Set SEO tags for the profile page
-    this.currentUser$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(user => {
-        this.currentUser = user;
-        if (user) {
-          this.submittedIdeas$ = this.ideaService.getUserIdeas(user.uid);
-          this.upvotedIdeas$ = this.ideaService.getUpvotedIdeasByUser(user.uid);
+    this.currentUser$.pipe(takeUntil(this.destroy$)).subscribe((user) => {
+      this.currentUser = user;
+      if (user) {
+        this.submittedIdeas$ = this.ideaService.getUserIdeas(user.uid);
+        this.upvotedIdeas$ = this.ideaService.getUpvotedIdeasByUser(user.uid);
 
-          // Check for custom admin claim
-          this.checkAdmin(user);
-          // Attempt auto-seed once (admin only) if collection empty
-          if (!this.autoSeedAttempted) {
-            this.autoSeedAttempted = true;
-            setTimeout(() => this.tryAutoSeed(), 0);
-          }
-          this.userService.getUserProfile(user.uid)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(profile => {
-              if (profile) {
-                this.displayName = profile.displayName || 'User';
-                this.username = profile.username || 'user';
-                this.bio = profile.bio || '';
-                this.totalIdeas = profile.totalIdeas || 0;
-                this.totalUpvotes = profile.totalUpvotes || 0;
-                this.profilePicUrl = profile.profilePicture || '';
-                this.hasProfilePic = !!profile.profilePicture;
-                this.oldProfilePicUrl = profile.profilePicture || '';
-              }
-            });
+        // Check for custom admin claim
+        this.checkAdmin(user);
+        // Attempt auto-seed once (admin only) if collection empty
+        if (!this.autoSeedAttempted) {
+          this.autoSeedAttempted = true;
+          setTimeout(() => this.tryAutoSeed(), 0);
         }
-      });
+        this.userService
+          .getUserProfile(user.uid)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((profile) => {
+            if (profile) {
+              this.displayName = profile.displayName || 'User';
+              this.username = profile.username || 'user';
+              this.bio = profile.bio || '';
+              this.totalIdeas = profile.totalIdeas || 0;
+              this.totalUpvotes = profile.totalUpvotes || 0;
+              this.points = profile.points || 0;
+              this.profilePicUrl = profile.profilePicture || '';
+              this.hasProfilePic = !!profile.profilePicture;
+              this.oldProfilePicUrl = profile.profilePicture || '';
+            }
+          });
+      }
+    });
   }
 
   private async checkAdmin(user: User) {
@@ -117,9 +118,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
       const fallbackAdmins = ['albertlwatson@gmail.com'];
       if (!this.isAdmin && user.email && fallbackAdmins.includes(user.email)) {
         this.isAdmin = true;
-        console.warn('[ADMIN-FALLBACK] Granting admin UI via email fallback (add real custom claim soon).');
+        console.warn(
+          '[ADMIN-FALLBACK] Granting admin UI via email fallback (add real custom claim soon).',
+        );
       }
-      console.debug('[ADMIN-CHECK] claims:', tokenResult.claims, 'isAdmin:', this.isAdmin);
+      console.debug(
+        '[ADMIN-CHECK] claims:',
+        tokenResult.claims,
+        'isAdmin:',
+        this.isAdmin,
+      );
     } catch (err) {
       console.warn('Failed to read admin claim', err);
       this.isAdmin = false;
@@ -145,10 +153,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.seeding = true;
     this.seedResult = null;
     try {
-      const result = await this.ideaService.seedInitialIdeas(IDEA_SEED_DATA, this.currentUser);
+      const result = await this.ideaService.seedInitialIdeas(
+        IDEA_SEED_DATA,
+        this.currentUser,
+      );
       this.seedResult = result;
       if (result.inserted > 0) {
-        this.toast.success(`Seeded ${result.inserted} ideas (${result.skipped} skipped)`);
+        this.toast.success(
+          `Seeded ${result.inserted} ideas (${result.skipped} skipped)`,
+        );
       } else {
         this.toast.info('No new ideas to seed — all titles already exist');
       }
@@ -162,9 +175,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   async removeSeedIdeas() {
-    if (!this.currentUser) { this.toast.error('Not logged in'); return; }
-    if (!this.isAdmin) { this.toast.error('Admin only'); return; }
-    const confirmDelete = confirm('Remove all seeded demo ideas? This cannot be undone.');
+    if (!this.currentUser) {
+      this.toast.error('Not logged in');
+      return;
+    }
+    if (!this.isAdmin) {
+      this.toast.error('Admin only');
+      return;
+    }
+    const confirmDelete = confirm(
+      'Remove all seeded demo ideas? This cannot be undone.',
+    );
     if (!confirmDelete) return;
     this.removingSeeds = true;
     try {
@@ -179,17 +200,30 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   async reSeedIdeas() {
-    if (!this.currentUser) { this.toast.error('Not logged in'); return; }
-    if (!this.isAdmin) { this.toast.error('Admin only'); return; }
+    if (!this.currentUser) {
+      this.toast.error('Not logged in');
+      return;
+    }
+    if (!this.isAdmin) {
+      this.toast.error('Admin only');
+      return;
+    }
     if (this.reSeeding) return;
-    const confirmReset = confirm('This will remove existing seeded demo ideas and re-seed fresh copies. Continue?');
+    const confirmReset = confirm(
+      'This will remove existing seeded demo ideas and re-seed fresh copies. Continue?',
+    );
     if (!confirmReset) return;
     this.reSeeding = true;
     try {
       const removed = await this.ideaService.removeSeedIdeas(this.currentUser);
-      const result = await this.ideaService.seedInitialIdeas(IDEA_SEED_DATA, this.currentUser);
+      const result = await this.ideaService.seedInitialIdeas(
+        IDEA_SEED_DATA,
+        this.currentUser,
+      );
       this.seedResult = result;
-      this.toast.success(`Re-seeded: removed ${removed}, inserted ${result.inserted}, skipped ${result.skipped}`);
+      this.toast.success(
+        `Re-seeded: removed ${removed}, inserted ${result.inserted}, skipped ${result.skipped}`,
+      );
     } catch (e) {
       console.error('Re-seed failed', e);
       this.toast.error('Re-seed failed');
@@ -201,7 +235,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private async tryAutoSeed() {
     if (!this.currentUser || !this.isAdmin) return;
     try {
-      const res = await this.ideaService.autoSeedIfEmpty(IDEA_SEED_DATA, this.currentUser);
+      const res = await this.ideaService.autoSeedIfEmpty(
+        IDEA_SEED_DATA,
+        this.currentUser,
+      );
       if (!res.alreadySeeded && res.inserted > 0) {
         this.toast.success(`Auto-seeded ${res.inserted} demo ideas`);
       }
@@ -221,24 +258,24 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
     const profileData = {
       username: this.editForm.username,
-      bio: this.editForm.bio
+      bio: this.editForm.bio,
     };
 
-    this.userService.saveUserProfile(this.currentUser.uid, profileData).subscribe({
-      next: () => {
-        this.username = this.editForm.username;
-        this.bio = this.editForm.bio;
-        this.isEditing = false;
-        this.toast.success('Profile updated successfully!');
-      },
-      error: (error) => {
-        console.error('Error updating profile:', error);
-        this.toast.error('Error updating profile. Please try again.');
-      }
-    });
+    this.userService
+      .saveUserProfile(this.currentUser.uid, profileData)
+      .subscribe({
+        next: () => {
+          this.username = this.editForm.username;
+          this.bio = this.editForm.bio;
+          this.isEditing = false;
+          this.toast.success('Profile updated successfully!');
+        },
+        error: (error) => {
+          console.error('Error updating profile:', error);
+          this.toast.error('Error updating profile. Please try again.');
+        },
+      });
   }
-
-
 
   cancelEditing() {
     this.isEditing = false;
@@ -261,13 +298,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0];
-      
+
       // Basic validation
       if (!file.type.startsWith('image/')) {
         this.uploadError = 'Please select an image file';
         return;
       }
-      
+
       if (file.size > 5 * 1024 * 1024) {
         this.uploadError = 'File size must be less than 5MB';
         return;
@@ -287,52 +324,71 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.uploadProgress = 0;
     this.uploadController = { cancel: () => {} };
 
-  const oldImageUrl = this.oldProfilePicUrl;
-  const oldPath = this.profilePicPath;
+    const oldImageUrl = this.oldProfilePicUrl;
+    const oldPath = this.profilePicPath;
 
-    this.userService.uploadProfilePicture(this.selectedFile, this.currentUser.uid, this.uploadController).subscribe({
-      next: (progress) => {
-        this.uploadProgress = progress.progress;
-        if (progress.completed) {
-          if (progress.cancelled) {
-            this.isUploading = false;
-            this.toast.info('Upload cancelled');
-            return;
+    this.userService
+      .uploadProfilePicture(
+        this.selectedFile,
+        this.currentUser.uid,
+        this.uploadController,
+      )
+      .subscribe({
+        next: (progress) => {
+          this.uploadProgress = progress.progress;
+          if (progress.completed) {
+            if (progress.cancelled) {
+              this.isUploading = false;
+              this.toast.info('Upload cancelled');
+              return;
+            }
+            if (progress.error) {
+              this.uploadError = `Upload failed (${progress.code || 'error'}): ${progress.error}`;
+              this.isUploading = false;
+              return;
+            }
+            if (progress.url) {
+              this.userService
+                .updateProfilePicture(
+                  this.currentUser!.uid,
+                  progress.url,
+                  progress.path,
+                  oldImageUrl,
+                  oldPath,
+                )
+                .subscribe({
+                  next: () => {
+                    this.profilePicUrl = progress.url!;
+                    if (progress.path) {
+                      this.profilePicPath = progress.path;
+                    }
+                    this.hasProfilePic = true;
+                    this.oldProfilePicUrl = progress.url!;
+                    this.isUploading = false;
+                    this.selectedFile = null;
+                    this.toast.success(
+                      'Profile picture uploaded successfully!',
+                    );
+                  },
+                  error: (error) => {
+                    console.error('Error updating profile picture URL:', error);
+                    this.uploadError = 'Failed to update profile picture URL.';
+                    this.isUploading = false;
+                  },
+                });
+            }
           }
-          if (progress.error) {
-            this.uploadError = `Upload failed (${progress.code || 'error'}): ${progress.error}`;
-            this.isUploading = false;
-            return;
-          }
-          if (progress.url) {
-            this.userService.updateProfilePicture(this.currentUser!.uid, progress.url, progress.path, oldImageUrl, oldPath).subscribe({
-              next: () => {
-                this.profilePicUrl = progress.url!;
-                if (progress.path) {
-                  this.profilePicPath = progress.path;
-                }
-                this.hasProfilePic = true;
-                this.oldProfilePicUrl = progress.url!;
-                this.isUploading = false;
-                this.selectedFile = null;
-                this.toast.success('Profile picture uploaded successfully!');
-              },
-              error: (error) => {
-                console.error('Error updating profile picture URL:', error);
-                this.uploadError = 'Failed to update profile picture URL.';
-                this.isUploading = false;
-              }
-            });
-          }
-        }
-      },
-      error: (error) => {
-        console.error('Upload error:', error);
-        const code = (error && (error.code || error.error?.code)) ? (error.code || error.error.code) : 'unknown';
-        this.uploadError = `Upload failed (${code}). Please try again.`;
-        this.isUploading = false;
-      }
-    });
+        },
+        error: (error) => {
+          console.error('Upload error:', error);
+          const code =
+            error && (error.code || error.error?.code)
+              ? error.code || error.error.code
+              : 'unknown';
+          this.uploadError = `Upload failed (${code}). Please try again.`;
+          this.isUploading = false;
+        },
+      });
   }
 
   cancelUpload() {
@@ -346,18 +402,24 @@ export class ProfileComponent implements OnInit, OnDestroy {
     if (!this.currentUser || !this.hasProfilePic) return;
     const confirmDelete = confirm('Remove your profile picture?');
     if (!confirmDelete) return;
-    this.userService.removeProfilePicture(this.currentUser.uid, this.profilePicUrl, this.profilePicPath).subscribe({
-      next: () => {
-        this.profilePicUrl = '';
-        this.profilePicPath = '';
-        this.hasProfilePic = false;
-        this.oldProfilePicUrl = '';
-        this.toast.info('Profile picture removed');
-      },
-      error: (err) => {
-        console.error('Failed to remove picture', err);
-        this.toast.error('Failed to remove picture');
-      }
-    });
+    this.userService
+      .removeProfilePicture(
+        this.currentUser.uid,
+        this.profilePicUrl,
+        this.profilePicPath,
+      )
+      .subscribe({
+        next: () => {
+          this.profilePicUrl = '';
+          this.profilePicPath = '';
+          this.hasProfilePic = false;
+          this.oldProfilePicUrl = '';
+          this.toast.info('Profile picture removed');
+        },
+        error: (err) => {
+          console.error('Failed to remove picture', err);
+          this.toast.error('Failed to remove picture');
+        },
+      });
   }
 }

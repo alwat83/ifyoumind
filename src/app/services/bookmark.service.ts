@@ -1,6 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { Auth, user } from '@angular/fire/auth';
-import { Firestore, collection, doc, setDoc, deleteDoc, serverTimestamp, collectionData } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  doc,
+  setDoc,
+  deleteDoc,
+  serverTimestamp,
+  collectionData,
+} from '@angular/fire/firestore';
 import { Observable, switchMap, of, map } from 'rxjs';
 
 export interface Bookmark {
@@ -19,12 +27,12 @@ export class BookmarkService {
 
   list(): Observable<string[]> {
     return user(this.auth).pipe(
-      switchMap(u => {
+      switchMap((u) => {
         if (!u) return of([]);
-        return collectionData(this.userBookmarksCollection(u.uid), { idField: 'id' }).pipe(
-          map(items => items.map((b: any) => b['id']))
-        );
-      })
+        return collectionData(this.userBookmarksCollection(u.uid), {
+          idField: 'id',
+        }).pipe(map((items) => items.map((b: any) => b['id'])));
+      }),
     );
   }
 
@@ -45,7 +53,8 @@ export class BookmarkService {
   }
 
   async remove(ideaId: string): Promise<void> {
-    const u = this.auth.currentUser; if (!u) return;
+    const u = this.auth.currentUser;
+    if (!u) return;
     await deleteDoc(doc(this.firestore, `users/${u.uid}/bookmarks/${ideaId}`));
   }
 }

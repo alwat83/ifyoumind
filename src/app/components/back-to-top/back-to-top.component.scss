@@ -12,7 +12,9 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: opacity 0.3s, transform 0.3s;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
   opacity: 0;
   transform: translateY(100px);
   z-index: 1000;

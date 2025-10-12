@@ -1,23 +1,23 @@
 import { Injectable, inject } from '@angular/core';
-import { 
-  Firestore, 
-  collection, 
-  doc, 
-  setDoc, 
-  updateDoc, 
+import {
+  Firestore,
+  collection,
+  doc,
+  setDoc,
+  updateDoc,
   collectionData,
   query,
   where,
   orderBy,
   limit,
-  docData
+  docData,
 } from '@angular/fire/firestore';
-import { 
-  Storage, 
-  ref, 
-  uploadBytesResumable, 
-  getDownloadURL, 
-  deleteObject
+import {
+  Storage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  deleteObject,
 } from '@angular/fire/storage';
 import { Auth, User } from '@angular/fire/auth';
 import { Observable, from, switchMap, of } from 'rxjs';
@@ -43,6 +43,7 @@ export interface UserProfile {
   badges?: string[];
   hasSeenPlatformTour?: boolean;
   hasDismissedChecklist?: boolean;
+  points?: number;
 }
 
 export interface UploadProgress {
@@ -57,7 +58,7 @@ export interface UploadProgress {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
   private firestore: Firestore = inject(Firestore);
@@ -67,13 +68,16 @@ export class UserService {
   /**
    * Create user profile in Firestore
    */
-  createUserProfile(userId: string, profile: Partial<UserProfile>): Observable<void> {
+  createUserProfile(
+    userId: string,
+    profile: Partial<UserProfile>,
+  ): Observable<void> {
     const userDoc = doc(this.firestore, 'users', userId);
     const profileData = {
       ...profile,
-      createdAt: new Date()
+      createdAt: new Date(),
     };
-    
+
     return from(setDoc(userDoc, profileData));
   }
 
@@ -88,101 +92,169 @@ export class UserService {
         if (data) {
           return of({
             ...data,
-            createdAt: data['createdAt']?.toDate ? data['createdAt'].toDate() : data['createdAt'] || new Date(),
-            lastLogin: data['lastLogin']?.toDate ? data['lastLogin'].toDate() : data['lastLogin']
+            createdAt: data['createdAt']?.toDate
+              ? data['createdAt'].toDate()
+              : data['createdAt'] || new Date(),
+            lastLogin: data['lastLogin']?.toDate
+              ? data['lastLogin'].toDate()
+              : data['lastLogin'],
           } as UserProfile);
         }
         return of(null);
-      })
+      }),
     );
   }
 
   /**
    * Create or update user profile
    */
-  saveUserProfile(userId: string, profile: Partial<UserProfile>): Observable<void> {
+  saveUserProfile(
+    userId: string,
+    profile: Partial<UserProfile>,
+  ): Observable<void> {
     const userDoc = doc(this.firestore, 'users', userId);
     const profileData = {
       ...profile,
-      lastLogin: new Date()
+      lastLogin: new Date(),
     };
-    
+
     return from(setDoc(userDoc, profileData, { merge: true }));
   }
 
   /**
    * Upload profile picture with progress tracking
    */
-  uploadProfilePicture(file: File, userId: string, controller?: { cancel: () => void }): Observable<UploadProgress> {
+  uploadProfilePicture(
+    file: File,
+    userId: string,
+    controller?: { cancel: () => void },
+  ): Observable<UploadProgress> {
     if (!this.validateImageFile(file)) {
-      return of({ progress: 0, completed: true, error: 'Invalid file type or size' });
+      return of({
+        progress: 0,
+        completed: true,
+        error: 'Invalid file type or size',
+      });
     }
 
-    const performUpload = (inputFile: File, attempt: number): Observable<UploadProgress> => {
+    const performUpload = (
+      inputFile: File,
+      attempt: number,
+    ): Observable<UploadProgress> => {
       const timestamp = Date.now();
       const fileName = `avatar_${timestamp}_${attempt}.${this.getFileExtension(inputFile.name)}`;
-      const storageRef = ref(this.storage, `profile-pictures/${userId}/${fileName}`);
+      const storageRef = ref(
+        this.storage,
+        `profile-pictures/${userId}/${fileName}`,
+      );
 
-      return new Observable<UploadProgress>(observer => {
-      let lastPercent = 0;
-      observer.next({ progress: 0, completed: false, cancellable: true });
-      try {
-        const task = uploadBytesResumable(storageRef, inputFile, { contentType: inputFile.type, cacheControl: 'public,max-age=3600' });
-        if (controller) {
-          controller.cancel = () => {
-            try { task.cancel(); } catch {}
-          };
-        }
-        task.on('state_changed', (snapshot) => {
-          const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-          // Throttle UI updates a bit
-          if (pct !== lastPercent) {
-            lastPercent = pct;
-            observer.next({ progress: pct, completed: false });
+      return new Observable<UploadProgress>((observer) => {
+        let lastPercent = 0;
+        observer.next({ progress: 0, completed: false, cancellable: true });
+        try {
+          const task = uploadBytesResumable(storageRef, inputFile, {
+            contentType: inputFile.type,
+            cacheControl: 'public,max-age=3600',
+          });
+          if (controller) {
+            controller.cancel = () => {
+              try {
+                task.cancel();
+              } catch {}
+            };
           }
-        }, (error) => {
-          console.error('Resumable upload error:', error);
-          const code = (error && (error.code || error['message'])) ? (error.code || 'unknown') : 'unknown';
-          if (code === 'storage/canceled') {
-            observer.next({ progress: lastPercent, completed: true, cancelled: true, code });
-            observer.complete();
-            return;
-          }
-          // Retry once for transient errors
-          if (attempt === 0 && ['storage/retry-limit-exceeded','storage/unknown','storage/quota-exceeded'].includes(code) === false) {
-            console.warn('Retrying upload (single retry policy)...');
-            performUpload(inputFile, 1).subscribe(observer);
-            return;
-          }
-          observer.next({ progress: lastPercent, completed: true, error: error.message || 'Upload failed', code });
+          task.on(
+            'state_changed',
+            (snapshot) => {
+              const pct = Math.round(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100,
+              );
+              // Throttle UI updates a bit
+              if (pct !== lastPercent) {
+                lastPercent = pct;
+                observer.next({ progress: pct, completed: false });
+              }
+            },
+            (error) => {
+              console.error('Resumable upload error:', error);
+              const code =
+                error && (error.code || error['message'])
+                  ? error.code || 'unknown'
+                  : 'unknown';
+              if (code === 'storage/canceled') {
+                observer.next({
+                  progress: lastPercent,
+                  completed: true,
+                  cancelled: true,
+                  code,
+                });
+                observer.complete();
+                return;
+              }
+              // Retry once for transient errors
+              if (
+                attempt === 0 &&
+                [
+                  'storage/retry-limit-exceeded',
+                  'storage/unknown',
+                  'storage/quota-exceeded',
+                ].includes(code) === false
+              ) {
+                console.warn('Retrying upload (single retry policy)...');
+                performUpload(inputFile, 1).subscribe(observer);
+                return;
+              }
+              observer.next({
+                progress: lastPercent,
+                completed: true,
+                error: error.message || 'Upload failed',
+                code,
+              });
+              observer.complete();
+            },
+            async () => {
+              try {
+                const url = await getDownloadURL(storageRef);
+                observer.next({
+                  progress: 100,
+                  completed: true,
+                  url,
+                  path: storageRef.fullPath,
+                });
+                observer.complete();
+              } catch (err: any) {
+                console.error('Download URL error after upload:', err);
+                observer.next({
+                  progress: 100,
+                  completed: true,
+                  error: err.message || 'Failed to get download URL',
+                  code: err.code || 'url_error',
+                });
+                observer.complete();
+              }
+            },
+          );
+        } catch (err: any) {
+          observer.next({
+            progress: 0,
+            completed: true,
+            error: err.message || 'Unexpected upload error',
+            code: err.code || 'unexpected',
+          });
           observer.complete();
-        }, async () => {
-          try {
-            const url = await getDownloadURL(storageRef);
-            observer.next({ progress: 100, completed: true, url, path: storageRef.fullPath });
-            observer.complete();
-          } catch (err: any) {
-            console.error('Download URL error after upload:', err);
-            observer.next({ progress: 100, completed: true, error: err.message || 'Failed to get download URL', code: err.code || 'url_error' });
-            observer.complete();
-          }
-        });
-      } catch (err: any) {
-        observer.next({ progress: 0, completed: true, error: err.message || 'Unexpected upload error', code: err.code || 'unexpected' });
-        observer.complete();
-      }
+        }
       });
     };
 
     // Compress if larger than 800KB
     const shouldCompress = file.size > 800 * 1024;
     if (shouldCompress) {
-      return new Observable<UploadProgress>(observer => {
+      return new Observable<UploadProgress>((observer) => {
         this.compressImage(file, 600, 0.8)
-          .then(compressed => {
+          .then((compressed) => {
             performUpload(compressed, 0).subscribe(observer);
           })
-          .catch(err => {
+          .catch((err) => {
             console.warn('Compression failed, uploading original', err);
             performUpload(file, 0).subscribe(observer);
           });
@@ -194,31 +266,46 @@ export class UserService {
   /**
    * Delete old profile picture and update user profile
    */
-  updateProfilePicture(userId: string, newImageUrl: string, newPath: string | undefined, oldImageUrl?: string, oldPath?: string): Observable<void> {
-    return new Observable<void>(observer => {
+  updateProfilePicture(
+    userId: string,
+    newImageUrl: string,
+    newPath: string | undefined,
+    oldImageUrl?: string,
+    oldPath?: string,
+  ): Observable<void> {
+    return new Observable<void>((observer) => {
       // Delete old image if it exists
       if (oldImageUrl || oldPath) {
         this.deleteProfilePicture(oldPath || oldImageUrl!).subscribe({
           next: () => {
             // Update user profile with new URL
-            this.saveUserProfile(userId, { profilePicture: newImageUrl, profilePicturePath: newPath }).subscribe({
+            this.saveUserProfile(userId, {
+              profilePicture: newImageUrl,
+              profilePicturePath: newPath,
+            }).subscribe({
               next: () => observer.next(),
-              error: (err) => observer.error(err)
+              error: (err) => observer.error(err),
             });
           },
           error: () => {
             // Continue with profile update even if deletion fails
-            this.saveUserProfile(userId, { profilePicture: newImageUrl, profilePicturePath: newPath }).subscribe({
+            this.saveUserProfile(userId, {
+              profilePicture: newImageUrl,
+              profilePicturePath: newPath,
+            }).subscribe({
               next: () => observer.next(),
-              error: (err) => observer.error(err)
+              error: (err) => observer.error(err),
             });
-          }
+          },
         });
       } else {
         // Just update the profile
-        this.saveUserProfile(userId, { profilePicture: newImageUrl, profilePicturePath: newPath }).subscribe({
+        this.saveUserProfile(userId, {
+          profilePicture: newImageUrl,
+          profilePicturePath: newPath,
+        }).subscribe({
           next: () => observer.next(),
-          error: (err) => observer.error(err)
+          error: (err) => observer.error(err),
         });
       }
     });
@@ -244,28 +331,50 @@ export class UserService {
   }
 
   /** Remove avatar: delete file if path known then clear profile fields */
-  removeProfilePicture(userId: string, imageUrl?: string, path?: string): Observable<void> {
-    return new Observable<void>(observer => {
+  removeProfilePicture(
+    userId: string,
+    imageUrl?: string,
+    path?: string,
+  ): Observable<void> {
+    return new Observable<void>((observer) => {
       if (path || imageUrl) {
         this.deleteProfilePicture(path || imageUrl!).subscribe({
           next: () => {
-            this.saveUserProfile(userId, { profilePicture: '', profilePicturePath: '' }).subscribe({
-              next: () => { observer.next(); observer.complete(); },
-              error: (err) => observer.error(err)
+            this.saveUserProfile(userId, {
+              profilePicture: '',
+              profilePicturePath: '',
+            }).subscribe({
+              next: () => {
+                observer.next();
+                observer.complete();
+              },
+              error: (err) => observer.error(err),
             });
           },
           error: () => {
             // proceed anyway
-            this.saveUserProfile(userId, { profilePicture: '', profilePicturePath: '' }).subscribe({
-              next: () => { observer.next(); observer.complete(); },
-              error: (err) => observer.error(err)
+            this.saveUserProfile(userId, {
+              profilePicture: '',
+              profilePicturePath: '',
+            }).subscribe({
+              next: () => {
+                observer.next();
+                observer.complete();
+              },
+              error: (err) => observer.error(err),
             });
-          }
+          },
         });
       } else {
-        this.saveUserProfile(userId, { profilePicture: '', profilePicturePath: '' }).subscribe({
-          next: () => { observer.next(); observer.complete(); },
-          error: (err) => observer.error(err)
+        this.saveUserProfile(userId, {
+          profilePicture: '',
+          profilePicturePath: '',
+        }).subscribe({
+          next: () => {
+            observer.next();
+            observer.complete();
+          },
+          error: (err) => observer.error(err),
         });
       }
     });
@@ -280,18 +389,38 @@ export class UserService {
       usersCollection,
       where('isPublic', '==', true),
       orderBy('createdAt', 'desc'),
-      limit(50)
+      limit(50),
     );
-    
+
     return collectionData(publicUsersQuery) as Observable<UserProfile[]>;
+  }
+
+  /**
+   * Get multiple users by their IDs
+   */
+  getUsers(userIds: string[]): Observable<UserProfile[]> {
+    if (!userIds || userIds.length === 0) {
+      return of([]);
+    }
+    const usersCollection = collection(this.firestore, 'users');
+    const usersQuery = query(usersCollection, where('id', 'in', userIds));
+    return collectionData(usersQuery) as Observable<UserProfile[]>;
   }
 
   /**
    * Update user statistics
    */
-  updateUserStats(userId: string, stats: { totalIdeas?: number; totalUpvotes?: number, totalComments?: number }): Observable<void> {
+  updateUserStats(
+    userId: string,
+    stats: {
+      totalIdeas?: number;
+      totalUpvotes?: number;
+      totalComments?: number;
+      points?: number;
+    },
+  ): Observable<void> {
     const userDoc = doc(this.firestore, 'users', userId);
-    
+
     const updateData: { [key: string]: any } = {};
     if (stats.totalIdeas) {
       updateData['totalIdeas'] = increment(stats.totalIdeas);
@@ -302,6 +431,9 @@ export class UserService {
     if (stats.totalComments) {
       updateData['totalComments'] = increment(stats.totalComments);
     }
+    if (stats.points) {
+      updateData['points'] = increment(stats.points);
+    }
 
     return from(updateDoc(userDoc, updateData));
   }
@@ -311,12 +443,25 @@ export class UserService {
    */
   incrementUserIdeaCount(userId: string): Observable<void> {
     const userDocRef = doc(this.firestore, 'users', userId);
-    return new Observable<void>(observer => {
+    return new Observable<void>((observer) => {
       updateDoc(userDocRef, { totalIdeas: increment(1) })
-        .then(() => { observer.next(); observer.complete(); })
+        .then(() => {
+          observer.next();
+          observer.complete();
+        })
         .catch(async () => {
           try {
-            await setDoc(userDocRef, { totalIdeas: 1, totalUpvotes: 0, createdAt: new Date(), displayName: 'User', email: '' }, { merge: true });
+            await setDoc(
+              userDocRef,
+              {
+                totalIdeas: 1,
+                totalUpvotes: 0,
+                createdAt: new Date(),
+                displayName: 'User',
+                email: '',
+              },
+              { merge: true },
+            );
             observer.next();
             observer.complete();
           } catch (err) {
@@ -344,7 +489,8 @@ export class UserService {
       interests: [],
       badges: [],
       hasSeenPlatformTour: false,
-      hasDismissedChecklist: false
+      hasDismissedChecklist: false,
+      points: 0,
     };
 
     return this.saveUserProfile(user.uid, profileData);
@@ -392,13 +538,13 @@ export class UserService {
 
         // Draw and compress
         ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
-        
+
         canvas.toBlob(
           (blob) => {
             if (blob) {
               const compressedFile = new File([blob], file.name, {
                 type: 'image/jpeg',
-                lastModified: Date.now()
+                lastModified: Date.now(),
               });
               resolve(compressedFile);
             } else {
@@ -406,7 +552,7 @@ export class UserService {
             }
           },
           'image/jpeg',
-          quality
+          quality,
         );
       };
 
@@ -415,7 +561,3 @@ export class UserService {
     });
   }
 }
-
-
-
-

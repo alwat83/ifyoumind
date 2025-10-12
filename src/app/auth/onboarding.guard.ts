@@ -11,13 +11,13 @@ export const onboardingGuard: CanActivateFn = (route, state) => {
 
   return user(auth).pipe(
     first(), // take the first emission and complete
-    switchMap(user => {
+    switchMap((user) => {
       if (!user) {
         return of(true); // Allow access for non-logged-in users
       }
       // User is logged in, check their onboarding status
       return userService.getUserProfile(user.uid).pipe(
-        map(profile => {
+        map((profile) => {
           if (profile?.hasCompletedOnboarding) {
             return true; // User has completed onboarding, allow access
           } else {
@@ -27,8 +27,8 @@ export const onboardingGuard: CanActivateFn = (route, state) => {
             }
             return router.parseUrl('/onboarding');
           }
-        })
+        }),
       );
-    })
+    }),
   );
 };

@@ -1,4 +1,3 @@
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfileComponent } from './profile.component';
 import { UserService } from '../services/user.service';
@@ -23,7 +22,7 @@ describe('ProfileComponent', () => {
     totalIdeas: 5,
     totalUpvotes: 10,
     profilePicture: 'http://example.com/pic.jpg',
-    profilePicturePath: 'path/to/pic.jpg'
+    profilePicturePath: 'path/to/pic.jpg',
   };
 
   beforeEach(async () => {
@@ -32,9 +31,13 @@ describe('ProfileComponent', () => {
       'saveUserProfile',
       'uploadProfilePicture',
       'updateProfilePicture',
-      'removeProfilePicture'
+      'removeProfilePicture',
     ]);
-    const toastServiceSpy = jasmine.createSpyObj('ToastService', ['success', 'error', 'info']);
+    const toastServiceSpy = jasmine.createSpyObj('ToastService', [
+      'success',
+      'error',
+      'info',
+    ]);
     const authSpy = jasmine.createSpyObj('Auth', ['']);
     const routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
@@ -44,8 +47,8 @@ describe('ProfileComponent', () => {
         { provide: UserService, useValue: userServiceSpy },
         { provide: ToastService, useValue: toastServiceSpy },
         { provide: Auth, useValue: { user: () => of(mockUser) } },
-        { provide: Router, useValue: routerSpy }
-      ]
+        { provide: Router, useValue: routerSpy },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProfileComponent);
@@ -100,11 +103,16 @@ describe('ProfileComponent', () => {
       component.editForm.username = newProfileData.username;
       component.editForm.bio = newProfileData.bio;
       component.saveProfile();
-      expect(userService.saveUserProfile).toHaveBeenCalledWith(mockUser.uid, newProfileData);
+      expect(userService.saveUserProfile).toHaveBeenCalledWith(
+        mockUser.uid,
+        newProfileData,
+      );
       expect(component.isEditing).toBe(false);
       expect(component.username).toBe(newProfileData.username);
       expect(component.bio).toBe(newProfileData.bio);
-      expect(toastService.success).toHaveBeenCalledWith('Profile updated successfully!');
+      expect(toastService.success).toHaveBeenCalledWith(
+        'Profile updated successfully!',
+      );
     });
 
     it('should cancel editing', () => {
@@ -133,7 +141,11 @@ describe('ProfileComponent', () => {
     });
 
     it('should not select a file larger than 5MB', () => {
-      const largeFile = new File(new Array(6 * 1024 * 1024).fill(0), 'large.jpg', { type: 'image/jpeg' });
+      const largeFile = new File(
+        new Array(6 * 1024 * 1024).fill(0),
+        'large.jpg',
+        { type: 'image/jpeg' },
+      );
       const event = { target: { files: [largeFile] } } as unknown as Event;
       component.onFileSelected(event);
       expect(component.selectedFile).toBe(null);
@@ -141,8 +153,15 @@ describe('ProfileComponent', () => {
     });
 
     it('should upload a profile picture', (done) => {
-      const uploadProgress = new Subject<{ progress: number; completed: boolean; url?: string; path?: string }>();
-      userService.uploadProfilePicture.and.returnValue(uploadProgress.asObservable());
+      const uploadProgress = new Subject<{
+        progress: number;
+        completed: boolean;
+        url?: string;
+        path?: string;
+      }>();
+      userService.uploadProfilePicture.and.returnValue(
+        uploadProgress.asObservable(),
+      );
       userService.updateProfilePicture.and.returnValue(of(undefined));
 
       component.selectedFile = mockFile;
@@ -155,7 +174,12 @@ describe('ProfileComponent', () => {
       fixture.detectChanges();
       expect(component.uploadProgress).toBe(50);
 
-      uploadProgress.next({ progress: 100, completed: true, url: 'http://example.com/new.jpg', path: 'path/to/new.jpg' });
+      uploadProgress.next({
+        progress: 100,
+        completed: true,
+        url: 'http://example.com/new.jpg',
+        path: 'path/to/new.jpg',
+      });
       fixture.detectChanges();
 
       setTimeout(() => {
@@ -163,7 +187,9 @@ describe('ProfileComponent', () => {
         expect(component.isUploading).toBe(false);
         expect(component.selectedFile).toBe(null);
         expect(component.profilePicUrl).toBe('http://example.com/new.jpg');
-        expect(toastService.success).toHaveBeenCalledWith('Profile picture uploaded successfully!');
+        expect(toastService.success).toHaveBeenCalledWith(
+          'Profile picture uploaded successfully!',
+        );
         done();
       }, 0);
     });
@@ -180,7 +206,11 @@ describe('ProfileComponent', () => {
 
       component.removeProfilePicture();
 
-      expect(userService.removeProfilePicture).toHaveBeenCalledWith(mockUser.uid, 'http://example.com/pic.jpg', 'path/to/pic.jpg');
+      expect(userService.removeProfilePicture).toHaveBeenCalledWith(
+        mockUser.uid,
+        'http://example.com/pic.jpg',
+        'path/to/pic.jpg',
+      );
       expect(component.profilePicUrl).toBe('');
       expect(component.hasProfilePic).toBe(false);
       expect(toastService.info).toHaveBeenCalledWith('Profile picture removed');

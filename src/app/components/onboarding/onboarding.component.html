@@ -3,24 +3,50 @@
     <!-- Step 1: Welcome -->
     <div *ngIf="currentStep === 1" class="step-content">
       <h1 class="text-3xl font-bold mb-4">Welcome to ifYouMind</h1>
-      <p class="text-lg mb-6">A space where ideas grow together. Ready to turn sparks into real-world impact?</p>
+      <p class="text-lg mb-6">
+        A space where ideas grow together. Ready to turn sparks into real-world
+        impact?
+      </p>
       <!-- Placeholder for intro video -->
-      <div class="video-placeholder bg-gray-800 border-2 border-dashed border-gray-600 w-full h-64 rounded-lg mb-6 flex flex-col items-center justify-center text-gray-400">
-        <svg class="w-24 h-24 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707.707M12 21v-1m0-16a9 9 0 11-9 9h18a9 9 0 01-9-9z"></path></svg>
+      <div
+        class="video-placeholder bg-gray-800 border-2 border-dashed border-gray-600 w-full h-64 rounded-lg mb-6 flex flex-col items-center justify-center text-gray-400"
+      >
+        <svg
+          class="w-24 h-24 text-yellow-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707.707M12 21v-1m0-16a9 9 0 11-9 9h18a9 9 0 01-9-9z"
+          ></path>
+        </svg>
         <p class="text-lg font-semibold mt-4">Intro Video Coming Soon</p>
       </div>
-      <button (click)="nextStep()" class="btn-primary w-full">Get Started</button>
+      <button (click)="nextStep()" class="btn-primary w-full">
+        Get Started
+      </button>
     </div>
 
     <!-- Step 2: Personalize -->
     <div *ngIf="currentStep === 2" class="step-content">
-      <h2 class="text-2xl font-bold mb-4">What kind of ideas excite you most?</h2>
-      <p class="text-md mb-6 text-gray-600">Select a few interests to help us tailor your experience.</p>
+      <h2 class="text-2xl font-bold mb-4">
+        What kind of ideas excite you most?
+      </h2>
+      <p class="text-md mb-6 text-gray-600">
+        Select a few interests to help us tailor your experience.
+      </p>
       <div class="interests-grid">
-        <div *ngFor="let interest of interests" 
-             class="interest-item"
-             [class.selected]="interest.selected"
-             (click)="interest.selected = !interest.selected">
+        <div
+          *ngFor="let interest of interests"
+          class="interest-item"
+          [class.selected]="interest.selected"
+          (click)="interest.selected = !interest.selected"
+        >
           {{ interest.name }}
         </div>
       </div>
@@ -35,10 +61,18 @@
       <h2 class="text-2xl font-bold mb-4">You're all set!</h2>
       <p class="text-lg mb-8">What would you like to do first?</p>
       <div class="action-buttons space-y-4">
-        <a routerLink="/submit" (click)="finishOnboarding()" class="btn-primary w-full block text-center">
+        <a
+          routerLink="/submit"
+          (click)="finishOnboarding()"
+          class="btn-primary w-full block text-center"
+        >
           Share Your First Idea
         </a>
-        <a routerLink="/" (click)="finishOnboarding()" class="btn-secondary w-full block text-center">
+        <a
+          routerLink="/"
+          (click)="finishOnboarding()"
+          class="btn-secondary w-full block text-center"
+        >
           Explore Ideas
         </a>
       </div>

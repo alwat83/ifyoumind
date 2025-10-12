@@ -12,13 +12,14 @@ import { BookmarkService } from '../services/bookmark.service';
 import { ToastService } from '../services/toast.service';
 import { AnalyticsService } from '../services/analytics.service';
 import { SeoService } from '../services/seo.service';
+import { TeamManagerComponent } from '../components/team-manager/team-manager.component';
 
 @Component({
   selector: 'app-idea-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule, TeamManagerComponent],
   templateUrl: './idea-detail.component.html',
-  styleUrls: ['./idea-detail.component.scss']
+  styleUrls: ['./idea-detail.component.scss'],
 })
 export class IdeaDetailComponent implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
@@ -41,6 +42,7 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
   isBookmarked = false;
   editingCommentId: string | null = null;
   editContent = '';
+  showTeamManager = false;
 
   async ngOnInit() {
     this.ideaId = this.route.snapshot.paramMap.get('id') || '';
@@ -60,11 +62,17 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
     });
     this.comments$ = this.commentsService.listForIdea(this.ideaId, 100);
     // Track bookmark state
-    this.currentUser$.pipe(takeUntil(this.destroy$)).subscribe(u => {
-      if (!u) { this.isBookmarked = false; return; }
-      this.bookmarkService.list().pipe(takeUntil(this.destroy$)).subscribe(ids => {
-        this.isBookmarked = ids.includes(this.ideaId);
-      });
+    this.currentUser$.pipe(takeUntil(this.destroy$)).subscribe((u) => {
+      if (!u) {
+        this.isBookmarked = false;
+        return;
+      }
+      this.bookmarkService
+        .list()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((ids) => {
+          this.isBookmarked = ids.includes(this.ideaId);
+        });
     });
   }
 
@@ -81,33 +89,35 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
 
     const url = `https://ifyoumind.com/idea/${idea.id}`;
     // Handle both Date and Firestore Timestamp for createdAt
-    const datePublished = idea.createdAt instanceof Date
-      ? idea.createdAt.toISOString()
-      : (idea.createdAt as any)?.toDate?.().toISOString() || new Date().toISOString();
+    const datePublished =
+      idea.createdAt instanceof Date
+        ? idea.createdAt.toISOString()
+        : (idea.createdAt as any)?.toDate?.().toISOString() ||
+          new Date().toISOString();
 
     const structuredData = {
       '@context': 'https://schema.org',
       '@type': 'TechArticle',
-      'mainEntityOfPage': {
+      mainEntityOfPage: {
         '@type': 'WebPage',
-        '@id': url
+        '@id': url,
       },
-      'headline': idea.title,
-      'datePublished': datePublished,
-      'author': {
+      headline: idea.title,
+      datePublished: datePublished,
+      author: {
         '@type': 'Person',
-        'name': idea.authorName || 'Anonymous'
+        name: idea.authorName || 'Anonymous',
       },
-      'publisher': {
+      publisher: {
         '@type': 'Organization',
-        'name': 'ifYouMind',
-        'logo': {
+        name: 'ifYouMind',
+        logo: {
           '@type': 'ImageObject',
-          'url': 'https://ifyoumind.com/image.png'
-        }
+          url: 'https://ifyoumind.com/image.png',
+        },
       },
-      'description': idea.problem,
-      'articleBody': idea.solution
+      description: idea.problem,
+      articleBody: idea.solution,
     };
     this.seo.setStructuredData(structuredData);
   }
@@ -116,7 +126,12 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
     if (!user || !this.ideaId) return;
     const content = this.newComment.trim();
     if (!content) return;
-    await this.commentsService.add(this.ideaId, content, user.uid, user.displayName || 'Anonymous');
+    await this.commentsService.add(
+      this.ideaId,
+      content,
+      user.uid,
+      user.displayName || 'Anonymous',
+    );
     this.analytics.commentAdded(this.ideaId);
     this.newComment = '';
   }
@@ -135,7 +150,10 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
   async saveEdit(c: Comment, u: User | null) {
     if (!u || u.uid !== c.authorId || !c.id) return;
     const trimmed = this.editContent.trim();
-    if (!trimmed) { this.toastService.error('Comment cannot be empty'); return; }
+    if (!trimmed) {
+      this.toastService.error('Comment cannot be empty');
+      return;
+    }
     const original = c.content;
     c.content = trimmed; // optimistic
     try {
@@ -146,7 +164,10 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
       c.content = original; // rollback
       this.toastService.error('Failed to update comment');
       console.error(e);
-      this.analytics.actionFailed('comment_update', (e as any)?.message, { idea_id: this.ideaId, comment_id: c.id });
+      this.analytics.actionFailed('comment_update', (e as any)?.message, {
+        idea_id: this.ideaId,
+        comment_id: c.id,
+      });
     }
   }
 
@@ -159,7 +180,10 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
     } catch (e) {
       this.toastService.error('Failed to delete comment');
       console.error(e);
-      this.analytics.actionFailed('comment_delete', (e as any)?.message, { idea_id: this.ideaId, comment_id: c.id });
+      this.analytics.actionFailed('comment_delete', (e as any)?.message, {
+        idea_id: this.ideaId,
+        comment_id: c.id,
+      });
     }
   }
 
@@ -198,10 +222,24 @@ export class IdeaDetailComponent implements OnInit, OnDestroy {
     } catch (e) {
       this.toastService.error('Failed to toggle bookmark');
       console.error(e);
-      this.analytics.actionFailed('bookmark_toggle', (e as any)?.message, { idea_id: this.ideaId });
+      this.analytics.actionFailed('bookmark_toggle', (e as any)?.message, {
+        idea_id: this.ideaId,
+      });
+    }
+  }
+
+  async requestToJoin() {
+    const u = await this.auth.currentUser;
+    if (!u || !this.ideaId) {
+      this.toastService.error('You must be logged in to join an idea');
+      return;
+    }
+    try {
+      await this.ideaService.requestToJoin(this.ideaId, u.uid);
+      this.toastService.success('Request sent!');
+    } catch (e) {
+      this.toastService.error('Failed to send request');
+      console.error(e);
     }
   }
 }
-
-
-

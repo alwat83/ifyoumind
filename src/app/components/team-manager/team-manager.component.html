@@ -1,0 +1,56 @@
+<div class="card-elevated mt-6">
+  <h2 class="heading-3 mb-5">Manage Team</h2>
+
+  <div *ngIf="joinRequestUsers$ | async as users">
+    <h3 class="heading-4 mb-3">Join Requests ({{ users.length }})</h3>
+    <div class="space-y-2">
+      <div *ngFor="let user of users" class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <img
+            [src]="user.profilePicture || 'assets/default-avatar.png'"
+            alt=""
+            class="w-8 h-8 rounded-full"
+          />
+          <span>{{ user.displayName }}</span>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn btn-xs btn-primary" (click)="accept(user.id!)">
+            Accept
+          </button>
+          <button class="btn btn-xs btn-secondary" (click)="decline(user.id!)">
+            Decline
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6" *ngIf="collaboratorUsers$ | async as users">
+    <h3 class="heading-4 mb-3">Collaborators ({{ users.length }})</h3>
+    <div class="space-y-2">
+      <div *ngFor="let user of users" class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <img
+            [src]="user.profilePicture || 'assets/default-avatar.png'"
+            alt=""
+            class="w-8 h-8 rounded-full"
+          />
+          <span>{{ user.displayName }}</span>
+        </div>
+        <button class="btn btn-xs btn-danger" (click)="remove(user.id!)">
+          Remove
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    *ngIf="
+      !(joinRequestUsers$ | async)?.length &&
+      !(collaboratorUsers$ | async)?.length
+    "
+    class="text-dim body-small"
+  >
+    No join requests or collaborators.
+  </div>
+</div>

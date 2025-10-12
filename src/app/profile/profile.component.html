@@ -5,118 +5,160 @@
       <button (click)="goBack()" class="btn btn-outline hover-scale-sm mb-4">
         ← Back to Ideas
       </button>
-      <h1 class="heading-1 mb-4 gradient-text">
-        Your Profile
-      </h1>
+      <h1 class="heading-1 mb-4 gradient-text">Your Profile</h1>
     </div>
 
     <!-- Profile Content -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-      
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
       <!-- Profile Card -->
       <div class="order-2 lg:order-1">
-  <div class="card-elevated h-full flex flex-col">
+        <div class="card-elevated h-full flex flex-col">
           <div class="text-center mb-6">
             <!-- Profile Picture -->
             <div class="relative inline-block mb-6">
-              <div class="avatar-large w-32 h-32 mx-auto flex items-center justify-center text-3xl overflow-hidden border-4 border-neutral-600 hover:border-blue-500 transition-colors">
-                <img 
+              <div
+                class="avatar-large w-32 h-32 mx-auto flex items-center justify-center text-3xl overflow-hidden border-4 border-neutral-600 hover:border-blue-500 transition-colors"
+              >
+                <img
                   *ngIf="hasProfilePic && profilePicUrl"
-                  [src]="profilePicUrl" 
+                  [src]="profilePicUrl"
                   [alt]="displayName"
-                  class="w-full h-full object-cover">
-                <span *ngIf="!hasProfilePic" class="text-neutral-400">{{ getUserInitial() }}</span>
+                  class="w-full h-full object-cover"
+                />
+                <span *ngIf="!hasProfilePic" class="text-neutral-400">{{
+                  getUserInitial()
+                }}</span>
               </div>
-              
+
               <!-- Large Upload Button -->
-              <button 
+              <button
                 (click)="fileInput.click()"
                 [disabled]="isUploading"
-                class="absolute -bottom-3 -right-3 w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform shadow-xl border-2 border-neutral-800">
+                class="absolute -bottom-3 -right-3 w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform shadow-xl border-2 border-neutral-800"
+              >
                 <span class="text-lg">📷</span>
               </button>
-              
+
               <!-- Hidden File Input -->
-              <input 
+              <input
                 #fileInput
-                type="file" 
-                accept="image/*" 
+                type="file"
+                accept="image/*"
                 (change)="onFileSelected($event)"
-                class="hidden">
+                class="hidden"
+              />
             </div>
 
             <!-- Upload Section -->
             <div class="space-y-4">
               <!-- Upload Instructions -->
-              <div *ngIf="!hasProfilePic && !selectedFile && !isUploading" class="text-center">
+              <div
+                *ngIf="!hasProfilePic && !selectedFile && !isUploading"
+                class="text-center"
+              >
                 <div class="text-neutral-400 body-medium mb-3">
                   No profile picture yet
                 </div>
-                <button 
+                <button
                   (click)="fileInput.click()"
-                  class="btn btn-primary-modern w-full hover-scale-sm">
+                  class="btn btn-primary-modern w-full hover-scale-sm"
+                >
                   📸 Add Profile Picture
                 </button>
               </div>
-              
+
               <!-- Upload Progress -->
               <div *ngIf="isUploading" class="space-y-4">
                 <div class="flex items-center justify-between">
-                  <div class="text-blue-400 body-medium font-medium flex items-center gap-2">📤 Uploading your picture...</div>
-                  <button (click)="cancelUpload()" class="text-xs text-red-300 hover:text-red-200 underline">Cancel</button>
-                </div>
-                <div class="w-full bg-neutral-700/70 rounded-full h-3 overflow-hidden">
-                  <div 
-                    class="bg-gradient-to-r from-blue-500 via-cyan-400 to-purple-600 h-3 rounded-full transition-all duration-300"
-                    [style.width.%]="uploadProgress">
+                  <div
+                    class="text-blue-400 body-medium font-medium flex items-center gap-2"
+                  >
+                    📤 Uploading your picture...
                   </div>
+                  <button
+                    (click)="cancelUpload()"
+                    class="text-xs text-red-300 hover:text-red-200 underline"
+                  >
+                    Cancel
+                  </button>
                 </div>
-                <div class="text-neutral-400 text-sm">{{ uploadProgress }}% uploaded</div>
+                <div
+                  class="w-full bg-neutral-700/70 rounded-full h-3 overflow-hidden"
+                >
+                  <div
+                    class="bg-gradient-to-r from-blue-500 via-cyan-400 to-purple-600 h-3 rounded-full transition-all duration-300"
+                    [style.width.%]="uploadProgress"
+                  ></div>
+                </div>
+                <div class="text-neutral-400 text-sm">
+                  {{ uploadProgress }}% uploaded
+                </div>
               </div>
-              
+
               <!-- Upload Error -->
-              <div *ngIf="uploadError" class="bg-red-900/20 border border-red-500/50 rounded-lg p-4">
-                <div class="text-red-400 text-sm font-medium mb-2">⚠️ Upload Error</div>
+              <div
+                *ngIf="uploadError"
+                class="bg-red-900/20 border border-red-500/50 rounded-lg p-4"
+              >
+                <div class="text-red-400 text-sm font-medium mb-2">
+                  ⚠️ Upload Error
+                </div>
                 <div class="text-red-300 text-sm">{{ uploadError }}</div>
-                <button 
+                <button
                   (click)="uploadError = ''"
-                  class="text-red-400 hover:text-red-300 text-xs underline mt-2">
+                  class="text-red-400 hover:text-red-300 text-xs underline mt-2"
+                >
                   Dismiss
                 </button>
               </div>
-              
+
               <!-- Upload Confirmation -->
               <div *ngIf="selectedFile && !isUploading" class="space-y-3">
-                <div class="bg-green-900/20 border border-green-500/50 rounded-lg p-4">
-                  <div class="text-green-400 text-sm font-medium mb-2">✅ File Selected</div>
-                  <div class="text-green-300 text-sm">{{ selectedFile.name }}</div>
-                  <div class="text-green-300 text-xs">Size: {{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB</div>
+                <div
+                  class="bg-green-900/20 border border-green-500/50 rounded-lg p-4"
+                >
+                  <div class="text-green-400 text-sm font-medium mb-2">
+                    ✅ File Selected
+                  </div>
+                  <div class="text-green-300 text-sm">
+                    {{ selectedFile.name }}
+                  </div>
+                  <div class="text-green-300 text-xs">
+                    Size: {{ (selectedFile.size / 1024 / 1024).toFixed(2) }} MB
+                  </div>
                 </div>
-                
+
                 <div class="flex gap-3">
-                  <button 
+                  <button
                     (click)="uploadProfilePicture()"
-                    class="btn btn-primary-modern flex-1 hover-scale-sm">
+                    class="btn btn-primary-modern flex-1 hover-scale-sm"
+                  >
                     🚀 Upload Now
                   </button>
-                  <button 
+                  <button
                     (click)="clearSelectedFile()"
-                    class="btn btn-outline hover-scale-sm">
+                    class="btn btn-outline hover-scale-sm"
+                  >
                     Cancel
                   </button>
                 </div>
               </div>
 
               <!-- Change Picture Button -->
-              <div *ngIf="hasProfilePic && !selectedFile && !isUploading" class="text-center">
-                <button 
+              <div
+                *ngIf="hasProfilePic && !selectedFile && !isUploading"
+                class="text-center"
+              >
+                <button
                   (click)="fileInput.click()"
-                  class="btn btn-outline hover-scale-sm">
+                  class="btn btn-outline hover-scale-sm"
+                >
                   🔄 Change Picture
                 </button>
-                <button 
+                <button
                   (click)="removeProfilePicture()"
-                  class="btn btn-outline mt-3 text-red-300 hover:text-red-200 hover-scale-sm">
+                  class="btn btn-outline mt-3 text-red-300 hover:text-red-200 hover-scale-sm"
+                >
                   ❌ Remove
                 </button>
               </div>
@@ -129,7 +171,7 @@
               <h3 class="heading-3">{{ displayName }}</h3>
               <p class="body-medium text-dim">{{ username }}</p>
             </div>
-            
+
             <div class="text-subtle body-medium">
               {{ bio }}
             </div>
@@ -137,9 +179,10 @@
 
           <!-- Edit Profile Button -->
           <div class="mt-6">
-            <button 
+            <button
               (click)="startEditing()"
-              class="btn btn-outline w-full hover-scale-sm">
+              class="btn btn-outline w-full hover-scale-sm"
+            >
               Edit Profile
             </button>
           </div>
@@ -148,7 +191,7 @@
 
       <!-- Profile Stats -->
       <div class="order-1 lg:order-2 space-y-8">
-  <div class="card-elevated">
+        <div class="card-elevated">
           <h2 class="heading-2 mb-6 gradient-text">Your Stats</h2>
           <div class="grid grid-cols-2 gap-6">
             <div class="text-center">
@@ -159,111 +202,161 @@
               <div class="text-3xl font-bold">{{ totalUpvotes }}</div>
               <div class="text-dim body-medium">Total Upvotes</div>
             </div>
+            <div class="text-center">
+              <div class="text-3xl font-bold">{{ points }}</div>
+              <div class="text-dim body-medium">Points</div>
+            </div>
           </div>
           <!-- Admin Tools -->
           <div *ngIf="isAdmin" class="mt-8 border-t border-neutral-700/50 pt-6">
-            <h3 class="heading-3 mb-4 flex items-center gap-2">⚙️ Admin Utilities</h3>
+            <h3 class="heading-3 mb-4 flex items-center gap-2">
+              ⚙️ Admin Utilities
+            </h3>
             <div class="space-y-4">
-              <button (click)="seedIdeas()" [disabled]="seeding" class="btn btn-primary-modern w-full hover-scale-sm">
+              <button
+                (click)="seedIdeas()"
+                [disabled]="seeding"
+                class="btn btn-primary-modern w-full hover-scale-sm"
+              >
                 <span *ngIf="!seeding">🌱 Seed Initial Ideas</span>
-                <span *ngIf="seeding" class="flex items-center justify-center gap-2">
+                <span
+                  *ngIf="seeding"
+                  class="flex items-center justify-center gap-2"
+                >
                   <span class="animate-pulse">Seeding...</span>
                 </span>
               </button>
-              <button (click)="reSeedIdeas()" [disabled]="reSeeding" class="btn btn-outline w-full hover-scale-sm">
+              <button
+                (click)="reSeedIdeas()"
+                [disabled]="reSeeding"
+                class="btn btn-outline w-full hover-scale-sm"
+              >
                 <span *ngIf="!reSeeding">♻️ Re-Seed Demo Ideas</span>
-                <span *ngIf="reSeeding" class="animate-pulse">Re-seeding...</span>
+                <span *ngIf="reSeeding" class="animate-pulse"
+                  >Re-seeding...</span
+                >
               </button>
-              <button (click)="removeSeedIdeas()" [disabled]="removingSeeds" class="btn btn-outline w-full hover-scale-sm text-red-300 hover:text-red-200">
+              <button
+                (click)="removeSeedIdeas()"
+                [disabled]="removingSeeds"
+                class="btn btn-outline w-full hover-scale-sm text-red-300 hover:text-red-200"
+              >
                 <span *ngIf="!removingSeeds">🧹 Remove Seeded Ideas</span>
-                <span *ngIf="removingSeeds" class="animate-pulse">Removing...</span>
+                <span *ngIf="removingSeeds" class="animate-pulse"
+                  >Removing...</span
+                >
               </button>
               <div *ngIf="seedResult" class="text-subtle text-xs">
-                Inserted: {{ seedResult.inserted }} • Skipped: {{ seedResult.skipped }}
+                Inserted: {{ seedResult.inserted }} • Skipped:
+                {{ seedResult.skipped }}
               </div>
             </div>
           </div>
         </div>
 
         <!-- Edit Profile Form -->
-  <div *ngIf="isEditing" class="card-elevated">
+        <div *ngIf="isEditing" class="card-elevated">
           <h2 class="heading-2 mb-6 gradient-text">Edit Profile</h2>
           <form (ngSubmit)="saveProfile()" class="space-y-6">
-            
             <div>
-              <label for="username" class="block text-subtle body-medium mb-2">Username</label>
-              <input 
-                type="text" 
+              <label for="username" class="block text-subtle body-medium mb-2"
+                >Username</label
+              >
+              <input
+                type="text"
                 id="username"
                 [(ngModel)]="editForm.username"
                 name="username"
                 placeholder="Enter your username"
-                class="input-modern">
+                class="input-modern"
+              />
             </div>
-            
+
             <div>
-              <label for="bio" class="block text-subtle body-medium mb-2">Bio</label>
-              <textarea 
+              <label for="bio" class="block text-subtle body-medium mb-2"
+                >Bio</label
+              >
+              <textarea
                 id="bio"
                 [(ngModel)]="editForm.bio"
                 name="bio"
                 placeholder="Tell us about yourself..."
                 rows="4"
-                class="input-modern"></textarea>
+                class="input-modern"
+              ></textarea>
             </div>
-            
+
             <div class="flex gap-4">
-              <button 
+              <button
                 type="submit"
-                class="btn btn-primary-modern flex-1 hover-scale-sm">
+                class="btn btn-primary-modern flex-1 hover-scale-sm"
+              >
                 Save Changes
               </button>
-              <button 
+              <button
                 type="button"
                 (click)="cancelEditing()"
-                class="btn btn-outline flex-1 hover-scale-sm">
+                class="btn btn-outline flex-1 hover-scale-sm"
+              >
                 Cancel
               </button>
             </div>
           </form>
-        <!-- Your Activity -->
-        <div class="card-elevated">
-          <h2 class="heading-2 mb-6 gradient-text">Your Activity</h2>
-          <div class="tabs">
-            <button class="tab" [class.active]="activeTab === 'submitted'" (click)="activeTab = 'submitted'">My Ideas</button>
-            <button class="tab" [class.active]="activeTab === 'upvoted'" (click)="activeTab = 'upvoted'">Upvoted</button>
-          </div>
-          <div *ngIf="activeTab === 'submitted'">
-            <div *ngIf="(submittedIdeas$ | async) as ideas; else loadingIdeas">
-              <div *ngIf="ideas.length > 0; else noSubmittedIdeas">
-                <div *ngFor="let idea of ideas">
-                  <app-idea-card [idea]="idea"></app-idea-card>
+          <!-- Your Activity -->
+          <div class="card-elevated">
+            <h2 class="heading-2 mb-6 gradient-text">Your Activity</h2>
+            <div class="tabs">
+              <button
+                class="tab"
+                [class.active]="activeTab === 'submitted'"
+                (click)="activeTab = 'submitted'"
+              >
+                My Ideas
+              </button>
+              <button
+                class="tab"
+                [class.active]="activeTab === 'upvoted'"
+                (click)="activeTab = 'upvoted'"
+              >
+                Upvoted
+              </button>
+            </div>
+            <div *ngIf="activeTab === 'submitted'">
+              <div *ngIf="submittedIdeas$ | async as ideas; else loadingIdeas">
+                <div *ngIf="ideas.length > 0; else noSubmittedIdeas">
+                  <div *ngFor="let idea of ideas">
+                    <app-idea-card [idea]="idea"></app-idea-card>
+                  </div>
                 </div>
+                <ng-template #noSubmittedIdeas>
+                  <p class="text-subtle body-medium">
+                    You haven't submitted any ideas yet.
+                  </p>
+                </ng-template>
               </div>
-              <ng-template #noSubmittedIdeas>
-                <p class="text-subtle body-medium">You haven't submitted any ideas yet.</p>
-              </ng-template>
             </div>
-          </div>
-          <div *ngIf="activeTab === 'upvoted'">
-            <div *ngIf="(upvotedIdeas$ | async) as ideas; else loadingIdeas">
-              <div *ngIf="ideas.length > 0; else noUpvotedIdeas">
-                <div *ngFor="let idea of ideas">
-                  <app-idea-card [idea]="idea"></app-idea-card>
+            <div *ngIf="activeTab === 'upvoted'">
+              <div *ngIf="upvotedIdeas$ | async as ideas; else loadingIdeas">
+                <div *ngIf="ideas.length > 0; else noUpvotedIdeas">
+                  <div *ngFor="let idea of ideas">
+                    <app-idea-card [idea]="idea"></app-idea-card>
+                  </div>
                 </div>
+                <ng-template #noUpvotedIdeas>
+                  <p class="text-subtle body-medium">
+                    You haven't upvoted any ideas yet.
+                  </p>
+                </ng-template>
               </div>
-              <ng-template #noUpvotedIdeas>
-                <p class="text-subtle body-medium">You haven't upvoted any ideas yet.</p>
-              </ng-template>
             </div>
+            <ng-template #loadingIdeas>
+              <div class="space-y-4">
+                <div class="h-8 w-full shimmer-bg rounded"></div>
+                <div class="h-8 w-full shimmer-bg rounded"></div>
+                <div class="h-8 w-full shimmer-bg rounded"></div>
+              </div>
+            </ng-template>
           </div>
-          <ng-template #loadingIdeas>
-            <div class="space-y-4">
-              <div class="h-8 w-full shimmer-bg rounded"></div>
-              <div class="h-8 w-full shimmer-bg rounded"></div>
-              <div class="h-8 w-full shimmer-bg rounded"></div>
-            </div>
-          </ng-template>
         </div>
       </div>
     </div>

@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SeoService {
   private readonly appTitle = 'ifyoumind';
-  private readonly appDescription = 'A platform for sharing, discovering, and discussing innovative ideas.';
+  private readonly appDescription =
+    'A platform for sharing, discovering, and discussing innovative ideas.';
   private readonly appImage = 'https://ifyoumind.com/image.png'; // Default share image
   private readonly siteUrl = 'https://ifyoumind.com';
   private renderer: Renderer2;
@@ -19,7 +20,7 @@ export class SeoService {
     private meta: Meta,
     private router: Router,
     private rendererFactory: RendererFactory2,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
   ) {
     this.renderer = rendererFactory.createRenderer(null, null);
   }
@@ -46,16 +47,25 @@ export class SeoService {
 
     // Open Graph tags for social sharing (Facebook, LinkedIn, etc.)
     this.meta.updateTag({ property: 'og:title', content: pageTitle });
-    this.meta.updateTag({ property: 'og:description', content: pageDescription });
+    this.meta.updateTag({
+      property: 'og:description',
+      content: pageDescription,
+    });
     this.meta.updateTag({ property: 'og:image', content: pageImage });
     this.meta.updateTag({ property: 'og:url', content: canonicalUrl });
     this.meta.updateTag({ property: 'og:site_name', content: this.appTitle });
     this.meta.updateTag({ property: 'og:type', content: 'website' });
 
     // Twitter Card tags
-    this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+    this.meta.updateTag({
+      name: 'twitter:card',
+      content: 'summary_large_image',
+    });
     this.meta.updateTag({ name: 'twitter:title', content: pageTitle });
-    this.meta.updateTag({ name: 'twitter:description', content: pageDescription });
+    this.meta.updateTag({
+      name: 'twitter:description',
+      content: pageDescription,
+    });
     this.meta.updateTag({ name: 'twitter:image', content: pageImage });
   }
 
@@ -83,7 +93,8 @@ export class SeoService {
   setHomePageTags() {
     this.generateTags({
       title: 'ifyoumind | Share Your Ideas',
-      description: 'A community-driven platform to share, discover, and discuss new and innovative ideas for startups, projects, and more.'
+      description:
+        'A community-driven platform to share, discover, and discuss new and innovative ideas for startups, projects, and more.',
     });
   }
 }

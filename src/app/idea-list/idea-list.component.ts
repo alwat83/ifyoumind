@@ -20,9 +20,15 @@ import { IdeaCardComponent } from '../components/idea-card/idea-card.component';
 @Component({
   selector: 'app-idea-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, CategoryFilterComponent, IdeaCardComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    CategoryFilterComponent,
+    IdeaCardComponent,
+  ],
   templateUrl: './idea-list.component.html',
-  styleUrls: ['./idea-list.component.scss']
+  styleUrls: ['./idea-list.component.scss'],
 })
 export class IdeaListComponent implements OnDestroy {
   ideas$: Observable<Idea[]> = of([]); // still used for search fallback
@@ -53,7 +59,8 @@ export class IdeaListComponent implements OnDestroy {
     this.currentUser$ = user(this.auth);
     this.seo.generateTags({
       title: 'ifyoumind | Share Your Ideas',
-      description: 'A community-driven platform to share, discover, and discuss new and innovative ideas for startups, projects, and more.'
+      description:
+        'A community-driven platform to share, discover, and discuss new and innovative ideas for startups, projects, and more.',
     });
     this.applyFeedSource();
     // Setup intersection observer for infinite scroll
@@ -76,11 +83,16 @@ export class IdeaListComponent implements OnDestroy {
       this.ideas$ = this.ideaService.getIdeasByCategory(this.selectedCategory);
       return;
     }
-    this.ideas$ = this.sortMode === 'trending'
-      ? this.ideaService.getTrendingIdeas(50)
-      : this.ideaService.getRecentIdeas(50);
+    this.ideas$ =
+      this.sortMode === 'trending'
+        ? this.ideaService.getTrendingIdeas(50)
+        : this.ideaService.getRecentIdeas(50);
     // Reset paged loading when switching modes (only for recent mode infinite scroll)
-    if (this.sortMode === 'recent' && !this.searchTerm && !this.selectedCategory) {
+    if (
+      this.sortMode === 'recent' &&
+      !this.searchTerm &&
+      !this.selectedCategory
+    ) {
       this.resetPaged();
       this.loadNextPage();
     }
@@ -94,7 +106,7 @@ export class IdeaListComponent implements OnDestroy {
     } else {
       this.applyFeedSource();
     }
-    this.bookmarkService.list().subscribe(ids => {
+    this.bookmarkService.list().subscribe((ids) => {
       this.bookmarkedIds = new Set(ids);
     });
   }
@@ -106,10 +118,20 @@ export class IdeaListComponent implements OnDestroy {
   }
 
   private async loadNextPage() {
-    if (this.loadingPage || this.endReached || this.sortMode !== 'recent' || this.searchTerm) return;
+    if (
+      this.loadingPage ||
+      this.endReached ||
+      this.sortMode !== 'recent' ||
+      this.searchTerm
+    )
+      return;
     this.loadingPage = true;
     try {
-      const { ideas, nextCursor } = await this.ideaService.getRecentIdeasPage(this.pageSize, this.pageCursor, this.selectedCategory || undefined);
+      const { ideas, nextCursor } = await this.ideaService.getRecentIdeasPage(
+        this.pageSize,
+        this.pageCursor,
+        this.selectedCategory || undefined,
+      );
       this.pagedIdeas.push(...ideas);
       this.pageCursor = nextCursor || null;
       if (!nextCursor) this.endReached = true;
@@ -122,16 +144,20 @@ export class IdeaListComponent implements OnDestroy {
 
   private initObserver() {
     const el = document.getElementById(this.sentinelId);
-    if (!el) { setTimeout(() => this.initObserver(), 200); return; }
-    this.observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this.loadNextPage();
-        }
-      });
-    }, { rootMargin: '200px 0px' });
+    if (!el) {
+      setTimeout(() => this.initObserver(), 200);
+      return;
+    }
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.loadNextPage();
+          }
+        });
+      },
+      { rootMargin: '200px 0px' },
+    );
     this.observer.observe(el);
   }
-
-
 }

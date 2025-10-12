@@ -1,31 +1,56 @@
-<div class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
+<div
+  class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden flex flex-col"
+>
   <!-- Animated Background Elements -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none">
-    <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse"></div>
-    <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
-    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl animate-pulse" style="animation-delay: 4s;"></div>
+    <div
+      class="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse"
+    ></div>
+    <div
+      class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse"
+      style="animation-delay: 2s"
+    ></div>
+    <div
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl animate-pulse"
+      style="animation-delay: 4s"
+    ></div>
   </div>
 
   <!-- Modern Header -->
-  <header class="relative z-50 border-b border-white/10 backdrop-blur-xl bg-black/20">
+  <header
+    class="relative z-50 border-b border-white/10 backdrop-blur-xl bg-black/20"
+  >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
         <!-- Logo -->
-        <a routerLink="/" class="logo-link flex items-center space-x-3 cursor-pointer select-none">
-          <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+        <a
+          routerLink="/"
+          class="logo-link flex items-center space-x-3 cursor-pointer select-none"
+        >
+          <div
+            class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center"
+          >
             <span class="text-white font-bold text-sm">💡</span>
           </div>
           <div>
             <h1 class="logo-text text-xl font-bold text-white">ifYouMind</h1>
-            <p class="logo-text text-xs text-neutral-400 hidden sm:block">Ideas for a better world</p>
+            <p class="logo-text text-xs text-neutral-400 hidden sm:block">
+              Ideas for a better world
+            </p>
           </div>
         </a>
 
         <!-- Navigation -->
-        <div class="flex items-center space-x-4 relative" joyrideStep="step1" title="Welcome to ifYouMind!" text="This is the main navigation bar. You can find everything you need to get around the site right here.">
+        <div
+          class="flex items-center space-x-4 relative"
+          joyrideStep="step1"
+          title="Welcome to ifYouMind!"
+          text="This is the main navigation bar. You can find everything you need to get around the site right here."
+        >
           <!-- About submenu (accessible, click-to-toggle, outside click closable) -->
           <div class="relative" #aboutMenuContainer>
-            <button type="button"
+            <button
+              type="button"
               #aboutTrigger
               (click)="onAboutTriggerClick($event)"
               (keydown.enter)="onAboutTriggerKey($event)"
@@ -35,9 +60,14 @@
               class="btn btn-outline text-xs flex items-center gap-1"
               aria-haspopup="true"
               [attr.aria-expanded]="aboutOpen"
-              aria-controls="aboutMenuPanel">
+              aria-controls="aboutMenuPanel"
+            >
               <span>About</span>
-              <span class="chevron transition-transform duration-200" [class.rotate-180]="aboutOpen">▾</span>
+              <span
+                class="chevron transition-transform duration-200"
+                [class.rotate-180]="aboutOpen"
+                >▾</span
+              >
             </button>
             <div
               *ngIf="aboutOpen"
@@ -50,48 +80,88 @@
               (keydown.ArrowUp)="focusLastAboutItem($event)"
               (keydown.ArrowDown)="focusNextAboutItem($event)"
               (keydown.ArrowLeft)="closeAboutMenu()"
-              (keydown.Tab)="onAboutMenuTab($event)">
-              <a routerLink="/about" #aboutItem role="menuitem" (click)="onAboutItemClick($event)" class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm pointer-events-auto">About Us</a>
-              <a routerLink="/mission" #aboutItem role="menuitem" (click)="onAboutItemClick($event)" class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm pointer-events-auto">Why We Exist</a>
-              <a routerLink="/faq" #aboutItem role="menuitem" (click)="onAboutItemClick($event)" class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm pointer-events-auto">FAQ</a>
+              (keydown.Tab)="onAboutMenuTab($event)"
+            >
+              <a
+                routerLink="/about"
+                #aboutItem
+                role="menuitem"
+                (click)="onAboutItemClick($event)"
+                class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm pointer-events-auto"
+                >About Us</a
+              >
+              <a
+                routerLink="/mission"
+                #aboutItem
+                role="menuitem"
+                (click)="onAboutItemClick($event)"
+                class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm pointer-events-auto"
+                >Why We Exist</a
+              >
+              <a
+                routerLink="/faq"
+                #aboutItem
+                role="menuitem"
+                (click)="onAboutItemClick($event)"
+                class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm pointer-events-auto"
+                >FAQ</a
+              >
             </div>
           </div>
           <!-- Theme Toggle -->
-          <button (click)="toggleTheme()" class="btn-secondary text-xs flex items-center gap-1" aria-label="Toggle color theme">
+          <button
+            (click)="toggleTheme()"
+            class="btn-secondary text-xs flex items-center gap-1"
+            aria-label="Toggle color theme"
+          >
             <span *ngIf="themeService.theme()() === 'dark'">🌞</span>
             <span *ngIf="themeService.theme()() === 'light'">🌙</span>
             <span class="hidden sm:inline">Theme</span>
           </button>
           <!-- Submit Button -->
-          <a routerLink="/submit" 
-             class="btn-primary flex items-center space-x-2 text-sm"
-             joyrideStep="step2"
-             title="Submit Your Ideas"
-             text="Have a great idea? Click here to share it with the world!">
+          <a
+            routerLink="/submit"
+            class="btn-primary flex items-center space-x-2 text-sm"
+            joyrideStep="step2"
+            title="Submit Your Ideas"
+            text="Have a great idea? Click here to share it with the world!"
+          >
             <span>✨</span>
             <span class="hidden sm:inline">Submit Idea</span>
           </a>
 
           <!-- User Menu -->
-          <div *ngIf="user$ | async as user" class="flex items-center space-x-3" joyrideStep="step3" title="Your Profile" text="Manage your profile, view your ideas, and see your stats.">
+          <div
+            *ngIf="user$ | async as user"
+            class="flex items-center space-x-3"
+            joyrideStep="step3"
+            title="Your Profile"
+            text="Manage your profile, view your ideas, and see your stats."
+          >
             <!-- Profile Link -->
-            <a routerLink="/profile" 
-               class="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors">
+            <a
+              routerLink="/profile"
+              class="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors"
+            >
               <div class="avatar-modern">
                 {{ getUserInitial(user) }}
               </div>
-              <span class="hidden sm:block text-sm font-medium">{{ user.displayName }}</span>
+              <span class="hidden sm:block text-sm font-medium">{{
+                user.displayName
+              }}</span>
             </a>
-            
+
             <!-- Logout Button -->
-            <button (click)="logout()" 
-                    class="btn-secondary text-xs">
+            <button (click)="logout()" class="btn-secondary text-xs">
               Logout
             </button>
           </div>
 
           <!-- Login Buttons -->
-          <div *ngIf="(user$ | async) === null" class="flex items-center space-x-2">
+          <div
+            *ngIf="(user$ | async) === null"
+            class="flex items-center space-x-2"
+          >
             <a routerLink="/login" class="btn-primary text-sm">Sign In</a>
             <a routerLink="/register" class="btn-secondary text-sm">Register</a>
           </div>
@@ -101,29 +171,40 @@
   </header>
 
   <!-- Email Verification Banner -->
-  <div *ngIf="showVerificationBanner" class="bg-yellow-500 text-white text-center p-2">
-    Your email is not verified. <a routerLink="/verify-email" class="underline">Resend verification email</a>.
+  <div
+    *ngIf="showVerificationBanner"
+    class="bg-yellow-500 text-white text-center p-2"
+  >
+    Your email is not verified.
+    <a routerLink="/verify-email" class="underline">Resend verification email</a
+    >.
   </div>
 
   <!-- Main Content -->
-  <main class="relative z-10">
+  <main class="flex-grow relative z-10">
     <!-- Toast notifications -->
     <app-toast></app-toast>
-    
-    <router-outlet joyrideStep="step4" title="Main Content" text="This is where the magic happens! Browse ideas, comment, and vote on your favorites."></router-outlet>
-    
+
+    <router-outlet
+      joyrideStep="step4"
+      title="Main Content"
+      text="This is where the magic happens! Browse ideas, comment, and vote on your favorites."
+    ></router-outlet>
+
     <!-- Floating Action Button for Quick Idea Submission -->
     <app-fab *ngIf="user$ | async" (quickSubmit)="onQuickSubmit()"></app-fab>
-    
+
     <!-- Idea Wizard Modal -->
-    <app-idea-wizard 
-      *ngIf="showIdeaWizard" 
-      (ideaSubmitted)="onIdeaSubmitted()" 
-      (wizardClosed)="onWizardClosed()">
+    <app-idea-wizard
+      *ngIf="showIdeaWizard"
+      (ideaSubmitted)="onIdeaSubmitted()"
+      (wizardClosed)="onWizardClosed()"
+    >
     </app-idea-wizard>
 
     <!-- Onboarding Checklist -->
     <app-checklist></app-checklist>
     <app-back-to-top></app-back-to-top>
   </main>
+  <app-footer></app-footer>
 </div>

@@ -1,5 +1,9 @@
 import * as admin from 'firebase-admin';
-import { onCall, CallableRequest, HttpsError } from 'firebase-functions/v2/https';
+import {
+  onCall,
+  CallableRequest,
+  HttpsError,
+} from 'firebase-functions/v2/https';
 import { setGlobalOptions } from 'firebase-functions/v2';
 import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { onDocumentCreated } from 'firebase-functions/v2/firestore';
@@ -48,7 +52,10 @@ export const moderateDeleteIdea = onCall(async (req) => {
   const ideaRef = db.collection('ideas').doc(ideaId);
 
   // Delete comments for this idea (batched)
-  const commentsSnap = await db.collection('comments').where('ideaId', '==', ideaId).get();
+  const commentsSnap = await db
+    .collection('comments')
+    .where('ideaId', '==', ideaId)
+    .get();
   const batch = db.batch();
   commentsSnap.forEach((doc) => batch.delete(doc.ref));
   batch.delete(ideaRef);
@@ -86,7 +93,7 @@ export const toggleUpvote = onCall(async (req) => {
     let newUpvotedBy: string[];
     if (hasUpvoted) {
       newUpvotes = Math.max(0, upvotes - 1);
-      newUpvotedBy = upvotedBy.filter(id => id !== userId);
+      newUpvotedBy = upvotedBy.filter((id) => id !== userId);
     } else {
       newUpvotes = upvotes + 1;
       newUpvotedBy = [...upvotedBy, userId];
@@ -95,7 +102,8 @@ export const toggleUpvote = onCall(async (req) => {
     // Trending score simple recalculation (upvotes / (hours + 1))
     let trendingScore = data.trendingScore || 0;
     if (createdAt instanceof admin.firestore.Timestamp) {
-      const hours = (Date.now() - createdAt.toDate().getTime()) / (1000 * 60 * 60);
+      const hours =
+        (Date.now() - createdAt.toDate().getTime()) / (1000 * 60 * 60);
       trendingScore = newUpvotes / (hours + 1);
     }
 
@@ -103,16 +111,22 @@ export const toggleUpvote = onCall(async (req) => {
       upvotes: newUpvotes,
       upvotedBy: newUpvotedBy,
       trendingScore,
-      lastActivity: admin.firestore.FieldValue.serverTimestamp()
+      lastActivity: admin.firestore.FieldValue.serverTimestamp(),
     });
 
     // Update user stats (increment/decrement totalUpvotes received for author)
     const authorId = data.authorId as string | undefined;
     if (authorId) {
       const authorRef = db.collection('users').doc(authorId);
-      tx.set(authorRef, {
-        totalUpvotes: admin.firestore.FieldValue.increment(hasUpvoted ? -1 : 1)
-      }, { merge: true });
+      tx.set(
+        authorRef,
+        {
+          totalUpvotes: admin.firestore.FieldValue.increment(
+            hasUpvoted ? -1 : 1,
+          ),
+        },
+        { merge: true },
+      );
     }
 
     return { upvoted: !hasUpvoted, upvotes: newUpvotes };
@@ -124,31 +138,41 @@ export const toggleUpvote = onCall(async (req) => {
 /**
  * Firestore trigger: when a new idea document is created, increment author's totalIdeas.
  */
-export const onIdeaCreated = onDocumentCreated('ideas/{ideaId}', async (event) => {
-  const data = event.data?.data();
-  if (!data) return;
-  const authorId = data.authorId as string | undefined;
-  if (!authorId) return;
-  const db = admin.firestore();
-  const userRef = db.collection('users').doc(authorId);
-  await userRef.set({ totalIdeas: admin.firestore.FieldValue.increment(1) }, { merge: true });
-});
+export const onIdeaCreated = onDocumentCreated(
+  'ideas/{ideaId}',
+  async (event) => {
+    const data = event.data?.data();
+    if (!data) return;
+    const authorId = data.authorId as string | undefined;
+    if (!authorId) return;
+    const db = admin.firestore();
+    const userRef = db.collection('users').doc(authorId);
+    await userRef.set(
+      { totalIdeas: admin.firestore.FieldValue.increment(1) },
+      { merge: true },
+    );
+  },
+);
 
 /**
  * Scheduled job to recalculate trendingScore for recent ideas (last 72h) every hour.
  */
 export const recalcTrending = onSchedule('every 60 minutes', async () => {
   const db = admin.firestore();
-  const cutoff = Date.now() - (72 * 60 * 60 * 1000);
-  const ideasSnap = await db.collection('ideas')
+  const cutoff = Date.now() - 72 * 60 * 60 * 1000;
+  const ideasSnap = await db
+    .collection('ideas')
     .where('createdAt', '>=', new Date(cutoff))
     .limit(500)
     .get();
 
   const batch = db.batch();
-  ideasSnap.forEach(docSnap => {
+  ideasSnap.forEach((docSnap) => {
     const d = docSnap.data();
-    const createdAt = d.createdAt instanceof admin.firestore.Timestamp ? d.createdAt.toDate() : new Date();
+    const createdAt =
+      d.createdAt instanceof admin.firestore.Timestamp
+        ? d.createdAt.toDate()
+        : new Date();
     const hours = (Date.now() - createdAt.getTime()) / (1000 * 60 * 60);
     const upvotes = d.upvotes || 0;
     const trendingScore = upvotes / (hours + 1);
@@ -156,6 +180,3 @@ export const recalcTrending = onSchedule('every 60 minutes', async () => {
   });
   await batch.commit();
 });
-
-
-

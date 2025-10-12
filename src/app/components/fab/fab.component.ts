@@ -6,14 +6,12 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './fab.component.html',
-  styleUrls: ['./fab.component.scss']
+  styleUrls: ['./fab.component.scss'],
 })
 export class FabComponent {
   @Output() quickSubmit = new EventEmitter<void>();
-  
+
   onQuickSubmit() {
     this.quickSubmit.emit();
   }
 }
-
-

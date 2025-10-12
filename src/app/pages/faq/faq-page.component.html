@@ -1,11 +1,15 @@
 <section class="max-w-3xl mx-auto py-10 faq animate-fade-in-up">
   <h1 class="heading-2 mb-4">FAQ</h1>
-  <p class="body-large mb-8">Answers to common questions about using ifYouMind effectively.</p>
+  <p class="body-large mb-8">
+    Answers to common questions about using ifYouMind effectively.
+  </p>
   <div class="faq-items">
     <details *ngFor="let f of faqs" class="faq-item">
       <summary>{{ f.q }}</summary>
       <p class="body-small mt-2">{{ f.a }}</p>
     </details>
   </div>
-  <p class="body-small opacity-70 mt-10">Still have questions? Suggest a topic via feedback.</p>
+  <p class="body-small opacity-70 mt-10">
+    Still have questions? Suggest a topic via feedback.
+  </p>
 </section>

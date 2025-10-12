@@ -1,25 +1,50 @@
-import { Component, ElementRef, HostListener, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  inject,
+} from '@angular/core';
 import { RouterOutlet, RouterModule } from '@angular/router';
-import { Auth, signInWithPopup, GoogleAuthProvider, signOut, user, User } from '@angular/fire/auth';
+import {
+  Auth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+  user,
+  User,
+} from '@angular/fire/auth';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { ToastComponent } from './components/toast/toast.component';
 import { FabComponent } from './components/fab/fab.component';
 import { IdeaWizardComponent } from './components/idea-wizard/idea-wizard.component';
 import { ThemeService } from './services/theme.service';
-import { TourService } from './services/tour.service';
+// import { TourService } from './services/tour.service';
 import { UserService } from './services/user.service';
 import { filter, switchMap, take } from 'rxjs';
 import { ChecklistComponent } from './components/checklist/checklist.component';
-
 import { BackToTopComponent } from './components/back-to-top/back-to-top.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterModule, CommonModule, ToastComponent, FabComponent, IdeaWizardComponent, ChecklistComponent, BackToTopComponent],
+  imports: [
+    RouterOutlet,
+    RouterModule,
+    CommonModule,
+    ToastComponent,
+    FabComponent,
+    IdeaWizardComponent,
+    ChecklistComponent,
+    BackToTopComponent,
+    FooterComponent,
+  ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'ifyoumind';
@@ -27,27 +52,30 @@ export class AppComponent {
   user$: Observable<User | null>;
   showIdeaWizard = false;
   themeService = inject(ThemeService);
-  tourService = inject(TourService);
+  // tourService = inject(TourService);
   userService = inject(UserService);
   aboutOpen = false;
   // Menu element refs for accessible navigation
   @ViewChild('aboutMenuPanel') aboutMenuPanel?: ElementRef<HTMLElement>;
   @ViewChild('aboutTrigger') aboutTrigger?: ElementRef<HTMLButtonElement>;
-  @ViewChildren('aboutItem') aboutItems?: QueryList<ElementRef<HTMLAnchorElement>>;
+  @ViewChildren('aboutItem') aboutItems?: QueryList<
+    ElementRef<HTMLAnchorElement>
+  >;
   private aboutCloseHoverTimeout: any;
 
   showVerificationBanner = false;
 
   constructor() {
     this.user$ = user(this.auth);
-    this.user$.subscribe(user => {
+    this.user$.subscribe((user) => {
       if (user) {
         this.showVerificationBanner = !user.emailVerified;
       }
     });
-    this.checkAndStartTour();
+    // this.checkAndStartTour();
   }
 
+  /*
   private checkAndStartTour(): void {
     this.user$.pipe(
       filter(user => !!user), // Proceed only if the user is logged in
@@ -59,6 +87,7 @@ export class AppComponent {
       setTimeout(() => this.tourService.startTour(), 500);
     });
   }
+  */
 
   login() {
     signInWithPopup(this.auth, new GoogleAuthProvider());
@@ -84,7 +113,9 @@ export class AppComponent {
     this.showIdeaWizard = false;
   }
 
-  toggleTheme() { this.themeService.toggle(); }
+  toggleTheme() {
+    this.themeService.toggle();
+  }
 
   toggleAboutMenu() {
     this.aboutOpen = !this.aboutOpen;
@@ -93,8 +124,12 @@ export class AppComponent {
       queueMicrotask(() => this.focusFirstItem());
     }
   }
-  closeAboutMenu() { this.aboutOpen = false; }
-  onKeyClose(e: KeyboardEvent) { if (e.key === 'Escape') this.closeAboutMenu(); }
+  closeAboutMenu() {
+    this.aboutOpen = false;
+  }
+  onKeyClose(e: KeyboardEvent) {
+    if (e.key === 'Escape') this.closeAboutMenu();
+  }
 
   /* Outside click handling */
   @HostListener('document:click', ['$event'])
@@ -148,7 +183,10 @@ export class AppComponent {
     if (!items.length) return;
     const active = document.activeElement as HTMLElement;
     const idx = items.indexOf(active);
-    if (idx === -1) { this.focusFirstItem(); return; }
+    if (idx === -1) {
+      this.focusFirstItem();
+      return;
+    }
     event.preventDefault();
     const next = items[(idx + 1) % items.length];
     next.focus();
@@ -161,7 +199,10 @@ export class AppComponent {
     const first = items[0];
     const last = items[items.length - 1];
     const active = document.activeElement as HTMLElement;
-    if ((event.shiftKey && active === first) || (!event.shiftKey && active === last)) {
+    if (
+      (event.shiftKey && active === first) ||
+      (!event.shiftKey && active === last)
+    ) {
       this.closeAboutMenu();
     }
   }
@@ -170,6 +211,8 @@ export class AppComponent {
     if (first) first.focus();
   }
   private getItems(): HTMLElement[] {
-    return (this.aboutItems?.toArray().map(r => r.nativeElement) || []).filter(Boolean);
+    return (
+      this.aboutItems?.toArray().map((r) => r.nativeElement) || []
+    ).filter(Boolean);
   }
 }

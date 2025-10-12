@@ -88,7 +88,7 @@
 
 /* Pulse animation */
 .fab-main::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -117,18 +117,13 @@
     bottom: 1.5rem;
     right: 1.5rem;
   }
-  
+
   .fab-main {
     width: 3rem;
     height: 3rem;
   }
-  
+
   .fab-tooltip {
     display: none;
   }
 }
-
-
-
-
-

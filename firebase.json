@@ -9,9 +9,7 @@
         "firebase-debug.log",
         "firebase-debug.*.log"
       ],
-      "predeploy": [
-        "npm --prefix \"$RESOURCE_DIR\" run build"
-      ]
+      "predeploy": ["npm --prefix \"$RESOURCE_DIR\" run build"]
     }
   ],
   "firestore": {
@@ -20,21 +18,15 @@
   },
   "hosting": {
     "public": "dist/ifyoumind/browser",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [
       {
         "source": "**",
         "destination": "/index.html"
       }
     ]
-  }
-  ,
+  },
   "storage": {
     "rules": "storage.rules"
   }
 }
-

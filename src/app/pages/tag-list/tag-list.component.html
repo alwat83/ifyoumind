@@ -2,7 +2,12 @@
   <h1 class="page-title">Explore by Category</h1>
   <p class="page-subtitle">Discover ideas based on topics that interest you.</p>
   <div class="tag-grid" *ngIf="categories$ | async as categories">
-    <a *ngFor="let category of categories" [routerLink]="['/idea-list']" [queryParams]="{ category: category }" class="tag-card">
+    <a
+      *ngFor="let category of categories"
+      [routerLink]="['/idea-list']"
+      [queryParams]="{ category: category }"
+      class="tag-card"
+    >
       <span class="tag-name">{{ category | titlecase }}</span>
     </a>
   </div>

@@ -3,14 +3,14 @@
   color: white;
   border: 1px solid rgba(255, 255, 255, 0.2);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   &:hover {
     background: rgba(255, 255, 255, 0.15);
     border-color: rgba(255, 255, 255, 0.3);
     transform: scale(1.05);
     box-shadow: 0 8px 25px rgba(14, 165, 233, 0.2);
   }
-  
+
   &:active {
     transform: scale(0.95);
   }
@@ -21,12 +21,12 @@
   color: white;
   border: 1px solid #f472b6;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   &:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 25px rgba(236, 72, 153, 0.4);
   }
-  
+
   &:active {
     transform: scale(0.95);
   }
@@ -58,11 +58,14 @@
 
 // Trending badge animation
 @keyframes trending-glow {
-  0%, 100% {
+  0%,
+  100% {
     text-shadow: 0 0 5px currentColor;
   }
   50% {
-    text-shadow: 0 0 20px currentColor, 0 0 30px currentColor;
+    text-shadow:
+      0 0 20px currentColor,
+      0 0 30px currentColor;
   }
 }
 
@@ -87,11 +90,23 @@
 
 /* Responsive action bar */
 @media (max-width: 600px) {
-  .card-modern .flex.items-center.justify-between.pt-5 { flex-direction: column; align-items: stretch; gap: 0.75rem; }
-  .card-modern .flex.items-center.space-x-4 { flex-wrap: wrap; row-gap: 0.5rem; }
+  .card-modern .flex.items-center.justify-between.pt-5 {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  .card-modern .flex.items-center.space-x-4 {
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+  }
   .card-modern button.upvote-button,
   .card-modern button.upvoted-button,
-  .card-modern button.glass-modern { padding: 0.65rem 1rem; border-radius: 9999px; }
+  .card-modern button.glass-modern {
+    padding: 0.65rem 1rem;
+    border-radius: 9999px;
+  }
   .card-modern button.upvote-button span.font-semibold,
-  .card-modern button.upvoted-button span.font-semibold { font-size: 0.95rem; }
+  .card-modern button.upvoted-button span.font-semibold {
+    font-size: 0.95rem;
+  }
 }

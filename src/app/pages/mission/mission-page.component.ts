@@ -6,16 +6,16 @@ import { SeoService } from '../../services/seo.service';
   selector: 'app-mission-page',
   standalone: true,
   templateUrl: './mission-page.component.html',
-  styleUrls: ['./mission-page.component.scss']
+  styleUrls: ['./mission-page.component.scss'],
 })
 export class MissionPageComponent implements OnInit {
-
-  constructor(private seoService: SeoService) { }
+  constructor(private seoService: SeoService) {}
 
   ngOnInit(): void {
     this.seoService.generateTags({
       title: 'Our Mission | ifYouMind',
-      description: 'Our mission is to accelerate innovation by providing a space where ideas can be shared, discovered, and developed collaboratively. Join us in building the future.'
+      description:
+        'Our mission is to accelerate innovation by providing a space where ideas can be shared, discovered, and developed collaboratively. Join us in building the future.',
     });
   }
 }

@@ -19,24 +19,33 @@ export class AnalyticsService {
   private initPageTracking() {
     if (this.initialized) return;
     this.initialized = true;
-    this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((e) => {
-      const nav = e as NavigationEnd;
-      const now = Date.now();
-      // Emit dwell time for previous page
-      if (this.lastPath) {
-        const dwellMs = now - this.lastPageStart;
-        this.safeLog('page_dwell', { page_path: this.lastPath, dwell_ms: dwellMs });
-      }
-      this.lastPath = nav.urlAfterRedirects;
-      this.lastPageStart = now;
-      this.safeLog('page_view', { page_path: nav.urlAfterRedirects });
-    });
+    this.router.events
+      .pipe(filter((e) => e instanceof NavigationEnd))
+      .subscribe((e) => {
+        const nav = e as NavigationEnd;
+        const now = Date.now();
+        // Emit dwell time for previous page
+        if (this.lastPath) {
+          const dwellMs = now - this.lastPageStart;
+          this.safeLog('page_dwell', {
+            page_path: this.lastPath,
+            dwell_ms: dwellMs,
+          });
+        }
+        this.lastPath = nav.urlAfterRedirects;
+        this.lastPageStart = now;
+        this.safeLog('page_view', { page_path: nav.urlAfterRedirects });
+      });
     // Fire dwell on page unload
     if (typeof window !== 'undefined') {
       window.addEventListener('beforeunload', () => {
         if (this.lastPath) {
           const dwellMs = Date.now() - this.lastPageStart;
-          this.safeLog('page_dwell', { page_path: this.lastPath, dwell_ms: dwellMs, terminal: true });
+          this.safeLog('page_dwell', {
+            page_path: this.lastPath,
+            dwell_ms: dwellMs,
+            terminal: true,
+          });
         }
       });
     }
@@ -54,11 +63,21 @@ export class AnalyticsService {
     }
   }
 
-  ideaUpvoted(ideaId: string) { this.safeLog('idea_upvoted', { idea_id: ideaId }); }
-  ideaBookmarked(ideaId: string) { this.safeLog('idea_bookmarked', { idea_id: ideaId }); }
-  ideaCreated(ideaId: string, category?: string) { this.safeLog('idea_created', { idea_id: ideaId, category }); }
-  commentAdded(ideaId: string) { this.safeLog('comment_added', { idea_id: ideaId }); }
-  ideaShared(ideaId: string, method: string) { this.safeLog('idea_shared', { idea_id: ideaId, method }); }
+  ideaUpvoted(ideaId: string) {
+    this.safeLog('idea_upvoted', { idea_id: ideaId });
+  }
+  ideaBookmarked(ideaId: string) {
+    this.safeLog('idea_bookmarked', { idea_id: ideaId });
+  }
+  ideaCreated(ideaId: string, category?: string) {
+    this.safeLog('idea_created', { idea_id: ideaId, category });
+  }
+  commentAdded(ideaId: string) {
+    this.safeLog('comment_added', { idea_id: ideaId });
+  }
+  ideaShared(ideaId: string, method: string) {
+    this.safeLog('idea_shared', { idea_id: ideaId, method });
+  }
   actionFailed(action: string, reason?: string, context?: Record<string, any>) {
     this.safeLog('action_failed', { action, reason, ...context });
   }

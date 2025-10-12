@@ -3,7 +3,7 @@
   color: var(--neutral-200);
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   &:hover {
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.2);
@@ -11,38 +11,60 @@
 }
 
 /* Light theme category options */
-html[data-theme='light'] .category-button {
+html[data-theme="light"] .category-button {
   background: var(--neutral-200);
   color: var(--text-medium);
   border: 1px solid var(--neutral-400);
   font-weight: 600;
 }
-html[data-theme='light'] .category-button:hover {
+html[data-theme="light"] .category-button:hover {
   background: var(--neutral-300);
   color: var(--text-high);
   border-color: var(--neutral-500);
 }
-html[data-theme='light'] .category-button:active { background: var(--neutral-400); }
-html[data-theme='light'] .category-button:focus-visible { outline: 3px solid var(--primary-600); outline-offset: 2px; }
+html[data-theme="light"] .category-button:active {
+  background: var(--neutral-400);
+}
+html[data-theme="light"] .category-button:focus-visible {
+  outline: 3px solid var(--primary-600);
+  outline-offset: 2px;
+}
 
 .category-selected {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(147, 51, 234, 0.2) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.2) 0%,
+    rgba(147, 51, 234, 0.2) 100%
+  );
   border: 1px solid rgba(59, 130, 246, 0.3);
   color: white;
-  
+
   &:hover {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3) 0%, rgba(147, 51, 234, 0.3) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(59, 130, 246, 0.3) 0%,
+      rgba(147, 51, 234, 0.3) 100%
+    );
   }
 }
 
-html[data-theme='light'] .category-selected {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.25) 0%, rgba(124, 58, 237, 0.25) 100%);
+html[data-theme="light"] .category-selected {
+  background: linear-gradient(
+    135deg,
+    rgba(37, 99, 235, 0.25) 0%,
+    rgba(124, 58, 237, 0.25) 100%
+  );
   border: 1px solid rgba(37, 99, 235, 0.4);
   color: var(--text-high);
 }
-html[data-theme='light'] .category-selected:hover {
-  background: linear-gradient(135deg, rgba(37, 99, 235, 0.32) 0%, rgba(124, 58, 237, 0.32) 100%);
+html[data-theme="light"] .category-selected:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(37, 99, 235, 0.32) 0%,
+    rgba(124, 58, 237, 0.32) 100%
+  );
 }
-html[data-theme='light'] .category-selected:focus-visible { outline: 3px solid var(--primary-700); outline-offset: 2px; }
-
-
+html[data-theme="light"] .category-selected:focus-visible {
+  outline: 3px solid var(--primary-700);
+  outline-offset: 2px;
+}

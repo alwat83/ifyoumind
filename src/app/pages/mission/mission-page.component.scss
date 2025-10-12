@@ -1,5 +1,31 @@
-.mission { animation: fadeInUp .5s ease; }
-.pillars { display:grid; gap:1.25rem; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); }
-.pillars div { padding:1rem 1.1rem; border:1px solid var(--neutral-300,rgba(255,255,255,0.12)); border-radius:.85rem; background:var(--surface-alt,rgba(255,255,255,0.05)); backdrop-filter:blur(6px); }
-@media (prefers-color-scheme: light) { .pillars div { background:#fff; border-color:#e2e8f0; } }
-@keyframes fadeInUp { from { opacity:0; transform:translateY(6px);} to { opacity:1; transform:translateY(0);} }
+.mission {
+  animation: fadeInUp 0.5s ease;
+}
+.pillars {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+.pillars div {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--neutral-300, rgba(255, 255, 255, 0.12));
+  border-radius: 0.85rem;
+  background: var(--surface-alt, rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(6px);
+}
+@media (prefers-color-scheme: light) {
+  .pillars div {
+    background: #fff;
+    border-color: #e2e8f0;
+  }
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

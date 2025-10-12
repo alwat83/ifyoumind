@@ -9,7 +9,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   return user(auth).pipe(
-    map(user => {
+    map((user) => {
       if (user) {
         if (user.emailVerified || state.url === '/profile') {
           return true;
@@ -21,6 +21,6 @@ export const authGuard: CanActivateFn = (route, state) => {
         router.navigate(['/']);
         return false;
       }
-    })
+    }),
   );
 };

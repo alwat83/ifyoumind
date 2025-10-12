@@ -1,0 +1,12 @@
+<div class="cookie-consent-banner" *ngIf="showBanner">
+  <div class="container">
+    <p>
+      We use cookies to improve your experience. See our <a routerLink="/privacy-policy">Privacy Policy</a> to learn more.
+    </p>
+    <div class="actions">
+      <button (click)="acceptAll()" class="accept">Accept all</button>
+      <button (click)="declineAll()" class="decline">Reject all</button>
+      <button (click)="manage()" class="manage">Manage</button>
+    </div>
+  </div>
+</div>

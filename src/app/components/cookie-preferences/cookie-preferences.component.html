@@ -1,0 +1,34 @@
+<div class="modal-overlay" *ngIf="isOpen$ | async">
+  <div class="modal-content">
+    <h2>Cookie Preferences</h2>
+    <p>Manage your cookie settings. You can enable or disable different types of cookies below. Essential cookies are always enabled.</p>
+
+    <div class="cookie-category">
+      <label for="essential">Essential</label>
+      <input type="checkbox" id="essential" [ngModel]="consent.essential" disabled="true">
+    </div>
+
+    <div class="cookie-category">
+      <label for="analytics">Analytics</label>
+      <input type="checkbox" id="analytics" [(ngModel)]="consent.analytics">
+    </div>
+
+    <div class="cookie-category">
+      <label for="functional">Functional</label>
+      <input type="checkbox" id="functional" [(ngModel)]="consent.functional">
+    </div>
+
+    <div class="cookie-category">
+      <label for="marketing">Marketing</label>
+      <input type="checkbox" id="marketing" [(ngModel)]="consent.marketing">
+    </div>
+
+    <div class="actions">
+      <button (click)="save()">Save settings</button>
+      <button (click)="acceptAll()">Accept all</button>
+      <button (click)="rejectAll()">Reject all</button>
+    </div>
+
+    <button class="close-button" (click)="close()">&times;</button>
+  </div>
+</div>

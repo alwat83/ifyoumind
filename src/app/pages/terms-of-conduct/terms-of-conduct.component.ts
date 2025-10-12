@@ -11,7 +11,9 @@ export class TermsOfConductComponent implements OnInit {
   private seoService = inject(SeoService);
 
   ngOnInit(): void {
-    this.seoService.setTitle('Terms of Conduct');
-    this.seoService.setDescription('IfYouMind Community Guidelines');
+    this.seoService.generateTags({
+      title: 'Terms of Conduct',
+      description: 'IfYouMind Community Guidelines',
+    });
   }
 }

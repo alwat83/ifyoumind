@@ -61,6 +61,7 @@ export class AppComponent {
   @ViewChildren('aboutItem') aboutItems?: QueryList<
     ElementRef<HTMLAnchorElement>
   >;
+  profileMenuOpen = false;
   private aboutCloseHoverTimeout: any;
 
   showVerificationBanner = false;
@@ -127,17 +128,30 @@ export class AppComponent {
   closeAboutMenu() {
     this.aboutOpen = false;
   }
-  onKeyClose(e: KeyboardEvent) {
-    if (e.key === 'Escape') this.closeAboutMenu();
+  
+  toggleProfileMenu() {
+    this.profileMenuOpen = !this.profileMenuOpen;
+  }
+  closeProfileMenu() {
+    this.profileMenuOpen = false;
   }
 
-  /* Outside click handling */
+  onKeyClose(e: KeyboardEvent) {
+    if (e.key === 'Escape') {
+      this.closeAboutMenu();
+      this.closeProfileMenu();
+    }
+  }
+
   @HostListener('document:click', ['$event'])
   onDocumentClick(ev: MouseEvent) {
-    if (!this.aboutOpen) return;
     const target = ev.target as HTMLElement;
-    if (this.isInsideMenu(target)) return;
-    this.closeAboutMenu();
+    if (this.aboutOpen && !this.isInsideMenu(target)) {
+      this.closeAboutMenu();
+    }
+    if (this.profileMenuOpen && !target.closest('.profile-menu-container')) {
+      this.closeProfileMenu();
+    }
   }
 
   @HostListener('document:keydown', ['$event'])

@@ -93,7 +93,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.userService
           .getUserProfile(user.uid)
           .pipe(takeUntil(this.destroy$))
-          .subscribe((profile) => {
+          .subscribe((profile: any) => {
             if (profile) {
               this.displayName = profile.displayName || 'User';
               this.username = profile.username || 'user';
@@ -270,7 +270,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this.isEditing = false;
           this.toast.success('Profile updated successfully!');
         },
-        error: (error) => {
+        error: (error: any) => {
           console.error('Error updating profile:', error);
           this.toast.error('Error updating profile. Please try again.');
         },
@@ -334,7 +334,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.uploadController,
       )
       .subscribe({
-        next: (progress) => {
+        next: (progress: any) => {
           this.uploadProgress = progress.progress;
           if (progress.completed) {
             if (progress.cancelled) {
@@ -370,7 +370,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
                       'Profile picture uploaded successfully!',
                     );
                   },
-                  error: (error) => {
+                  error: (error: any) => {
                     console.error('Error updating profile picture URL:', error);
                     this.uploadError = 'Failed to update profile picture URL.';
                     this.isUploading = false;
@@ -379,7 +379,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
             }
           }
         },
-        error: (error) => {
+        error: (error: any) => {
           console.error('Upload error:', error);
           const code =
             error && (error.code || error.error?.code)
@@ -416,7 +416,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
           this.oldProfilePicUrl = '';
           this.toast.info('Profile picture removed');
         },
-        error: (err) => {
+        error: (err: any) => {
           console.error('Failed to remove picture', err);
           this.toast.error('Failed to remove picture');
         },

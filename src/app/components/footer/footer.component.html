@@ -1,21 +1,13 @@
-<footer class="bg-gray-50 border-t mt-8">
-  <div
-    class="container mx-auto py-6 px-4 flex flex-col md:flex-row justify-between items-center"
-  >
-    <div class="text-gray-600 mb-4 md:mb-0">
-      &copy; 2025 Ifyoumind. All rights reserved.
+<footer class="border-t border-white/5 bg-[#09090b]/80 backdrop-blur-md mt-16 relative z-10">
+  <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+    <div class="text-subtle body-medium mb-4 md:mb-0">
+      &copy; {{ currentYear }} Ifyoumind. All rights reserved.
     </div>
     <nav class="flex gap-4">
-      <a
-        routerLink="/privacy-policy"
-        class="text-gray-600 hover:text-gray-900 transition-colors"
-        >Privacy Policy</a
-      >
-      <a
-        routerLink="/terms-of-conduct"
-        class="text-gray-600 hover:text-gray-900 transition-colors"
-        >Terms of Conduct</a
-      >
+      <a routerLink="/privacy-policy" class="text-subtle hover:text-white transition-colors body-medium">Privacy
+        Policy</a>
+      <a routerLink="/terms-of-conduct" class="text-subtle hover:text-white transition-colors body-medium">Terms of
+        Conduct</a>
     </nav>
   </div>
 </footer>

@@ -33,11 +33,18 @@ export class IdeaWizardComponent {
 
   // Form data
   ideaData = {
+    title: '',
     problem: '',
     solution: '',
     impact: '',
     category: 'general',
     tags: [] as string[],
+    collaborationNeeds: {
+      developer: false,
+      designer: false,
+      funding: false,
+      research: false
+    }
   };
 
   // Available categories
@@ -104,7 +111,7 @@ export class IdeaWizardComponent {
 
   selectCategory(categoryId: string) {
     this.ideaData.category = categoryId;
-    this.nextStep();
+    // Removed automatic nextStep() here since Step 3 also contains collaboration Needs checkboxes.
   }
 
   async submitIdea() {
@@ -114,13 +121,21 @@ export class IdeaWizardComponent {
       const currentUser = await this.authHelper.getCurrentUserOnce();
 
       if (currentUser) {
+        // Map collaboration needs to tags
+        const newTags = [...this.ideaData.tags];
+        if (this.ideaData.collaborationNeeds.developer) newTags.push('Needs Developer');
+        if (this.ideaData.collaborationNeeds.designer) newTags.push('Needs Designer');
+        if (this.ideaData.collaborationNeeds.funding) newTags.push('Needs Funding');
+        if (this.ideaData.collaborationNeeds.research) newTags.push('Needs Research');
+
         await this.ideaService.createIdea(
           {
+            title: this.ideaData.title,
             problem: this.ideaData.problem,
             solution: this.ideaData.solution,
             impact: this.ideaData.impact,
             category: this.ideaData.category,
-            tags: this.ideaData.tags,
+            tags: newTags,
           },
           currentUser,
         );
@@ -151,11 +166,18 @@ export class IdeaWizardComponent {
 
   resetForm() {
     this.ideaData = {
+      title: '',
       problem: '',
       solution: '',
       impact: '',
       category: 'general',
       tags: [],
+      collaborationNeeds: {
+        developer: false,
+        designer: false,
+        funding: false,
+        research: false
+      }
     };
     this.currentStep = 1;
   }
@@ -175,13 +197,13 @@ export class IdeaWizardComponent {
   isStepValid(step: number): boolean {
     switch (step) {
       case 1:
-        return this.ideaData.problem.trim().length > 10;
+        return this.ideaData.title.trim().length > 3 && this.ideaData.problem.trim().length > 10 && this.ideaData.solution.trim().length > 10;
       case 2:
-        return this.ideaData.solution.trim().length > 10;
-      case 3:
         return this.ideaData.impact.trim().length > 10;
+      case 3:
+        return true; // Category & Needs selection
       case 4:
-        return true; // Category selection
+        return true; // Mockups / Review
       default:
         return false;
     }

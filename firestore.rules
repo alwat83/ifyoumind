@@ -26,7 +26,7 @@ service cloud.firestore {
     match /users/{userId} {
       // Users can read their own profile and public profiles
       allow read: if request.auth != null 
-        && (request.auth.uid == userId || resource.data.isPublic == true);
+        && (request.auth.uid == userId || (resource != null && resource.data.isPublic == true));
       
       // Users can create their own profile
       allow create: if request.auth != null 

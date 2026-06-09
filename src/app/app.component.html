@@ -1,169 +1,122 @@
-<div
-  class="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden flex flex-col"
->
-  <!-- Animated Background Elements -->
-  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+<div class="min-h-screen relative overflow-hidden flex flex-col bg-app transition-colors duration-300">
+  <!-- Subtle Premium Animated Mesh Gradient Background -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
     <div
-      class="absolute -top-40 -right-40 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl animate-pulse"
-    ></div>
+      class="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-indigo-600/5 rounded-[100%] blur-[120px] animate-pulse"
+      style="animation-duration: 8s"></div>
     <div
-      class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse"
-      style="animation-delay: 2s"
-    ></div>
+      class="absolute bottom-[-20%] right-[-10%] w-[60%] h-[60%] bg-emerald-600/5 rounded-[100%] blur-[120px] animate-pulse"
+      style="animation-delay: 2s; animation-duration: 10s"></div>
     <div
-      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl animate-pulse"
-      style="animation-delay: 4s"
-    ></div>
+      class="absolute top-[30%] left-[60%] w-[40%] h-[40%] bg-purple-600/5 rounded-[100%] blur-[100px] animate-pulse"
+      style="animation-delay: 4s; animation-duration: 12s"></div>
   </div>
 
-  <!-- Modern Header -->
+  <!-- Modern Sticky Header -->
   <header
-    class="relative z-50 border-b border-white/10 backdrop-blur-xl bg-black/20"
-  >
+    class="sticky top-0 z-50 border-b border-outline backdrop-blur-2xl bg-glass shadow-sm transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16">
-        <!-- Logo -->
-        <a
-          routerLink="/"
-          class="logo-link flex items-center space-x-3 cursor-pointer select-none"
-        >
-          <div
-            class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center"
-          >
-            <span class="text-white font-bold text-sm">💡</span>
-          </div>
-          <div>
-            <h1 class="logo-text text-xl font-bold text-white">ifYouMind</h1>
-            <p class="logo-text text-xs text-neutral-400 hidden sm:block">
-              Ideas for a better world
-            </p>
-          </div>
-        </a>
-
-        <!-- Navigation -->
-        <div
-          class="flex items-center space-x-4 relative"
-          joyrideStep="step1"
-          title="Welcome to ifYouMind!"
-          text="This is the main navigation bar. You can find everything you need to get around the site right here."
-        >
-          <!-- About submenu (accessible, click-to-toggle, outside click closable) -->
-          <div class="relative" #aboutMenuContainer>
-            <button
-              type="button"
-              #aboutTrigger
-              (click)="onAboutTriggerClick($event)"
-              (keydown.enter)="onAboutTriggerKey($event)"
-              (keydown.space)="onAboutTriggerKey($event)"
-              (keydown.ArrowDown)="focusFirstAboutItem($event)"
-              (keydown.Escape)="closeAboutMenu()"
-              class="btn btn-outline text-xs flex items-center gap-1"
-              aria-haspopup="true"
-              [attr.aria-expanded]="aboutOpen"
-              aria-controls="aboutMenuPanel"
-            >
-              <span>About</span>
-              <span
-                class="chevron transition-transform duration-200"
-                [class.rotate-180]="aboutOpen"
-                >▾</span
-              >
-            </button>
+        
+        <!-- Left: Logo & About -->
+        <div class="flex items-center space-x-6">
+          <a routerLink="/" class="logo-link flex items-center space-x-3 cursor-pointer select-none group">
             <div
-              *ngIf="aboutOpen"
-              id="aboutMenuPanel"
-              #aboutMenuPanel
-              class="submenu glass-modern mt-2 w-48 rounded-lg shadow-lg py-1 focus:outline-none absolute left-0 top-full z-[999] pointer-events-auto bg-slate-900/95"
-              role="menu"
-              tabindex="-1"
-              (keydown.Escape)="closeAboutMenu()"
-              (keydown.ArrowUp)="focusLastAboutItem($event)"
-              (keydown.ArrowDown)="focusNextAboutItem($event)"
-              (keydown.ArrowLeft)="closeAboutMenu()"
-              (keydown.Tab)="onAboutMenuTab($event)"
-            >
-              <a
-                routerLink="/about"
-                #aboutItem
-                role="menuitem"
-                (click)="onAboutItemClick($event)"
-                class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm pointer-events-auto"
-                >About Us</a
-              >
-              <a
-                routerLink="/mission"
-                #aboutItem
-                role="menuitem"
-                (click)="onAboutItemClick($event)"
-                class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm pointer-events-auto"
-                >Why We Exist</a
-              >
-              <a
-                routerLink="/faq"
-                #aboutItem
-                role="menuitem"
-                (click)="onAboutItemClick($event)"
-                class="block px-3 py-2 rounded-md hover:bg-white/10 focus-visible:bg-white/10 text-sm pointer-events-auto"
-                >FAQ</a
-              >
+              class="w-8 h-8 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:shadow-indigo-500/40 transition-shadow duration-300">
+              <span class="text-white font-bold text-sm drop-shadow-md">💡</span>
             </div>
-          </div>
-          <!-- Theme Toggle -->
-          <button
-            (click)="toggleTheme()"
-            class="btn-secondary text-xs flex items-center gap-1"
-            aria-label="Toggle color theme"
-          >
-            <span *ngIf="themeService.theme()() === 'dark'">🌞</span>
-            <span *ngIf="themeService.theme()() === 'light'">🌙</span>
-            <span class="hidden sm:inline">Theme</span>
-          </button>
-          <!-- Submit Button -->
-          <a
-            routerLink="/submit"
-            class="btn-primary flex items-center space-x-2 text-sm"
-            joyrideStep="step2"
-            title="Submit Your Ideas"
-            text="Have a great idea? Click here to share it with the world!"
-          >
-            <span>✨</span>
-            <span class="hidden sm:inline">Submit Idea</span>
+            <div>
+              <h1 class="logo-text text-lg font-bold text-fg-primary tracking-tight font-display">
+                ifYouMind</h1>
+            </div>
           </a>
 
+          <!-- About submenu -->
+          <div class="relative hidden sm:block" #aboutMenuContainer>
+            <button type="button" #aboutTrigger (click)="onAboutTriggerClick($event)"
+              class="text-sm font-medium text-fg-secondary hover:text-fg-primary flex items-center gap-1 transition-colors"
+              aria-haspopup="true" [attr.aria-expanded]="aboutOpen" aria-controls="aboutMenuPanel">
+              <span>About</span>
+              <span class="chevron transition-transform duration-200 text-xs" [class.rotate-180]="aboutOpen">▾</span>
+            </button>
+            <div *ngIf="aboutOpen" id="aboutMenuPanel" #aboutMenuPanel
+              class="submenu glass-modern mt-4 w-48 rounded-xl shadow-xl py-1.5 absolute left-0 top-full z-[999] bg-surface border border-outline backdrop-blur-xl transition-colors duration-300">
+              <a routerLink="/about" role="menuitem" (click)="onAboutItemClick($event)"
+                class="block px-3 py-2 rounded-md hover:bg-glass text-sm text-fg-secondary hover:text-fg-primary">About Us</a>
+              <a routerLink="/mission" role="menuitem" (click)="onAboutItemClick($event)"
+                class="block px-3 py-2 rounded-md hover:bg-glass text-sm text-fg-secondary hover:text-fg-primary">Why We Exist</a>
+              <a routerLink="/faq" role="menuitem" (click)="onAboutItemClick($event)"
+                class="block px-3 py-2 rounded-md hover:bg-glass text-sm text-fg-secondary hover:text-fg-primary">FAQ</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Center: Intelligent Search Bar -->
+        <div class="flex-1 max-w-xl mx-8 hidden md:block">
+          <div class="relative group">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <span class="text-fg-secondary group-focus-within:text-indigo-400 transition-colors">🔍</span>
+            </div>
+            <input type="text" 
+              class="w-full pl-10 pr-4 py-2 bg-glass border border-outline rounded-full text-sm text-fg-primary placeholder-fg-secondary focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:bg-glass-hover transition-all backdrop-blur-sm"
+              placeholder="Search ideas, topics, or people...">
+            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+              <span class="text-xs text-fg-secondary font-mono bg-glass px-1.5 py-0.5 rounded border border-outline">⌘K</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Actions & Profile -->
+        <div class="flex items-center space-x-3 sm:space-x-4">
+          <!-- Submit Button -->
+          <a routerLink="/submit" class="btn-primary text-sm hidden sm:inline-flex">
+            <span>✨</span>
+            <span class="ml-2 font-semibold">Submit Idea</span>
+          </a>
+
+          <!-- Notifications -->
+          <button class="w-9 h-9 rounded-full bg-glass border border-outline flex items-center justify-center text-fg-secondary hover:text-fg-primary hover:bg-glass-hover transition-all relative">
+            <span>🔔</span>
+            <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-indigo-500 border-2 border-surface rounded-full"></span>
+          </button>
+
           <!-- User Menu -->
-          <div
-            *ngIf="user$ | async as user"
-            class="flex items-center space-x-3"
-            joyrideStep="step3"
-            title="Your Profile"
-            text="Manage your profile, view your ideas, and see your stats."
-          >
-            <!-- Profile Link -->
-            <a
-              routerLink="/profile"
-              class="flex items-center space-x-2 text-white hover:text-blue-400 transition-colors"
-            >
-              <div class="avatar-modern">
+          <div *ngIf="user$ | async as user" class="relative profile-menu-container">
+            <button (click)="toggleProfileMenu()" class="flex items-center space-x-2 focus:outline-none">
+              <div class="avatar-modern hover:ring-2 hover:ring-indigo-500/50 transition-all cursor-pointer">
                 {{ getUserInitial(user) }}
               </div>
-              <span class="hidden sm:block text-sm font-medium">{{
-                user.displayName
-              }}</span>
-            </a>
-
-            <!-- Logout Button -->
-            <button (click)="logout()" class="btn-secondary text-xs">
-              Logout
             </button>
+
+            <!-- Profile Dropdown -->
+            <div *ngIf="profileMenuOpen" class="glass-modern absolute right-0 mt-3 w-56 rounded-xl shadow-2xl py-2 z-[999] bg-surface border border-outline backdrop-blur-xl animate-fade-in-up transition-colors duration-300" style="animation-duration: 0.2s">
+              <div class="px-4 py-3 border-b border-outline">
+                <p class="text-sm font-medium text-fg-primary truncate">{{ user.displayName }}</p>
+                <p class="text-xs text-fg-secondary truncate">{{ user.email }}</p>
+              </div>
+              <div class="py-1">
+                <a routerLink="/profile" (click)="closeProfileMenu()" class="block px-4 py-2 text-sm text-fg-secondary hover:bg-glass hover:text-fg-primary">Your Profile</a>
+                <a routerLink="/saved" (click)="closeProfileMenu()" class="block px-4 py-2 text-sm text-fg-secondary hover:bg-glass hover:text-fg-primary">Saved Ideas</a>
+              </div>
+              <div class="py-1 border-t border-outline">
+                <button (click)="toggleTheme()" class="w-full text-left px-4 py-2 text-sm text-fg-secondary hover:bg-glass hover:text-fg-primary flex items-center justify-between">
+                  <span>Toggle Theme</span>
+                  <span *ngIf="themeService.theme()() === 'dark'">🌞</span>
+                  <span *ngIf="themeService.theme()() === 'light'">🌙</span>
+                </button>
+              </div>
+              <div class="py-1 border-t border-outline">
+                <button (click)="logout(); closeProfileMenu()" class="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-glass hover:text-red-300">
+                  Sign out
+                </button>
+              </div>
+            </div>
           </div>
 
           <!-- Login Buttons -->
-          <div
-            *ngIf="(user$ | async) === null"
-            class="flex items-center space-x-2"
-          >
-            <a routerLink="/login" class="btn-primary text-sm">Sign In</a>
-            <a routerLink="/register" class="btn-secondary text-sm">Register</a>
+          <div *ngIf="(user$ | async) === null" class="flex items-center space-x-2">
+            <a routerLink="/login" class="text-sm font-medium text-fg-secondary hover:text-fg-primary px-3 py-2">Sign In</a>
+            <a routerLink="/register" class="btn-primary text-sm">Register</a>
           </div>
         </div>
       </div>
@@ -171,40 +124,28 @@
   </header>
 
   <!-- Email Verification Banner -->
-  <div
-    *ngIf="showVerificationBanner"
-    class="bg-yellow-500 text-white text-center p-2"
-  >
-    Your email is not verified.
-    <a routerLink="/verify-email" class="underline">Resend verification email</a
-    >.
+  <div *ngIf="showVerificationBanner" class="bg-indigo-500/20 border-b border-indigo-500/30 text-indigo-200 text-center p-2 text-sm">
+    Your email is not verified. <a routerLink="/verify-email" class="underline font-medium hover:text-white">Resend verification email</a>.
   </div>
 
   <!-- Main Content -->
-  <main class="flex-grow relative z-10">
+  <main class="flex-grow relative z-10 w-full max-w-7xl mx-auto">
     <!-- Toast notifications -->
     <app-toast></app-toast>
 
-    <router-outlet
-      joyrideStep="step4"
-      title="Main Content"
-      text="This is where the magic happens! Browse ideas, comment, and vote on your favorites."
-    ></router-outlet>
+    <router-outlet></router-outlet>
 
     <!-- Floating Action Button for Quick Idea Submission -->
     <app-fab *ngIf="user$ | async" (quickSubmit)="onQuickSubmit()"></app-fab>
 
     <!-- Idea Wizard Modal -->
-    <app-idea-wizard
-      *ngIf="showIdeaWizard"
-      (ideaSubmitted)="onIdeaSubmitted()"
-      (wizardClosed)="onWizardClosed()"
-    >
+    <app-idea-wizard *ngIf="showIdeaWizard" (ideaSubmitted)="onIdeaSubmitted()" (wizardClosed)="onWizardClosed()">
     </app-idea-wizard>
 
     <!-- Onboarding Checklist -->
     <app-checklist></app-checklist>
     <app-back-to-top></app-back-to-top>
   </main>
+  
   <app-footer></app-footer>
 </div>

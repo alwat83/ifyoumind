@@ -29,6 +29,10 @@ export class FaqPageComponent implements OnInit {
       a: 'Votes surface broadly compelling ideas. Bookmarks show personal follow interest and may guide future signals.',
     },
     {
+      q: 'Why does the site use a Digg-style layout?',
+      a: 'A dedicated vertical voting column aligns focus strictly on community consensus, allowing users to effortlessly parse and elevate the best ideas in a familiar, proven format.',
+    },
+    {
       q: 'Can I edit an idea?',
       a: 'You can update within allowed rules. Significant edits should clarify progress rather than erase history.',
     },
@@ -38,7 +42,7 @@ export class FaqPageComponent implements OnInit {
     },
   ];
 
-  constructor(private seoService: SeoService) {}
+  constructor(private seoService: SeoService) { }
 
   ngOnInit(): void {
     this.seoService.generateTags({

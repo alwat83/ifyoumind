@@ -33,7 +33,8 @@ import { IdeaCardComponent } from '../components/idea-card/idea-card.component';
 export class IdeaListComponent implements OnDestroy {
   ideas$: Observable<Idea[]> = of([]); // still used for search fallback
   currentUser$: Observable<User | null>;
-  sortMode: 'recent' | 'trending' = 'recent';
+  activeTab: 'trending' | 'new' | 'discussed' | 'needs' | 'following' = 'trending';
+  isMobileDrawerOpen = false;
   searchTerm = '';
   selectedCategory: string | null = null;
   // Infinite scroll state
@@ -83,13 +84,18 @@ export class IdeaListComponent implements OnDestroy {
       this.ideas$ = this.ideaService.getIdeasByCategory(this.selectedCategory);
       return;
     }
-    this.ideas$ =
-      this.sortMode === 'trending'
-        ? this.ideaService.getTrendingIdeas(50)
-        : this.ideaService.getRecentIdeas(50);
-    // Reset paged loading when switching modes (only for recent mode infinite scroll)
+    
+    // Map tabs to available service methods
+    if (this.activeTab === 'new') {
+      this.ideas$ = this.ideaService.getRecentIdeas(50);
+    } else {
+      // Fallback for trending, discussed, needs, following until backend supports them fully
+      this.ideas$ = this.ideaService.getTrendingIdeas(50);
+    }
+
+    // Reset paged loading when switching modes (only for 'new' mode infinite scroll)
     if (
-      this.sortMode === 'recent' &&
+      this.activeTab === 'new' &&
       !this.searchTerm &&
       !this.selectedCategory
     ) {
@@ -98,10 +104,27 @@ export class IdeaListComponent implements OnDestroy {
     }
   }
 
+  setTab(tab: 'trending' | 'new' | 'discussed' | 'needs' | 'following') {
+    this.activeTab = tab;
+    this.applyFeedSource();
+  }
+
+  toggleMobileDrawer() {
+    this.isMobileDrawerOpen = !this.isMobileDrawerOpen;
+  }
+
+  exploreIdeas() {
+    this.activeTab = 'trending';
+    this.applyFeedSource();
+    setTimeout(() => {
+      document.getElementById('explore-feed')?.scrollIntoView({ behavior: 'smooth' });
+    }, 50);
+  }
+
   onCategorySelected(cat: string) {
     this.selectedCategory = cat === 'all' ? null : cat;
     this.resetPaged();
-    if (!this.searchTerm && this.sortMode === 'recent') {
+    if (!this.searchTerm && this.activeTab === 'new') {
       this.loadNextPage();
     } else {
       this.applyFeedSource();
@@ -121,7 +144,7 @@ export class IdeaListComponent implements OnDestroy {
     if (
       this.loadingPage ||
       this.endReached ||
-      this.sortMode !== 'recent' ||
+      this.activeTab !== 'new' ||
       this.searchTerm
     )
       return;

@@ -2,6 +2,33 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     
+    // 2.0 organizations: only server code can create memberships or write data.
+    function activeIntelligenceMember(organizationId) {
+      return request.auth != null
+        && get(/databases/$(database)/documents/intelligenceOrganizations/$(organizationId)/members/$(request.auth.uid)).data.status == 'active'
+        && get(/databases/$(database)/documents/intelligenceOrganizations/$(organizationId)/members/$(request.auth.uid)).data.role in ['owner', 'admin', 'viewer'];
+    }
+    match /intelligenceOrganizations/{organizationId} {
+      allow read: if activeIntelligenceMember(organizationId);
+      allow write: if false;
+      match /members/{uid} {
+        allow read: if activeIntelligenceMember(organizationId) && request.auth.uid == uid;
+        allow write: if false;
+      }
+      // Credentials, job state, and future subcollections remain denied by default.
+      match /pulseReports/{reportId} {
+        allow read: if activeIntelligenceMember(organizationId);
+        allow write: if false;
+      }
+      match /insights/{insightId} {
+        allow read: if activeIntelligenceMember(organizationId);
+        allow write: if false;
+      }
+    }
+    match /intelligenceWorkspaceOwners/{uid} {
+      allow read, write: if false;
+    }
+
     // Ideas collection rules
     match /ideas/{ideaId} {
       // Anyone can read public ideas; admins can read all ideas

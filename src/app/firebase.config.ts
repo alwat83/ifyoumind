@@ -7,3 +7,5 @@ export const firebaseConfig = {
   appId: '1:528549191581:web:6113cc8abf6de795539974',
   measurementId: 'G-DZMLBPS4ZX',
 };
+
+export const useLocalEmulators = false;

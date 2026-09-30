@@ -180,3 +180,5 @@ export const recalcTrending = onSchedule('every 60 minutes', async () => {
   });
   await batch.commit();
 });
+
+export { createIntelligenceOrganization, getIntelligenceOrganization } from './intelligence/organizations';

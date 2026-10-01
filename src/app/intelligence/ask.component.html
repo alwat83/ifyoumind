@@ -3,6 +3,7 @@
     <a routerLink="/app" class="brand">ifYouMind <span>2.0</span></a>
     <div>
       <a routerLink="/app">Overview</a>
+      <a routerLink="/app/insights">Insights</a>
       <a routerLink="/app/ask" class="active">Ask</a>
       <a routerLink="/app/connections">Connections</a>
     </div>
@@ -47,8 +48,8 @@
       <pre>{{ response.evidence | json }}</pre>
     </details>
 
-    <button *ngIf="response.id" class="save-answer" type="button" (click)="saveQuestion(response.answer)">
-      Save this answer
+    <button *ngIf="response.id && lastAskedQuestion" class="save-answer" type="button" (click)="saveQuestion(lastAskedQuestion)">
+      Save this question
     </button>
 
     <div class="followups" *ngIf="response.suggestedQuestions.length">

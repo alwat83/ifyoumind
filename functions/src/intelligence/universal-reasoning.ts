@@ -109,12 +109,13 @@ export const reasonAcrossUniversalDatasets = onCall(async (request) => {
   signals.sort((a, b) => Math.abs(b.correlation) - Math.abs(a.correlation));
 
   const meaningful = signals.filter((signal) => Math.abs(signal.correlation) >= .3);
-  const supporting = meaningful.slice(0, 4);
-  const oppositeDirections = supporting.length
-    ? meaningful.filter((signal) => signal.direction !== supporting[0].direction).slice(0, 3)
+  const strongest = meaningful[0] || null;
+  const supporting = strongest
+    ? meaningful.filter((signal) => signal.direction === strongest.direction).slice(0, 4)
     : [];
-
-  const strongest = supporting[0] || null;
+  const oppositeDirections = strongest
+    ? meaningful.filter((signal) => signal.direction !== strongest.direction).slice(0, 3)
+    : [];
   const conclusion = strongest
     ? `${strongest.datasetName} has the strongest observed relationship with ${target.name}: a ${strongest.magnitude} ${strongest.direction === 'same_direction' ? 'same-direction' : 'inverse'} association (r=${strongest.correlation.toFixed(2)}) across ${strongest.matchedObservations} compatible observations.`
     : `The selected data does not yet show a meaningful measurable relationship with ${target.name}.`;

@@ -104,7 +104,7 @@
       <article *ngFor="let relationship of analysis.relationships" class="relationship">
         <div class="relationship-title">
           <strong>{{ relationship.datasetA.name }} + {{ relationship.datasetB.name }}</strong>
-          <span>{{ relationship.matchedPeriods }} matched periods</span>
+          <span>{{ relationship.matchedObservations }} compatible observations</span>
         </div>
         <p>{{ relationship.conclusion }}</p>
         <small>{{ relationship.caveat }}</small>

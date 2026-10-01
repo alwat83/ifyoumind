@@ -186,3 +186,4 @@ export {
   getIntelligenceOrganization,
   getMyIntelligenceOrganization,
 } from './intelligence/organizations';
+export { getIntelligenceConnections } from './intelligence/connections';

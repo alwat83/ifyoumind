@@ -11,12 +11,6 @@ export interface IntelligenceConnection {
   sourceAccountId?: string;
   lastSyncedAt?: string;
   errorCode?: string;
-  async syncGoogleAnalytics(organizationId: string): Promise<void> {
-    const sync = httpsCallable<{ organizationId: string }, { syncRunId: string; factsWritten: number }>(
-      this.functions, 'syncGoogleAnalytics',
-    );
-    await sync({ organizationId });
-  }
 }
 
 export interface GoogleAnalyticsProperty {
@@ -66,5 +60,14 @@ export class ConnectionService {
     >(this.functions, 'selectGoogleAnalyticsProperty');
 
     await select({ organizationId, propertyId });
+  }
+
+  async syncGoogleAnalytics(organizationId: string): Promise<void> {
+    const sync = httpsCallable<
+      { organizationId: string },
+      { syncRunId: string; factsWritten: number }
+    >(this.functions, 'syncGoogleAnalytics');
+
+    await sync({ organizationId });
   }
 }

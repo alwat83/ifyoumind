@@ -20,7 +20,8 @@ export interface UniversalAnalysis {
   relationships: Array<{
     datasetA: { id: string; name: string; metric: string; unit: string };
     datasetB: { id: string; name: string; metric: string; unit: string };
-    matchedPeriods: number;
+    matchedObservations: number;
+    alignmentRule: string;
     correlation: number | null;
     strength: string;
     direction: string;

@@ -1,7 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { ConnectionService, IntelligenceConnection, IntelligenceSource } from './connection.service';
+import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import {
+  ConnectionService,
+  GoogleAnalyticsProperty,
+  IntelligenceConnection,
+  IntelligenceSource,
+} from './connection.service';
 import { IntelligenceOrganization, OrganizationService } from './organization.service';
 
 interface SourceDefinition {
@@ -15,18 +21,23 @@ interface SourceDefinition {
 @Component({
   selector: 'app-intelligence-connections',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './connections.component.html',
   styleUrls: ['./connections.component.scss'],
 })
 export class IntelligenceConnectionsComponent implements OnInit {
   private readonly organizations = inject(OrganizationService);
   private readonly connectionsService = inject(ConnectionService);
+  private readonly route = inject(ActivatedRoute);
 
   workspace: IntelligenceOrganization | null = null;
   connections = new Map<IntelligenceSource, IntelligenceConnection>();
+  googleProperties: GoogleAnalyticsProperty[] = [];
+  selectedGoogleProperty = '';
   loading = true;
   connectingGoogle = false;
+  loadingProperties = false;
+  savingProperty = false;
   error = '';
 
   readonly sources: SourceDefinition[] = [
@@ -63,7 +74,12 @@ export class IntelligenceConnectionsComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.workspace = await this.organizations.getMyWorkspace();
-      if (this.workspace) await this.refreshConnections();
+      if (this.workspace) {
+        await this.refreshConnections();
+        if (this.route.snapshot.queryParamMap.get('google') === 'authorized') {
+          await this.loadGoogleProperties();
+        }
+      }
     } catch (error) {
       this.error = this.message(error);
     } finally {
@@ -87,6 +103,44 @@ export class IntelligenceConnectionsComponent implements OnInit {
     }
   }
 
+  async loadGoogleProperties(): Promise<void> {
+    if (!this.workspace || this.loadingProperties) return;
+    this.loadingProperties = true;
+    this.error = '';
+
+    try {
+      this.googleProperties = await this.connectionsService.discoverGoogleAnalyticsProperties(
+        this.workspace.organizationId,
+      );
+      if (this.googleProperties.length === 1) {
+        this.selectedGoogleProperty = this.googleProperties[0].id;
+      }
+    } catch (error) {
+      this.error = this.message(error);
+    } finally {
+      this.loadingProperties = false;
+    }
+  }
+
+  async saveGoogleProperty(): Promise<void> {
+    if (!this.workspace || !this.selectedGoogleProperty || this.savingProperty) return;
+    this.savingProperty = true;
+    this.error = '';
+
+    try {
+      await this.connectionsService.selectGoogleAnalyticsProperty(
+        this.workspace.organizationId,
+        this.selectedGoogleProperty,
+      );
+      await this.refreshConnections();
+      this.googleProperties = [];
+    } catch (error) {
+      this.error = this.message(error);
+    } finally {
+      this.savingProperty = false;
+    }
+  }
+
   status(source: IntelligenceSource): string {
     return this.connections.get(source)?.status ?? 'not_connected';
   }
@@ -97,6 +151,10 @@ export class IntelligenceConnectionsComponent implements OnInit {
     if (status === 'connecting') return 'Connecting';
     if (status === 'error') return 'Needs attention';
     return 'Not connected';
+  }
+
+  connectionLabel(source: IntelligenceSource): string {
+    return this.connections.get(source)?.accountLabel || '';
   }
 
   private async refreshConnections(): Promise<void> {

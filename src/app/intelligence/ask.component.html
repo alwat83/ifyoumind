@@ -47,6 +47,10 @@
       <pre>{{ response.evidence | json }}</pre>
     </details>
 
+    <button *ngIf="response.id" class="save-answer" type="button" (click)="saveQuestion(response.answer)">
+      Save this answer
+    </button>
+
     <div class="followups" *ngIf="response.suggestedQuestions.length">
       <span>Try next:</span>
       <button
@@ -57,6 +61,21 @@
         {{ prompt }}
       </button>
     </div>
+  </section>
+
+  <section *ngIf="saved.length" class="history saved">
+    <div class="section-heading">
+      <p class="eyebrow">Saved</p>
+      <h2>Questions worth watching</h2>
+    </div>
+
+    <article *ngFor="let item of saved">
+      <p class="question">{{ item.question }}</p>
+      <div class="saved-actions">
+        <button type="button" (click)="usePrompt(item.question)">Ask again</button>
+        <button type="button" (click)="removeSaved(item)">Remove</button>
+      </div>
+    </article>
   </section>
 
   <section *ngIf="recent.length" class="history">

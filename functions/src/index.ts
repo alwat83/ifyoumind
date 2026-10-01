@@ -199,3 +199,6 @@ export { askIntelligence, getRecentIntelligenceQuestions } from './intelligence/
 export { getIntelligenceInsightFeed } from './intelligence/insight-feed';
 
 export { saveIntelligenceQuestion, deleteSavedIntelligenceQuestion, getSavedIntelligenceQuestions } from './intelligence/saved-questions';
+
+export { createUniversalDataset, addUniversalObservation, listUniversalDatasets, getUniversalDataset } from './intelligence/universal-data';
+export { analyzeUniversalDatasets } from './intelligence/universal-analysis';

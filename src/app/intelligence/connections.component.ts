@@ -26,6 +26,7 @@ export class IntelligenceConnectionsComponent implements OnInit {
   workspace: IntelligenceOrganization | null = null;
   connections = new Map<IntelligenceSource, IntelligenceConnection>();
   loading = true;
+  connectingGoogle = false;
   error = '';
 
   readonly sources: SourceDefinition[] = [
@@ -62,14 +63,27 @@ export class IntelligenceConnectionsComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.workspace = await this.organizations.getMyWorkspace();
-      if (this.workspace) {
-        const connections = await this.connectionsService.listConnections(this.workspace.organizationId);
-        this.connections = new Map(connections.map((connection) => [connection.source, connection]));
-      }
+      if (this.workspace) await this.refreshConnections();
     } catch (error) {
       this.error = this.message(error);
     } finally {
       this.loading = false;
+    }
+  }
+
+  async connectGoogleAnalytics(): Promise<void> {
+    if (!this.workspace || this.connectingGoogle) return;
+    this.connectingGoogle = true;
+    this.error = '';
+
+    try {
+      const url = await this.connectionsService.beginGoogleAnalyticsConnection(
+        this.workspace.organizationId,
+      );
+      window.location.assign(url);
+    } catch (error) {
+      this.error = this.message(error);
+      this.connectingGoogle = false;
     }
   }
 
@@ -83,6 +97,12 @@ export class IntelligenceConnectionsComponent implements OnInit {
     if (status === 'connecting') return 'Connecting';
     if (status === 'error') return 'Needs attention';
     return 'Not connected';
+  }
+
+  private async refreshConnections(): Promise<void> {
+    if (!this.workspace) return;
+    const connections = await this.connectionsService.listConnections(this.workspace.organizationId);
+    this.connections = new Map(connections.map((connection) => [connection.source, connection]));
   }
 
   private message(error: unknown): string {

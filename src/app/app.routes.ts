@@ -19,6 +19,12 @@ import { TermsOfConductComponent } from './pages/terms-of-conduct/terms-of-condu
 export const routes: Routes = [
   { path: '', component: IdeaListComponent },
   {
+    path: 'app/import',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./intelligence/data-import.component').then((m) => m.DataImportComponent),
+  },
+  {
     path: 'app/canvas',
     canActivate: [authGuard],
     loadComponent: () =>

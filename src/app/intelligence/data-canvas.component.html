@@ -4,6 +4,7 @@
     <div>
       <a routerLink="/app">Overview</a>
       <a routerLink="/app/canvas" class="active">Canvas</a>
+      <a routerLink="/app/import">Import</a>
       <a routerLink="/app/insights">Insights</a>
       <a routerLink="/app/ask">Ask</a>
       <a routerLink="/app/connections">Connections</a>
@@ -22,6 +23,14 @@
   <section *ngIf="loading" class="panel">Loading your datasets…</section>
 
   <ng-container *ngIf="!loading && workspace">
+    <section class="import-banner">
+      <div>
+        <p class="eyebrow">Have existing data?</p>
+        <strong>Import a CSV and map it into universal observations.</strong>
+      </div>
+      <a routerLink="/app/import">Import data →</a>
+    </section>
+
     <section class="builder-grid">
       <article class="panel">
         <p class="eyebrow">1 · Create dataset</p>

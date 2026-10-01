@@ -152,11 +152,54 @@
         </div>
       </div>
 
+      <div class="ai-action">
+        <button type="button" (click)="explainWithAi()" [disabled]="synthesizing">
+          {{ synthesizing ? 'Synthesizing…' : 'Explain with AI' }}
+        </button>
+        <span>AI explains the saved evidence packet; it does not recalculate the statistics.</span>
+      </div>
+
       <div class="limitations">
         <p class="eyebrow">Reasoning guardrails</p>
         <ul>
           <li *ngFor="let limitation of reasoning.limitations">{{ limitation }}</li>
         </ul>
+      </div>
+    </section>
+
+    <section *ngIf="synthesis" class="analysis synthesis">
+      <div class="analysis-header">
+        <div>
+          <p class="eyebrow">AI synthesis</p>
+          <h2>{{ synthesis.headline }}</h2>
+          <p>{{ synthesis.explanation }}</p>
+        </div>
+        <span class="confidence">{{ synthesisModel }}</span>
+      </div>
+
+      <div class="reasoning-columns">
+        <div>
+          <p class="eyebrow">Evidence used</p>
+          <article *ngFor="let point of synthesis.evidencePoints" class="relationship">
+            <strong>{{ point.signalId }}</strong>
+            <p>{{ point.statement }}</p>
+          </article>
+        </div>
+        <div>
+          <p class="eyebrow">Alternative interpretations</p>
+          <ul>
+            <li *ngFor="let item of synthesis.alternativeInterpretations">{{ item }}</li>
+          </ul>
+          <p class="eyebrow synthesis-subhead">Caveats</p>
+          <ul>
+            <li *ngFor="let item of synthesis.caveats">{{ item }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="confidence-explanation">
+        <p class="eyebrow">Why this confidence level</p>
+        <p>{{ synthesis.confidenceExplanation }}</p>
       </div>
     </section>
 

@@ -25,4 +25,13 @@ export class ConnectionService {
 
     return (await list({ organizationId })).data.connections;
   }
+
+  async beginGoogleAnalyticsConnection(organizationId: string): Promise<string> {
+    const begin = httpsCallable<
+      { organizationId: string },
+      { authorizationUrl: string }
+    >(this.functions, 'beginGoogleAnalyticsConnection');
+
+    return (await begin({ organizationId })).data.authorizationUrl;
+  }
 }

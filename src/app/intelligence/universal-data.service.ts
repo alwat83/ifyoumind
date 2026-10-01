@@ -12,6 +12,34 @@ export interface UniversalDataset {
   updatedAt?: string | null;
 }
 
+export interface UniversalReasoningSignal {
+  datasetId: string;
+  datasetName: string;
+  source: string;
+  correlation: number;
+  magnitude: 'strong' | 'moderate' | 'weak' | 'little';
+  direction: 'same_direction' | 'opposite_direction';
+  matchedObservations: number;
+  evidence: Array<{ period: string; geography: string | null; entity: string | null; a: number; b: number }>;
+}
+
+export interface UniversalReasoning {
+  target: { id: string; name: string; metric: string; unit: string; source: string };
+  conclusion: string;
+  interpretation: string;
+  confidence: 'low' | 'medium' | 'high';
+  supportingEvidence: UniversalReasoningSignal[];
+  counterEvidence: UniversalReasoningSignal[];
+  allSignals: UniversalReasoningSignal[];
+  reasoningPolicy: {
+    causalClaimAllowed: boolean;
+    alignmentRule: string;
+    minimumPairsForCorrelation: number;
+    meaningfulCorrelationThreshold: number;
+  };
+  limitations: string[];
+}
+
 export interface UniversalAnalysis {
   datasetCount: number;
   summary: string;
@@ -81,6 +109,18 @@ export class UniversalDataService {
       { imported: number }
     >(this.functions, 'importUniversalObservations');
     return (await call({ organizationId, datasetId, observations })).data.imported;
+  }
+
+  async reason(
+    organizationId: string,
+    datasetIds: string[],
+    targetDatasetId: string,
+  ): Promise<UniversalReasoning> {
+    const call = httpsCallable<
+      { organizationId: string; datasetIds: string[]; targetDatasetId: string },
+      UniversalReasoning
+    >(this.functions, 'reasonAcrossUniversalDatasets');
+    return (await call({ organizationId, datasetIds, targetDatasetId })).data;
   }
 
   async analyze(organizationId: string, datasetIds: string[]): Promise<UniversalAnalysis> {

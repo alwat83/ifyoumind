@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { OrganizationService, IntelligenceOrganization } from './organization.service';
 
-type ConnectorState = 'ready' | 'next';
+type ConnectorState = 'ready' | 'next' | 'deferred';
 
 interface ConnectorCard {
   name: string;
@@ -15,7 +16,7 @@ interface ConnectorCard {
 @Component({
   selector: 'app-intelligence-dashboard',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
@@ -30,15 +31,15 @@ export class IntelligenceDashboardComponent implements OnInit {
 
   readonly connectors: ConnectorCard[] = [
     {
-      name: 'Stripe',
-      description: 'Revenue, refunds, and cash collected.',
-      metrics: ['Cash collected', 'Refunds'],
-      state: 'ready',
-    },
-    {
       name: 'Google Analytics 4',
       description: 'Traffic and conversion activity.',
       metrics: ['Sessions', 'Key events'],
+      state: 'ready',
+    },
+    {
+      name: 'Search Console',
+      description: 'Organic search demand and visibility.',
+      metrics: ['Clicks', 'Impressions'],
       state: 'next',
     },
     {
@@ -48,10 +49,10 @@ export class IntelligenceDashboardComponent implements OnInit {
       state: 'next',
     },
     {
-      name: 'Search Console',
-      description: 'Organic search demand and visibility.',
-      metrics: ['Clicks', 'Impressions'],
-      state: 'next',
+      name: 'Stripe',
+      description: 'Revenue, refunds, and cash collected.',
+      metrics: ['Cash collected', 'Refunds'],
+      state: 'deferred',
     },
   ];
 
@@ -80,6 +81,12 @@ export class IntelligenceDashboardComponent implements OnInit {
     } finally {
       this.creating = false;
     }
+  }
+
+  stateLabel(state: ConnectorState): string {
+    if (state === 'ready') return 'Building now';
+    if (state === 'deferred') return 'Deferred';
+    return 'Next';
   }
 
   private message(error: unknown): string {

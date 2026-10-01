@@ -23,6 +23,17 @@
   <section *ngIf="loading" class="panel">Loading your datasets…</section>
 
   <ng-container *ngIf="!loading && workspace">
+    <section class="demo-banner">
+      <div>
+        <p class="eyebrow">Test drive</p>
+        <strong>Load synthetic demo data and analyze it immediately.</strong>
+        <p>Housing, income, population, and crime data — clearly marked as synthetic.</p>
+      </div>
+      <button type="button" (click)="loadDemoData()" [disabled]="seedingDemo">
+        {{ seedingDemo ? 'Loading demo…' : 'Load demo data' }}
+      </button>
+    </section>
+
     <section class="import-banner">
       <div>
         <p class="eyebrow">Have existing data?</p>

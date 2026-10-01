@@ -3,6 +3,7 @@ import { onCall } from 'firebase-functions/v2/https';
 import { authorizeOrganization } from './authorization';
 import { MetricFact } from './contracts';
 import { totalFacts } from './metric-facts';
+import { compareMetricWindows } from './insight-rules';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const readMembership = async (organizationId: string, uid: string) =>
@@ -61,13 +62,23 @@ export const getIntelligenceDashboardMetrics = onCall(async (request) => {
   const baselineFacts = facts.filter((fact) => fact.date >= baselineFrom && fact.date <= baselineThrough);
   const current = totalFacts(currentFacts);
   const baseline = totalFacts(baselineFacts);
-  const changePercent = baseline > 0 ? ((current - baseline) / baseline) * 100 : null;
+  const insight = currentFacts.length || baselineFacts.length
+    ? compareMetricWindows(
+        'ga4.sessions',
+        currentFacts,
+        baselineFacts,
+        { from: currentFrom, through: currentThrough },
+        { from: baselineFrom, through: baselineThrough },
+      )
+    : null;
+  const changePercent = insight?.changePercent ?? null;
 
   return {
     ga4: {
       sessions: current,
       baselineSessions: baseline,
       changePercent,
+      insight,
       currentWindow: { from: currentFrom, through: currentThrough },
       baselineWindow: { from: baselineFrom, through: baselineThrough },
       sampleSize: currentFacts.length,

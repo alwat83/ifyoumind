@@ -28,6 +28,7 @@ export class DataCanvasComponent implements OnInit {
   targetDatasetId = '';
   loading = true;
   saving = false;
+  seedingDemo = false;
   analyzing = false;
   error = '';
 
@@ -76,6 +77,26 @@ export class DataCanvasComponent implements OnInit {
 
   isSelected(id: string): boolean {
     return this.selected.has(id);
+  }
+
+  async loadDemoData(): Promise<void> {
+    if (!this.workspace || this.seedingDemo) return;
+    this.seedingDemo = true;
+    this.error = '';
+    try {
+      const seeded = await this.data.seedDemo(this.workspace.organizationId);
+      await this.refresh();
+      this.selected = new Set(seeded.datasetIds);
+      this.targetDatasetId = seeded.targetDatasetId;
+      this.analysis = null;
+      this.reasoning = null;
+      this.synthesis = null;
+      this.synthesisModel = '';
+    } catch (error) {
+      this.error = this.message(error);
+    } finally {
+      this.seedingDemo = false;
+    }
   }
 
   async createDataset(): Promise<void> {

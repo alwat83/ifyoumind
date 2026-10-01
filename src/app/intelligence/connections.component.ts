@@ -132,6 +132,7 @@ export class IntelligenceConnectionsComponent implements OnInit {
         this.workspace.organizationId,
         this.selectedGoogleProperty,
       );
+      await this.connectionsService.syncGoogleAnalytics(this.workspace.organizationId);
       await this.refreshConnections();
       this.googleProperties = [];
     } catch (error) {

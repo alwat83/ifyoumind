@@ -134,8 +134,9 @@ export const getUniversalDataset = onCall(async (request) => {
   if (!dataset.exists) throw new HttpsError('not-found', 'Dataset not found.');
 
   const observations = await ref.collection('observations').orderBy('period', 'asc').limit(500).get();
+  const datasetData = dataset.data() || {};
   return {
-    dataset: { id: dataset.id, ...dataset.data() },
+    dataset: { id: dataset.id, ...datasetData },
     observations: observations.docs.map((doc) => ({ id: doc.id, ...doc.data() })),
   };
 });

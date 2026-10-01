@@ -208,3 +208,5 @@ export { importUniversalObservations } from './intelligence/universal-import';
 export { reasonAcrossUniversalDatasets, getRecentUniversalAnalysisRuns } from './intelligence/universal-reasoning';
 
 export { synthesizeUniversalAnalysis } from './intelligence/ai-synthesis';
+
+export { seedUniversalDemoData } from './intelligence/demo-data';

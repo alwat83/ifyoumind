@@ -13,6 +13,12 @@ export interface IntelligenceConnection {
   errorCode?: string;
 }
 
+export interface GoogleAnalyticsProperty {
+  id: string;
+  displayName: string;
+  accountDisplayName: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ConnectionService {
   private readonly functions = inject(Functions);
@@ -33,5 +39,26 @@ export class ConnectionService {
     >(this.functions, 'beginGoogleAnalyticsConnection');
 
     return (await begin({ organizationId })).data.authorizationUrl;
+  }
+
+  async discoverGoogleAnalyticsProperties(organizationId: string): Promise<GoogleAnalyticsProperty[]> {
+    const discover = httpsCallable<
+      { organizationId: string },
+      { properties: GoogleAnalyticsProperty[] }
+    >(this.functions, 'discoverGoogleAnalyticsProperties');
+
+    return (await discover({ organizationId })).data.properties;
+  }
+
+  async selectGoogleAnalyticsProperty(
+    organizationId: string,
+    propertyId: string,
+  ): Promise<void> {
+    const select = httpsCallable<
+      { organizationId: string; propertyId: string },
+      { connection: IntelligenceConnection }
+    >(this.functions, 'selectGoogleAnalyticsProperty');
+
+    await select({ organizationId, propertyId });
   }
 }

@@ -187,3 +187,5 @@ export {
   getMyIntelligenceOrganization,
 } from './intelligence/organizations';
 export { getIntelligenceConnections } from './intelligence/connections';
+
+export { beginGoogleAnalyticsConnection, googleAnalyticsOAuthCallback } from './intelligence/google-analytics-oauth';

@@ -7,6 +7,29 @@ export interface AskResponse {
   answer: string;
   evidence: any;
   suggestedQuestions: string[];
+  async saved(organizationId: string): Promise<SavedQuestion[]> {
+    const call = httpsCallable<
+      { organizationId: string },
+      { questions: SavedQuestion[] }
+    >(this.functions, 'getSavedIntelligenceQuestions');
+    return (await call({ organizationId })).data.questions;
+  }
+
+  async save(organizationId: string, question: string): Promise<void> {
+    const call = httpsCallable<
+      { organizationId: string; question: string },
+      { id: string; question: string }
+    >(this.functions, 'saveIntelligenceQuestion');
+    await call({ organizationId, question });
+  }
+
+  async removeSaved(organizationId: string, id: string): Promise<void> {
+    const call = httpsCallable<
+      { organizationId: string; id: string },
+      { ok: boolean }
+    >(this.functions, 'deleteSavedIntelligenceQuestion');
+    await call({ organizationId, id });
+  }
 }
 
 export interface RecentQuestion {
@@ -15,6 +38,12 @@ export interface RecentQuestion {
   answer: string;
   intent: string;
   createdAt: string | null;
+}
+
+export interface SavedQuestion {
+  id: string;
+  question: string;
+  updatedAt: string | null;
 }
 
 @Injectable({ providedIn: 'root' })

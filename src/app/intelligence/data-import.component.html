@@ -1,0 +1,128 @@
+<main class="import-shell">
+  <nav class="app-nav">
+    <a routerLink="/app" class="brand">ifYouMind <span>2.0</span></a>
+    <div>
+      <a routerLink="/app">Overview</a>
+      <a routerLink="/app/canvas">Canvas</a>
+      <a routerLink="/app/import" class="active">Import</a>
+      <a routerLink="/app/insights">Insights</a>
+      <a routerLink="/app/ask">Ask</a>
+      <a routerLink="/app/connections">Connections</a>
+    </div>
+  </nav>
+
+  <header>
+    <p class="eyebrow">Import data</p>
+    <h1>Bring your own data.</h1>
+    <p>Upload a CSV, map what each column means, and turn every row into universal observations.</p>
+  </header>
+
+  <section *ngIf="error" class="panel error">{{ error }}</section>
+  <section *ngIf="importedCount !== null" class="panel success">
+    Imported {{ importedCount }} observations successfully.
+    <a routerLink="/app/canvas">Open them in Data Canvas →</a>
+  </section>
+
+  <section class="panel">
+    <p class="eyebrow">1 · Destination</p>
+    <h2>Which dataset should receive these observations?</h2>
+    <select [(ngModel)]="datasetId">
+      <option value="">Choose a dataset</option>
+      <option *ngFor="let dataset of datasets" [value]="dataset.id">
+        {{ dataset.name }} · {{ dataset.unit }}
+      </option>
+    </select>
+    <p class="hint">Create the metric definition in Data Canvas first, then import observations into it.</p>
+  </section>
+
+  <section class="panel">
+    <p class="eyebrow">2 · File</p>
+    <h2>Choose a CSV.</h2>
+    <label class="file-picker">
+      <input type="file" accept=".csv,text/csv" (change)="chooseFile($event)" />
+      <span>{{ fileName || 'Choose CSV file' }}</span>
+    </label>
+    <p class="hint">Current limit: 400 rows / 2 MB per import. Nothing is imported until you review the mapping.</p>
+  </section>
+
+  <ng-container *ngIf="table">
+    <section class="panel">
+      <p class="eyebrow">3 · Map columns</p>
+      <h2>Tell ifYouMind what the columns mean.</h2>
+
+      <div class="mapping-grid">
+        <label>
+          <span>Value *</span>
+          <select [(ngModel)]="valueColumn">
+            <option value="">Choose column</option>
+            <option *ngFor="let header of table.headers" [value]="header">{{ header }}</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Period *</span>
+          <select [(ngModel)]="periodColumn">
+            <option value="">Choose column</option>
+            <option *ngFor="let header of table.headers" [value]="header">{{ header }}</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Geography</span>
+          <select [(ngModel)]="geographyColumn">
+            <option value="">None</option>
+            <option *ngFor="let header of table.headers" [value]="header">{{ header }}</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Entity</span>
+          <select [(ngModel)]="entityColumn">
+            <option value="">None</option>
+            <option *ngFor="let header of table.headers" [value]="header">{{ header }}</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Note</span>
+          <select [(ngModel)]="noteColumn">
+            <option value="">None</option>
+            <option *ngFor="let header of table.headers" [value]="header">{{ header }}</option>
+          </select>
+        </label>
+      </div>
+
+      <p class="hint" *ngIf="dimensionColumns().length">
+        Preserved as dimensions: {{ dimensionColumns().join(', ') }}
+      </p>
+    </section>
+
+    <section class="panel">
+      <div class="preview-heading">
+        <div>
+          <p class="eyebrow">4 · Preview</p>
+          <h2>{{ table.rows.length }} rows detected.</h2>
+        </div>
+        <button type="button" (click)="import()" [disabled]="!canImport()">
+          {{ importing ? 'Importing…' : 'Import observations' }}
+        </button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th *ngFor="let header of table.headers">{{ header }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of previewRows()">
+              <td *ngFor="let cell of row">{{ cell }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="hint">Preview shows the first five rows only.</p>
+    </section>
+  </ng-container>
+</main>

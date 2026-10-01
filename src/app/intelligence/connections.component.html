@@ -35,16 +35,57 @@
       </div>
 
       <p>{{ item.description }}</p>
+      <p *ngIf="connectionLabel(item.source)" class="connection-label">
+        {{ connectionLabel(item.source) }}
+      </p>
 
       <div class="metrics">
         <span *ngFor="let metric of item.metrics">{{ metric }}</span>
       </div>
 
       <div class="source-action" *ngIf="item.source === 'ga4'; else planned">
-        <button type="button" (click)="connectGoogleAnalytics()" [disabled]="connectingGoogle">
-          {{ connectingGoogle ? 'Opening Google…' : 'Connect Google Analytics' }}
-        </button>
-        <small>Uses Google OAuth with read-only Analytics access. Credentials remain server-side.</small>
+        <ng-container *ngIf="status('ga4') === 'connected'; else ga4Setup">
+          <button type="button" disabled>Connected</button>
+        </ng-container>
+
+        <ng-template #ga4Setup>
+          <button
+            *ngIf="status('ga4') === 'not_connected' || status('ga4') === 'error'"
+            type="button"
+            (click)="connectGoogleAnalytics()"
+            [disabled]="connectingGoogle"
+          >
+            {{ connectingGoogle ? 'Opening Google…' : 'Connect Google Analytics' }}
+          </button>
+
+          <button
+            *ngIf="status('ga4') === 'connecting' && googleProperties.length === 0"
+            type="button"
+            (click)="loadGoogleProperties()"
+            [disabled]="loadingProperties"
+          >
+            {{ loadingProperties ? 'Loading properties…' : 'Choose Analytics property' }}
+          </button>
+
+          <div *ngIf="googleProperties.length > 0" class="property-picker">
+            <label for="ga4-property">Analytics property</label>
+            <select id="ga4-property" [(ngModel)]="selectedGoogleProperty">
+              <option value="">Select a property</option>
+              <option *ngFor="let property of googleProperties" [value]="property.id">
+                {{ property.displayName }} — {{ property.accountDisplayName }}
+              </option>
+            </select>
+            <button
+              type="button"
+              (click)="saveGoogleProperty()"
+              [disabled]="!selectedGoogleProperty || savingProperty"
+            >
+              {{ savingProperty ? 'Saving…' : 'Use this property' }}
+            </button>
+          </div>
+
+          <small>Uses Google OAuth with read-only Analytics access. Credentials remain encrypted server-side.</small>
+        </ng-template>
       </div>
 
       <ng-template #planned>

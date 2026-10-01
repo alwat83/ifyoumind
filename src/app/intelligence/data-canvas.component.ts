@@ -3,7 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IntelligenceOrganization, OrganizationService } from './organization.service';
-import { UniversalAnalysis, UniversalAnalysisRun, UniversalDataService, UniversalDataset, UniversalReasoning } from './universal-data.service';
+import { UniversalAnalysis, UniversalAnalysisRun, UniversalDataService, UniversalDataset, UniversalReasoning, UniversalSynthesis } from './universal-data.service';
 
 @Component({
   selector: 'app-data-canvas',
@@ -22,6 +22,9 @@ export class DataCanvasComponent implements OnInit {
   analysis: UniversalAnalysis | null = null;
   reasoning: UniversalReasoning | null = null;
   recentRuns: UniversalAnalysisRun[] = [];
+  synthesis: UniversalSynthesis | null = null;
+  synthesisModel = '';
+  synthesizing = false;
   targetDatasetId = '';
   loading = true;
   saving = false;
@@ -138,6 +141,8 @@ export class DataCanvasComponent implements OnInit {
     this.error = '';
     try {
       const ids = [...this.selected];
+      this.synthesis = null;
+      this.synthesisModel = '';
       [this.analysis, this.reasoning] = await Promise.all([
         this.data.analyze(this.workspace.organizationId, ids),
         this.data.reason(this.workspace.organizationId, ids, this.targetDatasetId),
@@ -147,6 +152,24 @@ export class DataCanvasComponent implements OnInit {
       this.error = this.message(error);
     } finally {
       this.analyzing = false;
+    }
+  }
+
+  async explainWithAi(): Promise<void> {
+    if (!this.workspace || !this.reasoning?.analysisRunId || this.synthesizing) return;
+    this.synthesizing = true;
+    this.error = '';
+    try {
+      const result = await this.data.synthesize(
+        this.workspace.organizationId,
+        this.reasoning.analysisRunId,
+      );
+      this.synthesis = result.synthesis;
+      this.synthesisModel = result.model;
+    } catch (error) {
+      this.error = this.message(error);
+    } finally {
+      this.synthesizing = false;
     }
   }
 

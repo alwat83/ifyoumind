@@ -1,0 +1,56 @@
+<main class="feed-shell">
+  <nav class="app-nav">
+    <a routerLink="/app" class="brand">ifYouMind <span>2.0</span></a>
+    <div>
+      <a routerLink="/app">Overview</a>
+      <a routerLink="/app/insights" class="active">Insights</a>
+      <a routerLink="/app/ask">Ask</a>
+      <a routerLink="/app/connections">Connections</a>
+    </div>
+  </nav>
+
+  <header>
+    <p class="eyebrow">Insight feed</p>
+    <h1>What deserves your attention.</h1>
+    <p>Important changes from your connected data, ranked by magnitude and backed by evidence.</p>
+  </header>
+
+  <section *ngIf="loading" class="panel">Looking for meaningful changes…</section>
+  <section *ngIf="error" class="panel error">{{ error }}</section>
+
+  <section *ngIf="!loading && !insights.length" class="empty-state">
+    <p class="eyebrow">Nothing to show yet</p>
+    <h2>Your feed starts when connected data is available.</h2>
+    <p>Connect GA4 and sync data, then ifYouMind will surface changes here automatically.</p>
+    <a routerLink="/app/connections">Manage connections</a>
+  </section>
+
+  <section *ngIf="insights.length" class="insight-list">
+    <article *ngFor="let insight of insights">
+      <div class="insight-top">
+        <div>
+          <span class="source">{{ insight.source }}</span>
+          <h2>{{ insight.title }}</h2>
+        </div>
+        <span class="direction" [attr.data-direction]="insight.direction">{{ insight.direction }}</span>
+      </div>
+
+      <div class="numbers">
+        <div>
+          <span>Current</span>
+          <strong>{{ insight.currentValue | number }}</strong>
+        </div>
+        <div>
+          <span>Previous</span>
+          <strong>{{ insight.baselineValue | number }}</strong>
+        </div>
+      </div>
+
+      <div class="evidence">
+        <span>{{ metricLabel(insight.metric) }}</span>
+        <span>{{ insight.currentWindow.from }}–{{ insight.currentWindow.through }}</span>
+        <span *ngIf="insight.freshnessAt">Updated {{ insight.freshnessAt | date:'short' }}</span>
+      </div>
+    </article>
+  </section>
+</main>

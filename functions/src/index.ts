@@ -197,3 +197,5 @@ export { getIntelligenceDashboardMetrics } from './intelligence/dashboard-metric
 
 export { askIntelligence, getRecentIntelligenceQuestions } from './intelligence/ask';
 export { getIntelligenceInsightFeed } from './intelligence/insight-feed';
+
+export { saveIntelligenceQuestion, deleteSavedIntelligenceQuestion, getSavedIntelligenceQuestions } from './intelligence/saved-questions';

@@ -64,6 +64,25 @@ export class UniversalDataService {
     await call({ organizationId, ...data });
   }
 
+  async importObservations(
+    organizationId: string,
+    datasetId: string,
+    observations: Array<{
+      value: number;
+      period: string;
+      geography?: string | null;
+      entity?: string | null;
+      note?: string | null;
+      dimensions?: Record<string, string>;
+    }>,
+  ): Promise<number> {
+    const call = httpsCallable<
+      { organizationId: string; datasetId: string; observations: typeof observations },
+      { imported: number }
+    >(this.functions, 'importUniversalObservations');
+    return (await call({ organizationId, datasetId, observations })).data.imported;
+  }
+
   async analyze(organizationId: string, datasetIds: string[]): Promise<UniversalAnalysis> {
     const call = httpsCallable<
       { organizationId: string; datasetIds: string[] },

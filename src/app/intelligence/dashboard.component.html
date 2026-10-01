@@ -13,10 +13,10 @@
   <section class="hero">
     <div>
       <p class="eyebrow">ifYouMind 2.0</p>
-      <h1>Your business, explained.</h1>
+      <h1>Put the data together.</h1>
       <p class="lede">
-        Bring acquisition, traffic, search, and eventually revenue data into one place.
-        ifYouMind turns the raw numbers into evidence-backed answers.
+        Bring together data from any domain—real estate, crime, food, weather, finance, business systems, public APIs, or your own files.
+        ifYouMind looks for relationships and turns the underlying observations into evidence-backed conclusions.
       </p>
     </div>
     <div class="status-pill">Foundation live</div>
@@ -29,7 +29,7 @@
   <section *ngIf="!loading && !workspace" class="panel onboarding">
     <div>
       <p class="eyebrow">Create your workspace</p>
-      <h2>Start with the business you want to understand.</h2>
+      <h2>Start with what you want to understand.</h2>
       <p>You can connect data sources after the workspace is created.</p>
     </div>
     <form (ngSubmit)="createWorkspace()" class="workspace-form">
@@ -71,8 +71,8 @@
       </a>
       <a routerLink="/app/ask" class="feature-card">
         <span>Ask ifYouMind</span>
-        <strong>Ask your business a question →</strong>
-        <p>Get a plain-English answer grounded in your connected data.</p>
+        <strong>Ask your data a question →</strong>
+        <p>Get a plain-English answer grounded in the datasets and observations behind it.</p>
       </a>
       <a routerLink="/app/insights" class="feature-card">
         <span>Insight feed</span>

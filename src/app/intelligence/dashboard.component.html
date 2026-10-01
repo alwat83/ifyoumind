@@ -1,0 +1,116 @@
+<main class="intelligence-shell">
+  <section class="hero">
+    <div>
+      <p class="eyebrow">ifYouMind 2.0</p>
+      <h1>Your business, explained.</h1>
+      <p class="lede">
+        Bring revenue, acquisition, traffic, and search data into one place.
+        ifYouMind turns the raw numbers into evidence-backed answers.
+      </p>
+    </div>
+    <div class="status-pill">Foundation live</div>
+  </section>
+
+  <section *ngIf="loading" class="panel centered">
+    <p>Loading your workspace…</p>
+  </section>
+
+  <section *ngIf="!loading && !workspace" class="panel onboarding">
+    <div>
+      <p class="eyebrow">Create your workspace</p>
+      <h2>Start with the business you want to understand.</h2>
+      <p>You can connect data sources after the workspace is created.</p>
+    </div>
+    <form (ngSubmit)="createWorkspace()" class="workspace-form">
+      <label for="workspace-name">Workspace name</label>
+      <div class="input-row">
+        <input
+          id="workspace-name"
+          name="workspaceName"
+          [(ngModel)]="workspaceName"
+          maxlength="120"
+          placeholder="Dose Ninja"
+          autocomplete="organization"
+        />
+        <button type="submit" [disabled]="creating || !workspaceName.trim()">
+          {{ creating ? 'Creating…' : 'Create workspace' }}
+        </button>
+      </div>
+      <p *ngIf="error" class="error">{{ error }}</p>
+    </form>
+  </section>
+
+  <ng-container *ngIf="!loading && workspace">
+    <section class="workspace-header">
+      <div>
+        <p class="eyebrow">Workspace</p>
+        <h2>{{ workspace.name }}</h2>
+      </div>
+      <span class="role">{{ workspace.role }}</span>
+    </section>
+
+    <section class="metric-grid" aria-label="Key metrics">
+      <article class="metric-card">
+        <p>Revenue</p>
+        <strong>—</strong>
+        <span>Connect Stripe to populate</span>
+      </article>
+      <article class="metric-card">
+        <p>Traffic</p>
+        <strong>—</strong>
+        <span>Connect GA4 to populate</span>
+      </article>
+      <article class="metric-card">
+        <p>Ad spend</p>
+        <strong>—</strong>
+        <span>Connect Google Ads to populate</span>
+      </article>
+      <article class="metric-card">
+        <p>Organic clicks</p>
+        <strong>—</strong>
+        <span>Connect Search Console to populate</span>
+      </article>
+    </section>
+
+    <section class="section-heading">
+      <div>
+        <p class="eyebrow">Data sources</p>
+        <h2>Connect the systems already running your business.</h2>
+      </div>
+    </section>
+
+    <section class="connector-grid">
+      <article *ngFor="let connector of connectors" class="connector-card">
+        <div class="connector-top">
+          <h3>{{ connector.name }}</h3>
+          <span [class.ready]="connector.state === 'ready'">
+            {{ connector.state === 'ready' ? 'Building now' : 'Next' }}
+          </span>
+        </div>
+        <p>{{ connector.description }}</p>
+        <div class="chips">
+          <span *ngFor="let metric of connector.metrics">{{ metric }}</span>
+        </div>
+        <button type="button" disabled>
+          {{ connector.state === 'ready' ? 'Connect Stripe — next step' : 'Coming next' }}
+        </button>
+      </article>
+    </section>
+
+    <section class="panel insight-panel">
+      <div>
+        <p class="eyebrow">Intelligence layer</p>
+        <h2>Answers must show their work.</h2>
+        <p>
+          Every insight will carry its reporting window, source references,
+          freshness, and data-quality flags so AI analysis stays grounded in the underlying facts.
+        </p>
+      </div>
+      <div class="example-insight">
+        <span>Example</span>
+        <strong>Revenue increased 18% week over week.</strong>
+        <p>Evidence: Stripe cash collected · Sep 21–27 vs Sep 14–20</p>
+      </div>
+    </section>
+  </ng-container>
+</main>

@@ -204,3 +204,5 @@ export { createUniversalDataset, addUniversalObservation, listUniversalDatasets,
 export { analyzeUniversalDatasets } from './intelligence/universal-analysis';
 
 export { importUniversalObservations } from './intelligence/universal-import';
+
+export { reasonAcrossUniversalDatasets } from './intelligence/universal-reasoning';

@@ -189,3 +189,5 @@ export {
 export { getIntelligenceConnections } from './intelligence/connections';
 
 export { beginGoogleAnalyticsConnection, googleAnalyticsOAuthCallback } from './intelligence/google-analytics-oauth';
+
+export { discoverGoogleAnalyticsProperties, selectGoogleAnalyticsProperty } from './intelligence/google-analytics';

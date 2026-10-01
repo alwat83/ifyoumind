@@ -136,3 +136,23 @@ button:disabled { opacity: .5; cursor: default; }
   .ask-shell { width: min(100% - 24px, 980px); }
   .app-nav { align-items: flex-start; flex-direction: column; margin-bottom: 42px; }
 }
+
+
+.save-answer {
+  margin-top: 14px;
+  background: #eef0f5;
+  color: #080b12;
+}
+
+.saved-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.saved-actions button {
+  border: 1px solid #2d3548;
+  background: #151b27;
+  color: #aeb5c4;
+  font-weight: 600;
+}

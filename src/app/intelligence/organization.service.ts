@@ -18,6 +18,13 @@ export class OrganizationService {
     return (await create({ name })).data.organizationId;
   }
 
+  async getMyWorkspace(): Promise<IntelligenceOrganization | null> {
+    const getMine = httpsCallable<Record<string, never>, { organization: IntelligenceOrganization | null }>(
+      this.functions, 'getMyIntelligenceOrganization',
+    );
+    return (await getMine({})).data.organization;
+  }
+
   async getWorkspace(organizationId: string): Promise<IntelligenceOrganization> {
     const get = httpsCallable<{ organizationId: string }, IntelligenceOrganization>(
       this.functions, 'getIntelligenceOrganization',

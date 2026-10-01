@@ -1,0 +1,74 @@
+<main class="ask-shell">
+  <nav class="app-nav">
+    <a routerLink="/app" class="brand">ifYouMind <span>2.0</span></a>
+    <div>
+      <a routerLink="/app">Overview</a>
+      <a routerLink="/app/ask" class="active">Ask</a>
+      <a routerLink="/app/connections">Connections</a>
+    </div>
+  </nav>
+
+  <header>
+    <p class="eyebrow">Ask ifYouMind</p>
+    <h1>Ask your business a question.</h1>
+    <p class="lede">Plain-English answers, grounded in the data behind them.</p>
+  </header>
+
+  <section *ngIf="loading" class="panel">Loading workspace…</section>
+  <section *ngIf="error" class="panel error">{{ error }}</section>
+
+  <section *ngIf="!loading && workspace" class="ask-panel">
+    <form (ngSubmit)="submit()">
+      <textarea
+        name="question"
+        [(ngModel)]="question"
+        maxlength="500"
+        rows="3"
+        placeholder="What changed this week?"
+      ></textarea>
+      <button type="submit" [disabled]="asking || !question.trim()">
+        {{ asking ? 'Looking at your data…' : 'Ask ifYouMind' }}
+      </button>
+    </form>
+
+    <div class="prompt-row">
+      <button *ngFor="let prompt of prompts" type="button" (click)="usePrompt(prompt)">
+        {{ prompt }}
+      </button>
+    </div>
+  </section>
+
+  <section *ngIf="response" class="answer-card">
+    <p class="eyebrow">Answer</p>
+    <h2>{{ response.answer }}</h2>
+
+    <details *ngIf="response.evidence">
+      <summary>Show evidence</summary>
+      <pre>{{ response.evidence | json }}</pre>
+    </details>
+
+    <div class="followups" *ngIf="response.suggestedQuestions.length">
+      <span>Try next:</span>
+      <button
+        *ngFor="let prompt of response.suggestedQuestions"
+        type="button"
+        (click)="usePrompt(prompt)"
+      >
+        {{ prompt }}
+      </button>
+    </div>
+  </section>
+
+  <section *ngIf="recent.length" class="history">
+    <div class="section-heading">
+      <p class="eyebrow">Recent questions</p>
+      <h2>Your analysis history</h2>
+    </div>
+
+    <article *ngFor="let item of recent">
+      <p class="question">{{ item.question }}</p>
+      <p class="answer">{{ item.answer }}</p>
+      <span>{{ item.createdAt ? (item.createdAt | date:'medium') : '' }}</span>
+    </article>
+  </section>
+</main>

@@ -23,6 +23,15 @@ export interface UniversalReasoningSignal {
   evidence: Array<{ period: string; geography: string | null; entity: string | null; a: number; b: number }>;
 }
 
+export interface UniversalSynthesis {
+  headline: string;
+  explanation: string;
+  evidencePoints: Array<{ signalId: string; statement: string }>;
+  alternativeInterpretations: string[];
+  caveats: string[];
+  confidenceExplanation: string;
+}
+
 export interface UniversalAnalysisRun {
   id: string;
   targetDatasetId: string;
@@ -120,6 +129,18 @@ export class UniversalDataService {
       { imported: number }
     >(this.functions, 'importUniversalObservations');
     return (await call({ organizationId, datasetId, observations })).data.imported;
+  }
+
+  async synthesize(
+    organizationId: string,
+    analysisRunId: string,
+  ): Promise<{ synthesis: UniversalSynthesis; model: string }> {
+    const call = httpsCallable<
+      { organizationId: string; analysisRunId: string },
+      { analysisRunId: string; synthesis: UniversalSynthesis; model: string }
+    >(this.functions, 'synthesizeUniversalAnalysis');
+    const result = (await call({ organizationId, analysisRunId })).data;
+    return { synthesis: result.synthesis, model: result.model };
   }
 
   async recentRuns(organizationId: string): Promise<UniversalAnalysisRun[]> {

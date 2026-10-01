@@ -194,3 +194,6 @@ export { discoverGoogleAnalyticsProperties, selectGoogleAnalyticsProperty } from
 
 export { syncGoogleAnalytics } from './intelligence/google-analytics-sync';
 export { getIntelligenceDashboardMetrics } from './intelligence/dashboard-metrics';
+
+export { askIntelligence, getRecentIntelligenceQuestions } from './intelligence/ask';
+export { getIntelligenceInsightFeed } from './intelligence/insight-feed';

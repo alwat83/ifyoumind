@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { AskResponse, AskService, RecentQuestion } from './ask.service';
+import { AskResponse, AskService, RecentQuestion, SavedQuestion } from './ask.service';
 import { IntelligenceOrganization, OrganizationService } from './organization.service';
 
 @Component({
@@ -20,6 +20,7 @@ export class AskIntelligenceComponent implements OnInit {
   question = '';
   response: AskResponse | null = null;
   recent: RecentQuestion[] = [];
+  saved: SavedQuestion[] = [];
   loading = true;
   asking = false;
   error = '';
@@ -35,7 +36,10 @@ export class AskIntelligenceComponent implements OnInit {
     try {
       this.workspace = await this.organizations.getMyWorkspace();
       if (this.workspace) {
-        this.recent = await this.askService.recent(this.workspace.organizationId);
+        [this.recent, this.saved] = await Promise.all([
+          this.askService.recent(this.workspace.organizationId),
+          this.askService.saved(this.workspace.organizationId),
+        ]);
       }
     } catch (error) {
       this.error = this.message(error);
@@ -62,6 +66,26 @@ export class AskIntelligenceComponent implements OnInit {
       this.error = this.message(error);
     } finally {
       this.asking = false;
+    }
+  }
+
+  async saveQuestion(question: string): Promise<void> {
+    if (!this.workspace) return;
+    try {
+      await this.askService.save(this.workspace.organizationId, question);
+      this.saved = await this.askService.saved(this.workspace.organizationId);
+    } catch (error) {
+      this.error = this.message(error);
+    }
+  }
+
+  async removeSaved(item: SavedQuestion): Promise<void> {
+    if (!this.workspace) return;
+    try {
+      await this.askService.removeSaved(this.workspace.organizationId, item.id);
+      this.saved = this.saved.filter((saved) => saved.id !== item.id);
+    } catch (error) {
+      this.error = this.message(error);
     }
   }
 

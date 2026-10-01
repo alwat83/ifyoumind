@@ -206,3 +206,5 @@ export { analyzeUniversalDatasets } from './intelligence/universal-analysis';
 export { importUniversalObservations } from './intelligence/universal-import';
 
 export { reasonAcrossUniversalDatasets, getRecentUniversalAnalysisRuns } from './intelligence/universal-reasoning';
+
+export { synthesizeUniversalAnalysis } from './intelligence/ai-synthesis';

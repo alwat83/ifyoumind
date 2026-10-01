@@ -11,15 +11,19 @@ import { MissionPageComponent } from './pages/mission/mission-page.component';
 import { FaqPageComponent } from './pages/faq/faq-page.component';
 import { TagListComponent } from './pages/tag-list/tag-list.component';
 import { NewbieIdeasComponent } from './newbie-ideas/newbie-ideas.component';
-
 import { VerifyEmailComponent } from './auth/verify-email/verify-email.component';
-
 import { LoginComponent } from './auth/login/login.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { TermsOfConductComponent } from './pages/terms-of-conduct/terms-of-conduct.component';
 
 export const routes: Routes = [
   { path: '', component: IdeaListComponent },
+  {
+    path: 'app',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./intelligence/dashboard.component').then((m) => m.IntelligenceDashboardComponent),
+  },
   { path: 'idea-list', component: IdeaListComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
@@ -27,9 +31,7 @@ export const routes: Routes = [
   {
     path: 'idea/:id',
     loadComponent: () =>
-      import('./idea-detail/idea-detail.component').then(
-        (m) => m.IdeaDetailComponent,
-      ),
+      import('./idea-detail/idea-detail.component').then((m) => m.IdeaDetailComponent),
   },
   { path: 'submit', component: IdeaSubmitComponent, canActivate: [authGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
@@ -39,17 +41,7 @@ export const routes: Routes = [
   { path: 'tags', component: TagListComponent },
   { path: 't', redirectTo: '/tags', pathMatch: 'full' },
   { path: 'newbie-ideas', component: NewbieIdeasComponent },
-  {
-    path: 'onboarding',
-    component: OnboardingComponent,
-    canActivate: [onboardingGuard],
-  },
-  {
-    path: 'privacy-policy',
-    component: PrivacyPolicyComponent,
-  },
-  {
-    path: 'terms-of-conduct',
-    component: TermsOfConductComponent,
-  },
+  { path: 'onboarding', component: OnboardingComponent, canActivate: [onboardingGuard] },
+  { path: 'privacy-policy', component: PrivacyPolicyComponent },
+  { path: 'terms-of-conduct', component: TermsOfConductComponent },
 ];

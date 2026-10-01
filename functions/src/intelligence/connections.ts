@@ -32,7 +32,7 @@ export const getIntelligenceConnections = onCall(async (request) => {
     .collection('connections')
     .get();
 
-  const stored = new Map<string, FirebaseFirestore.DocumentData>();
+  const stored = new Map<string, Record<string, any>>();
   snapshot.forEach((doc) => stored.set(doc.id, doc.data()));
 
   const connections: PublicConnection[] = supportedSources.map((source) => {

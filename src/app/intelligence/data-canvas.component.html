@@ -160,6 +160,18 @@
       </div>
     </section>
 
+    <section *ngIf="recentRuns.length" class="analysis history">
+      <p class="eyebrow">Recent analyses</p>
+      <article *ngFor="let run of recentRuns" class="relationship">
+        <div class="relationship-title">
+          <strong>{{ run.targetName }}</strong>
+          <span>{{ run.confidence }} confidence</span>
+        </div>
+        <p>{{ run.conclusion }}</p>
+        <small>{{ run.createdAt ? (run.createdAt | date:'medium') : '' }}</small>
+      </article>
+    </section>
+
     <section *ngIf="analysis" class="analysis raw-analysis">
       <div class="analysis-header">
         <div>

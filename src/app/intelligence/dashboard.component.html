@@ -3,6 +3,8 @@
     <a routerLink="/app" class="brand">ifYouMind <span>2.0</span></a>
     <div>
       <a routerLink="/app" class="active">Overview</a>
+      <a routerLink="/app/insights">Insights</a>
+      <a routerLink="/app/ask">Ask</a>
       <a routerLink="/app/connections">Connections</a>
     </div>
   </nav>
@@ -58,6 +60,19 @@
         <span class="role">{{ workspace.role }}</span>
         <a routerLink="/app/connections" class="primary-link">Manage connections</a>
       </div>
+    </section>
+
+    <section class="feature-launcher">
+      <a routerLink="/app/ask" class="feature-card">
+        <span>Ask ifYouMind</span>
+        <strong>Ask your business a question →</strong>
+        <p>Get a plain-English answer grounded in your connected data.</p>
+      </a>
+      <a routerLink="/app/insights" class="feature-card">
+        <span>Insight feed</span>
+        <strong>See what changed →</strong>
+        <p>Important movements surfaced automatically, with evidence attached.</p>
+      </a>
     </section>
 
     <section class="metric-grid" aria-label="Key metrics">

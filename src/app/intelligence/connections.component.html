@@ -41,8 +41,10 @@
       </div>
 
       <div class="source-action" *ngIf="item.source === 'ga4'; else planned">
-        <button type="button" disabled>Connect Google account — OAuth next</button>
-        <small>The tenant-safe connection model is ready; Google OAuth is the next implementation step.</small>
+        <button type="button" (click)="connectGoogleAnalytics()" [disabled]="connectingGoogle">
+          {{ connectingGoogle ? 'Opening Google…' : 'Connect Google Analytics' }}
+        </button>
+        <small>Uses Google OAuth with read-only Analytics access. Credentials remain server-side.</small>
       </div>
 
       <ng-template #planned>
@@ -56,6 +58,6 @@
   <section *ngIf="workspace" class="architecture-note">
     <p class="eyebrow">Workspace boundary</p>
     <strong>{{ workspace.name }}</strong>
-    <p>Connection metadata belongs only to this workspace. Provider credentials will remain server-side and are never returned to the browser.</p>
+    <p>Connection metadata belongs only to this workspace. Provider credentials remain encrypted server-side and are never returned to the browser.</p>
   </section>
 </main>

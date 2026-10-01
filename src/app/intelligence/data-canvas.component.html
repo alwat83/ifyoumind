@@ -75,10 +75,20 @@
           class="analyze-button"
           type="button"
           (click)="analyze()"
-          [disabled]="selected.size < 2 || analyzing"
+          [disabled]="selected.size < 2 || !targetDatasetId || analyzing"
         >
           {{ analyzing ? 'Analyzing…' : 'Analyze together' }}
         </button>
+      </div>
+
+      <div class="target-picker" *ngIf="selected.size >= 2">
+        <label for="targetDataset">What are you trying to explain?</label>
+        <select id="targetDataset" [(ngModel)]="targetDatasetId">
+          <option value="">Choose target dataset</option>
+          <option *ngFor="let dataset of datasets" [value]="dataset.id" [disabled]="!isSelected(dataset.id)">
+            {{ dataset.name }}
+          </option>
+        </select>
       </div>
 
       <div class="dataset-grid" *ngIf="datasets.length; else noDatasets">
@@ -101,7 +111,56 @@
       </ng-template>
     </section>
 
-    <section *ngIf="analysis" class="analysis">
+    <section *ngIf="reasoning" class="analysis reasoning">
+      <div class="analysis-header">
+        <div>
+          <p class="eyebrow">ifYouMind conclusion</p>
+          <h2>{{ reasoning.conclusion }}</h2>
+          <p>{{ reasoning.interpretation }}</p>
+        </div>
+        <span class="confidence">{{ reasoning.confidence }} confidence</span>
+      </div>
+
+      <div class="reasoning-columns">
+        <div>
+          <p class="eyebrow">Supporting signals</p>
+          <article *ngFor="let signal of reasoning.supportingEvidence" class="relationship">
+            <div class="relationship-title">
+              <strong>{{ signal.datasetName }}</strong>
+              <span>r={{ signal.correlation | number:'1.2-2' }}</span>
+            </div>
+            <p>
+              {{ signal.magnitude }} {{ signal.direction === 'same_direction' ? 'same-direction' : 'inverse' }}
+              relationship across {{ signal.matchedObservations }} compatible observations.
+            </p>
+            <small>Source: {{ signal.source }}</small>
+          </article>
+          <p *ngIf="!reasoning.supportingEvidence.length" class="empty-note">No meaningful supporting signal yet.</p>
+        </div>
+
+        <div>
+          <p class="eyebrow">Counter-signals</p>
+          <article *ngFor="let signal of reasoning.counterEvidence" class="relationship">
+            <div class="relationship-title">
+              <strong>{{ signal.datasetName }}</strong>
+              <span>r={{ signal.correlation | number:'1.2-2' }}</span>
+            </div>
+            <p>This signal moves in the opposite relationship direction from the strongest evidence.</p>
+            <small>Source: {{ signal.source }}</small>
+          </article>
+          <p *ngIf="!reasoning.counterEvidence.length" class="empty-note">No counter-signal identified in the selected data.</p>
+        </div>
+      </div>
+
+      <div class="limitations">
+        <p class="eyebrow">Reasoning guardrails</p>
+        <ul>
+          <li *ngFor="let limitation of reasoning.limitations">{{ limitation }}</li>
+        </ul>
+      </div>
+    </section>
+
+    <section *ngIf="analysis" class="analysis raw-analysis">
       <div class="analysis-header">
         <div>
           <p class="eyebrow">Conclusion</p>

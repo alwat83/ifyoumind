@@ -203,3 +203,35 @@ small {
     grid-template-columns: 1fr;
   }
 }
+
+
+.connection-label {
+  margin: -2px 0 0;
+  color: #dfe3ec;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.property-picker {
+  display: grid;
+  gap: 9px;
+  padding: 12px;
+  border: 1px solid #2a3143;
+  border-radius: 14px;
+  background: #0b0f17;
+}
+
+.property-picker label {
+  color: #c8cedb;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.property-picker select {
+  width: 100%;
+  border: 1px solid #343c50;
+  border-radius: 10px;
+  background: #090d15;
+  color: #f7f8fb;
+  padding: 11px 12px;
+}

@@ -1,0 +1,29 @@
+:host { display:block; min-height:100vh; background:#080b12; color:#f7f8fb; }
+.feed-shell { width:min(980px,calc(100% - 40px)); margin:0 auto; padding:28px 0 80px; }
+.app-nav { display:flex; align-items:center; justify-content:space-between; gap:24px; margin-bottom:68px; padding-bottom:20px; border-bottom:1px solid #1e2433; }
+.brand { color:white; font-weight:850; letter-spacing:-.03em; text-decoration:none; }
+.brand span,.app-nav a { color:#8d95a8; }
+.app-nav>div { display:flex; gap:20px; }
+.app-nav>div a { text-decoration:none; font-size:14px; }
+.app-nav a.active { color:white; }
+header { max-width:760px; margin-bottom:32px; }
+h1 { margin:6px 0 14px; font-size:clamp(42px,7vw,68px); line-height:.98; letter-spacing:-.055em; }
+h2 { margin:6px 0; letter-spacing:-.03em; }
+p { color:#a4abbb; line-height:1.65; }
+.eyebrow { margin:0; color:#7f8799; font-size:11px; font-weight:800; letter-spacing:.16em; text-transform:uppercase; }
+.panel,.empty-state,.insight-list article { border:1px solid #202638; border-radius:20px; background:#10151f; padding:24px; }
+.error { color:#ffb2b2; }
+.empty-state a { display:inline-block; margin-top:8px; border-radius:12px; background:#f4f5f8; color:#080b12; padding:11px 14px; text-decoration:none; font-weight:800; }
+.insight-list { display:grid; gap:12px; }
+.insight-top { display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+.source { color:#7f8799; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.12em; }
+.direction { border:1px solid #32394b; border-radius:999px; padding:6px 9px; color:#a7afbf; font-size:11px; text-transform:capitalize; }
+.direction[data-direction="up"] { border-color:#27563a; color:#b5f0ca; background:#10291b; }
+.direction[data-direction="down"] { border-color:#613434; color:#f3b1b1; background:#2b1717; }
+.numbers { display:flex; gap:40px; margin:24px 0; }
+.numbers div { display:grid; gap:4px; }
+.numbers span { color:#747d91; font-size:11px; text-transform:uppercase; letter-spacing:.1em; }
+.numbers strong { font-size:30px; }
+.evidence { display:flex; flex-wrap:wrap; gap:8px; }
+.evidence span { border:1px solid #2a3143; border-radius:999px; padding:5px 8px; color:#858da0; font-size:11px; }
+@media (max-width:640px) { .feed-shell{width:min(100% - 24px,980px)} .app-nav{align-items:flex-start;flex-direction:column;margin-bottom:42px}.insight-top{flex-direction:column}.numbers{gap:22px} }

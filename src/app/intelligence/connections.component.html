@@ -1,0 +1,61 @@
+<main class="connections-shell">
+  <nav class="app-nav">
+    <a routerLink="/app" class="brand">ifYouMind <span>2.0</span></a>
+    <div>
+      <a routerLink="/app">Overview</a>
+      <a routerLink="/app/connections" class="active">Connections</a>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">Data connections</p>
+      <h1>Bring your business data together.</h1>
+      <p>Connect one source at a time. ifYouMind normalizes the data before it reaches the intelligence layer.</p>
+    </div>
+    <a routerLink="/app" class="back-link">Back to overview</a>
+  </header>
+
+  <section *ngIf="loading" class="panel">Loading connections…</section>
+  <section *ngIf="error" class="panel error">{{ error }}</section>
+  <section *ngIf="!loading && !workspace" class="panel">
+    Create your workspace from the overview before adding connections.
+  </section>
+
+  <section *ngIf="!loading && workspace" class="source-grid">
+    <article *ngFor="let item of sources" class="source-card" [class.primary]="item.priority === 'now'">
+      <div class="source-top">
+        <div>
+          <p class="source-kicker">{{ item.priority === 'now' ? 'Building now' : 'Planned' }}</p>
+          <h2>{{ item.name }}</h2>
+        </div>
+        <span class="status" [attr.data-status]="status(item.source)">
+          {{ statusLabel(item.source) }}
+        </span>
+      </div>
+
+      <p>{{ item.description }}</p>
+
+      <div class="metrics">
+        <span *ngFor="let metric of item.metrics">{{ metric }}</span>
+      </div>
+
+      <div class="source-action" *ngIf="item.source === 'ga4'; else planned">
+        <button type="button" disabled>Connect Google account — OAuth next</button>
+        <small>The tenant-safe connection model is ready; Google OAuth is the next implementation step.</small>
+      </div>
+
+      <ng-template #planned>
+        <div class="source-action">
+          <button type="button" disabled>Planned</button>
+        </div>
+      </ng-template>
+    </article>
+  </section>
+
+  <section *ngIf="workspace" class="architecture-note">
+    <p class="eyebrow">Workspace boundary</p>
+    <strong>{{ workspace.name }}</strong>
+    <p>Connection metadata belongs only to this workspace. Provider credentials will remain server-side and are never returned to the browser.</p>
+  </section>
+</main>

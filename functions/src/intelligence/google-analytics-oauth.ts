@@ -91,12 +91,17 @@ export const googleAnalyticsOAuthCallback = onRequest(
     const code = typeof request.query.code === 'string' ? request.query.code : '';
     const denied = typeof request.query.error === 'string' ? request.query.error : '';
 
+    if (!state) {
+      response.status(400).send('Invalid or expired connection request.');
+      return;
+    }
+
     const stateRef = oauthStates().doc(state);
-    const snapshot = state ? await stateRef.get() : null;
-    const data = snapshot?.data();
+    const snapshot = await stateRef.get();
+    const data = snapshot.data();
     const expired = !data?.expiresAt?.toMillis || data.expiresAt.toMillis() < Date.now();
 
-    if (!state || !data || expired || data.source !== 'ga4') {
+    if (!data || expired || data.source !== 'ga4') {
       response.status(400).send('Invalid or expired connection request.');
       return;
     }

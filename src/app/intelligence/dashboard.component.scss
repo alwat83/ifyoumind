@@ -172,3 +172,77 @@ button:disabled { opacity: .48; cursor: default; }
   .metric-grid, .connector-grid { grid-template-columns: 1fr; }
   .input-row button { width: 100%; }
 }
+
+
+.app-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 48px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #1e2433;
+}
+
+.brand {
+  color: #fff;
+  font-weight: 850;
+  letter-spacing: -.03em;
+  text-decoration: none;
+}
+
+.brand span,
+.app-nav a {
+  color: #8d95a8;
+}
+
+.app-nav > div {
+  display: flex;
+  gap: 20px;
+}
+
+.app-nav > div a {
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.app-nav a.active {
+  color: #fff;
+}
+
+.workspace-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.primary-link,
+.card-link {
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 800;
+}
+
+.primary-link {
+  background: #f4f5f8;
+  color: #0b0e15;
+  padding: 10px 14px;
+}
+
+.card-link {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  background: #1b2130;
+  color: #dce0e8;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .app-nav,
+  .workspace-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

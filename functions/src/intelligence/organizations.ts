@@ -4,6 +4,7 @@ import { authorizeOrganization, requireIdentity } from './authorization';
 
 // Dedicated domain: no legacy users/profile fields grant membership.
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
+const workspaceOwners = () => getFirestore().collection('intelligenceWorkspaceOwners');
 const readMembership = async (organizationId: string, uid: string) =>
   (await organizations().doc(organizationId).collection('members').doc(uid).get()).data();
 
@@ -15,7 +16,7 @@ export const createIntelligenceOrganization = onCall(async (request) => {
   }
   // One initial workspace per identity. Transaction makes repeated requests idempotent.
   const db = getFirestore();
-  const index = db.collection('intelligenceWorkspaceOwners').doc(uid);
+  const index = workspaceOwners().doc(uid);
   const candidate = organizations().doc();
   const organizationId = await db.runTransaction(async (transaction) => {
     const existing = await transaction.get(index);
@@ -37,6 +38,29 @@ export const createIntelligenceOrganization = onCall(async (request) => {
     return candidate.id;
   });
   return { organizationId };
+});
+
+export const getMyIntelligenceOrganization = onCall(async (request) => {
+  const uid = requireIdentity(request.auth?.uid);
+  const index = await workspaceOwners().doc(uid).get();
+  if (!index.exists) return { organization: null };
+
+  const organizationId: unknown = index.data()?.organizationId;
+  if (typeof organizationId !== 'string' || !organizationId) {
+    throw new HttpsError('internal', 'Invalid workspace index.');
+  }
+
+  const scope = await authorizeOrganization(uid, organizationId, readMembership);
+  const snapshot = await organizations().doc(scope.organizationId).get();
+  if (!snapshot.exists) throw new HttpsError('not-found', 'Organization not found.');
+
+  return {
+    organization: {
+      organizationId: scope.organizationId,
+      name: snapshot.data()?.name,
+      role: scope.role,
+    },
+  };
 });
 
 export const getIntelligenceOrganization = onCall(async (request) => {

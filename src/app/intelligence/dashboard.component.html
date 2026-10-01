@@ -62,9 +62,10 @@
 
     <section class="metric-grid" aria-label="Key metrics">
       <article class="metric-card">
-        <p>Traffic</p>
-        <strong>—</strong>
-        <span>Connect GA4 to populate</span>
+        <p>Traffic · 7 days</p>
+        <strong>{{ ga4 ? (ga4.sessions | number) : '—' }}</strong>
+        <span *ngIf="ga4">{{ changeLabel() }}</span>
+        <span *ngIf="!ga4">Connect GA4 to populate</span>
       </article>
       <article class="metric-card">
         <p>Organic clicks</p>
@@ -117,11 +118,21 @@
           freshness, and data-quality flags so AI analysis stays grounded in the underlying facts.
         </p>
       </div>
-      <div class="example-insight">
-        <span>Example</span>
-        <strong>Sessions increased 18% week over week.</strong>
-        <p>Evidence: GA4 sessions · current 7 days vs previous 7 days</p>
+      <div class="example-insight" *ngIf="ga4; else exampleInsight">
+        <span>Observed from GA4</span>
+        <strong>{{ changeLabel() }}</strong>
+        <p>
+          Sessions · {{ ga4.currentWindow.from }}–{{ ga4.currentWindow.through }}
+          vs {{ ga4.baselineWindow.from }}–{{ ga4.baselineWindow.through }}
+        </p>
       </div>
+      <ng-template #exampleInsight>
+        <div class="example-insight">
+          <span>Example</span>
+          <strong>Sessions increased 18% week over week.</strong>
+          <p>Evidence: GA4 sessions · current 7 days vs previous 7 days</p>
+        </div>
+      </ng-template>
     </section>
   </ng-container>
 </main>

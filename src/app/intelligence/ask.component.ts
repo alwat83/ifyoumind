@@ -19,6 +19,7 @@ export class AskIntelligenceComponent implements OnInit {
   workspace: IntelligenceOrganization | null = null;
   question = '';
   response: AskResponse | null = null;
+  lastAskedQuestion = '';
   recent: RecentQuestion[] = [];
   saved: SavedQuestion[] = [];
   loading = true;
@@ -59,6 +60,7 @@ export class AskIntelligenceComponent implements OnInit {
     this.asking = true;
     this.error = '';
     try {
+      this.lastAskedQuestion = question;
       this.response = await this.askService.ask(this.workspace.organizationId, question);
       this.question = '';
       this.recent = await this.askService.recent(this.workspace.organizationId);

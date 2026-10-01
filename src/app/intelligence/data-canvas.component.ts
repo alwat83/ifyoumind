@@ -3,7 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IntelligenceOrganization, OrganizationService } from './organization.service';
-import { UniversalAnalysis, UniversalDataService, UniversalDataset } from './universal-data.service';
+import { UniversalAnalysis, UniversalDataService, UniversalDataset, UniversalReasoning } from './universal-data.service';
 
 @Component({
   selector: 'app-data-canvas',
@@ -20,6 +20,8 @@ export class DataCanvasComponent implements OnInit {
   datasets: UniversalDataset[] = [];
   selected = new Set<string>();
   analysis: UniversalAnalysis | null = null;
+  reasoning: UniversalReasoning | null = null;
+  targetDatasetId = '';
   loading = true;
   saving = false;
   analyzing = false;
@@ -56,8 +58,13 @@ export class DataCanvasComponent implements OnInit {
   }
 
   toggleDataset(id: string): void {
-    if (this.selected.has(id)) this.selected.delete(id);
-    else if (this.selected.size < 8) this.selected.add(id);
+    if (this.selected.has(id)) {
+      this.selected.delete(id);
+      if (this.targetDatasetId === id) this.targetDatasetId = '';
+    } else if (this.selected.size < 8) {
+      this.selected.add(id);
+      if (!this.targetDatasetId) this.targetDatasetId = id;
+    }
   }
 
   isSelected(id: string): boolean {
@@ -122,11 +129,15 @@ export class DataCanvasComponent implements OnInit {
   }
 
   async analyze(): Promise<void> {
-    if (!this.workspace || this.selected.size < 2 || this.analyzing) return;
+    if (!this.workspace || this.selected.size < 2 || !this.targetDatasetId || this.analyzing) return;
     this.analyzing = true;
     this.error = '';
     try {
-      this.analysis = await this.data.analyze(this.workspace.organizationId, [...this.selected]);
+      const ids = [...this.selected];
+      [this.analysis, this.reasoning] = await Promise.all([
+        this.data.analyze(this.workspace.organizationId, ids),
+        this.data.reason(this.workspace.organizationId, ids, this.targetDatasetId),
+      ]);
     } catch (error) {
       this.error = this.message(error);
     } finally {

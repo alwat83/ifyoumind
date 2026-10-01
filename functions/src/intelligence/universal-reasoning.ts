@@ -1,4 +1,4 @@
-import { getFirestore } from 'firebase-admin/firestore';
+import { FieldValue, getFirestore } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { authorizeOrganization } from './authorization';
 import { alignObservations, pearson, UniversalObservation } from './universal-analysis';
@@ -123,7 +123,7 @@ export const reasonAcrossUniversalDatasets = onCall(async (request) => {
     ? `Changes in ${strongest.datasetName} are statistically associated with changes in ${target.name} in the overlapping data. Treat this as a candidate explanatory signal, not a causal finding.`
     : `More overlapping observations or additional datasets are needed before ifYouMind can identify a useful explanatory signal for ${target.name}.`;
 
-  return {
+  const result = {
     target: {
       id: target.id,
       name: target.name,
@@ -149,5 +149,47 @@ export const reasonAcrossUniversalDatasets = onCall(async (request) => {
       'Only observations matching period, geography, and entity are compared.',
       'A high correlation can still be misleading when the sample is small or the source definitions differ.',
     ],
+  };
+
+  const runRef = organizations().doc(scope.organizationId).collection('analysisRuns').doc();
+  await runRef.set({
+    schemaVersion: 1,
+    targetDatasetId: target.id,
+    datasetIds: ids,
+    result,
+    createdBy: scope.uid,
+    createdAt: FieldValue.serverTimestamp(),
+  });
+
+  return { ...result, analysisRunId: runRef.id };
+});
+
+export const getRecentUniversalAnalysisRuns = onCall(async (request) => {
+  const scope = await authorizeOrganization(
+    request.auth?.uid,
+    request.data?.organizationId,
+    readMembership,
+  );
+
+  const snapshot = await organizations()
+    .doc(scope.organizationId)
+    .collection('analysisRuns')
+    .orderBy('createdAt', 'desc')
+    .limit(12)
+    .get();
+
+  return {
+    runs: snapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        targetDatasetId: data.targetDatasetId,
+        datasetIds: data.datasetIds,
+        conclusion: data.result?.conclusion || '',
+        confidence: data.result?.confidence || 'low',
+        targetName: data.result?.target?.name || 'Unknown target',
+        createdAt: data.createdAt?.toDate?.().toISOString?.() || null,
+      };
+    }),
   };
 });

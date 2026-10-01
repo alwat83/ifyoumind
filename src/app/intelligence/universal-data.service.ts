@@ -83,6 +83,14 @@ export interface UniversalAnalysis {
 export class UniversalDataService {
   private readonly functions = inject(Functions);
 
+  async seedDemo(organizationId: string): Promise<{ datasetIds: string[]; targetDatasetId: string; observationCount: number }> {
+    const call = httpsCallable<
+      { organizationId: string },
+      { datasetIds: string[]; targetDatasetId: string; observationCount: number }
+    >(this.functions, 'seedUniversalDemoData');
+    return (await call({ organizationId })).data;
+  }
+
   async list(organizationId: string): Promise<UniversalDataset[]> {
     const call = httpsCallable<{ organizationId: string }, { datasets: UniversalDataset[] }>(
       this.functions, 'listUniversalDatasets',

@@ -202,3 +202,5 @@ export { saveIntelligenceQuestion, deleteSavedIntelligenceQuestion, getSavedInte
 
 export { createUniversalDataset, addUniversalObservation, listUniversalDatasets, getUniversalDataset } from './intelligence/universal-data';
 export { analyzeUniversalDatasets } from './intelligence/universal-analysis';
+
+export { importUniversalObservations } from './intelligence/universal-import';

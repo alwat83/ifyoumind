@@ -3,7 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IntelligenceOrganization, OrganizationService } from './organization.service';
-import { UniversalAnalysis, UniversalDataService, UniversalDataset, UniversalReasoning } from './universal-data.service';
+import { UniversalAnalysis, UniversalAnalysisRun, UniversalDataService, UniversalDataset, UniversalReasoning } from './universal-data.service';
 
 @Component({
   selector: 'app-data-canvas',
@@ -21,6 +21,7 @@ export class DataCanvasComponent implements OnInit {
   selected = new Set<string>();
   analysis: UniversalAnalysis | null = null;
   reasoning: UniversalReasoning | null = null;
+  recentRuns: UniversalAnalysisRun[] = [];
   targetDatasetId = '';
   loading = true;
   saving = false;
@@ -49,7 +50,10 @@ export class DataCanvasComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.workspace = await this.organizations.getMyWorkspace();
-      if (this.workspace) await this.refresh();
+      if (this.workspace) {
+        await this.refresh();
+        this.recentRuns = await this.data.recentRuns(this.workspace.organizationId);
+      }
     } catch (error) {
       this.error = this.message(error);
     } finally {
@@ -138,6 +142,7 @@ export class DataCanvasComponent implements OnInit {
         this.data.analyze(this.workspace.organizationId, ids),
         this.data.reason(this.workspace.organizationId, ids, this.targetDatasetId),
       ]);
+      this.recentRuns = await this.data.recentRuns(this.workspace.organizationId);
     } catch (error) {
       this.error = this.message(error);
     } finally {

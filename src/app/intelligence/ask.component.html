@@ -2,95 +2,56 @@
   <nav class="app-nav">
     <a routerLink="/app" class="brand">ifYouMind <span>2.0</span></a>
     <div>
-      <a routerLink="/app">Overview</a>
-      <a routerLink="/app/canvas">Canvas</a>
-      <a routerLink="/app/import">Import</a>
-      <a routerLink="/app/insights">Insights</a>
-      <a routerLink="/app/ask" class="active">Ask</a>
-      <a routerLink="/app/connections">Connections</a>
+      <a routerLink="/app">Overview</a><a routerLink="/app/canvas">Canvas</a><a routerLink="/app/import">Import</a>
+      <a routerLink="/app/insights">Insights</a><a routerLink="/app/ask" class="active">Ask</a><a routerLink="/app/connections">Connections</a>
     </div>
   </nav>
-
-  <header>
-    <p class="eyebrow">Ask ifYouMind</p>
-    <h1>Ask your business a question.</h1>
-    <p class="lede">Plain-English answers, grounded in the data behind them.</p>
-  </header>
-
+  <header><p class="eyebrow">Ask ifYouMind</p><h1>Ask your data a question.</h1><p class="lede">ifYouMind finds the dataset you mean, compares it with the data you already have, and shows what the evidence supports.</p></header>
   <section *ngIf="loading" class="panel">Loading workspace…</section>
   <section *ngIf="error" class="panel error">{{ error }}</section>
-
   <section *ngIf="!loading && workspace" class="ask-panel">
     <form (ngSubmit)="submit()">
-      <textarea
-        name="question"
-        [(ngModel)]="question"
-        maxlength="500"
-        rows="3"
-        placeholder="What changed this week?"
-      ></textarea>
-      <button type="submit" [disabled]="asking || !question.trim()">
-        {{ asking ? 'Looking at your data…' : 'Ask ifYouMind' }}
-      </button>
+      <textarea name="question" [(ngModel)]="question" maxlength="500" rows="3" placeholder="What seems to be driving home prices?"></textarea>
+      <button type="submit" [disabled]="asking || !question.trim()">{{ asking ? 'Looking across your data…' : 'Ask ifYouMind' }}</button>
     </form>
-
-    <div class="prompt-row">
-      <button *ngFor="let prompt of prompts" type="button" (click)="usePrompt(prompt)">
-        {{ prompt }}
-      </button>
-    </div>
+    <div class="prompt-row"><button *ngFor="let prompt of prompts" type="button" (click)="usePrompt(prompt)">{{ prompt }}</button></div>
   </section>
-
   <section *ngIf="response" class="answer-card">
-    <p class="eyebrow">Answer</p>
-    <h2>{{ response.answer }}</h2>
-
-    <details *ngIf="response.evidence">
-      <summary>Show evidence</summary>
-      <pre>{{ response.evidence | json }}</pre>
-    </details>
-
-    <button *ngIf="response.id && lastAskedQuestion" class="save-answer" type="button" (click)="saveQuestion(lastAskedQuestion)">
-      Save this question
-    </button>
-
-    <div class="followups" *ngIf="response.suggestedQuestions.length">
-      <span>Try next:</span>
-      <button
-        *ngFor="let prompt of response.suggestedQuestions"
-        type="button"
-        (click)="usePrompt(prompt)"
-      >
-        {{ prompt }}
-      </button>
+    <p class="eyebrow">Answer</p><h2>{{ response.answer }}</h2>
+    <div *ngIf="response.status === 'answered'" class="answer-meta">
+      <span *ngIf="response.target">Target: {{ response.target.name }}</span>
+      <span *ngIf="response.confidence">{{ response.confidence }} confidence</span>
+      <span *ngIf="response.datasetsConsidered">{{ response.datasetsConsidered }} datasets considered</span>
     </div>
+    <div *ngIf="response.status === 'needs_target' && response.targetChoices?.length" class="target-choices">
+      <p>Which dataset did you mean?</p>
+      <button *ngFor="let target of response.targetChoices" type="button" (click)="useTarget(target.name)">{{ target.name }}</button>
+    </div>
+    <div *ngIf="response.supportingEvidence?.length" class="evidence-section">
+      <p class="eyebrow">Supporting signals</p>
+      <article *ngFor="let signal of response.supportingEvidence">
+        <div><strong>{{ signal.datasetName }}</strong><span>r={{ signal.correlation | number:'1.2-2' }}</span></div>
+        <p>{{ signal.magnitude }} {{ signal.direction === 'same_direction' ? 'same-direction' : 'inverse' }} relationship across {{ signal.matchedObservations }} compatible observations.</p>
+        <small>Source: {{ signal.source }}</small>
+      </article>
+    </div>
+    <div *ngIf="response.counterEvidence?.length" class="evidence-section">
+      <p class="eyebrow">Counter-signals</p>
+      <article *ngFor="let signal of response.counterEvidence">
+        <div><strong>{{ signal.datasetName }}</strong><span>r={{ signal.correlation | number:'1.2-2' }}</span></div>
+        <p>This relationship moves in the opposite direction from the strongest observed pattern.</p>
+      </article>
+    </div>
+    <details *ngIf="response.limitations?.length"><summary>Why ifYouMind is cautious</summary><ul><li *ngFor="let limitation of response.limitations">{{ limitation }}</li></ul></details>
+    <button *ngIf="response.id && lastAskedQuestion" class="save-answer" type="button" (click)="saveQuestion(lastAskedQuestion)">Save this question</button>
+    <div class="followups" *ngIf="response.suggestions.length"><span>Try next:</span><button *ngFor="let prompt of response.suggestions" type="button" (click)="usePrompt(prompt)">{{ prompt }}</button></div>
   </section>
-
   <section *ngIf="saved.length" class="history saved">
-    <div class="section-heading">
-      <p class="eyebrow">Saved</p>
-      <h2>Questions worth watching</h2>
-    </div>
-
-    <article *ngFor="let item of saved">
-      <p class="question">{{ item.question }}</p>
-      <div class="saved-actions">
-        <button type="button" (click)="usePrompt(item.question)">Ask again</button>
-        <button type="button" (click)="removeSaved(item)">Remove</button>
-      </div>
-    </article>
+    <div class="section-heading"><p class="eyebrow">Saved</p><h2>Questions worth revisiting</h2></div>
+    <article *ngFor="let item of saved"><p class="question">{{ item.question }}</p><div class="saved-actions"><button type="button" (click)="usePrompt(item.question)">Ask again</button><button type="button" (click)="removeSaved(item)">Remove</button></div></article>
   </section>
-
   <section *ngIf="recent.length" class="history">
-    <div class="section-heading">
-      <p class="eyebrow">Recent questions</p>
-      <h2>Your analysis history</h2>
-    </div>
-
-    <article *ngFor="let item of recent">
-      <p class="question">{{ item.question }}</p>
-      <p class="answer">{{ item.answer }}</p>
-      <span>{{ item.createdAt ? (item.createdAt | date:'medium') : '' }}</span>
-    </article>
+    <div class="section-heading"><p class="eyebrow">Recent questions</p><h2>Your analysis history</h2></div>
+    <article *ngFor="let item of recent"><p class="question">{{ item.question }}</p><p class="answer">{{ item.answer }}</p><span>{{ item.createdAt ? (item.createdAt | date:'medium') : '' }}</span></article>
   </section>
 </main>

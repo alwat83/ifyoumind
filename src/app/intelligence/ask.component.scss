@@ -156,3 +156,5 @@ button:disabled { opacity: .5; cursor: default; }
   color: #aeb5c4;
   font-weight: 600;
 }
+
+.answer-meta{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}.answer-meta span{border:1px solid #2f3749;border-radius:999px;padding:6px 9px;color:#8e97a8;font-size:11px;text-transform:capitalize}.target-choices{margin-top:18px;padding-top:16px;border-top:1px solid #252d3e}.target-choices p{margin:0 0 10px}.target-choices button{margin:0 8px 8px 0;border:1px solid #343d51;background:#151b27;color:#d4d9e4}.evidence-section{margin-top:22px}.evidence-section article{margin-top:9px;border:1px solid #252d3e;border-radius:14px;background:#0c111a;padding:14px}.evidence-section article>div{display:flex;justify-content:space-between;gap:16px}.evidence-section article p{margin:7px 0}.evidence-section article span,.evidence-section article small{color:#7d8699;font-size:11px}.answer-card details ul{padding-left:20px;color:#929aac}.answer-card details li{margin:6px 0}

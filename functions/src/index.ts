@@ -210,3 +210,5 @@ export { reasonAcrossUniversalDatasets, getRecentUniversalAnalysisRuns } from '.
 export { synthesizeUniversalAnalysis } from './intelligence/ai-synthesis';
 
 export { seedUniversalDemoData } from './intelligence/demo-data';
+
+export { askUniversalIntelligence } from './intelligence/universal-ask';

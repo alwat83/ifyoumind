@@ -126,3 +126,26 @@ arbitrary data
 → evidence-backed conclusion
 → saved analysis history
 ```
+
+
+## Universal Ask test
+
+After loading the synthetic demo pack in Canvas:
+
+1. Open **Ask** or navigate to `/app/ask`.
+2. Try:
+   - `What seems to be driving Median Home Price?`
+   - `What is most strongly related to Crime Rate?`
+   - `What else is related to Population Growth Index?`
+3. Verify that ifYouMind:
+   - identifies the intended target dataset;
+   - evaluates the available compatible datasets;
+   - shows the strongest observed signal;
+   - shows supporting and counter-signals;
+   - reports correlation, observation count, source, and confidence;
+   - explicitly says that association is not proof of cause;
+   - stores the question in recent history.
+
+If the question does not clearly name or match a dataset, ifYouMind should **not guess**. It should present likely target datasets so the user can refine the question.
+
+Universal Ask does not require an OpenAI key. It uses the deterministic evidence-first reasoning pipeline.

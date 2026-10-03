@@ -22,6 +22,23 @@
   <section *ngIf="error" class="panel error">{{ error }}</section>
   <section *ngIf="loading" class="panel">Loading your datasets…</section>
 
+  <section *ngIf="!loading && !workspace" class="panel workspace-setup">
+    <p class="eyebrow">First-time setup</p>
+    <h2>Create your ifYouMind workspace.</h2>
+    <p>This is where your datasets, questions, and analysis history live.</p>
+    <form (ngSubmit)="createWorkspace()">
+      <input
+        name="workspaceName"
+        [(ngModel)]="workspaceName"
+        maxlength="120"
+        placeholder="My ifYouMind Workspace"
+      />
+      <button type="submit" [disabled]="creatingWorkspace || !workspaceName.trim()">
+        {{ creatingWorkspace ? 'Creating…' : 'Create workspace' }}
+      </button>
+    </form>
+  </section>
+
   <ng-container *ngIf="!loading && workspace">
     <section class="demo-banner">
       <div>

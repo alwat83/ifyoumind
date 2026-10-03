@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { user } from '@angular/fire/auth';
 import { Auth } from '@angular/fire/auth';
+import { useLocalEmulators } from './firebase.config';
 import { map } from 'rxjs/operators';
 
 export const authGuard: CanActivateFn = (route, state) => {
@@ -11,7 +12,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   return user(auth).pipe(
     map((user) => {
       if (user) {
-        if (user.emailVerified || state.url === '/profile') {
+        if (useLocalEmulators || user.emailVerified || state.url === '/profile') {
           return true;
         } else {
           router.navigate(['/verify-email']);

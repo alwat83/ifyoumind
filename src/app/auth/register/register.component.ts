@@ -11,6 +11,7 @@ import {
   GoogleAuthProvider,
 } from '@angular/fire/auth';
 import { UserService } from '../../services/user.service';
+import { useLocalEmulators } from '../../firebase.config';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
@@ -64,7 +65,9 @@ export class RegisterComponent {
         return;
       }
 
-      await sendEmailVerification(user);
+      if (!useLocalEmulators) {
+        await sendEmailVerification(user);
+      }
 
       this.router.navigate(['/onboarding']);
     } catch (error: any) {

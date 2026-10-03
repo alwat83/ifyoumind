@@ -27,9 +27,9 @@ function between(seed: number, min: number, max: number, salt: number): number {
   return min + (x / 0xffffffff) * (max - min);
 }
 
-function buildDemoBrief(location: string, concept: string) {
+function buildMetricProfile(location: string, concept: string) {
   const seed = hash(`${location.toLowerCase()}|${concept.toLowerCase()}`);
-  const metrics = [
+  return [
     { key:'population', label:'Population', value:Math.round(between(seed, 28000, 165000, 11)), unit:'people', direction:'context' },
     { key:'income', label:'Median household income', value:Math.round(between(seed, 48000, 118000, 23)), unit:'USD', direction:'higher' },
     { key:'growth', label:'Population growth', value:Number(between(seed, -0.8, 5.2, 37).toFixed(1)), unit:'%', direction:'higher' },
@@ -38,6 +38,10 @@ function buildDemoBrief(location: string, concept: string) {
     { key:'competition', label:'Category competition', value:Math.round(between(seed, 4, 38, 67)), unit:'nearby businesses', direction:'lower' },
     { key:'spending', label:'Consumer spending proxy', value:Math.round(between(seed, 78, 136, 79)), unit:'index', direction:'higher' },
   ];
+}
+
+function buildDemoBrief(location: string, concept: string, comparisonLocations: string[]) {
+  const metrics = buildMetricProfile(location, concept);
 
   const positive = [
     metrics.find(m=>m.key==='income')!,
@@ -59,6 +63,10 @@ function buildDemoBrief(location: string, concept: string) {
       `${risk[0].label} is a material pressure to validate before committing capital.`,
       `${risk[1].label} could limit upside depending on concept differentiation.`,
     ],
+    comparisons: comparisonLocations.map((comparisonLocation) => ({
+      location: comparisonLocation,
+      metrics: buildMetricProfile(comparisonLocation, concept),
+    })),
     questions: [
       `How does ${location} compare with nearby alternatives for ${concept}?`,
       `What would make this market a bad fit for ${concept}?`,
@@ -74,14 +82,21 @@ export const createMarketIntelligenceProject = onCall(async (request) => {
   const location = text(request.data?.location, 'Location', 160);
   const concept = text(request.data?.concept, 'Business concept', 160);
   const decision = text(request.data?.decision || 'Evaluate this market', 'Decision', 240);
+  const rawComparisons = Array.isArray(request.data?.comparisonLocations) ? request.data.comparisonLocations : [];
+  const comparisonLocations = rawComparisons
+    .filter((value: unknown): value is string => typeof value === 'string')
+    .map((value: string) => value.trim())
+    .filter(Boolean)
+    .slice(0, 3);
 
   const ref = organizations().doc(scope.organizationId).collection('marketProjects').doc();
-  const brief = buildDemoBrief(location, concept);
+  const brief = buildDemoBrief(location, concept, comparisonLocations);
   await ref.set({
     schemaVersion:1,
     location,
     concept,
     decision,
+    comparisonLocations,
     mode:'demo',
     brief,
     status:'ready',
@@ -95,6 +110,7 @@ export const createMarketIntelligenceProject = onCall(async (request) => {
     location,
     concept,
     decision,
+    comparisonLocations,
     mode:'demo',
     brief,
     dataNotice:'Synthetic demo enrichment — not real market data.',

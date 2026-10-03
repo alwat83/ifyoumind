@@ -8,4 +8,6 @@ export const firebaseConfig = {
   measurementId: 'G-DZMLBPS4ZX',
 };
 
-export const useLocalEmulators = false;
+const hostname = typeof window !== 'undefined' ? window.location.hostname : '';
+export const useLocalEmulators =
+  hostname === 'localhost' || hostname === '127.0.0.1';

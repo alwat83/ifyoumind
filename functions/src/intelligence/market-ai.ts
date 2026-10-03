@@ -4,7 +4,7 @@ import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import { authorizeOrganization } from './authorization';
 
 const OPENAI_API_KEY = defineSecret('OPENAI_API_KEY');
-const MARKET_AI_MODEL = defineString('MARKET_AI_MODEL', { default: 'gpt-5.6-luna' });
+const MARKET_AI_MODEL = defineString('MARKET_AI_MODEL', { default: 'gpt-6-luna' });
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const readMembership = async (organizationId: string, uid: string) =>

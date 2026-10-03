@@ -13,6 +13,7 @@ export interface MarketBrief {
   opportunities:string[];
   risks:string[];
   questions:string[];
+  comparisons:Array<{location:string;metrics:MarketMetric[]}>;
 }
 export interface MarketProject {
   id:string;
@@ -29,12 +30,18 @@ export interface MarketProject {
 export class MarketIntelligenceService {
   private readonly functions=inject(Functions);
 
-  async create(organizationId:string, location:string, concept:string, decision:string):Promise<MarketProject>{
+  async create(
+    organizationId:string,
+    location:string,
+    concept:string,
+    decision:string,
+    comparisonLocations:string[],
+  ):Promise<MarketProject>{
     const call=httpsCallable<
-      {organizationId:string;location:string;concept:string;decision:string},
+      {organizationId:string;location:string;concept:string;decision:string;comparisonLocations:string[]},
       MarketProject
     >(this.functions,'createMarketIntelligenceProject');
-    return (await call({organizationId,location,concept,decision})).data;
+    return (await call({organizationId,location,concept,decision,comparisonLocations})).data;
   }
 
   async recent(organizationId:string):Promise<MarketProject[]>{

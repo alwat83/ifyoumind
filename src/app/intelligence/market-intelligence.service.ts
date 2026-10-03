@@ -44,6 +44,13 @@ export class MarketIntelligenceService {
     return (await call({organizationId,location,concept,decision,comparisonLocations})).data;
   }
 
+  async get(organizationId:string, projectId:string):Promise<MarketProject>{
+    const call=httpsCallable<{organizationId:string;projectId:string},MarketProject>(
+      this.functions,'getMarketIntelligenceProject'
+    );
+    return (await call({organizationId,projectId})).data;
+  }
+
   async recent(organizationId:string):Promise<MarketProject[]>{
     const call=httpsCallable<{organizationId:string},{projects:MarketProject[]}>(
       this.functions,'getRecentMarketIntelligenceProjects'

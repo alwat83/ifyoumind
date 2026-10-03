@@ -22,6 +22,7 @@ export class MarketIntelligenceComponent implements OnInit {
   location='Birmingham, AL';
   concept='Fast-casual seafood restaurant';
   decision='Should I open this concept in this market?';
+  comparisonInput='Hoover, AL; Homewood, AL; Vestavia Hills, AL';
   loading=true;
   creating=false;
   creatingWorkspace=false;
@@ -49,11 +50,17 @@ export class MarketIntelligenceComponent implements OnInit {
     if(!this.workspace||!this.location.trim()||!this.concept.trim()||this.creating)return;
     this.creating=true; this.error='';
     try{
+      const comparisonLocations=this.comparisonInput
+        .split(';')
+        .map(value=>value.trim())
+        .filter(Boolean)
+        .slice(0,3);
       this.project=await this.market.create(
         this.workspace.organizationId,
         this.location.trim(),
         this.concept.trim(),
         this.decision.trim()||'Evaluate this market',
+        comparisonLocations,
       );
       this.recent=await this.market.recent(this.workspace.organizationId);
     }catch(error){this.error=this.message(error);}

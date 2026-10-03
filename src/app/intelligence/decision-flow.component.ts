@@ -31,7 +31,12 @@ export class DecisionFlowComponent implements OnInit {
 
   ngOnInit():void{
     const type=this.route.snapshot.queryParamMap.get('type');
-    if(type==='business'||type==='compare'||type==='growth') this.type=type;
+    if(type==='business'||type==='compare'||type==='growth'){
+      this.type=type;
+      this.applyDefaults();
+      this.step=2;
+      return;
+    }
     this.applyDefaults();
   }
 

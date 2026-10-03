@@ -43,6 +43,10 @@
           <input name="concept" [(ngModel)]="concept" placeholder="Fast-casual seafood restaurant" />
         </label>
         <label class="wide">
+          <span>Compare with up to 3 markets (separate with semicolons)</span>
+          <input name="comparisonInput" [(ngModel)]="comparisonInput" placeholder="Hoover, AL; Homewood, AL" />
+        </label>
+        <label class="wide">
           <span>Decision</span>
           <input name="decision" [(ngModel)]="decision" placeholder="Should I open this concept here?" />
         </label>
@@ -70,6 +74,22 @@
           <small>{{ metric.unit }}</small>
         </article>
       </div>
+
+      <section *ngIf="brief.comparisons.length" class="comparisons">
+        <p class="eyebrow">Market comparison</p>
+        <div class="comparison-grid">
+          <article>
+            <strong>{{ project?.location }}</strong>
+            <span>Primary market</span>
+            <small *ngFor="let metric of brief.metrics">{{ metric.label }}: {{ formatMetric(metric.value, metric.unit) }}</small>
+          </article>
+          <article *ngFor="let comparison of brief.comparisons">
+            <strong>{{ comparison.location }}</strong>
+            <span>Comparison market</span>
+            <small *ngFor="let metric of comparison.metrics">{{ metric.label }}: {{ formatMetric(metric.value, metric.unit) }}</small>
+          </article>
+        </div>
+      </section>
 
       <div class="brief-columns">
         <article class="signal-panel">

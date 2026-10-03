@@ -2,7 +2,8 @@
   <a routerLink="/" class="brand">ifYouMind</a>
   <section class="auth-card">
     <p class="eyebrow">Welcome back</p>
-    <h1>Sign in to your intelligence workspace.</h1>
+    <h1>Pick up where you left off.</h1>
+    <p class="sub">Your saved decisions and reports are waiting.</p>
     <form (ngSubmit)="login()" #loginForm="ngForm">
       <label><span>Email</span><input name="email" type="email" required email [(ngModel)]="email" /></label>
       <label><span>Password</span><input name="password" type="password" required [(ngModel)]="password" /></label>
@@ -11,6 +12,6 @@
     <div class="divider"><span>or</span></div>
     <button class="google" type="button" (click)="googleLogin()">Continue with Google</button>
     <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
-    <p class="switch">New to ifYouMind? <a routerLink="/register">Create an account</a></p>
+    <p class="switch">New here? <a routerLink="/register">Create a free account</a></p>
   </section>
 </main>

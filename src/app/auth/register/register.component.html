@@ -2,7 +2,8 @@
   <a routerLink="/" class="brand">ifYouMind</a>
   <section class="auth-card">
     <p class="eyebrow">Start free</p>
-    <h1>Make your next market decision with more evidence.</h1>
+    <h1>Ask a better question before making the call.</h1>
+    <p class="sub">Create an account and try your first decision for free.</p>
     <form (ngSubmit)="register()" #registerForm="ngForm">
       <label><span>Name</span><input name="displayName" type="text" required [(ngModel)]="displayName" /></label>
       <label><span>Email</span><input name="email" type="email" required email [(ngModel)]="email" /></label>
@@ -13,6 +14,6 @@
     <button class="google" type="button" (click)="googleLogin()">Continue with Google</button>
     <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
     <p class="switch">Already have an account? <a routerLink="/login">Sign in</a></p>
-    <p class="fine">By creating an account, you agree to the Terms and Privacy Policy.</p>
+    <p class="fine">By continuing, you agree to the Terms and Privacy Policy.</p>
   </section>
 </main>

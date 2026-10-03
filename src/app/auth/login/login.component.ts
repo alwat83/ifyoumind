@@ -27,14 +27,14 @@ export class LoginComponent {
   async login(){
     try{
       await signInWithEmailAndPassword(this.auth,this.email,this.password);
-      await this.router.navigate(['/app/market']);
+      await this.router.navigate(['/app']);
     }catch(error:any){this.errorMessage=error.message;}
   }
 
   async googleLogin(){
     try{
       await signInWithPopup(this.auth,new GoogleAuthProvider());
-      await this.router.navigate(['/app/market']);
+      await this.router.navigate(['/app']);
     }catch(error:any){this.errorMessage=error.message;}
   }
 }

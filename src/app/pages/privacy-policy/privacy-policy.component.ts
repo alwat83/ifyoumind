@@ -1,22 +1,15 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-privacy-policy',
-  standalone: true,
-  imports: [],
-  templateUrl: './privacy-policy.component.html',
+  selector:'app-privacy-policy',
+  standalone:true,
+  imports:[RouterLink],
+  templateUrl:'./privacy-policy.component.html',
+  styleUrl:'./privacy-policy.component.scss',
 })
 export class PrivacyPolicyComponent {
-  effectiveDate = 'October 12, 2025';
-  lastUpdated = 'October 12, 2025';
-  contactEmail = 'privacy@ifyoumind.com';
-  companyAddress = '123 Main Street, Wilmington, DE, 19801, USA';
-
-  scrollToAnchor(event: Event, anchor: string): void {
-    event.preventDefault();
-    const element = document.querySelector(`#${anchor}`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  }
+  effectiveDate='October 2, 2026';
+  lastUpdated='October 2, 2026';
+  contactEmail='privacy@ifyoumind.com';
 }

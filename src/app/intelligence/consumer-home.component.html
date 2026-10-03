@@ -1,0 +1,60 @@
+<main class="home">
+  <nav class="topbar">
+    <a routerLink="/app" class="brand">ifYouMind</a>
+    <div>
+      <a routerLink="/app/pricing">Pricing</a>
+      <a routerLink="/app/data">My data</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <p class="eyebrow">Make a smarter call</p>
+    <h1>What are you trying to figure out?</h1>
+    <p>Start with the decision. ifYouMind will pull together the signals, comparisons, and context that matter.</p>
+    <a routerLink="/app/decide" class="primary">Start a decision</a>
+  </section>
+
+  <section class="quick-grid">
+    <a routerLink="/app/decide" [queryParams]="{type:'business'}">
+      <span class="icon">⌂</span>
+      <strong>Should I open here?</strong>
+      <p>Compare a business idea across locations.</p>
+    </a>
+    <a routerLink="/app/decide" [queryParams]="{type:'compare'}">
+      <span class="icon">↔</span>
+      <strong>Which place is better?</strong>
+      <p>Put two or more markets side by side.</p>
+    </a>
+    <a routerLink="/app/decide" [queryParams]="{type:'growth'}">
+      <span class="icon">↗</span>
+      <strong>Is this area growing?</strong>
+      <p>See demand, income, housing, and momentum signals.</p>
+    </a>
+    <a routerLink="/app/data">
+      <span class="icon">＋</span>
+      <strong>Use my own data</strong>
+      <p>Bring in a CSV and combine it with other signals.</p>
+    </a>
+  </section>
+
+  <section *ngIf="loading" class="state">Loading your decisions…</section>
+  <section *ngIf="error" class="state error">{{ error }}</section>
+
+  <section *ngIf="!loading && recent.length" class="recent">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Recent</p>
+        <h2>Your decisions</h2>
+      </div>
+      <a routerLink="/app/decide">New decision</a>
+    </div>
+
+    <div class="recent-grid">
+      <a *ngFor="let item of recent" [routerLink]="['/app/result', item.id]">
+        <span>{{ item.location }}</span>
+        <strong>{{ item.concept }}</strong>
+        <small>{{ item.createdAt ? (item.createdAt | date:'mediumDate') : '' }}</small>
+      </a>
+    </div>
+  </section>
+</main>

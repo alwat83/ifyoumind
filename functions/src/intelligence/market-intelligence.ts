@@ -97,6 +97,14 @@ function numberCell(row:string[],headers:string[],key:string):number{
 
 async function fetchCensusPlace(location:string):Promise<CensusPlace>{
   const parsed=parseLocation(location);
+  const cacheId=`acs5-2024-2019-${parsed.stateFips}-${normalize(parsed.city).replace(/\s+/g,'_')}`;
+  const cacheRef=getFirestore().collection('censusPlaceCache').doc(cacheId);
+  const cached=await cacheRef.get();
+  if(cached.exists){
+    const data=cached.data() as CensusPlace;
+    return {...data,location};
+  }
+
   const [latest,prior]=await Promise.all([
     fetchPlaceRows(2024,parsed.stateFips),
     fetchPlaceRows(2019,parsed.stateFips),
@@ -114,7 +122,7 @@ async function fetchCensusPlace(location:string):Promise<CensusPlace>{
     ? Number((((population-populationFiveYearsAgo)/populationFiveYearsAgo)*100).toFixed(1))
     : null;
 
-  return {
+  const place:CensusPlace={
     location,
     population,
     income:numberCell(latestRow,latestHeaders,'B19013_001E'),
@@ -124,6 +132,14 @@ async function fetchCensusPlace(location:string):Promise<CensusPlace>{
     placeFips:latestRow[latestHeaders.indexOf('place')],
     stateFips:parsed.stateFips,
   };
+
+  await cacheRef.set({
+    ...place,
+    cachedAt:FieldValue.serverTimestamp(),
+    sourceYears:[2019,2024],
+  });
+
+  return place;
 }
 
 function metricsFor(place:CensusPlace){

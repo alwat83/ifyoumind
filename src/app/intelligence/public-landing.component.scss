@@ -53,3 +53,7 @@ footer div{display:flex;gap:18px}
 footer a{color:#657084;text-decoration:none}
 @media(max-width:820px){.hero{grid-template-columns:1fr;padding-top:60px}.demo-card{transform:none}.steps,.price-grid{grid-template-columns:1fr}.question-strip{grid-template-columns:1fr 1fr}.use-grid{grid-template-columns:1fr}}
 @media(max-width:560px){.nav>div>a:not(.nav-cta):not([routerlink="/login"]){display:none}.hero,.how,.use-cases,.pricing{width:min(100% - 22px,1180px)}.hero h1{font-size:58px}.hero-actions{flex-direction:column}.question-strip{grid-template-columns:1fr}.question-strip span{border-right:0;border-bottom:1px solid rgba(255,255,255,.12)}footer{width:min(100% - 22px,1180px);align-items:flex-start;flex-direction:column}}
+
+/* Consumer light-surface heading contrast: override legacy global dark-theme heading token. */
+.hero h1,.demo-card h3,.section-copy h2,.use-grid h3,.price-grid article:not(.featured) h3{color:#111827}
+.price-grid .featured h3,.final h2{color:#fff}

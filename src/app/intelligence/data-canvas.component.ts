@@ -27,6 +27,8 @@ export class DataCanvasComponent implements OnInit {
   synthesizing = false;
   targetDatasetId = '';
   loading = true;
+  creatingWorkspace = false;
+  workspaceName = 'My ifYouMind Workspace';
   saving = false;
   seedingDemo = false;
   analyzing = false;
@@ -62,6 +64,25 @@ export class DataCanvasComponent implements OnInit {
       this.error = this.message(error);
     } finally {
       this.loading = false;
+    }
+  }
+
+  async createWorkspace(): Promise<void> {
+    if (this.creatingWorkspace || !this.workspaceName.trim()) return;
+    this.creatingWorkspace = true;
+    this.error = '';
+    try {
+      await this.organizations.createWorkspace(this.workspaceName.trim());
+      this.workspace = await this.organizations.getMyWorkspace();
+      if (!this.workspace) {
+        throw new Error('Workspace was created but could not be loaded.');
+      }
+      await this.refresh();
+      this.recentRuns = await this.data.recentRuns(this.workspace.organizationId);
+    } catch (error) {
+      this.error = this.message(error);
+    } finally {
+      this.creatingWorkspace = false;
     }
   }
 

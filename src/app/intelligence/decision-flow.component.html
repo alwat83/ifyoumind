@@ -4,7 +4,7 @@
     <span>Step {{ step }} of 4 · takes about a minute</span>
   </nav>
 
-  <section class="progress"><i [style.width.%]="step * 25"></i></section>
+  <section class="progress" role="progressbar" aria-label="Decision setup progress" aria-valuemin="1" aria-valuemax="4" [attr.aria-valuenow]="step"><i [style.width.%]="step * 25"></i></section>
 
   <section class="card">
     <ng-container *ngIf="step===1">
@@ -18,7 +18,7 @@
           <span>↔</span><strong>Which place is better?</strong><small>Compare markets side by side</small>
         </button>
         <button type="button" (click)="chooseType('growth')">
-          <span>↗</span><strong>Is this area growing?</strong><small>Look for momentum and demand</small>
+          <span>↗</span><strong>Is this area growing?</strong><small>Look at population and household trends</small>
         </button>
         <button type="button" (click)="chooseType('custom')">
           <span>✦</span><strong>Something else</strong><small>Ask a custom market question</small>
@@ -36,6 +36,7 @@
       <label class="big-input">
         <span>Compare with other places <em>optional</em></span>
         <input [(ngModel)]="comparisonInput" placeholder="Hoover, AL; Homewood, AL" />
+        <small class="field-help">Separate multiple places with semicolons.</small>
       </label>
       <div class="actions"><button class="ghost" type="button" (click)="back()">Back</button><button class="primary" type="button" (click)="next()" [disabled]="!location.trim()">Continue</button></div>
     </ng-container>

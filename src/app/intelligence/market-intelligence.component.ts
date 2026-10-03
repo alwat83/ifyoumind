@@ -34,7 +34,6 @@ export class MarketIntelligenceComponent implements OnInit {
   async ngOnInit():Promise<void>{
     try{
       this.workspace=await this.organizations.getMyWorkspace();
-      if(this.workspace) this.commercial=await this.monetization.status(this.workspace.organizationId);
       if(this.workspace) {
         [this.recent,this.commercial]=await Promise.all([
           this.market.recent(this.workspace.organizationId),

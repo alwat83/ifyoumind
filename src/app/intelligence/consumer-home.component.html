@@ -46,6 +46,15 @@
   <section *ngIf="loading" class="state">Loading your decisions…</section>
   <section *ngIf="error" class="state error">{{ error }}</section>
 
+  <section *ngIf="!loading && !error && !recent.length" class="first-time">
+    <div>
+      <p class="eyebrow">Your first brief</p>
+      <h2>Nothing to manage yet — that’s okay.</h2>
+      <p>Once you ask your first question, your Decision Brief will show up here so you can come back to it anytime.</p>
+    </div>
+    <a routerLink="/app/decide">Create my first brief</a>
+  </section>
+
   <section *ngIf="!loading && recent.length" class="recent">
     <div class="section-head">
       <div>

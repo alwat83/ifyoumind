@@ -116,6 +116,10 @@
         <a *ngFor="let question of brief.questions" routerLink="/app/ask">{{ question }}</a>
       </article>
 
+      <div class="report-actions" *ngIf="project?.id">
+        <a [routerLink]="['/app/market', project?.id, 'report']">Open printable report →</a>
+        <a routerLink="/app/pricing">Report & Pro pricing →</a>
+      </div>
       <p class="data-notice">{{ project?.dataNotice }}</p>
     </section>
 
@@ -123,7 +127,10 @@
       <p class="eyebrow">Recent market projects</p>
       <article *ngFor="let item of recent">
         <div><strong>{{ item.concept }}</strong><span>{{ item.location }}</span></div>
-        <small>{{ item.createdAt ? (item.createdAt | date:'medium') : '' }}</small>
+        <div class="recent-actions">
+          <a [routerLink]="['/app/market', item.id, 'report']">Open report</a>
+          <small>{{ item.createdAt ? (item.createdAt | date:'medium') : '' }}</small>
+        </div>
       </article>
     </section>
   </ng-container>

@@ -4,6 +4,7 @@
     <div>
       <a routerLink="/app">Overview</a>
       <a routerLink="/app/market" class="active">Market</a>
+      <a routerLink="/app/pricing">Pricing</a>
       <a routerLink="/app/canvas">Canvas</a>
       <a routerLink="/app/import">Import</a>
       <a routerLink="/app/ask">Ask</a>
@@ -28,6 +29,14 @@
   </section>
 
   <ng-container *ngIf="!loading && workspace">
+    <section *ngIf="commercial" class="commercial-bar">
+      <div>
+        <strong>{{ commercial.planName }} plan</strong>
+        <span>{{ commercial.usedMarketProjects }} / {{ commercial.marketProjectsPerMonth }} projects used this month</span>
+      </div>
+      <a routerLink="/app/pricing">View pricing →</a>
+    </section>
+
     <section class="intake panel">
       <div>
         <p class="eyebrow">New project</p>
@@ -43,7 +52,7 @@
           <input name="concept" [(ngModel)]="concept" placeholder="Fast-casual seafood restaurant" />
         </label>
         <label class="wide">
-          <span>Compare with up to 3 markets (separate with semicolons)</span>
+          <span>Compare with up to {{ commercial?.comparisonMarkets || 1 }} market{{ (commercial?.comparisonMarkets || 1) === 1 ? '' : 's' }} (separate with semicolons)</span>
           <input name="comparisonInput" [(ngModel)]="comparisonInput" placeholder="Hoover, AL; Homewood, AL" />
         </label>
         <label class="wide">

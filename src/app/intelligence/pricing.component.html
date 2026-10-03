@@ -43,7 +43,7 @@
       <button type="button" (click)="request('pro')" [disabled]="requesting">{{ requesting === 'pro' ? 'Saving…' : 'Get Pro access' }}</button>
     </article>
 
-    <article>
+    <article [class.highlight-report]="highlightedOffer === 'report'">
       <span class="label">One report</span>
       <h2>${{ status.pricing.reportOneTimeUsd }}</h2>
       <p>For one important decision without starting a subscription.</p>

@@ -37,14 +37,14 @@ export class RegisterComponent {
         await this.router.navigate(['/verify-email']);
         return;
       }
-      await this.router.navigate(['/app/market']);
+      await this.router.navigate(['/app']);
     }catch(error:any){this.errorMessage=error.message;}
   }
 
   async googleLogin(){
     try{
       await signInWithPopup(this.auth,new GoogleAuthProvider());
-      await this.router.navigate(['/app/market']);
+      await this.router.navigate(['/app']);
     }catch(error:any){this.errorMessage=error.message;}
   }
 }

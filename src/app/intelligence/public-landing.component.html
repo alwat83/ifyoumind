@@ -1,121 +1,89 @@
 <main class="landing">
   <nav class="nav">
     <a routerLink="/" class="brand">ifYouMind</a>
-    <div class="nav-links">
+    <div>
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
       <a routerLink="/login">Sign in</a>
-      <a routerLink="/register" class="primary">Start free</a>
+      <a routerLink="/register" class="nav-cta">Try it free</a>
     </div>
   </nav>
 
   <section class="hero">
-    <p class="eyebrow">Market intelligence for real decisions</p>
-    <h1>Know a market before you bet on it.</h1>
-    <p class="lede">
-      Compare locations, combine public and private data, and turn scattered signals into an evidence-backed decision brief.
-    </p>
-    <div class="hero-actions">
-      <a routerLink="/register" class="primary large">Analyze a market free</a>
-      <a href="#how" class="secondary large">See how it works</a>
+    <div class="hero-copy">
+      <p class="eyebrow">Answers for real-world decisions</p>
+      <h1>Wondering if it makes sense?</h1>
+      <p class="lede">Tell ifYouMind what you’re considering. We’ll pull the relevant signals together and show you what supports the idea, what pushes against it, and what you should check next.</p>
+      <div class="hero-actions">
+        <a routerLink="/register" class="primary">Ask your first question</a>
+        <a href="#how" class="secondary">See how it works</a>
+      </div>
+      <p class="micro">Free to try. No credit card.</p>
     </div>
-    <p class="micro">No credit card required.</p>
+
+    <div class="demo-card">
+      <p class="demo-label">Example</p>
+      <h3>Should I open a seafood spot in Birmingham?</h3>
+      <div class="answer-row"><span>Opportunity</span><strong>Income and demand signals look supportive</strong></div>
+      <div class="answer-row"><span>Watch</span><strong>Competition and rent pressure need validation</strong></div>
+      <div class="answer-row"><span>Compare</span><strong>Homewood · Hoover · Vestavia Hills</strong></div>
+      <div class="confidence"><span>Evidence strength</span><b>Medium</b></div>
+    </div>
   </section>
 
-  <section class="decision-strip">
-    <span>Open here?</span>
-    <span>Invest here?</span>
-    <span>Expand here?</span>
-    <span>Which market wins?</span>
+  <section class="question-strip">
+    <span>Should I open here?</span>
+    <span>Which place looks better?</span>
+    <span>Is this area growing?</span>
+    <span>What am I missing?</span>
   </section>
 
-  <section id="how" class="section">
-    <div class="section-heading">
-      <p class="eyebrow">How it works</p>
-      <h2>Start with the decision, not the dashboard.</h2>
+  <section id="how" class="how">
+    <div class="section-copy">
+      <p class="eyebrow">Simple by design</p>
+      <h2>Start with your question. We handle the data part.</h2>
     </div>
     <div class="steps">
-      <article>
-        <span>01</span>
-        <h3>Describe the opportunity</h3>
-        <p>Enter a location, business concept, and the decision you are trying to make.</p>
-      </article>
-      <article>
-        <span>02</span>
-        <h3>Compare the signals</h3>
-        <p>ifYouMind brings market, demographic, competition, economic, and custom data into one analysis.</p>
-      </article>
-      <article>
-        <span>03</span>
-        <h3>Get the brief</h3>
-        <p>See opportunity, risk, comparison markets, evidence, and the next questions worth asking.</p>
-      </article>
+      <article><span>1</span><strong>Tell us what you’re considering</strong><p>A place, business idea, expansion, neighborhood, or market question.</p></article>
+      <article><span>2</span><strong>We put the signals together</strong><p>Demographics, growth, housing, competition, your own data, and more as sources come online.</p></article>
+      <article><span>3</span><strong>You get a clear answer</strong><p>Opportunity, risk, comparisons, confidence, evidence, and what to validate next.</p></article>
     </div>
   </section>
 
-  <section class="section product">
-    <div class="product-copy">
-      <p class="eyebrow">Built to explain</p>
-      <h2>Not another wall of charts.</h2>
-      <p>
-        ifYouMind is designed to answer the question behind the data: what does this mean for the decision in front of me?
-      </p>
-      <ul>
-        <li>Market comparison</li>
-        <li>Opportunity and risk signals</li>
-        <li>Evidence-backed conclusions</li>
-        <li>Ask follow-up questions in plain English</li>
-        <li>Bring your own CSV and custom datasets</li>
-      </ul>
+  <section class="use-cases">
+    <div class="section-copy">
+      <p class="eyebrow">Useful from day one</p>
+      <h2>For questions that are bigger than one Google search.</h2>
     </div>
-    <div class="brief-card">
-      <p class="eyebrow">Example decision brief</p>
-      <h3>Fast-casual seafood · Birmingham, AL</h3>
-      <div class="mini-grid">
-        <div><span>Opportunity</span><strong>Income + demand signals</strong></div>
-        <div><span>Risk</span><strong>Competition + rent pressure</strong></div>
-        <div><span>Compare</span><strong>Hoover · Homewood · Vestavia</strong></div>
-        <div><span>Ask</span><strong>What should I validate next?</strong></div>
-      </div>
+    <div class="use-grid">
+      <article><span>Small business</span><h3>“Would this concept work here?”</h3><p>Compare locations and demand signals before spending real money.</p></article>
+      <article><span>Moving</span><h3>“Which area fits what I care about?”</h3><p>Bring together market, housing, growth, safety, and your own priorities.</p></article>
+      <article><span>Local opportunity</span><h3>“What’s changing in this market?”</h3><p>See whether multiple signals are moving in the same direction—or not.</p></article>
+      <article><span>Your own data</span><h3>“What does this mean together?”</h3><p>Upload data and compare it with other information instead of staring at separate spreadsheets.</p></article>
     </div>
   </section>
 
-  <section id="pricing" class="section pricing">
-    <div class="section-heading">
+  <section id="pricing" class="pricing">
+    <div class="section-copy">
       <p class="eyebrow">Pricing</p>
-      <h2>Start free. Pay when the decision matters.</h2>
+      <h2>Try the thinking for free.</h2>
     </div>
-    <div class="plans">
-      <article>
-        <span>Free</span>
-        <h3>$0</h3>
-        <p>Try the workflow and run a few market projects each month.</p>
-        <a routerLink="/register" class="secondary">Start free</a>
-      </article>
-      <article class="featured">
-        <span>Pro</span>
-        <h3>$39<small>/mo</small></h3>
-        <p>For operators, brokers, consultants, and repeat market research.</p>
-        <a routerLink="/register" class="primary">Start with Pro</a>
-      </article>
-      <article>
-        <span>One-time report</span>
-        <h3>$79</h3>
-        <p>One serious market decision without a subscription.</p>
-        <a routerLink="/register" class="secondary">Build a report</a>
-      </article>
+    <div class="price-grid">
+      <article><span>Free</span><h3>$0</h3><p>A few decisions each month to see if ifYouMind is useful to you.</p><a routerLink="/register" class="secondary">Try it</a></article>
+      <article class="featured"><span>Pro</span><h3>$39<small>/month</small></h3><p>More decisions, more comparisons, saved work, and deeper analysis.</p><a routerLink="/register" class="primary">Start free</a></article>
+      <article><span>One report</span><h3>$79</h3><p>A polished, shareable report for one important market decision.</p><a routerLink="/register" class="secondary">Build a report</a></article>
     </div>
   </section>
 
-  <section class="final-cta">
-    <p class="eyebrow">Make the next decision with more evidence</p>
-    <h2>Before you commit capital, ask the market.</h2>
-    <a routerLink="/register" class="primary large">Start analyzing free</a>
+  <section class="final">
+    <p class="eyebrow">Ask the question</p>
+    <h2>Before you commit time or money, see what the signals say.</h2>
+    <a routerLink="/register" class="primary">Try ifYouMind free</a>
   </section>
 
   <footer>
     <a routerLink="/" class="brand">ifYouMind</a>
-    <span>Decision intelligence for markets and data.</span>
+    <span>Make sense of more than one data point.</span>
     <div><a routerLink="/privacy-policy">Privacy</a><a routerLink="/terms-of-conduct">Terms</a></div>
   </footer>
 </main>

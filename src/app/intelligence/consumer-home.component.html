@@ -10,9 +10,15 @@
   <section class="hero">
     <p class="eyebrow">Make a smarter call</p>
     <h1>What are you trying to figure out?</h1>
-    <p>Start with the decision. ifYouMind will pull together the signals, comparisons, and context that matter.</p>
+    <p>Tell us what you’re considering. We’ll pull the useful facts together and explain what they mean in plain English.</p>
     <a routerLink="/app/decide" class="primary">Start a decision</a>
   </section>
+
+  <div class="reassurance">
+    <span>No special expertise needed</span>
+    <span>Live public data</span>
+    <span>Sources included</span>
+  </div>
 
   <section class="quick-grid">
     <a routerLink="/app/decide" [queryParams]="{type:'business'}">
@@ -28,12 +34,12 @@
     <a routerLink="/app/decide" [queryParams]="{type:'growth'}">
       <span class="icon">↗</span>
       <strong>Is this area growing?</strong>
-      <p>See demand, income, housing, and momentum signals.</p>
+      <p>See population, income, housing, and growth signals.</p>
     </a>
     <a routerLink="/app/data">
       <span class="icon">＋</span>
       <strong>Use my own data</strong>
-      <p>Bring in a CSV and combine it with other signals.</p>
+      <p>Bring in a CSV when you want to add your own numbers.</p>
     </a>
   </section>
 

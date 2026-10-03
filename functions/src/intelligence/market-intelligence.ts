@@ -158,3 +158,33 @@ export const getRecentMarketIntelligenceProjects = onCall(async (request) => {
     }),
   };
 });
+
+
+export const getMarketIntelligenceProject = onCall(async (request) => {
+  const scope = await authorizeOrganization(
+    request.auth?.uid, request.data?.organizationId, readMembership,
+  );
+  const projectId = request.data?.projectId;
+  if (typeof projectId !== 'string' || !/^[A-Za-z0-9_-]{1,128}$/.test(projectId)) {
+    throw new HttpsError('invalid-argument', 'Invalid market project.');
+  }
+
+  const snapshot = await organizations().doc(scope.organizationId)
+    .collection('marketProjects').doc(projectId).get();
+  if (!snapshot.exists) throw new HttpsError('not-found', 'Market project not found.');
+
+  const data = snapshot.data()!;
+  return {
+    id: snapshot.id,
+    location: data.location,
+    concept: data.concept,
+    decision: data.decision,
+    comparisonLocations: data.comparisonLocations || [],
+    mode: data.mode || 'demo',
+    brief: data.brief,
+    dataNotice: data.mode === 'demo'
+      ? 'Synthetic demo enrichment — not real market data.'
+      : null,
+    createdAt: data.createdAt?.toDate?.().toISOString?.() || null,
+  };
+});

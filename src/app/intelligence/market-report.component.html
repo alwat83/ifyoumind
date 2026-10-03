@@ -44,6 +44,7 @@
           <span>{{ metric.label }}</span>
           <strong>{{ formatMetric(metric.value, metric.unit) }}</strong>
           <small>{{ metric.unit }}</small>
+          <small *ngIf="metric.sourceLabel" class="source">{{ metric.sourceLabel }}</small>
         </article>
       </div>
     </section>
@@ -78,6 +79,15 @@
       <p class="eyebrow">What to check next</p>
       <h2>These are the questions worth answering before you act.</h2>
       <ol><li *ngFor="let question of brief.questions">{{ question }}</li></ol>
+    </section>
+
+    <section *ngIf="brief.sources?.length" class="sources">
+      <p class="eyebrow">Sources</p>
+      <ul>
+        <li *ngFor="let source of brief.sources">
+          <strong>{{ source.provider }}</strong> · {{ source.dataset }}
+        </li>
+      </ul>
     </section>
 
     <footer>

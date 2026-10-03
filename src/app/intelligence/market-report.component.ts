@@ -37,8 +37,6 @@ export class MarketReportComponent implements OnInit {
     return new Intl.NumberFormat('en-US').format(value);
   }
 
-  print():void{window.print();}
-
   private message(error:unknown):string{
     if(error&&typeof error==='object'&&'message' in error){
       return String((error as {message?:unknown}).message||'Something went wrong.');

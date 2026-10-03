@@ -213,6 +213,6 @@ export { seedUniversalDemoData } from './intelligence/demo-data';
 
 export { askUniversalIntelligence } from './intelligence/universal-ask';
 
-export { createMarketIntelligenceProject, getRecentMarketIntelligenceProjects } from './intelligence/market-intelligence';
+export { createMarketIntelligenceProject, getRecentMarketIntelligenceProjects, getMarketIntelligenceProject } from './intelligence/market-intelligence';
 
 export { getCommercialStatus, requestCommercialAccess } from './intelligence/monetization';

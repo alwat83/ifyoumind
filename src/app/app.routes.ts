@@ -21,6 +21,11 @@ export const routes: Routes = [
     loadComponent:()=>import('./intelligence/pricing.component').then((m)=>m.PricingComponent),
   },
   {
+    path:'app/market/:projectId/report',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/market-report.component').then((m)=>m.MarketReportComponent),
+  },
+  {
     path:'app/market',
     canActivate:[authGuard],
     loadComponent:()=>import('./intelligence/market-intelligence.component').then((m)=>m.MarketIntelligenceComponent),

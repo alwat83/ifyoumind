@@ -1,7 +1,7 @@
 import { createCipheriv, randomBytes } from 'crypto';
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { defineSecret, defineString } from 'firebase-functions/params';
-import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
+import { onCall, onRequest } from 'firebase-functions/v2/https';
 import { authorizeOrganization } from './authorization';
 
 const GOOGLE_CLIENT_ID = defineSecret('GOOGLE_OAUTH_CLIENT_ID');

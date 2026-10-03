@@ -9,3 +9,10 @@
 .app-footer>div a{color:#566273;text-decoration:none}
 .app-footer>div a:hover{color:#111827}
 @media(max-width:560px){.app-footer{align-items:flex-start;flex-direction:column;margin-top:60px}}
+
+.reassurance{display:flex;flex-wrap:wrap;gap:8px;margin:-20px 0 28px}
+.reassurance span{display:inline-flex;align-items:center;min-height:30px;padding:0 10px;border-radius:999px;background:#eef1f4;color:#475467;font-size:11px;font-weight:700}
+.quick-grid>a:focus-visible,.topbar a:focus-visible,.primary:focus-visible,.app-footer a:focus-visible{outline:3px solid #7c8ba1;outline-offset:3px}
+.quick-grid>a{min-height:190px}
+.topbar a,.primary{min-height:44px;display:inline-flex;align-items:center}
+@media(max-width:560px){.reassurance{margin-top:-8px}}

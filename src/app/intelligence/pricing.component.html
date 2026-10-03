@@ -1,0 +1,70 @@
+<main class="pricing-shell">
+  <nav class="app-nav">
+    <a routerLink="/app" class="brand">ifYouMind <span>2.0</span></a>
+    <div>
+      <a routerLink="/app">Overview</a>
+      <a routerLink="/app/market">Market</a>
+      <a routerLink="/app/pricing" class="active">Pricing</a>
+    </div>
+  </nav>
+
+  <header>
+    <p class="eyebrow">Pricing</p>
+    <h1>Pay for a better decision, not another dashboard.</h1>
+    <p class="lede">Start free. Upgrade when the analysis becomes valuable enough to use in a real decision.</p>
+  </header>
+
+  <section *ngIf="loading" class="panel">Loading pricing…</section>
+  <section *ngIf="error" class="panel error">{{ error }}</section>
+  <section *ngIf="message" class="panel success">{{ message }}</section>
+
+  <section *ngIf="status" class="plans">
+    <article class="plan">
+      <span class="plan-label">Free</span>
+      <h2>$0</h2>
+      <p>For trying the workflow and evaluating ifYouMind.</p>
+      <ul>
+        <li>{{ status.marketProjectsPerMonth }} market projects / month</li>
+        <li>{{ status.comparisonMarkets }} comparison market</li>
+        <li>Decision brief preview</li>
+        <li>Universal Ask</li>
+      </ul>
+      <div class="usage">
+        {{ status.usedMarketProjects }} of {{ status.marketProjectsPerMonth }} projects used this month
+      </div>
+    </article>
+
+    <article class="plan featured">
+      <span class="plan-label">Pro</span>
+      <h2>${{ status.pricing.proMonthlyUsd }}<small>/mo</small></h2>
+      <p>For operators, founders, consultants, brokers, and repeat market research.</p>
+      <ul>
+        <li>Up to 50 market projects / month</li>
+        <li>3 comparison markets per project</li>
+        <li>Saved projects and deeper follow-up analysis</li>
+        <li>Future live public-data enrichment</li>
+        <li>Priority report/export features</li>
+      </ul>
+      <button type="button" (click)="request('pro')" [disabled]="requesting">
+        {{ requesting === 'pro' ? 'Saving interest…' : 'Get Pro access' }}
+      </button>
+    </article>
+
+    <article class="plan">
+      <span class="plan-label">One-time report</span>
+      <h2>${{ status.pricing.reportOneTimeUsd }}</h2>
+      <p>For someone who needs one serious location decision without a subscription.</p>
+      <ul>
+        <li>1 full market decision report</li>
+        <li>Primary + comparison markets</li>
+        <li>Opportunity and risk analysis</li>
+        <li>Designed for sharing with partners or investors</li>
+      </ul>
+      <button type="button" (click)="request('report')" [disabled]="requesting">
+        {{ requesting === 'report' ? 'Saving interest…' : 'Request a report' }}
+      </button>
+    </article>
+  </section>
+
+  <p class="billing-note">Billing is not live yet. These buttons record commercial intent while the separate ifYouMind billing account is being prepared.</p>
+</main>

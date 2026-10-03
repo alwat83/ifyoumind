@@ -7,6 +7,8 @@ export interface MarketMetric {
   value:number;
   unit:string;
   direction:string;
+  sourceLabel?:string;
+  sourceUrl?:string;
 }
 export interface MarketBrief {
   metrics:MarketMetric[];
@@ -14,6 +16,7 @@ export interface MarketBrief {
   risks:string[];
   questions:string[];
   comparisons:Array<{location:string;metrics:MarketMetric[]}>;
+  sources?:Array<{provider:string;dataset:string;retrievedAt:string;url:string}>;
 }
 export interface MarketProject {
   id:string;

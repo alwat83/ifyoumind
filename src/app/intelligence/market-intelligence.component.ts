@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IntelligenceOrganization, OrganizationService } from './organization.service';
 import { MarketIntelligenceService, MarketProject } from './market-intelligence.service';
+import { CommercialStatus, MonetizationService } from './monetization.service';
 
 @Component({
   selector:'app-market-intelligence',
@@ -15,10 +16,12 @@ import { MarketIntelligenceService, MarketProject } from './market-intelligence.
 export class MarketIntelligenceComponent implements OnInit {
   private readonly organizations=inject(OrganizationService);
   private readonly market=inject(MarketIntelligenceService);
+  private readonly monetization=inject(MonetizationService);
 
   workspace:IntelligenceOrganization|null=null;
   recent:MarketProject[]=[];
   project:MarketProject|null=null;
+  commercial:CommercialStatus|null=null;
   location='Birmingham, AL';
   concept='Fast-casual seafood restaurant';
   decision='Should I open this concept in this market?';
@@ -31,7 +34,13 @@ export class MarketIntelligenceComponent implements OnInit {
   async ngOnInit():Promise<void>{
     try{
       this.workspace=await this.organizations.getMyWorkspace();
-      if(this.workspace) this.recent=await this.market.recent(this.workspace.organizationId);
+      if(this.workspace) this.commercial=await this.monetization.status(this.workspace.organizationId);
+      if(this.workspace) {
+        [this.recent,this.commercial]=await Promise.all([
+          this.market.recent(this.workspace.organizationId),
+          this.monetization.status(this.workspace.organizationId),
+        ]);
+      }
     }catch(error){this.error=this.message(error);}
     finally{this.loading=false;}
   }
@@ -54,7 +63,7 @@ export class MarketIntelligenceComponent implements OnInit {
         .split(';')
         .map(value=>value.trim())
         .filter(Boolean)
-        .slice(0,3);
+        .slice(0,this.commercial?.comparisonMarkets ?? 3);
       this.project=await this.market.create(
         this.workspace.organizationId,
         this.location.trim(),
@@ -62,7 +71,10 @@ export class MarketIntelligenceComponent implements OnInit {
         this.decision.trim()||'Evaluate this market',
         comparisonLocations,
       );
-      this.recent=await this.market.recent(this.workspace.organizationId);
+      [this.recent,this.commercial]=await Promise.all([
+        this.market.recent(this.workspace.organizationId),
+        this.monetization.status(this.workspace.organizationId),
+      ]);
     }catch(error){this.error=this.message(error);}
     finally{this.creating=false;}
   }

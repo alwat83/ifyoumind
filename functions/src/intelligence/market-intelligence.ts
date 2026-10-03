@@ -6,6 +6,36 @@ const organizations = () => getFirestore().collection('intelligenceOrganizations
 const readMembership = async (organizationId: string, uid: string) =>
   (await organizations().doc(organizationId).collection('members').doc(uid).get()).data();
 
+const STATE_FIPS: Record<string,string> = {
+  AL:'01',AK:'02',AZ:'04',AR:'05',CA:'06',CO:'08',CT:'09',DE:'10',DC:'11',FL:'12',GA:'13',HI:'15',
+  ID:'16',IL:'17',IN:'18',IA:'19',KS:'20',KY:'21',LA:'22',ME:'23',MD:'24',MA:'25',MI:'26',MN:'27',
+  MS:'28',MO:'29',MT:'30',NE:'31',NV:'32',NH:'33',NJ:'34',NM:'35',NY:'36',NC:'37',ND:'38',OH:'39',
+  OK:'40',OR:'41',PA:'42',RI:'44',SC:'45',SD:'46',TN:'47',TX:'48',UT:'49',VT:'50',VA:'51',WA:'53',
+  WV:'54',WI:'55',WY:'56'
+};
+
+const STATE_NAMES: Record<string,string> = {
+  Alabama:'AL',Alaska:'AK',Arizona:'AZ',Arkansas:'AR',California:'CA',Colorado:'CO',Connecticut:'CT',
+  Delaware:'DE','District of Columbia':'DC',Florida:'FL',Georgia:'GA',Hawaii:'HI',Idaho:'ID',Illinois:'IL',
+  Indiana:'IN',Iowa:'IA',Kansas:'KS',Kentucky:'KY',Louisiana:'LA',Maine:'ME',Maryland:'MD',Massachusetts:'MA',
+  Michigan:'MI',Minnesota:'MN',Mississippi:'MS',Missouri:'MO',Montana:'MT',Nebraska:'NE',Nevada:'NV',
+  'New Hampshire':'NH','New Jersey':'NJ','New Mexico':'NM','New York':'NY','North Carolina':'NC',
+  'North Dakota':'ND',Ohio:'OH',Oklahoma:'OK',Oregon:'OR',Pennsylvania:'PA','Rhode Island':'RI',
+  'South Carolina':'SC','South Dakota':'SD',Tennessee:'TN',Texas:'TX',Utah:'UT',Vermont:'VT',Virginia:'VA',
+  Washington:'WA','West Virginia':'WV',Wisconsin:'WI',Wyoming:'WY'
+};
+
+interface CensusPlace {
+  location:string;
+  population:number;
+  income:number;
+  homeValue:number;
+  populationFiveYearsAgo:number|null;
+  populationChangePct:number|null;
+  placeFips:string;
+  stateFips:string;
+}
+
 function text(value: unknown, label: string, max: number): string {
   if (typeof value !== 'string' || !value.trim() || value.trim().length > max) {
     throw new HttpsError('invalid-argument', `${label} is required.`);
@@ -13,64 +43,144 @@ function text(value: unknown, label: string, max: number): string {
   return value.trim();
 }
 
-function hash(input: string): number {
-  let h = 2166136261;
-  for (let i = 0; i < input.length; i++) {
-    h ^= input.charCodeAt(i);
-    h = Math.imul(h, 16777619);
+function normalize(value:string):string {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+}
+
+function parseLocation(location:string):{city:string;state:string;stateFips:string}{
+  const parts=location.split(',').map(part=>part.trim()).filter(Boolean);
+  if(parts.length<2){
+    throw new HttpsError('invalid-argument','For live data, enter a U.S. city and state, for example Birmingham, AL.');
   }
-  return h >>> 0;
+  const city=parts[0];
+  const rawState=parts[parts.length-1];
+  const state=rawState.length===2 ? rawState.toUpperCase() : STATE_NAMES[rawState.replace(/\b\w/g,c=>c.toUpperCase())];
+  const stateFips=state ? STATE_FIPS[state] : '';
+  if(!city||!state||!stateFips){
+    throw new HttpsError('invalid-argument','For live data, enter a valid U.S. city and state, for example Birmingham, AL.');
+  }
+  return {city,state,stateFips};
 }
 
-function between(seed: number, min: number, max: number, salt: number): number {
-  const x = (Math.imul(seed ^ salt, 1103515245) + 12345) >>> 0;
-  return min + (x / 0xffffffff) * (max - min);
+async function fetchPlaceRows(year:number,stateFips:string):Promise<string[][]>{
+  const url=new URL(`https://api.census.gov/data/${year}/acs/acs5`);
+  url.searchParams.set('get','NAME,B01003_001E,B19013_001E,B25077_001E');
+  url.searchParams.set('for','place:*');
+  url.searchParams.set('in',`state:${stateFips}`);
+  const response=await fetch(url);
+  if(!response.ok){
+    console.error('Census API failed',year,response.status);
+    throw new HttpsError('unavailable','Live Census data is temporarily unavailable.');
+  }
+  return await response.json() as string[][];
 }
 
-function buildMetricProfile(location: string, concept: string) {
-  const seed = hash(`${location.toLowerCase()}|${concept.toLowerCase()}`);
-  return [
-    { key:'population', label:'Population', value:Math.round(between(seed, 28000, 165000, 11)), unit:'people', direction:'context' },
-    { key:'income', label:'Median household income', value:Math.round(between(seed, 48000, 118000, 23)), unit:'USD', direction:'higher' },
-    { key:'growth', label:'Population growth', value:Number(between(seed, -0.8, 5.2, 37).toFixed(1)), unit:'%', direction:'higher' },
-    { key:'homeValue', label:'Median home value', value:Math.round(between(seed, 175000, 560000, 41)), unit:'USD', direction:'context' },
-    { key:'rentPressure', label:'Commercial rent pressure', value:Math.round(between(seed, 72, 138, 53)), unit:'index', direction:'lower' },
-    { key:'competition', label:'Category competition', value:Math.round(between(seed, 4, 38, 67)), unit:'nearby businesses', direction:'lower' },
-    { key:'spending', label:'Consumer spending proxy', value:Math.round(between(seed, 78, 136, 79)), unit:'index', direction:'higher' },
+function findPlace(rows:string[][],city:string):string[]|null{
+  const target=normalize(city);
+  const headers=rows[0]||[];
+  const nameIndex=headers.indexOf('NAME');
+  if(nameIndex<0)return null;
+  const candidates=rows.slice(1).filter(row=>{
+    const placeName=(row[nameIndex]||'').split(',')[0].replace(/\b(city|town|village|borough|CDP|municipality)\b/ig,'').trim();
+    return normalize(placeName)===target;
+  });
+  return candidates[0]||null;
+}
+
+function numberCell(row:string[],headers:string[],key:string):number{
+  const value=Number(row[headers.indexOf(key)]);
+  if(!Number.isFinite(value)||value<0){
+    throw new HttpsError('unavailable',`Census did not return a usable value for ${key}.`);
+  }
+  return value;
+}
+
+async function fetchCensusPlace(location:string):Promise<CensusPlace>{
+  const parsed=parseLocation(location);
+  const [latest,prior]=await Promise.all([
+    fetchPlaceRows(2024,parsed.stateFips),
+    fetchPlaceRows(2019,parsed.stateFips),
+  ]);
+  const latestHeaders=latest[0]||[];
+  const latestRow=findPlace(latest,parsed.city);
+  if(!latestRow){
+    throw new HttpsError('not-found',`I couldn't match "${location}" to a Census place. Try city, state such as Birmingham, AL.`);
+  }
+  const priorHeaders=prior[0]||[];
+  const priorRow=findPlace(prior,parsed.city);
+  const population=numberCell(latestRow,latestHeaders,'B01003_001E');
+  const populationFiveYearsAgo=priorRow ? numberCell(priorRow,priorHeaders,'B01003_001E') : null;
+  const populationChangePct=populationFiveYearsAgo && populationFiveYearsAgo>0
+    ? Number((((population-populationFiveYearsAgo)/populationFiveYearsAgo)*100).toFixed(1))
+    : null;
+
+  return {
+    location,
+    population,
+    income:numberCell(latestRow,latestHeaders,'B19013_001E'),
+    homeValue:numberCell(latestRow,latestHeaders,'B25077_001E'),
+    populationFiveYearsAgo,
+    populationChangePct,
+    placeFips:latestRow[latestHeaders.indexOf('place')],
+    stateFips:parsed.stateFips,
+  };
+}
+
+function metricsFor(place:CensusPlace){
+  const sourceUrl=`https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A${place.placeFips}&in=state%3A${place.stateFips}`;
+  const metrics=[
+    {key:'population',label:'Population',value:place.population,unit:'people',direction:'context',sourceLabel:'U.S. Census Bureau · 2024 ACS 5-year',sourceUrl},
+    {key:'income',label:'Median household income',value:place.income,unit:'USD',direction:'higher',sourceLabel:'U.S. Census Bureau · 2024 ACS 5-year',sourceUrl},
+    {key:'homeValue',label:'Median home value',value:place.homeValue,unit:'USD',direction:'context',sourceLabel:'U.S. Census Bureau · 2024 ACS 5-year',sourceUrl},
   ];
+  if(place.populationChangePct!==null){
+    metrics.push({
+      key:'growth',
+      label:'5-year population change',
+      value:place.populationChangePct,
+      unit:'%',
+      direction:'higher',
+      sourceLabel:'U.S. Census Bureau · 2019–2024 ACS 5-year estimates',
+      sourceUrl,
+    });
+  }
+  return metrics;
 }
 
-function buildDemoBrief(location: string, concept: string, comparisonLocations: string[]) {
-  const metrics = buildMetricProfile(location, concept);
+function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[]){
+  const metrics=metricsFor(primary);
+  const growth=primary.populationChangePct;
+  const opportunity:string[]=[];
+  const risks:string[]=[];
 
-  const positive = [
-    metrics.find(m=>m.key==='income')!,
-    metrics.find(m=>m.key==='growth')!,
-    metrics.find(m=>m.key==='spending')!,
-  ].sort((a,b)=>Number(b.value)-Number(a.value));
-  const risk = [
-    metrics.find(m=>m.key==='rentPressure')!,
-    metrics.find(m=>m.key==='competition')!,
-  ].sort((a,b)=>Number(b.value)-Number(a.value));
+  if(growth!==null){
+    if(growth>1) opportunity.push(`Population increased ${growth}% between the 2019 and 2024 ACS 5-year estimates.`);
+    else if(growth<0) risks.push(`Population decreased ${Math.abs(growth)}% between the 2019 and 2024 ACS 5-year estimates.`);
+    else opportunity.push('Population was broadly stable across the 2019 and 2024 ACS 5-year estimates.');
+  }
+  opportunity.push(`Median household income is ${new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(primary.income)}.`);
+
+  if(comparisons.length){
+    const higherIncome=comparisons.filter(place=>place.income>primary.income).length;
+    const strongerGrowth=comparisons.filter(place=>(place.populationChangePct??-999)>(primary.populationChangePct??-999)).length;
+    if(higherIncome) risks.push(`${higherIncome} comparison market${higherIncome===1?' has':'s have'} a higher median household income.`);
+    if(strongerGrowth) risks.push(`${strongerGrowth} comparison market${strongerGrowth===1?' shows':'s show'} stronger 5-year population change.`);
+  }
+  if(!risks.length) risks.push('Census demographics alone do not measure competition, commercial rent, foot traffic, or concept-level demand.');
 
   return {
     metrics,
-    opportunities: [
-      `${positive[0].label} is one of the stronger signals in this demo market profile.`,
-      `${positive[1].label} adds supporting context for demand potential.`,
+    opportunities:opportunity.slice(0,2),
+    risks:risks.slice(0,2),
+    comparisons:comparisons.map(place=>({location:place.location,metrics:metricsFor(place)})),
+    questions:[
+      `What local competitors serve the same customer as ${primary.location}?`,
+      'What are current commercial rents and occupancy costs for the exact trade area?',
+      'What foot-traffic or customer-demand signal would confirm this opportunity?',
     ],
-    risks: [
-      `${risk[0].label} is a material pressure to validate before committing capital.`,
-      `${risk[1].label} could limit upside depending on concept differentiation.`,
-    ],
-    comparisons: comparisonLocations.map((comparisonLocation) => ({
-      location: comparisonLocation,
-      metrics: buildMetricProfile(comparisonLocation, concept),
-    })),
-    questions: [
-      `How does ${location} compare with nearby alternatives for ${concept}?`,
-      `What would make this market a bad fit for ${concept}?`,
-      `Which local signal should I validate next?`,
+    sources:[
+      {provider:'U.S. Census Bureau',dataset:'2024 ACS 5-year estimates',retrievedAt:new Date().toISOString(),url:'https://api.census.gov/data/2024/acs/acs5'},
+      {provider:'U.S. Census Bureau',dataset:'2019 ACS 5-year estimates',retrievedAt:new Date().toISOString(),url:'https://api.census.gov/data/2019/acs/acs5'},
     ],
   };
 }
@@ -109,15 +219,19 @@ export const createMarketIntelligenceProject = onCall(async (request) => {
     .filter(Boolean)
     .slice(0, isLocalDemo || plan === 'pro' ? 3 : 1);
 
+  const [primary,...comparisonPlaces]=await Promise.all(
+    [location,...comparisonLocations].map(value=>fetchCensusPlace(value)),
+  );
+  const brief=buildLiveBrief(primary,comparisonPlaces);
+
   const ref = organizations().doc(scope.organizationId).collection('marketProjects').doc();
-  const brief = buildDemoBrief(location, concept, comparisonLocations);
   await ref.set({
-    schemaVersion:1,
+    schemaVersion:2,
     location,
     concept,
     decision,
     comparisonLocations,
-    mode:'demo',
+    mode:'live',
     brief,
     status:'ready',
     createdBy:scope.uid,
@@ -131,9 +245,9 @@ export const createMarketIntelligenceProject = onCall(async (request) => {
     concept,
     decision,
     comparisonLocations,
-    mode:'demo',
+    mode:'live',
     brief,
-    dataNotice:'Synthetic demo enrichment — not real market data.',
+    dataNotice:'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.',
   };
 });
 
@@ -159,7 +273,6 @@ export const getRecentMarketIntelligenceProjects = onCall(async (request) => {
   };
 });
 
-
 export const getMarketIntelligenceProject = onCall(async (request) => {
   const scope = await authorizeOrganization(
     request.auth?.uid, request.data?.organizationId, readMembership,
@@ -175,16 +288,16 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
 
   const data = snapshot.data()!;
   return {
-    id: snapshot.id,
-    location: data.location,
-    concept: data.concept,
-    decision: data.decision,
-    comparisonLocations: data.comparisonLocations || [],
-    mode: data.mode || 'demo',
-    brief: data.brief,
-    dataNotice: data.mode === 'demo'
-      ? 'Synthetic demo enrichment — not real market data.'
-      : null,
-    createdAt: data.createdAt?.toDate?.().toISOString?.() || null,
+    id:snapshot.id,
+    location:data.location,
+    concept:data.concept,
+    decision:data.decision,
+    comparisonLocations:data.comparisonLocations || [],
+    mode:data.mode || 'demo',
+    brief:data.brief,
+    dataNotice:data.mode === 'live'
+      ? 'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.'
+      : 'Synthetic demo enrichment — not real market data.',
+    createdAt:data.createdAt?.toDate?.().toISOString?.() || null,
   };
 });

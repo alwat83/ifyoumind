@@ -1,89 +1,61 @@
 import { Routes } from '@angular/router';
-import { IdeaSubmitComponent } from './idea-submit/idea-submit.component';
-import { IdeaListComponent } from './idea-list/idea-list.component';
-import { ProfileComponent } from './profile/profile.component';
 import { authGuard } from './auth.guard';
-import { onboardingGuard } from './auth/onboarding.guard';
-import { OnboardingComponent } from './components/onboarding/onboarding.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { AboutPageComponent } from './pages/about/about-page.component';
-import { MissionPageComponent } from './pages/mission/mission-page.component';
-import { FaqPageComponent } from './pages/faq/faq-page.component';
-import { TagListComponent } from './pages/tag-list/tag-list.component';
-import { NewbieIdeasComponent } from './newbie-ideas/newbie-ideas.component';
 import { VerifyEmailComponent } from './auth/verify-email/verify-email.component';
 import { LoginComponent } from './auth/login/login.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { TermsOfConductComponent } from './pages/terms-of-conduct/terms-of-conduct.component';
 
 export const routes: Routes = [
-  { path: '', component: IdeaListComponent },
   {
-    path: 'app/pricing',
-    canActivate: [authGuard],
+    path: '',
     loadComponent: () =>
-      import('./intelligence/pricing.component').then((m) => m.PricingComponent),
+      import('./intelligence/public-landing.component').then((m) => m.PublicLandingComponent),
+  },
+  { path:'register', component:RegisterComponent },
+  { path:'login', component:LoginComponent },
+  { path:'verify-email', component:VerifyEmailComponent },
+  {
+    path:'app/pricing',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/pricing.component').then((m)=>m.PricingComponent),
   },
   {
-    path: 'app/market',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./intelligence/market-intelligence.component').then((m) => m.MarketIntelligenceComponent),
+    path:'app/market',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/market-intelligence.component').then((m)=>m.MarketIntelligenceComponent),
   },
   {
-    path: 'app/import',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./intelligence/data-import.component').then((m) => m.DataImportComponent),
+    path:'app/import',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/data-import.component').then((m)=>m.DataImportComponent),
   },
   {
-    path: 'app/canvas',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./intelligence/data-canvas.component').then((m) => m.DataCanvasComponent),
+    path:'app/canvas',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/data-canvas.component').then((m)=>m.DataCanvasComponent),
   },
   {
-    path: 'app/ask',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./intelligence/ask.component').then((m) => m.AskIntelligenceComponent),
+    path:'app/ask',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/ask.component').then((m)=>m.AskIntelligenceComponent),
   },
   {
-    path: 'app/insights',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./intelligence/insight-feed.component').then((m) => m.InsightFeedComponent),
+    path:'app/insights',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/insight-feed.component').then((m)=>m.InsightFeedComponent),
   },
   {
-    path: 'app/connections',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./intelligence/connections.component').then((m) => m.IntelligenceConnectionsComponent),
+    path:'app/connections',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/connections.component').then((m)=>m.IntelligenceConnectionsComponent),
   },
   {
-    path: 'app',
-    canActivate: [authGuard],
-    loadComponent: () =>
-      import('./intelligence/dashboard.component').then((m) => m.IntelligenceDashboardComponent),
+    path:'app',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/dashboard.component').then((m)=>m.IntelligenceDashboardComponent),
   },
-  { path: 'idea-list', component: IdeaListComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'verify-email', component: VerifyEmailComponent },
-  {
-    path: 'idea/:id',
-    loadComponent: () =>
-      import('./idea-detail/idea-detail.component').then((m) => m.IdeaDetailComponent),
-  },
-  { path: 'submit', component: IdeaSubmitComponent, canActivate: [authGuard] },
-  { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
-  { path: 'about', component: AboutPageComponent },
-  { path: 'mission', component: MissionPageComponent },
-  { path: 'faq', component: FaqPageComponent },
-  { path: 'tags', component: TagListComponent },
-  { path: 't', redirectTo: '/tags', pathMatch: 'full' },
-  { path: 'newbie-ideas', component: NewbieIdeasComponent },
-  { path: 'onboarding', component: OnboardingComponent, canActivate: [onboardingGuard] },
-  { path: 'privacy-policy', component: PrivacyPolicyComponent },
-  { path: 'terms-of-conduct', component: TermsOfConductComponent },
+  { path:'privacy-policy', component:PrivacyPolicyComponent },
+  { path:'terms-of-conduct', component:TermsOfConductComponent },
+  { path:'**', redirectTo:'' },
 ];

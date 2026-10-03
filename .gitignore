@@ -46,3 +46,9 @@ serviceAccountKey.json
 /serviceAccountKey.json
 firebase-debug.log
 cors.json
+
+# Nested dependencies and generated Functions output
+**/node_modules/
+/functions/lib/
+*-debug.log
+.firebase/

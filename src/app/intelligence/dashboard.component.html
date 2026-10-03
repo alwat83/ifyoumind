@@ -1,0 +1,172 @@
+<main class="intelligence-shell">
+  <nav class="app-nav">
+    <a routerLink="/app" class="brand">ifYouMind <span>2.0</span></a>
+    <div>
+      <a routerLink="/app" class="active">Overview</a>
+      <a routerLink="/app/market">Market</a>
+      <a routerLink="/app/pricing">Pricing</a>
+      <a routerLink="/app/canvas">Canvas</a>
+      <a routerLink="/app/import">Import</a>
+      <a routerLink="/app/insights">Insights</a>
+      <a routerLink="/app/ask">Ask</a>
+      <a routerLink="/app/connections">Connections</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <p class="eyebrow">ifYouMind 2.0</p>
+      <h1>Put the data together.</h1>
+      <p class="lede">
+        Bring together data from any domain—real estate, crime, food, weather, finance, business systems, public APIs, or your own files.
+        ifYouMind looks for relationships and turns the underlying observations into evidence-backed conclusions.
+      </p>
+    </div>
+    <div class="status-pill">Foundation live</div>
+  </section>
+
+  <section *ngIf="loading" class="panel centered">
+    <p>Loading your workspace…</p>
+  </section>
+
+  <section *ngIf="!loading && !workspace" class="panel onboarding">
+    <div>
+      <p class="eyebrow">Create your workspace</p>
+      <h2>Start with what you want to understand.</h2>
+      <p>You can connect data sources after the workspace is created.</p>
+    </div>
+    <form (ngSubmit)="createWorkspace()" class="workspace-form">
+      <label for="workspace-name">Workspace name</label>
+      <div class="input-row">
+        <input
+          id="workspace-name"
+          name="workspaceName"
+          [(ngModel)]="workspaceName"
+          maxlength="120"
+          placeholder="ifYouMind"
+          autocomplete="organization"
+        />
+        <button type="submit" [disabled]="creating || !workspaceName.trim()">
+          {{ creating ? 'Creating…' : 'Create workspace' }}
+        </button>
+      </div>
+      <p *ngIf="error" class="error">{{ error }}</p>
+    </form>
+  </section>
+
+  <ng-container *ngIf="!loading && workspace">
+    <section class="workspace-header">
+      <div>
+        <p class="eyebrow">Workspace</p>
+        <h2>{{ workspace.name }}</h2>
+      </div>
+      <div class="workspace-actions">
+        <span class="role">{{ workspace.role }}</span>
+        <a routerLink="/app/connections" class="primary-link">Manage connections</a>
+      </div>
+    </section>
+
+    <section class="feature-launcher">
+      <a routerLink="/app/market" class="feature-card">
+        <span>Market Intelligence</span>
+        <strong>Know a market before you bet on it →</strong>
+        <p>Evaluate a location and business concept with an evidence-backed decision brief.</p>
+      </a>
+      <a routerLink="/app/canvas" class="feature-card">
+        <span>Data Canvas</span>
+        <strong>Put anything together →</strong>
+        <p>Combine real estate, crime, food, weather, business data, or any custom dataset.</p>
+      </a>
+      <a routerLink="/app/import" class="feature-card">
+        <span>Import Data</span>
+        <strong>Import your own data →</strong>
+        <p>Map CSV columns into values, periods, geography, entities, and dimensions.</p>
+      </a>
+      <a routerLink="/app/ask" class="feature-card">
+        <span>Ask ifYouMind</span>
+        <strong>Ask your data a question →</strong>
+        <p>Get a plain-English answer grounded in the datasets and observations behind it.</p>
+      </a>
+      <a routerLink="/app/insights" class="feature-card">
+        <span>Insight feed</span>
+        <strong>See what changed →</strong>
+        <p>Important movements surfaced automatically, with evidence attached.</p>
+      </a>
+    </section>
+
+    <section class="metric-grid" aria-label="Key metrics">
+      <article class="metric-card">
+        <p>Traffic · 7 days</p>
+        <strong>{{ ga4 ? (ga4.sessions | number) : '—' }}</strong>
+        <span *ngIf="ga4">{{ changeLabel() }}</span>
+        <span *ngIf="!ga4">Connect GA4 to populate</span>
+      </article>
+      <article class="metric-card">
+        <p>Organic clicks</p>
+        <strong>—</strong>
+        <span>Connect Search Console to populate</span>
+      </article>
+      <article class="metric-card">
+        <p>Ad spend</p>
+        <strong>—</strong>
+        <span>Connect Google Ads to populate</span>
+      </article>
+      <article class="metric-card">
+        <p>Revenue</p>
+        <strong>—</strong>
+        <span>Stripe deferred for dedicated setup</span>
+      </article>
+    </section>
+
+    <section class="section-heading">
+      <div>
+        <p class="eyebrow">Data sources</p>
+        <h2>Start with GA4, then layer in the rest.</h2>
+      </div>
+    </section>
+
+    <section class="connector-grid">
+      <article *ngFor="let connector of connectors" class="connector-card">
+        <div class="connector-top">
+          <h3>{{ connector.name }}</h3>
+          <span [class.ready]="connector.state === 'ready'">
+            {{ stateLabel(connector.state) }}
+          </span>
+        </div>
+        <p>{{ connector.description }}</p>
+        <div class="chips">
+          <span *ngFor="let metric of connector.metrics">{{ metric }}</span>
+        </div>
+        <a routerLink="/app/connections" class="card-link">
+          {{ connector.state === 'ready' ? 'Open connections' : 'View plan' }}
+        </a>
+      </article>
+    </section>
+
+    <section class="panel insight-panel">
+      <div>
+        <p class="eyebrow">Intelligence layer</p>
+        <h2>Answers must show their work.</h2>
+        <p>
+          Every insight will carry its reporting window, source references,
+          freshness, and data-quality flags so AI analysis stays grounded in the underlying facts.
+        </p>
+      </div>
+      <div class="example-insight" *ngIf="ga4; else exampleInsight">
+        <span>Observed from GA4</span>
+        <strong>{{ changeLabel() }}</strong>
+        <p>
+          Sessions · {{ ga4.currentWindow.from }}–{{ ga4.currentWindow.through }}
+          vs {{ ga4.baselineWindow.from }}–{{ ga4.baselineWindow.through }}
+        </p>
+      </div>
+      <ng-template #exampleInsight>
+        <div class="example-insight">
+          <span>Example</span>
+          <strong>Sessions increased 18% week over week.</strong>
+          <p>Evidence: GA4 sessions · current 7 days vs previous 7 days</p>
+        </div>
+      </ng-template>
+    </section>
+  </ng-container>
+</main>

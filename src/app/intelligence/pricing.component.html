@@ -1,0 +1,61 @@
+<main class="pricing-shell">
+  <nav class="topbar">
+    <a routerLink="/app" class="brand">ifYouMind</a>
+    <a routerLink="/app">Back to your decisions</a>
+  </nav>
+
+  <header>
+    <p class="eyebrow">Pricing</p>
+    <h1>Start free. Pay when the answer is worth more.</h1>
+    <p class="lede">No complicated seats or credits. Pick the level that matches how often you need to make a decision.</p>
+  </header>
+
+  <section *ngIf="loading" class="notice">Loading pricing…</section>
+  <section *ngIf="error" class="notice error">{{ error }}</section>
+  <section *ngIf="message" class="notice success">{{ message }}</section>
+
+  <section *ngIf="status" class="plans">
+    <article>
+      <span class="label">Free</span>
+      <h2>$0</h2>
+      <p>Try the product and run a few decisions each month.</p>
+      <ul>
+        <li>{{ status.marketProjectsPerMonth }} decisions each month</li>
+        <li>{{ status.comparisonMarkets }} comparison location</li>
+        <li>Saved decision history</li>
+        <li>Basic decision brief</li>
+      </ul>
+      <div class="usage">{{ status.usedMarketProjects }} of {{ status.marketProjectsPerMonth }} used this month</div>
+      <a routerLink="/app/decide" class="secondary">Start a decision</a>
+    </article>
+
+    <article class="featured">
+      <div class="topline"><span class="label">Pro</span><b>Most useful</b></div>
+      <h2>${{ status.pricing.proMonthlyUsd }}<small>/month</small></h2>
+      <p>For people making location and market decisions regularly.</p>
+      <ul>
+        <li>Up to 50 decisions each month</li>
+        <li>Up to 3 comparison locations</li>
+        <li>Deeper follow-up analysis</li>
+        <li>Saved reports and exports</li>
+        <li>Live data enrichment as sources launch</li>
+      </ul>
+      <button type="button" (click)="request('pro')" [disabled]="requesting">{{ requesting === 'pro' ? 'Saving…' : 'Get Pro access' }}</button>
+    </article>
+
+    <article>
+      <span class="label">One report</span>
+      <h2>${{ status.pricing.reportOneTimeUsd }}</h2>
+      <p>For one important decision without starting a subscription.</p>
+      <ul>
+        <li>One full decision report</li>
+        <li>Primary and comparison locations</li>
+        <li>Opportunity and risk summary</li>
+        <li>Print / save as PDF</li>
+      </ul>
+      <button type="button" class="outline-button" (click)="request('report')" [disabled]="requesting">{{ requesting === 'report' ? 'Saving…' : 'Request a report' }}</button>
+    </article>
+  </section>
+
+  <p class="billing-note">Checkout is not connected yet. These buttons currently record interest while billing is prepared.</p>
+</main>

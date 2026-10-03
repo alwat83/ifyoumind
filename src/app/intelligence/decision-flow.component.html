@@ -1,0 +1,71 @@
+<main class="flow">
+  <nav>
+    <a routerLink="/app" class="brand">ifYouMind</a>
+    <span>Step {{ step }} of 4</span>
+  </nav>
+
+  <section class="progress"><i [style.width.%]="step * 25"></i></section>
+
+  <section class="card">
+    <ng-container *ngIf="step===1">
+      <p class="eyebrow">Start with the question</p>
+      <h1>What are you trying to decide?</h1>
+      <div class="choice-grid">
+        <button type="button" (click)="chooseType('business')">
+          <span>⌂</span><strong>Should I open here?</strong><small>Business or location decision</small>
+        </button>
+        <button type="button" (click)="chooseType('compare')">
+          <span>↔</span><strong>Which place is better?</strong><small>Compare markets side by side</small>
+        </button>
+        <button type="button" (click)="chooseType('growth')">
+          <span>↗</span><strong>Is this area growing?</strong><small>Look for momentum and demand</small>
+        </button>
+        <button type="button" (click)="chooseType('custom')">
+          <span>✦</span><strong>Something else</strong><small>Ask a custom market question</small>
+        </button>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="step===2">
+      <p class="eyebrow">Place</p>
+      <h1>Where are you looking?</h1>
+      <label class="big-input">
+        <span>Main location</span>
+        <input [(ngModel)]="location" placeholder="Birmingham, AL" />
+      </label>
+      <label class="big-input">
+        <span>Compare with other places <em>optional</em></span>
+        <input [(ngModel)]="comparisonInput" placeholder="Hoover, AL; Homewood, AL" />
+      </label>
+      <div class="actions"><button class="ghost" type="button" (click)="back()">Back</button><button class="primary" type="button" (click)="next()" [disabled]="!location.trim()">Continue</button></div>
+    </ng-container>
+
+    <ng-container *ngIf="step===3">
+      <p class="eyebrow">Context</p>
+      <h1>What are you considering?</h1>
+      <label class="big-input">
+        <span>Business, idea, or situation</span>
+        <input [(ngModel)]="concept" placeholder="Coffee shop, apartment purchase, expansion…" />
+      </label>
+      <label class="big-input">
+        <span>The question you want answered</span>
+        <textarea [(ngModel)]="decision" rows="4" placeholder="Should I open this here?"></textarea>
+      </label>
+      <div class="actions"><button class="ghost" type="button" (click)="back()">Back</button><button class="primary" type="button" (click)="next()">Continue</button></div>
+    </ng-container>
+
+    <ng-container *ngIf="step===4">
+      <p class="eyebrow">Ready</p>
+      <h1>Let’s put the pieces together.</h1>
+      <div class="summary">
+        <div><span>Question</span><strong>{{ decision }}</strong></div>
+        <div><span>Location</span><strong>{{ location }}</strong></div>
+        <div *ngIf="comparisonInput.trim()"><span>Compare with</span><strong>{{ comparisonInput }}</strong></div>
+        <div><span>Context</span><strong>{{ concept }}</strong></div>
+      </div>
+      <p class="explain">ifYouMind will organize the market signals, compare the places, and give you the clearest opportunity and risk picture it can from the available data.</p>
+      <p *ngIf="error" class="error">{{ error }}</p>
+      <div class="actions"><button class="ghost" type="button" (click)="back()">Back</button><button class="primary final" type="button" (click)="analyze()" [disabled]="working">{{ working ? 'Putting it together…' : 'Show me what the data says' }}</button></div>
+    </ng-container>
+  </section>
+</main>

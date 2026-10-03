@@ -1,0 +1,26 @@
+name: Launch build check
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Use Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - name: Install app dependencies
+        run: npm ci
+      - name: Install functions dependencies
+        run: npm --prefix functions ci
+      - name: Build functions
+        run: npm --prefix functions run build
+      - name: Build app
+        run: npm run build

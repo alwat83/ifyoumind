@@ -180,3 +180,39 @@ export const recalcTrending = onSchedule('every 60 minutes', async () => {
   });
   await batch.commit();
 });
+
+export {
+  createIntelligenceOrganization,
+  getIntelligenceOrganization,
+  getMyIntelligenceOrganization,
+} from './intelligence/organizations';
+export { getIntelligenceConnections } from './intelligence/connections';
+
+export { beginGoogleAnalyticsConnection, googleAnalyticsOAuthCallback } from './intelligence/google-analytics-oauth';
+
+export { discoverGoogleAnalyticsProperties, selectGoogleAnalyticsProperty } from './intelligence/google-analytics';
+
+export { syncGoogleAnalytics } from './intelligence/google-analytics-sync';
+export { getIntelligenceDashboardMetrics } from './intelligence/dashboard-metrics';
+
+export { askIntelligence, getRecentIntelligenceQuestions } from './intelligence/ask';
+export { getIntelligenceInsightFeed } from './intelligence/insight-feed';
+
+export { saveIntelligenceQuestion, deleteSavedIntelligenceQuestion, getSavedIntelligenceQuestions } from './intelligence/saved-questions';
+
+export { createUniversalDataset, addUniversalObservation, listUniversalDatasets, getUniversalDataset } from './intelligence/universal-data';
+export { analyzeUniversalDatasets } from './intelligence/universal-analysis';
+
+export { importUniversalObservations } from './intelligence/universal-import';
+
+export { reasonAcrossUniversalDatasets, getRecentUniversalAnalysisRuns } from './intelligence/universal-reasoning';
+
+export { synthesizeUniversalAnalysis } from './intelligence/ai-synthesis';
+
+export { seedUniversalDemoData } from './intelligence/demo-data';
+
+export { askUniversalIntelligence } from './intelligence/universal-ask';
+
+export { createMarketIntelligenceProject, getRecentMarketIntelligenceProjects, getMarketIntelligenceProject } from './intelligence/market-intelligence';
+
+export { getCommercialStatus, requestCommercialAccess } from './intelligence/monetization';

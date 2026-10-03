@@ -1,0 +1,108 @@
+<main class="connections-shell">
+  <nav class="app-nav">
+    <a routerLink="/app" class="brand">ifYouMind <span>2.0</span></a>
+    <div>
+      <a routerLink="/app">Overview</a>
+      <a routerLink="/app/canvas">Canvas</a>
+      <a routerLink="/app/import">Import</a>
+      <a routerLink="/app/insights">Insights</a>
+      <a routerLink="/app/ask">Ask</a>
+      <a routerLink="/app/connections" class="active">Connections</a>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">Data connections</p>
+      <h1>Bring your business data together.</h1>
+      <p>Connect one source at a time. ifYouMind normalizes the data before it reaches the intelligence layer.</p>
+    </div>
+    <a routerLink="/app" class="back-link">Back to overview</a>
+  </header>
+
+  <section *ngIf="loading" class="panel">Loading connections…</section>
+  <section *ngIf="error" class="panel error">{{ error }}</section>
+  <section *ngIf="!loading && !workspace" class="panel">
+    Create your workspace from the overview before adding connections.
+  </section>
+
+  <section *ngIf="!loading && workspace" class="source-grid">
+    <article *ngFor="let item of sources" class="source-card" [class.primary]="item.priority === 'now'">
+      <div class="source-top">
+        <div>
+          <p class="source-kicker">{{ item.priority === 'now' ? 'Building now' : 'Planned' }}</p>
+          <h2>{{ item.name }}</h2>
+        </div>
+        <span class="status" [attr.data-status]="status(item.source)">
+          {{ statusLabel(item.source) }}
+        </span>
+      </div>
+
+      <p>{{ item.description }}</p>
+      <p *ngIf="connectionLabel(item.source)" class="connection-label">
+        {{ connectionLabel(item.source) }}
+      </p>
+
+      <div class="metrics">
+        <span *ngFor="let metric of item.metrics">{{ metric }}</span>
+      </div>
+
+      <div class="source-action" *ngIf="item.source === 'ga4'; else planned">
+        <ng-container *ngIf="status('ga4') === 'connected'; else ga4Setup">
+          <button type="button" disabled>Connected</button>
+        </ng-container>
+
+        <ng-template #ga4Setup>
+          <button
+            *ngIf="status('ga4') === 'not_connected' || status('ga4') === 'error'"
+            type="button"
+            (click)="connectGoogleAnalytics()"
+            [disabled]="connectingGoogle"
+          >
+            {{ connectingGoogle ? 'Opening Google…' : 'Connect Google Analytics' }}
+          </button>
+
+          <button
+            *ngIf="status('ga4') === 'connecting' && googleProperties.length === 0"
+            type="button"
+            (click)="loadGoogleProperties()"
+            [disabled]="loadingProperties"
+          >
+            {{ loadingProperties ? 'Loading properties…' : 'Choose Analytics property' }}
+          </button>
+
+          <div *ngIf="googleProperties.length > 0" class="property-picker">
+            <label for="ga4-property">Analytics property</label>
+            <select id="ga4-property" [(ngModel)]="selectedGoogleProperty">
+              <option value="">Select a property</option>
+              <option *ngFor="let property of googleProperties" [value]="property.id">
+                {{ property.displayName }} — {{ property.accountDisplayName }}
+              </option>
+            </select>
+            <button
+              type="button"
+              (click)="saveGoogleProperty()"
+              [disabled]="!selectedGoogleProperty || savingProperty"
+            >
+              {{ savingProperty ? 'Saving…' : 'Use this property' }}
+            </button>
+          </div>
+
+          <small>Uses Google OAuth with read-only Analytics access. Credentials remain encrypted server-side.</small>
+        </ng-template>
+      </div>
+
+      <ng-template #planned>
+        <div class="source-action">
+          <button type="button" disabled>Planned</button>
+        </div>
+      </ng-template>
+    </article>
+  </section>
+
+  <section *ngIf="workspace" class="architecture-note">
+    <p class="eyebrow">Workspace boundary</p>
+    <strong>{{ workspace.name }}</strong>
+    <p>Connection metadata belongs only to this workspace. Provider credentials remain encrypted server-side and are never returned to the browser.</p>
+  </section>
+</main>

@@ -1,0 +1,84 @@
+<main class="data-shell">
+  <nav class="topbar">
+    <a routerLink="/app" class="brand">ifYouMind</a>
+    <a routerLink="/app">Back to your decisions</a>
+  </nav>
+
+  <header>
+    <p class="eyebrow">Your data</p>
+    <h1>Bring your own numbers.</h1>
+    <p>Upload a CSV and tell us what it represents. We’ll turn the rows into something ifYouMind can compare and reason across.</p>
+  </header>
+
+  <section *ngIf="error" class="notice error">{{ error }}</section>
+  <section *ngIf="importedCount !== null" class="notice success">{{ importedCount }} rows imported. Your data is ready to use.</section>
+
+  <section class="upload-card">
+    <p class="eyebrow">Step 1</p>
+    <h2>Choose a CSV.</h2>
+    <label class="dropzone">
+      <input type="file" accept=".csv,text/csv" (change)="chooseFile($event)" />
+      <span class="plus">＋</span>
+      <strong>{{ fileName || 'Drop in a CSV or choose a file' }}</strong>
+      <small>Up to 400 rows / 2 MB for now</small>
+    </label>
+  </section>
+
+  <section *ngIf="table" class="details-card">
+    <p class="eyebrow">Step 2</p>
+    <h2>What does this data represent?</h2>
+
+    <div class="field-grid">
+      <label><span>Name</span><input [(ngModel)]="datasetName" placeholder="Median home price" /></label>
+      <label><span>Unit</span><input [(ngModel)]="unit" placeholder="USD, %, count…" /></label>
+      <label class="wide"><span>Source label</span><input [(ngModel)]="sourceLabel" placeholder="My upload" /></label>
+    </div>
+
+    <div class="mapping">
+      <div>
+        <span>Which column is the number?</span>
+        <select [(ngModel)]="valueColumn"><option value="">Choose column</option><option *ngFor="let header of table.headers" [value]="header">{{ header }}</option></select>
+      </div>
+      <div>
+        <span>Which column is the date or period?</span>
+        <select [(ngModel)]="periodColumn"><option value="">Choose column</option><option *ngFor="let header of table.headers" [value]="header">{{ header }}</option></select>
+      </div>
+      <div>
+        <span>Location column <em>optional</em></span>
+        <select [(ngModel)]="geographyColumn"><option value="">None</option><option *ngFor="let header of table.headers" [value]="header">{{ header }}</option></select>
+      </div>
+      <div>
+        <span>Item / entity column <em>optional</em></span>
+        <select [(ngModel)]="entityColumn"><option value="">None</option><option *ngFor="let header of table.headers" [value]="header">{{ header }}</option></select>
+      </div>
+    </div>
+
+    <div class="preview">
+      <p class="eyebrow">Preview</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th *ngFor="let header of table.headers">{{ header }}</th></tr></thead>
+          <tbody><tr *ngFor="let row of previewRows()"><td *ngFor="let cell of row">{{ cell }}</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <button class="import-button" type="button" (click)="import()" [disabled]="importing || !datasetName.trim() || !valueColumn || !periodColumn">
+      {{ importing ? 'Adding your data…' : 'Add this data to ifYouMind' }}
+    </button>
+  </section>
+
+  <section *ngIf="datasets.length" class="library">
+    <div class="section-head">
+      <div><p class="eyebrow">Saved</p><h2>Your data library</h2></div>
+      <a routerLink="/app/advanced">Advanced analysis</a>
+    </div>
+    <div class="dataset-grid">
+      <article *ngFor="let dataset of datasets">
+        <span>{{ dataset.sourceLabel }}</span>
+        <strong>{{ dataset.name }}</strong>
+        <small>{{ dataset.observationCount }} observations · {{ dataset.unit }}</small>
+      </article>
+    </div>
+  </section>
+</main>

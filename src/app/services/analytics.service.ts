@@ -1,11 +1,12 @@
 import { Injectable, inject } from '@angular/core';
+import { useLocalEmulators } from '../firebase.config';
 import { Analytics, logEvent } from '@angular/fire/analytics';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
-  private analytics = inject(Analytics);
+  private analytics = inject(Analytics, { optional: true });
   private router = inject(Router);
   private initialized = false;
   private lastPageStart = Date.now();
@@ -53,6 +54,7 @@ export class AnalyticsService {
 
   /** Wrap logEvent with guard so SSR / unsupported environments don't break */
   safeLog(eventName: string, params?: Record<string, any>) {
+    if (useLocalEmulators || !this.analytics) return;
     try {
       logEvent(this.analytics, eventName, params);
     } catch (err) {

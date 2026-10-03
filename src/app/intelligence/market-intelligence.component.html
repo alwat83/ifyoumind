@@ -1,0 +1,137 @@
+<main class="market-shell">
+  <nav class="app-nav">
+    <a routerLink="/app" class="brand">ifYouMind <span>2.0</span></a>
+    <div>
+      <a routerLink="/app">Overview</a>
+      <a routerLink="/app/market" class="active">Market</a>
+      <a routerLink="/app/pricing">Pricing</a>
+      <a routerLink="/app/canvas">Canvas</a>
+      <a routerLink="/app/import">Import</a>
+      <a routerLink="/app/ask">Ask</a>
+    </div>
+  </nav>
+
+  <header>
+    <p class="eyebrow">Market Intelligence</p>
+    <h1>Know a market before you bet on it.</h1>
+    <p class="lede">Start with a location and a business concept. ifYouMind turns the available signals into a decision brief instead of another dashboard.</p>
+  </header>
+
+  <section *ngIf="error" class="panel error">{{ error }}</section>
+  <section *ngIf="loading" class="panel">Loading workspace…</section>
+
+  <section *ngIf="!loading && !workspace" class="panel setup">
+    <p class="eyebrow">First-time setup</p>
+    <h2>Create a workspace to start.</h2>
+    <button type="button" (click)="createWorkspace()" [disabled]="creatingWorkspace">
+      {{ creatingWorkspace ? 'Creating…' : 'Create workspace' }}
+    </button>
+  </section>
+
+  <ng-container *ngIf="!loading && workspace">
+    <section *ngIf="commercial" class="commercial-bar">
+      <div>
+        <strong>{{ commercial.planName }} plan</strong>
+        <span>{{ commercial.usedMarketProjects }} / {{ commercial.marketProjectsPerMonth }} projects used this month</span>
+      </div>
+      <a routerLink="/app/pricing">View pricing →</a>
+    </section>
+
+    <section class="intake panel">
+      <div>
+        <p class="eyebrow">New project</p>
+        <h2>What decision are you trying to make?</h2>
+      </div>
+      <form (ngSubmit)="analyzeMarket()">
+        <label>
+          <span>Location</span>
+          <input name="location" [(ngModel)]="location" placeholder="Birmingham, AL" />
+        </label>
+        <label>
+          <span>Business concept</span>
+          <input name="concept" [(ngModel)]="concept" placeholder="Fast-casual seafood restaurant" />
+        </label>
+        <label class="wide">
+          <span>Compare with up to {{ commercial?.comparisonMarkets || 1 }} market{{ (commercial?.comparisonMarkets || 1) === 1 ? '' : 's' }} (separate with semicolons)</span>
+          <input name="comparisonInput" [(ngModel)]="comparisonInput" placeholder="Hoover, AL; Homewood, AL" />
+        </label>
+        <label class="wide">
+          <span>Decision</span>
+          <input name="decision" [(ngModel)]="decision" placeholder="Should I open this concept here?" />
+        </label>
+        <button class="wide" type="submit" [disabled]="creating || !location.trim() || !concept.trim()">
+          {{ creating ? 'Building brief…' : 'Analyze this market' }}
+        </button>
+      </form>
+      <p class="demo-note">Current build uses synthetic demo enrichment so we can validate the commercial workflow before connecting paid/live market-data providers.</p>
+    </section>
+
+    <section *ngIf="project?.brief as brief" class="brief">
+      <div class="brief-head">
+        <div>
+          <p class="eyebrow">Decision brief</p>
+          <h2>{{ project?.concept }} · {{ project?.location }}</h2>
+          <p>{{ project?.decision }}</p>
+        </div>
+        <span class="demo-pill">Demo data</span>
+      </div>
+
+      <div class="metrics">
+        <article *ngFor="let metric of brief.metrics">
+          <span>{{ metric.label }}</span>
+          <strong>{{ formatMetric(metric.value, metric.unit) }}</strong>
+          <small>{{ metric.unit }}</small>
+        </article>
+      </div>
+
+      <section *ngIf="brief.comparisons.length" class="comparisons">
+        <p class="eyebrow">Market comparison</p>
+        <div class="comparison-grid">
+          <article>
+            <strong>{{ project?.location }}</strong>
+            <span>Primary market</span>
+            <small *ngFor="let metric of brief.metrics">{{ metric.label }}: {{ formatMetric(metric.value, metric.unit) }}</small>
+          </article>
+          <article *ngFor="let comparison of brief.comparisons">
+            <strong>{{ comparison.location }}</strong>
+            <span>Comparison market</span>
+            <small *ngFor="let metric of comparison.metrics">{{ metric.label }}: {{ formatMetric(metric.value, metric.unit) }}</small>
+          </article>
+        </div>
+      </section>
+
+      <div class="brief-columns">
+        <article class="signal-panel">
+          <p class="eyebrow">Opportunity</p>
+          <ul><li *ngFor="let item of brief.opportunities">{{ item }}</li></ul>
+        </article>
+        <article class="signal-panel">
+          <p class="eyebrow">Risk</p>
+          <ul><li *ngFor="let item of brief.risks">{{ item }}</li></ul>
+        </article>
+      </div>
+
+      <article class="next-questions">
+        <p class="eyebrow">Ask next</p>
+        <a *ngFor="let question of brief.questions" routerLink="/app/ask">{{ question }}</a>
+      </article>
+
+      <div class="report-actions" *ngIf="project?.id">
+        <a [routerLink]="['/app/market', project?.id, 'report']">Open printable report →</a>
+        <a routerLink="/app/pricing">Report & Pro pricing →</a>
+      </div>
+      <p class="data-notice">{{ project?.dataNotice }}</p>
+    </section>
+
+    <section *ngIf="recent.length" class="recent">
+      <p class="eyebrow">Recent market projects</p>
+      <article *ngFor="let item of recent">
+        <div><strong>{{ item.concept }}</strong><span>{{ item.location }}</span></div>
+        <div class="recent-actions">
+          <a [routerLink]="['/app/market', item.id, 'report']">Open report</a>
+          <small>{{ item.createdAt ? (item.createdAt | date:'medium') : '' }}</small>
+        </div>
+      </article>
+    </section>
+  </ng-container>
+</main>

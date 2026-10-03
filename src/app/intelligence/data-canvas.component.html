@@ -1,0 +1,273 @@
+<main class="canvas-shell">
+  <nav class="app-nav">
+    <a routerLink="/app" class="brand">ifYouMind <span>2.0</span></a>
+    <div>
+      <a routerLink="/app">Overview</a>
+      <a routerLink="/app/market">Market</a>
+      <a routerLink="/app/canvas" class="active">Canvas</a>
+      <a routerLink="/app/import">Import</a>
+      <a routerLink="/app/insights">Insights</a>
+      <a routerLink="/app/ask">Ask</a>
+      <a routerLink="/app/connections">Connections</a>
+    </div>
+  </nav>
+
+  <header>
+    <p class="eyebrow">Data Canvas</p>
+    <h1>Put anything together.</h1>
+    <p class="lede">
+      Real estate. Crime. Food. Weather. Business metrics. Anything with measurable observations can live here.
+    </p>
+  </header>
+
+  <section *ngIf="error" class="panel error">{{ error }}</section>
+  <section *ngIf="loading" class="panel">Loading your datasets…</section>
+
+  <section *ngIf="!loading && !workspace" class="panel workspace-setup">
+    <p class="eyebrow">First-time setup</p>
+    <h2>Create your ifYouMind workspace.</h2>
+    <p>This is where your datasets, questions, and analysis history live.</p>
+    <form (ngSubmit)="createWorkspace()">
+      <input
+        name="workspaceName"
+        [(ngModel)]="workspaceName"
+        maxlength="120"
+        placeholder="My ifYouMind Workspace"
+      />
+      <button type="submit" [disabled]="creatingWorkspace || !workspaceName.trim()">
+        {{ creatingWorkspace ? 'Creating…' : 'Create workspace' }}
+      </button>
+    </form>
+  </section>
+
+  <ng-container *ngIf="!loading && workspace">
+    <section class="demo-banner">
+      <div>
+        <p class="eyebrow">Test drive</p>
+        <strong>Load synthetic demo data and analyze it immediately.</strong>
+        <p>Housing, income, population, and crime data — clearly marked as synthetic.</p>
+      </div>
+      <button type="button" (click)="loadDemoData()" [disabled]="seedingDemo">
+        {{ seedingDemo ? 'Loading demo…' : 'Load demo data' }}
+      </button>
+    </section>
+
+    <section class="import-banner">
+      <div>
+        <p class="eyebrow">Have existing data?</p>
+        <strong>Import a CSV and map it into universal observations.</strong>
+      </div>
+      <a routerLink="/app/import">Import data →</a>
+    </section>
+
+    <section class="builder-grid">
+      <article class="panel">
+        <p class="eyebrow">1 · Create dataset</p>
+        <h2>What are we measuring?</h2>
+        <form (ngSubmit)="createDataset()" class="form-grid">
+          <input name="name" [(ngModel)]="datasetForm.name" placeholder="Median home price" />
+          <input name="metric" [(ngModel)]="datasetForm.metric" placeholder="median_home_price" />
+          <select name="unit" [(ngModel)]="datasetForm.unit">
+            <option *ngFor="let unit of units" [value]="unit">{{ unit }}</option>
+          </select>
+          <input name="sourceLabel" [(ngModel)]="datasetForm.sourceLabel" placeholder="Source" />
+          <textarea name="description" [(ngModel)]="datasetForm.description" rows="2" placeholder="Optional description"></textarea>
+          <button type="submit" [disabled]="saving">Create dataset</button>
+        </form>
+      </article>
+
+      <article class="panel">
+        <p class="eyebrow">2 · Add observation</p>
+        <h2>Add a data point.</h2>
+        <form (ngSubmit)="addObservation()" class="form-grid">
+          <select name="datasetId" [(ngModel)]="observationForm.datasetId">
+            <option value="">Choose dataset</option>
+            <option *ngFor="let dataset of datasets" [value]="dataset.id">{{ dataset.name }}</option>
+          </select>
+          <input name="value" [(ngModel)]="observationForm.value" inputmode="decimal" placeholder="Value" />
+          <input name="period" [(ngModel)]="observationForm.period" placeholder="Period, e.g. 2026-09" />
+          <input name="geography" [(ngModel)]="observationForm.geography" placeholder="Geography, e.g. 35242" />
+          <input name="entity" [(ngModel)]="observationForm.entity" placeholder="Entity, e.g. Hoover" />
+          <input name="note" [(ngModel)]="observationForm.note" placeholder="Optional note" />
+          <button type="submit" [disabled]="saving">Add observation</button>
+        </form>
+      </article>
+    </section>
+
+    <section class="dataset-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">3 · Combine</p>
+          <h2>Select datasets to analyze together.</h2>
+        </div>
+        <button
+          class="analyze-button"
+          type="button"
+          (click)="analyze()"
+          [disabled]="selected.size < 2 || !targetDatasetId || analyzing"
+        >
+          {{ analyzing ? 'Analyzing…' : 'Analyze together' }}
+        </button>
+      </div>
+
+      <div class="target-picker" *ngIf="selected.size >= 2">
+        <label for="targetDataset">What are you trying to explain?</label>
+        <select id="targetDataset" [(ngModel)]="targetDatasetId">
+          <option value="">Choose target dataset</option>
+          <option *ngFor="let dataset of datasets" [value]="dataset.id" [disabled]="!isSelected(dataset.id)">
+            {{ dataset.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="dataset-grid" *ngIf="datasets.length; else noDatasets">
+        <button
+          type="button"
+          *ngFor="let dataset of datasets"
+          class="dataset-card"
+          [class.selected]="isSelected(dataset.id)"
+          (click)="toggleDataset(dataset.id)"
+        >
+          <span class="source">{{ dataset.sourceLabel }}</span>
+          <strong>{{ dataset.name }}</strong>
+          <p>{{ dataset.metric }} · {{ dataset.unit }}</p>
+          <small>{{ dataset.observationCount }} observations</small>
+        </button>
+      </div>
+
+      <ng-template #noDatasets>
+        <div class="empty">Create your first dataset above.</div>
+      </ng-template>
+    </section>
+
+    <section *ngIf="reasoning" class="analysis reasoning">
+      <div class="analysis-header">
+        <div>
+          <p class="eyebrow">ifYouMind conclusion</p>
+          <h2>{{ reasoning.conclusion }}</h2>
+          <p>{{ reasoning.interpretation }}</p>
+        </div>
+        <span class="confidence">{{ reasoning.confidence }} confidence</span>
+      </div>
+
+      <div class="reasoning-columns">
+        <div>
+          <p class="eyebrow">Supporting signals</p>
+          <article *ngFor="let signal of reasoning.supportingEvidence" class="relationship">
+            <div class="relationship-title">
+              <strong>{{ signal.datasetName }}</strong>
+              <span>r={{ signal.correlation | number:'1.2-2' }}</span>
+            </div>
+            <p>
+              {{ signal.magnitude }} {{ signal.direction === 'same_direction' ? 'same-direction' : 'inverse' }}
+              relationship across {{ signal.matchedObservations }} compatible observations.
+            </p>
+            <small>Source: {{ signal.source }}</small>
+          </article>
+          <p *ngIf="!reasoning.supportingEvidence.length" class="empty-note">No meaningful supporting signal yet.</p>
+        </div>
+
+        <div>
+          <p class="eyebrow">Counter-signals</p>
+          <article *ngFor="let signal of reasoning.counterEvidence" class="relationship">
+            <div class="relationship-title">
+              <strong>{{ signal.datasetName }}</strong>
+              <span>r={{ signal.correlation | number:'1.2-2' }}</span>
+            </div>
+            <p>This signal moves in the opposite relationship direction from the strongest evidence.</p>
+            <small>Source: {{ signal.source }}</small>
+          </article>
+          <p *ngIf="!reasoning.counterEvidence.length" class="empty-note">No counter-signal identified in the selected data.</p>
+        </div>
+      </div>
+
+      <div class="ai-action">
+        <button type="button" (click)="explainWithAi()" [disabled]="synthesizing">
+          {{ synthesizing ? 'Synthesizing…' : 'Explain with AI' }}
+        </button>
+        <span>AI explains the saved evidence packet; it does not recalculate the statistics.</span>
+      </div>
+
+      <div class="limitations">
+        <p class="eyebrow">Reasoning guardrails</p>
+        <ul>
+          <li *ngFor="let limitation of reasoning.limitations">{{ limitation }}</li>
+        </ul>
+      </div>
+    </section>
+
+    <section *ngIf="synthesis" class="analysis synthesis">
+      <div class="analysis-header">
+        <div>
+          <p class="eyebrow">AI synthesis</p>
+          <h2>{{ synthesis.headline }}</h2>
+          <p>{{ synthesis.explanation }}</p>
+        </div>
+        <span class="confidence">{{ synthesisModel }}</span>
+      </div>
+
+      <div class="reasoning-columns">
+        <div>
+          <p class="eyebrow">Evidence used</p>
+          <article *ngFor="let point of synthesis.evidencePoints" class="relationship">
+            <strong>{{ point.signalId }}</strong>
+            <p>{{ point.statement }}</p>
+          </article>
+        </div>
+        <div>
+          <p class="eyebrow">Alternative interpretations</p>
+          <ul>
+            <li *ngFor="let item of synthesis.alternativeInterpretations">{{ item }}</li>
+          </ul>
+          <p class="eyebrow synthesis-subhead">Caveats</p>
+          <ul>
+            <li *ngFor="let item of synthesis.caveats">{{ item }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="confidence-explanation">
+        <p class="eyebrow">Why this confidence level</p>
+        <p>{{ synthesis.confidenceExplanation }}</p>
+      </div>
+    </section>
+
+    <section *ngIf="recentRuns.length" class="analysis history">
+      <p class="eyebrow">Recent analyses</p>
+      <article *ngFor="let run of recentRuns" class="relationship">
+        <div class="relationship-title">
+          <strong>{{ run.targetName }}</strong>
+          <span>{{ run.confidence }} confidence</span>
+        </div>
+        <p>{{ run.conclusion }}</p>
+        <small>{{ run.createdAt ? (run.createdAt | date:'medium') : '' }}</small>
+      </article>
+    </section>
+
+    <section *ngIf="analysis" class="analysis raw-analysis">
+      <div class="analysis-header">
+        <div>
+          <p class="eyebrow">Conclusion</p>
+          <h2>{{ analysis.summary }}</h2>
+        </div>
+        <span class="confidence">{{ analysis.confidence }} confidence</span>
+      </div>
+
+      <article *ngFor="let relationship of analysis.relationships" class="relationship">
+        <div class="relationship-title">
+          <strong>{{ relationship.datasetA.name }} + {{ relationship.datasetB.name }}</strong>
+          <span>{{ relationship.matchedObservations }} compatible observations</span>
+        </div>
+        <p>{{ relationship.conclusion }}</p>
+        <small>{{ relationship.caveat }}</small>
+      </article>
+
+      <div class="limitations">
+        <p class="eyebrow">Limitations</p>
+        <ul>
+          <li *ngFor="let limitation of analysis.limitations">{{ limitation }}</li>
+        </ul>
+      </div>
+    </section>
+  </ng-container>
+</main>

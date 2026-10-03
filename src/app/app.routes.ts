@@ -1,55 +1,55 @@
 import { Routes } from '@angular/router';
-import { IdeaSubmitComponent } from './idea-submit/idea-submit.component';
-import { IdeaListComponent } from './idea-list/idea-list.component';
-import { ProfileComponent } from './profile/profile.component';
 import { authGuard } from './auth.guard';
-import { onboardingGuard } from './auth/onboarding.guard';
-import { OnboardingComponent } from './components/onboarding/onboarding.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { AboutPageComponent } from './pages/about/about-page.component';
-import { MissionPageComponent } from './pages/mission/mission-page.component';
-import { FaqPageComponent } from './pages/faq/faq-page.component';
-import { TagListComponent } from './pages/tag-list/tag-list.component';
-import { NewbieIdeasComponent } from './newbie-ideas/newbie-ideas.component';
-
 import { VerifyEmailComponent } from './auth/verify-email/verify-email.component';
-
 import { LoginComponent } from './auth/login/login.component';
 import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
 import { TermsOfConductComponent } from './pages/terms-of-conduct/terms-of-conduct.component';
 
-export const routes: Routes = [
-  { path: '', component: IdeaListComponent },
-  { path: 'idea-list', component: IdeaListComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'verify-email', component: VerifyEmailComponent },
+export const routes:Routes=[
   {
-    path: 'idea/:id',
-    loadComponent: () =>
-      import('./idea-detail/idea-detail.component').then(
-        (m) => m.IdeaDetailComponent,
-      ),
+    path:'',
+    loadComponent:()=>import('./intelligence/public-landing.component').then(m=>m.PublicLandingComponent),
   },
-  { path: 'submit', component: IdeaSubmitComponent, canActivate: [authGuard] },
-  { path: 'profile', component: ProfileComponent, canActivate: [authGuard] },
-  { path: 'about', component: AboutPageComponent },
-  { path: 'mission', component: MissionPageComponent },
-  { path: 'faq', component: FaqPageComponent },
-  { path: 'tags', component: TagListComponent },
-  { path: 't', redirectTo: '/tags', pathMatch: 'full' },
-  { path: 'newbie-ideas', component: NewbieIdeasComponent },
+  {path:'register',component:RegisterComponent},
+  {path:'login',component:LoginComponent},
+  {path:'verify-email',component:VerifyEmailComponent},
   {
-    path: 'onboarding',
-    component: OnboardingComponent,
-    canActivate: [onboardingGuard],
+    path:'app',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/consumer-home.component').then(m=>m.ConsumerHomeComponent),
   },
   {
-    path: 'privacy-policy',
-    component: PrivacyPolicyComponent,
+    path:'app/decide',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/decision-flow.component').then(m=>m.DecisionFlowComponent),
   },
   {
-    path: 'terms-of-conduct',
-    component: TermsOfConductComponent,
+    path:'app/result/:projectId',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/market-report.component').then(m=>m.MarketReportComponent),
   },
+  {
+    path:'app/pricing',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/pricing.component').then(m=>m.PricingComponent),
+  },
+  {
+    path:'app/data',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/consumer-data.component').then(m=>m.ConsumerDataComponent),
+  },
+  {
+    path:'app/ask',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/ask.component').then(m=>m.AskIntelligenceComponent),
+  },
+  {
+    path:'app/advanced',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/data-canvas.component').then(m=>m.DataCanvasComponent),
+  },
+  {path:'privacy-policy',component:PrivacyPolicyComponent},
+  {path:'terms-of-conduct',component:TermsOfConductComponent},
+  {path:'**',redirectTo:''},
 ];

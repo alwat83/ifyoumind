@@ -1,20 +1,20 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { SeoService } from '../../services/seo.service';
 
 @Component({
-  selector: 'app-terms-of-conduct',
-  standalone: true,
-  imports: [],
-  templateUrl: './terms-of-conduct.component.html',
-  styleUrl: './terms-of-conduct.component.scss',
+  selector:'app-terms-of-conduct',
+  standalone:true,
+  imports:[RouterLink],
+  templateUrl:'./terms-of-conduct.component.html',
+  styleUrl:'./terms-of-conduct.component.scss',
 })
 export class TermsOfConductComponent implements OnInit {
-  private seoService = inject(SeoService);
-
-  ngOnInit(): void {
+  private seoService=inject(SeoService);
+  ngOnInit():void{
     this.seoService.generateTags({
-      title: 'Terms of Conduct',
-      description: 'IfYouMind Community Guidelines',
+      title:'Terms of Service',
+      description:'ifYouMind Terms of Service',
     });
   }
 }

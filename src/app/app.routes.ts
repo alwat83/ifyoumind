@@ -37,7 +37,7 @@ export const routes:Routes=[
   {
     path:'app/data',
     canActivate:[authGuard],
-    loadComponent:()=>import('./intelligence/data-import.component').then(m=>m.DataImportComponent),
+    loadComponent:()=>import('./intelligence/consumer-data.component').then(m=>m.ConsumerDataComponent),
   },
   {
     path:'app/ask',

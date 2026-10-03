@@ -212,3 +212,5 @@ export { synthesizeUniversalAnalysis } from './intelligence/ai-synthesis';
 export { seedUniversalDemoData } from './intelligence/demo-data';
 
 export { askUniversalIntelligence } from './intelligence/universal-ask';
+
+export { createMarketIntelligenceProject, getRecentMarketIntelligenceProjects } from './intelligence/market-intelligence';

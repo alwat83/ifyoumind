@@ -3,7 +3,7 @@
     <a routerLink="/app">← Your decisions</a>
     <div>
       <a routerLink="/app/decide">Ask another question</a>
-      <a routerLink="/app/pricing" class="report-upgrade">Full report · $79</a>
+      <a [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Full report · $79</a>
     </div>
   </nav>
 
@@ -81,7 +81,7 @@
         <h2>Turn this brief into a full Decision Report.</h2>
         <p>Get a polished, source-backed report designed to share with a partner, lender, investor, broker, or team.</p>
       </div>
-      <a routerLink="/app/pricing">Get the $79 report</a>
+      <a [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}">Get the $79 report</a>
     </section>
 
     <section class="next">

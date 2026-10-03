@@ -24,3 +24,6 @@ table{width:100%;border-collapse:collapse;white-space:nowrap}th,td{padding:10px 
 .library{padding-top:56px}.section-head{display:flex;justify-content:space-between;align-items:end}.dataset-grid{grid-template-columns:repeat(3,1fr);margin-top:16px}
 .dataset-grid article{display:grid;gap:6px;background:#fff;border:1px solid #e0e4ea;border-radius:18px;padding:18px}
 @media(max-width:700px){.field-grid,.mapping,.dataset-grid{grid-template-columns:1fr}.wide{grid-column:auto}.data-shell{width:min(100% - 22px,1040px)}header{padding-top:58px}}
+
+/* Explicit light-surface heading contrast. */
+header h1,.upload-card h2,.details-card h2,.library h2{color:#111827}

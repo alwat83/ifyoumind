@@ -2,3 +2,8 @@
 
 /* Explicit light-surface heading contrast. */
 .card h1{color:#111827}
+
+.field-help{display:block;color:#667085;font-size:12px;line-height:1.45;margin-top:-2px}
+.big-input>span em{margin-left:5px}
+button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid #7c8ba1;outline-offset:3px}
+.choice-grid button,.actions button{min-height:48px}

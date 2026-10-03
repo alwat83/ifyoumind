@@ -1,0 +1,53 @@
+name: Deploy ifYouMind to Firebase
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+concurrency:
+  group: firebase-production
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Check out production source
+        uses: actions/checkout@v4
+
+      - name: Use Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+
+      - name: Install app dependencies
+        run: npm ci
+
+      - name: Install Functions dependencies
+        run: npm --prefix functions ci
+
+      - name: Build Angular app
+        run: npm run build
+
+      - name: Build Firebase Functions
+        run: npm --prefix functions run build
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_IFYOUMIND }}
+
+      - name: Deploy Firebase production
+        run: >
+          npx firebase-tools@13.35.1 deploy
+          --project ifyoumind-473fe
+          --only hosting,functions,firestore:rules,firestore:indexes,storage
+          --non-interactive

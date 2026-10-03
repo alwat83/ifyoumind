@@ -135,7 +135,7 @@ export const synthesizeUniversalAnalysis = onCall(
       matchedObservations: signal.matchedObservations,
     }));
 
-    const allowedSignalIds = new Set(signals.map((signal: any) => signal.signalId));
+    const allowedSignalIds = new Set<string>(signals.map((signal: any) => String(signal.signalId)));
     const allowedNumbers = new Set<string>();
     for (const signal of signals) {
       allowedNumbers.add(Number(signal.correlation).toString());

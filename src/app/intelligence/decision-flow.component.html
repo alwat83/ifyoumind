@@ -1,7 +1,7 @@
 <main class="flow">
   <nav>
     <a routerLink="/app" class="brand">ifYouMind</a>
-    <span>Step {{ step }} of 4</span>
+    <span>Step {{ step }} of 4 · takes about a minute</span>
   </nav>
 
   <section class="progress"><i [style.width.%]="step * 25"></i></section>
@@ -30,8 +30,8 @@
       <p class="eyebrow">Place</p>
       <h1>Where are you looking?</h1>
       <label class="big-input">
-        <span>Main location</span>
-        <input [(ngModel)]="location" placeholder="Birmingham, AL" />
+        <span>Main location <em>City and state</em></span>
+        <input [(ngModel)]="location" placeholder="Birmingham, AL" autocomplete="address-level2" aria-describedby="location-help" /><small id="location-help" class="field-help">Use a U.S. city and state so we can match reliable public data.</small>
       </label>
       <label class="big-input">
         <span>Compare with other places <em>optional</em></span>
@@ -63,7 +63,7 @@
         <div *ngIf="comparisonInput.trim()"><span>Compare with</span><strong>{{ comparisonInput }}</strong></div>
         <div><span>Context</span><strong>{{ concept }}</strong></div>
       </div>
-      <p class="explain">ifYouMind will organize the market signals, compare the places, and give you the clearest opportunity and risk picture it can from the available data.</p>
+      <p class="explain">ifYouMind will compare the available facts, explain what supports the idea, flag what still needs checking, and show the source behind the important numbers.</p>
       <p *ngIf="error" class="error">{{ error }}</p>
       <div class="actions"><button class="ghost" type="button" (click)="back()">Back</button><button class="primary final" type="button" (click)="analyze()" [disabled]="working">{{ working ? 'Putting it together…' : 'Show me what the data says' }}</button></div>
     </ng-container>

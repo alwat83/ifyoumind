@@ -188,11 +188,8 @@ export {
 } from './intelligence/organizations';
 export { getIntelligenceConnections } from './intelligence/connections';
 
-export { beginGoogleAnalyticsConnection, googleAnalyticsOAuthCallback } from './intelligence/google-analytics-oauth';
 
-export { discoverGoogleAnalyticsProperties, selectGoogleAnalyticsProperty } from './intelligence/google-analytics';
 
-export { syncGoogleAnalytics } from './intelligence/google-analytics-sync';
 export { getIntelligenceDashboardMetrics } from './intelligence/dashboard-metrics';
 
 export { askIntelligence, getRecentIntelligenceQuestions } from './intelligence/ask';
@@ -207,7 +204,6 @@ export { importUniversalObservations } from './intelligence/universal-import';
 
 export { reasonAcrossUniversalDatasets, getRecentUniversalAnalysisRuns } from './intelligence/universal-reasoning';
 
-export { synthesizeUniversalAnalysis } from './intelligence/ai-synthesis';
 
 export { seedUniversalDemoData } from './intelligence/demo-data';
 

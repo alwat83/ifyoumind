@@ -1,4 +1,4 @@
-import { FieldValue, getFirestore } from 'firebase-admin/firestore';
+import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { authorizeOrganization } from './authorization';
 
@@ -79,6 +79,26 @@ export const createMarketIntelligenceProject = onCall(async (request) => {
   const scope = await authorizeOrganization(
     request.auth?.uid, request.data?.organizationId, readMembership, ['owner','admin'],
   );
+  const orgRef = organizations().doc(scope.organizationId);
+  const orgData = (await orgRef.get()).data() || {};
+  const plan = orgData.plan === 'pro' ? 'pro' : 'free';
+  const isLocalDemo = process.env.GCLOUD_PROJECT === 'demo-ifyoumind';
+
+  if (!isLocalDemo && plan === 'free') {
+    const now = new Date();
+    const start = Timestamp.fromDate(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)));
+    const usage = await orgRef.collection('marketProjects')
+      .where('createdAt', '>=', start)
+      .count()
+      .get();
+    if (usage.data().count >= 3) {
+      throw new HttpsError(
+        'resource-exhausted',
+        'Free plan limit reached. Upgrade to Pro or purchase a one-time Market Report.',
+      );
+    }
+  }
+
   const location = text(request.data?.location, 'Location', 160);
   const concept = text(request.data?.concept, 'Business concept', 160);
   const decision = text(request.data?.decision || 'Evaluate this market', 'Decision', 240);
@@ -87,7 +107,7 @@ export const createMarketIntelligenceProject = onCall(async (request) => {
     .filter((value: unknown): value is string => typeof value === 'string')
     .map((value: string) => value.trim())
     .filter(Boolean)
-    .slice(0, 3);
+    .slice(0, isLocalDemo || plan === 'pro' ? 3 : 1);
 
   const ref = organizations().doc(scope.organizationId).collection('marketProjects').doc();
   const brief = buildDemoBrief(location, concept, comparisonLocations);

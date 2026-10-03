@@ -3,3 +3,5 @@
 Production launch branch for the consumer-first rebuild.
 
 Deployment trigger: production auto-deploy enabled.
+
+Deployment trigger: corrected consumer target list.

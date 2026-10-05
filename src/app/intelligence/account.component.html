@@ -1,0 +1,65 @@
+<main class="account-shell">
+  <nav class="topbar">
+    <a routerLink="/app" class="brand">ifYouMind</a>
+    <a routerLink="/app">Back to your decisions</a>
+  </nav>
+
+  <header>
+    <p class="eyebrow">Account</p>
+    <h1>Your ifYouMind profile</h1>
+    <p>Manage the basics, see your current plan, and keep control of your account.</p>
+  </header>
+
+  <section *ngIf="loading" class="notice">Loading your account…</section>
+  <section *ngIf="error" class="notice error">{{ error }}</section>
+  <section *ngIf="message" class="notice success">{{ message }}</section>
+
+  <div *ngIf="!loading" class="account-grid">
+    <section class="card">
+      <p class="eyebrow">Profile</p>
+      <h2>Account details</h2>
+      <label>
+        <span>Name</span>
+        <input [(ngModel)]="name" autocomplete="name" placeholder="Your name" />
+      </label>
+      <label>
+        <span>Email</span>
+        <input [value]="email" disabled />
+      </label>
+      <div class="provider">Signed in with <strong>{{ provider }}</strong></div>
+      <button type="button" (click)="saveProfile()" [disabled]="saving">{{ saving ? 'Saving…' : 'Save profile' }}</button>
+    </section>
+
+    <section class="card plan-card" *ngIf="status">
+      <p class="eyebrow">Plan</p>
+      <div class="plan-head">
+        <h2>{{ status.planName }}</h2>
+        <span>{{ status.usedMarketProjects }} / {{ status.marketProjectsPerMonth }} decisions used</span>
+      </div>
+      <div class="usage-track"><i [style.width.%]="(status.usedMarketProjects / status.marketProjectsPerMonth) * 100"></i></div>
+      <p *ngIf="status.plan==='free'">You can keep using the free plan, or move up when you need more decisions and comparisons.</p>
+      <p *ngIf="status.plan==='pro'">Your Pro plan includes up to {{ status.marketProjectsPerMonth }} decisions each month.</p>
+      <a routerLink="/app/pricing">{{ status.plan==='free' ? 'View upgrade options' : 'View plan details' }}</a>
+    </section>
+
+    <section class="card">
+      <p class="eyebrow">Security</p>
+      <h2>Sign-in & access</h2>
+      <p *ngIf="provider==='Email and password'">Need a new password? We’ll send a reset link to {{ email }}.</p>
+      <p *ngIf="provider==='Google'">Your sign-in is managed through Google.</p>
+      <button *ngIf="provider==='Email and password'" class="secondary" type="button" (click)="resetPassword()">Send password reset</button>
+      <button class="secondary danger" type="button" (click)="logout()">Sign out</button>
+    </section>
+
+    <section class="card">
+      <p class="eyebrow">Your data</p>
+      <h2>Privacy & control</h2>
+      <p>Your decisions stay tied to your account. Source-backed reports show where important public-data values came from.</p>
+      <div class="links">
+        <a routerLink="/app/data">Manage my data</a>
+        <a routerLink="/privacy-policy">Privacy policy</a>
+        <a routerLink="/terms-of-conduct">Terms</a>
+      </div>
+    </section>
+  </div>
+</main>

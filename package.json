@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "node scripts/generate-sitemap.js && ng build",
+    "build": "npm run preflight && node scripts/generate-sitemap.js && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
@@ -14,7 +14,8 @@
     "emulators": "npm --prefix functions run build && firebase emulators:start --project demo-ifyoumind --only auth,firestore,functions,storage",
     "test:rules": "firebase emulators:exec --project demo-ifyoumind --only firestore \"node --test test/intelligence.rules.test.mjs\"",
     "test:foundation": "npm --prefix functions test && npm run test:rules && npm run test:organizations",
-    "test:organizations": "npm --prefix functions run build && firebase emulators:exec --project demo-ifyoumind --only auth,firestore \"node --test test/organizations.integration.test.mjs\""
+    "test:organizations": "npm --prefix functions run build && firebase emulators:exec --project demo-ifyoumind --only auth,firestore \"node --test test/organizations.integration.test.mjs\"",
+    "preflight": "node scripts/preflight.js"
   },
   "private": true,
   "dependencies": {

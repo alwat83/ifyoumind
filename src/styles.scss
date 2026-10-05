@@ -142,3 +142,6 @@
   .prose a { @apply text-indigo-400 hover:text-indigo-300 underline; }
 }
 
+
+/* Light public landing overrides legacy dark heading token. */
+.landing .hero h1,.landing .demo-card h3{color:#111827}

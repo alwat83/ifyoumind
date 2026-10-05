@@ -6,3 +6,5 @@
 /* Explicit heading colors for light cards while preserving the dark featured plan. */
 header h1,.plans article:not(.featured) h2{color:#111827}
 .plans article.featured h2{color:#fff}
+
+.nav-links{display:flex;gap:16px;align-items:center}.nav-links a{font-size:13px;color:#566273;text-decoration:none}

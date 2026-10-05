@@ -35,6 +35,11 @@ export const routes:Routes=[
     loadComponent:()=>import('./intelligence/pricing.component').then(m=>m.PricingComponent),
   },
   {
+    path:'app/account',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/account.component').then(m=>m.AccountComponent),
+  },
+  {
     path:'app/data',
     canActivate:[authGuard],
     loadComponent:()=>import('./intelligence/consumer-data.component').then(m=>m.ConsumerDataComponent),

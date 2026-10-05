@@ -1,7 +1,7 @@
 <main class="pricing-shell">
   <nav class="topbar">
     <a routerLink="/app" class="brand">ifYouMind</a>
-    <a routerLink="/app">Back to your decisions</a>
+    <div class="nav-links"><a routerLink="/app/account">Account</a><a routerLink="/app">Back to your decisions</a></div>
   </nav>
 
   <header>
@@ -50,7 +50,8 @@
       <ul>
         <li>One full decision report</li>
         <li>Primary and comparison locations</li>
-        <li>Opportunity and risk summary</li>
+        <li>Expanded evidence and comparison narrative</li>
+        <li>Decision checklist and source appendix</li>
         <li>Print / save as PDF</li>
       </ul>
       <button type="button" class="outline-button" (click)="request('report')" [disabled]="requesting">{{ requesting === 'report' ? 'Saving…' : 'Request a report' }}</button>

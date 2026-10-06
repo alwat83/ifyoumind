@@ -22,8 +22,10 @@ p { color:#a4abbb; line-height:1.65; }
 .direction[data-direction="down"] { border-color:#613434; color:#f3b1b1; background:#2b1717; }
 .numbers { display:flex; gap:40px; margin:24px 0; }
 .numbers div { display:grid; gap:4px; }
-.numbers span { color:#747d91; font-size:11px; text-transform:uppercase; letter-spacing:.1em; }
+.numbers span { color:#8f98aa; font-size:11px; text-transform:uppercase; letter-spacing:.1em; }
 .numbers strong { font-size:30px; }
 .evidence { display:flex; flex-wrap:wrap; gap:8px; }
 .evidence span { border:1px solid #2a3143; border-radius:999px; padding:5px 8px; color:#858da0; font-size:11px; }
 @media (max-width:640px) { .feed-shell{width:min(100% - 24px,980px)} .app-nav{align-items:flex-start;flex-direction:column;margin-bottom:42px}.insight-top{flex-direction:column}.numbers{gap:22px} }
+
+.app-nav a:focus-visible,.empty-state a:focus-visible{outline:3px solid #a5b4fc;outline-offset:3px}

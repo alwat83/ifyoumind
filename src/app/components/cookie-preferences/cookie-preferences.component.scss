@@ -1,10 +1,7 @@
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,11 +10,17 @@
 
 .modal-content {
   background: white;
-  color: #333;
+  color: #1f2937;
   padding: 20px;
-  border-radius: 5px;
-  width: 500px;
+  border-radius: 8px;
+  width: min(500px, calc(100% - 32px));
   position: relative;
+}
+
+.modal-content h1,
+.modal-content h2,
+.modal-content h3 {
+  color: #111827;
 }
 
 .close-button {
@@ -25,6 +28,7 @@
   top: 10px;
   right: 10px;
   background: none;
+  color: #111827;
   border: none;
   font-size: 24px;
   cursor: pointer;
@@ -42,4 +46,11 @@
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+}
+
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 3px solid #4f46e5;
+  outline-offset: 3px;
 }

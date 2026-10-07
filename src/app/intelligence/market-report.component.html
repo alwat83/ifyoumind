@@ -3,6 +3,7 @@
     <a routerLink="/app">← Your decisions</a>
     <div>
       <a routerLink="/app/decide">Ask another question</a>
+      <button type="button" (click)="printReport()">Print / save PDF</button>
       <a [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Full report · $79</a>
     </div>
   </nav>
@@ -96,6 +97,44 @@
       </div>
       <a [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}">Get the $79 report</a>
     </section>
+
+    <ng-container *ngIf="decisionReport as reportDetail">
+      <section class="action-plan">
+        <p class="eyebrow">Action plan</p>
+        <h2>What to do before you commit.</h2>
+        <div class="action-grid">
+          <article *ngFor="let item of reportDetail.actionPlan">
+            <span>{{ item.stage }}</span>
+            <strong>{{ item.title }}</strong>
+            <p>{{ item.detail }}</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="decision-triggers">
+        <p class="eyebrow">What could change the call</p>
+        <div class="trigger-grid">
+          <article class="strengthens">
+            <span>Would strengthen the case</span>
+            <p>{{ reportDetail.decisionTriggers.strengthens }}</p>
+          </article>
+          <article class="weakens">
+            <span>Would weaken the case</span>
+            <p>{{ reportDetail.decisionTriggers.weakens }}</p>
+          </article>
+          <article class="unresolved">
+            <span>Still unresolved</span>
+            <p>{{ reportDetail.decisionTriggers.unresolved }}</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="limitations">
+        <p class="eyebrow">Evidence boundaries</p>
+        <h2>What this report does not know yet.</h2>
+        <ul><li *ngFor="let item of reportDetail.limitations">{{ item }}</li></ul>
+      </section>
+    </ng-container>
 
     <section class="next">
       <p class="eyebrow">What to check next</p>

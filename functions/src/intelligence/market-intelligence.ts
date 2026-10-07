@@ -219,6 +219,16 @@ function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[]){
         {stage:'Then',title:'Confirm local demand',detail:questions[2]},
         {stage:'Before committing',title:'Verify operating economics',detail:questions[1]},
       ],
+      comparisonFindings:comparisons.map(place=>{
+        const findings:string[]=[];
+        const incomeDelta=primary.income-place.income;
+        findings.push(`Median household income is ${new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Math.abs(incomeDelta))} ${incomeDelta>=0?'higher':'lower'} than ${place.location}.`);
+        if(primary.populationChangePct!==null&&place.populationChangePct!==null){
+          const delta=Number((primary.populationChangePct-place.populationChangePct).toFixed(1));
+          findings.push(`Five-year population change is ${Math.abs(delta)} percentage points ${delta>=0?'stronger':'weaker'} than ${place.location}.`);
+        }
+        return {location:place.location,findings};
+      }),
       decisionTriggers:{
         strengthens:trimmedOpportunities[0]||'Additional local evidence supports the core demand assumption.',
         weakens:trimmedRisks[0]||'New local evidence materially weakens the demand or economics case.',

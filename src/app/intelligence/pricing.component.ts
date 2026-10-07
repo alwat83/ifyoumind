@@ -28,6 +28,11 @@ export class PricingComponent implements OnInit {
   async ngOnInit():Promise<void>{
     this.projectId=this.route.snapshot.queryParamMap.get('projectId')||'';
     this.highlightedOffer=this.route.snapshot.queryParamMap.get('offer')||'';
+    const checkout=this.route.snapshot.queryParamMap.get('checkout')||'';
+
+    if(checkout==='success') this.message='Payment confirmed. Your access is being updated now.';
+    if(checkout==='cancelled') this.message='Checkout was cancelled. Nothing was charged.';
+
     try{
       this.workspace=await this.organizations.getMyWorkspace();
       if(this.workspace) this.status=await this.monetization.status(this.workspace.organizationId);
@@ -37,17 +42,39 @@ export class PricingComponent implements OnInit {
 
   async request(offer:'pro'|'report'):Promise<void>{
     if(!this.workspace||this.requesting)return;
-    this.requesting=offer; this.message=''; this.error='';
+
+    if(offer==='report'&&!this.projectId){
+      this.error='Start or open a decision first, then purchase its Decision Report.';
+      return;
+    }
+
+    this.requesting=offer;
+    this.message='';
+    this.error='';
+
     try{
+      if(this.status?.checkoutEnabled){
+        const url=await this.monetization.checkout(
+          this.workspace.organizationId,
+          offer,
+          this.projectId,
+        );
+        if(!url) throw new Error('Checkout did not return a payment URL.');
+        window.location.assign(url);
+        return;
+      }
+
       this.message=await this.monetization.requestAccess(
         this.workspace.organizationId,
         offer,
         offer==='pro'
           ? 'Pricing page Pro interest'
-          : (this.projectId ? `Decision report interest for project ${this.projectId}` : 'Pricing page one-time report interest'),
+          : 'Decision report interest for project '+this.projectId,
       );
-    }catch(error){this.error=this.messageFor(error);}
-    finally{this.requesting='';}
+    }catch(error){
+      this.error=this.messageFor(error);
+      this.requesting='';
+    }
   }
 
   private messageFor(error:unknown):string{

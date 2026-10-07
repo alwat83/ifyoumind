@@ -10,6 +10,14 @@ export interface MarketMetric {
   sourceLabel?:string;
   sourceUrl?:string;
 }
+export interface DecisionReportPayload {
+  schemaVersion:number;
+  posture:'favorable'|'caution'|'mixed';
+  evidenceCoverage:{sourcedMetrics:number;totalMetrics:number;percent:number};
+  actionPlan:Array<{stage:string;title:string;detail:string}>;
+  decisionTriggers:{strengthens:string;weakens:string;unresolved:string};
+  limitations:string[];
+}
 export interface MarketBrief {
   metrics:MarketMetric[];
   opportunities:string[];
@@ -17,6 +25,7 @@ export interface MarketBrief {
   questions:string[];
   comparisons:Array<{location:string;metrics:MarketMetric[]}>;
   sources?:Array<{provider:string;dataset:string;retrievedAt:string;url:string}>;
+  decisionReport?:DecisionReportPayload;
 }
 export interface MarketProject {
   id:string;

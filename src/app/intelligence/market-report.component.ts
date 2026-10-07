@@ -41,6 +41,10 @@ export class MarketReportComponent implements OnInit {
         {stage:'Then',title:'Confirm local demand',detail:brief.questions[2]||brief.questions[0]||'Validate demand with a local source.'},
         {stage:'Before committing',title:'Verify operating economics',detail:brief.questions[1]||'Confirm the economics of the exact decision.'},
       ],
+      comparisonFindings:brief.comparisons.map(comparison=>({
+        location:comparison.location,
+        findings:comparison.metrics.slice(0,2).map(metric=>`${metric.label}: ${this.formatMetric(metric.value,metric.unit)}`),
+      })),
       decisionTriggers:{
         strengthens:brief.opportunities[0]||'Additional local evidence supports the core assumption.',
         weakens:brief.risks[0]||'New local evidence materially weakens the case.',

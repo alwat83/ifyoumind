@@ -15,6 +15,7 @@ export interface DecisionReportPayload {
   posture:'favorable'|'caution'|'mixed';
   evidenceCoverage:{sourcedMetrics:number;totalMetrics:number;percent:number};
   actionPlan:Array<{stage:string;title:string;detail:string}>;
+  comparisonFindings:Array<{location:string;findings:string[]}>;
   decisionTriggers:{strengthens:string;weakens:string;unresolved:string};
   limitations:string[];
 }

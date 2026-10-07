@@ -20,6 +20,32 @@ export class MarketReportComponent implements OnInit {
   loading=true;
   error='';
 
+  get recommendation():string{
+    const brief=this.project?.brief;
+    if(!brief)return '';
+    const support=brief.opportunities.length;
+    const caution=brief.risks.length;
+    if(support>caution)return 'The available evidence leans favorable, with important items to validate before committing.';
+    if(caution>support)return 'The available evidence suggests caution. Resolve the major risks before committing.';
+    return 'The evidence is mixed. Treat this as a validation decision rather than a clear go/no-go.';
+  }
+
+  get confidenceLabel():string{
+    const brief=this.project?.brief;
+    if(!brief)return 'Building';
+    const sourced=brief.metrics.filter(metric=>!!metric.sourceLabel).length;
+    if(this.project?.mode==='live'&&sourced>=Math.max(2,Math.ceil(brief.metrics.length*.75)))return 'High evidence coverage';
+    if(sourced>0)return 'Moderate evidence coverage';
+    return 'Limited evidence coverage';
+  }
+
+  get evidenceSummary():string{
+    const brief=this.project?.brief;
+    if(!brief)return '';
+    const sourced=brief.metrics.filter(metric=>!!metric.sourceLabel).length;
+    return `${sourced} of ${brief.metrics.length} key metrics include source attribution.`;
+  }
+
   async ngOnInit():Promise<void>{
     try{
       const workspace=await this.organizations.getMyWorkspace();

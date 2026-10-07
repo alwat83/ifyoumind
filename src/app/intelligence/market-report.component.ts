@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrganizationService } from './organization.service';
-import { MarketIntelligenceService, MarketProject } from './market-intelligence.service';
+import { DecisionReportPayload, MarketIntelligenceService, MarketProject } from './market-intelligence.service';
 
 @Component({
   selector:'app-market-report',
@@ -19,6 +19,39 @@ export class MarketReportComponent implements OnInit {
   project:MarketProject|null=null;
   loading=true;
   error='';
+
+  get decisionReport():DecisionReportPayload|null{
+    const brief=this.project?.brief;
+    if(!brief)return null;
+    if(brief.decisionReport)return brief.decisionReport;
+    const sourced=brief.metrics.filter(metric=>!!metric.sourceLabel).length;
+    const posture=brief.opportunities.length>brief.risks.length
+      ? 'favorable'
+      : brief.risks.length>brief.opportunities.length ? 'caution' : 'mixed';
+    return {
+      schemaVersion:1,
+      posture,
+      evidenceCoverage:{
+        sourcedMetrics:sourced,
+        totalMetrics:brief.metrics.length,
+        percent:brief.metrics.length?Math.round((sourced/brief.metrics.length)*100):0,
+      },
+      actionPlan:[
+        {stage:'Validate first',title:'Resolve the biggest risk',detail:brief.risks[0]||'Confirm the most important downside assumption with a local source.'},
+        {stage:'Then',title:'Confirm local demand',detail:brief.questions[2]||brief.questions[0]||'Validate demand with a local source.'},
+        {stage:'Before committing',title:'Verify operating economics',detail:brief.questions[1]||'Confirm the economics of the exact decision.'},
+      ],
+      decisionTriggers:{
+        strengthens:brief.opportunities[0]||'Additional local evidence supports the core assumption.',
+        weakens:brief.risks[0]||'New local evidence materially weakens the case.',
+        unresolved:brief.questions[0]||'Validate the most material unknown.',
+      },
+      limitations:[
+        'The report is bounded by the sources currently connected to this decision.',
+        'Validate material facts that could change the economics or risk profile before committing.',
+      ],
+    };
+  }
 
   get recommendation():string{
     const brief=this.project?.brief;
@@ -55,6 +88,10 @@ export class MarketReportComponent implements OnInit {
       this.project=await this.market.get(workspace.organizationId,projectId);
     }catch(error){this.error=this.message(error);}
     finally{this.loading=false;}
+  }
+
+  printReport():void{
+    window.print();
   }
 
   formatMetric(value:number,unit:string):string{

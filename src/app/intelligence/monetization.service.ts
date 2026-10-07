@@ -23,6 +23,18 @@ export class MonetizationService {
     return (await call({organizationId})).data;
   }
 
+  async checkout(
+    organizationId:string,
+    offer:'pro'|'report',
+    projectId='',
+  ):Promise<string>{
+    const call=httpsCallable<
+      {organizationId:string;offer:'pro'|'report';projectId:string},
+      {url:string;sessionId:string}
+    >(this.functions,'createCommercialCheckout');
+    return (await call({organizationId,offer,projectId})).data.url;
+  }
+
   async requestAccess(
     organizationId:string,
     offer:'pro'|'report',

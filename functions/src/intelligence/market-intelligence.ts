@@ -184,20 +184,51 @@ function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[]){
   }
   if(!risks.length) risks.push('Census demographics alone do not measure competition, commercial rent, foot traffic, or concept-level demand.');
 
+  const questions=[
+    `What local competitors serve the same customer as ${primary.location}?`,
+    'What are current commercial rents and occupancy costs for the exact trade area?',
+    'What foot-traffic or customer-demand signal would confirm this opportunity?',
+  ];
+  const trimmedOpportunities=opportunity.slice(0,2);
+  const trimmedRisks=risks.slice(0,2);
+  const sourcedMetrics=metrics.filter(metric=>!!metric.sourceLabel).length;
+  const posture=trimmedOpportunities.length>trimmedRisks.length
+    ? 'favorable'
+    : trimmedRisks.length>trimmedOpportunities.length ? 'caution' : 'mixed';
+
   return {
     metrics,
-    opportunities:opportunity.slice(0,2),
-    risks:risks.slice(0,2),
+    opportunities:trimmedOpportunities,
+    risks:trimmedRisks,
     comparisons:comparisons.map(place=>({location:place.location,metrics:metricsFor(place)})),
-    questions:[
-      `What local competitors serve the same customer as ${primary.location}?`,
-      'What are current commercial rents and occupancy costs for the exact trade area?',
-      'What foot-traffic or customer-demand signal would confirm this opportunity?',
-    ],
+    questions,
     sources:[
       {provider:'U.S. Census Bureau',dataset:'2024 ACS 5-year estimates',retrievedAt:new Date().toISOString(),url:'https://api.census.gov/data/2024/acs/acs5'},
       {provider:'U.S. Census Bureau',dataset:'2019 ACS 5-year estimates',retrievedAt:new Date().toISOString(),url:'https://api.census.gov/data/2019/acs/acs5'},
     ],
+    decisionReport:{
+      schemaVersion:1,
+      posture,
+      evidenceCoverage:{
+        sourcedMetrics,
+        totalMetrics:metrics.length,
+        percent:metrics.length ? Math.round((sourcedMetrics/metrics.length)*100) : 0,
+      },
+      actionPlan:[
+        {stage:'Validate first',title:'Resolve the biggest risk',detail:trimmedRisks[0]||'Confirm the most important downside assumption with a local source.'},
+        {stage:'Then',title:'Confirm local demand',detail:questions[2]},
+        {stage:'Before committing',title:'Verify operating economics',detail:questions[1]},
+      ],
+      decisionTriggers:{
+        strengthens:trimmedOpportunities[0]||'Additional local evidence supports the core demand assumption.',
+        weakens:trimmedRisks[0]||'New local evidence materially weakens the demand or economics case.',
+        unresolved:questions[0],
+      },
+      limitations:[
+        'ACS estimates describe demographic context, not concept-level demand.',
+        'Commercial rent, foot traffic, competition, and site-specific operating economics are not yet included.',
+      ],
+    },
   };
 }
 

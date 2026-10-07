@@ -111,6 +111,17 @@
         </div>
       </section>
 
+      <section *ngIf="reportDetail.comparisonFindings.length" class="comparison-findings">
+        <p class="eyebrow">Comparison takeaways</p>
+        <h2>Where the primary market leads — and where it trails.</h2>
+        <div class="finding-list">
+          <article *ngFor="let item of reportDetail.comparisonFindings">
+            <strong>{{ item.location }}</strong>
+            <ul><li *ngFor="let finding of item.findings">{{ finding }}</li></ul>
+          </article>
+        </div>
+      </section>
+
       <section class="decision-triggers">
         <p class="eyebrow">What could change the call</p>
         <div class="trigger-grid">
@@ -147,6 +158,7 @@
       <ul>
         <li *ngFor="let source of brief.sources">
           <strong>{{ source.provider }}</strong> · {{ source.dataset }}
+          <a *ngIf="source.url" [href]="source.url" target="_blank" rel="noopener noreferrer">Open source</a>
         </li>
       </ul>
     </section>

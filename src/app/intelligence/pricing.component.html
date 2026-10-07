@@ -40,7 +40,9 @@
         <li>Saved reports and exports</li>
         <li>Live data enrichment as sources launch</li>
       </ul>
-      <button type="button" (click)="request('pro')" [disabled]="requesting">{{ requesting === 'pro' ? 'Saving…' : 'Get Pro access' }}</button>
+      <button type="button" (click)="request('pro')" [disabled]="requesting">
+        {{ requesting === 'pro' ? 'Opening checkout…' : 'Get Pro access' }}
+      </button>
     </article>
 
     <article [class.highlight-report]="highlightedOffer === 'report'">
@@ -54,9 +56,11 @@
         <li>Decision checklist and source appendix</li>
         <li>Print / save as PDF</li>
       </ul>
-      <button type="button" class="outline-button" (click)="request('report')" [disabled]="requesting">{{ requesting === 'report' ? 'Saving…' : 'Request a report' }}</button>
+      <button type="button" class="outline-button" (click)="request('report')" [disabled]="requesting">
+        {{ requesting === 'report' ? 'Opening checkout…' : 'Buy Decision Report' }}
+      </button>
     </article>
   </section>
 
-  <p class="billing-note">Checkout is not connected yet. These buttons currently record interest while billing is prepared.</p>
+  <p class="billing-note">Secure checkout is handled by Stripe. Pro renews monthly until cancelled. Decision Reports are one-time purchases.</p>
 </main>

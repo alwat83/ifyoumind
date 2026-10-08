@@ -182,6 +182,7 @@ export const stripeCommercialWebhook = onRequest({secrets:[stripeWebhookSecret]}
         plan:'pro',
         stripeCustomerId:session.customer||null,
         stripeSubscriptionId:session.subscription||null,
+        stripeSubscriptionStatus:'active',
         planUpdatedAt:FieldValue.serverTimestamp(),
       },{merge:true});
     }else if(organizationId&&offer==='report'&&metadata.projectId){
@@ -189,6 +190,22 @@ export const stripeCommercialWebhook = onRequest({secrets:[stripeWebhookSecret]}
         decisionReportPurchased:true,
         decisionReportPurchasedAt:FieldValue.serverTimestamp(),
         stripeCheckoutSessionId:session.id,
+      },{merge:true});
+    }
+  }else if(event.type==='customer.subscription.updated'||event.type==='customer.subscription.deleted'){
+    const subscription=event.data.object;
+    const metadata=subscription.metadata||{};
+    const organizationId=metadata.organizationId;
+    if(organizationId&&metadata.offer==='pro'){
+      const status=String(subscription.status||'unknown');
+      const proStatuses=new Set(['active','trialing']);
+      await organizations().doc(organizationId).set({
+        plan:proStatuses.has(status)?'pro':'free',
+        stripeCustomerId:subscription.customer||null,
+        stripeSubscriptionId:subscription.id||null,
+        stripeSubscriptionStatus:status,
+        stripeCancelAtPeriodEnd:Boolean(subscription.cancel_at_period_end),
+        planUpdatedAt:FieldValue.serverTimestamp(),
       },{merge:true});
     }
   }

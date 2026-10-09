@@ -3,8 +3,9 @@
     <a routerLink="/app">← Your decisions</a>
     <div>
       <a routerLink="/app/decide">Ask another question</a>
-      <button type="button" (click)="printReport()">Print / save PDF</button>
-      <a [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Full report · $79</a>
+      <button *ngIf="reportPurchased" type="button" (click)="printReport()">Print / save PDF</button>
+      <span *ngIf="reportPurchased" class="report-upgrade">Full report unlocked</span>
+      <a *ngIf="!reportPurchased" [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Full report · $79</a>
     </div>
   </nav>
 
@@ -89,7 +90,7 @@
       </div>
     </section>
 
-    <section class="report-offer no-print">
+    <section *ngIf="!reportPurchased" class="report-offer no-print">
       <div>
         <p class="eyebrow">Need something you can share?</p>
         <h2>Turn this brief into a full Decision Report.</h2>

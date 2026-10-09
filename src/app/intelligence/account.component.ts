@@ -61,6 +61,18 @@ export class AccountComponent implements OnInit {
     }catch(error){this.error=this.messageFor(error);}
   }
 
+  async manageBilling():Promise<void>{
+    if(!this.status||this.status.plan!=='pro')return;
+    this.message=''; this.error='';
+    try{
+      const workspace=await this.organizations.getMyWorkspace();
+      if(!workspace) throw new Error('Workspace not found.');
+      const url=await this.monetization.billingPortal(workspace.organizationId);
+      if(!url) throw new Error('Billing portal did not return a URL.');
+      window.location.assign(url);
+    }catch(error){this.error=this.messageFor(error);}
+  }
+
   async logout():Promise<void>{
     await signOut(this.auth);
     await this.router.navigate(['/']);

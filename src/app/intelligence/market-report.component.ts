@@ -24,7 +24,15 @@ export class MarketReportComponent implements OnInit {
 
   get decisionReport():DecisionReportPayload|null{
     if(!this.project?.decisionReportPurchased)return null;
-    return this.project.brief?.decisionReport||null;
+    const report=this.project.brief?.decisionReport;
+    if(!report)return null;
+    return {
+      ...report,
+      decisionTriggers:{
+        ...report.decisionTriggers,
+        strengthens:'Verified local demand plus acceptable occupancy costs would strengthen the case.',
+      },
+    };
   }
 
   get reportPurchased():boolean{
@@ -45,9 +53,9 @@ export class MarketReportComponent implements OnInit {
     const brief=this.project?.brief;
     if(!brief)return 'Building';
     const sourced=brief.metrics.filter(metric=>!!metric.sourceLabel).length;
-    if(this.project?.mode==='live'&&sourced>=Math.max(2,Math.ceil(brief.metrics.length*.75)))return 'High evidence coverage';
-    if(sourced>0)return 'Moderate evidence coverage';
-    return 'Limited evidence coverage';
+    if(this.project?.mode==='live'&&sourced>=Math.max(2,Math.ceil(brief.metrics.length*.75)))return 'High source coverage';
+    if(sourced>0)return 'Moderate source coverage';
+    return 'Limited source coverage';
   }
 
   get evidenceSummary():string{

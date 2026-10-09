@@ -26,3 +26,6 @@ Status: **NOT VERIFIED END TO END**. A successful GitHub Actions deployment is n
 - [ ] Document real production smoke test after test-mode success.
 
 **Do not declare revenue-ready until the checks above are completed.**
+
+## Secret rotation note
+- After updating `STRIPE_SECRET_KEY` in Google Cloud Secret Manager, redeploy the Stripe-backed Firebase functions before retesting Checkout so the newest secret version is bound to production.

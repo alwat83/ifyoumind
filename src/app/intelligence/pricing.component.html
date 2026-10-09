@@ -13,6 +13,9 @@
   <section *ngIf="loading" class="notice">Loading pricing…</section>
   <section *ngIf="error" class="notice error">{{ error }}</section>
   <section *ngIf="message" class="notice success">{{ message }}</section>
+  <section *ngIf="reportReady" class="notice success">
+    <a [routerLink]="['/app/result',projectId]">Open your unlocked Decision Report →</a>
+  </section>
   <section *ngIf="status?.plan==='pro'" class="notice success current-plan">
     <strong>Pro is active.</strong> You now have up to 50 decisions and 3 comparison locations each month.
   </section>

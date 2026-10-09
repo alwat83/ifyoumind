@@ -23,6 +23,7 @@ export class PricingComponent implements OnInit {
   message='';
   projectId='';
   highlightedOffer='';
+  reportReady=false;
   error='';
 
   async ngOnInit():Promise<void>{
@@ -30,7 +31,12 @@ export class PricingComponent implements OnInit {
     this.highlightedOffer=this.route.snapshot.queryParamMap.get('offer')||'';
     const checkout=this.route.snapshot.queryParamMap.get('checkout')||'';
 
-    if(checkout==='success') this.message='Payment confirmed. Your access is being updated now.';
+    if(checkout==='success'){
+      this.message=this.highlightedOffer==='report'
+        ? 'Payment confirmed. Your Decision Report is ready.'
+        : 'Payment confirmed. Your access is being updated now.';
+      this.reportReady=this.highlightedOffer==='report'&&!!this.projectId;
+    }
     if(checkout==='cancelled') this.message='Checkout was cancelled. Nothing was charged.';
 
     try{

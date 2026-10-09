@@ -250,70 +250,88 @@ function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[]){
 }
 
 export const createMarketIntelligenceProject = onCall(async (request) => {
-  const scope = await authorizeOrganization(
-    request.auth?.uid, request.data?.organizationId, readMembership, ['owner','admin'],
-  );
-  const orgRef = organizations().doc(scope.organizationId);
-  const orgData = (await orgRef.get()).data() || {};
-  const plan = orgData.plan === 'pro' ? 'pro' : 'free';
-  const isLocalDemo = process.env.GCLOUD_PROJECT === 'demo-ifyoumind';
+  let stage='authorization';
+  try{
+    const scope = await authorizeOrganization(
+      request.auth?.uid, request.data?.organizationId, readMembership, ['owner','admin'],
+    );
+    const orgRef = organizations().doc(scope.organizationId);
 
-  if (!isLocalDemo && plan === 'free') {
-    const now = new Date();
-    const start = Timestamp.fromDate(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)));
-    const usage = await orgRef.collection('marketProjects')
-      .where('createdAt', '>=', start)
-      .count()
-      .get();
-    if (usage.data().count >= 3) {
-      throw new HttpsError(
-        'resource-exhausted',
-        'Free plan limit reached. Upgrade to Pro or purchase a one-time Market Report.',
-      );
+    stage='plan';
+    const orgData = (await orgRef.get()).data() || {};
+    const plan = orgData.plan === 'pro' ? 'pro' : 'free';
+    const isLocalDemo = process.env.GCLOUD_PROJECT === 'demo-ifyoumind';
+
+    stage='usage';
+    if (!isLocalDemo && plan === 'free') {
+      const now = new Date();
+      const start = Timestamp.fromDate(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)));
+      const usage = await orgRef.collection('marketProjects')
+        .where('createdAt', '>=', start)
+        .count()
+        .get();
+      if (usage.data().count >= 3) {
+        throw new HttpsError(
+          'resource-exhausted',
+          'Free plan limit reached. Upgrade to Pro or purchase a one-time Market Report.',
+        );
+      }
     }
+
+    stage='input';
+    const location = text(request.data?.location, 'Location', 160);
+    const concept = text(request.data?.concept, 'Business concept', 160);
+    const decision = text(request.data?.decision || 'Evaluate this market', 'Decision', 240);
+    const rawComparisons = Array.isArray(request.data?.comparisonLocations) ? request.data.comparisonLocations : [];
+    const comparisonLocations = rawComparisons
+      .filter((value: unknown): value is string => typeof value === 'string')
+      .map((value: string) => value.trim())
+      .filter(Boolean)
+      .slice(0, isLocalDemo || plan === 'pro' ? 3 : 1);
+
+    stage='market-data';
+    const [primary,...comparisonPlaces]=await Promise.all(
+      [location,...comparisonLocations].map(value=>fetchCensusPlace(value)),
+    );
+
+    stage='analysis';
+    const brief=buildLiveBrief(primary,comparisonPlaces);
+
+    stage='save';
+    const ref = orgRef.collection('marketProjects').doc();
+    await ref.set({
+      schemaVersion:2,
+      location,
+      concept,
+      decision,
+      comparisonLocations,
+      mode:'live',
+      brief,
+      status:'ready',
+      createdBy:scope.uid,
+      createdAt:FieldValue.serverTimestamp(),
+      updatedAt:FieldValue.serverTimestamp(),
+    });
+
+    return {
+      id:ref.id,
+      location,
+      concept,
+      decision,
+      comparisonLocations,
+      mode:'live',
+      brief:briefForEntitlement(brief,false),
+      decisionReportPurchased:false,
+      dataNotice:'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.',
+    };
+  }catch(error){
+    if(error instanceof HttpsError) throw error;
+    console.error('Market decision creation failed',{stage,error});
+    throw new HttpsError(
+      'internal',
+      `Decision analysis failed during ${stage}. Please try again.`,
+    );
   }
-
-  const location = text(request.data?.location, 'Location', 160);
-  const concept = text(request.data?.concept, 'Business concept', 160);
-  const decision = text(request.data?.decision || 'Evaluate this market', 'Decision', 240);
-  const rawComparisons = Array.isArray(request.data?.comparisonLocations) ? request.data.comparisonLocations : [];
-  const comparisonLocations = rawComparisons
-    .filter((value: unknown): value is string => typeof value === 'string')
-    .map((value: string) => value.trim())
-    .filter(Boolean)
-    .slice(0, isLocalDemo || plan === 'pro' ? 3 : 1);
-
-  const [primary,...comparisonPlaces]=await Promise.all(
-    [location,...comparisonLocations].map(value=>fetchCensusPlace(value)),
-  );
-  const brief=buildLiveBrief(primary,comparisonPlaces);
-
-  const ref = organizations().doc(scope.organizationId).collection('marketProjects').doc();
-  await ref.set({
-    schemaVersion:2,
-    location,
-    concept,
-    decision,
-    comparisonLocations,
-    mode:'live',
-    brief,
-    status:'ready',
-    createdBy:scope.uid,
-    createdAt:FieldValue.serverTimestamp(),
-    updatedAt:FieldValue.serverTimestamp(),
-  });
-
-  return {
-    id:ref.id,
-    location,
-    concept,
-    decision,
-    comparisonLocations,
-    mode:'live',
-    brief:briefForEntitlement(brief,false),
-    decisionReportPurchased:false,
-    dataNotice:'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.',
-  };
 });
 
 export const getRecentMarketIntelligenceProjects = onCall(async (request) => {

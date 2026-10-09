@@ -8,3 +8,6 @@ header h1,.plans article:not(.featured) h2{color:#111827}
 .plans article.featured h2{color:#fff}
 
 .nav-links{display:flex;gap:16px;align-items:center}.nav-links a{font-size:13px;color:#566273;text-decoration:none}
+
+.current-plan{border-color:#a7f3d0;background:#ecfdf5;color:#047857}
+.active-plan-badge{margin-top:auto;display:flex;align-items:center;justify-content:center;border-radius:13px;padding:13px 14px;background:#ecfdf5;color:#047857;font-weight:850}

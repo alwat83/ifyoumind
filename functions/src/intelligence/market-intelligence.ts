@@ -64,6 +64,11 @@ function parseLocation(location:string):{city:string;state:string;stateFips:stri
   return {city,state,stateFips};
 }
 
+function canonicalLocation(location:string):string{
+  const parsed=parseLocation(location);
+  return `${parsed.city}, ${parsed.state}`;
+}
+
 async function fetchPlaceRows(year:number,stateFips:string):Promise<string[][]>{
   const url=new URL(`https://api.census.gov/data/${year}/acs/acs5`);
   url.searchParams.set('get','NAME,B01003_001E,B19013_001E,B25077_001E');
@@ -137,12 +142,13 @@ function numberCell(row:string[],headers:string[],key:string):number{
 
 async function fetchCensusPlace(location:string):Promise<CensusPlace>{
   const parsed=parseLocation(location);
+  const canonical=`${parsed.city}, ${parsed.state}`;
   const cacheId=`acs5-2024-2019-${parsed.stateFips}-${normalize(parsed.city).replace(/\s+/g,'_')}`;
   const cacheRef=getFirestore().collection('censusPlaceCache').doc(cacheId);
   const cached=await cacheRef.get();
   if(cached.exists){
     const data=cached.data() as CensusPlace;
-    return {...data,location};
+    return {...data,location:canonical};
   }
 
   const [latest,prior]=await Promise.all([
@@ -163,7 +169,7 @@ async function fetchCensusPlace(location:string):Promise<CensusPlace>{
     : null;
 
   const place:CensusPlace={
-    location,
+    location:canonical,
     population,
     income:numberCell(latestRow,latestHeaders,'B19013_001E'),
     homeValue:numberCell(latestRow,latestHeaders,'B25077_001E'),
@@ -277,7 +283,7 @@ function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[]){
         return {location:place.location,findings};
       }),
       decisionTriggers:{
-        strengthens:trimmedOpportunities[0]||'Additional local evidence supports the core demand assumption.',
+        strengthens:'Verified local demand plus acceptable occupancy costs would strengthen the case.',
         weakens:trimmedRisks[0]||'New local evidence materially weakens the demand or economics case.',
         unresolved:questions[0],
       },
@@ -319,13 +325,13 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
     }
 
     stage='input';
-    const location = text(request.data?.location, 'Location', 160);
+    const location = canonicalLocation(text(request.data?.location, 'Location', 160));
     const concept = text(request.data?.concept, 'Business concept', 160);
     const decision = text(request.data?.decision || 'Evaluate this market', 'Decision', 240);
     const rawComparisons = Array.isArray(request.data?.comparisonLocations) ? request.data.comparisonLocations : [];
     const comparisonLocations = rawComparisons
       .filter((value: unknown): value is string => typeof value === 'string')
-      .map((value: string) => value.trim())
+      .map((value: string) => canonicalLocation(value.trim()))
       .filter(Boolean)
       .slice(0, isLocalDemo || plan === 'pro' ? 3 : 1);
 
@@ -386,7 +392,7 @@ export const getRecentMarketIntelligenceProjects = onCall(async (request) => {
       const d=doc.data();
       return {
         id:doc.id,
-        location:d.location,
+        location:(()=>{try{return canonicalLocation(d.location);}catch{return d.location;}})(),
         concept:d.concept,
         decision:d.decision,
         mode:d.mode,
@@ -413,7 +419,7 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
   const decisionReportPurchased=data.decisionReportPurchased===true;
   return {
     id:snapshot.id,
-    location:data.location,
+    location:(()=>{try{return canonicalLocation(data.location);}catch{return data.location;}})(),
     concept:data.concept,
     decision:data.decision,
     comparisonLocations:data.comparisonLocations || [],

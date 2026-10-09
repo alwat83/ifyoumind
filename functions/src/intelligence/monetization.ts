@@ -175,7 +175,9 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
       code:stripeError.stripeCode||null,
     });
     const detail=[stripeError.stripeType,stripeError.stripeCode].filter(Boolean).join('/');
-    const safeMessage=String(stripeError.message||'').replace(/sk_(?:test|live)_[A-Za-z0-9]+/g,'[redacted]').slice(0,180);
+    const safeMessage=String(stripeError.message||'')
+      .replace(/sk_(?:test|live)_[^\s)]+/g,'[redacted]')
+      .slice(0,180);
     throw new HttpsError(
       'internal',
       `Checkout could not be started (Stripe: ${detail||'request_error'}${safeMessage?'; '+safeMessage:''}).`,

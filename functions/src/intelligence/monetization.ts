@@ -134,6 +134,27 @@ export const requestCommercialAccess = onCall(async (request) => {
 });
 
 
+export const createBillingPortalSession = onCall({secrets:[stripeSecretKey]}, async (request) => {
+  const scope=await authorizeOrganization(request.auth?.uid,request.data?.organizationId,readMembership);
+  const org=(await organizations().doc(scope.organizationId).get()).data()||{};
+  const customerId=typeof org.stripeCustomerId==='string'?org.stripeCustomerId.trim():'';
+  if(!customerId){
+    throw new HttpsError('failed-precondition','No Stripe billing account is connected yet.');
+  }
+
+  const params=new URLSearchParams();
+  params.set('customer',customerId);
+  params.set('return_url','https://ifyoumind.com/app/account');
+
+  try{
+    const session=await stripePost('billing_portal/sessions',params);
+    return {url:String(session.url||'')};
+  }catch(error){
+    console.error('Stripe billing portal creation failed',error);
+    throw new HttpsError('internal','Billing management could not be opened.');
+  }
+});
+
 export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, async (request) => {
   const scope=await authorizeOrganization(request.auth?.uid,request.data?.organizationId,readMembership);
   const offer=request.data?.offer;

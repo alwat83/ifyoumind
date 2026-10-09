@@ -67,12 +67,48 @@ async function fetchPlaceRows(year:number,stateFips:string):Promise<string[][]>{
   url.searchParams.set('get','NAME,B01003_001E,B19013_001E,B25077_001E');
   url.searchParams.set('for','place:*');
   url.searchParams.set('in',`state:${stateFips}`);
-  const response=await fetch(url);
-  if(!response.ok){
-    console.error('Census API failed',year,response.status);
-    throw new HttpsError('unavailable','Live Census data is temporarily unavailable.');
+
+  let lastError:unknown;
+  for(let attempt=1;attempt<=3;attempt++){
+    try{
+      const response=await fetch(url,{
+        headers:{
+          'Accept':'application/json',
+          'User-Agent':'ifYouMind/1.0 (+https://ifyoumind.com)',
+        },
+        signal:AbortSignal.timeout(12000),
+      });
+      if(!response.ok){
+        console.error('Census API failed',{year,stateFips,status:response.status,attempt});
+        if(response.status>=400&&response.status<500){
+          throw new HttpsError('unavailable','Live Census data is temporarily unavailable.');
+        }
+        lastError=new Error(`Census HTTP ${response.status}`);
+      }else{
+        const data=await response.json() as unknown;
+        if(!Array.isArray(data)||!Array.isArray(data[0])){
+          throw new Error('Census returned an unexpected response shape.');
+        }
+        return data as string[][];
+      }
+    }catch(error){
+      if(error instanceof HttpsError)throw error;
+      lastError=error;
+      console.warn('Census request attempt failed',{
+        year,
+        stateFips,
+        attempt,
+        error:error instanceof Error?error.message:String(error),
+      });
+    }
+    if(attempt<3) await new Promise(resolve=>setTimeout(resolve,attempt*350));
   }
-  return await response.json() as string[][];
+
+  console.error('Census API unavailable after retries',{year,stateFips,lastError});
+  throw new HttpsError(
+    'unavailable',
+    'Live Census data is temporarily unavailable. Please try again in a moment.',
+  );
 }
 
 function findPlace(rows:string[][],city:string):string[]|null{

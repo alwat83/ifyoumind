@@ -13,6 +13,9 @@
   <section *ngIf="loading" class="notice">Loading pricing…</section>
   <section *ngIf="error" class="notice error">{{ error }}</section>
   <section *ngIf="message" class="notice success">{{ message }}</section>
+  <section *ngIf="status?.plan==='pro'" class="notice success current-plan">
+    <strong>Pro is active.</strong> You now have up to 50 decisions and 3 comparison locations each month.
+  </section>
 
   <section *ngIf="status" class="plans">
     <article>
@@ -20,12 +23,12 @@
       <h2>$0</h2>
       <p>Try the product and run a few decisions each month.</p>
       <ul>
-        <li>{{ status.marketProjectsPerMonth }} decisions each month</li>
-        <li>{{ status.comparisonMarkets }} comparison location</li>
+        <li>3 decisions each month</li>
+        <li>1 comparison location</li>
         <li>Saved decision history</li>
         <li>Basic decision brief</li>
       </ul>
-      <div class="usage">{{ status.usedMarketProjects }} of {{ status.marketProjectsPerMonth }} used this month</div>
+      <div class="usage" *ngIf="status.plan==='free'">{{ status.usedMarketProjects }} of 3 used this month</div>
       <a routerLink="/app/decide" class="secondary">Start a decision</a>
     </article>
 

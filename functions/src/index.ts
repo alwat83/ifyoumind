@@ -212,3 +212,5 @@ export { askUniversalIntelligence } from './intelligence/universal-ask';
 export { createMarketIntelligenceProject, getRecentMarketIntelligenceProjects, getMarketIntelligenceProject } from './intelligence/market-intelligence';
 
 export { getCommercialStatus, requestCommercialAccess, createCommercialCheckout, createBillingPortalSession, stripeCommercialWebhook } from './intelligence/monetization';
+
+export { recordProductEvent } from './intelligence/product-analytics';

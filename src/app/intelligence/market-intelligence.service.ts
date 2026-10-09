@@ -35,6 +35,7 @@ export interface MarketProject {
   decision:string;
   mode:'demo'|'live';
   brief?:MarketBrief;
+  decisionReportPurchased?:boolean;
   dataNotice?:string;
   createdAt?:string|null;
 }

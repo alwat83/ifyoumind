@@ -21,40 +21,12 @@ export class MarketReportComponent implements OnInit {
   error='';
 
   get decisionReport():DecisionReportPayload|null{
-    const brief=this.project?.brief;
-    if(!brief)return null;
-    if(brief.decisionReport)return brief.decisionReport;
-    const sourced=brief.metrics.filter(metric=>!!metric.sourceLabel).length;
-    const posture=brief.opportunities.length>brief.risks.length
-      ? 'favorable'
-      : brief.risks.length>brief.opportunities.length ? 'caution' : 'mixed';
-    return {
-      schemaVersion:1,
-      posture,
-      evidenceCoverage:{
-        sourcedMetrics:sourced,
-        totalMetrics:brief.metrics.length,
-        percent:brief.metrics.length?Math.round((sourced/brief.metrics.length)*100):0,
-      },
-      actionPlan:[
-        {stage:'Validate first',title:'Resolve the biggest risk',detail:brief.risks[0]||'Confirm the most important downside assumption with a local source.'},
-        {stage:'Then',title:'Confirm local demand',detail:brief.questions[2]||brief.questions[0]||'Validate demand with a local source.'},
-        {stage:'Before committing',title:'Verify operating economics',detail:brief.questions[1]||'Confirm the economics of the exact decision.'},
-      ],
-      comparisonFindings:brief.comparisons.map(comparison=>({
-        location:comparison.location,
-        findings:comparison.metrics.slice(0,2).map(metric=>`${metric.label}: ${this.formatMetric(metric.value,metric.unit)}`),
-      })),
-      decisionTriggers:{
-        strengthens:brief.opportunities[0]||'Additional local evidence supports the core assumption.',
-        weakens:brief.risks[0]||'New local evidence materially weakens the case.',
-        unresolved:brief.questions[0]||'Validate the most material unknown.',
-      },
-      limitations:[
-        'The report is bounded by the sources currently connected to this decision.',
-        'Validate material facts that could change the economics or risk profile before committing.',
-      ],
-    };
+    if(!this.project?.decisionReportPurchased)return null;
+    return this.project.brief?.decisionReport||null;
+  }
+
+  get reportPurchased():boolean{
+    return this.project?.decisionReportPurchased===true;
   }
 
   get recommendation():string{

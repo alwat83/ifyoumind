@@ -214,3 +214,5 @@ export { createMarketIntelligenceProject, getRecentMarketIntelligenceProjects, g
 export { getCommercialStatus, requestCommercialAccess, createCommercialCheckout, createBillingPortalSession, stripeCommercialWebhook } from './intelligence/monetization';
 
 export { recordProductEvent } from './intelligence/product-analytics';
+
+export { getProductFunnelMetrics } from './intelligence/growth-metrics';

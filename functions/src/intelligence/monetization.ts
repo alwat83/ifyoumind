@@ -28,8 +28,17 @@ async function stripePost(path:string, body:URLSearchParams){
     },
     body,
   });
-  const data=await response.json() as Record<string,unknown>;
-  if(!response.ok) throw new Error(String((data.error as {message?:string}|undefined)?.message||'Stripe request failed.'));
+  const data=await response.json() as Record<string,any>;
+  if(!response.ok){
+    const stripeError=data.error||{};
+    const error=new Error(String(stripeError.message||'Stripe request failed.')) as Error & {
+      stripeType?:string;
+      stripeCode?:string;
+    };
+    error.stripeType=typeof stripeError.type==='string'?stripeError.type:undefined;
+    error.stripeCode=typeof stripeError.code==='string'?stripeError.code:undefined;
+    throw error;
+  }
   return data;
 }
 const readMembership = async (organizationId: string, uid: string) =>
@@ -143,7 +152,10 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
   params.set('success_url',`https://ifyoumind.com/app/pricing?checkout=success&offer=${offer}&projectId=${encodeURIComponent(projectId)}`);
   params.set('cancel_url',`https://ifyoumind.com/app/pricing?checkout=cancelled&offer=${offer}&projectId=${encodeURIComponent(projectId)}`);
   params.set('client_reference_id',scope.organizationId);
-  params.set('customer_email',String(request.auth?.token?.email||''));
+  const customerEmail=typeof request.auth?.token?.email==='string'
+    ? request.auth.token.email.trim()
+    : '';
+  if(customerEmail) params.set('customer_email',customerEmail);
   params.set('metadata[organizationId]',scope.organizationId);
   params.set('metadata[offer]',offer);
   params.set('metadata[projectId]',projectId);
@@ -156,8 +168,19 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
     const session=await stripePost('checkout/sessions',params);
     return {url:String(session.url||''),sessionId:String(session.id||'')};
   }catch(error){
-    console.error('Stripe checkout creation failed',error);
-    throw new HttpsError('internal','Checkout could not be started.');
+    const stripeError=error as Error & {stripeType?:string;stripeCode?:string};
+    console.error('Stripe checkout creation failed',{
+      message:stripeError.message,
+      type:stripeError.stripeType||null,
+      code:stripeError.stripeCode||null,
+    });
+    const detail=[stripeError.stripeType,stripeError.stripeCode].filter(Boolean).join('/');
+    throw new HttpsError(
+      'internal',
+      detail
+        ? `Checkout could not be started (Stripe: ${detail}).`
+        : 'Checkout could not be started. Billing configuration needs attention.',
+    );
   }
 });
 

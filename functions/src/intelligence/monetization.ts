@@ -121,7 +121,11 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
   const offer=request.data?.offer;
   if(offer!=='pro'&&offer!=='report') throw new HttpsError('invalid-argument','Choose a valid offer.');
   const projectId=typeof request.data?.projectId==='string'?request.data.projectId.trim().slice(0,120):'';
-  if(offer==='report'&&!projectId) throw new HttpsError('invalid-argument','Choose the decision this report belongs to.');
+  if(offer==='report'){
+    if(!projectId) throw new HttpsError('invalid-argument','Choose the decision this report belongs to.');
+    const project=await organizations().doc(scope.organizationId).collection('marketProjects').doc(projectId).get();
+    if(!project.exists) throw new HttpsError('not-found','Decision project not found.');
+  }
 
   const params=new URLSearchParams();
   params.set('mode',offer==='pro'?'subscription':'payment');
@@ -177,7 +181,7 @@ export const stripeCommercialWebhook = onRequest({secrets:[stripeWebhookSecret]}
     const metadata=session.metadata||{};
     const organizationId=metadata.organizationId;
     const offer=metadata.offer;
-    if(organizationId&&offer==='pro'){
+    if(organizationId&&offer==='pro'&&session.payment_status!=='unpaid'&&session.subscription){
       await organizations().doc(organizationId).set({
         plan:'pro',
         stripeCustomerId:session.customer||null,
@@ -185,8 +189,13 @@ export const stripeCommercialWebhook = onRequest({secrets:[stripeWebhookSecret]}
         stripeSubscriptionStatus:'active',
         planUpdatedAt:FieldValue.serverTimestamp(),
       },{merge:true});
-    }else if(organizationId&&offer==='report'&&metadata.projectId){
-      await organizations().doc(organizationId).collection('marketProjects').doc(metadata.projectId).set({
+    }else if(organizationId&&offer==='report'&&metadata.projectId&&session.payment_status==='paid'){
+      const projectRef=organizations().doc(organizationId).collection('marketProjects').doc(metadata.projectId);
+      if(!((await projectRef.get()).exists)){
+        console.error('Stripe report checkout references missing project',session.id);
+        res.status(200).send('No matching project'); return;
+      }
+      await projectRef.set({
         decisionReportPurchased:true,
         decisionReportPurchasedAt:FieldValue.serverTimestamp(),
         stripeCheckoutSessionId:session.id,

@@ -40,6 +40,9 @@ jobs:
       - name: Build Angular app
         run: npm run build
 
+      - name: Test Firebase Functions
+        run: npm --prefix functions test
+
       - name: Build Firebase Functions
         run: npm --prefix functions run build
 

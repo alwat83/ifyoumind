@@ -1,14 +1,23 @@
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
-import { createHmac, timingSafeEqual } from 'node:crypto';
 import { authorizeOrganization } from './authorization';
+import { grantsPro, shouldApplySubscriptionEvent, validStripeSignature } from './stripe-commerce-logic';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const stripeSecretKey = defineSecret('STRIPE_SECRET_KEY');
 const stripeWebhookSecret = defineSecret('STRIPE_WEBHOOK_SECRET');
 const PRO_PRICE_ID = 'price_1UNpHICZjBRiXCDejbdIRMk2';
 const REPORT_PRICE_ID = 'price_1UNpHNCZjBRiXCDeoCCxrn8u';
+
+async function stripeGet(path:string){
+  const response=await fetch(`https://api.stripe.com/v1/${path}`,{
+    headers:{Authorization:`Bearer ${stripeSecretKey.value()}`},
+  });
+  const data=await response.json() as Record<string,any>;
+  if(!response.ok) throw new Error(String(data.error?.message||'Stripe request failed.'));
+  return data;
+}
 
 async function stripePost(path:string, body:URLSearchParams){
   const response=await fetch(`https://api.stripe.com/v1/${path}`,{
@@ -152,72 +161,124 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
   }
 });
 
-function validStripeSignature(payload:string, header:string, secret:string):boolean{
-  const pieces=header.split(',');
-  const timestamp=pieces.find(part=>part.startsWith('t='))?.slice(2);
-  const signatures=pieces.filter(part=>part.startsWith('v1=')).map(part=>part.slice(3));
-  if(!timestamp||!signatures.length)return false;
-  if(Math.abs(Date.now()/1000-Number(timestamp))>300)return false;
-  const expected=createHmac('sha256',secret).update(`${timestamp}.${payload}`).digest('hex');
-  const expectedBuffer=Buffer.from(expected);
-  return signatures.some(signature=>{
-    const actual=Buffer.from(signature);
-    return actual.length===expectedBuffer.length&&timingSafeEqual(actual,expectedBuffer);
-  });
-}
+export const stripeCommercialWebhook = onRequest(
+  {secrets:[stripeWebhookSecret,stripeSecretKey]},
+  async(req,res)=>{
+    const raw=req.rawBody.toString('utf8');
+    const signature=String(req.headers['stripe-signature']||'');
+    if(!validStripeSignature(raw,signature,stripeWebhookSecret.value())){
+      res.status(400).send('Invalid signature'); return;
+    }
 
-export const stripeCommercialWebhook = onRequest({secrets:[stripeWebhookSecret]},async(req,res)=>{
-  const raw=req.rawBody.toString('utf8');
-  const signature=String(req.headers['stripe-signature']||'');
-  if(!validStripeSignature(raw,signature,stripeWebhookSecret.value())){
-    res.status(400).send('Invalid signature'); return;
-  }
-  const event=JSON.parse(raw) as {id:string;type:string;data:{object:Record<string,any>}};
-  const eventRef=getFirestore().collection('stripeEvents').doc(event.id);
-  if((await eventRef.get()).exists){res.status(200).send('Already processed');return;}
+    const event=JSON.parse(raw) as {
+      id:string;
+      type:string;
+      created:number;
+      data:{object:Record<string,any>};
+    };
 
-  if(event.type==='checkout.session.completed'){
-    const session=event.data.object;
-    const metadata=session.metadata||{};
-    const organizationId=metadata.organizationId;
-    const offer=metadata.offer;
-    if(organizationId&&offer==='pro'&&session.payment_status!=='unpaid'&&session.subscription){
-      await organizations().doc(organizationId).set({
-        plan:'pro',
-        stripeCustomerId:session.customer||null,
-        stripeSubscriptionId:session.subscription||null,
-        stripeSubscriptionStatus:'active',
-        planUpdatedAt:FieldValue.serverTimestamp(),
-      },{merge:true});
-    }else if(organizationId&&offer==='report'&&metadata.projectId&&session.payment_status==='paid'){
-      const projectRef=organizations().doc(organizationId).collection('marketProjects').doc(metadata.projectId);
-      if(!((await projectRef.get()).exists)){
-        console.error('Stripe report checkout references missing project',session.id);
-        res.status(200).send('No matching project'); return;
+    const db=getFirestore();
+    const eventRef=db.collection('stripeEvents').doc(event.id);
+    const nowMs=Date.now();
+    let claimed=false;
+
+    await db.runTransaction(async tx=>{
+      const existing=await tx.get(eventRef);
+      if(existing.exists){
+        const data=existing.data()||{};
+        const processingRecently=
+          data.status==='processing'&&
+          Number.isFinite(Number(data.claimedAtMs))&&
+          nowMs-Number(data.claimedAtMs)<5*60*1000;
+        if(data.status==='processed'||processingRecently)return;
       }
-      await projectRef.set({
-        decisionReportPurchased:true,
-        decisionReportPurchasedAt:FieldValue.serverTimestamp(),
-        stripeCheckoutSessionId:session.id,
+      tx.set(eventRef,{
+        type:event.type,
+        status:'processing',
+        claimedAtMs:nowMs,
+        updatedAt:FieldValue.serverTimestamp(),
       },{merge:true});
+      claimed=true;
+    });
+
+    if(!claimed){
+      res.status(200).send('Already processed or processing');
+      return;
     }
-  }else if(event.type==='customer.subscription.updated'||event.type==='customer.subscription.deleted'){
-    const subscription=event.data.object;
-    const metadata=subscription.metadata||{};
-    const organizationId=metadata.organizationId;
-    if(organizationId&&metadata.offer==='pro'){
-      const status=String(subscription.status||'unknown');
-      const proStatuses=new Set(['active','trialing']);
-      await organizations().doc(organizationId).set({
-        plan:proStatuses.has(status)?'pro':'free',
-        stripeCustomerId:subscription.customer||null,
-        stripeSubscriptionId:subscription.id||null,
-        stripeSubscriptionStatus:status,
-        stripeCancelAtPeriodEnd:Boolean(subscription.cancel_at_period_end),
-        planUpdatedAt:FieldValue.serverTimestamp(),
+
+    try{
+      if(event.type==='checkout.session.completed'){
+        const session=event.data.object;
+        const metadata=session.metadata||{};
+        const organizationId=metadata.organizationId;
+        const offer=metadata.offer;
+
+        if(organizationId&&offer==='pro'&&session.subscription){
+          const subscriptionId=typeof session.subscription==='string'
+            ? session.subscription
+            : String(session.subscription?.id||'');
+          if(subscriptionId){
+            const subscription=await stripeGet(`subscriptions/${encodeURIComponent(subscriptionId)}`);
+            if(grantsPro(subscription.status)){
+              await organizations().doc(organizationId).set({
+                plan:'pro',
+                stripeCustomerId:subscription.customer||session.customer||null,
+                stripeSubscriptionId:subscription.id||subscriptionId,
+                stripeSubscriptionStatus:String(subscription.status),
+                stripeCancelAtPeriodEnd:Boolean(subscription.cancel_at_period_end),
+                stripeSubscriptionEventCreated:event.created,
+                planUpdatedAt:FieldValue.serverTimestamp(),
+              },{merge:true});
+            }else{
+              console.warn('Checkout completed without active Pro subscription',session.id,subscription.status);
+            }
+          }
+        }else if(organizationId&&offer==='report'&&metadata.projectId&&session.payment_status==='paid'){
+          const projectRef=organizations().doc(organizationId).collection('marketProjects').doc(metadata.projectId);
+          if(!((await projectRef.get()).exists)){
+            console.error('Stripe report checkout references missing project',session.id);
+          }else{
+            await projectRef.set({
+              decisionReportPurchased:true,
+              decisionReportPurchasedAt:FieldValue.serverTimestamp(),
+              stripeCheckoutSessionId:session.id,
+            },{merge:true});
+          }
+        }
+      }else if(event.type==='customer.subscription.updated'||event.type==='customer.subscription.deleted'){
+        const subscription=event.data.object;
+        const metadata=subscription.metadata||{};
+        const organizationId=metadata.organizationId;
+        if(organizationId&&metadata.offer==='pro'){
+          const orgRef=organizations().doc(organizationId);
+          const current=(await orgRef.get()).data()||{};
+          if(shouldApplySubscriptionEvent(event.created,current.stripeSubscriptionEventCreated)){
+            const status=String(subscription.status||'unknown');
+            await orgRef.set({
+              plan:grantsPro(status)?'pro':'free',
+              stripeCustomerId:subscription.customer||null,
+              stripeSubscriptionId:subscription.id||null,
+              stripeSubscriptionStatus:status,
+              stripeCancelAtPeriodEnd:Boolean(subscription.cancel_at_period_end),
+              stripeSubscriptionEventCreated:event.created,
+              planUpdatedAt:FieldValue.serverTimestamp(),
+            },{merge:true});
+          }else{
+            console.info('Ignoring stale Stripe subscription event',event.id,event.created);
+          }
+        }
+      }
+
+      await eventRef.set({
+        status:'processed',
+        processedAt:FieldValue.serverTimestamp(),
+        updatedAt:FieldValue.serverTimestamp(),
       },{merge:true});
+      res.status(200).send('ok');
+    }catch(error){
+      console.error('Stripe webhook fulfillment failed',event.id,error);
+      await eventRef.delete().catch(()=>undefined);
+      res.status(500).send('Webhook processing failed');
     }
   }
-  await eventRef.set({type:event.type,processedAt:FieldValue.serverTimestamp()});
-  res.status(200).send('ok');
-});
+);

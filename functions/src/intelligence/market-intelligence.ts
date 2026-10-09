@@ -163,7 +163,7 @@ function metricsFor(place:CensusPlace){
   return metrics;
 }
 
-function briefForEntitlement(brief:any,purchased:boolean){
+export function briefForEntitlement(brief:any,purchased:boolean){
   if(purchased)return brief;
   if(!brief||typeof brief!=='object')return brief;
   const {decisionReport,...freeBrief}=brief;

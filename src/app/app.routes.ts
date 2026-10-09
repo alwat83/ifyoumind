@@ -35,6 +35,11 @@ export const routes:Routes=[
     loadComponent:()=>import('./intelligence/pricing.component').then(m=>m.PricingComponent),
   },
   {
+    path:'app/growth',
+    canActivate:[authGuard],
+    loadComponent:()=>import('./intelligence/growth-dashboard.component').then(m=>m.GrowthDashboardComponent),
+  },
+  {
     path:'app/account',
     canActivate:[authGuard],
     loadComponent:()=>import('./intelligence/account.component').then(m=>m.AccountComponent),

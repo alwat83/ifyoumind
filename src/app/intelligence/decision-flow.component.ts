@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { OrganizationService } from './organization.service';
 import { MarketIntelligenceService } from './market-intelligence.service';
+import { ProductAnalyticsService } from './product-analytics.service';
 
 type DecisionType='business'|'compare'|'growth'|'custom';
 
@@ -19,6 +20,7 @@ export class DecisionFlowComponent implements OnInit {
   private readonly router=inject(Router);
   private readonly organizations=inject(OrganizationService);
   private readonly market=inject(MarketIntelligenceService);
+  private readonly analytics=inject(ProductAnalyticsService);
 
   step=1;
   type:DecisionType='business';
@@ -68,6 +70,10 @@ export class DecisionFlowComponent implements OnInit {
         this.decision.trim()||this.defaultDecision(),
         comparisons,
       );
+      void this.analytics.track(workspace.organizationId,'decision_created',{
+        type:this.type,
+        comparisons:String(comparisons.length),
+      });
       await this.router.navigate(['/app/result',project.id]);
     }catch(error){this.error=this.message(error);}
     finally{this.working=false;}

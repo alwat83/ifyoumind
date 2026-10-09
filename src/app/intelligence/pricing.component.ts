@@ -3,6 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IntelligenceOrganization, OrganizationService } from './organization.service';
 import { CommercialStatus, MonetizationService } from './monetization.service';
+import { ProductAnalyticsService } from './product-analytics.service';
 
 @Component({
   selector:'app-pricing',
@@ -15,6 +16,7 @@ export class PricingComponent implements OnInit {
   private readonly organizations=inject(OrganizationService);
   private readonly monetization=inject(MonetizationService);
   private readonly route=inject(ActivatedRoute);
+  private readonly analytics=inject(ProductAnalyticsService);
 
   workspace:IntelligenceOrganization|null=null;
   status:CommercialStatus|null=null;
@@ -41,7 +43,14 @@ export class PricingComponent implements OnInit {
 
     try{
       this.workspace=await this.organizations.getMyWorkspace();
-      if(this.workspace) this.status=await this.monetization.status(this.workspace.organizationId);
+      if(this.workspace){
+        void this.analytics.track(this.workspace.organizationId,'pricing_view',{
+          offer:this.highlightedOffer||'none',
+        });
+        if(checkout==='success') void this.analytics.track(this.workspace.organizationId,'checkout_success',{offer:this.highlightedOffer||'unknown'});
+        if(checkout==='cancelled') void this.analytics.track(this.workspace.organizationId,'checkout_cancelled',{offer:this.highlightedOffer||'unknown'});
+        this.status=await this.monetization.status(this.workspace.organizationId);
+      }
     }catch(error){this.error=this.messageFor(error);}
     finally{this.loading=false;}
   }
@@ -60,6 +69,7 @@ export class PricingComponent implements OnInit {
 
     try{
       if(this.status?.checkoutEnabled){
+        void this.analytics.track(this.workspace.organizationId,'checkout_started',{offer});
         const url=await this.monetization.checkout(
           this.workspace.organizationId,
           offer,

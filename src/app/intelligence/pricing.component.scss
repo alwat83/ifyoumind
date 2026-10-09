@@ -11,3 +11,5 @@ header h1,.plans article:not(.featured) h2{color:#111827}
 
 .current-plan{border-color:#a7f3d0;background:#ecfdf5;color:#047857}
 .active-plan-badge{margin-top:auto;display:flex;align-items:center;justify-content:center;border-radius:13px;padding:13px 14px;background:#ecfdf5;color:#047857;font-weight:850}
+
+@media(max-width:560px){.topbar{align-items:flex-start;gap:14px}.nav-links{gap:10px;flex-wrap:wrap;justify-content:flex-end}.nav-links a{min-height:40px;display:flex;align-items:center}.plans article{padding:20px}.highlight-report:before{position:static;display:inline-flex;margin-bottom:10px}.plans h2{font-size:38px}}

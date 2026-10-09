@@ -163,6 +163,13 @@ function metricsFor(place:CensusPlace){
   return metrics;
 }
 
+function briefForEntitlement(brief:any,purchased:boolean){
+  if(purchased)return brief;
+  if(!brief||typeof brief!=='object')return brief;
+  const {decisionReport,...freeBrief}=brief;
+  return freeBrief;
+}
+
 function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[]){
   const metrics=metricsFor(primary);
   const growth=primary.populationChangePct;
@@ -303,7 +310,8 @@ export const createMarketIntelligenceProject = onCall(async (request) => {
     decision,
     comparisonLocations,
     mode:'live',
-    brief,
+    brief:briefForEntitlement(brief,false),
+    decisionReportPurchased:false,
     dataNotice:'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.',
   };
 });
@@ -344,6 +352,7 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
   if (!snapshot.exists) throw new HttpsError('not-found', 'Market project not found.');
 
   const data = snapshot.data()!;
+  const decisionReportPurchased=data.decisionReportPurchased===true;
   return {
     id:snapshot.id,
     location:data.location,
@@ -351,7 +360,8 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
     decision:data.decision,
     comparisonLocations:data.comparisonLocations || [],
     mode:data.mode || 'demo',
-    brief:data.brief,
+    brief:briefForEntitlement(data.brief,decisionReportPurchased),
+    decisionReportPurchased,
     dataNotice:data.mode === 'live'
       ? 'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.'
       : 'Synthetic demo enrichment — not real market data.',

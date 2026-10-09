@@ -1,8 +1,10 @@
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
+import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
+const censusApiKey = defineSecret('CENSUS_API_KEY');
 const readMembership = async (organizationId: string, uid: string) =>
   (await organizations().doc(organizationId).collection('members').doc(uid).get()).data();
 
@@ -67,6 +69,8 @@ async function fetchPlaceRows(year:number,stateFips:string):Promise<string[][]>{
   url.searchParams.set('get','NAME,B01003_001E,B19013_001E,B25077_001E');
   url.searchParams.set('for','place:*');
   url.searchParams.set('in',`state:${stateFips}`);
+  const apiKey=censusApiKey.value();
+  if(apiKey) url.searchParams.set('key',apiKey);
 
   let lastError:unknown;
   for(let attempt=1;attempt<=3;attempt++){
@@ -285,7 +289,7 @@ function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[]){
   };
 }
 
-export const createMarketIntelligenceProject = onCall(async (request) => {
+export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, async (request) => {
   let stage='authorization';
   try{
     const scope = await authorizeOrganization(

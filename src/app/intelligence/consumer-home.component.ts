@@ -3,6 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IntelligenceOrganization, OrganizationService } from './organization.service';
 import { MarketIntelligenceService, MarketProject } from './market-intelligence.service';
+import { ProductAnalyticsService } from './product-analytics.service';
 
 @Component({
   selector:'app-consumer-home',
@@ -14,6 +15,7 @@ import { MarketIntelligenceService, MarketProject } from './market-intelligence.
 export class ConsumerHomeComponent implements OnInit {
   private readonly organizations=inject(OrganizationService);
   private readonly market=inject(MarketIntelligenceService);
+  private readonly analytics=inject(ProductAnalyticsService);
 
   workspace:IntelligenceOrganization|null=null;
   recent:MarketProject[]=[];
@@ -28,6 +30,7 @@ export class ConsumerHomeComponent implements OnInit {
         this.workspace=await this.organizations.getMyWorkspace();
       }
       if(this.workspace){
+        void this.analytics.track(this.workspace.organizationId,'app_open');
         this.recent=await this.market.recent(this.workspace.organizationId);
       }
     }catch(error){this.error=this.message(error);}

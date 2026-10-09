@@ -3,6 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrganizationService } from './organization.service';
 import { DecisionReportPayload, MarketIntelligenceService, MarketProject } from './market-intelligence.service';
+import { ProductAnalyticsService } from './product-analytics.service';
 
 @Component({
   selector:'app-market-report',
@@ -15,6 +16,7 @@ export class MarketReportComponent implements OnInit {
   private readonly route=inject(ActivatedRoute);
   private readonly organizations=inject(OrganizationService);
   private readonly market=inject(MarketIntelligenceService);
+  private readonly analytics=inject(ProductAnalyticsService);
 
   project:MarketProject|null=null;
   loading=true;
@@ -62,6 +64,9 @@ export class MarketReportComponent implements OnInit {
       const projectId=this.route.snapshot.paramMap.get('projectId');
       if(!projectId) throw new Error('Market project not found.');
       this.project=await this.market.get(workspace.organizationId,projectId);
+      void this.analytics.track(workspace.organizationId,'report_view',{
+        paid:this.project.decisionReportPurchased?'yes':'no',
+      });
     }catch(error){this.error=this.message(error);}
     finally{this.loading=false;}
   }

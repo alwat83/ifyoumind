@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { Auth, sendPasswordResetEmail, signOut, updateProfile } from '@angular/fire/auth';
 import { OrganizationService } from './organization.service';
 import { CommercialStatus, MonetizationService } from './monetization.service';
+import { ProductAnalyticsService } from './product-analytics.service';
 
 @Component({
   selector:'app-account',
@@ -18,6 +19,7 @@ export class AccountComponent implements OnInit {
   private readonly organizations=inject(OrganizationService);
   private readonly monetization=inject(MonetizationService);
   private readonly router=inject(Router);
+  private readonly analytics=inject(ProductAnalyticsService);
 
   name='';
   email='';
@@ -67,6 +69,7 @@ export class AccountComponent implements OnInit {
     try{
       const workspace=await this.organizations.getMyWorkspace();
       if(!workspace) throw new Error('Workspace not found.');
+      void this.analytics.track(workspace.organizationId,'billing_portal_opened');
       const url=await this.monetization.billingPortal(workspace.organizationId);
       if(!url) throw new Error('Billing portal did not return a URL.');
       window.location.assign(url);

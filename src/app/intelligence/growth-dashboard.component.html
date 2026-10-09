@@ -1,0 +1,25 @@
+<main class="growth-shell">
+  <nav><a routerLink="/app" class="brand">ifYouMind</a><a routerLink="/app">Back to app</a></nav>
+  <header><p class="eyebrow">Founder growth</p><h1>30-day funnel</h1><p>Use this to decide where marketing or conversion work deserves attention next.</p></header>
+
+  <section *ngIf="loading" class="notice">Loading funnel…</section>
+  <section *ngIf="error" class="notice error">{{ error }}</section>
+
+  <ng-container *ngIf="metrics as m">
+    <section class="funnel">
+      <article><span>App visitors</span><strong>{{ m.uniqueOrganizations['app_open'] || 0 }}</strong></article>
+      <article><span>Created a decision</span><strong>{{ m.uniqueOrganizations['decision_created'] || 0 }}</strong></article>
+      <article><span>Viewed pricing</span><strong>{{ m.uniqueOrganizations['pricing_view'] || 0 }}</strong></article>
+      <article><span>Started checkout</span><strong>{{ m.uniqueOrganizations['checkout_started'] || 0 }}</strong></article>
+      <article><span>Paid</span><strong>{{ m.uniqueOrganizations['checkout_success'] || 0 }}</strong></article>
+    </section>
+
+    <section class="conversion">
+      <article><span>App → decision</span><strong>{{ m.conversion.appToDecision }}%</strong></article>
+      <article><span>Decision → pricing</span><strong>{{ m.conversion.decisionToPricing }}%</strong></article>
+      <article><span>Pricing → checkout</span><strong>{{ m.conversion.pricingToCheckout }}%</strong></article>
+      <article><span>Checkout → paid</span><strong>{{ m.conversion.checkoutToPaid }}%</strong></article>
+    </section>
+    <p class="updated">Updated {{ m.generatedAt | date:'medium' }} · unique organizations, trailing {{ m.days }} days</p>
+  </ng-container>
+</main>

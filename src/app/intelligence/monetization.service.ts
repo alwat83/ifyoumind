@@ -35,6 +35,13 @@ export class MonetizationService {
     return (await call({organizationId,offer,projectId})).data.url;
   }
 
+  async billingPortal(organizationId:string):Promise<string>{
+    const call=httpsCallable<{organizationId:string},{url:string}>(
+      this.functions,'createBillingPortalSession'
+    );
+    return (await call({organizationId})).data.url;
+  }
+
   async requestAccess(
     organizationId:string,
     offer:'pro'|'report',

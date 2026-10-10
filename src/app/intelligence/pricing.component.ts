@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IntelligenceOrganization, OrganizationService } from './organization.service';
 import { CommercialStatus, MonetizationService } from './monetization.service';
 import { ProductAnalyticsService } from './product-analytics.service';
+import { MarketIntelligenceService } from './market-intelligence.service';
 
 @Component({
   selector:'app-pricing',
@@ -17,6 +18,7 @@ export class PricingComponent implements OnInit {
   private readonly monetization=inject(MonetizationService);
   private readonly route=inject(ActivatedRoute);
   private readonly analytics=inject(ProductAnalyticsService);
+  private readonly market=inject(MarketIntelligenceService);
 
   workspace:IntelligenceOrganization|null=null;
   status:CommercialStatus|null=null;
@@ -34,10 +36,7 @@ export class PricingComponent implements OnInit {
     const checkout=this.route.snapshot.queryParamMap.get('checkout')||'';
 
     if(checkout==='success'){
-      this.message=this.highlightedOffer==='report'
-        ? 'Payment confirmed. Your Decision Report is ready.'
-        : 'Payment confirmed. Your access is being updated now.';
-      this.reportReady=this.highlightedOffer==='report'&&!!this.projectId;
+      this.message='Checkout returned successfully. Checking your access…';
     }
     if(checkout==='cancelled') this.message='Checkout was cancelled. Nothing was charged.';
 
@@ -50,6 +49,17 @@ export class PricingComponent implements OnInit {
         if(checkout==='success') void this.analytics.track(this.workspace.organizationId,'checkout_success',{offer:this.highlightedOffer||'unknown'});
         if(checkout==='cancelled') void this.analytics.track(this.workspace.organizationId,'checkout_cancelled',{offer:this.highlightedOffer||'unknown'});
         this.status=await this.monetization.status(this.workspace.organizationId);
+        if(checkout==='success'&&this.highlightedOffer==='report'&&this.projectId){
+          const project=await this.market.get(this.workspace.organizationId,this.projectId);
+          this.reportReady=project.decisionReportPurchased===true;
+          this.message=this.reportReady
+            ? 'Your payment is complete. Your Decision Report is unlocked.'
+            : 'Your checkout returned successfully. Report access is still being confirmed. Refresh this page shortly.';
+        }else if(checkout==='success'&&this.highlightedOffer==='pro'){
+          this.message=this.status.plan==='pro'
+            ? 'Pro is active. Your access has been updated.'
+            : 'Your checkout returned successfully. Pro access is still being confirmed. Refresh this page shortly.';
+        }
       }
     }catch(error){this.error=this.messageFor(error);}
     finally{this.loading=false;}

@@ -1,6 +1,8 @@
 import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 
+import { parseFredObservations } from './fred-observations';
+
 const fredApiKey = defineSecret('FRED_API_KEY');
 const CACHE_TTL_MS = 60 * 60 * 1000;
 const cache = new Map<string, { expiresAt: number; result: Record<string, unknown> }>();
@@ -36,14 +38,7 @@ export const getFredEconomicIndicators = onCall(
     try {
       const response = await fetch(url, { signal: AbortSignal.timeout(12000) });
       if (!response.ok) throw new Error('FRED HTTP ' + response.status);
-      const payload = await response.json() as { observations?: Array<{ date?: string; value?: string }> };
-      if (!Array.isArray(payload.observations)) throw new Error('Unexpected FRED response');
-      const observations = payload.observations
-        .filter((row) => typeof row.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(row.date) && typeof row.value === 'string' && row.value.trim() !== '')
-        .map((row) => ({ date: row.date!, value: Number(row.value) }))
-        .filter((row) => Number.isFinite(row.value))
-        .reverse();
-      if (!observations.length) throw new Error('No numeric observations');
+      const observations = parseFredObservations(await response.json());
       const result = { indicator, seriesId: series.id, label: series.label, units: series.units,
         frequency: series.frequency, source: 'Federal Reserve Bank of St. Louis (FRED)',
         sourceUrl: 'https://fred.stlouisfed.org/series/' + series.id,

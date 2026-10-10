@@ -56,3 +56,26 @@ jobs:
           name: audit-${{ matrix.target }}
           path: audit.json
           if-no-files-found: warn
+
+  propose-safe-fixes:
+    name: Generate compatible lockfile fixes
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply non-breaking npm audit fixes to lockfiles
+        shell: bash
+        run: |
+          npm audit fix --package-lock-only --ignore-scripts || true
+          npm --prefix functions audit fix --package-lock-only --ignore-scripts || true
+          git diff --stat
+      - name: Upload proposed lockfiles for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: compatible-security-lockfiles
+          path: |
+            package-lock.json
+            functions/package-lock.json

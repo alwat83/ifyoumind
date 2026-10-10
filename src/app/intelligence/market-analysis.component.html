@@ -1,0 +1,33 @@
+<section class="analysis">
+  <div class="head">
+    <div>
+      <p class="eyebrow">Business-plan ready</p>
+      <h2>{{ section.title }}</h2>
+    </div>
+    <button type="button" class="no-print" (click)="copy()">{{ copied ? 'Copied' : 'Copy as text' }}</button>
+  </div>
+  <p class="intro">{{ section.intro }}</p>
+
+  <article *ngFor="let paragraph of section.paragraphs">
+    <h3>{{ paragraph.heading }}</h3>
+    <p>{{ paragraph.text }}</p>
+  </article>
+
+  <div *ngIf="section.rankings.length" class="rankings">
+    <table *ngFor="let ranking of section.rankings">
+      <caption>{{ ranking.metric }}</caption>
+      <tr *ngFor="let row of ranking.ordered; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ row.location }}</td>
+        <td>{{ format(row.value, ranking.unit) }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <h3>Further research before committing</h3>
+  <ul><li *ngFor="let item of section.nextResearch">{{ item }}</li></ul>
+
+  <h3>Sources</h3>
+  <ol class="citations"><li *ngFor="let citation of section.citations">{{ citation }}</li></ol>
+  <p class="disclaimer">{{ section.disclaimer }}</p>
+</section>

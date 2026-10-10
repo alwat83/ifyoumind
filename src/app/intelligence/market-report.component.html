@@ -113,7 +113,7 @@
       <div>
         <p class="eyebrow">Need something you can share?</p>
         <h2>Turn this brief into a full Decision Report.</h2>
-        <p>Get a polished, source-backed report designed to share with a partner, lender, investor, broker, or team.</p>
+        <p>Adds a business-plan-ready market analysis written for your business and locations, location rankings, an action plan, and what would change the call. Every figure is cited.</p>
         <p *ngIf="canUnlockWithPro">Included with your Pro plan: {{ status?.remainingIncludedReports }} of {{ status?.includedReportsPerMonth }} full reports left this month.</p>
         <p *ngIf="proAllowanceUsedUp">You have used all {{ status?.includedReportsPerMonth }} full reports included with Pro this month. They reset on the 1st, or you can buy this one individually.</p>
         <p *ngIf="unlockError" class="error">{{ unlockError }}</p>
@@ -125,6 +125,7 @@
     </section>
 
     <ng-container *ngIf="decisionReport as reportDetail">
+      <app-market-analysis *ngIf="reportDetail.marketAnalysis as analysis" [section]="analysis"></app-market-analysis>
       <section class="action-plan">
         <p class="eyebrow">Action plan</p>
         <h2>What to do before you commit.</h2>

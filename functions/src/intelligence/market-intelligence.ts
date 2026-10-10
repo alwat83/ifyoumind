@@ -3,6 +3,7 @@ import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
 import { decisionReportAccess } from './report-entitlement-logic';
+import { buildMarketAnalysis, conceptPhrase, marketAnalysisText } from './market-analysis';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const censusApiKey = defineSecret('CENSUS_API_KEY');
@@ -232,7 +233,13 @@ export function briefForEntitlement(brief:any,purchased:boolean){
   return freeBrief;
 }
 
-function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[]){
+function withPlainText<T extends Parameters<typeof marketAnalysisText>[0]>(section:T){
+  return {...section,plainText:marketAnalysisText(section)};
+}
+
+export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],concept=''){
+  const business=conceptPhrase(concept);
+  const retrievedAt=new Date().toISOString();
   const metrics=metricsFor(primary);
   const growth=primary.populationChangePct;
   const opportunity:string[]=[];
@@ -254,9 +261,9 @@ function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[]){
   if(!risks.length) risks.push('Census demographics alone do not measure competition, commercial rent, foot traffic, or concept-level demand.');
 
   const questions=[
-    `What local competitors serve the same customer as ${primary.location}?`,
+    `How many ${business} competitors already serve your target customers in ${primary.location}?`,
     'What are current commercial rents and occupancy costs for the exact trade area?',
-    'What foot-traffic or customer-demand signal would confirm this opportunity?',
+    `What foot-traffic or customer-demand signal would confirm demand for your ${business}?`,
   ];
   const trimmedOpportunities=opportunity.slice(0,2);
   const trimmedRisks=risks.slice(0,2);
@@ -272,11 +279,12 @@ function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[]){
     comparisons:comparisons.map(place=>({location:place.location,metrics:metricsFor(place)})),
     questions,
     sources:[
-      {provider:'U.S. Census Bureau',dataset:'2024 ACS 5-year estimates',retrievedAt:new Date().toISOString(),url:'https://api.census.gov/data/2024/acs/acs5'},
-      {provider:'U.S. Census Bureau',dataset:'2019 ACS 5-year estimates',retrievedAt:new Date().toISOString(),url:'https://api.census.gov/data/2019/acs/acs5'},
+      {provider:'U.S. Census Bureau',dataset:'2024 ACS 5-year estimates',retrievedAt,url:'https://api.census.gov/data/2024/acs/acs5'},
+      {provider:'U.S. Census Bureau',dataset:'2019 ACS 5-year estimates',retrievedAt,url:'https://api.census.gov/data/2019/acs/acs5'},
     ],
     decisionReport:{
-      schemaVersion:1,
+      schemaVersion:2,
+      marketAnalysis:withPlainText(buildMarketAnalysis({concept,primary,comparisons,retrievedAt})),
       posture,
       evidenceCoverage:{
         sourcedMetrics,
@@ -299,7 +307,7 @@ function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[]){
         return {location:place.location,findings};
       }),
       decisionTriggers:{
-        strengthens:'Verified local demand plus acceptable occupancy costs would strengthen the case.',
+        strengthens:`Verified demand for your ${business} plus acceptable occupancy costs would strengthen the case.`,
         weakens:trimmedRisks[0]||'New local evidence materially weakens the demand or economics case.',
         unresolved:questions[0],
       },
@@ -357,7 +365,7 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
     );
 
     stage='analysis';
-    const brief=buildLiveBrief(primary,comparisonPlaces);
+    const brief=buildLiveBrief(primary,comparisonPlaces,concept);
 
     stage='save';
     const ref = orgRef.collection('marketProjects').doc();
@@ -468,7 +476,7 @@ export function sampleNeedsRefresh(generatedAtMs:unknown,schemaVersion:unknown,c
   return nowMs-generated>SAMPLE_REFRESH_MS;
 }
 
-const SAMPLE_SCHEMA=1;
+const SAMPLE_SCHEMA=2;
 
 export const getSampleDecisionReport = onCall({secrets:[censusApiKey]}, async () => {
   const ref=getFirestore().collection('publicSamples').doc('decision-report');
@@ -489,7 +497,7 @@ export const getSampleDecisionReport = onCall({secrets:[censusApiKey]}, async ()
       decision:SAMPLE_DECISION.decision,
       comparisonLocations:[...SAMPLE_DECISION.comparisonLocations],
       mode:'live',
-      brief:buildLiveBrief(primary,comparisonPlaces),
+      brief:buildLiveBrief(primary,comparisonPlaces,SAMPLE_DECISION.concept),
       decisionReportPurchased:false,
       decisionReportAccess:'none',
       dataNotice:'Sample report. Figures are real U.S. Census Bureau ACS 5-year estimates retrieved for this example; the decision itself is illustrative. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.',

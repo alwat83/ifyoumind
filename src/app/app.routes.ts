@@ -11,6 +11,11 @@ export const routes:Routes=[
     path:'',
     loadComponent:()=>import('./intelligence/public-landing.component').then(m=>m.PublicLandingComponent),
   },
+  {
+    path:'sample-report',
+    data:{sample:true},
+    loadComponent:()=>import('./intelligence/market-report.component').then(m=>m.MarketReportComponent),
+  },
   {path:'register',component:RegisterComponent},
   {path:'login',component:LoginComponent},
   {path:'verify-email',component:VerifyEmailComponent},

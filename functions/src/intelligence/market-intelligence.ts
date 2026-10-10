@@ -121,16 +121,31 @@ async function fetchPlaceRows(year:number,stateFips:string):Promise<string[][]>{
   );
 }
 
-function findPlace(rows:string[][],city:string):string[]|null{
+// Consolidated city-county governments are listed under compound names, e.g.
+// "Nashville-Davidson metropolitan government (balance)" or "Urban Honolulu CDP".
+const CONSOLIDATED_PLACE=/\b(metropolitan government|metro government|urban county|unified government|consolidated government)\b|\(balance\)/i;
+
+export function censusPlaceKeys(censusName:string):{exact:string[];consolidated:string}{
+  const base=censusName.split(',')[0].replace(/\(balance\)/ig,'').replace(/^urban\s+/i,'').trim();
+  const designation=/\b(city|town|village|borough|CDP|municipality)\b/ig;
+  // "Boise City city" should match both "Boise City" and "Boise".
+  const trailingOnly=base.replace(/\s+(city|town|village|borough|CDP|municipality)$/i,'').trim();
+  const allStripped=base.replace(designation,'').trim();
+  const consolidated=CONSOLIDATED_PLACE.test(censusName)
+    ? normalize(allStripped.split(/[-/]/)[0]||'')
+    : '';
+  return {exact:[normalize(trailingOnly),normalize(allStripped)],consolidated};
+}
+
+export function findPlace(rows:string[][],city:string):string[]|null{
   const target=normalize(city);
   const headers=rows[0]||[];
   const nameIndex=headers.indexOf('NAME');
   if(nameIndex<0)return null;
-  const candidates=rows.slice(1).filter(row=>{
-    const placeName=(row[nameIndex]||'').split(',')[0].replace(/\b(city|town|village|borough|CDP|municipality)\b/ig,'').trim();
-    return normalize(placeName)===target;
-  });
-  return candidates[0]||null;
+  const body=rows.slice(1);
+  const exact=body.find(row=>censusPlaceKeys(row[nameIndex]||'').exact.includes(target));
+  if(exact)return exact;
+  return body.find(row=>censusPlaceKeys(row[nameIndex]||'').consolidated===target)||null;
 }
 
 function numberCell(row:string[],headers:string[],key:string):number{
@@ -435,4 +450,57 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
       : 'Synthetic demo enrichment — not real market data.',
     createdAt:data.createdAt?.toDate?.().toISOString?.() || null,
   };
+});
+
+// Public sample report. Built from live Census data through the same pipeline as customer reports,
+// cached so anonymous traffic never reaches the Census API more than once per refresh window.
+export const SAMPLE_DECISION={
+  concept:'Specialty coffee shop',
+  decision:'Should I open my specialty coffee shop in Austin, or in Nashville or Charlotte?',
+  location:'Austin, TX',
+  comparisonLocations:['Nashville, TN','Charlotte, NC'],
+} as const;
+const SAMPLE_REFRESH_MS=30*24*60*60*1000;
+
+export function sampleNeedsRefresh(generatedAtMs:unknown,schemaVersion:unknown,currentSchema:number,nowMs=Date.now()):boolean{
+  const generated=Number(generatedAtMs);
+  if(schemaVersion!==currentSchema||!Number.isFinite(generated))return true;
+  return nowMs-generated>SAMPLE_REFRESH_MS;
+}
+
+const SAMPLE_SCHEMA=1;
+
+export const getSampleDecisionReport = onCall({secrets:[censusApiKey]}, async () => {
+  const ref=getFirestore().collection('publicSamples').doc('decision-report');
+  const cached=(await ref.get()).data();
+  if(cached&&!sampleNeedsRefresh(cached.generatedAtMs,cached.schemaVersion,SAMPLE_SCHEMA)){
+    return cached.payload;
+  }
+  try{
+    const [primary,...comparisonPlaces]=await Promise.all(
+      [SAMPLE_DECISION.location,...SAMPLE_DECISION.comparisonLocations].map(value=>fetchCensusPlace(value)),
+    );
+    const generatedAt=new Date().toISOString();
+    const payload={
+      id:'sample',
+      sample:true,
+      location:SAMPLE_DECISION.location,
+      concept:SAMPLE_DECISION.concept,
+      decision:SAMPLE_DECISION.decision,
+      comparisonLocations:[...SAMPLE_DECISION.comparisonLocations],
+      mode:'live',
+      brief:buildLiveBrief(primary,comparisonPlaces),
+      decisionReportPurchased:false,
+      decisionReportAccess:'none',
+      dataNotice:'Sample report. Figures are real U.S. Census Bureau ACS 5-year estimates retrieved for this example; the decision itself is illustrative. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.',
+      createdAt:generatedAt,
+    };
+    await ref.set({payload,schemaVersion:SAMPLE_SCHEMA,generatedAtMs:Date.parse(generatedAt)});
+    return payload;
+  }catch(error){
+    // Serve a stale sample rather than nothing if Census is down.
+    if(cached?.payload)return cached.payload;
+    console.error('Sample report generation failed',error);
+    throw new HttpsError('unavailable','The sample report is temporarily unavailable.');
+  }
 });

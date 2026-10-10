@@ -1,5 +1,12 @@
 <main class="report-shell">
-  <nav class="report-nav no-print">
+  <nav *ngIf="sampleMode" class="report-nav no-print">
+    <a routerLink="/">← ifYouMind</a>
+    <div><a routerLink="/register" class="report-upgrade">Create your own report free</a></div>
+  </nav>
+  <aside *ngIf="sampleMode" class="state no-print" style="margin-bottom:14px;border:1px solid #fcd34d;background:#fffbeb">
+    <strong>This is a sample report.</strong> The question is an example, but every figure is real U.S. Census Bureau data with its source linked. Your own report uses your decision, business type and locations.
+  </aside>
+  <nav *ngIf="!sampleMode" class="report-nav no-print">
     <a routerLink="/app">← Your decisions</a>
     <div>
       <a routerLink="/app/decide">Ask another question</a>
@@ -24,7 +31,7 @@
         <p class="context">{{ project?.concept }} · {{ project?.location }}</p>
       </div>
       <div class="meta">
-        <span>{{ project?.mode === 'demo' ? 'Demo data' : 'Live data' }}</span>
+        <span>{{ sampleMode ? 'Sample · live data' : project?.mode === 'demo' ? 'Demo data' : 'Live data' }}</span>
         <small>{{ project?.createdAt ? (project?.createdAt | date:'longDate') : '' }}</small>
       </div>
     </header>
@@ -91,6 +98,15 @@
           </dl>
         </article>
       </div>
+    </section>
+
+    <section *ngIf="sampleMode" class="report-offer no-print">
+      <div>
+        <p class="eyebrow">Your decision, your locations</p>
+        <h2>Get this analysis for your own question.</h2>
+        <p>Start with a free Decision Brief for any U.S. city. Upgrade to the full report when you need the action plan and comparison write-up.</p>
+      </div>
+      <a routerLink="/register">Start free</a>
     </section>
 
     <section *ngIf="!reportPurchased" class="report-offer no-print">

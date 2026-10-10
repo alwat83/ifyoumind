@@ -8,6 +8,7 @@ async function generateSitemap() {
 
   const routes = [
     { path: "/", priority: "1.0" },
+    { path: "/sample-report", priority: "0.8" },
     { path: "/privacy-policy", priority: "0.4" },
     { path: "/terms-of-conduct", priority: "0.4" },
   ];

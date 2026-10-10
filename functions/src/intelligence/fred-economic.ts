@@ -35,7 +35,7 @@ export const getFredEconomicIndicators = onCall(
       const payload = await response.json() as { observations?: Array<{ date?: string; value?: string }> };
       if (!Array.isArray(payload.observations)) throw new Error('Unexpected FRED response');
       const observations = payload.observations
-        .filter((row) => typeof row.date === 'string' && /^\\d{4}-\\d{2}-\\d{2}$/.test(row.date) && typeof row.value === 'string' && row.value.trim() !== '')
+        .filter((row) => typeof row.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(row.date) && typeof row.value === 'string' && row.value.trim() !== '')
         .map((row) => ({ date: row.date!, value: Number(row.value) }))
         .filter((row) => Number.isFinite(row.value))
         .reverse();

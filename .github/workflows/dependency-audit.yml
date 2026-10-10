@@ -1,0 +1,58 @@
+name: Dependency security audit
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: Production dependency audit
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - app
+          - functions
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install locked dependencies
+        run: ${{ matrix.target == 'app' && 'npm ci' || 'npm --prefix functions ci' }}
+
+      - name: Audit production dependencies
+        shell: bash
+        run: |
+          set +e
+          if [ "${{ matrix.target }}" = "app" ]; then
+            npm audit --omit=dev --audit-level=high --json > audit.json
+          else
+            npm --prefix functions audit --omit=dev --audit-level=high --json > audit.json
+          fi
+          code=$?
+          echo "Audit exit code: $code" >> "$GITHUB_STEP_SUMMARY"
+          node -e 'const a=require("./audit.json"); const v=a.metadata?.vulnerabilities || {}; const lines=Object.entries(v).map(([k,n])=>"- "+k+": "+n); require("fs").appendFileSync(process.env.GITHUB_STEP_SUMMARY, "### "+process.env.AUDIT_TARGET+" production dependencies\\n"+lines.join("\\n")+"\\n");' || true
+          exit "$code"
+        env:
+          AUDIT_TARGET: ${{ matrix.target }}
+
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-${{ matrix.target }}
+          path: audit.json
+          if-no-files-found: warn

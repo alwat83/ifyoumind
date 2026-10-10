@@ -216,3 +216,5 @@ export { getCommercialStatus, requestCommercialAccess, createCommercialCheckout,
 export { recordProductEvent } from './intelligence/product-analytics';
 
 export { getProductFunnelMetrics } from './intelligence/growth-metrics';
+
+export { getFredEconomicIndicators } from './intelligence/fred-economic';

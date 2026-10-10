@@ -1,0 +1,100 @@
+name: Dependency security audit
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  audit:
+    name: Production dependency audit
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - app
+          - functions
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install locked dependencies
+        run: ${{ matrix.target == 'app' && 'npm ci' || 'npm --prefix functions ci' }}
+
+      - name: Audit production dependencies
+        shell: bash
+        run: |
+          set +e
+          if [ "${{ matrix.target }}" = "app" ]; then
+            npm audit --omit=dev --audit-level=high --json > audit.json
+          else
+            npm --prefix functions audit --omit=dev --audit-level=high --json > audit.json
+          fi
+          code=$?
+          echo "Audit exit code: $code" >> "$GITHUB_STEP_SUMMARY"
+          node -e 'const a=require("./audit.json"); const v=a.metadata?.vulnerabilities || {}; const lines=Object.entries(v).map(([k,n])=>"- "+k+": "+n); require("fs").appendFileSync(process.env.GITHUB_STEP_SUMMARY, "### "+process.env.AUDIT_TARGET+" production dependencies\\n"+lines.join("\\n")+"\\n");' || true
+          exit "$code"
+        env:
+          AUDIT_TARGET: ${{ matrix.target }}
+
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-${{ matrix.target }}
+          path: audit.json
+          if-no-files-found: warn
+
+  propose-safe-fixes:
+    name: Generate compatible lockfile fixes
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Apply non-breaking npm audit fixes to lockfiles
+        shell: bash
+        run: |
+          npm audit fix --package-lock-only --ignore-scripts || true
+          npm --prefix functions audit fix --package-lock-only --ignore-scripts || true
+          git diff --stat
+      - name: Push proposed lockfiles to a review branch
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if git diff --quiet -- package-lock.json functions/package-lock.json; then
+            echo "No compatible lockfile updates were generated."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c codex/security-lockfile-fixes
+          git add package-lock.json functions/package-lock.json
+          git commit -m "fix: apply compatible production dependency updates"
+          git push --force-with-lease origin HEAD:refs/heads/codex/security-lockfile-fixes
+          gh pr create --base master --head codex/security-lockfile-fixes --draft --title "Security: compatible dependency lockfile updates" --body "Automated compatible npm audit fixes. Review production audit findings and run build/tests before merge. No major upgrades requested." || true
+
+      - name: Upload proposed lockfiles for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: compatible-security-lockfiles
+          path: |
+            package-lock.json
+            functions/package-lock.json

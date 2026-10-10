@@ -77,3 +77,11 @@ All development so far: **OpenAI only**, per founder confirmation. Other AI prov
 - [Notion Metric/Evidence Contracts](https://app.notion.com/p/3eb02474659c8160834df25c3bca34ec)
 
 **Maintenance:** Keep this record current after meaningful releases; preserve historical milestones and distinguish planned, committed, deployed and verified. Never commit credentials or personal customer data.
+
+## 11. FRED integration and security audit — 2026-10-10
+- **Provider:** OpenAI/ChatGPT tools; individual agent session unspecified.
+- **Branch:** `codex/fred-economic-indicators`; **draft PR:** [#2](https://github.com/alwat83/ifyoumind/pull/2). Status **committed**, not merged/deployed/production verified.
+- **Implementation:** authenticated Firebase callable `getFredEconomicIndicators` backed by server-side `FRED_API_KEY`, source metadata, validated FRED observations and a one-hour per-instance cache. CPIAUCSL is a **CPI index**, not an annual inflation percentage. Exports and explicit production deployment allowlist added, but no release executed.
+- **Evidence:** founder Mac verified `npm --prefix functions run build` PASS and `npm --prefix functions test` PASS **25/25** at commit `1a7c78c`, including three FRED parser tests. An earlier Angular build passed; no live authenticated FRED request verified.
+- **Security automation:** commit `d0b088b` adds `.github/workflows/dependency-audit.yml` to audit production dependencies on PRs and master pushes, with separate app/Functions artifacts and high-severity failure. **Workflow execution/results not yet verified.** Prior install output reported 94 app and 23 Functions vulnerabilities across all dependency classes; production-only severity counts unknown.
+- **Release gates:** inspect audit artifacts and remediate relevant high/critical findings; review quotas and caching across instances; verify real FRED response, authentication and failure handling; check GitHub Actions; only then merge and verify Firebase production. Merging `master` triggers the production workflow.

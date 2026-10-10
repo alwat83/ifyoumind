@@ -2,6 +2,8 @@ import { HttpsError, onCall } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 
 const fredApiKey = defineSecret('FRED_API_KEY');
+const CACHE_TTL_MS = 60 * 60 * 1000;
+const cache = new Map<string, { expiresAt: number; result: Record<string, unknown> }>();
 const SERIES = {
   inflation: { id: 'CPIAUCSL', label: 'Consumer Price Index', units: 'index', frequency: 'monthly' },
   unemployment: { id: 'UNRATE', label: 'Unemployment rate', units: 'percent', frequency: 'monthly' },
@@ -20,6 +22,8 @@ export const getFredEconomicIndicators = onCall(
     if (!Object.prototype.hasOwnProperty.call(SERIES, indicator)) {
       throw new HttpsError('invalid-argument', 'Choose a supported economic indicator.');
     }
+    const cached = cache.get(indicator);
+    if (cached && cached.expiresAt > Date.now()) return cached.result;
     const key = fredApiKey.value();
     if (!key) throw new HttpsError('failed-precondition', 'Economic data service is not configured.');
     const series = SERIES[indicator];
@@ -40,10 +44,12 @@ export const getFredEconomicIndicators = onCall(
         .filter((row) => Number.isFinite(row.value))
         .reverse();
       if (!observations.length) throw new Error('No numeric observations');
-      return { indicator, seriesId: series.id, label: series.label, units: series.units,
+      const result = { indicator, seriesId: series.id, label: series.label, units: series.units,
         frequency: series.frequency, source: 'Federal Reserve Bank of St. Louis (FRED)',
         sourceUrl: 'https://fred.stlouisfed.org/series/' + series.id,
         retrievedAt: new Date().toISOString(), observations };
+      cache.set(indicator, { expiresAt: Date.now() + CACHE_TTL_MS, result });
+      return result;
     } catch (error) {
       console.error('FRED request failed', { seriesId: series.id, message: error instanceof Error ? error.message : 'Unknown error' });
       throw new HttpsError('unavailable', 'Economic data is temporarily unavailable.');

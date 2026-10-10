@@ -19,7 +19,7 @@ Historical repository/Notion records describe Angular 19.x, TypeScript, Tailwind
 ## 3. Implemented/committed milestones (production validation separate)
 - **2026-09-30 foundation:** OpenAI/Codex branches `codex/ifyoumind-2-foundation` and `codex/ifyoumind-2-contracts` documented organization authorization, rules/emulator tests, metrics/evidence and connector contracts. Historical documentation records commits `b40cbee`, `9b5519a`.
 - **2026-10-03 consumer rebuild:** [PR #1](https://github.com/alwat83/ifyoumind/pull/1) merged to `master` with 275 commits, replacing the legacy site with a consumer-first public experience, authentication, guided decision flow, consumer results, pricing and data upload, while preserving intelligence backend.
-- **Stripe:** 2026-10-03 `13c9977` updated the production workflow for a Stripe commerce webhook. October 9 commits added self-service billing portal session/client/UI and related function deployment wiring (`6f399d6`, `9738403`, `cfc1ad3`, `bf7619c`, `743fb34`, `06173a1`). Actual checkout/portal/entitlement production behavior still needs verification.
+- **Stripe:** 2026-10-03 `13c9977` updated the production workflow for a Stripe commerce webhook. October 9 commits added self-service billing portal session/client/UI and related function deployment wiring (`6f399d6`, `9738403`, `cfc1ad3`, `bf7619c`, `743fb34`, `06173a1`). Founder confirms successful paid purchases; do not classify paid purchase as outstanding. Code/CI and production evidence remain separate from this founder confirmation.
 - **Census:** October 9 commits `975f24a` (API key for live market data), `55a708e` (transient failure retry), `705fc98` (safe failure-stage reporting). Validate live responses, fallback, quotas and source freshness.
 - **Decision Report trust:** `20a1c82`, `456a394`, `5d60934` refined source coverage, report locations and decision triggers. Verify report labels accurately describe data coverage rather than unsupported certainty.
 - **Mobile UX:** `7e2bc0a`, `6d5f156`, `0308df5`, `9c30bc2` refined mobile report/pricing layouts.
@@ -38,6 +38,21 @@ Latest recent-commit search on 2026-10-10 returned `20a1c82` dated October 9. Th
 
 **Later private connectors:** User-authorized Stripe, GA4 and other business systems, with least-privilege access, encryption, consent, auditability and deletion controls.
 
+## CURRENT HANDOFF — READ FIRST (2026-10-10)
+**Project coordination authority: [ifYouMind Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).** Read its newest founder decisions first. GitHub is implementation/CI evidence, and this Markdown is the durable engineering handoff. Do not use the historical phase table below to override the current consumer-first revenue priority.
+
+**Founder-confirmed working:** Decision Report generation, successful PDF output and paid purchases. Prior threads describe a Census-backed Decision Report with 4/4 attributed key metrics, evidence, decision triggers and action plan; do not rebuild or relabel these as unfinished. Stripe checkout, webhook, billing portal and report entitlement implementation exist on `master`. A founder-confirmed successful paid purchase is not an outstanding task.
+
+**Current workstreams (status at latest check):**
+- **Checkout return UX:** [Draft PR #3](https://github.com/alwat83/ifyoumind/pull/3), branch `codex/checkout-report-confirmation`, commit `7a78d090ca5b297e5dba0cac3d3c696cf0743d44`. Fixes misleading checkout-success copy by fetching the report project and requiring `decisionReportPurchased === true` before displaying unlocked link; checks Pro status before claiming Pro access. **Launch build check completed SUCCESS** on that commit. **NOT merged/deployed/production verified** as of this handoff. Next: review PR and release when appropriate; smoke check changed return-message UX only, not a wholesale retest of completed paid purchases.
+- **FRED:** [Draft PR #2](https://github.com/alwat83/ifyoumind/pull/2), branch `codex/fred-economic-indicators`, last observed `5565dfb`, 9 commits ahead of master at prior comparison. Earlier 25/25 Functions tests passed locally; launch build CI succeeded; dependency security audit failed. **Not merged/deployed**, nonessential to first revenue; defer.
+- **Security:** Production dependency audit has known failures. Triage material risks separately; do not blindly upgrade dependencies or conflate audit failure with confirmed compromise.
+- **Customer acquisition:** **Highest business priority after minimal release polish.** Use existing nationally appealing consumer positioning, product funnel analytics and growth dashboard. Focus on visitor → signup → decision → report → purchase conversion, messaging, SEO, outreach and learning from real users. Avoid building speculative connectors before demand.
+
+**Operational workflow for every agent:** Read the latest Notion hub directive, `AGENTS.md`, this handoff, GitHub master/open PRs/CI. Choose one nonduplicated task. Make scoped changes on a branch. Record what is confirmed by founder versus code/CI versus production smoke test. Update Notion after significant work and keep this file in sync. Include exact PR, commit, build, deployment and next action. Historical development attribution through this date: OpenAI agents only, per founder. Never confuse Dose Ninja.
+
+**Release and testing guardrail:** No automatic merging of PR #2/#3 or production deploy without reviewing their actual checks and impact. The successful CI result on PR #3 does not imply deployment.
+
 ## 6. Product and commercial roadmap
 | Phase | Priorities | Release gate |
 |---|---|---|
@@ -53,11 +68,11 @@ Latest recent-commit search on 2026-10-10 returned `20a1c82` dated October 9. Th
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 
-## 8. Verification checklist
+## 8. Historical verification checklist (not a list of unfinished launch features)
 - [ ] Confirm current `master` HEAD, relevant GitHub Actions run results and deployed Hosting/Functions revision.
 - [ ] Run fresh build/tests; inspect baseline lint, bundles and dependency hygiene.
-- [ ] Smoke test authentication, Decision Reports, source coverage, Census live calls and failure states.
-- [ ] Smoke test mobile layouts, pricing, checkout, Stripe webhook, paid access and billing portal.
+- [x] Founder confirmed working Decision Reports and generated PDF; earlier Census-backed 4/4 metric report documented. Targeted regression checks only when making related changes.
+- [x] Founder confirmed paid purchases work. Other UX/mobile/billing-portal regression checks should be scoped to actual changes; do not relabel paid purchase outstanding.
 - [ ] Verify founder metrics events, permissions and reporting consistency.
 - [ ] Compare all outstanding branches with `master` and resolve unique changes.
 - [ ] Update the ifYouMind Notion hub and engineering tasks with evidence-backed statuses.

@@ -8,7 +8,8 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 
 jobs:
   audit:
@@ -72,6 +73,24 @@ jobs:
           npm audit fix --package-lock-only --ignore-scripts || true
           npm --prefix functions audit fix --package-lock-only --ignore-scripts || true
           git diff --stat
+      - name: Push proposed lockfiles to a review branch
+        if: github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if git diff --quiet -- package-lock.json functions/package-lock.json; then
+            echo "No compatible lockfile updates were generated."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c codex/security-lockfile-fixes
+          git add package-lock.json functions/package-lock.json
+          git commit -m "fix: apply compatible production dependency updates"
+          git push --force-with-lease origin HEAD:refs/heads/codex/security-lockfile-fixes
+          gh pr create --base master --head codex/security-lockfile-fixes --draft --title "Security: compatible dependency lockfile updates" --body "Automated compatible npm audit fixes. Review production audit findings and run build/tests before merge. No major upgrades requested." || true
+
       - name: Upload proposed lockfiles for review
         uses: actions/upload-artifact@v4
         with:

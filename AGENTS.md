@@ -9,14 +9,20 @@ This file applies ONLY to the **ifYouMind** repository `alwat83/ifyoumind` and w
 ## Product direction
 Build a consumer-friendly, general-purpose, evidence-backed AI data intelligence platform. Users should be able to explore public and, later, permissioned private datasets, compare locations and other entities, generate clear Decision Reports, and understand data sources, limitations, and freshness. Business intelligence is one vertical, not the whole product. Prioritize mobile UX, trustworthy outputs, reliable production releases, monetization, and acquisition. Avoid geographically narrow demo examples.
 
-## Source of truth
-1. Current `master` code, relevant branches and open PRs (implementation evidence).
-2. CI status, Firebase deployments and real smoke tests (release/production evidence).
-3. `IFYOUMIND_MASTER_PROJECT.md` (product history, roadmap, status labels and references).
-4. ifYouMind Notion hub: https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
-5. Agent handoff notes and discussion context (not independently verified production evidence).
+## Source of truth — mandatory order
+**Notion is the central project coordination source of truth** for current priorities, completed work, roadmap, statuses, decisions, and cross-agent handoffs:
+https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
 
-Historical Notion plans may be superseded by the consumer rebuild merged in PR #1 on 2026-10-03. Never assume committed = deployed = tested in production.
+1. **Read the latest Notion operating directive and updates first.** Newer founder corrections supersede historical task lists.
+2. **GitHub master, PRs, CI and Firebase** are authoritative evidence for what is committed, merged, built, deployed and production-verified; never infer production status from a commit.
+3. **[IFYOUMIND_MASTER_PROJECT.md](IFYOUMIND_MASTER_PROJECT.md)** preserves durable architecture, history, current handoff and roadmap; keep it synchronized with Notion.
+4. Other agent notes and conversations are supporting context, not a competing roadmap.
+
+**Current founder-confirmed working capabilities (2026-10-10):** Decision Reports, PDF generation and successful paid purchases. Do NOT reopen these as outstanding without new evidence of a regression. Stripe checkout, billing portal, webhook and report entitlement logic are implemented in master. **Next business priority: customer acquisition and revenue growth, after minimal release polish.**
+
+**Active work:** Draft PR #3 (`codex/checkout-report-confirmation`, commit `7a78d090`) corrects checkout-return messaging so the UI checks actual report/Pro entitlement before claiming access. GitHub launch build PASS; PR is **not merged or deployed** as of last check. This is polish, not evidence that purchases are broken. Draft FRED PR #2 is separate, nonessential to launch and should not distract from revenue. Historical B2B-first plans and older status tables are superseded by consumer-first launch priorities.
+
+**Agent protocol:** (a) read Notion + this file + master MD; (b) inspect relevant code and current PR/CI; (c) work on one revenue-relevant item without duplicating other agents; (d) update Notion after meaningful changes and synchronize master MD; (e) hand off with branch/commit/PR, test outcome, deploy evidence, exact next action. No agent should claim a change is merged, deployed or live without evidence.
 
 ## Before making changes
 - Read this guide and the master project document; inspect actual repository state, recent commits, branches, workflows and relevant tests.

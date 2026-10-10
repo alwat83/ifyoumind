@@ -8,8 +8,11 @@ export interface CommercialStatus {
   marketProjectsPerMonth:number;
   comparisonMarkets:number;
   remainingMarketProjects:number;
+  includedReportsPerMonth:number;
+  usedIncludedReports:number;
+  remainingIncludedReports:number;
   checkoutEnabled:boolean;
-  pricing:{proMonthlyUsd:number;reportOneTimeUsd:number};
+  pricing:{proMonthlyUsd:number;reportOneTimeUsd:number;proIncludedReportsPerMonth?:number};
 }
 
 @Injectable({providedIn:'root'})
@@ -33,6 +36,14 @@ export class MonetizationService {
       {url:string;sessionId:string}
     >(this.functions,'createCommercialCheckout');
     return (await call({organizationId,offer,projectId})).data.url;
+  }
+
+  async unlockReportWithPro(organizationId:string,projectId:string):Promise<number>{
+    const call=httpsCallable<
+      {organizationId:string;projectId:string},
+      {unlocked:boolean;remainingIncludedReports:number}
+    >(this.functions,'unlockDecisionReportWithPro');
+    return (await call({organizationId,projectId})).data.remainingIncludedReports;
   }
 
   async billingPortal(organizationId:string):Promise<string>{

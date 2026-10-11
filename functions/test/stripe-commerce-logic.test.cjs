@@ -39,3 +39,13 @@ test('subscription events cannot move billing state backwards in time', () => {
   assert.equal(shouldApplySubscriptionEvent(100,undefined),true);
   assert.equal(shouldApplySubscriptionEvent(undefined,100),false);
 });
+
+test('detects whether a Stripe key can take real payments', () => {
+  const { stripeKeyMode } = require('../lib/intelligence/stripe-commerce-logic');
+  assert.equal(stripeKeyMode('sk_live_abc'),'live');
+  assert.equal(stripeKeyMode('rk_live_abc'),'live');
+  assert.equal(stripeKeyMode('sk_test_abc'),'test');
+  assert.equal(stripeKeyMode('rk_test_abc'),'test');
+  assert.equal(stripeKeyMode(''),'unknown');
+  assert.equal(stripeKeyMode(undefined),'unknown');
+});

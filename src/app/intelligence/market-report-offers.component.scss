@@ -7,3 +7,7 @@
 .report-nav>div>a:not(.report-upgrade){color:#4338ca}
 @media(max-width:720px){.report-offer>.offer-actions{width:100%}.report-nav>div{width:100%}.report-nav .report-upgrade{width:100%;box-sizing:border-box;text-align:center}}
 @media(max-width:720px){.report-nav .report-upgrade{order:-1}}
+.intent-prompt{display:grid;gap:8px;margin-bottom:14px;border:2px solid #4338ca;background:#eef2ff}
+.intent-prompt h2{margin:0;font-size:18px;color:#1e1b4b}
+.intent-prompt p{margin:0;color:#312e81}
+.intent-prompt .report-upgrade{justify-self:start}

@@ -3,7 +3,7 @@
     <a routerLink="/">← ifYouMind</a>
     <div>
       <a routerLink="/register">Start free</a>
-      <a routerLink="/register" class="report-upgrade">Get this report for your cities · $79</a>
+      <a routerLink="/register" [queryParams]="{intent:'report'}" class="report-upgrade">Get this report for your cities · $79</a>
     </div>
   </nav>
   <aside *ngIf="sampleMode" class="state no-print" style="margin-bottom:14px;border:1px solid #fcd34d;background:#fffbeb">
@@ -51,6 +51,12 @@
         <li *ngIf="brief.sources?.length"><a href="/sample-report#sources" (click)="jumpTo($event,'sources')">Sources</a></li>
       </ul>
     </nav>
+
+    <aside *ngIf="showPurchasePrompt" class="state no-print intent-prompt" role="note" aria-labelledby="intent-title">
+      <h2 id="intent-title">Your free brief is ready. Want the full $79 Decision Report for this decision?</h2>
+      <p>It adds up to three comparison cities, the plan-ready write-up and the action plan. Payment is by secure Stripe checkout.</p>
+      <a [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Get the full report · $79</a>
+    </aside>
 
     <section id="recommendation" class="executive-summary">
       <div class="recommendation">
@@ -123,7 +129,7 @@
         <p>Start with a free Decision Brief: your city compared with one other. Upgrade to the $79 Decision Report for up to three comparisons, the plan-ready write-up and the action plan.</p>
       </div>
       <div class="offer-actions">
-        <a routerLink="/register" class="offer-primary">Get this report for your cities · $79</a>
+        <a routerLink="/register" [queryParams]="{intent:'report'}" class="offer-primary">Get this report for your cities · $79</a>
         <a routerLink="/register" class="offer-secondary">Start free</a>
       </div>
     </section>

@@ -6,6 +6,7 @@ import { DecisionReportPayload, MarketIntelligenceService, MarketProject } from 
 import { ProductAnalyticsService } from './product-analytics.service';
 import { CommercialStatus, MonetizationService } from './monetization.service';
 import { MarketAnalysisComponent } from './market-analysis.component';
+import { clearIntent, parseIntent, readIntent } from '../purchase-intent';
 
 @Component({
   selector:'app-market-report',
@@ -31,6 +32,8 @@ export class MarketReportComponent implements OnInit {
   unlocking=false;
   unlockError='';
   error='';
+  /** Set when the visitor came from the sample wanting the $79 report. */
+  purchaseIntent=false;
 
   get decisionReport():DecisionReportPayload|null{
     if(!this.reportPurchased)return null;
@@ -60,6 +63,11 @@ export class MarketReportComponent implements OnInit {
 
   get canUnlockWithPro():boolean{
     return !this.reportPurchased&&this.status?.plan==='pro'&&(this.status?.remainingIncludedReports??0)>0;
+  }
+
+  /** Only for unpaid decisions: Pro members with allowance left see the existing unlock button instead. */
+  get showPurchasePrompt():boolean{
+    return !this.sampleMode&&this.purchaseIntent&&!this.reportPurchased&&!this.canUnlockWithPro;
   }
 
   get proAllowanceUsedUp():boolean{
@@ -123,6 +131,8 @@ export class MarketReportComponent implements OnInit {
         this.market.get(workspace.organizationId,projectId),
         this.monetization.status(workspace.organizationId).catch(()=>null),
       ]);
+      this.purchaseIntent=parseIntent(this.route.snapshot.queryParamMap.get('intent'))==='report'||readIntent()==='report';
+      clearIntent();
       void this.analytics.track(workspace.organizationId,'report_view',{
         paid:this.project.decisionReportPurchased?'yes':this.project.decisionReportAccess==='pro'?'pro':'no',
       });

@@ -54,7 +54,7 @@ test('unpaid brief shows what the $79 report adds, with the existing pricing CTA
 test('sample offers a direct $79 CTA and keeps Start free as the secondary action',()=>{
   const cta='Get this report for your cities · $79';
   assert.equal(reportHtml.split(cta).length-1,2,'in the top nav and in the end offer');
-  assert.match(reportHtml,/<a routerLink="\/register" class="offer-primary">Get this report for your cities · \$79<\/a>\s*<a routerLink="\/register" class="offer-secondary">Start free<\/a>/);
+  assert.match(reportHtml,/<a routerLink="\/register" \[queryParams\]="\{intent:'report'\}" class="offer-primary">Get this report for your cities · \$79<\/a>\s*<a routerLink="\/register" class="offer-secondary">Start free<\/a>/);
 });
 
 test('metric cards hide the unit line when the value already shows it',()=>{

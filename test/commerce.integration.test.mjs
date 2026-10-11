@@ -385,3 +385,80 @@ test('the growth dashboard reports confirmed payments, not browser returns', asy
     (error) => error.code === 'permission-denied',
   );
 });
+
+// ---- Decision Reports compare up to three places on every plan ----
+
+const PLACES = {
+  'Denver, CO': { fips: '08', pop: 718877, income: 94718, home: 616000, growth: 1.9 },
+  'Austin, TX': { fips: '48', pop: 979539, income: 93658, home: 555300, growth: 3 },
+  'Raleigh, NC': { fips: '37', pop: 482295, income: 82424, home: 410100, growth: 5.2 },
+  'Boise, ID': { fips: '16', pop: 236634, income: 76351, home: 470800, growth: 4.1 },
+};
+async function seedCensus() {
+  for (const [location, p] of Object.entries(PLACES)) {
+    const city = location.split(',')[0].toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim().replace(/\s+/g, '_');
+    await db().collection('censusPlaceCache').doc(`acs5-2024-2019-${p.fips}-${city}`).set({
+      location, population: p.pop, income: p.income, homeValue: p.home,
+      populationFiveYearsAgo: p.pop, populationChangePct: p.growth, placeFips: '1', stateFips: p.fips,
+    });
+  }
+}
+const createDecision = (organizationId) => call('createMarketIntelligenceProject', {
+  organizationId, location: 'Denver, CO', concept: 'Specialty coffee shop', decision: 'Where should I open?',
+  comparisonLocations: ['Austin, TX', 'Raleigh, NC', 'Boise, ID'],
+});
+
+test('a free decision shows one comparison but a paid report compares all three places', async () => {
+  await seedCensus();
+  const free = await newOrg();
+  const created = await createDecision(free);
+  assert.equal(created.error, undefined);
+  assert.deepEqual(created.result.comparisonLocations, ['Austin, TX']);
+  assert.deepEqual(created.result.reportOnlyLocations, ['Raleigh, NC', 'Boise, ID']);
+  assert.equal(created.result.brief.comparisons.length, 1);
+  assert.equal(created.result.brief.decisionReport, undefined);
+
+  const stored = await project(free, created.result.id);
+  assert.equal(stored.comparisonLocations.length, 3);
+  assert.equal(stored.brief.comparisons.length, 3);
+  assert.equal(stored.freeBrief.comparisons.length, 1);
+  assert.equal(stored.freeBrief.decisionReport, undefined);
+
+  const locked = await call('getMarketIntelligenceProject', { organizationId: free, projectId: created.result.id });
+  assert.equal(locked.result.brief.comparisons.length, 1);
+  assert.equal(locked.result.brief.decisionReport, undefined);
+  assert.equal(JSON.stringify(locked.result.brief).includes('Raleigh'), false);
+
+  await deliver('checkout.session.completed', reportSession(free, created.result.id));
+  const paid = await call('getMarketIntelligenceProject', { organizationId: free, projectId: created.result.id });
+  assert.equal(paid.result.decisionReportPurchased, true);
+  assert.deepEqual(paid.result.comparisonLocations, ['Austin, TX', 'Raleigh, NC', 'Boise, ID']);
+  assert.deepEqual(paid.result.reportOnlyLocations, []);
+  assert.equal(paid.result.brief.comparisons.length, 3);
+  assert.equal(paid.result.brief.decisionReport.comparisonFindings.length, 3);
+  const income = paid.result.brief.decisionReport.marketAnalysis.rankings.find((r) => r.metric === 'Median household income');
+  assert.equal(income.ordered.length, 4);
+});
+
+test('Pro decisions still show all three comparisons in the brief, and Pro unlock reveals the full report', async () => {
+  await seedCensus();
+  const pro = await newOrg({ plan: 'pro' });
+  const created = await createDecision(pro);
+  assert.equal(created.result.brief.comparisons.length, 3);
+  assert.deepEqual(created.result.reportOnlyLocations, []);
+  assert.equal((await project(pro, created.result.id)).freeBrief, null);
+  await call('unlockDecisionReportWithPro', { organizationId: pro, projectId: created.result.id });
+  const unlocked = await call('getMarketIntelligenceProject', { organizationId: pro, projectId: created.result.id });
+  assert.equal(unlocked.result.brief.decisionReport.comparisonFindings.length, 3);
+});
+
+test('a free decision with one comparison is unchanged', async () => {
+  await seedCensus();
+  const free = await newOrg();
+  const created = await call('createMarketIntelligenceProject', {
+    organizationId: free, location: 'Denver, CO', concept: 'Gym', decision: 'Open here?', comparisonLocations: ['Austin, TX'],
+  });
+  assert.equal(created.result.brief.comparisons.length, 1);
+  assert.deepEqual(created.result.reportOnlyLocations, []);
+  assert.equal((await project(free, created.result.id)).freeBrief, null);
+});

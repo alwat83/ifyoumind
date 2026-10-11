@@ -36,7 +36,7 @@
       <label class="big-input">
         <span>Compare with other places <em>optional</em></span>
         <input [(ngModel)]="comparisonInput" placeholder="Austin, TX; Raleigh, NC" />
-        <small class="field-help">Separate multiple places with semicolons. The free plan compares one other place; Pro compares up to three.</small>
+        <small class="field-help">Separate multiple places with semicolons. Add up to three. The free brief compares the first one; the full Decision Report compares all three.</small>
       </label>
       <div class="actions"><button class="ghost" type="button" (click)="back()">Back</button><button class="primary" type="button" (click)="next()" [disabled]="!location.trim()">Continue</button></div>
     </ng-container>

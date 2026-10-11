@@ -6,7 +6,11 @@
 **Notion:** https://app.notion.com/p/3f5c9bc5d8fd805ebaa6eae586db23bf  
 **Purpose:** Living project context for the founder and all current/future development agents.
 
-> **Project boundary and authorship:** ifYouMind and Dose Ninja are entirely separate projects. The founder confirms **all ifYouMind development through 2026-10-10 was performed using OpenAI (ChatGPT/Codex) tools and agents**. Claude, Gemini and other providers have **not** contributed to ifYouMind. Specific OpenAI agent/session ownership of individual commits may not be determinable from GitHub metadata; do not guess.
+> **Legal operator (founder-confirmed 2026-10-11):** ifYouMind is a product and service operated by **Dose Ninja Inc.**; it is not a separate legal entity. The privacy policy and terms name Dose Ninja Inc. as operator, and that is intentional.
+>
+> **Operational separation:** ifYouMind and the Dose Ninja medication-management product share **no** customer records, analytics properties, mailing lists, product credentials or marketing infrastructure.
+>
+> **Project boundary and authorship:** ifYouMind and the Dose Ninja medication-management product are entirely separate projects. The founder confirms **all ifYouMind development through 2026-10-10 was performed using OpenAI (ChatGPT/Codex) tools and agents**. Claude, Gemini and other providers have **not** contributed to ifYouMind. Specific OpenAI agent/session ownership of individual commits may not be determinable from GitHub metadata; do not guess.
 
 > **Status discipline:** planned ≠ committed ≠ merged ≠ deployed ≠ production verified. GitHub commits are implementation evidence, not proof of a working live release. Historical Notion architecture is not necessarily the current shipped product.
 
@@ -141,10 +145,19 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
 - **Prepared, not merged:**
   - [draft PR #20](https://github.com/alwat83/ifyoumind/pull/20): mobile table scroll cue on guide pages;
   - [draft PR #18](https://github.com/alwat83/ifyoumind/pull/18): consent-gated analytics, now with a "Cookies and analytics" privacy section and a Cookie settings button. Its privacy changes merge cleanly with #12; the #12/#15 copy-line conflicts noted earlier remain.
-- **Founder decisions open:**
-  - **legal operator named in the privacy policy:** the live page says "operated by Dose Ninja Inc."; the founder must confirm whether that is the correct legal entity for ifYouMind;
-  - GA4 property settings (Google signals and ads linking off; data retention);
-  - phase 1 approval.
+- **Resolved:** the legal operator is Dose Ninja Inc. (founder-confirmed). Privacy wording is in #18; Terms wording is in #12 (still on hold).
+- **Phase 1 approved by the founder (2026-10-11); committed as draft PRs, none merged:**
+
+  | PR | Phase 1 item | Status |
+  |---|---|---|
+  | [#18](https://github.com/alwat83/ifyoumind/pull/18) | Consent-gated GA4: Google signals and ad signals off in code, Consent Mode v2 ads denied, no user-ID, privacy disclosure | Committed; waits on founder GA4 property checks and release authorization |
+  | [#22](https://github.com/alwat83/ifyoumind/pull/22) | Clarity copy and founder-first offer presentation | Committed |
+  | [#23](https://github.com/alwat83/ifyoumind/pull/23) | Six-screen first-time path; verify-email page rebuilt | Committed; end to end against the Auth emulator |
+  | [#24](https://github.com/alwat83/ifyoumind/pull/24) | Five funnel events (stacked on #18, #22, #23) | Committed |
+
+  Release order: #18 → #22 → #23 → #24. Each merge deploys.
+- **Security finding (not changed):** Cloud Functions do not check `email_verified`; only the browser guard does. Decide before any "brief before verification" option.
+- **Founder checks still open for #18:** GA4 property ownership (ifYouMind-only), Google signals off, no advertising product links, data retention (2 or 14 months), granular location and device data, and data sharing settings.
 - **Customer count:** 0 verified live paying customers; five is the target.
 
 ## 7. Known technical debt and risks

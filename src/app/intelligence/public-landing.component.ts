@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CookiePreferencesService } from '../services/cookie-preferences.service';
+import { AnalyticsBootstrapService } from '../analytics/analytics-bootstrap.service';
 
 @Component({
   selector:'app-public-landing',
@@ -12,6 +13,9 @@ import { CookiePreferencesService } from '../services/cookie-preferences.service
 })
 export class PublicLandingComponent {
   private readonly cookiePreferences=inject(CookiePreferencesService);
+  private readonly funnel=inject(AnalyticsBootstrapService);
+
+  cta(name:string):void{this.funnel.track('cta_click',{cta:name});}
 
   openCookieSettings(event:Event):void{
     event.preventDefault();

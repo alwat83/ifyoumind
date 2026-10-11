@@ -1,8 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Injectable, Injector, PLATFORM_ID, inject } from '@angular/core';
-import { Analytics, ScreenTrackingService, setAnalyticsCollectionEnabled, setConsent } from '@angular/fire/analytics';
+import { Analytics, ScreenTrackingService, logEvent, setAnalyticsCollectionEnabled, setConsent } from '@angular/fire/analytics';
 import { CookieService } from '../services/cookie.service';
-import { ANALYTICS_CONSENT_GRANTED, analyticsAllowed } from './analytics-consent';
+import { ANALYTICS_CONSENT_GRANTED, FunnelEvent, analyticsAllowed } from './analytics-consent';
 
 /**
  * Starts Firebase Analytics (GA4) only after the visitor allows analytics cookies, and stops
@@ -14,6 +14,7 @@ export class AnalyticsBootstrapService{
   private readonly cookies=inject(CookieService);
   private readonly isBrowser=isPlatformBrowser(inject(PLATFORM_ID));
   private analytics:Analytics|null=null;
+  private allowed=false;
   private started=false;
 
   start():void{
@@ -21,6 +22,7 @@ export class AnalyticsBootstrapService{
     this.started=true;
     this.cookies.consentStatus$.subscribe(consent=>{
       const allowed=analyticsAllowed(consent,window.location.hostname);
+      this.allowed=allowed;
       if(allowed&&!this.analytics)this.initialize();
       else if(this.analytics)this.setCollection(allowed);
     });
@@ -37,6 +39,12 @@ export class AnalyticsBootstrapService{
     }catch(error){
       console.debug('[analytics] not started',error);
     }
+  }
+
+  /** Sends a funnel event only when the visitor has allowed analytics; otherwise does nothing. */
+  track(event:FunnelEvent,params:Record<string,string|number>={}):void{
+    if(!this.analytics||!this.allowed)return;
+    try{logEvent(this.analytics,event as string,params);}catch{/* never let analytics break the page */}
   }
 
   private setCollection(enabled:boolean):void{

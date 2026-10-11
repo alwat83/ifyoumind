@@ -47,3 +47,16 @@ test('analytics is configured without user-ID tracking and with the in-code sett
   assert.doesNotMatch(config,/UserTrackingService/);
   assert.match(config,/initializeAnalytics\(getApp\(\), \{ config: \{ \.\.\.ANALYTICS_GTAG_CONFIG \} \}\)/);
 });
+
+test('only the five allowlisted funnel events are sent, without personal data parameters',async()=>{
+  const {FUNNEL_EVENTS}=await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
+  assert.deepEqual([...FUNNEL_EVENTS],['cta_click','sample_report_view','sign_up','decision_created','checkout_started']);
+  const sources=['src/app/intelligence/public-landing.component.ts','src/app/intelligence/market-report.component.ts','src/app/auth/register/register.component.ts','src/app/intelligence/decision-flow.component.ts','src/app/intelligence/pricing.component.ts']
+    .map(file=>fs.readFileSync(new URL(`../${file}`,import.meta.url),'utf8')).join('\n');
+  const used=[...sources.matchAll(/funnel\.track\('([a-z_]+)'(.*)\);/g)];
+  assert.ok(used.length>=6);
+  for(const [,name,params] of used){
+    assert.ok(FUNNEL_EVENTS.includes(name),name);
+    assert.doesNotMatch(params,/\b(email|displayName|name|location|concept|decision|question)\s*:/i,`${name} params: ${params}`);
+  }
+});

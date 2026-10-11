@@ -31,3 +31,7 @@ export const ANALYTICS_CONSENT_GRANTED={
   personalization_storage:'denied',
   security_storage:'granted',
 } as const;
+
+/** The only custom GA4 events ifYouMind sends. Parameters never include names, emails or report contents. */
+export const FUNNEL_EVENTS=['cta_click','sample_report_view','sign_up','decision_created','checkout_started'] as const;
+export type FunnelEvent=typeof FUNNEL_EVENTS[number];

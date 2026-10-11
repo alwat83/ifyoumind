@@ -11,6 +11,7 @@ import {
   GoogleAuthProvider,
 } from '@angular/fire/auth';
 import { useLocalEmulators } from '../../firebase.config';
+import { AnalyticsBootstrapService } from '../../analytics/analytics-bootstrap.service';
 
 /** New accounts go straight to the market-analysis flow: they have no decisions to look at yet. */
 export const FIRST_DECISION_ROUTE=['/app/decide'];
@@ -31,11 +32,13 @@ export class RegisterComponent {
 
   private auth:Auth=inject(Auth);
   private router:Router=inject(Router);
+  private funnel=inject(AnalyticsBootstrapService);
 
   async register(){
     try{
       const credential=await createUserWithEmailAndPassword(this.auth,this.email,this.password);
       await updateProfile(credential.user,{displayName:this.displayName.trim()});
+      this.funnel.track('sign_up',{method:'email'});
       if(!useLocalEmulators){
         await this.sendVerification(credential.user);
         await this.router.navigate(['/verify-email']);
@@ -60,6 +63,7 @@ export class RegisterComponent {
       const result=await signInWithPopup(this.auth,new GoogleAuthProvider());
       // Returning Google users go to their decisions; brand-new ones start the market analysis.
       const isNew=result.user.metadata.creationTime===result.user.metadata.lastSignInTime;
+      if(isNew) this.funnel.track('sign_up',{method:'google'});
       if(isNew) await this.router.navigate(FIRST_DECISION_ROUTE,{queryParams:FIRST_DECISION_QUERY});
       else await this.router.navigate(['/app']);
     }catch(error:any){this.errorMessage=error.message;}

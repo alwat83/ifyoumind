@@ -1,7 +1,7 @@
 <section class="analysis">
   <div class="head">
     <div>
-      <p class="eyebrow">Business-plan ready</p>
+      <p class="eyebrow">Business-plan ready <span *ngIf="includedInReport" class="paid-pill">Included in the $79 report</span></p>
       <h2>{{ section.title }}</h2>
     </div>
     <button type="button" class="no-print" (click)="copy()">{{ copied ? 'Copied' : 'Copy as text' }}</button>

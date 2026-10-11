@@ -12,7 +12,7 @@ import { MarketAnalysisComponent } from './market-analysis.component';
   standalone:true,
   imports:[CommonModule,RouterLink,MarketAnalysisComponent],
   templateUrl:'./market-report.component.html',
-  styleUrls:['./market-report.component.scss'],
+  styleUrls:['./market-report.component.scss','./market-report-offers.component.scss'],
 })
 export class MarketReportComponent implements OnInit {
   private readonly route=inject(ActivatedRoute);
@@ -44,6 +44,13 @@ export class MarketReportComponent implements OnInit {
         strengthens:'Verified local demand plus acceptable occupancy costs would strengthen the case.',
       },
     };
+  }
+
+  /** Header label: the public sample is the $79 report; unpaid decisions are a free brief. */
+  get reportLabel():string{
+    if(this.sampleMode)return 'Decision Report · Sample';
+    if(this.reportPurchased)return 'Decision Report';
+    return 'Decision Brief';
   }
 
   get reportPurchased():boolean{
@@ -125,6 +132,21 @@ export class MarketReportComponent implements OnInit {
 
   printReport():void{
     window.print();
+  }
+
+  /** The formatted value already shows the unit for USD ($) and percentages (%). */
+  showUnit(unit:string):boolean{
+    return unit!=='USD'&&unit!=='%';
+  }
+
+  /** In-page jump links; the app uses a base href, so a bare #fragment would leave the page. */
+  jumpTo(event:Event,id:string):void{
+    const target=document.getElementById(id);
+    if(!target)return;
+    event.preventDefault();
+    target.scrollIntoView({behavior:'smooth',block:'start'});
+    target.setAttribute('tabindex','-1');
+    target.focus({preventScroll:true});
   }
 
   formatMetric(value:number,unit:string):string{

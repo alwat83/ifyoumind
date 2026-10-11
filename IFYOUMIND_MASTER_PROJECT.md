@@ -78,16 +78,26 @@ Session on branch `claude/jolly-ramanujan-ofr18a`. Builds on the commercial-exec
 ## ORGANIC DISCOVERY AND SEO READINESS — 2026-10-11 (Claude, Anthropic)
 Founder-approved preparation phase. Nothing was published, deployed, sent or configured externally. PR #12 is still on hold and the live $79 payment test is still deferred. No Dose Ninja resources were used.
 
-- **SEO metadata — committed, [draft PR #16](https://github.com/alwat83/ifyoumind/pull/16)** (`claude/jolly-ramanujan-ofr18a-seo`).
+- **SEO metadata — production verified, [PR #16](https://github.com/alwat83/ifyoumind/pull/16)** (`claude/jolly-ramanujan-ofr18a-seo`).
   - Live check before the fix: every route declared `https://ifyoumind.com/` as its canonical URL, including `/sample-report`, and login and app pages were indexable.
   - The PR adds `src/public-pages.json` as the single list of indexable pages, a `PageMetaService` that sets per-route canonical, robots and share tags, and noindex for auth and app routes.
   - The live sitemap was already correct (the build regenerates it); the committed copy was stale.
-  - `npm run test:seo` and the build pass. Not merged.
-- **Guides — committed, [draft PR #17](https://github.com/alwat83/ifyoumind/pull/17)** (`claude/jolly-ramanujan-ofr18a-guides`, stacked on #16).
+  - `npm run test:seo` and the build pass.
+- **Guides — production verified, [PR #17](https://github.com/alwat83/ifyoumind/pull/17)** (`claude/jolly-ramanujan-ofr18a-guides`).
   - Markdown in `content/guides/` is rendered at build time into static `public/guides/<slug>/index.html` pages, which Firebase Hosting serves before the SPA rewrite. One shared template and stylesheet; `marked` is a dev dependency.
   - First guide: `/guides/market-analysis-business-plan/`.
   - axe-core found 0 WCAG 2.1 AA violations on mobile and desktop.
-  - **Awaiting founder approval of the final page** before merge, because merging deploys it.
+- **SEO release — 2026-10-11, founder-authorized, production verified.**
+
+  | PR | Merge commit | Deploy run | Live check |
+  |---|---|---|---|
+  | #16 | `1e73076` (head `38e94a0`) | 38160120570, success | PASS: self-canonicals on `/`, `/sample-report` (UTM stripped), `/privacy-policy`, `/terms-of-conduct`; `noindex,nofollow` and no canonical on `/login`, `/register`, `/app/*`; sitemap 4 URLs; no console errors |
+  | #17 | `acf89ce` (head `888073f`, master merged in) | 38160728377, success | PASS: `/guides/market-analysis-business-plan` 301 → trailing slash, 200; canonical, og and Article/BreadcrumbList JSON-LD correct, dated 2026-10-11; all 13 Census figures present; 7 external and all internal links 200; 4 links to `/sample-report`; axe 0 violations and no overflow at 390px and 1280px; sitemap 6 URLs; homepage footer link present |
+
+  The checks were read-only, run from the ifyou environment.
+  - **Follow-up (not started):** the mobile comparison table scrolls sideways with no visual cue.
+  - **Next:** Search Console sitemap submission once ownership is confirmed.
+  - **Still on hold:** PR #18 (analytics consent) stays unmerged pending its consent and privacy-policy review; PR #12 is on hold; the live $79 test is deferred.
 - **Cornerstone article — verified.** All Census figures (Austin, Charlotte and Nashville-Davidson balance; ACS 5-year 2015–2019 and 2020–2024, tables B01003, B19013, B25077) match data.census.gov exactly, and the 2024 values match Census Reporter. External links were checked and the SBA link updated.
 - **Analytics — gap found, not fixed.**
   - GA4 (G-DZMLBPS4ZX) is configured but never initialises. Nothing injects AngularFire Analytics or `ScreenTrackingService` in routed code, and the live site sends zero GA requests.

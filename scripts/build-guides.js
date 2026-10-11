@@ -20,7 +20,7 @@ function renderBody(markdown) {
   let tableCount = 0;
   return marked.parse(markdown, { gfm: true })
     .replace(/<table>/g, () => `<div class="table-wrap" role="region" tabindex="0" aria-label="Table ${++tableCount}, scrolls sideways on small screens"><table>`)
-    .replace(/<\/table>/g, "</table></div>")
+    .replace(/<\/table>/g, '</table></div><p class="table-hint" aria-hidden="true">Swipe the table sideways to see every column.</p>')
     .replace(/<th>/g, '<th scope="col">')
     .replace(/<input (?:checked="" )?disabled="" type="checkbox">\s?/g, '<span class="check" aria-hidden="true"></span>')
     .replace(/<ul>(\s*<li><span class="check")/g, '<ul class="checklist">$1')

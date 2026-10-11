@@ -1,8 +1,8 @@
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
-import { defineSecret } from 'firebase-functions/params';
+import { defineSecret, defineString } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
-import { grantsPro, shouldApplySubscriptionEvent, validStripeSignature } from './stripe-commerce-logic';
+import { grantsPro, shouldApplySubscriptionEvent, stripeKeyMode, validStripeSignature } from './stripe-commerce-logic';
 import {
   allowancePeriod,
   blocksNewProCheckout,
@@ -15,8 +15,10 @@ import {
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const stripeSecretKey = defineSecret('STRIPE_SECRET_KEY');
 const stripeWebhookSecret = defineSecret('STRIPE_WEBHOOK_SECRET');
-const PRO_PRICE_ID = 'price_1UNpHICZjBRiXCDejbdIRMk2';
-const REPORT_PRICE_ID = 'price_1UNpHNCZjBRiXCDeoCCxrn8u';
+// Price IDs belong to one Stripe mode. The defaults are the sandbox (test-mode) prices; going live
+// means setting live price IDs (functions/.env or deploy-time params) together with a live secret key.
+const PRO_PRICE_ID = defineString('STRIPE_PRO_PRICE_ID', { default: 'price_1UNpHICZjBRiXCDejbdIRMk2' });
+const REPORT_PRICE_ID = defineString('STRIPE_REPORT_PRICE_ID', { default: 'price_1UNpHNCZjBRiXCDeoCCxrn8u' });
 
 async function stripeGet(path:string){
   const response=await fetch(`https://api.stripe.com/v1/${path}`,{
@@ -80,7 +82,7 @@ function monthStart(): Timestamp {
   return Timestamp.fromDate(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)));
 }
 
-export const getCommercialStatus = onCall(async (request) => {
+export const getCommercialStatus = onCall({secrets:[stripeSecretKey]}, async (request) => {
   const scope = await authorizeOrganization(
     request.auth?.uid, request.data?.organizationId, readMembership,
   );
@@ -109,6 +111,7 @@ export const getCommercialStatus = onCall(async (request) => {
     usedIncludedReports,
     remainingIncludedReports: Math.max(0, includedReportsPerMonth - usedIncludedReports),
     checkoutEnabled: true,
+    paymentsLive: stripeKeyMode(stripeSecretKey.value()) === 'live',
     pricing: {
       proMonthlyUsd: COMMERCIAL_PLANS.pro.monthlyPriceUsd,
       reportOneTimeUsd: COMMERCIAL_PLANS.report.oneTimePriceUsd,
@@ -192,7 +195,10 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
 
   const params=new URLSearchParams();
   params.set('mode',offer==='pro'?'subscription':'payment');
-  params.set('line_items[0][price]',offer==='pro'?PRO_PRICE_ID:REPORT_PRICE_ID);
+  params.set('line_items[0][price]',offer==='pro'?PRO_PRICE_ID.value():REPORT_PRICE_ID.value());
+  if(stripeKeyMode(stripeSecretKey.value())!=='live'){
+    console.warn('Creating a Stripe checkout with a non-live key: real cards will be declined.');
+  }
   params.set('line_items[0][quantity]','1');
   // Lets customers enter a promotion code created in the Stripe dashboard. No codes exist by default.
   params.set('allow_promotion_codes','true');

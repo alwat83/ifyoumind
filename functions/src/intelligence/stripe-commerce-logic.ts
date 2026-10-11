@@ -20,6 +20,14 @@ export function validStripeSignature(
   });
 }
 
+/** Which Stripe mode a secret or restricted key belongs to. Test keys cannot take real payments. */
+export function stripeKeyMode(key:unknown):'live'|'test'|'unknown'{
+  if(typeof key!=='string')return 'unknown';
+  if(/^(sk|rk)_live_/.test(key))return 'live';
+  if(/^(sk|rk)_test_/.test(key))return 'test';
+  return 'unknown';
+}
+
 export function grantsPro(status:unknown):boolean{
   return status==='active'||status==='trialing';
 }

@@ -10,8 +10,19 @@ export interface MarketMetric {
   sourceLabel?:string;
   sourceUrl?:string;
 }
+export interface MarketAnalysisSection {
+  title:string;
+  intro:string;
+  paragraphs:Array<{heading:string;text:string}>;
+  rankings:Array<{metric:string;unit:'people'|'USD'|'%';ordered:Array<{location:string;value:number}>}>;
+  nextResearch:string[];
+  citations:string[];
+  disclaimer:string;
+  plainText:string;
+}
 export interface DecisionReportPayload {
   schemaVersion:number;
+  marketAnalysis?:MarketAnalysisSection;
   posture:'favorable'|'caution'|'mixed';
   evidenceCoverage:{sourcedMetrics:number;totalMetrics:number;percent:number};
   actionPlan:Array<{stage:string;title:string;detail:string}>;
@@ -37,6 +48,7 @@ export interface MarketProject {
   brief?:MarketBrief;
   decisionReportPurchased?:boolean;
   decisionReportAccess?:'purchased'|'pro'|'none';
+  sample?:boolean;
   dataNotice?:string;
   createdAt?:string|null;
 }
@@ -57,6 +69,11 @@ export class MarketIntelligenceService {
       MarketProject
     >(this.functions,'createMarketIntelligenceProject');
     return (await call({organizationId,location,concept,decision,comparisonLocations})).data;
+  }
+
+  async sample():Promise<MarketProject>{
+    const call=httpsCallable<Record<string,never>,MarketProject>(this.functions,'getSampleDecisionReport');
+    return (await call({})).data;
   }
 
   async get(organizationId:string, projectId:string):Promise<MarketProject>{

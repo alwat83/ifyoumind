@@ -3,6 +3,7 @@ import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
 import { decisionReportAccess } from './report-entitlement-logic';
+import { buildMarketAnalysis, businessPhrase, marketAnalysisText } from './market-analysis';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const censusApiKey = defineSecret('CENSUS_API_KEY');
@@ -53,14 +54,14 @@ function normalize(value:string):string {
 function parseLocation(location:string):{city:string;state:string;stateFips:string}{
   const parts=location.split(',').map(part=>part.trim()).filter(Boolean);
   if(parts.length<2){
-    throw new HttpsError('invalid-argument','For live data, enter a U.S. city and state, for example Birmingham, AL.');
+    throw new HttpsError('invalid-argument','For live data, enter a U.S. city and state, for example Denver, CO.');
   }
   const city=parts[0];
   const rawState=parts[parts.length-1];
   const state=rawState.length===2 ? rawState.toUpperCase() : STATE_NAMES[rawState.replace(/\b\w/g,c=>c.toUpperCase())];
   const stateFips=state ? STATE_FIPS[state] : '';
   if(!city||!state||!stateFips){
-    throw new HttpsError('invalid-argument','For live data, enter a valid U.S. city and state, for example Birmingham, AL.');
+    throw new HttpsError('invalid-argument','For live data, enter a valid U.S. city and state, for example Denver, CO.');
   }
   return {city,state,stateFips};
 }
@@ -121,16 +122,31 @@ async function fetchPlaceRows(year:number,stateFips:string):Promise<string[][]>{
   );
 }
 
-function findPlace(rows:string[][],city:string):string[]|null{
+// Consolidated city-county governments are listed under compound names, e.g.
+// "Nashville-Davidson metropolitan government (balance)" or "Urban Honolulu CDP".
+const CONSOLIDATED_PLACE=/\b(metropolitan government|metro government|urban county|unified government|consolidated government)\b|\(balance\)/i;
+
+export function censusPlaceKeys(censusName:string):{exact:string[];consolidated:string}{
+  const base=censusName.split(',')[0].replace(/\(balance\)/ig,'').replace(/^urban\s+/i,'').trim();
+  const designation=/\b(city|town|village|borough|CDP|municipality)\b/ig;
+  // "Boise City city" should match both "Boise City" and "Boise".
+  const trailingOnly=base.replace(/\s+(city|town|village|borough|CDP|municipality)$/i,'').trim();
+  const allStripped=base.replace(designation,'').trim();
+  const consolidated=CONSOLIDATED_PLACE.test(censusName)
+    ? normalize(allStripped.split(/[-/]/)[0]||'')
+    : '';
+  return {exact:[normalize(trailingOnly),normalize(allStripped)],consolidated};
+}
+
+export function findPlace(rows:string[][],city:string):string[]|null{
   const target=normalize(city);
   const headers=rows[0]||[];
   const nameIndex=headers.indexOf('NAME');
   if(nameIndex<0)return null;
-  const candidates=rows.slice(1).filter(row=>{
-    const placeName=(row[nameIndex]||'').split(',')[0].replace(/\b(city|town|village|borough|CDP|municipality)\b/ig,'').trim();
-    return normalize(placeName)===target;
-  });
-  return candidates[0]||null;
+  const body=rows.slice(1);
+  const exact=body.find(row=>censusPlaceKeys(row[nameIndex]||'').exact.includes(target));
+  if(exact)return exact;
+  return body.find(row=>censusPlaceKeys(row[nameIndex]||'').consolidated===target)||null;
 }
 
 function numberCell(row:string[],headers:string[],key:string):number{
@@ -159,7 +175,7 @@ async function fetchCensusPlace(location:string):Promise<CensusPlace>{
   const latestHeaders=latest[0]||[];
   const latestRow=findPlace(latest,parsed.city);
   if(!latestRow){
-    throw new HttpsError('not-found',`I couldn't match "${location}" to a Census place. Try city, state such as Birmingham, AL.`);
+    throw new HttpsError('not-found',`I couldn't match "${location}" to a Census place. Try city and state, such as Denver, CO.`);
   }
   const priorHeaders=prior[0]||[];
   const priorRow=findPlace(prior,parsed.city);
@@ -217,7 +233,13 @@ export function briefForEntitlement(brief:any,purchased:boolean){
   return freeBrief;
 }
 
-function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[]){
+function withPlainText<T extends Parameters<typeof marketAnalysisText>[0]>(section:T){
+  return {...section,plainText:marketAnalysisText(section)};
+}
+
+export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],concept=''){
+  const business=businessPhrase(concept);
+  const retrievedAt=new Date().toISOString();
   const metrics=metricsFor(primary);
   const growth=primary.populationChangePct;
   const opportunity:string[]=[];
@@ -239,9 +261,13 @@ function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[]){
   if(!risks.length) risks.push('Census demographics alone do not measure competition, commercial rent, foot traffic, or concept-level demand.');
 
   const questions=[
-    `What local competitors serve the same customer as ${primary.location}?`,
+    business
+      ? `How many ${business} competitors already serve your target customers in ${primary.location}?`
+      : `What local competitors serve the same customer as ${primary.location}?`,
     'What are current commercial rents and occupancy costs for the exact trade area?',
-    'What foot-traffic or customer-demand signal would confirm this opportunity?',
+    business
+      ? `What foot-traffic or customer-demand signal would confirm demand for your ${business}?`
+      : 'What foot-traffic or customer-demand signal would confirm this opportunity?',
   ];
   const trimmedOpportunities=opportunity.slice(0,2);
   const trimmedRisks=risks.slice(0,2);
@@ -257,11 +283,12 @@ function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[]){
     comparisons:comparisons.map(place=>({location:place.location,metrics:metricsFor(place)})),
     questions,
     sources:[
-      {provider:'U.S. Census Bureau',dataset:'2024 ACS 5-year estimates',retrievedAt:new Date().toISOString(),url:'https://api.census.gov/data/2024/acs/acs5'},
-      {provider:'U.S. Census Bureau',dataset:'2019 ACS 5-year estimates',retrievedAt:new Date().toISOString(),url:'https://api.census.gov/data/2019/acs/acs5'},
+      {provider:'U.S. Census Bureau',dataset:'2024 ACS 5-year estimates',retrievedAt,url:'https://api.census.gov/data/2024/acs/acs5'},
+      {provider:'U.S. Census Bureau',dataset:'2019 ACS 5-year estimates',retrievedAt,url:'https://api.census.gov/data/2019/acs/acs5'},
     ],
     decisionReport:{
-      schemaVersion:1,
+      schemaVersion:2,
+      marketAnalysis:withPlainText(buildMarketAnalysis({concept,primary,comparisons,retrievedAt})),
       posture,
       evidenceCoverage:{
         sourcedMetrics,
@@ -284,7 +311,9 @@ function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[]){
         return {location:place.location,findings};
       }),
       decisionTriggers:{
-        strengthens:'Verified local demand plus acceptable occupancy costs would strengthen the case.',
+        strengthens:business
+          ? `Verified demand for your ${business} plus acceptable occupancy costs would strengthen the case.`
+          : 'Verified local demand plus acceptable occupancy costs would strengthen the case.',
         weakens:trimmedRisks[0]||'New local evidence materially weakens the demand or economics case.',
         unresolved:questions[0],
       },
@@ -342,7 +371,7 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
     );
 
     stage='analysis';
-    const brief=buildLiveBrief(primary,comparisonPlaces);
+    const brief=buildLiveBrief(primary,comparisonPlaces,concept);
 
     stage='save';
     const ref = orgRef.collection('marketProjects').doc();
@@ -435,4 +464,57 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
       : 'Synthetic demo enrichment — not real market data.',
     createdAt:data.createdAt?.toDate?.().toISOString?.() || null,
   };
+});
+
+// Public sample report. Built from live Census data through the same pipeline as customer reports,
+// cached so anonymous traffic never reaches the Census API more than once per refresh window.
+export const SAMPLE_DECISION={
+  concept:'Specialty coffee shop',
+  decision:'Should I open my specialty coffee shop in Austin, or in Nashville or Charlotte?',
+  location:'Austin, TX',
+  comparisonLocations:['Nashville, TN','Charlotte, NC'],
+} as const;
+const SAMPLE_REFRESH_MS=30*24*60*60*1000;
+
+export function sampleNeedsRefresh(generatedAtMs:unknown,schemaVersion:unknown,currentSchema:number,nowMs=Date.now()):boolean{
+  const generated=Number(generatedAtMs);
+  if(schemaVersion!==currentSchema||!Number.isFinite(generated))return true;
+  return nowMs-generated>SAMPLE_REFRESH_MS;
+}
+
+const SAMPLE_SCHEMA=2;
+
+export const getSampleDecisionReport = onCall({secrets:[censusApiKey]}, async () => {
+  const ref=getFirestore().collection('publicSamples').doc('decision-report');
+  const cached=(await ref.get()).data();
+  if(cached&&!sampleNeedsRefresh(cached.generatedAtMs,cached.schemaVersion,SAMPLE_SCHEMA)){
+    return cached.payload;
+  }
+  try{
+    const [primary,...comparisonPlaces]=await Promise.all(
+      [SAMPLE_DECISION.location,...SAMPLE_DECISION.comparisonLocations].map(value=>fetchCensusPlace(value)),
+    );
+    const generatedAt=new Date().toISOString();
+    const payload={
+      id:'sample',
+      sample:true,
+      location:SAMPLE_DECISION.location,
+      concept:SAMPLE_DECISION.concept,
+      decision:SAMPLE_DECISION.decision,
+      comparisonLocations:[...SAMPLE_DECISION.comparisonLocations],
+      mode:'live',
+      brief:buildLiveBrief(primary,comparisonPlaces,SAMPLE_DECISION.concept),
+      decisionReportPurchased:false,
+      decisionReportAccess:'none',
+      dataNotice:'Sample report. Figures are real U.S. Census Bureau ACS 5-year estimates retrieved for this example; the decision itself is illustrative. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.',
+      createdAt:generatedAt,
+    };
+    await ref.set({payload,schemaVersion:SAMPLE_SCHEMA,generatedAtMs:Date.parse(generatedAt)});
+    return payload;
+  }catch(error){
+    // Serve a stale sample rather than nothing if Census is down.
+    if(cached?.payload)return cached.payload;
+    console.error('Sample report generation failed',error);
+    throw new HttpsError('unavailable','The sample report is temporarily unavailable.');
+  }
 });

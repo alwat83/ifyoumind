@@ -41,6 +41,7 @@ export class ReportEvidenceComponent {
     if(value.value===null)return 'Not published';
     if(check.unit==='USD')return formatUsd(value.value);
     if(check.unit==='share')return formatShare(value.value);
+    if(check.unit==='count')return formatCount(value.value);
     return `${value.value>=0?'+':''}${value.value.toFixed(1)}%`;
   }
 

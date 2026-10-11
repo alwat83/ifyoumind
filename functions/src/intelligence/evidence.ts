@@ -205,9 +205,9 @@ export function placeEvidence(detail: PlaceDetail): PlaceEvidence {
 }
 
 export interface ComparisonCheck {
-  metric: 'medianIncome' | 'medianHomeValue' | 'growth' | 'affordableShare' | 'age25to44Share';
+  metric: 'population' | 'medianIncome' | 'medianHomeValue' | 'growth' | 'affordableShare' | 'age25to44Share';
   label: string;
-  unit: 'USD' | 'pct_points' | 'share';
+  unit: 'USD' | 'pct_points' | 'share' | 'count';
   primary: EvidenceValue;
   other: EvidenceValue;
   otherLocation: string;
@@ -230,6 +230,7 @@ export function wordingFor(label: string, primary: string, other: string, test: 
 export function compareEvidence(primary: PlaceEvidence, others: PlaceEvidence[], threshold = 75000): ComparisonCheck[] {
   const share = (p: PlaceEvidence) => p.affordable.find(a => a.threshold === threshold)?.share ?? unavailable('');
   const metrics: Array<[ComparisonCheck['metric'], string, ComparisonCheck['unit'], (p: PlaceEvidence) => EvidenceValue]> = [
+    ['population', 'Population', 'count', p => p.population],
     ['medianIncome', 'Median household income', 'USD', p => p.medianIncome],
     ['affordableShare', `Share of households earning ${usd(threshold)} or more`, 'share', share],
     ['age25to44Share', 'Share of residents aged 25 to 44', 'share', p => p.age25to44.share],
@@ -313,4 +314,20 @@ export function buildReportEvidence(primary: PlaceDetail, comparisons: PlaceDeta
     method: METHOD,
     plainText: evidenceText(base, business),
   };
+}
+
+const ANALYSIS_METRIC: Record<string, ComparisonCheck['metric']> = { population: 'population', income: 'medianIncome', homeValue: 'medianHomeValue', growth: 'growth' };
+
+/** Looks up the difference-test verdict for the primary place against one comparison. */
+export function confidenceFrom(evidence: Pick<ReportEvidence, 'comparisons'>) {
+  return (metric: 'population' | 'income' | 'homeValue' | 'growth', otherLocation: string): Verdict | undefined =>
+    evidence.comparisons.find(c => c.metric === ANALYSIS_METRIC[metric] && c.otherLocation === otherLocation)?.test.verdict;
+}
+
+/** Suffix that states whether a comparison is a real difference. */
+export function verdictSuffix(verdict: Verdict | undefined): string {
+  if (verdict === 'higher' || verdict === 'lower') return ' This is a real difference at 90% confidence.';
+  if (verdict === 'similar') return ' This is within the margin of error, so it is not a real difference.';
+  if (verdict === 'not-testable') return " This difference can't be tested because a margin of error is missing.";
+  return '';
 }

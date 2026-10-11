@@ -4,7 +4,7 @@ import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
 import { decisionReportAccess, decisionView, freeBriefComparisonCount, REPORT_COMPARISON_LIMIT } from './report-entitlement-logic';
 import { buildMarketAnalysis, businessPhrase, marketAnalysisText } from './market-analysis';
-import { ACS_DETAIL_GROUPS, ACS_PRIOR_GROUP, AcsRow, PlaceDetail, ReportEvidence, acsVariables, buildReportEvidence } from './evidence';
+import { ACS_DETAIL_GROUPS, ACS_PRIOR_GROUP, AcsRow, PlaceDetail, PlaceEvidence, ReportEvidence, acsVariables, buildReportEvidence, confidenceFrom, verdictSuffix } from './evidence';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const censusApiKey = defineSecret('CENSUS_API_KEY');
@@ -261,9 +261,49 @@ export async function reportEvidenceFor(location:string,comparisonLocations:stri
   }
 }
 
-export function withEvidence(brief:any,evidence:EvidenceResult|undefined){
+function analysisPlace(place:PlaceEvidence):CensusPlace|null{
+  const {population,medianIncome,medianHomeValue,growth}=place;
+  if(population.value===null||medianIncome.value===null||medianHomeValue.value===null)return null;
+  return {
+    location:place.location,
+    population:population.value,
+    income:medianIncome.value,
+    homeValue:medianHomeValue.value,
+    populationFiveYearsAgo:null,
+    populationChangePct:growth.value===null?null:Number(growth.value.toFixed(1)),
+    placeFips:place.geography.fips.slice(2),
+    stateFips:place.geography.fips.slice(0,2),
+  };
+}
+
+/**
+ * Attaches evidence to a paid report and rewrites the comparative wording to follow the difference
+ * tests, so no paragraph calls a place higher or the highest when the margin of error doesn't support it.
+ */
+export function withEvidence(brief:any,evidence:EvidenceResult|undefined,concept=''){
   if(!evidence||!brief?.decisionReport)return brief;
-  return {...brief,decisionReport:{...brief.decisionReport,evidence}};
+  const decisionReport={...brief.decisionReport,evidence};
+  if(evidence.status!=='unavailable'){
+    const places=evidence.places.map(analysisPlace);
+    if(places.every((p):p is CensusPlace=>p!==null)){
+      const [primary,...comparisons]=places;
+      const confidence=confidenceFrom(evidence);
+      decisionReport.marketAnalysis=withPlainText(buildMarketAnalysis({
+        concept,primary,comparisons,retrievedAt:evidence.source.retrievedAt,confidence,
+      }));
+      decisionReport.comparisonFindings=comparisons.map(place=>{
+        const findings:string[]=[];
+        const incomeDelta=primary.income-place.income;
+        findings.push(`Median household income is ${new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Math.abs(incomeDelta))} ${incomeDelta>=0?'higher':'lower'} than ${place.location} on the estimates.${verdictSuffix(confidence('income',place.location))}`);
+        if(primary.populationChangePct!==null&&place.populationChangePct!==null){
+          const delta=Number((primary.populationChangePct-place.populationChangePct).toFixed(1));
+          findings.push(`Estimated five-year population change is ${Math.abs(delta)} percentage points ${delta>=0?'stronger':'weaker'} than ${place.location}.${verdictSuffix(confidence('growth',place.location))}`);
+        }
+        return {location:place.location,findings};
+      });
+    }
+  }
+  return {...brief,decisionReport};
 }
 
 function metricsFor(place:CensusPlace){
@@ -316,7 +356,7 @@ export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],con
   if(comparisons.length){
     const higherIncome=comparisons.filter(place=>place.income>primary.income).length;
     const strongerGrowth=comparisons.filter(place=>(place.populationChangePct??-999)>(primary.populationChangePct??-999)).length;
-    if(higherIncome) risks.push(`${higherIncome} comparison market${higherIncome===1?' has':'s have'} a higher median household income.`);
+    if(higherIncome) risks.push(`${higherIncome} comparison market${higherIncome===1?' has':'s have'} a higher estimated median household income (differences may be within the margin of error).`);
     if(strongerGrowth) risks.push(`${strongerGrowth} comparison market${strongerGrowth===1?' shows':'s show'} higher estimated 5-year population change (differences may be within the margin of error).`);
   }
   if(!risks.length) risks.push('Census demographics alone do not measure competition, commercial rent, foot traffic, or concept-level demand.');
@@ -364,10 +404,10 @@ export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],con
       comparisonFindings:comparisons.map(place=>{
         const findings:string[]=[];
         const incomeDelta=primary.income-place.income;
-        findings.push(`Median household income is ${new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Math.abs(incomeDelta))} ${incomeDelta>=0?'higher':'lower'} than ${place.location}.`);
+        findings.push(`Median household income is ${new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Math.abs(incomeDelta))} ${incomeDelta>=0?'higher':'lower'} than ${place.location} on the estimates.`);
         if(primary.populationChangePct!==null&&place.populationChangePct!==null){
           const delta=Number((primary.populationChangePct-place.populationChangePct).toFixed(1));
-          findings.push(`Five-year population change is ${Math.abs(delta)} percentage points ${delta>=0?'stronger':'weaker'} than ${place.location}.`);
+          findings.push(`Estimated five-year population change is ${Math.abs(delta)} percentage points ${delta>=0?'stronger':'weaker'} than ${place.location}.`);
         }
         return {location:place.location,findings};
       }),
@@ -538,7 +578,7 @@ export const getMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, asy
     comparisonLocations:view.comparisonLocations,
     reportOnlyLocations:view.reportOnlyLocations,
     mode:data.mode || 'demo',
-    brief:reportAccess!=='none'?withEvidence(briefForEntitlement(view.brief,true),evidence):briefForEntitlement(view.brief,false),
+    brief:reportAccess!=='none'?withEvidence(briefForEntitlement(view.brief,true),evidence,String(data.concept||'')):briefForEntitlement(view.brief,false),
     decisionReportPurchased,
     decisionReportAccess:reportAccess,
     dataNotice:data.mode === 'live'
@@ -592,6 +632,7 @@ export const getSampleDecisionReport = onCall({secrets:[censusApiKey]}, async ()
       brief:withEvidence(
         buildLiveBrief(primary,comparisonPlaces,SAMPLE_DECISION.concept),
         await reportEvidenceFor(SAMPLE_DECISION.location,[...SAMPLE_DECISION.comparisonLocations],SAMPLE_DECISION.concept),
+        SAMPLE_DECISION.concept,
       ),
       decisionReportPurchased:false,
       decisionReportAccess:'none',

@@ -14,7 +14,7 @@ export interface MarketAnalysisSection {
   title:string;
   intro:string;
   paragraphs:Array<{heading:string;text:string}>;
-  rankings:Array<{metric:string;unit:'people'|'USD'|'%';ordered:Array<{location:string;value:number}>}>;
+  rankings:Array<{metric:string;unit:'people'|'USD'|'%';ordered:Array<{location:string;value:number}>;note?:string}>;
   nextResearch:string[];
   citations:string[];
   disclaimer:string;
@@ -42,7 +42,7 @@ export interface PlaceEvidence {
 export interface ComparisonCheck {
   metric:string;
   label:string;
-  unit:'USD'|'pct_points'|'share';
+  unit:'USD'|'pct_points'|'share'|'count';
   primary:EvidenceValue;
   other:EvidenceValue;
   otherLocation:string;

@@ -16,7 +16,8 @@
     "test:foundation": "npm --prefix functions test && npm run test:rules && npm run test:organizations",
     "test:organizations": "npm --prefix functions run build && firebase emulators:exec --project demo-ifyoumind --only auth,firestore \"node --test test/organizations.integration.test.mjs\"",
     "test:commerce": "npm --prefix functions run build && firebase emulators:exec --project demo-ifyoumind --only firestore \"node --test test/commerce.integration.test.mjs\"",
-    "preflight": "node scripts/preflight.js"
+    "preflight": "node scripts/preflight.js",
+    "test:seo": "node --test test/seo.test.mjs"
   },
   "private": true,
   "dependencies": {

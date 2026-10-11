@@ -118,6 +118,35 @@ Founder-approved preparation phase. Nothing was published, deployed, sent or con
 
   Full review: Claude Docs "SEO readiness and Customer Value Expansion review".
 
+## CUSTOMER VALUE EXPANSION, UX AND CONVERSION STRATEGY — 2026-10-11 (Claude, Anthropic)
+Strategy only: no features implemented, no pricing or entitlement changes, nothing deployed. The full assessment is in the Claude Docs doc "Customer Value Expansion, UX and Conversion Strategy".
+
+- **Finding:** an email sign-up passes about nine screens, including an inbox detour, before seeing a personalised result. Nothing before sign-in is measured. The paid report adds cities but little new insight. Pro at $39/month (5 reports, kept after cancelling) undercuts the $79 report.
+- **Recommended phase 1, "Measure and clarify"** (planned; needs approval):
+  1. Consent-gated GA4 (#18) plus five funnel events.
+  2. Clarity copy: free-brief limit, one name ("Decision Report"), register headline.
+  3. Intent carry-through, cutting nine screens to six with no change to auth or paid access.
+  4. Founder-first offer presentation, copy only.
+
+  Gate to phase 2: about 2 weeks or about 200 measured homepage visits.
+- **Phase 2, report value** (planned):
+  - ACS significance flags (Census Z-test, 90% MOE);
+  - households above income thresholds (B19001) and age bands (B01001);
+  - County Business Patterns employer establishments, plus Nonemployer Statistics;
+  - residential median gross rent (B25064), labelled as a proxy;
+  - a "copy into my business plan" export.
+
+  Commercial rent has no reliable free official source, so it is user-entered evidence only.
+- **Later phases:** professional offer (report pack or monthly plan above $79, decided on evidence); grounded AI (facts in, sentences out, with fact-ID validation and rule-based fallback; provider-neutral; OpenAI integration still deferred); cross-industry reuse of the same evidence engine.
+- **Prepared, not merged:**
+  - [draft PR #20](https://github.com/alwat83/ifyoumind/pull/20): mobile table scroll cue on guide pages;
+  - [draft PR #18](https://github.com/alwat83/ifyoumind/pull/18): consent-gated analytics, now with a "Cookies and analytics" privacy section and a Cookie settings button. Its privacy changes merge cleanly with #12; the #12/#15 copy-line conflicts noted earlier remain.
+- **Founder decisions open:**
+  - **legal operator named in the privacy policy:** the live page says "operated by Dose Ninja Inc."; the founder must confirm whether that is the correct legal entity for ifYouMind;
+  - GA4 property settings (Google signals and ads linking off; data retention);
+  - phase 1 approval.
+- **Customer count:** 0 verified live paying customers; five is the target.
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

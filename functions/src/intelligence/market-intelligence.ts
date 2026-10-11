@@ -2,7 +2,7 @@ import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
-import { decisionReportAccess } from './report-entitlement-logic';
+import { decisionReportAccess, decisionView, freeBriefComparisonCount, REPORT_COMPARISON_LIMIT } from './report-entitlement-logic';
 import { buildMarketAnalysis, businessPhrase, marketAnalysisText } from './market-analysis';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
@@ -363,7 +363,7 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
       .filter((value: unknown): value is string => typeof value === 'string')
       .map((value: string) => canonicalLocation(value.trim()))
       .filter(Boolean)
-      .slice(0, isLocalDemo || plan === 'pro' ? 3 : 1);
+      .slice(0, REPORT_COMPARISON_LIMIT);
 
     stage='market-data';
     const [primary,...comparisonPlaces]=await Promise.all(
@@ -372,6 +372,11 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
 
     stage='analysis';
     const brief=buildLiveBrief(primary,comparisonPlaces,concept);
+    // Free briefs show one comparison; the other places are kept for the full Decision Report.
+    const freeComparisonCount=freeBriefComparisonCount(plan,comparisonPlaces.length);
+    const freeBrief=freeComparisonCount===null
+      ? null
+      : briefForEntitlement(buildLiveBrief(primary,comparisonPlaces.slice(0,freeComparisonCount),concept),false);
 
     stage='save';
     const ref = orgRef.collection('marketProjects').doc();
@@ -383,20 +388,24 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
       comparisonLocations,
       mode:'live',
       brief,
+      freeBrief,
+      freeComparisonCount,
       status:'ready',
       createdBy:scope.uid,
       createdAt:FieldValue.serverTimestamp(),
       updatedAt:FieldValue.serverTimestamp(),
     });
 
+    const view=decisionView({brief,freeBrief,freeComparisonCount,comparisonLocations},'none');
     return {
       id:ref.id,
       location,
       concept,
       decision,
-      comparisonLocations,
+      comparisonLocations:view.comparisonLocations,
+      reportOnlyLocations:view.reportOnlyLocations,
       mode:'live',
-      brief:briefForEntitlement(brief,false),
+      brief:briefForEntitlement(view.brief,false),
       decisionReportPurchased:false,
       decisionReportAccess:'none',
       dataNotice:'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.',
@@ -449,14 +458,16 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
   const data = snapshot.data()!;
   const reportAccess=decisionReportAccess(data);
   const decisionReportPurchased=reportAccess==='purchased';
+  const view=decisionView(data,reportAccess);
   return {
     id:snapshot.id,
     location:(()=>{try{return canonicalLocation(data.location);}catch{return data.location;}})(),
     concept:data.concept,
     decision:data.decision,
-    comparisonLocations:data.comparisonLocations || [],
+    comparisonLocations:view.comparisonLocations,
+    reportOnlyLocations:view.reportOnlyLocations,
     mode:data.mode || 'demo',
-    brief:briefForEntitlement(data.brief,reportAccess!=='none'),
+    brief:briefForEntitlement(view.brief,reportAccess!=='none'),
     decisionReportPurchased,
     decisionReportAccess:reportAccess,
     dataNotice:data.mode === 'live'

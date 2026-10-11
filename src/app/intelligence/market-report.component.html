@@ -114,6 +114,7 @@
         <p class="eyebrow">Need something you can share?</p>
         <h2>Turn this brief into a full Decision Report.</h2>
         <p>Adds a business-plan-ready market analysis written for your business and locations, location rankings, an action plan, and what would change the call. Every figure is cited.</p>
+        <p *ngIf="project?.reportOnlyLocations?.length"><strong>Your full report also compares {{ project?.reportOnlyLocations?.join(' and ') }}.</strong> The free brief shows one comparison.</p>
         <p *ngIf="canUnlockWithPro">Included with your Pro plan: {{ status?.remainingIncludedReports }} of {{ status?.includedReportsPerMonth }} full reports left this month.</p>
         <p *ngIf="proAllowanceUsedUp">You have used all {{ status?.includedReportsPerMonth }} full reports included with Pro this month. They reset on the 1st, or you can buy this one individually.</p>
         <p *ngIf="unlockError" class="error">{{ unlockError }}</p>

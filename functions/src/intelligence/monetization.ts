@@ -2,7 +2,7 @@ import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret, defineString } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
-import { grantsPro, shouldApplySubscriptionEvent, stripeKeyMode, validStripeSignature } from './stripe-commerce-logic';
+import { grantsPro, shouldApplySubscriptionEvent, stripeKeyMode, stripePriceIds, validStripeSignature } from './stripe-commerce-logic';
 import {
   allowancePeriod,
   blocksNewProCheckout,
@@ -15,10 +15,10 @@ import {
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const stripeSecretKey = defineSecret('STRIPE_SECRET_KEY');
 const stripeWebhookSecret = defineSecret('STRIPE_WEBHOOK_SECRET');
-// Price IDs belong to one Stripe mode. The defaults are the sandbox (test-mode) prices; going live
-// means setting live price IDs (functions/.env or deploy-time params) together with a live secret key.
-const PRO_PRICE_ID = defineString('STRIPE_PRO_PRICE_ID', { default: 'price_1UNpHICZjBRiXCDejbdIRMk2' });
-const REPORT_PRICE_ID = defineString('STRIPE_REPORT_PRICE_ID', { default: 'price_1UNpHNCZjBRiXCDeoCCxrn8u' });
+// Price IDs belong to one Stripe mode, so checkout picks the set matching the installed secret key.
+// Optional params override them (leave empty to use these defaults).
+const PRO_PRICE_ID = defineString('STRIPE_PRO_PRICE_ID', { default: '' });
+const REPORT_PRICE_ID = defineString('STRIPE_REPORT_PRICE_ID', { default: '' });
 
 async function stripeGet(path:string){
   const response=await fetch(`https://api.stripe.com/v1/${path}`,{
@@ -195,7 +195,11 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
 
   const params=new URLSearchParams();
   params.set('mode',offer==='pro'?'subscription':'payment');
-  params.set('line_items[0][price]',offer==='pro'?PRO_PRICE_ID.value():REPORT_PRICE_ID.value());
+  const prices=stripePriceIds(stripeKeyMode(stripeSecretKey.value()),{
+    pro:PRO_PRICE_ID.value(),
+    report:REPORT_PRICE_ID.value(),
+  });
+  params.set('line_items[0][price]',offer==='pro'?prices.pro:prices.report);
   if(stripeKeyMode(stripeSecretKey.value())!=='live'){
     console.warn('Creating a Stripe checkout with a non-live key: real cards will be declined.');
   }

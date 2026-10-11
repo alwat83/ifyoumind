@@ -28,6 +28,23 @@ export function stripeKeyMode(key:unknown):'live'|'test'|'unknown'{
   return 'unknown';
 }
 
+// Copied from the sandbox to the live account on 2026-10-10.
+export const STRIPE_PRICES={
+  live:{pro:'price_1UPAPiCigpG2y4hQsIFcm3Sm',report:'price_1UPAPiCigpG2y4hQ2vedWuSB'},
+  test:{pro:'price_1UNpHICZjBRiXCDejbdIRMk2',report:'price_1UNpHNCZjBRiXCDeoCCxrn8u'},
+} as const;
+
+export function stripePriceIds(
+  mode:'live'|'test'|'unknown',
+  overrides:{pro?:string;report?:string}={},
+):{pro:string;report:string}{
+  const base=mode==='live'?STRIPE_PRICES.live:STRIPE_PRICES.test;
+  return {
+    pro:overrides.pro?.trim()||base.pro,
+    report:overrides.report?.trim()||base.report,
+  };
+}
+
 export function grantsPro(status:unknown):boolean{
   return status==='active'||status==='trialing';
 }

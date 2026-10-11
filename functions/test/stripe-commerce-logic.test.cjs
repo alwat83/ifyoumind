@@ -49,3 +49,12 @@ test('detects whether a Stripe key can take real payments', () => {
   assert.equal(stripeKeyMode(''),'unknown');
   assert.equal(stripeKeyMode(undefined),'unknown');
 });
+
+test('checkout uses the price set that matches the key mode', () => {
+  const { stripePriceIds, STRIPE_PRICES } = require('../lib/intelligence/stripe-commerce-logic');
+  assert.deepEqual(stripePriceIds('live'),STRIPE_PRICES.live);
+  assert.deepEqual(stripePriceIds('test'),STRIPE_PRICES.test);
+  assert.deepEqual(stripePriceIds('unknown'),STRIPE_PRICES.test);
+  assert.equal(stripePriceIds('live',{pro:' price_override '}).pro,'price_override');
+  assert.equal(stripePriceIds('live',{pro:''}).pro,STRIPE_PRICES.live.pro);
+});

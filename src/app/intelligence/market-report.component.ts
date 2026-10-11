@@ -1,14 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Meta, Title } from '@angular/platform-browser';
 import { OrganizationService } from './organization.service';
 import { DecisionReportPayload, MarketIntelligenceService, MarketProject } from './market-intelligence.service';
 import { ProductAnalyticsService } from './product-analytics.service';
+import { CommercialStatus, MonetizationService } from './monetization.service';
+import { MarketAnalysisComponent } from './market-analysis.component';
 
 @Component({
   selector:'app-market-report',
   standalone:true,
-  imports:[CommonModule,RouterLink],
+  imports:[CommonModule,RouterLink,MarketAnalysisComponent],
   templateUrl:'./market-report.component.html',
   styleUrls:['./market-report.component.scss'],
 })
@@ -17,15 +20,26 @@ export class MarketReportComponent implements OnInit {
   private readonly organizations=inject(OrganizationService);
   private readonly market=inject(MarketIntelligenceService);
   private readonly analytics=inject(ProductAnalyticsService);
+  private readonly monetization=inject(MonetizationService);
+  private readonly title=inject(Title);
+  private readonly meta=inject(Meta);
+
+  /** Public sample at /sample-report: full report, no account, no purchase UI. */
+  readonly sampleMode=this.route.snapshot.data['sample']===true;
 
   project:MarketProject|null=null;
+  status:CommercialStatus|null=null;
+  organizationId='';
   loading=true;
+  unlocking=false;
+  unlockError='';
   error='';
 
   get decisionReport():DecisionReportPayload|null{
-    if(!this.project?.decisionReportPurchased)return null;
-    const report=this.project.brief?.decisionReport;
+    if(!this.reportPurchased)return null;
+    const report=this.project?.brief?.decisionReport;
     if(!report)return null;
+    if(report.schemaVersion>=2)return report;
     return {
       ...report,
       decisionTriggers:{
@@ -36,7 +50,30 @@ export class MarketReportComponent implements OnInit {
   }
 
   get reportPurchased():boolean{
-    return this.project?.decisionReportPurchased===true;
+    if(this.sampleMode)return true;
+    return this.project?.decisionReportPurchased===true||this.project?.decisionReportAccess==='pro';
+  }
+
+  get canUnlockWithPro():boolean{
+    return !this.reportPurchased&&this.status?.plan==='pro'&&(this.status?.remainingIncludedReports??0)>0;
+  }
+
+  get proAllowanceUsedUp():boolean{
+    return !this.reportPurchased&&this.status?.plan==='pro'&&(this.status?.remainingIncludedReports??0)<=0;
+  }
+
+  async unlockWithPro():Promise<void>{
+    if(!this.project||!this.organizationId||this.unlocking)return;
+    this.unlocking=true;
+    this.unlockError='';
+    try{
+      await this.monetization.unlockReportWithPro(this.organizationId,this.project.id);
+      [this.project,this.status]=await Promise.all([
+        this.market.get(this.organizationId,this.project.id),
+        this.monetization.status(this.organizationId),
+      ]);
+    }catch(error){this.unlockError=this.message(error);}
+    finally{this.unlocking=false;}
   }
 
   get recommendation():string{
@@ -66,14 +103,26 @@ export class MarketReportComponent implements OnInit {
   }
 
   async ngOnInit():Promise<void>{
+    if(this.sampleMode){
+      this.title.setTitle('Sample Decision Report | ifYouMind');
+      this.meta.updateTag({name:'description',content:'See a full ifYouMind Decision Report: a location decision compared across three U.S. cities with cited U.S. Census data, an action plan, and clear limits.'});
+      try{this.project=await this.market.sample();}
+      catch(error){this.error=this.message(error);}
+      finally{this.loading=false;}
+      return;
+    }
     try{
       const workspace=await this.organizations.getMyWorkspace();
       if(!workspace) throw new Error('Workspace not found.');
       const projectId=this.route.snapshot.paramMap.get('projectId');
       if(!projectId) throw new Error('Market project not found.');
-      this.project=await this.market.get(workspace.organizationId,projectId);
+      this.organizationId=workspace.organizationId;
+      [this.project,this.status]=await Promise.all([
+        this.market.get(workspace.organizationId,projectId),
+        this.monetization.status(workspace.organizationId).catch(()=>null),
+      ]);
       void this.analytics.track(workspace.organizationId,'report_view',{
-        paid:this.project.decisionReportPurchased?'yes':'no',
+        paid:this.project.decisionReportPurchased?'yes':this.project.decisionReportAccess==='pro'?'pro':'no',
       });
     }catch(error){this.error=this.message(error);}
     finally{this.loading=false;}

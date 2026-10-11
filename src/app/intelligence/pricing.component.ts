@@ -65,6 +65,10 @@ export class PricingComponent implements OnInit {
     finally{this.loading=false;}
   }
 
+  get proReportAllowance():number{
+    return this.status?.pricing.proIncludedReportsPerMonth??5;
+  }
+
   async request(offer:'pro'|'report'):Promise<void>{
     if(!this.workspace||this.requesting)return;
 

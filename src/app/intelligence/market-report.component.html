@@ -1,11 +1,21 @@
 <main class="report-shell">
-  <nav class="report-nav no-print">
+  <nav *ngIf="sampleMode" class="report-nav no-print">
+    <a routerLink="/">← ifYouMind</a>
+    <div><a routerLink="/register" class="report-upgrade">Create your own report free</a></div>
+  </nav>
+  <aside *ngIf="sampleMode" class="state no-print" style="margin-bottom:14px;border:1px solid #fcd34d;background:#fffbeb">
+    <strong>This is a sample report.</strong> The question is an example, but every figure is real U.S. Census Bureau data with its source linked. Your own report uses your decision, business type and locations.
+  </aside>
+  <nav *ngIf="!sampleMode" class="report-nav no-print">
     <a routerLink="/app">← Your decisions</a>
     <div>
       <a routerLink="/app/decide">Ask another question</a>
       <button *ngIf="reportPurchased" type="button" (click)="printReport()">Print / save PDF</button>
       <span *ngIf="reportPurchased" class="report-upgrade">Full report unlocked</span>
-      <a *ngIf="!reportPurchased" [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Full report · $79</a>
+      <button *ngIf="canUnlockWithPro" type="button" class="report-upgrade" (click)="unlockWithPro()" [disabled]="unlocking">
+        {{ unlocking ? 'Unlocking…' : 'Unlock full report with Pro' }}
+      </button>
+      <a *ngIf="!reportPurchased && !canUnlockWithPro" [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Full report · $79</a>
     </div>
   </nav>
 
@@ -21,7 +31,7 @@
         <p class="context">{{ project?.concept }} · {{ project?.location }}</p>
       </div>
       <div class="meta">
-        <span>{{ project?.mode === 'demo' ? 'Demo data' : 'Live data' }}</span>
+        <span>{{ sampleMode ? 'Sample · live data' : project?.mode === 'demo' ? 'Demo data' : 'Live data' }}</span>
         <small>{{ project?.createdAt ? (project?.createdAt | date:'longDate') : '' }}</small>
       </div>
     </header>
@@ -90,16 +100,32 @@
       </div>
     </section>
 
+    <section *ngIf="sampleMode" class="report-offer no-print">
+      <div>
+        <p class="eyebrow">Your decision, your locations</p>
+        <h2>Get this analysis for your own question.</h2>
+        <p>Start with a free Decision Brief for any U.S. city. Upgrade to the full report when you need the action plan and comparison write-up.</p>
+      </div>
+      <a routerLink="/register">Start free</a>
+    </section>
+
     <section *ngIf="!reportPurchased" class="report-offer no-print">
       <div>
         <p class="eyebrow">Need something you can share?</p>
         <h2>Turn this brief into a full Decision Report.</h2>
-        <p>Get a polished, source-backed report designed to share with a partner, lender, investor, broker, or team.</p>
+        <p>Adds a business-plan-ready market analysis written for your business and locations, location rankings, an action plan, and what would change the call. Every figure is cited.</p>
+        <p *ngIf="canUnlockWithPro">Included with your Pro plan: {{ status?.remainingIncludedReports }} of {{ status?.includedReportsPerMonth }} full reports left this month.</p>
+        <p *ngIf="proAllowanceUsedUp">You have used all {{ status?.includedReportsPerMonth }} full reports included with Pro this month. They reset on the 1st, or you can buy this one individually.</p>
+        <p *ngIf="unlockError" class="error">{{ unlockError }}</p>
       </div>
-      <a [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}">Get the $79 report</a>
+      <button *ngIf="canUnlockWithPro" type="button" (click)="unlockWithPro()" [disabled]="unlocking">
+        {{ unlocking ? 'Unlocking…' : 'Unlock with Pro' }}
+      </button>
+      <a *ngIf="!canUnlockWithPro" [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}">Get the $79 report</a>
     </section>
 
     <ng-container *ngIf="decisionReport as reportDetail">
+      <app-market-analysis *ngIf="reportDetail.marketAnalysis as analysis" [section]="analysis"></app-market-analysis>
       <section class="action-plan">
         <p class="eyebrow">Action plan</p>
         <h2>What to do before you commit.</h2>

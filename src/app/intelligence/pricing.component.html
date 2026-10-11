@@ -17,7 +17,7 @@
     <a [routerLink]="['/app/result',projectId]">Open your unlocked Decision Report →</a>
   </section>
   <section *ngIf="status?.plan==='pro'" class="notice success current-plan">
-    <strong>Pro is active.</strong> You now have up to 50 decisions and 3 comparison locations each month.
+    <strong>Pro is active.</strong> You have up to 50 decisions, 3 comparison locations and {{ status?.includedReportsPerMonth }} full Decision Reports each month<span *ngIf="status?.includedReportsPerMonth"> ({{ status?.remainingIncludedReports }} left this month)</span>.
   </section>
 
   <section *ngIf="status" class="plans">
@@ -29,7 +29,7 @@
         <li>3 decisions each month</li>
         <li>1 comparison location</li>
         <li>Saved decision history</li>
-        <li>Basic decision brief</li>
+        <li>Decision Brief with sourced Census metrics</li>
       </ul>
       <div class="usage" *ngIf="status.plan==='free'">{{ status.usedMarketProjects }} of 3 used this month</div>
       <a routerLink="/app/decide" class="secondary">Start a decision</a>
@@ -40,14 +40,14 @@
       <h2>${{ status.pricing.proMonthlyUsd }}<small>/month</small></h2>
       <p>For people making location and market decisions regularly.</p>
       <ul>
+        <li>{{ proReportAllowance }} full Decision Reports included each month</li>
         <li>Up to 50 decisions each month</li>
-        <li>Up to 3 comparison locations</li>
-        <li>Deeper follow-up analysis</li>
-        <li>Saved reports and exports</li>
-        <li>Live data enrichment as sources launch</li>
+        <li>Up to 3 comparison locations per decision</li>
+        <li>Print / save reports as PDF</li>
+        <li>Cancel anytime from your account</li>
       </ul>
-      <button type="button" (click)="request('pro')" [disabled]="requesting">
-        {{ requesting === 'pro' ? 'Opening checkout…' : 'Get Pro access' }}
+      <button type="button" (click)="request('pro')" [disabled]="requesting || status.plan==='pro'">
+        {{ status.plan==='pro' ? 'Your current plan' : requesting === 'pro' ? 'Opening checkout…' : 'Get Pro access' }}
       </button>
     </article>
 
@@ -56,10 +56,11 @@
       <h2>${{ status.pricing.reportOneTimeUsd }}</h2>
       <p>For one important decision without starting a subscription.</p>
       <ul>
-        <li>One full decision report</li>
-        <li>Primary and comparison locations</li>
-        <li>Expanded evidence and comparison narrative</li>
-        <li>Decision checklist and source appendix</li>
+        <li>Full Decision Report for one decision</li>
+        <li>Business-plan-ready market analysis written for your business, with copy-as-text</li>
+        <li>Location rankings, action plan and comparison takeaways</li>
+        <li>What would strengthen or weaken the case</li>
+        <li>Evidence boundaries and source list</li>
         <li>Print / save as PDF</li>
       </ul>
       <button type="button" class="outline-button" (click)="request('report')" [disabled]="requesting">

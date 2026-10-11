@@ -209,9 +209,9 @@ export { seedUniversalDemoData } from './intelligence/demo-data';
 
 export { askUniversalIntelligence } from './intelligence/universal-ask';
 
-export { createMarketIntelligenceProject, getRecentMarketIntelligenceProjects, getMarketIntelligenceProject } from './intelligence/market-intelligence';
+export { createMarketIntelligenceProject, getRecentMarketIntelligenceProjects, getMarketIntelligenceProject, getSampleDecisionReport } from './intelligence/market-intelligence';
 
-export { getCommercialStatus, requestCommercialAccess, createCommercialCheckout, createBillingPortalSession, stripeCommercialWebhook } from './intelligence/monetization';
+export { getCommercialStatus, requestCommercialAccess, createCommercialCheckout, createBillingPortalSession, unlockDecisionReportWithPro, stripeCommercialWebhook } from './intelligence/monetization';
 
 export { recordProductEvent } from './intelligence/product-analytics';
 

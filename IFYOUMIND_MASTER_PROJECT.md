@@ -236,6 +236,23 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
   - **Recommendation:** keep $79 as the main offer, and reposition Pro as Professional at about $149 a month for 5 reports (about $30 per report), for advisers and multi-site operators. The alternative is $99 a month for 3 reports.
   - **Unit economics:** variable cost per report is near zero. Net of the Stripe card fee, $79 yields about $76.41.
   - **Status:** awaiting a founder decision.
+- **Release order (founder, 2026-10-11):** #26 (held for the mailbox baseline) → #28 → #29 → Wave B (held for the GA4 review) → docs #27. #29 is rebased onto #28; its CI tests the combined tree.
+- **#28 adds purchase intent:** the sample's $79 buttons carry `intent=report` through sign-up, verification and the first decision. The result page then offers the $79 report through the existing Stripe checkout. Verification and payment are unchanged.
+- **#29 narrative fix:** comparative wording follows the 90% difference tests. A place is never called higher or the highest within the margin of error.
+- **Combined R2+R3 check:**
+
+  | Suite | Result |
+  | --- | --- |
+  | Fast tests | 35/35 |
+  | Functions | 66/66 |
+  | Commerce | 31/31 |
+  | Orgs | 5/5 |
+  | Rules | 5/5 |
+
+  - **Accessibility:** axe 0 on six pages at 390 and 1280 px.
+  - **Exports:** the business-plan copy text and print/PDF are verified.
+  - **Evidence:** in `docs/integration-evidence/`.
+- **Professional at $149/month for 5 reports:** prepared as a specification only. Pending founder approval and a check for existing Pro subscribers in live Stripe. No Stripe, billing, entitlement or public-pricing change.
 - **Security finding (open until #26 ships):** Cloud Functions do not check `email_verified`; only the browser guard does.
 - **Customer count:** 0 verified live paying customers; five is the target.
 

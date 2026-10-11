@@ -204,6 +204,38 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
   - R3: evidence labels, significance tests, market sizing and export (Census only), about 4–5 days.
   - R4: industry code, competitors and cost proxy, about 4–5 days.
   - R5: BLS, BEA, permits and FHFA trends, about 5–7 days.
+- **Founder decisions (2026-10-11, late):**
+  - **R2 (conversion polish) and R3 (paid-report core):** approved for implementation as draft PRs. No merge or deploy.
+  - **R4 and R5:** stay at design stage.
+  - **The prototype:** the design baseline.
+  - **FRED:** research-only, pending legal review.
+  - **Official publishers first:** Census, BLS, BEA and FHFA, with licence notices and API conditions verified before production use.
+  - **Pricing:** a recommendation only, with no changes.
+- **[Draft PR #28](https://github.com/alwat83/ifyoumind/pull/28), R2 conversion polish.** Head `731979b`; CI green.
+  - **Changes:**
+    - the sample is labelled "Decision Report · Sample";
+    - "Included in the $79 report" pills;
+    - an unpaid "What the $79 report adds" panel;
+    - a direct "$79" CTA;
+    - the $79 card before Pro, with its contents listed;
+    - business-led homepage use cases;
+    - a support contact;
+    - a register next-step line;
+    - an "In this report" list;
+    - correct ACS period wording.
+  - **Tests:** fast tests 28/28, functions 48/48, commerce 29/29; axe 0 at 390 and 1280. Prices, Stripe and entitlements are unchanged.
+  - **Status:** committed (draft).
+- **[Draft PR #29](https://github.com/alwat83/ifyoumind/pull/29), R3 paid-report core.** Head `8fcdc7d`.
+  - **New code:** `functions/src/intelligence/evidence.ts` uses the Census Bureau formulas (SE = MOE/1.645, root-sum-of-squares totals, proportion and ratio MOEs, a 90% Z-test).
+  - **Report content:** households at four income thresholds (B19001), residents aged 25–44 (B01001), and difference checks that never rank places within the margin of error. Missing, open-ended and controlled values are explicit.
+  - **Fetching:** evidence is fetched only for entitled views, stored on the decision, and retried when Census is down. The key stays server-side.
+  - **Tests:** functions 61/61, commerce 31/31, fast tests 19/19, orgs and rules 5/5; axe 0. Screenshots use labelled fixture data.
+  - **Status:** committed (draft).
+- **Pricing recommendation (research only):**
+  - **The problem:** Pro at $39 a month includes 5 full reports, so it beats the $79 one-off for every buyer.
+  - **Recommendation:** keep $79 as the main offer, and reposition Pro as Professional at about $149 a month for 5 reports (about $30 per report), for advisers and multi-site operators. The alternative is $99 a month for 3 reports.
+  - **Unit economics:** variable cost per report is near zero. Net of the Stripe card fee, $79 yields about $76.41.
+  - **Status:** awaiting a founder decision.
 - **Security finding (open until #26 ships):** Cloud Functions do not check `email_verified`; only the browser guard does.
 - **Customer count:** 0 verified live paying customers; five is the target.
 

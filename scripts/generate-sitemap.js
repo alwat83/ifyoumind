@@ -2,34 +2,26 @@ const fs = require("fs");
 const path = require("path");
 
 const BASE_URL = "https://ifyoumind.com";
+// One list of indexable public pages, shared with the app's canonical/robots tags.
+const pages = require(path.join(__dirname, "..", "src", "public-pages.json"));
 
-async function generateSitemap() {
-  console.log("Generating sitemap...");
-
-  const routes = [
-    { path: "/", priority: "1.0" },
-    { path: "/sample-report", priority: "0.8" },
-    { path: "/privacy-policy", priority: "0.4" },
-    { path: "/terms-of-conduct", priority: "0.4" },
-  ];
-
-  const lastmod = new Date().toISOString().split("T")[0];
-  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+function buildSitemap(lastmod) {
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${routes.map(route => `
-  <url>
-    <loc>${BASE_URL}${route.path}</loc>
+${pages.map(page => `  <url>
+    <loc>${BASE_URL}${page.path}</loc>
     <lastmod>${lastmod}</lastmod>
-    <priority>${route.priority}</priority>
-  </url>`).join("")}
-</urlset>`;
-
-  const sitemapPath = path.join(__dirname, "..", "src", "sitemap.xml");
-  fs.writeFileSync(sitemapPath, sitemapXml);
-  console.log(`Sitemap successfully generated at ${sitemapPath}`);
+    <priority>${page.priority}</priority>
+  </url>`).join("\n")}
+</urlset>
+`;
 }
 
-generateSitemap().catch((error) => {
-  console.error("Sitemap generation failed:", error);
-  process.exit(1);
-});
+if (require.main === module) {
+  const lastmod = new Date().toISOString().split("T")[0];
+  const sitemapPath = path.join(__dirname, "..", "src", "sitemap.xml");
+  fs.writeFileSync(sitemapPath, buildSitemap(lastmod));
+  console.log(`Sitemap generated at ${sitemapPath} with ${pages.length} pages`);
+}
+
+module.exports = { buildSitemap };

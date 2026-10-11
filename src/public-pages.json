@@ -1,0 +1,26 @@
+[
+  {
+    "path": "/",
+    "title": "ifYouMind — Market analysis for your business plan",
+    "description": "Compare U.S. cities on Census-cited population, growth, income and home values, written up as the market analysis for your business plan. Start free.",
+    "priority": "1.0"
+  },
+  {
+    "path": "/sample-report",
+    "title": "Sample Decision Report | ifYouMind",
+    "description": "See a full ifYouMind Decision Report: a location decision compared across three U.S. cities with cited U.S. Census data, an action plan, and clear limits.",
+    "priority": "0.8"
+  },
+  {
+    "path": "/privacy-policy",
+    "title": "Privacy Policy | ifYouMind",
+    "description": "How ifYouMind collects, uses, stores and protects your information.",
+    "priority": "0.3"
+  },
+  {
+    "path": "/terms-of-conduct",
+    "title": "Terms of Service | ifYouMind",
+    "description": "The terms that apply when you use ifYouMind.",
+    "priority": "0.3"
+  }
+]

@@ -24,3 +24,5 @@ jobs:
         run: npm --prefix functions run build
       - name: Build app
         run: npm run build
+      - name: SEO checks
+        run: npm run test:seo

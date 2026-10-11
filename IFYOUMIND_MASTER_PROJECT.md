@@ -75,6 +75,39 @@ Session on branch `claude/jolly-ramanujan-ofr18a`. Builds on the commercial-exec
 - **Acquisition — drafted, nothing sent.** The Notion "ifYouMind Revenue Sprint Tracker" database was created. Launch Campaign Kit sections 7–11 were added: segment check, five posts, demo script, referral partners, and the 14-day plan.
 - **P0 gate unchanged:** live purchase → webhook → unlock → refund is not production verified. The Stripe connector reaches only the sandbox account, so live revenue is not verified by Claude.
 
+## ORGANIC DISCOVERY AND SEO READINESS — 2026-10-11 (Claude, Anthropic)
+Founder-approved preparation phase. Nothing was published, deployed, sent or configured externally. PR #12 is still on hold and the live $79 payment test is still deferred. No Dose Ninja resources were used.
+
+- **SEO metadata — committed, [draft PR #16](https://github.com/alwat83/ifyoumind/pull/16)** (`claude/jolly-ramanujan-ofr18a-seo`).
+  - Live check before the fix: every route declared `https://ifyoumind.com/` as its canonical URL, including `/sample-report`, and login and app pages were indexable.
+  - The PR adds `src/public-pages.json` as the single list of indexable pages, a `PageMetaService` that sets per-route canonical, robots and share tags, and noindex for auth and app routes.
+  - The live sitemap was already correct (the build regenerates it); the committed copy was stale.
+  - `npm run test:seo` and the build pass. Not merged.
+- **Guides — committed, [draft PR #17](https://github.com/alwat83/ifyoumind/pull/17)** (`claude/jolly-ramanujan-ofr18a-guides`, stacked on #16).
+  - Markdown in `content/guides/` is rendered at build time into static `public/guides/<slug>/index.html` pages, which Firebase Hosting serves before the SPA rewrite. One shared template and stylesheet; `marked` is a dev dependency.
+  - First guide: `/guides/market-analysis-business-plan/`.
+  - axe-core found 0 WCAG 2.1 AA violations on mobile and desktop.
+  - **Awaiting founder approval of the final page** before merge, because merging deploys it.
+- **Cornerstone article — verified.** All Census figures (Austin, Charlotte and Nashville-Davidson balance; ACS 5-year 2015–2019 and 2020–2024, tables B01003, B19013, B25077) match data.census.gov exactly, and the 2024 values match Census Reporter. External links were checked and the SBA link updated.
+- **Analytics — gap found, not fixed.**
+  - GA4 (G-DZMLBPS4ZX) is configured but never initialises. Nothing injects AngularFire Analytics or `ScreenTrackingService` in routed code, and the live site sends zero GA requests.
+  - A two-line fix was tested locally but is held for a consent and privacy decision.
+  - The first-party funnel (`recordProductEvent` → `productEvents`) covers signed-in events only.
+- **Email DNS — risk found, not changed.** ifyoumind.com publishes **two SPF records**, which is an SPF permanent error. DMARC is `p=quarantine`, there is no Google DKIM, and MX points to self-hosted `mail.ifyoumind.com`. The support@ inbox is unverified.
+- **Search Console:** a `google-site-verification` TXT record already exists, and its owning account is unknown. `www.ifyoumind.com` serves a duplicate of the site instead of redirecting.
+- **Analytics consent — committed, [draft PR #18](https://github.com/alwat83/ifyoumind/pull/18)** (stacked on #17). GA4 starts only after "Allow analytics"; the banner and preferences panel, previously never rendered, now appear. Not merged.
+- **Pricing finding:** reports unlocked under Pro are permanently flagged `decisionReportIncludedWithPro`, so one $39 Pro month (5 reports, kept after cancellation) dominates the $79 report. Recommendations are for the founder; no prices or entitlements were changed.
+- **Census API:** api.census.gov now rejects keyless requests. Production uses the `CENSUS_API_KEY` secret; keep it set.
+- **Next initiative — Customer Value Expansion (planned).** Priorities:
+  1. analytics;
+  2. customer discovery calls with target users (no contact authorized yet; **five genuine paying customers is the target, not an established result — 0 verified live payments as of 2026-10-11**);
+  3. the Pro/report overlap;
+  4. County Business Patterns competitor counts and ACS median rent (B25064) in reports;
+  5. explicit free-brief limits;
+  6. a professional tier.
+
+  Full review: Claude Docs "SEO readiness and Customer Value Expansion review".
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

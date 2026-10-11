@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Meta, Title } from '@angular/platform-browser';
 import { OrganizationService } from './organization.service';
 import { DecisionReportPayload, MarketIntelligenceService, MarketProject } from './market-intelligence.service';
 import { ProductAnalyticsService } from './product-analytics.service';
@@ -21,8 +20,6 @@ export class MarketReportComponent implements OnInit {
   private readonly market=inject(MarketIntelligenceService);
   private readonly analytics=inject(ProductAnalyticsService);
   private readonly monetization=inject(MonetizationService);
-  private readonly title=inject(Title);
-  private readonly meta=inject(Meta);
 
   /** Public sample at /sample-report: full report, no account, no purchase UI. */
   readonly sampleMode=this.route.snapshot.data['sample']===true;
@@ -104,8 +101,6 @@ export class MarketReportComponent implements OnInit {
 
   async ngOnInit():Promise<void>{
     if(this.sampleMode){
-      this.title.setTitle('Sample Decision Report | ifYouMind');
-      this.meta.updateTag({name:'description',content:'See a full ifYouMind Decision Report: a location decision compared across three U.S. cities with cited U.S. Census data, an action plan, and clear limits.'});
       try{this.project=await this.market.sample();}
       catch(error){this.error=this.message(error);}
       finally{this.loading=false;}

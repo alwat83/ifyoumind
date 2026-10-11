@@ -268,6 +268,7 @@ export const METHOD = 'Differences are tested with the Census Bureau method at 9
 const pct = (v: number | null) => (v === null ? 'n/a' : `${(v * 100).toFixed(1)}%`);
 const int = (v: number | null) => (v === null ? 'n/a' : Math.round(v).toLocaleString('en-US'));
 const pm = (v: EvidenceValue, f: (n: number | null) => string) => (v.moe === null ? '' : ` (± ${f(v.moe)})`);
+const pts = (v: number | null) => (v === null ? 'n/a' : `${(v * 100).toFixed(1)} percentage points`);
 
 export function evidenceText(e: Pick<ReportEvidence, 'places' | 'comparisons' | 'defaultThreshold' | 'source'>, business: string | null): string {
   const lines: string[] = [];
@@ -277,7 +278,7 @@ export function evidenceText(e: Pick<ReportEvidence, 'places' | 'comparisons' | 
   for (const place of e.places) {
     const a = place.affordable.find(x => x.threshold === e.defaultThreshold);
     const parts: string[] = [];
-    if (a && a.count.value !== null) parts.push(`${int(a.count.value)} households earn ${usd(e.defaultThreshold)} or more${pm(a.count, int)}, ${pct(a.share.value)} of households${pm(a.share, pct)}`);
+    if (a && a.count.value !== null) parts.push(`${int(a.count.value)} households earn ${usd(e.defaultThreshold)} or more${pm(a.count, int)}, ${pct(a.share.value)} of households${pm(a.share, pts)}`);
     if (place.age25to44.count.value !== null) parts.push(`${int(place.age25to44.count.value)} residents are aged 25 to 44${pm(place.age25to44.count, int)}, ${pct(place.age25to44.share.value)} of residents`);
     lines.push(`- ${place.location} (city): ${parts.length ? parts.join('; ') : 'figures not published for this place'}.`);
   }

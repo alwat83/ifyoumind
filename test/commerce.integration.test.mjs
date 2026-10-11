@@ -520,11 +520,15 @@ test('report evidence is fetched only for entitled views, then stored so it neve
   const evidence = paid.result.brief.decisionReport.evidence;
   assert.equal(evidence.status, 'ready');
   assert.deepEqual(evidence.places.map(p => p.location), ['Denver, CO', 'Austin, TX', 'Raleigh, NC', 'Boise, ID']);
-  assert.equal(evidence.comparisons.length, 3 * 5);
+  assert.equal(evidence.comparisons.length, 3 * 6);
   assert.ok(evidence.places.every(p => p.medianIncome.moe > 0 && p.affordable.length === 4));
   assert.ok(censusRequests.every(u => u.searchParams.get('get').split(',').length <= 50));
   assert.ok(censusRequests.some(u => u.pathname.startsWith('/data/2019/')), 'the earlier period is fetched for change');
   assert.match(evidence.plainText, /Source: U\.S\. Census Bureau/);
+  const narrative = paid.result.brief.decisionReport.marketAnalysis.plainText;
+  assert.doesNotMatch(narrative, /margins of error not checked/, 'the paid narrative follows the difference tests');
+  const findings = paid.result.brief.decisionReport.comparisonFindings.flatMap(f => f.findings).join(' ');
+  assert.match(findings, /real difference at 90% confidence|within the margin of error/);
   assert.ok((await project(org, created.result.id)).reportEvidence, 'stored after the first entitled view');
 
   censusRequests = [];

@@ -288,16 +288,17 @@ export function withEvidence(brief:any,evidence:EvidenceResult|undefined,concept
     if(places.every((p):p is CensusPlace=>p!==null)){
       const [primary,...comparisons]=places;
       const confidence=confidenceFrom(evidence);
-      decisionReport.marketAnalysis=withPlainText(buildMarketAnalysis({
+      // Only rewrite sections the stored report already has; never add new ones.
+      if(decisionReport.marketAnalysis)decisionReport.marketAnalysis=withPlainText(buildMarketAnalysis({
         concept,primary,comparisons,retrievedAt:evidence.source.retrievedAt,confidence,
       }));
-      decisionReport.comparisonFindings=comparisons.map(place=>{
+      if(Array.isArray(decisionReport.comparisonFindings))decisionReport.comparisonFindings=comparisons.map(place=>{
         const findings:string[]=[];
         const incomeDelta=primary.income-place.income;
         findings.push(`Median household income is ${new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Math.abs(incomeDelta))} ${incomeDelta>=0?'higher':'lower'} than ${place.location} on the estimates.${verdictSuffix(confidence('income',place.location))}`);
         if(primary.populationChangePct!==null&&place.populationChangePct!==null){
           const delta=Number((primary.populationChangePct-place.populationChangePct).toFixed(1));
-          findings.push(`Estimated five-year population change is ${Math.abs(delta)} percentage points ${delta>=0?'stronger':'weaker'} than ${place.location}.${verdictSuffix(confidence('growth',place.location))}`);
+          findings.push(`Estimated five-year population change is ${Math.abs(delta)} percentage point${Math.abs(delta)===1?'':'s'} ${delta>=0?'stronger':'weaker'} than ${place.location}.${verdictSuffix(confidence('growth',place.location))}`);
         }
         return {location:place.location,findings};
       });
@@ -407,7 +408,7 @@ export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],con
         findings.push(`Median household income is ${new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Math.abs(incomeDelta))} ${incomeDelta>=0?'higher':'lower'} than ${place.location} on the estimates.`);
         if(primary.populationChangePct!==null&&place.populationChangePct!==null){
           const delta=Number((primary.populationChangePct-place.populationChangePct).toFixed(1));
-          findings.push(`Estimated five-year population change is ${Math.abs(delta)} percentage points ${delta>=0?'stronger':'weaker'} than ${place.location}.`);
+          findings.push(`Estimated five-year population change is ${Math.abs(delta)} percentage point${Math.abs(delta)===1?'':'s'} ${delta>=0?'stronger':'weaker'} than ${place.location}.`);
         }
         return {location:place.location,findings};
       }),

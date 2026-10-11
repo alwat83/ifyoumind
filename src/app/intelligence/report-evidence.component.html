@@ -1,0 +1,67 @@
+<section class="evidence" aria-labelledby="evidence-title">
+  <p class="eyebrow">Target market and confidence <span *ngIf="includedInReport" class="paid-pill">Included in the $79 report</span></p>
+  <h2 id="evidence-title">Who can afford it, and which differences are real.</h2>
+
+  <p *ngIf="!ready" class="unavailable" role="status">{{ $any(evidence).message }}</p>
+
+  <ng-container *ngIf="ready as e">
+    <div class="key" aria-label="Evidence key">
+      <span class="tag survey">Survey estimate</span>
+      <span class="tag calc">Calculated</span>
+      <span class="tag caution">Low reliability</span>
+      <span class="key-note">City level (Census place) · ACS 5-year {{ e.period.latest }} · margins of error at 90% confidence</span>
+    </div>
+
+    <p *ngIf="e.status === 'partial'" class="partial" role="note">Some figures weren't published by the Census Bureau for every place. Those cells say so, and nothing missing is counted as zero.</p>
+
+    <fieldset class="thresholds">
+      <legend>Household income of at least</legend>
+      <label *ngFor="let t of e.thresholds">
+        <input type="radio" name="evidence-threshold" [value]="t" [checked]="t === threshold" (change)="selected = t">
+        <span>{{ usd(t) }}</span>
+      </label>
+    </fieldset>
+
+    <div class="scroll" tabindex="0" role="region" aria-label="Target market by place">
+      <table>
+        <thead>
+          <tr><th scope="col">Place</th><th scope="col" class="r">Households at {{ usd(threshold) }}+</th><th scope="col" class="r">Share of households</th><th scope="col" class="r">Residents aged 25–44</th><th scope="col" class="r">Share of residents</th></tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let place of e.places">
+            <th scope="row">{{ place.location }}<span class="geo">{{ place.geography.name }}</span></th>
+            <ng-container *ngIf="affordable(place) as a">
+              <td class="r"><span class="num">{{ count(a.count.value) }}</span><span class="moe">{{ pm(a.count,'count') }}</span><span *ngIf="low(a.count)" class="tag caution">Low reliability</span></td>
+              <td class="r"><span class="num">{{ share(a.share.value) }}</span><span class="moe">{{ pm(a.share,'share') }}</span></td>
+            </ng-container>
+            <td class="r"><span class="num">{{ count(place.age25to44.count.value) }}</span><span class="moe">{{ pm(place.age25to44.count,'count') }}</span><span *ngIf="low(place.age25to44.count)" class="tag caution">Low reliability</span></td>
+            <td class="r"><span class="num">{{ share(place.age25to44.share.value) }}</span><span class="moe">{{ pm(place.age25to44.share,'share') }}</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note"><span class="tag calc">Calculated</span> Households are the sum of the ACS income brackets from {{ usd(threshold) }} up (table B19001); residents 25–44 sum eight age cells (table B01001). Margins use the Census Bureau's formulas for sums and shares.</p>
+
+    <h3>How sure we are</h3>
+    <p class="note">Each comparison uses the Census Bureau's test at 90% confidence. "Within the margin of error" means the places can't be ranked on that figure.</p>
+    <div class="checks">
+      <section *ngFor="let group of groups(e)" class="check-group" [attr.aria-label]="e.places[0].location + ' compared with ' + group.location">
+        <h4>{{ e.places[0].location }} compared with {{ group.location }}</h4>
+        <ul>
+          <li *ngFor="let check of group.checks">
+            <span class="figure">{{ check.label }}</span>
+            <span class="values"><span class="num">{{ checkValue(check, check.primary) }}</span> vs <span class="num">{{ checkValue(check, check.other) }}</span></span>
+            <span [class]="'verdict ' + verdict(check.test.verdict).tone">{{ verdict(check.test.verdict).text }}</span>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <details class="method">
+      <summary>How these figures are calculated</summary>
+      <p>{{ e.method }}</p>
+      <p>{{ e.reliabilityPolicy }}</p>
+      <p>Source: {{ e.source.agency }}, {{ e.source.dataset }}, {{ e.period.latest }} (and {{ e.period.prior }} for change), tables {{ e.source.tables.join(', ') }}. Retrieved {{ e.source.retrievedAt | date:'mediumDate' }}. <a [href]="e.source.url" target="_blank" rel="noopener noreferrer">Open source</a></p>
+    </details>
+  </ng-container>
+</section>

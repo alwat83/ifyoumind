@@ -4,6 +4,7 @@ import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
 import { decisionReportAccess, decisionView, freeBriefComparisonCount, REPORT_COMPARISON_LIMIT } from './report-entitlement-logic';
 import { buildMarketAnalysis, businessPhrase, marketAnalysisText } from './market-analysis';
+import { ACS_DETAIL_GROUPS, ACS_PRIOR_GROUP, AcsRow, PlaceDetail, ReportEvidence, acsVariables, buildReportEvidence } from './evidence';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const censusApiKey = defineSecret('CENSUS_API_KEY');
@@ -71,9 +72,9 @@ function canonicalLocation(location:string):string{
   return `${parsed.city}, ${parsed.state}`;
 }
 
-async function fetchPlaceRows(year:number,stateFips:string):Promise<string[][]>{
+async function fetchPlaceRows(year:number,stateFips:string,get='NAME,B01003_001E,B19013_001E,B25077_001E'):Promise<string[][]>{
   const url=new URL(`https://api.census.gov/data/${year}/acs/acs5`);
-  url.searchParams.set('get','NAME,B01003_001E,B19013_001E,B25077_001E');
+  url.searchParams.set('get',get);
   url.searchParams.set('for','place:*');
   url.searchParams.set('in',`state:${stateFips}`);
   const apiKey=censusApiKey.value();
@@ -203,6 +204,66 @@ async function fetchCensusPlace(location:string):Promise<CensusPlace>{
   });
 
   return place;
+}
+
+// ---- Paid-report evidence: estimates with margins of error, fetched only for entitled views ----
+
+const DETAIL_SCHEMA=1;
+
+function rowObject(headers:string[],row:string[]):AcsRow{
+  return Object.fromEntries(headers.map((h,i)=>[h,row[i]]));
+}
+
+async function fetchPlaceDetail(location:string):Promise<PlaceDetail>{
+  const parsed=parseLocation(location);
+  const canonical=`${parsed.city}, ${parsed.state}`;
+  const cacheId=`acs5detail-v${DETAIL_SCHEMA}-2024-2019-${parsed.stateFips}-${normalize(parsed.city).replace(/\s+/g,'_')}`;
+  const cacheRef=getFirestore().collection('censusPlaceCache').doc(cacheId);
+  const cached=await cacheRef.get();
+  if(cached.exists){
+    const data=cached.data() as PlaceDetail;
+    return {...data,location:canonical};
+  }
+  const [groupA,groupB,prior]=await Promise.all([
+    fetchPlaceRows(2024,parsed.stateFips,['NAME',...acsVariables(ACS_DETAIL_GROUPS[0])].join(',')),
+    fetchPlaceRows(2024,parsed.stateFips,['NAME',...acsVariables(ACS_DETAIL_GROUPS[1])].join(',')),
+    fetchPlaceRows(2019,parsed.stateFips,['NAME',...acsVariables(ACS_PRIOR_GROUP)].join(',')),
+  ]);
+  const rowA=findPlace(groupA,parsed.city);
+  const rowB=findPlace(groupB,parsed.city);
+  if(!rowA||!rowB){
+    throw new HttpsError('not-found',`I couldn't match "${location}" to a Census place.`);
+  }
+  const headersA=groupA[0]||[];
+  const priorRow=findPlace(prior,parsed.city);
+  const detail:PlaceDetail={
+    location:canonical,
+    censusName:String(rowA[headersA.indexOf('NAME')]),
+    stateFips:parsed.stateFips,
+    placeFips:String(rowA[headersA.indexOf('place')]),
+    latest:{...rowObject(headersA,rowA),...rowObject(groupB[0]||[],rowB)},
+    prior:priorRow?rowObject(prior[0]||[],priorRow):null,
+  };
+  await cacheRef.set({...detail,schemaVersion:DETAIL_SCHEMA,cachedAt:FieldValue.serverTimestamp()});
+  return detail;
+}
+
+export type EvidenceResult=ReportEvidence|{schemaVersion:1;status:'unavailable';message:string};
+
+/** Builds report evidence, or an explicit "unavailable" result: a missing source never breaks the report. */
+export async function reportEvidenceFor(location:string,comparisonLocations:string[],concept:string):Promise<EvidenceResult>{
+  try{
+    const [primary,...others]=await Promise.all([location,...comparisonLocations].map(fetchPlaceDetail));
+    return buildReportEvidence(primary,others,businessPhrase(concept),new Date().toISOString());
+  }catch(error){
+    console.warn('Report evidence unavailable',{location,error:error instanceof Error?error.message:String(error)});
+    return {schemaVersion:1,status:'unavailable',message:'Margins of error and target-market figures are temporarily unavailable. The rest of the report is unaffected; reopen it later to load them.'};
+  }
+}
+
+export function withEvidence(brief:any,evidence:EvidenceResult|undefined){
+  if(!evidence||!brief?.decisionReport)return brief;
+  return {...brief,decisionReport:{...brief.decisionReport,evidence}};
 }
 
 function metricsFor(place:CensusPlace){
@@ -442,7 +503,7 @@ export const getRecentMarketIntelligenceProjects = onCall(async (request) => {
   };
 });
 
-export const getMarketIntelligenceProject = onCall(async (request) => {
+export const getMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, async (request) => {
   const scope = await authorizeOrganization(
     request.auth?.uid, request.data?.organizationId, readMembership,
   );
@@ -459,6 +520,16 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
   const reportAccess=decisionReportAccess(data);
   const decisionReportPurchased=reportAccess==='purchased';
   const view=decisionView(data,reportAccess);
+  // Evidence is fetched only for entitled views and stored once it is complete, so free briefs never
+  // trigger the extra Census requests and a paid report never changes silently afterwards.
+  let evidence:EvidenceResult|undefined;
+  if(reportAccess!=='none'&&data.mode==='live'){
+    evidence=data.reportEvidence?.schemaVersion===1?data.reportEvidence:undefined;
+    if(!evidence){
+      evidence=await reportEvidenceFor(data.location,Array.isArray(data.comparisonLocations)?data.comparisonLocations:[],String(data.concept||''));
+      if(evidence.status!=='unavailable')await snapshot.ref.update({reportEvidence:evidence});
+    }
+  }
   return {
     id:snapshot.id,
     location:(()=>{try{return canonicalLocation(data.location);}catch{return data.location;}})(),
@@ -467,7 +538,7 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
     comparisonLocations:view.comparisonLocations,
     reportOnlyLocations:view.reportOnlyLocations,
     mode:data.mode || 'demo',
-    brief:briefForEntitlement(view.brief,reportAccess!=='none'),
+    brief:reportAccess!=='none'?withEvidence(briefForEntitlement(view.brief,true),evidence):briefForEntitlement(view.brief,false),
     decisionReportPurchased,
     decisionReportAccess:reportAccess,
     dataNotice:data.mode === 'live'
@@ -493,12 +564,16 @@ export function sampleNeedsRefresh(generatedAtMs:unknown,schemaVersion:unknown,c
   return nowMs-generated>SAMPLE_REFRESH_MS;
 }
 
-const SAMPLE_SCHEMA=2;
+const SAMPLE_SCHEMA=3;
+// If the sample's evidence could not be loaded, try again after an hour instead of waiting 30 days.
+const SAMPLE_EVIDENCE_RETRY_MS=60*60*1000;
 
 export const getSampleDecisionReport = onCall({secrets:[censusApiKey]}, async () => {
   const ref=getFirestore().collection('publicSamples').doc('decision-report');
   const cached=(await ref.get()).data();
-  if(cached&&!sampleNeedsRefresh(cached.generatedAtMs,cached.schemaVersion,SAMPLE_SCHEMA)){
+  const evidenceMissing=cached?.payload?.brief?.decisionReport?.evidence?.status==='unavailable'
+    &&Date.now()-Number(cached?.generatedAtMs)>SAMPLE_EVIDENCE_RETRY_MS;
+  if(cached&&!evidenceMissing&&!sampleNeedsRefresh(cached.generatedAtMs,cached.schemaVersion,SAMPLE_SCHEMA)){
     return cached.payload;
   }
   try{
@@ -514,7 +589,10 @@ export const getSampleDecisionReport = onCall({secrets:[censusApiKey]}, async ()
       decision:SAMPLE_DECISION.decision,
       comparisonLocations:[...SAMPLE_DECISION.comparisonLocations],
       mode:'live',
-      brief:buildLiveBrief(primary,comparisonPlaces,SAMPLE_DECISION.concept),
+      brief:withEvidence(
+        buildLiveBrief(primary,comparisonPlaces,SAMPLE_DECISION.concept),
+        await reportEvidenceFor(SAMPLE_DECISION.location,[...SAMPLE_DECISION.comparisonLocations],SAMPLE_DECISION.concept),
+      ),
       decisionReportPurchased:false,
       decisionReportAccess:'none',
       dataNotice:'Sample report. Figures are real U.S. Census Bureau ACS 5-year estimates retrieved for this example; the decision itself is illustrative. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.',

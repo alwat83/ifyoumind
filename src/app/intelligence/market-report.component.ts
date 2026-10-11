@@ -7,11 +7,12 @@ import { ProductAnalyticsService } from './product-analytics.service';
 import { CommercialStatus, MonetizationService } from './monetization.service';
 import { MarketAnalysisComponent } from './market-analysis.component';
 import { clearIntent, parseIntent, readIntent } from '../purchase-intent';
+import { ReportEvidenceComponent } from './report-evidence.component';
 
 @Component({
   selector:'app-market-report',
   standalone:true,
-  imports:[CommonModule,RouterLink,MarketAnalysisComponent],
+  imports:[CommonModule,RouterLink,MarketAnalysisComponent,ReportEvidenceComponent],
   templateUrl:'./market-report.component.html',
   styleUrls:['./market-report.component.scss','./market-report-offers.component.scss'],
 })
@@ -34,6 +35,11 @@ export class MarketReportComponent implements OnInit {
   error='';
   /** Set when the visitor came from the sample wanting the $79 report. */
   purchaseIntent=false;
+
+  evidenceText(report:DecisionReportPayload):string{
+    const evidence=report.evidence;
+    return evidence&&evidence.status!=='unavailable'?evidence.plainText:'';
+  }
 
   get decisionReport():DecisionReportPayload|null{
     if(!this.reportPurchased)return null;

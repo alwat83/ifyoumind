@@ -23,7 +23,34 @@ let stripeRequests = [];
 let stripeSubscriptions = {};
 
 // Stand-in for the Stripe REST API: records checkout requests and serves subscriptions.
+// Stand-in for the Census ACS API: serves estimates and margins of error for the PLACES fixture.
+let censusRequests = [];
+let censusDown = false;
+const STATE_NAMES_BY_FIPS = { '08': 'Colorado', '48': 'Texas', '37': 'North Carolina', '16': 'Idaho' };
+function censusResponse(url) {
+  const u = new URL(url);
+  censusRequests.push(u);
+  if (censusDown) return { ok: false, status: 400, json: async () => ({}) };
+  const year = Number(u.pathname.split('/')[2]);
+  const vars = u.searchParams.get('get').split(',');
+  const state = u.searchParams.get('in').replace('state:', '');
+  const rows = Object.entries(PLACES).filter(([, p]) => p.fips === state).map(([location, p], i) => {
+    const values = { NAME: `${location.split(',')[0]} city, ${STATE_NAMES_BY_FIPS[state]}` };
+    const pop = year === 2019 ? Math.round(p.pop / (1 + p.growth / 100)) : p.pop;
+    const est = { B01003_001: pop, B19013_001: p.income, B25077_001: p.home, B19001_001: Math.round(p.pop / 2.4), B01001_001: pop };
+    for (let b = 2; b <= 17; b++) est[`B19001_${String(b).padStart(3, '0')}`] = Math.round(est.B19001_001 / 16);
+    for (const c of ['011', '012', '013', '014', '035', '036', '037', '038']) est[`B01001_${c}`] = Math.round(pop * 0.04);
+    for (const v of vars.slice(1)) {
+      const key = v.slice(0, -1);
+      values[v] = v.endsWith('M') ? String(Math.max(1, Math.round((est[key] ?? 0) * 0.02))) : String(est[key] ?? -666666666);
+    }
+    return [...vars.map(v => values[v]), state, String(1000 + i)];
+  });
+  return { ok: true, status: 200, json: async () => [[...vars, 'state', 'place'], ...rows] };
+}
+
 globalThis.fetch = async (url, init = {}) => {
+  if (String(url).startsWith('https://api.census.gov/')) return censusResponse(String(url));
   const path = String(url).replace('https://api.stripe.com/v1/', '');
   const json = (status, body) => ({ ok: status < 400, status, json: async () => body });
   if (path === 'checkout/sessions' && init.method === 'POST') {
@@ -117,7 +144,9 @@ test('Pro unlocks five reports a month, then is refused', async () => {
   assert.equal((await call('unlockDecisionReportWithPro', { organizationId: pro, projectId: ids[5] })).error, 'resource-exhausted');
   const read = await call('getMarketIntelligenceProject', { organizationId: pro, projectId: ids[0] });
   assert.equal(read.result.decisionReportAccess, 'pro');
-  assert.deepEqual(read.result.brief.decisionReport, { title: 'paid part' });
+  const { evidence: _evidence, ...paidPart } = read.result.brief.decisionReport;
+  assert.deepEqual(paidPart, { title: 'paid part' });
+  assert.ok(_evidence, 'entitled views carry report evidence');
   const locked = await call('getMarketIntelligenceProject', { organizationId: pro, projectId: ids[5] });
   assert.equal(locked.result.brief.decisionReport, undefined);
   const status = await call('getCommercialStatus', { organizationId: pro });
@@ -250,7 +279,9 @@ test('a paid report checkout unlocks the report once, even if delivered twice', 
   assert.equal(data.decisionReportPurchased, true);
   assert.equal(data.stripeCheckoutSessionId, session.id);
   const read = await call('getMarketIntelligenceProject', { organizationId: free, projectId: id });
-  assert.deepEqual(read.result.brief.decisionReport, { title: 'paid part' });
+  const { evidence: _evidence, ...paidPart } = read.result.brief.decisionReport;
+  assert.deepEqual(paidPart, { title: 'paid part' });
+  assert.ok(_evidence, 'entitled views carry report evidence');
 });
 
 test('an unpaid checkout does not unlock until the delayed payment succeeds', async () => {
@@ -461,4 +492,65 @@ test('a free decision with one comparison is unchanged', async () => {
   assert.equal(created.result.brief.comparisons.length, 1);
   assert.deepEqual(created.result.reportOnlyLocations, []);
   assert.equal((await project(free, created.result.id)).freeBrief, null);
+});
+
+// ---- Paid-report evidence (margins of error, target market, difference checks) ----
+
+async function clearEvidenceCache() {
+  const docs = await db().collection('censusPlaceCache').get();
+  await Promise.all(docs.docs.filter(d => d.id.startsWith('acs5detail')).map(d => d.ref.delete()));
+}
+
+test('report evidence is fetched only for entitled views, then stored so it never changes silently', async () => {
+  await seedCensus();
+  await clearEvidenceCache();
+  const org = await newOrg();
+  const created = await createDecision(org);
+  assert.equal(created.error, undefined);
+  assert.equal(JSON.stringify(created.result).includes('evidence'), false);
+
+  censusRequests = [];
+  const free = await call('getMarketIntelligenceProject', { organizationId: org, projectId: created.result.id });
+  assert.equal(free.result.brief.decisionReport, undefined);
+  assert.equal(censusRequests.length, 0, 'a free brief never triggers the extra Census requests');
+  assert.equal((await project(org, created.result.id)).reportEvidence, undefined);
+
+  await orgs().doc(org).collection('marketProjects').doc(created.result.id).update({ decisionReportPurchased: true });
+  const paid = await call('getMarketIntelligenceProject', { organizationId: org, projectId: created.result.id });
+  const evidence = paid.result.brief.decisionReport.evidence;
+  assert.equal(evidence.status, 'ready');
+  assert.deepEqual(evidence.places.map(p => p.location), ['Denver, CO', 'Austin, TX', 'Raleigh, NC', 'Boise, ID']);
+  assert.equal(evidence.comparisons.length, 3 * 5);
+  assert.ok(evidence.places.every(p => p.medianIncome.moe > 0 && p.affordable.length === 4));
+  assert.ok(censusRequests.every(u => u.searchParams.get('get').split(',').length <= 50));
+  assert.ok(censusRequests.some(u => u.pathname.startsWith('/data/2019/')), 'the earlier period is fetched for change');
+  assert.match(evidence.plainText, /Source: U\.S\. Census Bureau/);
+  assert.ok((await project(org, created.result.id)).reportEvidence, 'stored after the first entitled view');
+
+  censusRequests = [];
+  const again = await call('getMarketIntelligenceProject', { organizationId: org, projectId: created.result.id });
+  assert.equal(censusRequests.length, 0, 'stored evidence is reused');
+  assert.deepEqual(again.result.brief.decisionReport.evidence, evidence);
+});
+
+test('when Census is down, the paid report still loads with evidence marked unavailable, and retries later', async () => {
+  await seedCensus();
+  await clearEvidenceCache();
+  const org = await newOrg();
+  const created = await createDecision(org);
+  await orgs().doc(org).collection('marketProjects').doc(created.result.id).update({ decisionReportPurchased: true });
+
+  censusDown = true;
+  try {
+    const down = await call('getMarketIntelligenceProject', { organizationId: org, projectId: created.result.id });
+    assert.equal(down.error, undefined);
+    assert.ok(down.result.brief.decisionReport.marketAnalysis, 'the rest of the paid report is unaffected');
+    assert.equal(down.result.brief.decisionReport.evidence.status, 'unavailable');
+    assert.match(down.result.brief.decisionReport.evidence.message, /temporarily unavailable/);
+    assert.equal((await project(org, created.result.id)).reportEvidence, undefined, 'an unavailable result is not stored');
+  } finally {
+    censusDown = false;
+  }
+  const recovered = await call('getMarketIntelligenceProject', { organizationId: org, projectId: created.result.id });
+  assert.equal(recovered.result.brief.decisionReport.evidence.status, 'ready');
 });

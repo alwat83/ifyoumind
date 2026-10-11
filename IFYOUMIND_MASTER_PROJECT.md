@@ -38,6 +38,26 @@ Latest recent-commit search on 2026-10-10 returned `20a1c82` dated October 9. Th
 
 **Later private connectors:** User-authorized Stripe, GA4 and other business systems, with least-privilege access, encryption, consent, auditability and deletion controls.
 
+## COMMERCIAL EXECUTION — 2026-10-11 (Claude, Anthropic)
+**Provider note:** the founder authorized Claude (Anthropic, via Claude Code) on 2026-10-10 as commercialization and technical execution lead. These are the first non-OpenAI contributions to ifYouMind. Everything earlier remains OpenAI-only, per founder.
+
+**Approved direction:** revenue first. The first customer hypothesis is people preparing a business-plan market analysis (entrepreneurs, plan writers, advisers), without narrowing the product identity. The assessment and the campaign kit are Claude Docs linked from the Notion hub.
+
+**Stacked draft PRs (merge in order; each merge deploys to production):**
+| PR | Branch | Change | Status |
+|---|---|---|---|
+| [#6](https://github.com/alwat83/ifyoumind/pull/6) | `claude/project-thread-159q9x` | Pro includes full reports (proposed 5/month, server-enforced); blocks duplicate Pro and report checkouts; flags duplicate payments in `billingReviews`; Stripe promotion codes allowed; accurate Pro copy | committed, tested locally (functions 29/29, app build), **awaiting approval** (allowance is a pricing decision) |
+| [#7](https://github.com/alwat83/ifyoumind/pull/7) | `claude/project-thread-159q9x-sample-report` | Public `/sample-report` built from live Census data (cached 30 days); fixes Nashville, Indianapolis, Louisville, Lexington and Honolulu lookups | committed, tested locally (33/33), awaiting approval |
+| [#8](https://github.com/alwat83/ifyoumind/pull/8) | `claude/project-thread-159q9x-report-value` | Business-plan-ready market analysis in the paid report, tailored to the stated business, with rankings, citations and copy-as-text | committed, tested locally (37/37), awaiting approval |
+
+**Findings recorded:**
+- `functions/encryption-key.txt` is placeholder text (32 printable characters, not valid base64). It cannot be the production `GOOGLE_TOKEN_ENCRYPTION_KEY`, which must decode to 32 bytes. Not a secret, so no rotation is needed; delete it in a cleanup PR. A scan of tracked files found no Stripe, webhook, private-key or GitHub tokens.
+- Deploy: the `Deploy ifYouMind to Firebase` run for `70fe2cc` [succeeded](https://github.com/alwat83/ifyoumind/actions/runs/38092232501) on 2026-10-10 22:42 UTC, so PR #3 is **deployed**. The live site could not be checked from Claude's environment (network policy), so it is **not production verified** by Claude.
+- Terms say pricing and cancellation terms "will be presented before checkout"; that is not yet done. Refund and cancellation policy needs a founder decision.
+- Revenue baseline is unknown to Claude: the Stripe connector sign-in has expired and GA4 and Firebase billing are not connected.
+
+**Next action:** founder approves the allowance and merges #6, #7 and #8 in order; post-deploy smoke test of `/sample-report`, Nashville and Pro unlock; founder decisions on refund policy, promo code and outreach.
+
 ## CURRENT HANDOFF — READ FIRST (2026-10-10)
 **Project coordination authority: [ifYouMind Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).** Read its newest founder decisions first. GitHub is implementation/CI evidence, and this Markdown is the durable engineering handoff. Do not use the historical phase table below to override the current consumer-first revenue priority.
 

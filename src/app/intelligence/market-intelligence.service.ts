@@ -37,6 +37,7 @@ export interface MarketProject {
   brief?:MarketBrief;
   decisionReportPurchased?:boolean;
   decisionReportAccess?:'purchased'|'pro'|'none';
+  sample?:boolean;
   dataNotice?:string;
   createdAt?:string|null;
 }
@@ -57,6 +58,11 @@ export class MarketIntelligenceService {
       MarketProject
     >(this.functions,'createMarketIntelligenceProject');
     return (await call({organizationId,location,concept,decision,comparisonLocations})).data;
+  }
+
+  async sample():Promise<MarketProject>{
+    const call=httpsCallable<Record<string,never>,MarketProject>(this.functions,'getSampleDecisionReport');
+    return (await call({})).data;
   }
 
   async get(organizationId:string, projectId:string):Promise<MarketProject>{

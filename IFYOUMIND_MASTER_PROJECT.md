@@ -95,11 +95,12 @@ Founder-approved preparation phase. Nothing was published, deployed, sent or con
   - The first-party funnel (`recordProductEvent` → `productEvents`) covers signed-in events only.
 - **Email DNS — risk found, not changed.** ifyoumind.com publishes **two SPF records**, which is an SPF permanent error. DMARC is `p=quarantine`, there is no Google DKIM, and MX points to self-hosted `mail.ifyoumind.com`. The support@ inbox is unverified.
 - **Search Console:** a `google-site-verification` TXT record already exists, and its owning account is unknown. `www.ifyoumind.com` serves a duplicate of the site instead of redirecting.
+- **Analytics consent — committed, [draft PR #18](https://github.com/alwat83/ifyoumind/pull/18)** (stacked on #17). GA4 starts only after "Allow analytics"; the banner and preferences panel, previously never rendered, now appear. Not merged.
 - **Pricing finding:** reports unlocked under Pro are permanently flagged `decisionReportIncludedWithPro`, so one $39 Pro month (5 reports, kept after cancellation) dominates the $79 report. Recommendations are for the founder; no prices or entitlements were changed.
 - **Census API:** api.census.gov now rejects keyless requests. Production uses the `CENSUS_API_KEY` secret; keep it set.
 - **Next initiative — Customer Value Expansion (planned).** Priorities:
   1. analytics;
-  2. interviews with the five paying customers (needs approval);
+  2. customer discovery calls with target users (no contact authorized yet; **five genuine paying customers is the target, not an established result — 0 verified live payments as of 2026-10-11**);
   3. the Pro/report overlap;
   4. County Business Patterns competitor counts and ACS median rent (B25064) in reports;
   5. explicit free-brief limits;

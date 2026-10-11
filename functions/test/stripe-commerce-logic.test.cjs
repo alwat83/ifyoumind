@@ -39,3 +39,22 @@ test('subscription events cannot move billing state backwards in time', () => {
   assert.equal(shouldApplySubscriptionEvent(100,undefined),true);
   assert.equal(shouldApplySubscriptionEvent(undefined,100),false);
 });
+
+test('detects whether a Stripe key can take real payments', () => {
+  const { stripeKeyMode } = require('../lib/intelligence/stripe-commerce-logic');
+  assert.equal(stripeKeyMode('sk_live_abc'),'live');
+  assert.equal(stripeKeyMode('rk_live_abc'),'live');
+  assert.equal(stripeKeyMode('sk_test_abc'),'test');
+  assert.equal(stripeKeyMode('rk_test_abc'),'test');
+  assert.equal(stripeKeyMode(''),'unknown');
+  assert.equal(stripeKeyMode(undefined),'unknown');
+});
+
+test('checkout uses the price set that matches the key mode', () => {
+  const { stripePriceIds, STRIPE_PRICES } = require('../lib/intelligence/stripe-commerce-logic');
+  assert.deepEqual(stripePriceIds('live'),STRIPE_PRICES.live);
+  assert.deepEqual(stripePriceIds('test'),STRIPE_PRICES.test);
+  assert.deepEqual(stripePriceIds('unknown'),STRIPE_PRICES.test);
+  assert.equal(stripePriceIds('live',{pro:' price_override '}).pro,'price_override');
+  assert.equal(stripePriceIds('live',{pro:''}).pro,STRIPE_PRICES.live.pro);
+});

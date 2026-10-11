@@ -2,13 +2,11 @@ import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
-import { grantsPro, shouldApplySubscriptionEvent, validStripeSignature } from './stripe-commerce-logic';
+import { grantsPro, shouldApplySubscriptionEvent, stripeKeyMode, stripePriceIds, validStripeSignature } from './stripe-commerce-logic';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const stripeSecretKey = defineSecret('STRIPE_SECRET_KEY');
 const stripeWebhookSecret = defineSecret('STRIPE_WEBHOOK_SECRET');
-const PRO_PRICE_ID = 'price_1UNpHICZjBRiXCDejbdIRMk2';
-const REPORT_PRICE_ID = 'price_1UNpHNCZjBRiXCDeoCCxrn8u';
 
 async function stripeGet(path:string){
   const response=await fetch(`https://api.stripe.com/v1/${path}`,{
@@ -168,7 +166,9 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
 
   const params=new URLSearchParams();
   params.set('mode',offer==='pro'?'subscription':'payment');
-  params.set('line_items[0][price]',offer==='pro'?PRO_PRICE_ID:REPORT_PRICE_ID);
+  // Live keys must use live prices; sandbox prices do not exist in the live account.
+  const prices=stripePriceIds(stripeKeyMode(stripeSecretKey.value()));
+  params.set('line_items[0][price]',offer==='pro'?prices.pro:prices.report);
   params.set('line_items[0][quantity]','1');
   params.set('success_url',`https://ifyoumind.com/app/pricing?checkout=success&offer=${offer}&projectId=${encodeURIComponent(projectId)}`);
   params.set('cancel_url',`https://ifyoumind.com/app/pricing?checkout=cancelled&offer=${offer}&projectId=${encodeURIComponent(projectId)}`);

@@ -3,7 +3,7 @@
 **Updated:** 2026-10-10  
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
-**Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71  
+**Notion:** https://app.notion.com/p/3f5c9bc5d8fd805ebaa6eae586db23bf  
 **Purpose:** Living project context for the founder and all current/future development agents.
 
 > **Project boundary and authorship:** ifYouMind and Dose Ninja are entirely separate projects. The founder confirms **all ifYouMind development through 2026-10-10 was performed using OpenAI (ChatGPT/Codex) tools and agents**. Claude, Gemini and other providers have **not** contributed to ifYouMind. Specific OpenAI agent/session ownership of individual commits may not be determinable from GitHub metadata; do not guess.
@@ -39,7 +39,7 @@ Latest recent-commit search on 2026-10-10 returned `20a1c82` dated October 9. Th
 **Later private connectors:** User-authorized Stripe, GA4 and other business systems, with least-privilege access, encryption, consent, auditability and deletion controls.
 
 ## CURRENT HANDOFF — READ FIRST (2026-10-10)
-**Project coordination authority: [ifYouMind Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).** Read its newest founder decisions first. GitHub is implementation/CI evidence, and this Markdown is the durable engineering handoff. Do not use the historical phase table below to override the current consumer-first revenue priority.
+**Project coordination authority: [ifYouMind Notion hub](https://app.notion.com/p/3f5c9bc5d8fd805ebaa6eae586db23bf).** Read its newest founder decisions first. GitHub is implementation/CI evidence, and this Markdown is the durable engineering handoff. Do not use the historical phase table below to override the current consumer-first revenue priority.
 
 **Founder-confirmed working:** Decision Report generation, successful PDF output and paid purchases. Prior threads describe a Census-backed Decision Report with 4/4 attributed key metrics, evidence, decision triggers and action plan; do not rebuild or relabel these as unfinished. Stripe checkout, webhook, billing portal and report entitlement implementation exist on `master`. A founder-confirmed successful paid purchase is not an outstanding task.
 
@@ -95,10 +95,10 @@ All development so far: **OpenAI only**, per founder confirmation. Other AI prov
 - [Commits](https://github.com/alwat83/ifyoumind/commits/master)
 - [Branches](https://github.com/alwat83/ifyoumind/branches)
 - [Consumer rebuild PR #1](https://github.com/alwat83/ifyoumind/pull/1)
-- [Notion project hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71)
-- [Notion Alpha Architecture](https://app.notion.com/p/3eb02474659c81e69b5eee89a8b120c7)
-- [Notion Repository Audit](https://app.notion.com/p/3eb02474659c81388ce6c013301a3292)
-- [Notion Organization Authorization](https://app.notion.com/p/3eb02474659c8144a068cc030cd5e3b5)
-- [Notion Metric/Evidence Contracts](https://app.notion.com/p/3eb02474659c8160834df25c3bca34ec)
+- [Notion project hub](https://app.notion.com/p/3f5c9bc5d8fd805ebaa6eae586db23bf)
+- [Notion Alpha Architecture](https://app.notion.com/p/3f5c9bc5d8fd8050a396c3f97307c97b)
+- [Notion Repository Audit](https://app.notion.com/p/10fc9bc5d8fd83e58a3601021e03a362)
+- [Notion Organization Authorization](https://app.notion.com/p/fb7c9bc5d8fd83c1a35401fb26610ef1)
+- [Notion Metric/Evidence Contracts](https://app.notion.com/p/b92c9bc5d8fd832aa62281b47e427829)
 
 **Maintenance:** Keep this record current after meaningful releases; preserve historical milestones and distinguish planned, committed, deployed and verified. Never commit credentials or personal customer data.

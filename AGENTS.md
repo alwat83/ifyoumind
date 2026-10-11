@@ -11,7 +11,7 @@ Build a consumer-friendly, general-purpose, evidence-backed AI data intelligence
 
 ## Source of truth — mandatory order
 **Notion is the central project coordination source of truth** for current priorities, completed work, roadmap, statuses, decisions, and cross-agent handoffs:
-https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
+https://app.notion.com/p/3f5c9bc5d8fd805ebaa6eae586db23bf
 
 1. **Read the latest Notion operating directive and updates first.** Newer founder corrections supersede historical task lists.
 2. **GitHub master, PRs, CI and Firebase** are authoritative evidence for what is committed, merged, built, deployed and production-verified; never infer production status from a commit.

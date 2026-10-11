@@ -6,6 +6,7 @@ import { Auth, sendPasswordResetEmail, signOut, updateProfile } from '@angular/f
 import { OrganizationService } from './organization.service';
 import { CommercialStatus, MonetizationService } from './monetization.service';
 import { ProductAnalyticsService } from './product-analytics.service';
+import { planMessages } from './plan-messages';
 
 @Component({
   selector:'app-account',
@@ -25,6 +26,11 @@ export class AccountComponent implements OnInit {
   email='';
   provider='';
   status:CommercialStatus|null=null;
+
+  /** Price, earlier-price and cancellation wording for a Pro workspace. */
+  get plan(){
+    return planMessages(this.status?.subscription);
+  }
   loading=true;
   saving=false;
   message='';

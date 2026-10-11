@@ -14,6 +14,8 @@ export interface CommercialStatus {
   checkoutEnabled:boolean;
   paymentsLive?:boolean;
   pricing:{proMonthlyUsd:number;reportOneTimeUsd:number;proIncludedReportsPerMonth?:number};
+  /** Present for Pro workspaces: what this workspace actually pays. */
+  subscription?:{monthlyUsd:number|null;grandfathered:boolean;listMonthlyUsd:number;cancelAtPeriodEnd:boolean}|null;
 }
 
 @Injectable({providedIn:'root'})

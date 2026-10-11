@@ -6,11 +6,12 @@ import { OrganizationService } from './organization.service';
 import { DecisionReportPayload, MarketIntelligenceService, MarketProject } from './market-intelligence.service';
 import { ProductAnalyticsService } from './product-analytics.service';
 import { CommercialStatus, MonetizationService } from './monetization.service';
+import { MarketAnalysisComponent } from './market-analysis.component';
 
 @Component({
   selector:'app-market-report',
   standalone:true,
-  imports:[CommonModule,RouterLink],
+  imports:[CommonModule,RouterLink,MarketAnalysisComponent],
   templateUrl:'./market-report.component.html',
   styleUrls:['./market-report.component.scss'],
 })
@@ -38,6 +39,7 @@ export class MarketReportComponent implements OnInit {
     if(!this.reportPurchased)return null;
     const report=this.project?.brief?.decisionReport;
     if(!report)return null;
+    if(report.schemaVersion>=2)return report;
     return {
       ...report,
       decisionTriggers:{

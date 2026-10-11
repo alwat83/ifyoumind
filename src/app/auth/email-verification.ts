@@ -31,3 +31,34 @@ export async function redirectIfUnverified<T>(
     throw error;
   }
 }
+
+/** The parts of a Firebase User the guard needs; kept structural so tests can pass a fake. */
+export interface VerifiableUser {
+  readonly emailVerified: boolean;
+  reload(): Promise<void>;
+  getIdTokenResult(): Promise<{ claims: Record<string, unknown> }>;
+  getIdToken(forceRefresh?: boolean): Promise<string>;
+}
+
+/**
+ * Resolves whether the account is verified, as fresh as one network round trip allows.
+ * An account still marked unverified is reloaded once, so a visitor arriving from the
+ * email's continue link isn't sent back to /verify-email. A verified account whose ID
+ * token predates verification gets one forced refresh, so protected callables accept it.
+ * Network failures never block: the cached state is used and the backend still checks.
+ */
+export async function ensureFreshVerification(user: VerifiableUser): Promise<boolean> {
+  if (!user.emailVerified) {
+    try { await user.reload(); } catch { return false; }
+    if (!user.emailVerified) return false;
+  }
+  try {
+    const token = await user.getIdTokenResult();
+    if (needsTokenRefresh(user.emailVerified, token.claims['email_verified'])) {
+      await user.getIdToken(true);
+    }
+  } catch {
+    // Offline or token service unavailable: let navigation proceed; the backend still checks.
+  }
+  return true;
+}

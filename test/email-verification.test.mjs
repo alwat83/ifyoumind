@@ -36,3 +36,42 @@ test('a refused call sends the visitor to /verify-email and still rejects; other
   await assert.rejects(redirectIfUnverified(router,async()=>{throw {code:'functions/internal',message:'boom'};}));
   assert.equal(navigations.length,1);
 });
+
+const {ensureFreshVerification}=await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
+function fakeUser({verified,afterReload=verified,claim=verified,reloadFails=false,tokenFails=false}){
+  const calls={reload:0,refresh:0};
+  const user={emailVerified:verified,calls,
+    async reload(){calls.reload++;if(reloadFails)throw new Error('offline');user.emailVerified=afterReload;},
+    async getIdTokenResult(){if(tokenFails)throw new Error('offline');return {claims:{email_verified:claim}};},
+    async getIdToken(force){if(force)calls.refresh++;return 't';}};
+  return user;
+}
+
+test('a verified account with a current token passes with no network calls',async()=>{
+  const u=fakeUser({verified:true});
+  assert.equal(await ensureFreshVerification(u),true);
+  assert.deepEqual(u.calls,{reload:0,refresh:0});
+});
+
+test('a verified account with a token minted before verification is refreshed once',async()=>{
+  const u=fakeUser({verified:true,claim:false});
+  assert.equal(await ensureFreshVerification(u),true);
+  assert.deepEqual(u.calls,{reload:0,refresh:1});
+});
+
+test('arriving from the email link: a stale unverified account is reloaded, then refreshed and let through',async()=>{
+  const u=fakeUser({verified:false,afterReload:true,claim:false});
+  assert.equal(await ensureFreshVerification(u),true);
+  assert.deepEqual(u.calls,{reload:1,refresh:1});
+});
+
+test('a genuinely unverified account is still refused after one reload',async()=>{
+  const u=fakeUser({verified:false});
+  assert.equal(await ensureFreshVerification(u),false);
+  assert.deepEqual(u.calls,{reload:1,refresh:0});
+});
+
+test('network failures never block a verified account and never admit an unverified one',async()=>{
+  assert.equal(await ensureFreshVerification(fakeUser({verified:true,tokenFails:true})),true);
+  assert.equal(await ensureFreshVerification(fakeUser({verified:false,reloadFails:true})),false);
+});

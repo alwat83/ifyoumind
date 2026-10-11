@@ -160,7 +160,34 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
   - a DebugView check after deploy.
 
   #24 must merge after #18.
-- **Email-verification hardening:** [draft PR #26](https://github.com/alwat83/ifyoumind/pull/26) adds `requireVerifiedIdentity` to the 12 functions that write data or touch billing. Public, admin, setup and read-only functions are exempt. The auth guard refreshes a token that predates verification. Local suites pass. **Not merged or deployed; needs separate founder authorization.**
+- **Email-verification hardening:** [PR #26](https://github.com/alwat83/ifyoumind/pull/26), head `af7a535`, CI green. Status: **committed, not merged or deployed**.
+  - **What it does:** `requireVerifiedIdentity` runs first in 13 functions: the 12 that write data or touch billing, plus `getProductFunnelMetrics` (verified email, then the admin claim). 12 functions are exempt: the public sample, the Stripe webhook, workspace setup, the product-event log, and read-only functions of the caller's own workspace.
+  - **Fail-closed:** only the boolean claim `email_verified === true` passes.
+  - **Browser:** the auth guard reloads a stale unverified account once, and refreshes a token minted before verification.
+  - **Tests:** functions 52/52, commerce 35/35, organizations 5/5, rules 5/5, fast tests 24/24.
+  - **Release condition (founder, 2026-10-11):** release only after the 13-scenario onboarding baseline passes on production with internal test accounts, then re-test. **Blocked:** no ifYouMind-controlled inbox is available to the agent session. The domain's MX is `mail.ifyoumind.com`; Dose Ninja mailboxes must not be used.
+- **Phase 2, paid-report value (technical preparation approved; implementation not approved):**
+  - **Seven items:**
+    - significance flags (ACS MOE, Census Z-test at 90%);
+    - affordable households (B19001);
+    - target age (B01001);
+    - employer competitors (CBP 2023, county);
+    - owner-operated competitors (NES 2023, county);
+    - residential rent as a labelled proxy (B25064);
+    - a business-plan copy.
+  - **Labels:** every figure carries an evidence label (survey estimate, business count, calculated, proxy or customer evidence), plus its geography level and period.
+  - **Accuracy rules:** ratios only within one geography level, and no apportioning county figures to cities.
+- **FRED research (2026-10-11):**
+  - **Terms:** the FRED terms prohibit caching or storing FRED content and commercial use without the St. Louis Fed's written consent. Copyrighted series need owner permission.
+  - **Excluded:** Realtor.com, the Freddie Mac PMMS 30-year rate and UMich sentiment.
+  - **Recommendation:** FRED for research only. Production indicators come from the original public-domain agencies:
+    - BLS LAUS and QCEW;
+    - BEA county income and GDP;
+    - Census population estimates and building permits;
+    - FHFA HPI.
+
+    Each agency's API terms are to be confirmed before build.
+  - **Plan:** https://claude.ai/code/artifact/f2fecef4-4921-44da-ba45-a113a03e722a
 - **Security finding (open until #26 ships):** Cloud Functions do not check `email_verified`; only the browser guard does.
 - **Customer count:** 0 verified live paying customers; five is the target.
 

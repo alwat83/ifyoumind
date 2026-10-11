@@ -31,11 +31,11 @@
       <h1>Where are you looking?</h1>
       <label class="big-input">
         <span>Main location <em>City and state</em></span>
-        <input [(ngModel)]="location" placeholder="Birmingham, AL" autocomplete="address-level2" aria-describedby="location-help" /><small id="location-help" class="field-help">Use a U.S. city and state so we can match reliable public data.</small>
+        <input [(ngModel)]="location" placeholder="Denver, CO" autocomplete="address-level2" aria-describedby="location-help" /><small id="location-help" class="field-help">Use a U.S. city and state so we can match reliable public data.</small>
       </label>
       <label class="big-input">
         <span>Compare with other places <em>optional</em></span>
-        <input [(ngModel)]="comparisonInput" placeholder="Hoover, AL; Homewood, AL" />
+        <input [(ngModel)]="comparisonInput" placeholder="Austin, TX; Raleigh, NC" />
         <small class="field-help">Separate multiple places with semicolons.</small>
       </label>
       <div class="actions"><button class="ghost" type="button" (click)="back()">Back</button><button class="primary" type="button" (click)="next()" [disabled]="!location.trim()">Continue</button></div>

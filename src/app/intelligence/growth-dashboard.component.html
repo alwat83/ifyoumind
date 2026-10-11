@@ -11,14 +11,34 @@
       <article><span>Created a decision</span><strong>{{ m.uniqueOrganizations['decision_created'] || 0 }}</strong></article>
       <article><span>Viewed pricing</span><strong>{{ m.uniqueOrganizations['pricing_view'] || 0 }}</strong></article>
       <article><span>Started checkout</span><strong>{{ m.uniqueOrganizations['checkout_started'] || 0 }}</strong></article>
-      <article><span>Paid</span><strong>{{ m.uniqueOrganizations['checkout_success'] || 0 }}</strong></article>
+      <article><span>Returned from checkout</span><strong>{{ m.uniqueOrganizations['checkout_success'] || 0 }}</strong></article>
     </section>
 
     <section class="conversion">
       <article><span>App → decision</span><strong>{{ m.conversion.appToDecision }}%</strong></article>
       <article><span>Decision → pricing</span><strong>{{ m.conversion.decisionToPricing }}%</strong></article>
       <article><span>Pricing → checkout</span><strong>{{ m.conversion.pricingToCheckout }}%</strong></article>
-      <article><span>Checkout → paid</span><strong>{{ m.conversion.checkoutToPaid }}%</strong></article>
+      <article><span>Checkout → return</span><strong>{{ m.conversion.checkoutToPaid }}%</strong></article>
+    </section>
+    <section *ngIf="m.confirmedPayments as p" class="payments">
+      <div class="payments-head">
+        <p class="eyebrow">Stripe-confirmed payments</p>
+        <p>Counted from Stripe webhooks, not browser redirects. Live mode only is revenue. Monthly Pro renewals and refunds are not included yet: reconcile them in the Stripe Dashboard.</p>
+      </div>
+      <div class="funnel">
+        <article><span>Live payments</span><strong>{{ p.live.payments }}</strong></article>
+        <article><span>Live reports</span><strong>{{ p.live.reports }}</strong></article>
+        <article><span>Live Pro starts</span><strong>{{ p.live.pro }}</strong></article>
+        <article><span>Live gross</span><strong class="gross">{{ gross(p.live.grossByCurrency) }}</strong></article>
+        <article class="test-mode"><span>Test-mode payments (not revenue)</span><strong>{{ p.test.payments }}</strong></article>
+      </div>
+      <div *ngIf="p.recentLive.length" class="payment-list">
+        <article *ngFor="let row of p.recentLive">
+          <span>{{ row.paidAt ? (row.paidAt | date:'medium') : '—' }}</span>
+          <strong>{{ row.offer === 'pro' ? 'Pro' : 'Report' }} · {{ money(row.amountTotal,row.currency) }}</strong>
+          <small>Workspace {{ row.organizationId }}<ng-container *ngIf="row.fulfilment === 'duplicate'"> · duplicate payment, review refund</ng-container></small>
+        </article>
+      </div>
     </section>
     <p class="updated">Updated {{ m.generatedAt | date:'medium' }} · unique organizations, trailing {{ m.days }} days</p>
   </ng-container>

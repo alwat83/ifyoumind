@@ -74,8 +74,8 @@ const project = async (organizationId, id) =>
 const org = async (organizationId) => (await orgs().doc(organizationId).get()).data();
 
 let eventCounter = 0;
-async function deliver(type, object, { id = `evt_${++eventCounter}`, created = Math.floor(Date.now() / 1000), secret = WEBHOOK_SECRET } = {}) {
-  const payload = JSON.stringify({ id, type, created, data: { object } });
+async function deliver(type, object, { id = `evt_${++eventCounter}`, created = Math.floor(Date.now() / 1000), secret = WEBHOOK_SECRET, livemode = false } = {}) {
+  const payload = JSON.stringify({ id, type, created, livemode, data: { object } });
   const t = Math.floor(Date.now() / 1000);
   const v1 = createHmac('sha256', secret).update(`${t}.${payload}`).digest('hex');
   const res = { statusCode: 0, body: '', status(code) { this.statusCode = code; return this; }, send(body) { this.body = body; return this; } };
@@ -322,4 +322,66 @@ test('subscription.created and unrelated events are acknowledged without changes
   assert.equal(res.statusCode, 200);
   assert.notEqual((await org(free)).plan, 'pro');
   assert.equal((await deliver('charge.refunded', { id: 'ch_1' })).statusCode, 200);
+});
+
+// ---- Stripe-confirmed payment records (growth reporting) ----
+
+const payment = async (sessionId) => (await db().collection('stripePayments').doc(sessionId).get()).data();
+
+test('a paid report is recorded once as a confirmed payment, flagged live or test', async () => {
+  const free = await newOrg();
+  const liveSession = reportSession(free, await newProject(free));
+  await deliver('checkout.session.completed', liveSession, { id: 'evt_live_pay', livemode: true });
+  await deliver('checkout.session.completed', liveSession, { id: 'evt_live_pay', livemode: true });
+  const live = await payment(liveSession.id);
+  assert.equal(live.offer, 'report');
+  assert.equal(live.livemode, true);
+  assert.equal(live.amountTotal, 7900);
+  assert.equal(live.fulfilment, 'fulfilled');
+  const testSession = reportSession(free, await newProject(free));
+  await deliver('checkout.session.completed', testSession);
+  assert.equal((await payment(testSession.id)).livemode, false);
+});
+
+test('unpaid checkouts are not recorded until the delayed payment succeeds', async () => {
+  const free = await newOrg();
+  const session = reportSession(free, await newProject(free), { payment_status: 'unpaid' });
+  await deliver('checkout.session.completed', session);
+  assert.equal(await payment(session.id), undefined);
+  await deliver('checkout.session.async_payment_succeeded', { ...session, payment_status: 'paid' });
+  assert.equal((await payment(session.id)).fulfilment, 'fulfilled');
+});
+
+test('a duplicate report payment is recorded as money received and marked duplicate', async () => {
+  const free = await newOrg();
+  const id = await newProject(free);
+  await deliver('checkout.session.completed', reportSession(free, id));
+  const second = reportSession(free, id);
+  await deliver('checkout.session.completed', second);
+  assert.equal((await payment(second.id)).fulfilment, 'duplicate');
+});
+
+test('Pro is recorded as a payment only when the subscription grants Pro', async () => {
+  const free = await newOrg();
+  stripeSubscriptions.sub_pay_incomplete = { id: 'sub_pay_incomplete', status: 'incomplete', customer: 'cus_p' };
+  await deliver('checkout.session.completed', { id: 'cs_pay_pro_1', subscription: 'sub_pay_incomplete', amount_total: 3900, currency: 'usd', metadata: { organizationId: free, offer: 'pro' } });
+  assert.equal(await payment('cs_pay_pro_1'), undefined);
+  stripeSubscriptions.sub_pay_active = { id: 'sub_pay_active', status: 'active', customer: 'cus_p' };
+  await deliver('checkout.session.completed', { id: 'cs_pay_pro_2', subscription: 'sub_pay_active', amount_total: 3900, currency: 'usd', metadata: { organizationId: free, offer: 'pro' } }, { livemode: true });
+  const pro = await payment('cs_pay_pro_2');
+  assert.equal(pro.offer, 'pro');
+  assert.equal(pro.livemode, true);
+  assert.equal(pro.subscriptionId, 'sub_pay_active');
+});
+
+test('the growth dashboard reports confirmed payments, not browser returns', async () => {
+  const admin = { uid: 'admin-uid', token: { admin: true } };
+  const result = await handlers.getProductFunnelMetrics.run({ data: { days: 30 }, auth: admin });
+  assert.ok(result.confirmedPayments.live.payments >= 2);
+  assert.ok(result.confirmedPayments.test.payments >= 1);
+  assert.ok(result.confirmedPayments.recentLive.every((row) => row.checkoutSessionId));
+  await assert.rejects(
+    handlers.getProductFunnelMetrics.run({ data: { days: 30 }, auth: { uid: 'owner-uid', token: {} } }),
+    (error) => error.code === 'permission-denied',
+  );
 });

@@ -254,14 +254,42 @@ async function recordBillingReview(organizationId:string,kind:string,details:Rec
   });
 }
 
-async function fulfillReportPayment(session:Record<string,any>){
+// Stripe-confirmed payments, kept apart from the browser's return from Checkout so growth
+// reporting never counts a redirect as revenue. Keyed by checkout session and timestamped with the
+// Stripe event, so a redelivered event rewrites the same record. Never blocks fulfilment.
+async function recordConfirmedPayment(
+  session:Record<string,any>,
+  offer:'report'|'pro',
+  event:{created:number;livemode?:boolean},
+  extra:Record<string,unknown>={},
+){
+  if(!session.id)return;
+  try{
+    await getFirestore().collection('stripePayments').doc(String(session.id)).set({
+      offer,
+      organizationId:session.metadata?.organizationId||null,
+      projectId:session.metadata?.projectId||null,
+      checkoutSessionId:String(session.id),
+      amountTotal:typeof session.amount_total==='number'?session.amount_total:null,
+      currency:typeof session.currency==='string'?session.currency:null,
+      livemode:event.livemode===true,
+      paidAt:Timestamp.fromMillis(event.created*1000),
+      ...extra,
+    });
+  }catch(error){
+    console.error('Could not record confirmed Stripe payment',session.id,error);
+  }
+}
+
+async function fulfillReportPayment(session:Record<string,any>):Promise<'unpaid'|'missing'|'duplicate'|'fulfilled'>{
   const metadata=session.metadata||{};
   const organizationId=metadata.organizationId;
-  if(!organizationId||!metadata.projectId||session.payment_status!=='paid')return;
+  if(!organizationId||!metadata.projectId||session.payment_status!=='paid')return 'unpaid';
   const projectRef=organizations().doc(organizationId).collection('marketProjects').doc(metadata.projectId);
   const projectSnapshot=await projectRef.get();
   if(!projectSnapshot.exists){
     console.error('Stripe report checkout references missing project',session.id);
+    return 'missing';
   }else if(projectSnapshot.data()?.decisionReportPurchased===true&&projectSnapshot.data()?.stripeCheckoutSessionId!==session.id){
     // A second payment for a report that was already bought. Keep the original purchase record
     // and flag the extra charge for a manual refund decision.
@@ -272,13 +300,20 @@ async function fulfillReportPayment(session:Record<string,any>){
       amountTotal:session.amount_total??null,
       currency:session.currency??null,
     });
+    return 'duplicate';
   }else{
     await projectRef.set({
       decisionReportPurchased:true,
       decisionReportPurchasedAt:FieldValue.serverTimestamp(),
       stripeCheckoutSessionId:session.id,
     },{merge:true});
+    return 'fulfilled';
   }
+}
+
+async function handleReportPayment(session:Record<string,any>,event:{created:number;livemode?:boolean}){
+  const outcome=await fulfillReportPayment(session);
+  if(outcome!=='unpaid')await recordConfirmedPayment(session,'report',event,{fulfilment:outcome});
 }
 
 export const unlockDecisionReportWithPro = onCall(async (request) => {
@@ -339,6 +374,7 @@ export const stripeCommercialWebhook = onRequest(
       id:string;
       type:string;
       created:number;
+      livemode?:boolean;
       data:{object:Record<string,any>};
     };
 
@@ -403,16 +439,17 @@ export const stripeCommercialWebhook = onRequest(
                 stripeSubscriptionEventCreated:event.created,
                 planUpdatedAt:FieldValue.serverTimestamp(),
               },{merge:true});
+              await recordConfirmedPayment(session,'pro',event,{subscriptionId:subscription.id||subscriptionId});
             }else{
               console.warn('Checkout completed without active Pro subscription',session.id,subscription.status);
             }
           }
         }else if(offer==='report'){
-          await fulfillReportPayment(event.data.object);
+          await handleReportPayment(event.data.object,event);
         }
       }else if(event.type==='checkout.session.async_payment_succeeded'){
         // Delayed payment methods (bank debits) complete checkout unpaid and confirm payment later.
-        if(event.data.object.metadata?.offer==='report')await fulfillReportPayment(event.data.object);
+        if(event.data.object.metadata?.offer==='report')await handleReportPayment(event.data.object,event);
       }else if(event.type==='customer.subscription.updated'||event.type==='customer.subscription.deleted'){
         const subscription=event.data.object;
         const metadata=subscription.metadata||{};

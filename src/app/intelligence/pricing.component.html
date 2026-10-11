@@ -46,6 +46,7 @@
         <li>Print / save reports as PDF</li>
         <li>Cancel anytime from your account</li>
       </ul>
+      <p class="terms-note">Renews automatically each month until you cancel. Cancel anytime in Account → Manage billing; Pro stays active until the end of the month you paid for. Unused reports don't roll over, and reports you unlock stay available after you cancel. No refunds for partial months, except that you can ask for a refund within 7 days of your first charge if you haven't unlocked a report.</p>
       <button type="button" (click)="request('pro')" [disabled]="requesting || status.plan==='pro'">
         {{ status.plan==='pro' ? 'Your current plan' : requesting === 'pro' ? 'Opening checkout…' : 'Get Pro access' }}
       </button>
@@ -63,11 +64,12 @@
         <li>Evidence boundaries and source list</li>
         <li>Print / save as PDF</li>
       </ul>
+      <p class="terms-note">One-time payment. Not useful? Ask for a full refund within 14 days (one refund per customer). Duplicate charges and reports that fail to generate are always refunded.</p>
       <button type="button" class="outline-button" (click)="request('report')" [disabled]="requesting">
         {{ requesting === 'report' ? 'Opening checkout…' : 'Buy Decision Report' }}
       </button>
     </article>
   </section>
 
-  <p class="billing-note">Secure checkout is handled by Stripe. Pro renews monthly until cancelled. Decision Reports are one-time purchases.</p>
+  <p class="billing-note">Secure checkout by Stripe. Prices are in U.S. dollars and may exclude taxes. Pro renews monthly until cancelled; Decision Reports are one-time purchases. By continuing you agree to the <a routerLink="/terms-of-conduct">Terms</a>. Refund requests: <a href="mailto:support&#64;ifyoumind.com">support&#64;ifyoumind.com</a>.</p>
 </main>

@@ -142,22 +142,26 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
 
   Commercial rent has no reliable free official source, so it is user-entered evidence only.
 - **Later phases:** professional offer (report pack or monthly plan above $79, decided on evidence); grounded AI (facts in, sentences out, with fact-ID validation and rule-based fallback; provider-neutral; OpenAI integration still deferred); cross-industry reuse of the same evidence engine.
-- **Prepared, not merged:**
-  - [draft PR #20](https://github.com/alwat83/ifyoumind/pull/20): mobile table scroll cue on guide pages;
-  - [draft PR #18](https://github.com/alwat83/ifyoumind/pull/18): consent-gated analytics, now with a "Cookies and analytics" privacy section and a Cookie settings button. Its privacy changes merge cleanly with #12; the #12/#15 copy-line conflicts noted earlier remain.
 - **Resolved:** the legal operator is Dose Ninja Inc. (founder-confirmed). Privacy wording is in #18; Terms wording is in #12 (still on hold).
-- **Phase 1 approved by the founder (2026-10-11); committed as draft PRs, none merged:**
+- **Wave A release, 2026-10-11 (Claude Code, founder-authorized).** Each PR: CI green on head → merge → deploy run → read-only production check from the ifyou environment (no sign-ups, purchases, form submissions or consent clicks).
 
-  | PR | Phase 1 item | Status |
-  |---|---|---|
-  | [#18](https://github.com/alwat83/ifyoumind/pull/18) | Consent-gated GA4: Google signals and ad signals off in code, Consent Mode v2 ads denied, no user-ID, privacy disclosure | Committed; waits on founder GA4 property checks and release authorization |
-  | [#22](https://github.com/alwat83/ifyoumind/pull/22) | Clarity copy and founder-first offer presentation | Committed |
-  | [#23](https://github.com/alwat83/ifyoumind/pull/23) | Six-screen first-time path; verify-email page rebuilt | Committed; end to end against the Auth emulator |
-  | [#24](https://github.com/alwat83/ifyoumind/pull/24) | Five funnel events (stacked on #18, #22, #23) | Committed |
+  | Order | PR | CI head | Merge commit | Deploy run | Production check | Status |
+  |---|---|---|---|---|---|---|
+  | 1 | [#20](https://github.com/alwat83/ifyoumind/pull/20) guide table scroll cue | `77ff048` | `46f1125` | 38171026194 success | PASS: hint at 390px, hidden at 1280px; axe 0; no overflow | Production verified |
+  | 2 | [#22](https://github.com/alwat83/ifyoumind/pull/22) clarity copy | `4d8bf30` | `a956f57` | 38171460974 success | Copy live everywhere; FAIL on pre-existing /sample-report contrast (`#788194`, 3.91:1), so the release stopped | Deployed; verified after #25 |
+  | 2a | [#25](https://github.com/alwat83/ifyoumind/pull/25) footnote grey `#5f6878` (5.62:1) | `5f8d91b` | `2591d95` | 38176829772 success | PASS: computed colour correct; axe 0 on /sample-report at 390 and 1280px; regressions clean | Production verified |
+  | 3 | [#23](https://github.com/alwat83/ifyoumind/pull/23) six-screen first-time path | `2f1e6e7` | `c95de9e` | 38177318999 success | PASS: /verify-email renders the new page; signed-out /app/decide redirects to /login; new flow strings in the deployed chunks; no "Fast-casual restaurant" default; axe 0 on six public pages | Production verified (signed-out); real verification email still to check |
+  | 4 | [#21](https://github.com/alwat83/ifyoumind/pull/21) this documentation | see the merge record | | | Docs only | |
 
-  Release order: #18 → #22 → #23 → #24. Each merge deploys.
-- **Security finding (not changed):** Cloud Functions do not check `email_verified`; only the browser guard does. Decide before any "brief before verification" option.
-- **Founder checks still open for #18:** GA4 property ownership (ifYouMind-only), Google signals off, no advertising product links, data retention (2 or 14 months), granular location and device data, and data sharing settings.
+  **Not verifiable read-only:** the signed-in decision flow and the real verification email's continue link. Check both once with a founder test account.
+- **Wave B (#18 consent-gated GA4 → #24 funnel events): on hold.** It needs:
+  - the founder's GA4 property checks: an ifYouMind-only property; Google signals off; no advertising links; retention of 2 or 14 months; enhanced-measurement history, site search and form interactions off; granular location and device data off; data sharing off;
+  - separate authorization;
+  - a DebugView check after deploy.
+
+  #24 must merge after #18.
+- **Email-verification hardening:** [draft PR #26](https://github.com/alwat83/ifyoumind/pull/26) adds `requireVerifiedIdentity` to the 12 functions that write data or touch billing. Public, admin, setup and read-only functions are exempt. The auth guard refreshes a token that predates verification. Local suites pass. **Not merged or deployed; needs separate founder authorization.**
+- **Security finding (open until #26 ships):** Cloud Functions do not check `email_verified`; only the browser guard does.
 - **Customer count:** 0 verified live paying customers; five is the target.
 
 ## 7. Known technical debt and risks

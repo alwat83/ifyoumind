@@ -29,11 +29,12 @@ export function isLocalDemoEmulator(env: NodeJS.ProcessEnv = process.env): boole
  * createBillingPortalSession, unlockDecisionReportWithPro, requestCommercialAccess,
  * createUniversalDataset, addUniversalObservation, importUniversalObservations,
  * seedUniversalDemoData, analyzeUniversalDatasets, reasonAcrossUniversalDatasets,
- * askUniversalIntelligence.
+ * askUniversalIntelligence; and getProductFunnelMetrics, which also requires the
+ * admin claim (admins must hold a verified identity, as the /app/growth route already does).
  *
  * Intentionally exempt: getSampleDecisionReport (public sample),
- * stripeCommercialWebhook (Stripe signature, no user), getProductFunnelMetrics
- * (admin claim), createIntelligenceOrganization (runs before verification),
+ * stripeCommercialWebhook (Stripe signature, no user),
+ * createIntelligenceOrganization (runs before verification),
  * getMyIntelligenceOrganization, getIntelligenceOrganization, getCommercialStatus,
  * recordProductEvent, getRecentMarketIntelligenceProjects,
  * getMarketIntelligenceProject, listUniversalDatasets, getUniversalDataset,

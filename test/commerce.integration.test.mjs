@@ -381,14 +381,31 @@ test('Pro is recorded as a payment only when the subscription grants Pro', async
 });
 
 test('the growth dashboard reports confirmed payments, not browser returns', async () => {
-  const admin = { uid: 'admin-uid', token: { admin: true } };
+  const admin = { uid: 'admin-uid', token: { admin: true, email_verified: true } };
   const result = await handlers.getProductFunnelMetrics.run({ data: { days: 30 }, auth: admin });
   assert.ok(result.confirmedPayments.live.payments >= 2);
   assert.ok(result.confirmedPayments.test.payments >= 1);
   assert.ok(result.confirmedPayments.recentLive.every((row) => row.checkoutSessionId));
   await assert.rejects(
-    handlers.getProductFunnelMetrics.run({ data: { days: 30 }, auth: { uid: 'owner-uid', token: {} } }),
+    handlers.getProductFunnelMetrics.run({ data: { days: 30 }, auth: { uid: 'owner-uid', token: { email_verified: true } } }),
     (error) => error.code === 'permission-denied',
+  );
+});
+
+test('the growth dashboard also requires a verified email, and an admin claim alone is not enough', async () => {
+  for (const token of [{ admin: true }, { admin: true, email_verified: false }, { admin: true, email_verified: 'true' }]) {
+    await assert.rejects(
+      handlers.getProductFunnelMetrics.run({ data: { days: 30 }, auth: { uid: 'admin-uid', token } }),
+      (error) => error.code === 'failed-precondition',
+    );
+  }
+  await assert.rejects(
+    handlers.getProductFunnelMetrics.run({ data: { days: 30 } }),
+    (error) => error.code === 'unauthenticated',
+  );
+  await assert.rejects(
+    handlers.getProductFunnelMetrics.run({ data: { days: 30 }, auth: { uid: 'owner-uid', token: {} } }),
+    (error) => error.code === 'failed-precondition',
   );
 });
 

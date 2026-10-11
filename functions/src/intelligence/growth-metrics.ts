@@ -1,5 +1,6 @@
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
+import { requireVerifiedIdentity } from './authorization';
 
 // Revenue comes from Stripe-confirmed payments (written by the webhook), never from
 // checkout_success, which only means the browser came back from Checkout.
@@ -36,8 +37,8 @@ export function summarizePayments(payments:Array<Record<string,any>>){
 const FUNNEL=['app_open','decision_created','report_view','pricing_view','checkout_started','checkout_success'] as const;
 
 export const getProductFunnelMetrics=onCall(async(request)=>{
-  if(!request.auth) throw new HttpsError('unauthenticated','Authentication required.');
-  if(request.auth.token.admin!==true) throw new HttpsError('permission-denied','Admin access required.');
+  requireVerifiedIdentity(request.auth);
+  if(request.auth!.token.admin!==true) throw new HttpsError('permission-denied','Admin access required.');
 
   const rawDays=Number(request.data?.days||30);
   const days=Math.min(90,Math.max(1,Number.isFinite(rawDays)?Math.floor(rawDays):30));

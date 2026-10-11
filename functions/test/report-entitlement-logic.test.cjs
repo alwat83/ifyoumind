@@ -58,3 +58,40 @@ test('report checkout is blocked once the report is unlocked', () => {
   assert.equal(blocksReportCheckout({decisionReportIncludedWithPro:true}),true);
   assert.equal(blocksReportCheckout({}),false);
 });
+
+const { decisionView, freeBriefComparisonCount, REPORT_COMPARISON_LIMIT } = require('../lib/intelligence/report-entitlement-logic');
+
+test('free decisions with more than one comparison keep a one-comparison free brief', () => {
+  assert.equal(REPORT_COMPARISON_LIMIT, 3);
+  assert.equal(freeBriefComparisonCount('free', 3), 1);
+  assert.equal(freeBriefComparisonCount('free', 1), null);
+  assert.equal(freeBriefComparisonCount('free', 0), null);
+  assert.equal(freeBriefComparisonCount('pro', 3), null);
+});
+
+test('decision view shows the free brief until the report is unlocked', () => {
+  const project = {
+    brief: { comparisons: ['b', 'c', 'd'] },
+    freeBrief: { comparisons: ['b'] },
+    freeComparisonCount: 1,
+    comparisonLocations: ['B', 'C', 'D'],
+  };
+  const locked = decisionView(project, 'none');
+  assert.deepEqual(locked.brief, project.freeBrief);
+  assert.deepEqual(locked.comparisonLocations, ['B']);
+  assert.deepEqual(locked.reportOnlyLocations, ['C', 'D']);
+  for (const access of ['purchased', 'pro']) {
+    const full = decisionView(project, access);
+    assert.deepEqual(full.brief, project.brief);
+    assert.deepEqual(full.comparisonLocations, ['B', 'C', 'D']);
+    assert.deepEqual(full.reportOnlyLocations, []);
+  }
+});
+
+test('decisions without a free brief (Pro, single comparison, older decisions) are unchanged', () => {
+  const project = { brief: { comparisons: ['b'] }, comparisonLocations: ['B'] };
+  const view = decisionView(project, 'none');
+  assert.deepEqual(view.brief, project.brief);
+  assert.deepEqual(view.comparisonLocations, ['B']);
+  assert.deepEqual(view.reportOnlyLocations, []);
+});

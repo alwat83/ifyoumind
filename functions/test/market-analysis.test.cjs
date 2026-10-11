@@ -1,6 +1,7 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { buildMarketAnalysis, conceptPhrase, marketAnalysisText } = require('../lib/intelligence/market-analysis');
+const { buildMarketAnalysis, businessPhrase, conceptPhrase, marketAnalysisText } = require('../lib/intelligence/market-analysis');
+const { buildLiveBrief } = require('../lib/intelligence/market-intelligence');
 
 const place=(location,population,income,homeValue,growth)=>({
   location,population,income,homeValue,populationChangePct:growth,placeFips:'1',stateFips:'1',
@@ -41,4 +42,24 @@ test('single-location analysis omits comparison content', () => {
   assert.equal(section.rankings.length,0);
   assert.equal(section.paragraphs.some(p=>p.heading==='Comparative position'),false);
   assert.match(section.paragraphs[0].text,/not available/);
+});
+
+test('decision-type defaults are never written as if they were a business', () => {
+  for (const concept of ['Location comparison', 'Market growth', 'Location decision', '', '  ']) {
+    assert.equal(businessPhrase(concept), null, concept);
+    const section = buildMarketAnalysis({ concept, primary, comparisons: [nashville], retrievedAt: '2026-10-10' });
+    assert.equal(section.title, 'Market analysis: Austin, TX');
+    const text = marketAnalysisText(section).toLowerCase();
+    assert.doesNotMatch(text, /location comparison|market growth|location decision|your business|business competitors/);
+  }
+  assert.equal(businessPhrase('Specialty coffee shop'), 'specialty coffee shop');
+});
+
+test('the free brief keeps neutral questions when no business was given', () => {
+  const generic = buildLiveBrief(primary, [nashville], 'Market growth');
+  assert.equal(generic.questions[0], 'What local competitors serve the same customer as Austin, TX?');
+  assert.doesNotMatch(JSON.stringify(generic), /market growth competitors|your market growth/i);
+  const tailored = buildLiveBrief(primary, [nashville], 'Gym');
+  assert.match(tailored.questions[0], /How many gym competitors/);
+  assert.match(tailored.decisionReport.decisionTriggers.strengthens, /your gym/);
 });

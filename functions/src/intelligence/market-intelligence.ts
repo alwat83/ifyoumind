@@ -3,7 +3,7 @@ import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
 import { decisionReportAccess } from './report-entitlement-logic';
-import { buildMarketAnalysis, conceptPhrase, marketAnalysisText } from './market-analysis';
+import { buildMarketAnalysis, businessPhrase, marketAnalysisText } from './market-analysis';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const censusApiKey = defineSecret('CENSUS_API_KEY');
@@ -238,7 +238,7 @@ function withPlainText<T extends Parameters<typeof marketAnalysisText>[0]>(secti
 }
 
 export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],concept=''){
-  const business=conceptPhrase(concept);
+  const business=businessPhrase(concept);
   const retrievedAt=new Date().toISOString();
   const metrics=metricsFor(primary);
   const growth=primary.populationChangePct;
@@ -261,9 +261,13 @@ export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],con
   if(!risks.length) risks.push('Census demographics alone do not measure competition, commercial rent, foot traffic, or concept-level demand.');
 
   const questions=[
-    `How many ${business} competitors already serve your target customers in ${primary.location}?`,
+    business
+      ? `How many ${business} competitors already serve your target customers in ${primary.location}?`
+      : `What local competitors serve the same customer as ${primary.location}?`,
     'What are current commercial rents and occupancy costs for the exact trade area?',
-    `What foot-traffic or customer-demand signal would confirm demand for your ${business}?`,
+    business
+      ? `What foot-traffic or customer-demand signal would confirm demand for your ${business}?`
+      : 'What foot-traffic or customer-demand signal would confirm this opportunity?',
   ];
   const trimmedOpportunities=opportunity.slice(0,2);
   const trimmedRisks=risks.slice(0,2);
@@ -307,7 +311,9 @@ export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],con
         return {location:place.location,findings};
       }),
       decisionTriggers:{
-        strengthens:`Verified demand for your ${business} plus acceptable occupancy costs would strengthen the case.`,
+        strengthens:business
+          ? `Verified demand for your ${business} plus acceptable occupancy costs would strengthen the case.`
+          : 'Verified local demand plus acceptable occupancy costs would strengthen the case.',
         weakens:trimmedRisks[0]||'New local evidence materially weakens the demand or economics case.',
         unresolved:questions[0],
       },

@@ -37,6 +37,16 @@ export function conceptPhrase(concept:string):string{
   return [keep?first:first.charAt(0).toLowerCase()+first.slice(1),...rest].join(' ');
 }
 
+// The decision flow saves these labels when the customer leaves the business field blank.
+// They describe the kind of decision, not a business, so they must not be written as one.
+const GENERIC_CONCEPTS=new Set(['business','business concept','location decision','location comparison','market growth']);
+
+/** The customer's business as a phrase, or null when no specific business was given. */
+export function businessPhrase(concept:string):string|null{
+  const phrase=conceptPhrase(concept);
+  return GENERIC_CONCEPTS.has(phrase.toLowerCase())?null:phrase;
+}
+
 function rank(places:AnalysisPlace[],pick:(place:AnalysisPlace)=>number|null){
   return places
     .map(place=>({location:place.location,value:pick(place)}))
@@ -62,7 +72,7 @@ export function buildMarketAnalysis(input:{
   retrievedAt:string;
 }):MarketAnalysisSection{
   const {primary,comparisons}=input;
-  const business=conceptPhrase(input.concept);
+  const business=businessPhrase(input.concept);
   const all=[primary,...comparisons];
   const n=all.length;
   const others=comparisons.map(place=>place.location);
@@ -97,12 +107,12 @@ export function buildMarketAnalysis(input:{
     : '';
   paragraphs.push({
     heading:'Household purchasing power',
-    text:`Median household income in ${primary.location} is ${usd(primary.income)}.${incomeComparison} Household income indicates how much local residents may be able to spend; it does not measure demand for your ${business} specifically.`,
+    text:`Median household income in ${primary.location} is ${usd(primary.income)}.${incomeComparison} Household income indicates how much local residents may be able to spend; it does not measure demand for ${business?`your ${business}`:'any specific business'}.`,
   });
 
   paragraphs.push({
     heading:'Property cost context',
-    text:`The median home value in ${primary.location} is ${usd(primary.homeValue)}${comparisons.length?`, ${where(byHomeValue)} of the ${n} locations`:''}. Home values are a rough signal of local property costs, not commercial rents; occupancy costs for your ${business} need to be confirmed with lease quotes for the specific site.`,
+    text:`The median home value in ${primary.location} is ${usd(primary.homeValue)}${comparisons.length?`, ${where(byHomeValue)} of the ${n} locations`:''}. Home values are a rough signal of local property costs, not commercial rents; occupancy costs${business?` for your ${business}`:''} need to be confirmed with lease quotes for the specific site.`,
   });
 
   if(comparisons.length){
@@ -135,14 +145,14 @@ export function buildMarketAnalysis(input:{
 
   const retrieved=input.retrievedAt.slice(0,10);
   return {
-    title:`Market analysis: ${business} in ${primary.location}`,
-    intro:`This section summarizes public demographic evidence for opening your ${business} in ${primary.location}${comparisons.length?`, compared with ${others.join(' and ')}`:''}. It is written so it can be adapted for the market analysis section of a business plan.`,
+    title:business?`Market analysis: ${business} in ${primary.location}`:`Market analysis: ${primary.location}`,
+    intro:`This section summarizes public demographic evidence for ${business?`opening your ${business} in `:''}${primary.location}${comparisons.length?`, compared with ${others.join(' and ')}`:''}. It is written so it can be adapted for the market analysis section of a business plan.`,
     paragraphs,
     rankings: comparisons.length ? rankings : [],
     nextResearch:[
-      `Count existing ${business} competitors serving the same customers in your intended trade area, and note their pricing and positioning.`,
+      `Count existing ${business?`${business} `:''}competitors serving the same customers in your intended trade area, and note their pricing and positioning.`,
       `Obtain two or three commercial lease quotes for suitable sites in ${primary.location} to replace home values with real occupancy costs.`,
-      `Gather direct demand evidence for your ${business}: customer interviews, pre-orders, a waitlist, or foot-traffic counts at candidate sites.`,
+      `Gather direct demand evidence for ${business?`your ${business}`:'your idea'}: customer interviews, pre-orders, a waitlist, or foot-traffic counts at candidate sites.`,
     ],
     citations:[
       `U.S. Census Bureau. American Community Survey 5-Year Estimates, 2020–2024: total population (B01003), median household income in 2024 inflation-adjusted dollars (B19013), median home value (B25077). Retrieved ${retrieved} from https://api.census.gov/data/2024/acs/acs5.`,

@@ -67,6 +67,14 @@ Latest recent-commit search on 2026-10-10 returned `20a1c82` dated October 9. Th
 
 **Pricing:** Historical Notion hypotheses include $49/$99/$199/$399+ tiers. Treat these as exploratory, not approved live pricing; inspect the current site and Stripe configuration.
 
+## REVENUE SPRINT — 2026-10-11 (Claude, Anthropic)
+Session on branch `claude/jolly-ramanujan-ofr18a`. Builds on the commercial-execution handoff (PRs #6–#9); does not repeat it. Full record in the Notion hub entry "Revenue sprint: AI audit, revenue tracking and acquisition kit".
+
+- **OpenAI integration — planned / deferred.** No AI model runs in production. `market-ai.ts` and `ai-synthesis.ts` call OpenAI, but they are not exported from `functions/src/index.ts`, not in the deploy allowlist, and not called by the UI. The $79 report is deterministic: Census ACS metrics plus rules. It delivers what its copy promises, so this is **not a P0 revenue blocker**. Do not market the product as AI-powered until AI ships.
+- **Revenue analytics — committed, [draft PR #11](https://github.com/alwat83/ifyoumind/pull/11).** The webhook records Stripe-confirmed payments with `livemode`. The growth dashboard separates live revenue from test mode and no longer calls the checkout redirect "Paid". Functions 35/35, commerce emulator 26/26, build PASS. Not merged or deployed.
+- **Acquisition — drafted, nothing sent.** The Notion "ifYouMind Revenue Sprint Tracker" database was created. Launch Campaign Kit sections 7–11 were added: segment check, five posts, demo script, referral partners, and the 14-day plan.
+- **P0 gate unchanged:** live purchase → webhook → unlock → refund is not production verified. The Stripe connector reaches only the sandbox account, so live revenue is not verified by Claude.
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

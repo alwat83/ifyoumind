@@ -253,6 +253,21 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
   - **Exports:** the business-plan copy text and print/PDF are verified.
   - **Evidence:** in `docs/integration-evidence/`.
 - **Professional at $149/month for 5 reports:** prepared as a specification only. Pending founder approval and a check for existing Pro subscribers in live Stripe. No Stripe, billing, entitlement or public-pricing change.
+- **Release readiness (2026-10-11, latest):**
+  - **#28:** ready for release review. A security review of the purchase-intent journey found no sensitive data in verification or continue URLs, an intent value limited to `report`, a same-origin continue URL, and unchanged verification, guard and payment controls.
+  - **#29:** head `82b41c5`. The Census key is proven never returned, stored or cached, and never in `src/` or `dist/`. Real-data validation (`npm run validate:census`, `docs/census-validation/`) waits on a dev `CENSUS_API_KEY` in a test environment.
+- **Professional pricing ($149/month for 5 reports):** preferred direction, not authorized. Grandfathering is automatic, because Stripe keeps existing subscription prices and access depends on subscription status. The live subscriber count is unknown, since the connector reaches only the sandbox (one $39 test subscription). The migration plan is in the Phase 2 plan, section 10.
+- **R4 and R5 sequence (design only):**
+  - R4.1 geography resolver → R4.2 industry-code picker → R4.3 CBP 2023 → R4.4 NES 2023 (needs a NAICS 2017→2022 crosswalk) → R4.5 rent proxy and lease quotes.
+  - R5.1 FHFA (no key) → R5.2 BLS LAUS → R5.3 BEA → R5.4 building permits.
+- **Founder checklist:**
+  1. Hestia QA mailboxes and the email steps (unblocks #26).
+  2. A dev Census key in a test environment (unblocks #29 validation).
+  3. Authorize #28, then #29.
+  4. Count live Pro subscriptions in Stripe.
+  5. Approve Professional pricing.
+  6. GA4 review (unblocks Wave B).
+  7. Later: BLS and BEA keys, and R4/R5 approval.
 - **Security finding (open until #26 ships):** Cloud Functions do not check `email_verified`; only the browser guard does.
 - **Customer count:** 0 verified live paying customers; five is the target.
 

@@ -1,10 +1,10 @@
 <main class="flow">
   <nav>
     <a routerLink="/app" class="brand">ifYouMind</a>
-    <span>Step {{ step }} of 4 · takes about a minute</span>
+    <span>Step {{ progress.current }} of {{ progress.total }} · takes about a minute</span>
   </nav>
 
-  <section class="progress" role="progressbar" aria-label="Decision setup progress" aria-valuemin="1" aria-valuemax="4" [attr.aria-valuenow]="step"><i [style.width.%]="step * 25"></i></section>
+  <section class="progress" role="progressbar" aria-label="Decision setup progress" aria-valuemin="1" [attr.aria-valuemax]="progress.total" [attr.aria-valuenow]="progress.current"><i [style.width.%]="progress.current / progress.total * 100"></i></section>
 
   <section class="card">
     <ng-container *ngIf="step===1">
@@ -27,46 +27,34 @@
     </ng-container>
 
     <ng-container *ngIf="step===2">
-      <p class="eyebrow">Place</p>
+      <p class="eyebrow">{{ type === 'business' ? 'Your market analysis · place' : 'Place' }}</p>
       <h1>Where are you looking?</h1>
       <label class="big-input">
         <span>Main location <em>City and state</em></span>
         <input [(ngModel)]="location" placeholder="Denver, CO" autocomplete="address-level2" aria-describedby="location-help" /><small id="location-help" class="field-help">Use a U.S. city and state so we can match reliable public data.</small>
       </label>
       <label class="big-input">
-        <span>Compare with other places <em>optional</em></span>
-        <input [(ngModel)]="comparisonInput" placeholder="Austin, TX; Raleigh, NC" />
-        <small class="field-help">Separate multiple places with semicolons. Add up to three. The free brief compares the first one; the full Decision Report compares all three.</small>
+        <span>Compare with other places <em>{{ needsComparison ? 'at least one' : 'optional' }}</em></span>
+        <input [(ngModel)]="comparisonInput" placeholder="Austin, TX; Raleigh, NC" aria-describedby="comparison-help" />
+        <small id="comparison-help" class="field-help"><ng-container *ngIf="needsComparison">The comparison is what shows a lender why this place. </ng-container>Separate places with semicolons; add up to three. The free brief compares the first one; the full Decision Report compares all three.</small>
       </label>
-      <div class="actions"><button class="ghost" type="button" (click)="back()">Back</button><button class="primary" type="button" (click)="next()" [disabled]="!location.trim()">Continue</button></div>
+      <div class="actions"><button class="ghost" type="button" (click)="back()">Back</button><button class="primary" type="button" (click)="next()" [disabled]="!canContinueFromPlace">Continue</button></div>
     </ng-container>
 
     <ng-container *ngIf="step===3">
-      <p class="eyebrow">Context</p>
+      <p class="eyebrow">{{ type === 'business' ? 'Your market analysis · business' : 'Context' }}</p>
       <h1>What are you considering?</h1>
       <label class="big-input">
-        <span>Business, idea, or situation</span>
-        <input [(ngModel)]="concept" placeholder="Coffee shop, apartment purchase, expansion…" />
+        <span>{{ type === 'business' ? 'Your business' : 'Business, idea, or situation' }} <em>recommended</em></span>
+        <input [(ngModel)]="concept" [placeholder]="type === 'business' ? 'Coffee shop, dental practice, gym…' : 'Coffee shop, apartment purchase, expansion…'" />
       </label>
       <label class="big-input">
         <span>The question you want answered</span>
-        <textarea [(ngModel)]="decision" rows="4" placeholder="Should I open this here?"></textarea>
+        <textarea [(ngModel)]="decision" rows="3" placeholder="Should I open this here?"></textarea>
       </label>
-      <div class="actions"><button class="ghost" type="button" (click)="back()">Back</button><button class="primary" type="button" (click)="next()">Continue</button></div>
-    </ng-container>
-
-    <ng-container *ngIf="step===4">
-      <p class="eyebrow">Ready</p>
-      <h1>Let’s put the pieces together.</h1>
-      <div class="summary">
-        <div><span>Question</span><strong>{{ decision }}</strong></div>
-        <div><span>Location</span><strong>{{ location }}</strong></div>
-        <div *ngIf="comparisonInput.trim()"><span>Compare with</span><strong>{{ comparisonInput }}</strong></div>
-        <div><span>Context</span><strong>{{ concept }}</strong></div>
-      </div>
-      <p class="explain">ifYouMind will compare the available facts, explain what supports the idea, flag what still needs checking, and show the source behind the important numbers.</p>
+      <p class="explain">ifYouMind compares {{ location || 'your city' }}<ng-container *ngIf="comparisonCount"> with {{ comparisonCount === 1 ? 'one other place' : comparisonCount + ' other places' }}</ng-container> using U.S. Census data, explains what supports the idea, flags what still needs checking, and cites every important number.</p>
       <p *ngIf="error" class="error">{{ error }}</p>
-      <div class="actions"><button class="ghost" type="button" (click)="back()">Back</button><button class="primary final" type="button" (click)="analyze()" [disabled]="working">{{ working ? 'Putting it together…' : 'Show me what the data says' }}</button></div>
+      <div class="actions"><button class="ghost" type="button" (click)="back()">Back</button><button class="primary final" type="button" (click)="analyze()" [disabled]="working || !canContinueFromPlace">{{ working ? 'Putting it together…' : 'Show me what the data says' }}</button></div>
     </ng-container>
   </section>
 </main>

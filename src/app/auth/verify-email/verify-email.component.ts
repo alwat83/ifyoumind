@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { Auth, sendEmailVerification, User } from '@angular/fire/auth';
+import { Auth, sendEmailVerification, signOut } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-verify-email',
@@ -12,33 +12,59 @@ import { Auth, sendEmailVerification, User } from '@angular/fire/auth';
 })
 export class VerifyEmailComponent {
   isResending = false;
+  isChecking = false;
   message: { type: 'success' | 'error'; text: string } | null = null;
 
   private auth: Auth = inject(Auth);
   private router: Router = inject(Router);
 
+  get email(): string {
+    return this.auth.currentUser?.email || 'your email address';
+  }
+
+  /** Re-reads the account after the visitor clicks the link in another tab, then continues. */
+  async continueIfVerified() {
+    const user = this.auth.currentUser;
+    if (!user) {
+      await this.router.navigate(['/login']);
+      return;
+    }
+    this.isChecking = true;
+    this.message = null;
+    try {
+      await user.reload();
+      if (this.auth.currentUser?.emailVerified) {
+        await this.auth.currentUser.getIdToken(true);
+        await this.router.navigate(['/app/decide'], { queryParams: { type: 'business' } });
+        return;
+      }
+      this.message = { type: 'error', text: 'Not verified yet. Open the link in the email we sent, then try again.' };
+    } catch {
+      this.message = { type: 'error', text: 'We could not check right now. Please try again.' };
+    } finally {
+      this.isChecking = false;
+    }
+  }
+
   async resendVerificationEmail() {
     this.isResending = true;
     this.message = null;
-
     const user = this.auth.currentUser;
     if (user) {
       try {
         await sendEmailVerification(user);
-        this.message = {
-          type: 'success',
-          text: 'A new verification email has been sent.',
-        };
-      } catch (error) {
-        this.message = {
-          type: 'error',
-          text: 'An error occurred while sending the email. Please try again.',
-        };
+        this.message = { type: 'success', text: `A new verification email has been sent to ${this.email}.` };
+      } catch {
+        this.message = { type: 'error', text: 'We could not send the email. Wait a minute and try again.' };
       }
     } else {
-      this.message = { type: 'error', text: 'You are not logged in.' };
+      this.message = { type: 'error', text: 'You are not signed in.' };
     }
-
     this.isResending = false;
+  }
+
+  async useDifferentEmail() {
+    await signOut(this.auth);
+    await this.router.navigate(['/register']);
   }
 }

@@ -1,0 +1,126 @@
+{
+ "result": {
+  "id": "NXdZbvkKr5tsigKANpMF",
+  "location": "Nashville, TN",
+  "concept": "Gym",
+  "decision": "Should I open this business here?",
+  "comparisonLocations": [
+   "Charlotte, NC"
+  ],
+  "reportOnlyLocations": [],
+  "mode": "live",
+  "brief": {
+   "metrics": [
+    {
+     "key": "population",
+     "label": "Population",
+     "value": 690130,
+     "unit": "people",
+     "direction": "context",
+     "sourceLabel": "U.S. Census Bureau \u00b7 2024 ACS 5-year",
+     "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A52006&in=state%3A47"
+    },
+    {
+     "key": "income",
+     "label": "Median household income",
+     "value": 77371,
+     "unit": "USD",
+     "direction": "higher",
+     "sourceLabel": "U.S. Census Bureau \u00b7 2024 ACS 5-year",
+     "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A52006&in=state%3A47"
+    },
+    {
+     "key": "homeValue",
+     "label": "Median home value",
+     "value": 413600,
+     "unit": "USD",
+     "direction": "context",
+     "sourceLabel": "U.S. Census Bureau \u00b7 2024 ACS 5-year",
+     "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A52006&in=state%3A47"
+    },
+    {
+     "key": "growth",
+     "label": "5-year population change",
+     "value": 4,
+     "unit": "%",
+     "direction": "higher",
+     "sourceLabel": "U.S. Census Bureau \u00b7 2019\u20132024 ACS 5-year estimates",
+     "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A52006&in=state%3A47"
+    }
+   ],
+   "opportunities": [
+    "Population increased 4% between the 2019 and 2024 ACS 5-year estimates.",
+    "Median household income is $77,371."
+   ],
+   "risks": [
+    "1 comparison market has a higher median household income.",
+    "1 comparison market shows stronger 5-year population change."
+   ],
+   "comparisons": [
+    {
+     "location": "Charlotte, NC",
+     "metrics": [
+      {
+       "key": "population",
+       "label": "Population",
+       "value": 903844,
+       "unit": "people",
+       "direction": "context",
+       "sourceLabel": "U.S. Census Bureau \u00b7 2024 ACS 5-year",
+       "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A12000&in=state%3A37"
+      },
+      {
+       "key": "income",
+       "label": "Median household income",
+       "value": 82068,
+       "unit": "USD",
+       "direction": "higher",
+       "sourceLabel": "U.S. Census Bureau \u00b7 2024 ACS 5-year",
+       "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A12000&in=state%3A37"
+      },
+      {
+       "key": "homeValue",
+       "label": "Median home value",
+       "value": 385700,
+       "unit": "USD",
+       "direction": "context",
+       "sourceLabel": "U.S. Census Bureau \u00b7 2024 ACS 5-year",
+       "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A12000&in=state%3A37"
+      },
+      {
+       "key": "growth",
+       "label": "5-year population change",
+       "value": 5.4,
+       "unit": "%",
+       "direction": "higher",
+       "sourceLabel": "U.S. Census Bureau \u00b7 2019\u20132024 ACS 5-year estimates",
+       "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A12000&in=state%3A37"
+      }
+     ]
+    }
+   ],
+   "questions": [
+    "How many gym competitors already serve your target customers in Nashville, TN?",
+    "What are current commercial rents and occupancy costs for the exact trade area?",
+    "What foot-traffic or customer-demand signal would confirm demand for your gym?"
+   ],
+   "sources": [
+    {
+     "provider": "U.S. Census Bureau",
+     "dataset": "2024 ACS 5-year estimates",
+     "retrievedAt": "2026-10-11T15:41:52.624Z",
+     "url": "https://api.census.gov/data/2024/acs/acs5"
+    },
+    {
+     "provider": "U.S. Census Bureau",
+     "dataset": "2019 ACS 5-year estimates",
+     "retrievedAt": "2026-10-11T15:41:52.624Z",
+     "url": "https://api.census.gov/data/2019/acs/acs5"
+    }
+   ]
+  },
+  "decisionReportPurchased": false,
+  "decisionReportAccess": "none",
+  "dataNotice": "Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included."
+ }
+}

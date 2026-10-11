@@ -1,0 +1,129 @@
+{
+ "result": {
+  "id": "PHGwgbjzAKQ9zcCU2nUU",
+  "location": "Denver, CO",
+  "concept": "Specialty coffee shop",
+  "decision": "Should I open this business here?",
+  "comparisonLocations": [
+   "Austin, TX"
+  ],
+  "reportOnlyLocations": [
+   "Raleigh, NC",
+   "Boise, ID"
+  ],
+  "mode": "live",
+  "brief": {
+   "metrics": [
+    {
+     "key": "population",
+     "label": "Population",
+     "value": 718877,
+     "unit": "people",
+     "direction": "context",
+     "sourceLabel": "U.S. Census Bureau \u00b7 2024 ACS 5-year",
+     "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A20000&in=state%3A08"
+    },
+    {
+     "key": "income",
+     "label": "Median household income",
+     "value": 94718,
+     "unit": "USD",
+     "direction": "higher",
+     "sourceLabel": "U.S. Census Bureau \u00b7 2024 ACS 5-year",
+     "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A20000&in=state%3A08"
+    },
+    {
+     "key": "homeValue",
+     "label": "Median home value",
+     "value": 616000,
+     "unit": "USD",
+     "direction": "context",
+     "sourceLabel": "U.S. Census Bureau \u00b7 2024 ACS 5-year",
+     "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A20000&in=state%3A08"
+    },
+    {
+     "key": "growth",
+     "label": "5-year population change",
+     "value": 1.9,
+     "unit": "%",
+     "direction": "higher",
+     "sourceLabel": "U.S. Census Bureau \u00b7 2019\u20132024 ACS 5-year estimates",
+     "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A20000&in=state%3A08"
+    }
+   ],
+   "opportunities": [
+    "Population increased 1.9% between the 2019 and 2024 ACS 5-year estimates.",
+    "Median household income is $94,718."
+   ],
+   "risks": [
+    "1 comparison market shows stronger 5-year population change."
+   ],
+   "comparisons": [
+    {
+     "location": "Austin, TX",
+     "metrics": [
+      {
+       "key": "population",
+       "label": "Population",
+       "value": 979539,
+       "unit": "people",
+       "direction": "context",
+       "sourceLabel": "U.S. Census Bureau \u00b7 2024 ACS 5-year",
+       "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A05000&in=state%3A48"
+      },
+      {
+       "key": "income",
+       "label": "Median household income",
+       "value": 93658,
+       "unit": "USD",
+       "direction": "higher",
+       "sourceLabel": "U.S. Census Bureau \u00b7 2024 ACS 5-year",
+       "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A05000&in=state%3A48"
+      },
+      {
+       "key": "homeValue",
+       "label": "Median home value",
+       "value": 555300,
+       "unit": "USD",
+       "direction": "context",
+       "sourceLabel": "U.S. Census Bureau \u00b7 2024 ACS 5-year",
+       "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A05000&in=state%3A48"
+      },
+      {
+       "key": "growth",
+       "label": "5-year population change",
+       "value": 3,
+       "unit": "%",
+       "direction": "higher",
+       "sourceLabel": "U.S. Census Bureau \u00b7 2019\u20132024 ACS 5-year estimates",
+       "sourceUrl": "https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A05000&in=state%3A48"
+      }
+     ]
+    }
+   ],
+   "questions": [
+    "How many specialty coffee shop competitors already serve your target customers in Denver, CO?",
+    "What are current commercial rents and occupancy costs for the exact trade area?",
+    "What foot-traffic or customer-demand signal would confirm demand for your specialty coffee shop?"
+   ],
+   "sources": [
+    {
+     "provider": "U.S. Census Bureau",
+     "dataset": "2024 ACS 5-year estimates",
+     "retrievedAt": "2026-10-11T15:39:01.450Z",
+     "url": "https://api.census.gov/data/2024/acs/acs5"
+    },
+    {
+     "provider": "U.S. Census Bureau",
+     "dataset": "2019 ACS 5-year estimates",
+     "retrievedAt": "2026-10-11T15:39:01.450Z",
+     "url": "https://api.census.gov/data/2019/acs/acs5"
+    }
+   ]
+  },
+  "decisionReportPurchased": false,
+  "decisionReportAccess": "none",
+  "dataNotice": "Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.",
+  "createdAt": "2026-10-11T15:39:01.486Z"
+ }
+}

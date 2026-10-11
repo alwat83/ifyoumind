@@ -349,7 +349,7 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
       if (usage.data().count >= 3) {
         throw new HttpsError(
           'resource-exhausted',
-          'Free plan limit reached. Upgrade to Pro or purchase a one-time Market Report.',
+          'You have used your 3 free decisions this month. They reset on the 1st (UTC). You can still buy the full Decision Report for any decision you have already created.',
         );
       }
     }

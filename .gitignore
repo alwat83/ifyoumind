@@ -42,6 +42,9 @@ testem.log
 Thumbs.db
 
 # Secret files
+.env
+.env.*
+**/.secret.local
 serviceAccountKey.json
 /serviceAccountKey.json
 firebase-debug.log

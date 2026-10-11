@@ -8,6 +8,9 @@ import { createRequire } from 'node:module';
 const WEBHOOK_SECRET = 'whsec_integration_test';
 process.env.STRIPE_WEBHOOK_SECRET = WEBHOOK_SECRET;
 process.env.STRIPE_SECRET_KEY = 'sk_test_integration';
+// A recognisable stand-in for the Census key: tests prove it is sent to Census and never stored or returned.
+const CENSUS_TEST_KEY = 'census-test-key-NEVER-STORE-1f2e3d';
+process.env.CENSUS_API_KEY = CENSUS_TEST_KEY;
 
 const require = createRequire(new URL('../functions/package.json', import.meta.url));
 const handlers = require('./lib/index.js');
@@ -530,6 +533,12 @@ test('report evidence is fetched only for entitled views, then stored so it neve
   const findings = paid.result.brief.decisionReport.comparisonFindings.flatMap(f => f.findings).join(' ');
   assert.match(findings, /real difference at 90% confidence|within the margin of error/);
   assert.ok((await project(org, created.result.id)).reportEvidence, 'stored after the first entitled view');
+  assert.ok(censusRequests.every(u => u.searchParams.get('key') === CENSUS_TEST_KEY), 'the server sends its Census key');
+  const storedDoc = JSON.stringify(await project(org, created.result.id));
+  const cacheDocs = JSON.stringify((await db().collection('censusPlaceCache').get()).docs.map(d => d.data()));
+  for (const [where, text] of [['response', JSON.stringify(paid.result)], ['decision document', storedDoc], ['Census cache', cacheDocs]]) {
+    assert.equal(text.includes(CENSUS_TEST_KEY), false, `the Census key never reaches the ${where}`);
+  }
 
   censusRequests = [];
   const again = await call('getMarketIntelligenceProject', { organizationId: org, projectId: created.result.id });

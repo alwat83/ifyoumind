@@ -21,6 +21,18 @@ export interface ConsentStatus {
   marketing: boolean;
 }
 
+/** A stored choice that is missing, unreadable or malformed counts as "not answered yet". */
+function parseConsent(raw: string | null): ConsentStatus | null {
+  if (!raw) return null;
+  try {
+    const value = JSON.parse(raw);
+    if (!value || typeof value !== 'object' || typeof value.analytics !== 'boolean') return null;
+    return { essential: true, analytics: value.analytics, functional: false, marketing: false };
+  } catch {
+    return null;
+  }
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -37,9 +49,10 @@ export class CookieService {
 
   private loadConsentStatus() {
     if (this.isBrowser) {
-      const storedConsent = localStorage.getItem(CONSENT_STORAGE_KEY);
-      if (storedConsent) {
-        const consent = JSON.parse(storedConsent) as ConsentStatus;
+      let storedConsent: string | null = null;
+      try { storedConsent = localStorage.getItem(CONSENT_STORAGE_KEY); } catch { /* storage blocked */ }
+      const consent = parseConsent(storedConsent);
+      if (consent) {
         this.consentStatus.next(consent);
         this.updateGoogleConsentMode(consent);
       } else {
@@ -48,8 +61,9 @@ export class CookieService {
     }
   }
 
+  /** ifYouMind only uses analytics cookies; no functional or advertising cookies are set. */
   public acceptAll(): void {
-    const consent: ConsentStatus = { essential: true, analytics: true, functional: true, marketing: true };
+    const consent: ConsentStatus = { essential: true, analytics: true, functional: false, marketing: false };
     this.updateConsent(consent);
   }
 
@@ -60,7 +74,7 @@ export class CookieService {
 
   public updateConsent(consent: ConsentStatus): void {
     if (this.isBrowser) {
-      localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(consent));
+      try { localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(consent)); } catch { /* storage blocked: choice lasts this visit */ }
       this.consentStatus.next(consent);
       this.updateGoogleConsentMode(consent);
     }

@@ -2,6 +2,7 @@ import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
+import { decisionReportAccess } from './report-entitlement-logic';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const censusApiKey = defineSecret('CENSUS_API_KEY');
@@ -368,6 +369,7 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
       mode:'live',
       brief:briefForEntitlement(brief,false),
       decisionReportPurchased:false,
+      decisionReportAccess:'none',
       dataNotice:'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.',
     };
   }catch(error){
@@ -416,7 +418,8 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
   if (!snapshot.exists) throw new HttpsError('not-found', 'Market project not found.');
 
   const data = snapshot.data()!;
-  const decisionReportPurchased=data.decisionReportPurchased===true;
+  const reportAccess=decisionReportAccess(data);
+  const decisionReportPurchased=reportAccess==='purchased';
   return {
     id:snapshot.id,
     location:(()=>{try{return canonicalLocation(data.location);}catch{return data.location;}})(),
@@ -424,8 +427,9 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
     decision:data.decision,
     comparisonLocations:data.comparisonLocations || [],
     mode:data.mode || 'demo',
-    brief:briefForEntitlement(data.brief,decisionReportPurchased),
+    brief:briefForEntitlement(data.brief,reportAccess!=='none'),
     decisionReportPurchased,
+    decisionReportAccess:reportAccess,
     dataNotice:data.mode === 'live'
       ? 'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.'
       : 'Synthetic demo enrichment — not real market data.',

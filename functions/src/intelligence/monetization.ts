@@ -2,13 +2,26 @@ import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
-import { grantsPro, shouldApplySubscriptionEvent, validStripeSignature } from './stripe-commerce-logic';
+import {
+  grantsPro,
+  shouldApplySubscriptionEvent,
+  stripeKeyMode,
+  stripePriceIds,
+  subscriptionEventMayChangePlan,
+  validStripeSignature,
+} from './stripe-commerce-logic';
+import {
+  allowancePeriod,
+  blocksNewProCheckout,
+  blocksReportCheckout,
+  decisionReportAccess,
+  includedReportsUsed,
+  proUnlockDecision,
+} from './report-entitlement-logic';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const stripeSecretKey = defineSecret('STRIPE_SECRET_KEY');
 const stripeWebhookSecret = defineSecret('STRIPE_WEBHOOK_SECRET');
-const PRO_PRICE_ID = 'price_1UNpHICZjBRiXCDejbdIRMk2';
-const REPORT_PRICE_ID = 'price_1UNpHNCZjBRiXCDeoCCxrn8u';
 
 async function stripeGet(path:string){
   const response=await fetch(`https://api.stripe.com/v1/${path}`,{
@@ -57,6 +70,8 @@ export const COMMERCIAL_PLANS = {
     monthlyPriceUsd: 39,
     marketProjectsPerMonth: 50,
     comparisonMarkets: 3,
+    // Approved by the founder on 2026-10-11. Resets on the 1st of each UTC calendar month.
+    includedReportsPerMonth: 5,
   },
   report: {
     id: 'report',
@@ -70,7 +85,7 @@ function monthStart(): Timestamp {
   return Timestamp.fromDate(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)));
 }
 
-export const getCommercialStatus = onCall(async (request) => {
+export const getCommercialStatus = onCall({secrets:[stripeSecretKey]}, async (request) => {
   const scope = await authorizeOrganization(
     request.auth?.uid, request.data?.organizationId, readMembership,
   );
@@ -85,6 +100,8 @@ export const getCommercialStatus = onCall(async (request) => {
 
   const used = usageSnapshot.data().count;
   const limits = COMMERCIAL_PLANS[plan];
+  const includedReportsPerMonth = plan === 'pro' ? COMMERCIAL_PLANS.pro.includedReportsPerMonth : 0;
+  const usedIncludedReports = plan === 'pro' ? includedReportsUsed(org, allowancePeriod()) : 0;
 
   return {
     plan,
@@ -93,10 +110,15 @@ export const getCommercialStatus = onCall(async (request) => {
     marketProjectsPerMonth: limits.marketProjectsPerMonth,
     comparisonMarkets: limits.comparisonMarkets,
     remainingMarketProjects: Math.max(0, limits.marketProjectsPerMonth - used),
+    includedReportsPerMonth,
+    usedIncludedReports,
+    remainingIncludedReports: Math.max(0, includedReportsPerMonth - usedIncludedReports),
     checkoutEnabled: true,
+    paymentsLive: stripeKeyMode(stripeSecretKey.value()) === 'live',
     pricing: {
       proMonthlyUsd: COMMERCIAL_PLANS.pro.monthlyPriceUsd,
       reportOneTimeUsd: COMMERCIAL_PLANS.report.oneTimePriceUsd,
+      proIncludedReportsPerMonth: COMMERCIAL_PLANS.pro.includedReportsPerMonth,
     },
   };
 });
@@ -164,12 +186,27 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
     if(!projectId) throw new HttpsError('invalid-argument','Choose the decision this report belongs to.');
     const project=await organizations().doc(scope.organizationId).collection('marketProjects').doc(projectId).get();
     if(!project.exists) throw new HttpsError('not-found','Decision project not found.');
+    if(blocksReportCheckout(project.data())){
+      throw new HttpsError('failed-precondition','This Decision Report is already unlocked. Open it from your decisions.');
+    }
+  }else{
+    const org=(await organizations().doc(scope.organizationId).get()).data();
+    if(blocksNewProCheckout(org)){
+      throw new HttpsError('failed-precondition','This workspace already has a Pro subscription. Use Manage billing on your account page to change it.');
+    }
   }
 
   const params=new URLSearchParams();
   params.set('mode',offer==='pro'?'subscription':'payment');
-  params.set('line_items[0][price]',offer==='pro'?PRO_PRICE_ID:REPORT_PRICE_ID);
+  // Price IDs belong to one Stripe mode, so checkout picks the set matching the installed secret key.
+  const prices=stripePriceIds(stripeKeyMode(stripeSecretKey.value()));
+  params.set('line_items[0][price]',offer==='pro'?prices.pro:prices.report);
+  if(stripeKeyMode(stripeSecretKey.value())!=='live'){
+    console.warn('Creating a Stripe checkout with a non-live key: real cards will be declined.');
+  }
   params.set('line_items[0][quantity]','1');
+  // Lets customers enter a promotion code created in the Stripe dashboard. No codes exist by default.
+  params.set('allow_promotion_codes','true');
   params.set('success_url',`https://ifyoumind.com/app/pricing?checkout=success&offer=${offer}&projectId=${encodeURIComponent(projectId)}`);
   params.set('cancel_url',`https://ifyoumind.com/app/pricing?checkout=cancelled&offer=${offer}&projectId=${encodeURIComponent(projectId)}`);
   params.set('client_reference_id',scope.organizationId);
@@ -204,6 +241,89 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
       `Checkout could not be started (Stripe: ${detail||'request_error'}${safeMessage?'; '+safeMessage:''}).`,
     );
   }
+});
+
+async function recordBillingReview(organizationId:string,kind:string,details:Record<string,unknown>){
+  console.warn('Billing review needed',kind,organizationId,details);
+  await getFirestore().collection('billingReviews').add({
+    kind,
+    organizationId,
+    ...details,
+    status:'open',
+    createdAt:FieldValue.serverTimestamp(),
+  });
+}
+
+async function fulfillReportPayment(session:Record<string,any>){
+  const metadata=session.metadata||{};
+  const organizationId=metadata.organizationId;
+  if(!organizationId||!metadata.projectId||session.payment_status!=='paid')return;
+  const projectRef=organizations().doc(organizationId).collection('marketProjects').doc(metadata.projectId);
+  const projectSnapshot=await projectRef.get();
+  if(!projectSnapshot.exists){
+    console.error('Stripe report checkout references missing project',session.id);
+  }else if(projectSnapshot.data()?.decisionReportPurchased===true&&projectSnapshot.data()?.stripeCheckoutSessionId!==session.id){
+    // A second payment for a report that was already bought. Keep the original purchase record
+    // and flag the extra charge for a manual refund decision.
+    await recordBillingReview(organizationId,'duplicate_report_payment',{
+      checkoutSessionId:session.id,
+      projectId:metadata.projectId,
+      originalCheckoutSessionId:projectSnapshot.data()?.stripeCheckoutSessionId||null,
+      amountTotal:session.amount_total??null,
+      currency:session.currency??null,
+    });
+  }else{
+    await projectRef.set({
+      decisionReportPurchased:true,
+      decisionReportPurchasedAt:FieldValue.serverTimestamp(),
+      stripeCheckoutSessionId:session.id,
+    },{merge:true});
+  }
+}
+
+export const unlockDecisionReportWithPro = onCall(async (request) => {
+  const scope=await authorizeOrganization(
+    request.auth?.uid,request.data?.organizationId,readMembership,['owner','admin'],
+  );
+  const projectId=request.data?.projectId;
+  if(typeof projectId!=='string'||!/^[A-Za-z0-9_-]{1,128}$/.test(projectId)){
+    throw new HttpsError('invalid-argument','Invalid decision.');
+  }
+  const orgRef=organizations().doc(scope.organizationId);
+  const projectRef=orgRef.collection('marketProjects').doc(projectId);
+  const limit=COMMERCIAL_PLANS.pro.includedReportsPerMonth;
+  const period=allowancePeriod();
+
+  return getFirestore().runTransaction(async tx=>{
+    const [orgSnapshot,projectSnapshot]=await Promise.all([tx.get(orgRef),tx.get(projectRef)]);
+    if(!projectSnapshot.exists) throw new HttpsError('not-found','Decision not found.');
+    const org=orgSnapshot.data()||{};
+    const used=includedReportsUsed(org,period);
+    const decision=proUnlockDecision({
+      plan:org.plan,
+      access:decisionReportAccess(projectSnapshot.data()),
+      used,
+      limit,
+    });
+    if(!decision.ok){
+      throw new HttpsError(
+        decision.reason==='not-pro'?'permission-denied':'resource-exhausted',
+        decision.reason==='not-pro'
+          ? 'Full reports are included with Pro.'
+          : `You have used all ${limit} included reports this month. You can still buy this report individually.`,
+      );
+    }
+    if(decision.alreadyUnlocked){
+      return {unlocked:true,remainingIncludedReports:Math.max(0,limit-used)};
+    }
+    tx.set(projectRef,{
+      decisionReportIncludedWithPro:true,
+      decisionReportUnlockedAt:FieldValue.serverTimestamp(),
+      decisionReportUnlockedBy:scope.uid,
+    },{merge:true});
+    tx.set(orgRef,{proReportAllowance:{period,used:used+1}},{merge:true});
+    return {unlocked:true,remainingIncludedReports:Math.max(0,limit-used-1)};
+  });
 });
 
 export const stripeCommercialWebhook = onRequest(
@@ -265,6 +385,15 @@ export const stripeCommercialWebhook = onRequest(
           if(subscriptionId){
             const subscription=await stripeGet(`subscriptions/${encodeURIComponent(subscriptionId)}`);
             if(grantsPro(subscription.status)){
+              const existing=(await organizations().doc(organizationId).get()).data()||{};
+              const priorSubscriptionId=typeof existing.stripeSubscriptionId==='string'?existing.stripeSubscriptionId:'';
+              if(priorSubscriptionId&&priorSubscriptionId!==(subscription.id||subscriptionId)&&grantsPro(existing.stripeSubscriptionStatus)){
+                await recordBillingReview(organizationId,'duplicate_pro_subscription',{
+                  checkoutSessionId:session.id,
+                  existingSubscriptionId:priorSubscriptionId,
+                  newSubscriptionId:subscription.id||subscriptionId,
+                });
+              }
               await organizations().doc(organizationId).set({
                 plan:'pro',
                 stripeCustomerId:subscription.customer||session.customer||null,
@@ -278,18 +407,12 @@ export const stripeCommercialWebhook = onRequest(
               console.warn('Checkout completed without active Pro subscription',session.id,subscription.status);
             }
           }
-        }else if(organizationId&&offer==='report'&&metadata.projectId&&session.payment_status==='paid'){
-          const projectRef=organizations().doc(organizationId).collection('marketProjects').doc(metadata.projectId);
-          if(!((await projectRef.get()).exists)){
-            console.error('Stripe report checkout references missing project',session.id);
-          }else{
-            await projectRef.set({
-              decisionReportPurchased:true,
-              decisionReportPurchasedAt:FieldValue.serverTimestamp(),
-              stripeCheckoutSessionId:session.id,
-            },{merge:true});
-          }
+        }else if(offer==='report'){
+          await fulfillReportPayment(event.data.object);
         }
+      }else if(event.type==='checkout.session.async_payment_succeeded'){
+        // Delayed payment methods (bank debits) complete checkout unpaid and confirm payment later.
+        if(event.data.object.metadata?.offer==='report')await fulfillReportPayment(event.data.object);
       }else if(event.type==='customer.subscription.updated'||event.type==='customer.subscription.deleted'){
         const subscription=event.data.object;
         const metadata=subscription.metadata||{};
@@ -297,8 +420,11 @@ export const stripeCommercialWebhook = onRequest(
         if(organizationId&&metadata.offer==='pro'){
           const orgRef=organizations().doc(organizationId);
           const current=(await orgRef.get()).data()||{};
-          if(shouldApplySubscriptionEvent(event.created,current.stripeSubscriptionEventCreated)){
-            const status=String(subscription.status||'unknown');
+          const status=String(subscription.status||'unknown');
+          if(!subscriptionEventMayChangePlan(current,subscription.id,status)){
+            // e.g. a duplicate subscription being cancelled must not end the workspace's live one.
+            console.info('Ignoring event for a non-current Stripe subscription',event.id,subscription.id);
+          }else if(shouldApplySubscriptionEvent(event.created,current.stripeSubscriptionEventCreated)){
             await orgRef.set({
               plan:grantsPro(status)?'pro':'free',
               stripeCustomerId:subscription.customer||null,

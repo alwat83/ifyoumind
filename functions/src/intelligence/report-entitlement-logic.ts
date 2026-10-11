@@ -49,3 +49,31 @@ export function blocksNewProCheckout(org:Record<string,unknown>|undefined|null):
 export function blocksReportCheckout(project:Record<string,unknown>|undefined|null):boolean{
   return decisionReportAccess(project)!=='none';
 }
+
+// A full Decision Report compares the main location with up to three places on every plan. The free
+// Decision Brief shows one comparison; Pro briefs show all three.
+export const REPORT_COMPARISON_LIMIT=3;
+export const FREE_BRIEF_COMPARISONS=1;
+
+export function freeBriefComparisonCount(plan:unknown,comparisons:number):number|null{
+  if(plan==='pro'||comparisons<=FREE_BRIEF_COMPARISONS)return null;
+  return FREE_BRIEF_COMPARISONS;
+}
+
+/**
+ * What a decision returns for a given report access. Unlocked reports get the full brief and every
+ * comparison; otherwise free-plan decisions return their one-comparison free brief and name the
+ * places held back for the full report.
+ */
+export function decisionView(project:Record<string,any>,access:ReportAccess){
+  const comparisonLocations:string[]=Array.isArray(project.comparisonLocations)?project.comparisonLocations:[];
+  const freeCount=typeof project.freeComparisonCount==='number'?project.freeComparisonCount:null;
+  if(access!=='none'||!project.freeBrief||freeCount===null){
+    return {brief:project.brief,comparisonLocations,reportOnlyLocations:[] as string[]};
+  }
+  return {
+    brief:project.freeBrief,
+    comparisonLocations:comparisonLocations.slice(0,freeCount),
+    reportOnlyLocations:comparisonLocations.slice(freeCount),
+  };
+}

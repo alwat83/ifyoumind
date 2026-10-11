@@ -44,14 +44,15 @@ test('public pages have unique titles and search-length descriptions',()=>{
   }
 });
 
-test('every public page is a real route and the sitemap lists exactly the public pages',()=>{
+test('every public page is a real route and the sitemap lists the public pages first',()=>{
   const routes=read('src/app/app.routes.ts');
   for(const page of pages.filter(page=>page.path!=='/')){
     assert.match(routes,new RegExp(`path:'${page.path.slice(1)}'`),page.path);
   }
   const sitemap=buildSitemap('2026-01-01');
   const locs=[...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(match=>match[1]);
-  assert.deepEqual(locs,pages.map(page=>`${SITE_URL}${page.path}`));
+  assert.deepEqual(locs.slice(0,pages.length),pages.map(page=>`${SITE_URL}${page.path}`));
+  assert.ok(locs.slice(pages.length).every(loc=>loc.startsWith(`${SITE_URL}/guides/`)),'only static guides follow the app pages');
 });
 
 test('the static index.html carries no canonical or og:url that would mislabel other routes',()=>{

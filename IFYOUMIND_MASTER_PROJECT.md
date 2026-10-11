@@ -188,6 +188,22 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
 
     Each agency's API terms are to be confirmed before build.
   - **Plan:** https://claude.ai/code/artifact/f2fecef4-4921-44da-ba45-a113a03e722a
+- **Official-source research (2026-10-11).** Plan: https://claude.ai/code/artifact/fd74813d-55a5-4ca9-a354-d82031e6e7bd
+  - **Census:** no US copyright (policy DS027). Every API request now needs a key. Required notice: "This product uses the Census Bureau Data API but is not endorsed or certified by the Census Bureau."
+  - **BLS:** public domain. Cite BLS and the retrieval date. v2 key allows 500 queries a day; v1 allows 25. The BLS quotes still need a manual check in a browser.
+  - **BEA:** public domain. Free key; 100 requests a minute. Required notice: "This product uses the Bureau of Economic Analysis (BEA) Data API but is not endorsed or certified by BEA."
+  - **FHFA HPI:** no API, downloads only. "FHFA HPI®" is a trademark; cite it as "Source: FHFA HPI®".
+  - **Caching:** none of the four restricts storage in the pages read.
+  - **Changes to the plan:**
+    - CBP has no planned release date for 2024 data, and NES changes method from 2025, after a Commerce order banning noise infusion. Use the 2023 data, labelled as the latest published, with BLS QCEW as the fallback for employer counts.
+    - Building permits are monthly at county level (since 2022), not only at metro level.
+- **Enhanced $79 report prototype:** https://claude.ai/artifact/3aabntWGixBsHtxLatJEyp. It mixes real figures (ACS from the guide; FHFA county HPI 2020–2025; Travis County LAUS) with clearly marked illustrative placeholders. Status: for founder review; not implemented.
+- **Release phases (estimates, each gated on founder approval):**
+  - R1: #26, then Wave B, then docs.
+  - R2: UX polish U1–U12, about 2–3 days.
+  - R3: evidence labels, significance tests, market sizing and export (Census only), about 4–5 days.
+  - R4: industry code, competitors and cost proxy, about 4–5 days.
+  - R5: BLS, BEA, permits and FHFA trends, about 5–7 days.
 - **Security finding (open until #26 ships):** Cloud Functions do not check `email_verified`; only the browser guard does.
 - **Customer count:** 0 verified live paying customers; five is the target.
 

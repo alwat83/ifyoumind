@@ -6,7 +6,11 @@
 **Notion:** https://app.notion.com/p/3f5c9bc5d8fd805ebaa6eae586db23bf  
 **Purpose:** Living project context for the founder and all current/future development agents.
 
-> **Project boundary and authorship:** ifYouMind and Dose Ninja are entirely separate projects. The founder confirms **all ifYouMind development through 2026-10-10 was performed using OpenAI (ChatGPT/Codex) tools and agents**. Claude, Gemini and other providers have **not** contributed to ifYouMind. Specific OpenAI agent/session ownership of individual commits may not be determinable from GitHub metadata; do not guess.
+> **Legal operator (founder-confirmed 2026-10-11):** ifYouMind is a product and service operated by **Dose Ninja Inc.**; it is not a separate legal entity. The privacy policy and terms name Dose Ninja Inc. as operator, and that is intentional.
+>
+> **Operational separation:** ifYouMind and the Dose Ninja medication-management product share **no** customer records, analytics properties, mailing lists, product credentials or marketing infrastructure.
+>
+> **Project boundary and authorship:** ifYouMind and the Dose Ninja medication-management product are entirely separate projects. The founder confirms **all ifYouMind development through 2026-10-10 was performed using OpenAI (ChatGPT/Codex) tools and agents**. Claude, Gemini and other providers have **not** contributed to ifYouMind. Specific OpenAI agent/session ownership of individual commits may not be determinable from GitHub metadata; do not guess.
 
 > **Status discipline:** planned ≠ committed ≠ merged ≠ deployed ≠ production verified. GitHub commits are implementation evidence, not proof of a working live release. Historical Notion architecture is not necessarily the current shipped product.
 
@@ -117,6 +121,48 @@ Founder-approved preparation phase. Nothing was published, deployed, sent or con
   6. a professional tier.
 
   Full review: Claude Docs "SEO readiness and Customer Value Expansion review".
+
+## CUSTOMER VALUE EXPANSION, UX AND CONVERSION STRATEGY — 2026-10-11 (Claude, Anthropic)
+Strategy only: no features implemented, no pricing or entitlement changes, nothing deployed. The full assessment is in the Claude Docs doc "Customer Value Expansion, UX and Conversion Strategy".
+
+- **Finding:** an email sign-up passes about nine screens, including an inbox detour, before seeing a personalised result. Nothing before sign-in is measured. The paid report adds cities but little new insight. Pro at $39/month (5 reports, kept after cancelling) undercuts the $79 report.
+- **Recommended phase 1, "Measure and clarify"** (planned; needs approval):
+  1. Consent-gated GA4 (#18) plus five funnel events.
+  2. Clarity copy: free-brief limit, one name ("Decision Report"), register headline.
+  3. Intent carry-through, cutting nine screens to six with no change to auth or paid access.
+  4. Founder-first offer presentation, copy only.
+
+  Gate to phase 2: about 2 weeks or about 200 measured homepage visits.
+- **Phase 2, report value** (planned):
+  - ACS significance flags (Census Z-test, 90% MOE);
+  - households above income thresholds (B19001) and age bands (B01001);
+  - County Business Patterns employer establishments, plus Nonemployer Statistics;
+  - residential median gross rent (B25064), labelled as a proxy;
+  - a "copy into my business plan" export.
+
+  Commercial rent has no reliable free official source, so it is user-entered evidence only.
+- **Later phases:** professional offer (report pack or monthly plan above $79, decided on evidence); grounded AI (facts in, sentences out, with fact-ID validation and rule-based fallback; provider-neutral; OpenAI integration still deferred); cross-industry reuse of the same evidence engine.
+- **Resolved:** the legal operator is Dose Ninja Inc. (founder-confirmed). Privacy wording is in #18; Terms wording is in #12 (still on hold).
+- **Wave A release, 2026-10-11 (Claude Code, founder-authorized).** Each PR: CI green on head → merge → deploy run → read-only production check from the ifyou environment (no sign-ups, purchases, form submissions or consent clicks).
+
+  | Order | PR | CI head | Merge commit | Deploy run | Production check | Status |
+  |---|---|---|---|---|---|---|
+  | 1 | [#20](https://github.com/alwat83/ifyoumind/pull/20) guide table scroll cue | `77ff048` | `46f1125` | 38171026194 success | PASS: hint at 390px, hidden at 1280px; axe 0; no overflow | Production verified |
+  | 2 | [#22](https://github.com/alwat83/ifyoumind/pull/22) clarity copy | `4d8bf30` | `a956f57` | 38171460974 success | Copy live everywhere; FAIL on pre-existing /sample-report contrast (`#788194`, 3.91:1), so the release stopped | Deployed; verified after #25 |
+  | 2a | [#25](https://github.com/alwat83/ifyoumind/pull/25) footnote grey `#5f6878` (5.62:1) | `5f8d91b` | `2591d95` | 38176829772 success | PASS: computed colour correct; axe 0 on /sample-report at 390 and 1280px; regressions clean | Production verified |
+  | 3 | [#23](https://github.com/alwat83/ifyoumind/pull/23) six-screen first-time path | `2f1e6e7` | `c95de9e` | 38177318999 success | PASS: /verify-email renders the new page; signed-out /app/decide redirects to /login; new flow strings in the deployed chunks; no "Fast-casual restaurant" default; axe 0 on six public pages | Production verified (signed-out); real verification email still to check |
+  | 4 | [#21](https://github.com/alwat83/ifyoumind/pull/21) this documentation | see the merge record | | | Docs only | |
+
+  **Not verifiable read-only:** the signed-in decision flow and the real verification email's continue link. Check both once with a founder test account.
+- **Wave B (#18 consent-gated GA4 → #24 funnel events): on hold.** It needs:
+  - the founder's GA4 property checks: an ifYouMind-only property; Google signals off; no advertising links; retention of 2 or 14 months; enhanced-measurement history, site search and form interactions off; granular location and device data off; data sharing off;
+  - separate authorization;
+  - a DebugView check after deploy.
+
+  #24 must merge after #18.
+- **Email-verification hardening:** [draft PR #26](https://github.com/alwat83/ifyoumind/pull/26) adds `requireVerifiedIdentity` to the 12 functions that write data or touch billing. Public, admin, setup and read-only functions are exempt. The auth guard refreshes a token that predates verification. Local suites pass. **Not merged or deployed; needs separate founder authorization.**
+- **Security finding (open until #26 ships):** Cloud Functions do not check `email_verified`; only the browser guard does.
+- **Customer count:** 0 verified live paying customers; five is the target.
 
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.

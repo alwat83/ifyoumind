@@ -19,7 +19,18 @@ export function analyticsAllowed(consent:AnalyticsConsent|null|undefined,hostnam
 export const ANALYTICS_GTAG_CONFIG={
   allow_google_signals:false,
   allow_ad_personalization_signals:false,
+  // Page views are sent by AnalyticsBootstrapService with a cleaned URL instead.
+  send_page_view:false,
 } as const;
+
+/**
+ * The page path GA4 may see: no query string or fragment (they can carry record ids such as
+ * projectId), and private report ids replaced with a placeholder.
+ */
+export function analyticsPagePath(url:string):string{
+  const path=(url||'/').split(/[?#]/)[0]||'/';
+  return path.replace(/^\/app\/result\/[^/]+/,'/app/result/:id');
+}
 
 /** Consent Mode values sent once a visitor has allowed analytics. Advertising is never granted. */
 export const ANALYTICS_CONSENT_GRANTED={

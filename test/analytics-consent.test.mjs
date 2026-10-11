@@ -5,7 +5,7 @@ import ts from 'typescript';
 
 const source=fs.readFileSync(new URL('../src/app/analytics/analytics-consent.ts',import.meta.url),'utf8');
 const compiled=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2022}}).outputText;
-const {analyticsAllowed,ANALYTICS_GTAG_CONFIG,ANALYTICS_CONSENT_GRANTED}=await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
+const {analyticsAllowed,ANALYTICS_GTAG_CONFIG,ANALYTICS_CONSENT_GRANTED,analyticsPagePath}=await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
 
 test('no stored choice means no analytics',()=>{
   assert.equal(analyticsAllowed(null,'ifyoumind.com'),false);
@@ -45,6 +45,8 @@ test('consent never grants advertising storage or signals',()=>{
 test('analytics is configured without user-ID tracking and with the in-code settings',()=>{
   const config=fs.readFileSync(new URL('../src/app/app.config.ts',import.meta.url),'utf8');
   assert.doesNotMatch(config,/UserTrackingService/);
+  assert.doesNotMatch(config,/ScreenTrackingService/);
+  assert.equal(ANALYTICS_GTAG_CONFIG.send_page_view,false);
   assert.match(config,/initializeAnalytics\(getApp\(\), \{ config: \{ \.\.\.ANALYTICS_GTAG_CONFIG \} \}\)/);
 });
 
@@ -59,4 +61,12 @@ test('only the five allowlisted funnel events are sent, without personal data pa
     assert.ok(FUNNEL_EVENTS.includes(name),name);
     assert.doesNotMatch(params,/\b(email|displayName|name|location|concept|decision|question)\s*:/i,`${name} params: ${params}`);
   }
+});
+
+test('page paths sent to GA4 drop query strings and private report ids',()=>{
+  assert.equal(analyticsPagePath('/app/pricing?checkout=success&offer=report&projectId=abc123'),'/app/pricing');
+  assert.equal(analyticsPagePath('/app/result/AbC123xyz'),'/app/result/:id');
+  assert.equal(analyticsPagePath('/app/result/AbC123xyz?x=1#top'),'/app/result/:id');
+  assert.equal(analyticsPagePath('/sample-report?utm_source=li'),'/sample-report');
+  assert.equal(analyticsPagePath('/'),'/');
 });

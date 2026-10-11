@@ -20,7 +20,6 @@ import { provideFunctions, getFunctions, connectFunctionsEmulator } from '@angul
 import {
   provideAnalytics,
   initializeAnalytics,
-  ScreenTrackingService,
 } from '@angular/fire/analytics';
 import { ANALYTICS_GTAG_CONFIG } from './analytics/analytics-consent';
 
@@ -59,9 +58,9 @@ export const appConfig: ApplicationConfig = {
       return functions;
     }),
     ...(useLocalEmulators ? [] : [
-      // Created only when AnalyticsBootstrapService starts it after consent. No user-ID tracking.
+      // Created only when AnalyticsBootstrapService starts it after consent. No user-ID tracking;
+      // page views are sent by that service with cleaned URLs.
       provideAnalytics(() => initializeAnalytics(getApp(), { config: { ...ANALYTICS_GTAG_CONFIG } })),
-      ScreenTrackingService,
     ]),
   ],
 };

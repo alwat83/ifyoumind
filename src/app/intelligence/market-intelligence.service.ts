@@ -1,5 +1,7 @@
 import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Functions, httpsCallable } from '@angular/fire/functions';
+import { redirectIfUnverified } from '../auth/email-verification';
 
 export interface MarketMetric {
   key:string;
@@ -58,6 +60,7 @@ export interface MarketProject {
 @Injectable({providedIn:'root'})
 export class MarketIntelligenceService {
   private readonly functions=inject(Functions);
+  private readonly router=inject(Router);
 
   async create(
     organizationId:string,
@@ -70,7 +73,7 @@ export class MarketIntelligenceService {
       {organizationId:string;location:string;concept:string;decision:string;comparisonLocations:string[]},
       MarketProject
     >(this.functions,'createMarketIntelligenceProject');
-    return (await call({organizationId,location,concept,decision,comparisonLocations})).data;
+    return (await redirectIfUnverified(this.router, () => call({organizationId,location,concept,decision,comparisonLocations}))).data;
   }
 
   async sample():Promise<MarketProject>{

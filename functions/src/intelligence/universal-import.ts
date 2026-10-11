@@ -1,6 +1,6 @@
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
-import { authorizeOrganization } from './authorization';
+import { authorizeOrganization, requireVerifiedIdentity } from './authorization';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const readMembership = async (organizationId: string, uid: string) =>
@@ -26,6 +26,7 @@ function validateText(value: unknown, label: string, max: number, optional = fal
 export const importUniversalObservations = onCall(
   { timeoutSeconds: 120 },
   async (request) => {
+    requireVerifiedIdentity(request.auth);
     const scope = await authorizeOrganization(
       request.auth?.uid,
       request.data?.organizationId,

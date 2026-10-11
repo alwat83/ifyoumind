@@ -1,5 +1,7 @@
 import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Functions, httpsCallable } from '@angular/fire/functions';
+import { redirectIfUnverified } from '../auth/email-verification';
 
 export interface UniversalDataset {
   id: string;
@@ -82,13 +84,14 @@ export interface UniversalAnalysis {
 @Injectable({ providedIn: 'root' })
 export class UniversalDataService {
   private readonly functions = inject(Functions);
+  private readonly router = inject(Router);
 
   async seedDemo(organizationId: string): Promise<{ datasetIds: string[]; targetDatasetId: string; observationCount: number }> {
     const call = httpsCallable<
       { organizationId: string },
       { datasetIds: string[]; targetDatasetId: string; observationCount: number }
     >(this.functions, 'seedUniversalDemoData');
-    return (await call({ organizationId })).data;
+    return (await redirectIfUnverified(this.router, () => call({ organizationId }))).data;
   }
 
   async list(organizationId: string): Promise<UniversalDataset[]> {
@@ -106,7 +109,7 @@ export class UniversalDataService {
       { organizationId: string } & typeof data,
       { id: string }
     >(this.functions, 'createUniversalDataset');
-    return (await call({ organizationId, ...data })).data.id;
+    return (await redirectIfUnverified(this.router, () => call({ organizationId, ...data }))).data.id;
   }
 
   async addObservation(
@@ -117,7 +120,7 @@ export class UniversalDataService {
       { organizationId: string } & typeof data,
       { id: string }
     >(this.functions, 'addUniversalObservation');
-    await call({ organizationId, ...data });
+    await redirectIfUnverified(this.router, () => call({ organizationId, ...data }));
   }
 
   async importObservations(
@@ -136,7 +139,7 @@ export class UniversalDataService {
       { organizationId: string; datasetId: string; observations: typeof observations },
       { imported: number }
     >(this.functions, 'importUniversalObservations');
-    return (await call({ organizationId, datasetId, observations })).data.imported;
+    return (await redirectIfUnverified(this.router, () => call({ organizationId, datasetId, observations }))).data.imported;
   }
 
   async synthesize(
@@ -168,7 +171,7 @@ export class UniversalDataService {
       { organizationId: string; datasetIds: string[]; targetDatasetId: string },
       UniversalReasoning
     >(this.functions, 'reasonAcrossUniversalDatasets');
-    return (await call({ organizationId, datasetIds, targetDatasetId })).data;
+    return (await redirectIfUnverified(this.router, () => call({ organizationId, datasetIds, targetDatasetId }))).data;
   }
 
   async analyze(organizationId: string, datasetIds: string[]): Promise<UniversalAnalysis> {
@@ -176,6 +179,6 @@ export class UniversalDataService {
       { organizationId: string; datasetIds: string[] },
       UniversalAnalysis
     >(this.functions, 'analyzeUniversalDatasets');
-    return (await call({ organizationId, datasetIds })).data;
+    return (await redirectIfUnverified(this.router, () => call({ organizationId, datasetIds }))).data;
   }
 }

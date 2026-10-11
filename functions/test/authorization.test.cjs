@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { authorizeOrganization } = require('../lib/intelligence/authorization');
+const { authorizeOrganization, requireVerifiedIdentity, isLocalDemoEmulator } = require('../lib/intelligence/authorization');
 const denied = (code) => (error) => error.code === code;
 
 test('anonymous requests never reach membership storage', async () => {
@@ -26,4 +26,39 @@ test('viewer may read but cannot enter an owner/admin-only operation', async () 
   const reader = async () => ({ role: 'viewer', status: 'active' });
   assert.equal((await authorizeOrganization('alice', 'org-a', reader)).role, 'viewer');
   await assert.rejects(authorizeOrganization('alice', 'org-a', reader, ['owner', 'admin']), denied('permission-denied'));
+});
+
+const prod = { GCLOUD_PROJECT: 'ifyoumind' };
+const localDemo = { FUNCTIONS_EMULATOR: 'true', GCLOUD_PROJECT: 'demo-ifyoumind' };
+const throwsCode = (fn, code) => assert.throws(fn, denied(code));
+
+test('verified identity: anonymous callers are unauthenticated', () => {
+  for (const auth of [undefined, {}, { token: { email_verified: true } }, { uid: '', token: { email_verified: true } }]) {
+    throwsCode(() => requireVerifiedIdentity(auth, prod), 'unauthenticated');
+    throwsCode(() => requireVerifiedIdentity(auth, localDemo), 'unauthenticated');
+  }
+});
+test('verified identity: anything but email_verified === true is refused', () => {
+  for (const token of [undefined, {}, { email_verified: false }, { email_verified: 'true' }, { email_verified: 1 }, { email_verified: null }]) {
+    assert.throws(() => requireVerifiedIdentity({ uid: 'alice', token }, prod),
+      (error) => error.code === 'failed-precondition' && error.message === 'Verify your email address to continue.');
+  }
+});
+test('verified identity: a verified token returns the uid', () => {
+  assert.equal(requireVerifiedIdentity({ uid: 'alice', token: { email_verified: true } }, prod), 'alice');
+});
+test('verified identity: only the local demo emulator bypasses the check', () => {
+  assert.equal(isLocalDemoEmulator(localDemo), true);
+  assert.equal(requireVerifiedIdentity({ uid: 'alice', token: {} }, localDemo), 'alice');
+  for (const env of [
+    {}, prod,
+    { FUNCTIONS_EMULATOR: 'true', GCLOUD_PROJECT: 'ifyoumind' },
+    { FUNCTIONS_EMULATOR: 'true' },
+    { GCLOUD_PROJECT: 'demo-ifyoumind' },
+    { FUNCTIONS_EMULATOR: '1', GCLOUD_PROJECT: 'demo-ifyoumind' },
+    { FUNCTIONS_EMULATOR: 'true', GCLOUD_PROJECT: 'demo-ifyoumind-other' },
+  ]) {
+    assert.equal(isLocalDemoEmulator(env), false);
+    throwsCode(() => requireVerifiedIdentity({ uid: 'alice', token: { email_verified: false } }, env), 'failed-precondition');
+  }
 });

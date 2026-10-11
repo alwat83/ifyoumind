@@ -4,6 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 
 interface GtagConsentParams {
   ad_storage?: 'granted' | 'denied';
+  ad_user_data?: 'granted' | 'denied';
+  ad_personalization?: 'granted' | 'denied';
   analytics_storage?: 'granted' | 'denied';
   functionality_storage?: 'granted' | 'denied';
   security_storage?: 'granted' | 'denied';
@@ -96,11 +98,14 @@ export class CookieService {
   private updateGoogleConsentMode(consent: ConsentStatus): void {
     if (typeof gtag === 'function') {
       gtag('consent', 'update', {
-        'ad_storage': consent.marketing ? 'granted' : 'denied',
+        // ifYouMind never uses advertising features, so ad signals are always denied.
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
         'analytics_storage': consent.analytics ? 'granted' : 'denied',
-        'functionality_storage': consent.functional ? 'granted' : 'denied',
+        'functionality_storage': 'denied',
         'security_storage': 'granted', // Always granted
-        'personalization_storage': consent.marketing ? 'granted' : 'denied'
+        'personalization_storage': 'denied'
       });
     }
   }

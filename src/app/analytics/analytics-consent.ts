@@ -11,3 +11,23 @@ export function analyticsAllowed(consent:AnalyticsConsent|null|undefined,hostnam
   if(LOCAL_HOSTS.has(hostname))return false;
   return consent?.analytics===true;
 }
+
+/**
+ * GA4 settings applied in code, whatever the property settings say: no Google signals
+ * (cross-device / demographics) and no ad personalization signals.
+ */
+export const ANALYTICS_GTAG_CONFIG={
+  allow_google_signals:false,
+  allow_ad_personalization_signals:false,
+} as const;
+
+/** Consent Mode values sent once a visitor has allowed analytics. Advertising is never granted. */
+export const ANALYTICS_CONSENT_GRANTED={
+  analytics_storage:'granted',
+  ad_storage:'denied',
+  ad_user_data:'denied',
+  ad_personalization:'denied',
+  functionality_storage:'denied',
+  personalization_storage:'denied',
+  security_storage:'granted',
+} as const;

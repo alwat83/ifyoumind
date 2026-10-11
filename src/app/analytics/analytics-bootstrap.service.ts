@@ -1,8 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Injectable, Injector, PLATFORM_ID, inject } from '@angular/core';
-import { Analytics, ScreenTrackingService, setAnalyticsCollectionEnabled } from '@angular/fire/analytics';
+import { Analytics, ScreenTrackingService, setAnalyticsCollectionEnabled, setConsent } from '@angular/fire/analytics';
 import { CookieService } from '../services/cookie.service';
-import { analyticsAllowed } from './analytics-consent';
+import { ANALYTICS_CONSENT_GRANTED, analyticsAllowed } from './analytics-consent';
 
 /**
  * Starts Firebase Analytics (GA4) only after the visitor allows analytics cookies, and stops
@@ -28,6 +28,8 @@ export class AnalyticsBootstrapService{
 
   private initialize():void{
     try{
+      // Consent defaults must be set before Analytics is created; advertising stays denied.
+      setConsent({...ANALYTICS_CONSENT_GRANTED});
       this.analytics=this.injector.get(Analytics,null);
       if(!this.analytics)return;
       this.injector.get(ScreenTrackingService,null);

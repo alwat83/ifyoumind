@@ -59,3 +59,19 @@ export function shouldApplySubscriptionEvent(
   if(!Number.isFinite(previous))return true;
   return incoming>=previous;
 }
+
+/**
+ * Whether a subscription event may change the workspace's plan. Events for a different subscription
+ * (such as a duplicate being cancelled) must not downgrade a workspace whose current subscription
+ * still grants Pro.
+ */
+export function subscriptionEventMayChangePlan(
+  current:{stripeSubscriptionId?:unknown;stripeSubscriptionStatus?:unknown},
+  incomingSubscriptionId:unknown,
+  incomingStatus:unknown,
+):boolean{
+  const currentId=typeof current.stripeSubscriptionId==='string'?current.stripeSubscriptionId:'';
+  if(!currentId||currentId===incomingSubscriptionId)return true;
+  if(!grantsPro(current.stripeSubscriptionStatus))return true;
+  return grantsPro(incomingStatus);
+}

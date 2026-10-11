@@ -58,3 +58,13 @@ test('checkout uses the price set that matches the key mode', () => {
   assert.equal(stripePriceIds('live',{pro:' price_override '}).pro,'price_override');
   assert.equal(stripePriceIds('live',{pro:''}).pro,STRIPE_PRICES.live.pro);
 });
+
+test('events for another subscription cannot end the current Pro subscription', () => {
+  const { subscriptionEventMayChangePlan } = require('../lib/intelligence/stripe-commerce-logic');
+  const current={stripeSubscriptionId:'sub_current',stripeSubscriptionStatus:'active'};
+  assert.equal(subscriptionEventMayChangePlan(current,'sub_current','canceled'),true);
+  assert.equal(subscriptionEventMayChangePlan(current,'sub_duplicate','canceled'),false);
+  assert.equal(subscriptionEventMayChangePlan(current,'sub_duplicate','active'),true);
+  assert.equal(subscriptionEventMayChangePlan({stripeSubscriptionId:'sub_old',stripeSubscriptionStatus:'canceled'},'sub_new','active'),true);
+  assert.equal(subscriptionEventMayChangePlan({},'sub_new','active'),true);
+});

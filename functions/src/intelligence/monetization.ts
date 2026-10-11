@@ -1,8 +1,15 @@
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
-import { defineSecret, defineString } from 'firebase-functions/params';
+import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
-import { grantsPro, shouldApplySubscriptionEvent, stripeKeyMode, stripePriceIds, validStripeSignature } from './stripe-commerce-logic';
+import {
+  grantsPro,
+  shouldApplySubscriptionEvent,
+  stripeKeyMode,
+  stripePriceIds,
+  subscriptionEventMayChangePlan,
+  validStripeSignature,
+} from './stripe-commerce-logic';
 import {
   allowancePeriod,
   blocksNewProCheckout,
@@ -15,10 +22,6 @@ import {
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const stripeSecretKey = defineSecret('STRIPE_SECRET_KEY');
 const stripeWebhookSecret = defineSecret('STRIPE_WEBHOOK_SECRET');
-// Price IDs belong to one Stripe mode, so checkout picks the set matching the installed secret key.
-// Optional params override them (leave empty to use these defaults).
-const PRO_PRICE_ID = defineString('STRIPE_PRO_PRICE_ID', { default: '' });
-const REPORT_PRICE_ID = defineString('STRIPE_REPORT_PRICE_ID', { default: '' });
 
 async function stripeGet(path:string){
   const response=await fetch(`https://api.stripe.com/v1/${path}`,{
@@ -67,7 +70,7 @@ export const COMMERCIAL_PLANS = {
     monthlyPriceUsd: 39,
     marketProjectsPerMonth: 50,
     comparisonMarkets: 3,
-    // Proposed allowance, pending founder approval before release.
+    // Approved by the founder on 2026-10-11. Resets on the 1st of each UTC calendar month.
     includedReportsPerMonth: 5,
   },
   report: {
@@ -195,10 +198,8 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
 
   const params=new URLSearchParams();
   params.set('mode',offer==='pro'?'subscription':'payment');
-  const prices=stripePriceIds(stripeKeyMode(stripeSecretKey.value()),{
-    pro:PRO_PRICE_ID.value(),
-    report:REPORT_PRICE_ID.value(),
-  });
+  // Price IDs belong to one Stripe mode, so checkout picks the set matching the installed secret key.
+  const prices=stripePriceIds(stripeKeyMode(stripeSecretKey.value()));
   params.set('line_items[0][price]',offer==='pro'?prices.pro:prices.report);
   if(stripeKeyMode(stripeSecretKey.value())!=='live'){
     console.warn('Creating a Stripe checkout with a non-live key: real cards will be declined.');
@@ -251,6 +252,33 @@ async function recordBillingReview(organizationId:string,kind:string,details:Rec
     status:'open',
     createdAt:FieldValue.serverTimestamp(),
   });
+}
+
+async function fulfillReportPayment(session:Record<string,any>){
+  const metadata=session.metadata||{};
+  const organizationId=metadata.organizationId;
+  if(!organizationId||!metadata.projectId||session.payment_status!=='paid')return;
+  const projectRef=organizations().doc(organizationId).collection('marketProjects').doc(metadata.projectId);
+  const projectSnapshot=await projectRef.get();
+  if(!projectSnapshot.exists){
+    console.error('Stripe report checkout references missing project',session.id);
+  }else if(projectSnapshot.data()?.decisionReportPurchased===true&&projectSnapshot.data()?.stripeCheckoutSessionId!==session.id){
+    // A second payment for a report that was already bought. Keep the original purchase record
+    // and flag the extra charge for a manual refund decision.
+    await recordBillingReview(organizationId,'duplicate_report_payment',{
+      checkoutSessionId:session.id,
+      projectId:metadata.projectId,
+      originalCheckoutSessionId:projectSnapshot.data()?.stripeCheckoutSessionId||null,
+      amountTotal:session.amount_total??null,
+      currency:session.currency??null,
+    });
+  }else{
+    await projectRef.set({
+      decisionReportPurchased:true,
+      decisionReportPurchasedAt:FieldValue.serverTimestamp(),
+      stripeCheckoutSessionId:session.id,
+    },{merge:true});
+  }
 }
 
 export const unlockDecisionReportWithPro = onCall(async (request) => {
@@ -379,29 +407,12 @@ export const stripeCommercialWebhook = onRequest(
               console.warn('Checkout completed without active Pro subscription',session.id,subscription.status);
             }
           }
-        }else if(organizationId&&offer==='report'&&metadata.projectId&&session.payment_status==='paid'){
-          const projectRef=organizations().doc(organizationId).collection('marketProjects').doc(metadata.projectId);
-          const projectSnapshot=await projectRef.get();
-          if(!projectSnapshot.exists){
-            console.error('Stripe report checkout references missing project',session.id);
-          }else if(projectSnapshot.data()?.decisionReportPurchased===true&&projectSnapshot.data()?.stripeCheckoutSessionId!==session.id){
-            // A second payment for a report that was already bought. Keep the original purchase record
-            // and flag the extra charge for a manual refund decision.
-            await recordBillingReview(organizationId,'duplicate_report_payment',{
-              checkoutSessionId:session.id,
-              projectId:metadata.projectId,
-              originalCheckoutSessionId:projectSnapshot.data()?.stripeCheckoutSessionId||null,
-              amountTotal:session.amount_total??null,
-              currency:session.currency??null,
-            });
-          }else{
-            await projectRef.set({
-              decisionReportPurchased:true,
-              decisionReportPurchasedAt:FieldValue.serverTimestamp(),
-              stripeCheckoutSessionId:session.id,
-            },{merge:true});
-          }
+        }else if(offer==='report'){
+          await fulfillReportPayment(event.data.object);
         }
+      }else if(event.type==='checkout.session.async_payment_succeeded'){
+        // Delayed payment methods (bank debits) complete checkout unpaid and confirm payment later.
+        if(event.data.object.metadata?.offer==='report')await fulfillReportPayment(event.data.object);
       }else if(event.type==='customer.subscription.updated'||event.type==='customer.subscription.deleted'){
         const subscription=event.data.object;
         const metadata=subscription.metadata||{};
@@ -409,8 +420,11 @@ export const stripeCommercialWebhook = onRequest(
         if(organizationId&&metadata.offer==='pro'){
           const orgRef=organizations().doc(organizationId);
           const current=(await orgRef.get()).data()||{};
-          if(shouldApplySubscriptionEvent(event.created,current.stripeSubscriptionEventCreated)){
-            const status=String(subscription.status||'unknown');
+          const status=String(subscription.status||'unknown');
+          if(!subscriptionEventMayChangePlan(current,subscription.id,status)){
+            // e.g. a duplicate subscription being cancelled must not end the workspace's live one.
+            console.info('Ignoring event for a non-current Stripe subscription',event.id,subscription.id);
+          }else if(shouldApplySubscriptionEvent(event.created,current.stripeSubscriptionEventCreated)){
             await orgRef.set({
               plan:grantsPro(status)?'pro':'free',
               stripeCustomerId:subscription.customer||null,

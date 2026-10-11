@@ -54,14 +54,14 @@ function normalize(value:string):string {
 function parseLocation(location:string):{city:string;state:string;stateFips:string}{
   const parts=location.split(',').map(part=>part.trim()).filter(Boolean);
   if(parts.length<2){
-    throw new HttpsError('invalid-argument','For live data, enter a U.S. city and state, for example Birmingham, AL.');
+    throw new HttpsError('invalid-argument','For live data, enter a U.S. city and state, for example Denver, CO.');
   }
   const city=parts[0];
   const rawState=parts[parts.length-1];
   const state=rawState.length===2 ? rawState.toUpperCase() : STATE_NAMES[rawState.replace(/\b\w/g,c=>c.toUpperCase())];
   const stateFips=state ? STATE_FIPS[state] : '';
   if(!city||!state||!stateFips){
-    throw new HttpsError('invalid-argument','For live data, enter a valid U.S. city and state, for example Birmingham, AL.');
+    throw new HttpsError('invalid-argument','For live data, enter a valid U.S. city and state, for example Denver, CO.');
   }
   return {city,state,stateFips};
 }
@@ -175,7 +175,7 @@ async function fetchCensusPlace(location:string):Promise<CensusPlace>{
   const latestHeaders=latest[0]||[];
   const latestRow=findPlace(latest,parsed.city);
   if(!latestRow){
-    throw new HttpsError('not-found',`I couldn't match "${location}" to a Census place. Try city, state such as Birmingham, AL.`);
+    throw new HttpsError('not-found',`I couldn't match "${location}" to a Census place. Try city and state, such as Denver, CO.`);
   }
   const priorHeaders=prior[0]||[];
   const priorRow=findPlace(prior,parsed.city);

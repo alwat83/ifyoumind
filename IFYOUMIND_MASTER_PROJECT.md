@@ -605,6 +605,47 @@ Founder approved releasing PR #38 at reviewed head `c0e9894`.
 
 **Holds unchanged:** #12, #18, #24, #26, #29, #30, #32, #33, #35, #39, #40, #41, R4/R5, advertising, outreach and AI.
 
+## STATUS AFTER #38 ACCEPTANCE — 2026-10-12 (Claude, Anthropic)
+**Production: verified.** Master and live are at `f98e19b` (PR #38, accepted by the founder as the production QA foundation).
+- **Live bundle:** `main-B3S77CN4.js`.
+- **Smoke checks:** 9/9 read-only checks passed at 20:49Z, all signed out.
+- **Still unverified:** signed-in production journeys, email delivery, Google OAuth and live payments.
+
+**Work this round (all drafts; nothing merged or deployed after #38):**
+- **Live Stripe reconciliation** (#39, `scripts/reconcile-stripe.mjs`): founder-approved as read-only, **prepared but not run.** It needs the founder's live restricted key, so it can't run from here.
+  - **Stripe safety:** a single GET-only fetch wrapper; it refuses non-`rk_live_` keys and keys that can read Customers; it prints only the HTTP status on errors, never the key or Stripe's message.
+  - **Firestore and entitlements:** no Firestore write calls and no entitlement code loaded, proved by `test/reconcile-script.test.mjs`. Run it as a viewer-only account.
+  - **Output:** `verified` matches and `discrepancies` are separate, with IDs and counts only.
+- **#39 ledger** (`ab0c973`; CI green; security review found no issues):
+  - **Customer fallback made conservative:** a refund or dispute is tied to a purchase only by payment intent, or by a Stripe customer with exactly one live payment in exactly one workspace. Anything else stays **unresolved for review**.
+  - `genuinePayingCustomers` assumes every unresolved reversal applies; `payingCustomersNeedingReview` and unresolved refund amounts are reported separately.
+  - **Tests:** functions 57/57, commerce 39/39, fast 54/54.
+- **#40 free-limit tests:** CI green. Unchanged since the last round.
+- **#42 Pro 50-decision allowance** (`93e923b`, built on #40; CI started by manual dispatch):
+  - A transaction-reserved counter, so concurrent requests can't exceed the limit; failures give the slot back; the counter heals from stored decisions.
+  - Period is the UTC calendar month, the same as Pro's included reports.
+  - Covers mid-month downgrades and a grandfathering check; design in `docs/billing/decision-allowance.md`.
+  - **Tests:** functions 50/50, commerce 34/34, e2e 66/66.
+- **#41 deletion proposal** (`56411b3`):
+  - Record retention is sourced from the IRS (3/6/7-year rules), CCPA (AG summary; statute text not fetched), GDPR 17(3), Stripe customer deletion (cancels subscriptions immediately), card dispute windows (120 days typical, up to 180) and Firebase recent sign-in.
+  - Recommended defaults for the four decisions: payment records 7 years; Stripe customer link 180 days; anonymise legacy posts; a confirmation email before deletion; a 7-day undo window.
+- **#33 favicon** (`cb61084`, master merged): built assets are real PNG and ICO files, the production bundle check passes, and fast tests pass 52/52. **Awaiting founder approval to merge.**
+
+**Holds:**
+- #26 (verified-email gates);
+- #18 and #24 (GA4 property and consent review);
+- #12, #29, #30, #32, #35, #39, #40, #41 and #42;
+- R4/R5, pricing, outreach, advertising and AI.
+
+**Next approval gates:**
+1. #33 release.
+2. Running the reconciliation with a live restricted key.
+3. #40, then #42: check that no Pro workspace has more than 50 decisions this month.
+4. #39, after selecting the webhook events.
+5. The four deletion decisions and counsel on retention.
+6. #26 after the QA account baseline.
+7. #18/#24 after the GA4 review.
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

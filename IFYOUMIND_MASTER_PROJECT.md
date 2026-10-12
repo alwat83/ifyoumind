@@ -268,6 +268,22 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
   5. Approve Professional pricing.
   6. GA4 review (unblocks Wave B).
   7. Later: BLS and BEA keys, and R4/R5 approval.
+- **Readiness 2026-10-12 (Claude Code; nothing merged or deployed):**
+  - **#26:** held until the Hestia QA mailbox baseline passes.
+  - **#28 (a7a4cf4, CI green):** can ship independently of #26. There's no code dependency and a trial merge is clean. The only new URL parameter is the allowlisted `intent=report`, so there's no PII in any URL. Rollback is a revert.
+  - **Live headers:** only HSTS and Cache-Control are sent. There's no Referrer-Policy (so the browser default applies), no CSP, no nosniff, no X-Frame-Options and no Permissions-Policy. www serves 200 rather than redirecting to the apex.
+  - **#31 (c83fb54, draft):** adds the explicit headers, without CSP.
+  - **#29 (82b41c5):** draft until the live Census harness passes with a dedicated dev key in an isolated environment.
+  - **#30 (1466625, draft):** grandfathered-price display, cancellation messaging and a portal-config hook. No Stripe changes. Needs a rebase after #26.
+  - **#32 (756d92e, draft):** R4.1 city→county→metro resolver (CBSA July 2023). Never apportions county figures to a city. Not wired in.
+  - **Founder actions:**
+    1. QA mailboxes and the baseline (#26).
+    2. Dev Census key as `CENSUS_API_KEY` (#29).
+    3. Authorize #28, optionally with #31.
+    4. Count live Pro subscriptions.
+    5. Approve $149 and the portal configuration.
+    6. GA4 review.
+    7. Later: BLS/BEA keys and R4/R5 approval.
 - **Security finding (open until #26 ships):** Cloud Functions do not check `email_verified`; only the browser guard does.
 - **Customer count:** 0 verified live paying customers; five is the target.
 

@@ -33,7 +33,7 @@ export function summarizePayments(payments:Array<Record<string,any>>){
   return {live,test,recentLive:recentLive.slice(0,25)};
 }
 
-const FUNNEL=['app_open','decision_created','report_view','finding_viewed','intent_prompt_shown','intent_prompt_clicked','offer_viewed','report_copied','report_exported','pricing_view','checkout_started','checkout_success'] as const;
+const FUNNEL=['app_open','decision_created','report_view','result_engaged','intent_prompt_shown','intent_prompt_clicked','upgrade_panel_shown','market_analysis_copied','print_dialog_opened','pricing_view','checkout_started','checkout_success'] as const;
 
 /** Workspaces that created at least two decisions in the window: the repeat-use signal, derived rather than tracked. */
 export function repeatDecisionOrganizations(events:Array<{event?:unknown;organizationId?:unknown}>):number{
@@ -82,8 +82,8 @@ export const getProductFunnelMetrics=onCall(async(request)=>{
     repeatDecisionOrganizations:repeatDecisionOrganizations(snapshot.docs.map(doc=>doc.data())),
     conversion:{
       appToDecision:Number(((uniqueOrganizations.decision_created/activated)*100).toFixed(1)),
-      decisionToFinding:uniqueOrganizations.decision_created
-        ? Number(((uniqueOrganizations.finding_viewed/uniqueOrganizations.decision_created)*100).toFixed(1))
+      decisionToEngaged:uniqueOrganizations.decision_created
+        ? Number(((uniqueOrganizations.result_engaged/uniqueOrganizations.decision_created)*100).toFixed(1))
         : 0,
       decisionToPricing:uniqueOrganizations.decision_created
         ? Number(((uniqueOrganizations.pricing_view/uniqueOrganizations.decision_created)*100).toFixed(1))

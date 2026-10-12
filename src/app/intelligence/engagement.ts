@@ -1,17 +1,18 @@
-// Decides when a result counts as "finding viewed", the activation proxy: the result has been open
-// for at least 30 seconds and the person did one meaningful thing with it (copied the market
-// analysis, opened a source, or printed). It fires at most once per page view.
+// Decides when a result counts as engaged (event result_engaged): the result has been open for at
+// least 30 seconds and the person did one meaningful thing with it (copied the market analysis,
+// opened a source, or opened the print dialog). It fires at most once per page view.
+// This is an engagement signal, not activation: it cannot show that anyone understood a finding.
 // Kept free of Angular so test/activation-events.test.mjs can run it directly.
 
-export type EngagementTrigger='copy'|'source'|'export';
+export type EngagementTrigger='copy'|'source'|'print';
 
-export const ACTIVATION_DWELL_MS=30_000;
+export const ENGAGEMENT_DWELL_MS=30_000;
 
 export class EngagementTracker {
   private fired=false;
   private pending:EngagementTrigger|null=null;
 
-  constructor(private readonly startedAt:number,private readonly dwellMs=ACTIVATION_DWELL_MS){}
+  constructor(private readonly startedAt:number,private readonly dwellMs=ENGAGEMENT_DWELL_MS){}
 
   /** Records an interaction. Returns the trigger when the event should be sent now. */
   interact(trigger:EngagementTrigger,now:number):EngagementTrigger|null{

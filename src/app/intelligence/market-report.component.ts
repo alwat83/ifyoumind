@@ -141,22 +141,22 @@ export class MarketReportComponent implements OnInit, OnDestroy {
         paid:this.project.decisionReportPurchased?'yes':this.project.decisionReportAccess==='pro'?'pro':'no',
       });
       this.startEngagement();
-      if(!this.reportPurchased)this.record('offer_viewed',{surface:'upgrade_panel',offer:'report'});
+      if(!this.reportPurchased)this.record('upgrade_panel_shown',{offer:'report'});
       if(this.showPurchasePrompt)this.record('intent_prompt_shown');
     }catch(error){this.error=this.message(error);}
     finally{this.loading=false;}
   }
 
   printReport():void{
-    this.record('report_exported',{format:'print'});
-    this.engaged('export');
+    this.record('print_dialog_opened');
+    this.engaged('print');
     window.print();
   }
 
   onIntentPromptClick():void{this.record('intent_prompt_clicked');}
   onSourceOpened():void{this.engaged('source');}
   onMarketAnalysisCopied():void{
-    this.record('report_copied',{section:'market_analysis'});
+    this.record('market_analysis_copied');
     this.engaged('copy');
   }
 
@@ -173,15 +173,15 @@ export class MarketReportComponent implements OnInit, OnDestroy {
   private startEngagement():void{
     const tracker=new EngagementTracker(Date.now());
     this.engagement=tracker;
-    this.dwellTimer=setTimeout(()=>this.sendFinding(tracker.tick(Date.now())),tracker.msUntilDwell(Date.now()));
+    this.dwellTimer=setTimeout(()=>this.sendEngaged(tracker.tick(Date.now())),tracker.msUntilDwell(Date.now()));
   }
 
   private engaged(trigger:EngagementTrigger):void{
-    this.sendFinding(this.engagement?.interact(trigger,Date.now())??null);
+    this.sendEngaged(this.engagement?.interact(trigger,Date.now())??null);
   }
 
-  private sendFinding(trigger:EngagementTrigger|null):void{
-    if(trigger)this.record('finding_viewed',{trigger});
+  private sendEngaged(trigger:EngagementTrigger|null):void{
+    if(trigger)this.record('result_engaged',{trigger});
   }
 
   /** The formatted value already shows the unit for USD ($) and percentages (%). */

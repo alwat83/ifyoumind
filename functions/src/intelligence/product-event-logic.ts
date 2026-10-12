@@ -14,13 +14,18 @@ export const EVENT_CONTEXT:Record<string,Record<string,RegExp>|null>={
   checkout_success:null,
   checkout_cancelled:null,
   billing_portal_opened:null,
-  // Activation proxy: a result viewed for 30 s or more plus one meaningful interaction.
-  finding_viewed:{trigger:/^(copy|source|export)$/,project:RECORD_ID},
-  offer_viewed:{surface:/^upgrade_panel$/,offer:/^report$/,project:RECORD_ID},
+  // Names say only what the code can observe. See docs/analytics/product-events.md.
+  // Engagement signal, not activation: the result was open 30 s or more and the person copied the
+  // market analysis, opened a source or opened the print dialog. It cannot show understanding.
+  result_engaged:{trigger:/^(copy|source|print)$/,project:RECORD_ID},
+  // "shown" = rendered on the page, not proof that anyone looked at it.
+  upgrade_panel_shown:{offer:/^report$/,project:RECORD_ID},
   intent_prompt_shown:{project:RECORD_ID},
   intent_prompt_clicked:{project:RECORD_ID},
-  report_copied:{section:/^market_analysis$/,project:RECORD_ID},
-  report_exported:{format:/^print$/,project:RECORD_ID},
+  // The browser confirmed the copy to the clipboard.
+  market_analysis_copied:{project:RECORD_ID},
+  // window.print() was called; we cannot know whether anything was printed or saved.
+  print_dialog_opened:{project:RECORD_ID},
 };
 
 export function isAllowedEvent(event:unknown):event is string{

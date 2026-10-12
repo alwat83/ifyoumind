@@ -5,10 +5,10 @@ import ts from 'typescript';
 
 const read = (p) => fs.readFileSync(new URL(p, import.meta.url), 'utf8');
 const load = async (p) => import(`data:text/javascript;base64,${Buffer.from(ts.transpileModule(read(p), { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 } }).outputText).toString('base64')}`);
-const { EngagementTracker, ACTIVATION_DWELL_MS } = await load('../src/app/intelligence/engagement.ts');
+const { EngagementTracker, ENGAGEMENT_DWELL_MS } = await load('../src/app/intelligence/engagement.ts');
 
-test('finding_viewed needs 30 seconds and one meaningful action, and fires once', () => {
-  assert.equal(ACTIVATION_DWELL_MS, 30000);
+test('result_engaged (an engagement signal, not activation) needs 30 seconds and one meaningful action, and fires once', () => {
+  assert.equal(ENGAGEMENT_DWELL_MS, 30000);
   const early = new EngagementTracker(0);
   assert.equal(early.interact('copy', 5000), null, 'an action before 30 s waits');
   assert.equal(early.tick(20000), null, 'not yet 30 s');
@@ -19,17 +19,17 @@ test('finding_viewed needs 30 seconds and one meaningful action, and fires once'
   const late = new EngagementTracker(0);
   assert.equal(late.tick(31000), null, 'time alone is not activation');
   assert.equal(late.interact('source', 31000), 'source');
-  assert.equal(late.interact('export', 32000), null);
+  assert.equal(late.interact('print', 32000), null);
   assert.equal(new EngagementTracker(1000).msUntilDwell(11000), 20000);
 });
 
 test('the report records the new events only for signed-in reports, with enumerated context', () => {
   const tsSrc = read('../src/app/intelligence/market-report.component.ts');
   assert.match(tsSrc, /if\(this\.sampleMode\|\|!this\.organizationId\|\|!this\.project\?\.id\)return;/, 'the public sample records nothing');
-  assert.match(tsSrc, /if\(!this\.reportPurchased\)this\.record\('offer_viewed',\{surface:'upgrade_panel',offer:'report'\}\);/);
+  assert.match(tsSrc, /if\(!this\.reportPurchased\)this\.record\('upgrade_panel_shown',\{offer:'report'\}\);/);
   assert.match(tsSrc, /if\(this\.showPurchasePrompt\)this\.record\('intent_prompt_shown'\);/);
-  assert.match(tsSrc, /this\.record\('report_exported',\{format:'print'\}\);\s*this\.engaged\('export'\);\s*window\.print\(\);/);
-  assert.match(tsSrc, /this\.record\('report_copied',\{section:'market_analysis'\}\);/);
+  assert.match(tsSrc, /this\.record\('print_dialog_opened'\);\s*this\.engaged\('print'\);\s*window\.print\(\);/);
+  assert.match(tsSrc, /this\.record\('market_analysis_copied'\);/);
   assert.match(tsSrc, /ngOnDestroy\(\):void\{\s*if\(this\.dwellTimer\)clearTimeout\(this\.dwellTimer\);/, 'no timer outlives the page');
   for (const [, ctx] of tsSrc.matchAll(/this\.record\('[a-z_]+',(\{[^}]*\})\)/g)) {
     assert.doesNotMatch(ctx, /email|name|city|place|displayName|concept|decision:/i, `context ${ctx} carries only enumerations`);

@@ -10,12 +10,12 @@ export type ProductEvent=
   |'checkout_success'
   |'checkout_cancelled'
   |'billing_portal_opened'
-  |'finding_viewed'
-  |'offer_viewed'
+  |'result_engaged'
+  |'upgrade_panel_shown'
   |'intent_prompt_shown'
   |'intent_prompt_clicked'
-  |'report_copied'
-  |'report_exported';
+  |'market_analysis_copied'
+  |'print_dialog_opened';
 
 @Injectable({providedIn:'root'})
 export class ProductAnalyticsService {

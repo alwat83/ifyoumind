@@ -25,6 +25,19 @@ The retention periods also need a short legal review: they are working assumptio
 | **Payment records** | `stripePayments`, `stripeLedger` (#39), `billingReviews`, `stripeEvents` | Workspace and Stripe IDs, amounts | **Keep for the legal retention period**, re-keyed so no live account links to them (below) |
 | **Stripe customer:** name, email, address, card fingerprint, invoices | Stripe | Yes | See "Stripe" below. Financial records stay with Stripe |
 
+## Record-retention requirements (researched 2026-10-12, official sources)
+**This is research, not legal advice.** Counsel should confirm it before any retention policy changes.
+
+| Source | What it says | What it means for ifYouMind |
+|---|---|---|
+| **IRS**, ["How long should I keep records?"](https://www.irs.gov/businesses/small-businesses-self-employed/how-long-should-i-keep-records) | "Keep records for 3 years" by default. 6 years if income over 25% of gross was under-reported. 7 years for bad-debt or worthless-securities claims. "Indefinitely" if no return was filed or it was fraudulent. Employment tax records at least 4 years | Payment records (amount, date, offer, Stripe IDs) support Dose Ninja Inc.'s tax filings. **Keeping them 7 years** covers every normal case with margin |
+| **CCPA/CPRA**, [California AG summary](https://oag.ca.gov/privacy/ccpa) (§1798.105(d)) | A business may keep information to "complete your transaction…", for "certain business security practices", "certain internal uses that are compatible with reasonable consumer expectations", and "to comply with legal obligations, exercise legal claims or rights, or defend legal claims" | Deleting decisions and profile data is required on request. Keeping de-identified payment records for tax and accounting is permitted. *The statute text itself couldn't be fetched (leginfo blocked automated access), so this relies on the AG's official summary only* |
+| **GDPR** Art. 17(3)(b), (e) and Art. 5(1)(e) ([gdpr-info.eu](https://gdpr-info.eu/art-17-gdpr/), not the official EUR-Lex) | Erasure doesn't apply where processing is needed "for compliance with a legal obligation" or "for the establishment, exercise or defence of legal claims". Data must be kept "no longer than is necessary" | The same split applies to EU visitors: delete everything else, keep minimal payment records, and only for as long as the obligation lasts |
+| **Stripe**, [Delete a customer](https://docs.stripe.com/api/customers/delete) | "Permanently deletes a customer. It cannot be undone. Also immediately cancels any active subscriptions on the customer." Deleted customers "can still be retrieved through the API … to track their history", and deletion "removes all credit card details" | **Confirms the active-subscription rule below.** Stripe keeps its own transaction history ([privacy policy](https://stripe.com/privacy) §5: legal, fraud, tax and accounting obligations) whatever we do |
+| **Stripe**, [How disputes work](https://docs.stripe.com/disputes/how-disputes-work) | "Card networks typically allow cardholders to initiate disputes within 120 days of the original payment", sometimes more. Local methods such as Klarna and PayPal are "typically up to 180 days" | Keep the billing link (Stripe customer ID inside the re-keyed payment record) for **180 days after the last payment**, so a dispute can still be answered |
+| **Firebase**, [Manage users](https://firebase.google.com/docs/auth/web/manage-users) | "To delete a user, the user must have signed in recently." Otherwise, re-authenticate | Confirms the recent-sign-in step. A [Delete User Data extension](https://extensions.dev/extensions/firebase/delete-user-data) exists, but our data is keyed by workspace, not uid, so a purpose-built callable fits better |
+| **FTC** Negative Option ("Click to Cancel") | Vacated by the 8th Circuit on 2025-07-08. The FTC conformed the rule in Feb 2026 and opened an ANPRM in Mar 2026 | No new federal cancellation duty today. Keep cancellation easy anyway (the billing portal), and recheck before launch |
+
 ## The decisions this needs
 
 1. **Retention of financial records.**
@@ -77,8 +90,18 @@ be retried by the same person. Nothing is deleted before every precondition pass
 - Say how to delete an account, and what is kept and for how long.
 - Remove the inaccurate AI-provider sentence (see #12).
 
-## Open questions for the founder
-1. The retention period for payment records (counsel).
-2. Should public ideas and comments (legacy features) be deleted or anonymised?
-3. Should a confirmation email be sent before deletion?
-4. Should deletion be immediate, or follow a 7-day undo window?
+## The four decisions, with recommended defaults
+
+| # | Decision | Recommended default | Tradeoffs |
+|---|---|---|---|
+| 1 | **How long to keep payment records after deletion** | **7 years** from the payment. Keep only amount, currency, date, offer and Stripe IDs, re-keyed to `deleted:<random>`. Keep the Stripe customer ID for **180 days after the last payment** (the dispute window), then drop it from our records | **Shorter (3 years, the IRS default):** less data held, but no margin for the 6- and 7-year cases. **Longer or indefinite:** conflicts with the storage-limitation principle. Counsel confirms |
+| 2 | **Public ideas and comments** (legacy features) | **Anonymise:** keep the text, replace the author with "Deleted user" and remove the uid. Delete instead if the founder prefers or the feature is retired | **Delete:** cleanest for privacy, but breaks threads other people replied to. **Anonymise:** keeps others' conversations intact, but the text itself could still identify someone. Offer "delete my posts too" as an option |
+| 3 | **Confirmation email** | **Yes:** one email *before* deletion ("You asked to delete your ifYouMind account. It will be deleted in 7 days unless you cancel"), and none after | It proves the request came from the owner and catches mistakes. It costs one transactional email. A confirmation after deletion would need the address we just deleted |
+| 4 | **Immediate deletion or an undo window** | **A 7-day undo window.** The workspace is frozen at once (sign-in shows "scheduled for deletion"), then a scheduled job deletes it on day 7 | **Immediate:** simplest, and what some customers expect, but there's no recovery from a mistake or an account takeover. **The window** adds a scheduled job and a freeze state. 7 days stays well inside the CCPA's 45-day response time (to be confirmed by counsel) |
+
+**Also recommended**, and already part of the design:
+- refuse deletion while a Pro subscription is active (Stripe would cancel it immediately);
+- postpone the billing link while a dispute is open;
+- delete the Auth user last.
+
+None of this is implemented, and no retention policy has changed.

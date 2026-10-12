@@ -268,6 +268,26 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
   5. Approve Professional pricing.
   6. GA4 review (unblocks Wave B).
   7. Later: BLS and BEA keys, and R4/R5 approval.
+- **Phase 1 customer-experience proposal, 2026-10-12 (Claude Code; for founder review).**
+  - **Documents:**
+    - Proposal: https://claude.ai/code/artifact/bc794ad5-24aa-4544-bcfe-c52ba170b327.
+    - Concepts v2: https://claude.ai/artifact/CtfueoihHaB8WGXZFa1q5H. They cover the verdict-first header, a dot-and-interval comparison and evidence cards; every element is tagged live, built, designed or illustrative.
+  - **Scope:**
+    - 1.1 Q1 + Q2: [draft PR #34](https://github.com/alwat83/ifyoumind/pull/34), `a0d488c`, CI green, fast tests 40/40, not merged.
+    - 1.2 merge master into #18/#24, which now conflict with master.
+    - 1.3 activation and offer events.
+    - 1.4 copy fixes Q4–Q6.
+    - 1.5 an 8-person usability study.
+  - **Phase 2 gate:**
+    - at least 4 of 6 complete and understand a first result unaided;
+    - at least 4 of 6 understand the $79 offer;
+    - non-buyers name missing evidence;
+    - 2 weeks of Wave B data.
+  - **Competition research (official pages, 2026-10-12):**
+    - CBP and NES have no place (city) geography.
+    - Minimum figure: CBP 2023 county `ESTAB` by 6-digit NAICS 2017, plus a density from the same county's population, labelled county/employer-only/2023. Counts aren't noised, but cells under 3 are dropped.
+    - NES 2024 (released 2026-09-29) uses NAICS 2022, and its method changes from 2025. Deferred.
+    - R4 stays design-only.
 - **Customer Value Expansion strategic assessment, 2026-10-12 (Claude Code; strategy only, for founder review).**
   - **Documents:**
     - Assessment: https://claude.ai/code/artifact/269b3bcd-c5ea-4e9b-8a80-2a2ba533f392. It covers the 12 deliverables and the original-brief traceability matrix.

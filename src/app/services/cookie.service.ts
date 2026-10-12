@@ -4,6 +4,8 @@ import { BehaviorSubject } from 'rxjs';
 
 interface GtagConsentParams {
   ad_storage?: 'granted' | 'denied';
+  ad_user_data?: 'granted' | 'denied';
+  ad_personalization?: 'granted' | 'denied';
   analytics_storage?: 'granted' | 'denied';
   functionality_storage?: 'granted' | 'denied';
   security_storage?: 'granted' | 'denied';
@@ -19,6 +21,18 @@ export interface ConsentStatus {
   analytics: boolean;
   functional: boolean;
   marketing: boolean;
+}
+
+/** A stored choice that is missing, unreadable or malformed counts as "not answered yet". */
+function parseConsent(raw: string | null): ConsentStatus | null {
+  if (!raw) return null;
+  try {
+    const value = JSON.parse(raw);
+    if (!value || typeof value !== 'object' || typeof value.analytics !== 'boolean') return null;
+    return { essential: true, analytics: value.analytics, functional: false, marketing: false };
+  } catch {
+    return null;
+  }
 }
 
 @Injectable({
@@ -37,9 +51,10 @@ export class CookieService {
 
   private loadConsentStatus() {
     if (this.isBrowser) {
-      const storedConsent = localStorage.getItem(CONSENT_STORAGE_KEY);
-      if (storedConsent) {
-        const consent = JSON.parse(storedConsent) as ConsentStatus;
+      let storedConsent: string | null = null;
+      try { storedConsent = localStorage.getItem(CONSENT_STORAGE_KEY); } catch { /* storage blocked */ }
+      const consent = parseConsent(storedConsent);
+      if (consent) {
         this.consentStatus.next(consent);
         this.updateGoogleConsentMode(consent);
       } else {
@@ -48,8 +63,9 @@ export class CookieService {
     }
   }
 
+  /** ifYouMind only uses analytics cookies; no functional or advertising cookies are set. */
   public acceptAll(): void {
-    const consent: ConsentStatus = { essential: true, analytics: true, functional: true, marketing: true };
+    const consent: ConsentStatus = { essential: true, analytics: true, functional: false, marketing: false };
     this.updateConsent(consent);
   }
 
@@ -60,7 +76,7 @@ export class CookieService {
 
   public updateConsent(consent: ConsentStatus): void {
     if (this.isBrowser) {
-      localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(consent));
+      try { localStorage.setItem(CONSENT_STORAGE_KEY, JSON.stringify(consent)); } catch { /* storage blocked: choice lasts this visit */ }
       this.consentStatus.next(consent);
       this.updateGoogleConsentMode(consent);
     }
@@ -82,11 +98,14 @@ export class CookieService {
   private updateGoogleConsentMode(consent: ConsentStatus): void {
     if (typeof gtag === 'function') {
       gtag('consent', 'update', {
-        'ad_storage': consent.marketing ? 'granted' : 'denied',
+        // ifYouMind never uses advertising features, so ad signals are always denied.
+        'ad_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
         'analytics_storage': consent.analytics ? 'granted' : 'denied',
-        'functionality_storage': consent.functional ? 'granted' : 'denied',
+        'functionality_storage': 'denied',
         'security_storage': 'granted', // Always granted
-        'personalization_storage': consent.marketing ? 'granted' : 'denied'
+        'personalization_storage': 'denied'
       });
     }
   }

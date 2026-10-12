@@ -5,7 +5,7 @@
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
       <a routerLink="/login">Sign in</a>
-      <a routerLink="/register" class="nav-cta">Try it free</a>
+      <a routerLink="/register" class="nav-cta" (click)="cta('nav_try_free')">Try it free</a>
     </div>
   </nav>
 
@@ -15,8 +15,8 @@
       <h1>The market analysis for your business plan, done in minutes.</h1>
       <p class="lede">Compare the U.S. cities you’re considering on population, growth, income and home values, with every figure cited to the Census, written up for your business.</p>
       <div class="hero-actions">
-        <a routerLink="/register" class="primary">Build my market analysis free</a>
-        <a routerLink="/sample-report" class="secondary">See a sample report</a>
+        <a routerLink="/register" class="primary" (click)="cta('build_free')">Build my market analysis free</a>
+        <a routerLink="/sample-report" class="secondary" (click)="cta('sample_report')">See a sample report</a>
       </div>
       <p class="micro" style="margin:12px 0 0;max-width:560px">The free brief compares your city with one other. The $79 Decision Report adds up to two more cities and the plan-ready write-up.</p>
       <div class="trust-row" aria-label="Why people can trust ifYouMind">
@@ -111,6 +111,6 @@
     <a routerLink="/" class="brand">ifYouMind</a>
     <span>Decision intelligence, starting with where to build your business.</span>
     <p class="support">Questions? <a href="mailto:support&#64;ifyoumind.com">support&#64;ifyoumind.com</a></p>
-    <div><a href="/guides/market-analysis-business-plan/">How to write a market analysis</a><a routerLink="/privacy-policy">Privacy</a><a routerLink="/terms-of-conduct">Terms</a></div>
+    <div><a href="/guides/market-analysis-business-plan/">How to write a market analysis</a><a routerLink="/privacy-policy">Privacy</a><a routerLink="/terms-of-conduct">Terms</a><a href="#cookie-settings" (click)="openCookieSettings($event)">Cookie settings</a></div>
   </footer>
 </main>

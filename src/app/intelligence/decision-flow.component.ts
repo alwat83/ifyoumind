@@ -6,6 +6,7 @@ import { intentParams, parseIntent, readIntent, rememberIntent } from '../purcha
 import { OrganizationService } from './organization.service';
 import { MarketIntelligenceService } from './market-intelligence.service';
 import { ProductAnalyticsService } from './product-analytics.service';
+import { AnalyticsBootstrapService } from '../analytics/analytics-bootstrap.service';
 import { DecisionType, parseComparisons, requiresComparison, stepProgress } from './decision-steps';
 
 @Component({
@@ -21,6 +22,7 @@ export class DecisionFlowComponent implements OnInit {
   private readonly organizations=inject(OrganizationService);
   private readonly market=inject(MarketIntelligenceService);
   private readonly analytics=inject(ProductAnalyticsService);
+  private readonly funnel=inject(AnalyticsBootstrapService);
 
   step=1;
   startStep=1;
@@ -84,6 +86,7 @@ export class DecisionFlowComponent implements OnInit {
         type:this.type,
         comparisons:String(comparisons.length),
       });
+      this.funnel.track('decision_created',{decision_type:this.type,comparisons:comparisons.length});
       await this.router.navigate(['/app/result',project.id],{queryParams:intentParams({},readIntent())});
     }catch(error){this.error=this.message(error);}
     finally{this.working=false;}

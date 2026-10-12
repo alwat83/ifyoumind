@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IntelligenceOrganization, OrganizationService } from './organization.service';
 import { CommercialStatus, MonetizationService } from './monetization.service';
 import { ProductAnalyticsService } from './product-analytics.service';
+import { AnalyticsBootstrapService } from '../analytics/analytics-bootstrap.service';
 import { MarketIntelligenceService } from './market-intelligence.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class PricingComponent implements OnInit {
   private readonly monetization=inject(MonetizationService);
   private readonly route=inject(ActivatedRoute);
   private readonly analytics=inject(ProductAnalyticsService);
+  private readonly funnel=inject(AnalyticsBootstrapService);
   private readonly market=inject(MarketIntelligenceService);
 
   workspace:IntelligenceOrganization|null=null;
@@ -84,6 +86,7 @@ export class PricingComponent implements OnInit {
     try{
       if(this.status?.checkoutEnabled){
         void this.analytics.track(this.workspace.organizationId,'checkout_started',{offer});
+        this.funnel.track('checkout_started',{offer});
         const url=await this.monetization.checkout(
           this.workspace.organizationId,
           offer,

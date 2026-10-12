@@ -12,17 +12,16 @@ import { JoyrideModule } from 'ngx-joyride';
 
 import { routes } from './app.routes';
 import { firebaseConfig, useLocalEmulators } from './firebase.config';
-import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideFirebaseApp, initializeApp, getApp } from '@angular/fire/app';
 import { provideAuth, getAuth, connectAuthEmulator } from '@angular/fire/auth';
 import { provideFirestore, getFirestore, connectFirestoreEmulator } from '@angular/fire/firestore';
 import { provideStorage, getStorage, connectStorageEmulator } from '@angular/fire/storage';
 import { provideFunctions, getFunctions, connectFunctionsEmulator } from '@angular/fire/functions';
 import {
   provideAnalytics,
-  getAnalytics,
-  ScreenTrackingService,
-  UserTrackingService,
+  initializeAnalytics,
 } from '@angular/fire/analytics';
+import { ANALYTICS_GTAG_CONFIG } from './analytics/analytics-consent';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -59,9 +58,9 @@ export const appConfig: ApplicationConfig = {
       return functions;
     }),
     ...(useLocalEmulators ? [] : [
-      provideAnalytics(() => getAnalytics()),
-      ScreenTrackingService,
-      UserTrackingService,
+      // Created only when AnalyticsBootstrapService starts it after consent. No user-ID tracking;
+      // page views are sent by that service with cleaned URLs.
+      provideAnalytics(() => initializeAnalytics(getApp(), { config: { ...ANALYTICS_GTAG_CONFIG } })),
     ]),
   ],
 };

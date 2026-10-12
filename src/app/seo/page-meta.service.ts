@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { NavigationEnd, Router } from '@angular/router';
+import { ResolveEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import publicPages from '../../public-pages.json';
 import { PageMeta, PublicPage, pageMetaFor } from './page-meta';
@@ -18,7 +18,8 @@ export class PageMetaService{
   start():void{
     if(this.started)return;
     this.started=true;
-    this.router.events.pipe(filter((event):event is NavigationEnd=>event instanceof NavigationEnd))
+    // ResolveEnd fires before the new page activates, so analytics screen views see the right title.
+    this.router.events.pipe(filter((event):event is ResolveEnd=>event instanceof ResolveEnd))
       .subscribe(event=>this.apply(pageMetaFor(event.urlAfterRedirects,publicPages as PublicPage[])));
   }
 

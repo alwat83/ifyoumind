@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrganizationService } from './organization.service';
 import { DecisionReportPayload, MarketIntelligenceService, MarketProject } from './market-intelligence.service';
 import { ProductAnalyticsService } from './product-analytics.service';
+import { AnalyticsBootstrapService } from '../analytics/analytics-bootstrap.service';
 import { CommercialStatus, MonetizationService } from './monetization.service';
 import { MarketAnalysisComponent } from './market-analysis.component';
 import { clearIntent, parseIntent, readIntent } from '../purchase-intent';
@@ -20,6 +21,7 @@ export class MarketReportComponent implements OnInit {
   private readonly organizations=inject(OrganizationService);
   private readonly market=inject(MarketIntelligenceService);
   private readonly analytics=inject(ProductAnalyticsService);
+  private readonly funnel=inject(AnalyticsBootstrapService);
   private readonly monetization=inject(MonetizationService);
 
   /** Public sample at /sample-report: full report, no account, no purchase UI. */
@@ -116,6 +118,7 @@ export class MarketReportComponent implements OnInit {
 
   async ngOnInit():Promise<void>{
     if(this.sampleMode){
+      this.funnel.track('sample_report_view');
       try{this.project=await this.market.sample();}
       catch(error){this.error=this.message(error);}
       finally{this.loading=false;}

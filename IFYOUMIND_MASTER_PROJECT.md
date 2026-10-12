@@ -268,6 +268,23 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
   5. Approve Professional pricing.
   6. GA4 review (unblocks Wave B).
   7. Later: BLS and BEA keys, and R4/R5 approval.
+- **Phase 1 release candidate and event spec, 2026-10-12 (Claude Code; awaiting founder approval; nothing merged or deployed).**
+  - **RC [#37](https://github.com/alwat83/ifyoumind/pull/37) `d81b178`:** master `d413a88` plus #34 plus #36.
+    - The homepage conflict was resolved by keeping #34's intent and #36's labels.
+    - Checks:
+      - security review;
+      - fast 45/45, functions 48/48, commerce 29/29, rules 5/5, organisations 5/5, build passes;
+      - axe 0 and no overflow at 390 and 1280 px, no console errors;
+      - signed-out deep link goes to `/login?returnUrl=…`, and `//evil.example` stays on-site.
+    - The diff touches no functions, rules, config or billing code.
+    - The Pro cancellation line is kept (founder decision; it matches the entitlement code).
+    - The release checklist (before merge, deploy, signed-out and signed-in production checks, stop and rollback) is in the PR body.
+    - #34 and #36 are to be closed as superseded on release.
+  - **#35 spec v2 `2ca8350`:** `docs/analytics/product-events.md`.
+    - `result_engaged` is an **engagement** signal. Activation (understanding) is measured only in usability task T3.
+    - Events renamed to observable actions: `upgrade_panel_shown`, `intent_prompt_shown`, `intent_prompt_clicked`, `market_analysis_copied`, `print_dialog_opened`.
+    - Functions 54/54, fast 38/38.
+  - **Toolkit:** T1 is now the "10-second comprehension test". Consent supports notes-only, with no recording; those sessions are counted the same.
 - **Phase 1 development, 2026-10-12 (Claude Code; founder-approved for draft branches; nothing merged or deployed).**
   - **1.1 [#34](https://github.com/alwat83/ifyoumind/pull/34) `c296d10`:** login return URL plus homepage $79 intent.
     - Security review done: allowlist, and property tests over about 25,000 inputs.

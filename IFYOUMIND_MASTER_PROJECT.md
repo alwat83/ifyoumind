@@ -268,6 +268,19 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
   5. Approve Professional pricing.
   6. GA4 review (unblocks Wave B).
   7. Later: BLS and BEA keys, and R4/R5 approval.
+- **Advertising and alternative revenue strategy, 2026-10-12 (Claude Code; research only; nothing applied for, contacted, installed or spent).**
+  - **Where it lives:** strategy doc https://claude.ai/code/artifact/edba208a-efd0-49c1-9231-a0f85fe9fcea; Notion entry "Advertising & Alternative Revenue Strategy (research only)" (https://app.notion.com/p/3f7c9bc5d8fd81719dd6ce961d2c1c74). The original discussion took place in ChatGPT and was not saved before.
+  - **Recommendation:** don't monetise yet; measure guide traffic first.
+    - **Then affiliates:** one labelled business-formation affiliate on guides only. ZenBusiness pays $75–$175, LegalZoom from $125 CPA and Northwest $100–$150, per their official pages.
+    - **Display ads last:** non-personalised AdSense on guides only. AdSense has no traffic minimum. Mediavine Journey needs 1,000 Tier 1 sessions, Raptive 25k pageviews and Ezoic 250k users.
+    - **Sponsorship:** only with an audience to show.
+  - **Never on product surfaces:** homepage, sample, sign-up, free result, paid report and PDF, pricing, checkout, account and workspace.
+  - **Model (assumptions only):** at 500, 3,000 and 15,000 guide pageviews a month, display ads earn about $1, $18 and $180, against about $76, $688 and $5,731 from $79 reports. A 5% drop in report conversion outweighs display ads in every scenario.
+  - **Gates:**
+    - A: 1,000+ Tier 1 guide sessions a month for 2 months, and the study complete.
+    - B: counsel review of the CMP, RDP and GPC consent design and the policy changes.
+    - C: no relative drop of 5% or more in report conversion during a 90-day pilot.
+  - **Google Ads customer acquisition stays a separate spending track.**
 - **Release 2026-10-12 (Claude Code, founder-approved): Phase 1 RC [#37](https://github.com/alwat83/ifyoumind/pull/37), production verified (signed-out).**
   - **Merge:** `3114840`, pinned to the reviewed head `d81b178`. CI was green; the diff was 13 files with no functions, rules, config or billing code.
   - **Deploy:** run 38271849491 (#179) succeeded at 15:42:03Z on `3114840`. Bundle `main-UEXL42XX.js`.

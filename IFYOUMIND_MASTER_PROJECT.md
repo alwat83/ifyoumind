@@ -464,6 +464,81 @@ Documentation and research only. Nothing was merged, deployed, installed, purcha
   6. Stripe live: the webhook event list and identifying real customers.
   7. Release approvals.
 
+## AUTOMATED QA INFRASTRUCTURE & REVENUE INTEGRITY — 2026-10-12 (Claude, Anthropic)
+Nothing was merged or deployed, and production stays at `3114840`. No production users or data were created, changed or deleted. Stripe configuration was not touched.
+
+**#38: automated authenticated QA** (`claude/jolly-ramanujan-ofr18a-qa-fixtures`, `c0e9894`, draft). CI is green on GitHub: the new `qa` job and `build`.
+- **Fixtures F01–F10** run on the Auth, Firestore and Functions emulators (`demo-ifyoumind`):
+  - real sign-up;
+  - real verification-code consumption;
+  - the real onboarding and decision callables;
+  - a seeded Census cache;
+  - targeted cleanup that refuses non-fixture accounts, and a leak check.
+- **The run fails closed** if the emulators aren't local, the project isn't `demo-ifyoumind`, cloud credentials are present, or the bundle references `ifyoumind-473fe`.
+- **Playwright: 32 scenarios × desktop and mobile = 64 tests, all passing.** They cover:
+  - registration errors;
+  - **the verification link opened in a separate browser, with the `$79` intent kept through the continue URL;**
+  - the unverified gate;
+  - protected routes;
+  - return URLs (valid ones, plus 12 hostile ones);
+  - a free decision;
+  - saved retrieval;
+  - cross-account denial;
+  - the non-admin `/app/growth` view;
+  - sign-out;
+  - expired and invalid sessions;
+  - layout, axe, console errors, and no external requests.
+- **Integration suite:** 10 pass, 1 skipped until #26. The skipped test checks the server-side verification refusal.
+- **New PR workflow `authenticated-qa.yml`:**
+  - runs every emulator suite plus Playwright;
+  - uses no secrets and has read-only permissions;
+  - the rules, organizations and commerce suites had never run in CI before.
+- **Production bundle check:** a new step in `launch-build-check.yml`. The deploy workflow is unchanged.
+- **Behaviour changes:**
+  - The emulator-only verification bypasses in the guard and register page are removed (dev and CI only; production unchanged).
+  - `build:local` now writes to `dist/ifyoumind-local`.
+  - Two fixes the new checks found: pricing "/month" contrast was 2.87:1, and account cards overflowed at 390 px with long email addresses.
+
+**#26** (head `1bd38de`) now carries master and #37:
+- The merge was a merge commit, not a force-push. The guard keeps both `ensureFreshVerification` and `loginParams`.
+- The server-side emulator bypass `isLocalDemoEmulator` is removed.
+- **Tests:** functions 52/52, fast 53/53, commerce 35/35.
+- **Combined with #38:** e2e 64/64, and the QA integration suite 11/11 with the server check enforced.
+- Still held for the QA account baseline.
+
+**#39: revenue ledger** (`claude/jolly-ramanujan-ofr18a-revenue-ledger`, `2d4b699`, draft). It records renewals, failed renewals, refunds and disputes in `stripeLedger`:
+- idempotent and out-of-order safe;
+- a new dispute opens a billing review;
+- **no access changes;**
+- `stripePayments` gains `paymentIntentId`;
+- `revenueSummary` counts genuine paying customers from live records only, excluding QA;
+- `docs/revenue/founder-dashboard.md`.
+
+**Tests:** functions 54/54, commerce 36/36. **Founder actions for #39:**
+1. Select the new events on the live webhook endpoint.
+2. Approve or decline a backfill.
+3. Provide the exclusion list.
+
+**Analytics compatibility** (local trial: #38 + #18 + #24 + #35, not pushed):
+- **#24 conflicts with #38** in `register.component.ts`. The fix is mechanical: keep `sign_up` tracking and the always-verify flow.
+- **Results:** fast 63/63, functions 54/54, e2e 63/64.
+- **The failure is a real #18 issue:** on mobile the cookie banner covers the decision flow's "Show me what the data says" button until it's dismissed. Fix it before #18 ships.
+- The local build never initialises GA, so this suite can't prove GA consent gating. #18's earlier production-config Chromium checks remain the evidence.
+
+**Docs:**
+- `docs/qa/automated-qa.md`: commands, environment variables, lifecycle, coverage matrix, CI and limitations.
+- `docs/qa/production-qa-proposal.md`: least-privilege, allowlisted, dry-run-by-default production QA accounts plus an audit log. **Not built.**
+
+**Remaining real-world gaps:**
+- real email delivery and the hosted action page;
+- Google OAuth;
+- real Census data;
+- live payments;
+- Safari and real devices;
+- intent across **devices** (only through the continue URL).
+
+**Not tested anywhere:** the free 3-decisions-a-month limit, which the demo project skips. There is also no self-service account deletion.
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

@@ -11,7 +11,6 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from '@angular/fire/auth';
-import { useLocalEmulators } from '../../firebase.config';
 
 /** New accounts go straight to the market-analysis flow: they have no decisions to look at yet. */
 export const FIRST_DECISION_ROUTE=['/app/decide'];
@@ -57,12 +56,9 @@ export class RegisterComponent {
     try{
       const credential=await createUserWithEmailAndPassword(this.auth,this.email,this.password);
       await updateProfile(credential.user,{displayName:this.displayName.trim()});
-      if(!useLocalEmulators){
-        await this.sendVerification(credential.user);
-        await this.router.navigate(['/verify-email']);
-        return;
-      }
-      await this.router.navigate(FIRST_DECISION_ROUTE,{queryParams:intentParams(FIRST_DECISION_QUERY,this.intent)});
+      // Always verify first. Locally the Auth emulator captures the email instead of sending it.
+      await this.sendVerification(credential.user);
+      await this.router.navigate(['/verify-email']);
     }catch(error:any){this.errorMessage=error.message;}
   }
 

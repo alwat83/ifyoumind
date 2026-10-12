@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PurchaseIntent, intentParams, parseIntent, readIntent, rememberIntent } from '../../purchase-intent';
 import {
@@ -11,7 +11,6 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from '@angular/fire/auth';
-import { useLocalEmulators } from '../../firebase.config';
 
 /** New accounts go straight to the market-analysis flow: they have no decisions to look at yet. */
 export const FIRST_DECISION_ROUTE=['/app/decide'];
@@ -29,6 +28,9 @@ export class RegisterComponent {
   email='';
   password='';
   errorMessage:string|null=null;
+  /** Field errors appear only after the first submit, so the form doesn't scold people while they type. */
+  showErrors=false;
+  submitting=false;
 
   private auth:Auth=inject(Auth);
   private router:Router=inject(Router);
@@ -38,16 +40,25 @@ export class RegisterComponent {
 
   constructor(){rememberIntent(this.intent);}
 
+  /** The button is always active: an incomplete form shows what to fix instead of looking broken. */
+  async submit(form:NgForm):Promise<void>{
+    if(form.invalid){
+      this.showErrors=true;
+      (document.querySelector('.auth-card input[aria-invalid="true"], .auth-card input.ng-invalid') as HTMLInputElement|null)?.focus();
+      return;
+    }
+    this.submitting=true;
+    try{await this.register();}
+    finally{this.submitting=false;}
+  }
+
   async register(){
     try{
       const credential=await createUserWithEmailAndPassword(this.auth,this.email,this.password);
       await updateProfile(credential.user,{displayName:this.displayName.trim()});
-      if(!useLocalEmulators){
-        await this.sendVerification(credential.user);
-        await this.router.navigate(['/verify-email']);
-        return;
-      }
-      await this.router.navigate(FIRST_DECISION_ROUTE,{queryParams:intentParams(FIRST_DECISION_QUERY,this.intent)});
+      // Always verify first. Locally the Auth emulator captures the email instead of sending it.
+      await this.sendVerification(credential.user);
+      await this.router.navigate(['/verify-email']);
     }catch(error:any){this.errorMessage=error.message;}
   }
 

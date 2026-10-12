@@ -534,3 +534,28 @@ test('a failed renewal is recorded without changing the plan (subscription event
   assert.equal((await ledger('invoice_in_pf_1')).status, 'payment_failed');
   assert.equal((await org(pro)).plan, 'pro');
 });
+
+test('a refund update that arrives after a newer charge event is still recorded, without changing totals', async () => {
+  await deliver('charge.refunded', { id: 'ch_late_1', amount: 7900, amount_refunded: 7900, refunded: true, payment_intent: 'pi_late_1' }, { created: 6100 });
+  await deliver('charge.refund.updated', { id: 're_late_1', charge: 'ch_late_1', status: 'failed', amount: 7900 }, { created: 6050 });
+  const entry = await ledger('charge_ch_late_1');
+  assert.deepEqual([entry.amountRefunded, entry.eventCreated, entry.lastRefundStatus, entry.refundEventCreated], [7900, 6100, 'failed', 6050]);
+});
+
+test('a dispute delivered as two different events opens exactly one review', async () => {
+  const dispute = { id: 'dp_once', charge: 'ch_once', payment_intent: 'pi_once', amount: 7900, currency: 'usd', status: 'needs_response', reason: 'general' };
+  await deliver('charge.dispute.created', dispute, { id: 'evt_dp_once_a', created: 7000 });
+  await deliver('charge.dispute.created', dispute, { id: 'evt_dp_once_b', created: 7000 });
+  const reviews = await db().collection('billingReviews').where('disputeId', '==', 'dp_once').get();
+  assert.equal(reviews.size, 1);
+  assert.equal(reviews.docs[0].id, 'dispute_opened_dp_once');
+});
+
+test('a Pro payment records its Stripe customer so subscription refunds can be matched', async () => {
+  const pro = await newOrg();
+  stripeSubscriptions.sub_cust = { id: 'sub_cust', status: 'active', customer: 'cus_match' };
+  const session = { id: `cs_${++eventCounter}`, payment_status: 'paid', amount_total: 3900, currency: 'usd', customer: 'cus_match', subscription: 'sub_cust', payment_intent: null, metadata: { organizationId: pro, offer: 'pro' } };
+  await deliver('checkout.session.completed', session, { livemode: true });
+  const payment = (await db().collection('stripePayments').doc(session.id).get()).data();
+  assert.deepEqual([payment.customerId, payment.paymentIntentId, payment.offer], ['cus_match', null, 'pro']);
+});

@@ -1,0 +1,163 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - main [ref=e4]:
+    - navigation [ref=e5]:
+      - link "ifYouMind" [ref=e6] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e7]:
+        - link "Sign in" [ref=e8] [cursor=pointer]:
+          - /url: /login
+        - link "Try it free" [ref=e9] [cursor=pointer]:
+          - /url: /register
+    - generic [ref=e10]:
+      - generic [ref=e11]:
+        - paragraph [ref=e12]: For business plans and location decisions
+        - heading "The market analysis for your business plan, done in minutes." [level=1] [ref=e13]
+        - paragraph [ref=e14]: Compare the U.S. cities you’re considering on population, growth, income and home values, with every figure cited to the Census, written up for your business.
+        - generic [ref=e15]:
+          - link "Build my market analysis free" [ref=e16] [cursor=pointer]:
+            - /url: /register
+          - link "See a sample report" [ref=e17] [cursor=pointer]:
+            - /url: /sample-report
+        - paragraph [ref=e18]: The free brief compares your city with one other. The $79 Decision Report adds up to two more cities and the plan-ready write-up.
+        - generic "Why people can trust ifYouMind" [ref=e19]:
+          - generic [ref=e20]: Free to try
+          - generic [ref=e21]: No credit card
+          - generic [ref=e22]: Live public data
+          - generic [ref=e23]: Sources shown
+      - generic [ref=e24]:
+        - paragraph [ref=e25]: Example
+        - heading "Should I open in Austin or Nashville?" [level=3] [ref=e26]
+        - generic [ref=e27]:
+          - generic [ref=e28]: Opportunity
+          - strong [ref=e29]: Population and income signals can show where the case looks stronger
+        - generic [ref=e30]:
+          - generic [ref=e31]: Watch
+          - strong [ref=e32]: Competition, rent, and site economics still need validation
+        - generic [ref=e33]:
+          - generic [ref=e34]: Compare
+          - strong [ref=e35]: Austin · Nashville · Charlotte
+        - generic [ref=e36]:
+          - generic [ref=e37]: Data source
+          - generic [ref=e38]: U.S. Census
+    - generic [ref=e39]:
+      - generic [ref=e40]: Should I open here?
+      - generic [ref=e41]: Which place looks better?
+      - generic [ref=e42]: Is this area growing?
+      - generic [ref=e43]: What am I missing?
+    - generic [ref=e44]:
+      - generic [ref=e45]:
+        - paragraph [ref=e46]: Simple by design
+        - heading "Start with your question. We handle the data part." [level=2] [ref=e47]
+      - generic [ref=e48]:
+        - article [ref=e49]:
+          - generic [ref=e50]: "1"
+          - strong [ref=e51]: Tell us what you’re considering
+          - paragraph [ref=e52]: A place, business idea, expansion, neighborhood, or market question.
+        - article [ref=e53]:
+          - generic [ref=e54]: "2"
+          - strong [ref=e55]: We put the signals together
+          - paragraph [ref=e56]: Demographics, population change, housing, your own data, and more as verified sources come online.
+        - article [ref=e57]:
+          - generic [ref=e58]: "3"
+          - strong [ref=e59]: You get a clear brief
+          - paragraph [ref=e60]: See the useful signals in plain English, compare places, and know what still needs checking.
+    - generic [ref=e61]:
+      - generic [ref=e62]:
+        - paragraph [ref=e63]: Useful from day one
+        - heading "For decisions where one search result isn’t enough." [level=2] [ref=e64]
+      - generic [ref=e65]:
+        - article [ref=e66]:
+          - text: Business plan
+          - heading "“I need the market analysis section.”" [level=3] [ref=e67]
+          - paragraph [ref=e68]: The $79 Decision Report includes a cited market analysis of population, growth, income and home values for your business and cities, ready to adapt for your plan.
+        - article [ref=e69]:
+          - text: Location
+          - heading "“Austin, Nashville, or Charlotte?”" [level=3] [ref=e70]
+          - paragraph [ref=e71]: Compare live demographic and growth signals before spending real money.
+        - article [ref=e72]:
+          - text: Growth
+          - heading "“Is Phoenix still growing?”" [level=3] [ref=e73]
+          - paragraph [ref=e74]: See whether population and household signals are moving in the same direction—or not.
+    - generic [ref=e75]:
+      - generic [ref=e76]:
+        - paragraph [ref=e77]: No data background needed
+        - heading "You bring the question. We’ll handle the complicated part." [level=2] [ref=e78]
+      - generic [ref=e79]:
+        - article [ref=e80]:
+          - strong [ref=e81]: Plain language
+          - paragraph [ref=e82]: No dashboards to learn before you can get an answer.
+        - article [ref=e83]:
+          - strong [ref=e84]: Show your work
+          - paragraph [ref=e85]: We show where important numbers came from.
+        - article [ref=e86]:
+          - strong [ref=e87]: No false certainty
+          - paragraph [ref=e88]: If the data cannot answer something yet, we say so.
+    - generic [ref=e89]:
+      - generic [ref=e90]:
+        - paragraph [ref=e91]: Pricing
+        - heading "Start free. Pay when the answer is worth more." [level=2] [ref=e92]
+      - generic [ref=e93]:
+        - article [ref=e94]:
+          - generic [ref=e95]: Free
+          - heading "$0" [level=3] [ref=e96]
+          - paragraph [ref=e97]: A Decision Brief for your main city compared with one other, a few decisions each month.
+          - link "Start a free brief" [ref=e98] [cursor=pointer]:
+            - /url: /register
+        - article [ref=e99]:
+          - generic [ref=e100]:
+            - generic [ref=e101]: One report
+            - generic [ref=e102]: Recommended for one business plan
+          - heading "$79" [level=3] [ref=e103]
+          - paragraph [ref=e104]: The full Decision Report for one decision, with no subscription.
+          - list [ref=e105]:
+            - listitem [ref=e106]: Your main city compared with up to three other cities
+            - listitem [ref=e107]: A plan-ready market analysis written for your business, with location rankings and copy-as-text
+            - listitem [ref=e108]: "An action plan: what to do before you commit"
+            - listitem [ref=e109]: "Comparison takeaways: where your main city leads and where it trails"
+            - listitem [ref=e110]: What could change the call, plus the evidence boundaries
+            - listitem [ref=e111]: Print or save the full report as a PDF
+          - link "Build a report" [ref=e112] [cursor=pointer]:
+            - /url: /register?intent=report
+        - article [ref=e113]:
+          - generic [ref=e114]: Pro
+          - heading "$39/month" [level=3] [ref=e115]
+          - paragraph [ref=e116]: For advisers and anyone planning several locations a month.
+          - paragraph [ref=e117]: Five full Decision Reports a month, plus more decisions and comparison locations.
+          - link "Create an account for Pro" [ref=e118] [cursor=pointer]:
+            - /url: /register
+    - generic [ref=e119]:
+      - paragraph [ref=e120]: Ask the question
+      - heading "Before you commit time or money, see what the signals say." [level=2] [ref=e121]
+      - link "Try ifYouMind free" [ref=e122] [cursor=pointer]:
+        - /url: /register
+    - generic [ref=e123]:
+      - link "ifYouMind" [ref=e124] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e125]: Decision intelligence, starting with where to build your business.
+      - paragraph [ref=e126]:
+        - text: Questions?
+        - link "support@ifyoumind.com" [ref=e127] [cursor=pointer]:
+          - /url: mailto:support@ifyoumind.com
+      - generic [ref=e128]:
+        - link "How to write a market analysis" [ref=e129] [cursor=pointer]:
+          - /url: /guides/market-analysis-business-plan/
+        - link "Privacy" [ref=e130] [cursor=pointer]:
+          - /url: /privacy-policy
+        - link "Terms" [ref=e131] [cursor=pointer]:
+          - /url: /terms-of-conduct
+        - link "Cookie settings" [ref=e132] [cursor=pointer]:
+          - /url: "#cookie-settings"
+  - region "Cookie choice" [ref=e133]:
+    - generic [ref=e134]:
+      - paragraph [ref=e135]:
+        - text: We'd like to use Google Analytics cookies to see how visitors use ifYouMind. Google Analytics only runs if you allow it.
+        - link "Privacy Policy" [ref=e136] [cursor=pointer]:
+          - /url: /privacy-policy
+      - generic [ref=e137]:
+        - button "Allow analytics" [ref=e138] [cursor=pointer]
+        - button "Reject" [ref=e139] [cursor=pointer]
+        - button "Manage" [ref=e140] [cursor=pointer]
+```

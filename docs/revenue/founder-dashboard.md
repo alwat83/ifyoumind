@@ -64,6 +64,37 @@ The following are **never** counted as revenue or as customers:
 - **This list doesn't exist yet.** It's a founder decision, and the figures stay **unverified** until it does.
 - Emulator fixtures can't appear here at all, because they live only in the `demo-ifyoumind` emulator.
 
+## Audit (2026-10-12): what was checked and fixed
+
+| Area | Finding | Status |
+|---|---|---|
+| Duplicate events | The same event ID is processed once (`stripeEvents`). The same object in several events lands on one document. | OK, tested |
+| Duplicate dispute reviews | A dispute delivered as two events, or redelivered after a failed attempt, could open two `billingReviews`. | **Fixed:** the review ID is now `dispute_opened_{disputeId}`, created once. Tested |
+| Out-of-order refunds | A refund status update was ordered on the same clock as the charge totals, so a late `charge.refund.updated` was dropped behind a newer `charge.refunded`. | **Fixed:** refund status has its own `refundEventCreated`, and totals keep `eventCreated`. Tested in both directions |
+| Out-of-order invoices and disputes | An older event never overwrites a newer one. | OK, tested |
+| **Subscription refunds unmatched** | Checked against sandbox records on the current Stripe API version. Pro Checkout Sessions have `payment_intent: null`, and invoices carry no `payment_intent` or top-level `subscription`. The workspace lives in `parent.subscription_details.metadata`. Refunds and disputes on Pro charges therefore could never match a payment by intent. | **Fixed:** `stripePayments` now stores `customerId`. Charges and disputes match by payment intent (reports) or Stripe customer (Pro), and invoice entries map customer to workspace. Tested |
+| Genuine-customer rule | A Pro workspace with renewals was treated as not paying if its first charge was refunded. | **Fixed:** a workspace counts while its confirmed live payments (first payments + renewals) outnumber its fully reversed charges. Each charge is reversed at most once, even if it was both refunded and disputed |
+| Dispute status | `warning_closed` (inquiries) and `prevented` counted as open. | **Fixed:** `CLOSED_DISPUTE_STATUSES` |
+| Renewals vs first payment | `subscription_create` invoices aren't counted as renewals; that payment is already in `stripePayments`. `subscription_update` (proration) invoices are recorded but counted in neither. | OK, documented |
+| Entitlements | Refunds, disputes and failed renewals change no plan and no report access. | OK, tested |
+| **Live reconciliation** | The Stripe connector available to Claude reaches only the **sandbox** (`acct_1UNp…`, test mode), so **no live record has been compared.** | `reconcileWithStripe` (tested) plus the read-only `scripts/reconcile-stripe.mjs`. Founder-run after approval (below) |
+
+## Reconciliation against Stripe live records (founder-run, read-only)
+1. **Create a restricted key** in Stripe live mode, with **Read** on Checkout Sessions, Charges, Disputes and Invoices and nothing else. Keep it in your password manager.
+2. **Authenticate:** run `gcloud auth application-default login` as an account that can read Firestore.
+3. **Run:** `STRIPE_RECONCILE_KEY=rk_live_… node scripts/reconcile-stripe.mjs --project ifyoumind-473fe --since 2026-10-01`.
+   - The script refuses secret keys (`sk_…`), a missing `--project`, or a missing `--since`.
+   - It sends only GET requests and only reads Firestore.
+4. **Read the output.** It's JSON listing Stripe and Firestore IDs only:
+   - `paymentsMissing`: paid live sessions not recorded;
+   - `paymentAmountMismatch`;
+   - `paymentsNotInStripe`;
+   - `renewalsMissing`;
+   - `refundsMissingOrDifferent`;
+   - `disputesMissingOrDifferent`.
+
+   `clean: true` (exit code 0) means Firestore matches Stripe for the period. Before #39 ships and the webhook events are selected, expect every live renewal, refund and dispute to be listed as missing.
+
 ## Missing data: documented, not estimated
 1. **Events before this PR ships:**
    - renewals, refunds and disputes that happened before deploy aren't in Firestore;

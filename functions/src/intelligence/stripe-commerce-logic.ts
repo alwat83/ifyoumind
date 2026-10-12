@@ -75,3 +75,49 @@ export function subscriptionEventMayChangePlan(
   if(!grantsPro(current.stripeSubscriptionStatus))return true;
   return grantsPro(incomingStatus);
 }
+
+// ---- Subscriber pricing (prepared for the Professional plan; price-neutral today) ----
+
+/** The recurring price a subscription is actually billed at, from Stripe's subscription object. */
+export function subscriptionPrice(subscription:any):{priceId:string|null;unitAmountCents:number|null;currency:string|null;interval:string|null}{
+  const price=subscription?.items?.data?.[0]?.price??subscription?.plan??null;
+  const amount=Number(price?.unit_amount??price?.amount);
+  return {
+    priceId:typeof price?.id==='string'?price.id:null,
+    unitAmountCents:Number.isFinite(amount)&&amount>=0?amount:null,
+    currency:typeof price?.currency==='string'?price.currency:null,
+    interval:typeof price?.recurring?.interval==='string'?price.recurring.interval:typeof price?.interval==='string'?price.interval:null,
+  };
+}
+
+export interface SubscriberPricing {
+  /** What this workspace actually pays per month, or null when Stripe hasn't told us yet. */
+  monthlyUsd:number|null;
+  /** True when the workspace pays less than today's list price: an earlier price that stays while active. */
+  grandfathered:boolean;
+  listMonthlyUsd:number;
+  cancelAtPeriodEnd:boolean;
+}
+
+export function subscriberPricing(org:Record<string,any>|undefined|null,listMonthlyUsd:number):SubscriberPricing{
+  const cents=Number(org?.stripeSubscriptionUnitAmount);
+  const monthly=org?.stripeSubscriptionCurrency==='usd'&&org?.stripeSubscriptionInterval==='month'&&Number.isFinite(cents)
+    ? cents/100
+    : null;
+  return {
+    monthlyUsd:monthly,
+    grandfathered:monthly!==null&&monthly<listMonthlyUsd,
+    listMonthlyUsd,
+    cancelAtPeriodEnd:org?.stripeCancelAtPeriodEnd===true,
+  };
+}
+
+// Billing portal configurations (Stripe Dashboard > Settings > Billing > Customer portal). Empty means
+// Stripe's default configuration, which is today's behaviour. When the Professional price launches, set
+// these to configurations that allow cancellation at period end but no switching to archived prices.
+export const STRIPE_PORTAL_CONFIGURATIONS={live:'',test:''} as const;
+
+export function portalConfiguration(mode:'live'|'test'|'unknown',configurations:{live:string;test:string}=STRIPE_PORTAL_CONFIGURATIONS):string|null{
+  const id=(mode==='live'?configurations.live:configurations.test).trim();
+  return /^bpc_[A-Za-z0-9]+$/.test(id)?id:null;
+}

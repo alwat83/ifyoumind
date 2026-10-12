@@ -9,6 +9,9 @@ import {
   stripePriceIds,
   subscriptionEventMayChangePlan,
   validStripeSignature,
+  portalConfiguration,
+  subscriberPricing,
+  subscriptionPrice,
 } from './stripe-commerce-logic';
 import {
   allowancePeriod,
@@ -22,6 +25,18 @@ import {
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const stripeSecretKey = defineSecret('STRIPE_SECRET_KEY');
 const stripeWebhookSecret = defineSecret('STRIPE_WEBHOOK_SECRET');
+
+/** Records the price a subscription is billed at, so the account page shows what the customer really pays. */
+function priceFields(subscription:any):Record<string,unknown>{
+  const price=subscriptionPrice(subscription);
+  if(price.unitAmountCents===null)return {};
+  return {
+    stripeSubscriptionPriceId:price.priceId,
+    stripeSubscriptionUnitAmount:price.unitAmountCents,
+    stripeSubscriptionCurrency:price.currency,
+    stripeSubscriptionInterval:price.interval,
+  };
+}
 
 async function stripeGet(path:string){
   const response=await fetch(`https://api.stripe.com/v1/${path}`,{
@@ -115,6 +130,7 @@ export const getCommercialStatus = onCall({secrets:[stripeSecretKey]}, async (re
     remainingIncludedReports: Math.max(0, includedReportsPerMonth - usedIncludedReports),
     checkoutEnabled: true,
     paymentsLive: stripeKeyMode(stripeSecretKey.value()) === 'live',
+    subscription: plan === 'pro' ? subscriberPricing(org, COMMERCIAL_PLANS.pro.monthlyPriceUsd) : null,
     pricing: {
       proMonthlyUsd: COMMERCIAL_PLANS.pro.monthlyPriceUsd,
       reportOneTimeUsd: COMMERCIAL_PLANS.report.oneTimePriceUsd,
@@ -167,6 +183,8 @@ export const createBillingPortalSession = onCall({secrets:[stripeSecretKey]}, as
   const params=new URLSearchParams();
   params.set('customer',customerId);
   params.set('return_url','https://ifyoumind.com/app/account');
+  const configuration=portalConfiguration(stripeKeyMode(stripeSecretKey.value()));
+  if(configuration)params.set('configuration',configuration);
 
   try{
     const session=await stripePost('billing_portal/sessions',params);
@@ -436,6 +454,7 @@ export const stripeCommercialWebhook = onRequest(
                 stripeSubscriptionId:subscription.id||subscriptionId,
                 stripeSubscriptionStatus:String(subscription.status),
                 stripeCancelAtPeriodEnd:Boolean(subscription.cancel_at_period_end),
+                ...priceFields(subscription),
                 stripeSubscriptionEventCreated:event.created,
                 planUpdatedAt:FieldValue.serverTimestamp(),
               },{merge:true});
@@ -468,6 +487,7 @@ export const stripeCommercialWebhook = onRequest(
               stripeSubscriptionId:subscription.id||null,
               stripeSubscriptionStatus:status,
               stripeCancelAtPeriodEnd:Boolean(subscription.cancel_at_period_end),
+              ...priceFields(subscription),
               stripeSubscriptionEventCreated:event.created,
               planUpdatedAt:FieldValue.serverTimestamp(),
             },{merge:true});

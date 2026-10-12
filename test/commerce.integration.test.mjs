@@ -21,6 +21,7 @@ let orgId;
 let projectCounter = 0;
 let stripeRequests = [];
 let stripeSubscriptions = {};
+let portalRequests = [];
 
 // Stand-in for the Stripe REST API: records checkout requests and serves subscriptions.
 globalThis.fetch = async (url, init = {}) => {
@@ -31,6 +32,7 @@ globalThis.fetch = async (url, init = {}) => {
     return json(200, { id: `cs_${stripeRequests.length}`, url: 'https://checkout.stripe.com/c/pay/x' });
   }
   if (path === 'billing_portal/sessions' && init.method === 'POST') {
+    portalRequests.push(new URLSearchParams(String(init.body)));
     return json(200, { url: 'https://billing.stripe.com/p/session/x' });
   }
   const sub = path.match(/^subscriptions\/(.+)$/);
@@ -461,4 +463,39 @@ test('a free decision with one comparison is unchanged', async () => {
   assert.equal(created.result.brief.comparisons.length, 1);
   assert.deepEqual(created.result.reportOnlyLocations, []);
   assert.equal((await project(free, created.result.id)).freeBrief, null);
+});
+
+// ---- Subscriber pricing (prepared for the Professional plan; price-neutral today) ----
+
+test('subscription events record the billed price, and status reports what the workspace actually pays', async () => {
+  const org = await newOrg();
+  const meta = { organizationId: org, offer: 'pro' };
+  const price = { id: 'price_pro_39', unit_amount: 3900, currency: 'usd', recurring: { interval: 'month' } };
+  await deliver('customer.subscription.updated', { id: 'sub_priced', status: 'active', customer: 'cus_p39', metadata: meta, items: { data: [{ price }] } }, { created: 100 });
+  const stored = (await orgs().doc(org).get()).data();
+  assert.equal(stored.plan, 'pro');
+  assert.equal(stored.stripeSubscriptionPriceId, 'price_pro_39');
+  assert.equal(stored.stripeSubscriptionUnitAmount, 3900);
+  const status = await call('getCommercialStatus', { organizationId: org });
+  assert.deepEqual(status.result.subscription, { monthlyUsd: 39, grandfathered: false, listMonthlyUsd: 39, cancelAtPeriodEnd: false });
+  assert.equal(status.result.pricing.proMonthlyUsd, 39, 'list price unchanged');
+
+  // An event without price details never erases the recorded price.
+  await deliver('customer.subscription.updated', { id: 'sub_priced', status: 'active', cancel_at_period_end: true, customer: 'cus_p39', metadata: meta }, { created: 200 });
+  const after = (await call('getCommercialStatus', { organizationId: org })).result.subscription;
+  assert.equal(after.monthlyUsd, 39);
+  assert.equal(after.cancelAtPeriodEnd, true);
+
+  const free = (await call('getCommercialStatus', { organizationId: await newOrg() })).result;
+  assert.equal(free.subscription, null, 'free workspaces have no subscription details');
+});
+
+test('the billing portal keeps Stripe\'s default configuration until one is set', async () => {
+  const org = await newOrg({ stripeCustomerId: 'cus_portal' });
+  portalRequests = [];
+  const res = await call('createBillingPortalSession', { organizationId: org });
+  assert.equal(res.error, undefined);
+  assert.equal(portalRequests.length, 1);
+  assert.equal(portalRequests[0].get('customer'), 'cus_portal');
+  assert.equal(portalRequests[0].has('configuration'), false);
 });

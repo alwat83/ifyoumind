@@ -53,3 +53,19 @@ test('a non-admin account sees no founder metrics on /app/growth', async ({ page
   await expect(page.locator('.notice.error')).toBeVisible();
   await expect(page.locator('.notice.error')).not.toBeEmpty();
 });
+
+test('the fourth free decision this month is refused with a clear message', async ({ page, fixtures, consoleErrors }) => {
+  const user = await fixtures(FIXTURES.FREE_LIMIT, { decisions: 3 });
+  consoleErrors.allow.push(/status of 429|resource-exhausted|Too Many Requests/i);
+  await signInThroughUi(page, user);
+  await expect(page.getByRole('heading', { name: 'Your decisions' })).toBeVisible();
+  await page.goto('/app/decide?type=business');
+  await page.getByLabel(/Main location/).fill('Springfield, IL');
+  await page.getByLabel(/Compare with other places/).fill('Madison, WI');
+  await page.getByRole('button', { name: 'Continue' }).click();
+  await page.getByLabel(/Your business/).fill('Fourth bakery');
+  await page.getByLabel('The question you want answered').fill('A fourth decision this month?');
+  await page.getByRole('button', { name: 'Show me what the data says' }).click();
+  await expect(page.locator('p.error')).toContainText('used your 3 free decisions this month');
+  await expect(page).toHaveURL(/\/app\/decide/);
+});

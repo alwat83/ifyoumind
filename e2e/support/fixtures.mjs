@@ -34,6 +34,7 @@ export const FIXTURES = Object.freeze({
   RETURN_URL: 'F08-return-url',
   HOSTILE_RETURN_URL: 'F09-hostile-return-url',
   EXPIRED_SESSION: 'F10-expired-session',
+  FREE_LIMIT: 'F11-free-limit',
 });
 
 /** Cities whose Census figures are pre-seeded. Values are synthetic and only exist in the emulator. */

@@ -77,3 +77,16 @@ export function decisionView(project:Record<string,any>,access:ReportAccess){
     reportOnlyLocations:comparisonLocations.slice(freeCount),
   };
 }
+
+/** Free workspaces may create this many decisions per calendar month (UTC). */
+export const FREE_DECISIONS_PER_MONTH=3;
+
+/** Start of the free-decision period that contains `now`: the 1st of the month, 00:00 UTC. */
+export function freeDecisionPeriodStart(now:Date=new Date()):Date{
+  return new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),1));
+}
+
+/** True when a free workspace has used its monthly decisions. Pro workspaces are not limited here. */
+export function freeDecisionLimitReached(plan:unknown,createdThisPeriod:number):boolean{
+  return plan!=='pro'&&createdThisPeriod>=FREE_DECISIONS_PER_MONTH;
+}

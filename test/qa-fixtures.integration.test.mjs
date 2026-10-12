@@ -114,6 +114,49 @@ test('cleanup removes exactly one fixture: user, workspace, decisions, owner ind
   assert.ok(still.result);
 });
 
+test('a free workspace gets three decisions a month; the fourth is refused and nothing is written', async () => {
+  const { getFirestore } = require('firebase-admin/firestore');
+  const f = await make(FIXTURES.FREE_LIMIT, { decisions: 3 });
+  const fourth = await callable('createMarketIntelligenceProject', {
+    organizationId: f.organizationId, location: 'Springfield, IL', concept: 'QA fixture bakery 4', decision: 'Fourth decision',
+  }, f.idToken);
+  assert.equal(fourth.error, 'RESOURCE_EXHAUSTED');
+  assert.match(fourth.message, /used your 3 free decisions this month/);
+  const db = getFirestore((await import('firebase-admin/app')).getApp('qa-fixtures'));
+  assert.equal((await db.collection('intelligenceOrganizations').doc(f.organizationId).collection('marketProjects').get()).size, 3);
+  // Existing decisions stay readable after the limit.
+  const read = await callable('getMarketIntelligenceProject', { organizationId: f.organizationId, projectId: f.projectIds[0] }, f.idToken);
+  assert.ok(read.result);
+  // Another free workspace is not affected.
+  const other = await make(FIXTURES.FREE_NO_REPORTS, { decisions: 1 });
+  assert.equal(other.projectIds.length, 1);
+});
+
+test('decisions from an earlier month do not count toward this month', async () => {
+  const { getFirestore, Timestamp } = require('firebase-admin/firestore');
+  const f = await make(FIXTURES.FREE_LIMIT);
+  const db = getFirestore((await import('firebase-admin/app')).getApp('qa-fixtures'));
+  const now = new Date();
+  const lastMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1) - 24 * 3600 * 1000);
+  // Earlier decisions as the pipeline stores them, dated in the previous month (test data, not an entitlement).
+  for (let i = 0; i < 3; i++) {
+    await db.collection('intelligenceOrganizations').doc(f.organizationId).collection('marketProjects').add({
+      schemaVersion: 2, location: 'Springfield, IL', concept: `Earlier ${i}`, decision: `Earlier ${i}`, comparisonLocations: [],
+      mode: 'live', status: 'ready', createdBy: f.uid, createdAt: Timestamp.fromDate(lastMonth),
+    });
+  }
+  for (let i = 0; i < 3; i++) {
+    const made = await callable('createMarketIntelligenceProject', {
+      organizationId: f.organizationId, location: 'Springfield, IL', concept: `Now ${i}`, decision: `Now ${i}`,
+    }, f.idToken);
+    assert.ok(made.result, `decision ${i + 1} this month`);
+  }
+  const refused = await callable('createMarketIntelligenceProject', {
+    organizationId: f.organizationId, location: 'Springfield, IL', concept: 'Now 3', decision: 'Now 3',
+  }, f.idToken);
+  assert.equal(refused.error, 'RESOURCE_EXHAUSTED');
+});
+
 test('cleanup refuses addresses that are not fixtures', async () => {
   await assert.rejects(cleanupFixture({ email: 'customer@example.com', uid: 'abc' }), /non-fixture/);
   await assert.rejects(cleanupFixtureByEmail('owner@ifyoumind.com'), /non-fixture/);

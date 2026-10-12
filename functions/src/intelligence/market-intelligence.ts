@@ -2,7 +2,7 @@ import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
-import { decisionReportAccess, decisionView, freeBriefComparisonCount, REPORT_COMPARISON_LIMIT } from './report-entitlement-logic';
+import { decisionReportAccess, decisionView, freeBriefComparisonCount, freeDecisionLimitReached, freeDecisionPeriodStart, FREE_DECISIONS_PER_MONTH, REPORT_COMPARISON_LIMIT } from './report-entitlement-logic';
 import { buildMarketAnalysis, businessPhrase, marketAnalysisText } from './market-analysis';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
@@ -336,20 +336,19 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
     stage='plan';
     const orgData = (await orgRef.get()).data() || {};
     const plan = orgData.plan === 'pro' ? 'pro' : 'free';
-    const isLocalDemo = process.env.GCLOUD_PROJECT === 'demo-ifyoumind';
 
     stage='usage';
-    if (!isLocalDemo && plan === 'free') {
-      const now = new Date();
-      const start = Timestamp.fromDate(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)));
+    // Enforced everywhere, including the emulator, so the limit is tested the way customers meet it.
+    if (plan === 'free') {
+      const start = Timestamp.fromDate(freeDecisionPeriodStart());
       const usage = await orgRef.collection('marketProjects')
         .where('createdAt', '>=', start)
         .count()
         .get();
-      if (usage.data().count >= 3) {
+      if (freeDecisionLimitReached(plan, usage.data().count)) {
         throw new HttpsError(
           'resource-exhausted',
-          'You have used your 3 free decisions this month. They reset on the 1st (UTC). You can still buy the full Decision Report for any decision you have already created.',
+          `You have used your ${FREE_DECISIONS_PER_MONTH} free decisions this month. They reset on the 1st (UTC). You can still buy the full Decision Report for any decision you have already created.`,
         );
       }
     }

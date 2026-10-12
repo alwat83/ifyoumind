@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { PurchaseIntent, intentParams, parseIntent, readIntent, rememberIntent } from '../../purchase-intent';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -33,6 +34,11 @@ export class RegisterComponent {
   private auth:Auth=inject(Auth);
   private router:Router=inject(Router);
   private funnel=inject(AnalyticsBootstrapService);
+  private route=inject(ActivatedRoute);
+  /** Visitor arrived from the sample's "$79" button; their free brief comes first, then the offer. */
+  readonly intent:PurchaseIntent|null=parseIntent(this.route.snapshot.queryParamMap.get('intent'))??readIntent();
+
+  constructor(){rememberIntent(this.intent);}
 
   async register(){
     try{
@@ -44,14 +50,14 @@ export class RegisterComponent {
         await this.router.navigate(['/verify-email']);
         return;
       }
-      await this.router.navigate(FIRST_DECISION_ROUTE,{queryParams:FIRST_DECISION_QUERY});
+      await this.router.navigate(FIRST_DECISION_ROUTE,{queryParams:intentParams(FIRST_DECISION_QUERY,this.intent)});
     }catch(error:any){this.errorMessage=error.message;}
   }
 
   /** The verification email's "Continue" link returns to the market-analysis flow when allowed. */
   private async sendVerification(user:Parameters<typeof sendEmailVerification>[0]):Promise<void>{
     try{
-      await sendEmailVerification(user,{url:`${window.location.origin}/app/decide?type=business`});
+      await sendEmailVerification(user,{url:`${window.location.origin}/app/decide?type=business${this.intent?`&intent=${this.intent}`:''}`});
     }catch(error:any){
       if(String(error?.code||'').includes('continue-uri')) await sendEmailVerification(user);
       else throw error;
@@ -64,7 +70,7 @@ export class RegisterComponent {
       // Returning Google users go to their decisions; brand-new ones start the market analysis.
       const isNew=result.user.metadata.creationTime===result.user.metadata.lastSignInTime;
       if(isNew) this.funnel.track('sign_up',{method:'google'});
-      if(isNew) await this.router.navigate(FIRST_DECISION_ROUTE,{queryParams:FIRST_DECISION_QUERY});
+      if(isNew) await this.router.navigate(FIRST_DECISION_ROUTE,{queryParams:intentParams(FIRST_DECISION_QUERY,this.intent)});
       else await this.router.navigate(['/app']);
     }catch(error:any){this.errorMessage=error.message;}
   }

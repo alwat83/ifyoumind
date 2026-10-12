@@ -7,13 +7,14 @@ import { ProductAnalyticsService } from './product-analytics.service';
 import { AnalyticsBootstrapService } from '../analytics/analytics-bootstrap.service';
 import { CommercialStatus, MonetizationService } from './monetization.service';
 import { MarketAnalysisComponent } from './market-analysis.component';
+import { clearIntent, parseIntent, readIntent } from '../purchase-intent';
 
 @Component({
   selector:'app-market-report',
   standalone:true,
   imports:[CommonModule,RouterLink,MarketAnalysisComponent],
   templateUrl:'./market-report.component.html',
-  styleUrls:['./market-report.component.scss'],
+  styleUrls:['./market-report.component.scss','./market-report-offers.component.scss'],
 })
 export class MarketReportComponent implements OnInit {
   private readonly route=inject(ActivatedRoute);
@@ -33,6 +34,8 @@ export class MarketReportComponent implements OnInit {
   unlocking=false;
   unlockError='';
   error='';
+  /** Set when the visitor came from the sample wanting the $79 report. */
+  purchaseIntent=false;
 
   get decisionReport():DecisionReportPayload|null{
     if(!this.reportPurchased)return null;
@@ -48,6 +51,13 @@ export class MarketReportComponent implements OnInit {
     };
   }
 
+  /** Header label: the public sample is the $79 report; unpaid decisions are a free brief. */
+  get reportLabel():string{
+    if(this.sampleMode)return 'Decision Report · Sample';
+    if(this.reportPurchased)return 'Decision Report';
+    return 'Decision Brief';
+  }
+
   get reportPurchased():boolean{
     if(this.sampleMode)return true;
     return this.project?.decisionReportPurchased===true||this.project?.decisionReportAccess==='pro';
@@ -55,6 +65,11 @@ export class MarketReportComponent implements OnInit {
 
   get canUnlockWithPro():boolean{
     return !this.reportPurchased&&this.status?.plan==='pro'&&(this.status?.remainingIncludedReports??0)>0;
+  }
+
+  /** Only for unpaid decisions: Pro members with allowance left see the existing unlock button instead. */
+  get showPurchasePrompt():boolean{
+    return !this.sampleMode&&this.purchaseIntent&&!this.reportPurchased&&!this.canUnlockWithPro;
   }
 
   get proAllowanceUsedUp():boolean{
@@ -119,6 +134,8 @@ export class MarketReportComponent implements OnInit {
         this.market.get(workspace.organizationId,projectId),
         this.monetization.status(workspace.organizationId).catch(()=>null),
       ]);
+      this.purchaseIntent=parseIntent(this.route.snapshot.queryParamMap.get('intent'))==='report'||readIntent()==='report';
+      clearIntent();
       void this.analytics.track(workspace.organizationId,'report_view',{
         paid:this.project.decisionReportPurchased?'yes':this.project.decisionReportAccess==='pro'?'pro':'no',
       });
@@ -128,6 +145,21 @@ export class MarketReportComponent implements OnInit {
 
   printReport():void{
     window.print();
+  }
+
+  /** The formatted value already shows the unit for USD ($) and percentages (%). */
+  showUnit(unit:string):boolean{
+    return unit!=='USD'&&unit!=='%';
+  }
+
+  /** In-page jump links; the app uses a base href, so a bare #fragment would leave the page. */
+  jumpTo(event:Event,id:string):void{
+    const target=document.getElementById(id);
+    if(!target)return;
+    event.preventDefault();
+    target.scrollIntoView({behavior:'smooth',block:'start'});
+    target.setAttribute('tabindex','-1');
+    target.focus({preventScroll:true});
   }
 
   formatMetric(value:number,unit:string):string{

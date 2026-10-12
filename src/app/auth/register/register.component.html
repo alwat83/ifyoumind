@@ -4,6 +4,8 @@
     <p class="eyebrow">Start free</p>
     <h1>Build your market analysis.</h1>
     <p class="sub">Create a free account. Your free brief compares your city with one other, with every figure cited to the U.S. Census.</p>
+    <p class="next-steps">Next: verify your email, then two quick steps to your free brief. Google sign-ups skip the email check.</p>
+    <p *ngIf="intent" class="next-steps intent-note">You'll see your free brief first, then you can get the full $79 Decision Report for that decision.</p>
     <form (ngSubmit)="register()" #registerForm="ngForm">
       <label><span>Name</span><input name="displayName" type="text" required [(ngModel)]="displayName" /></label>
       <label><span>Email</span><input name="email" type="email" required email [(ngModel)]="email" /></label>

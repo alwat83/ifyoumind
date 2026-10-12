@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { intentParams, parseIntent, readIntent, rememberIntent } from '../purchase-intent';
 import { OrganizationService } from './organization.service';
 import { MarketIntelligenceService } from './market-intelligence.service';
 import { ProductAnalyticsService } from './product-analytics.service';
@@ -34,6 +35,7 @@ export class DecisionFlowComponent implements OnInit {
   error='';
 
   ngOnInit():void{
+    rememberIntent(parseIntent(this.route.snapshot.queryParamMap.get('intent')));
     const type=this.route.snapshot.queryParamMap.get('type');
     if(type==='business'||type==='compare'||type==='growth'){
       this.type=type;
@@ -85,7 +87,7 @@ export class DecisionFlowComponent implements OnInit {
         comparisons:String(comparisons.length),
       });
       this.funnel.track('decision_created',{decision_type:this.type,comparisons:comparisons.length});
-      await this.router.navigate(['/app/result',project.id]);
+      await this.router.navigate(['/app/result',project.id],{queryParams:intentParams({},readIntent())});
     }catch(error){this.error=this.message(error);}
     finally{this.working=false;}
   }

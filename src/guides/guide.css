@@ -35,7 +35,9 @@ h1{font-size:clamp(32px,6vw,48px);line-height:1.08;letter-spacing:-.035em;margin
 .prose blockquote{margin:20px 0;padding:16px 20px;border-left:4px solid var(--accent);background:var(--accent-soft);border-radius:0 var(--radius) var(--radius) 0;color:#1f2937}
 .prose blockquote p{margin:0}
 
-.table-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface)}
+.table-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(to left,var(--surface) 30%,rgba(255,255,255,0)) right/40px 100% no-repeat local,radial-gradient(farthest-side at 100% 50%,rgba(17,24,39,.16),rgba(17,24,39,0)) right/14px 100% no-repeat scroll,var(--surface)}
+/* The right-edge shadow shows only while more columns are off-screen; it scrolls away at the end. */
+.table-hint{display:none;margin:-12px 0 20px;font-size:13px;color:var(--subtle)}
 table{border-collapse:collapse;width:100%;min-width:520px;font-size:15px;line-height:1.45}
 th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
 th{background:#f3f4f6;font-weight:700}
@@ -69,5 +71,6 @@ th:first-child{background:#f3f4f6}
   .nav-links{gap:12px}
   .nav-links a{font-size:14px}
   table{font-size:14px;min-width:500px}
+  .table-hint{display:block}
   th,td{padding:9px 10px}
 }

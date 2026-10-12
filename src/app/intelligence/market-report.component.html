@@ -1,7 +1,10 @@
 <main class="report-shell">
   <nav *ngIf="sampleMode" class="report-nav no-print">
     <a routerLink="/">← ifYouMind</a>
-    <div><a routerLink="/register" class="report-upgrade">Create your own report free</a></div>
+    <div>
+      <a routerLink="/register">Start free</a>
+      <a routerLink="/register" [queryParams]="{intent:'report'}" class="report-upgrade">Get this report for your cities · $79</a>
+    </div>
   </nav>
   <aside *ngIf="sampleMode" class="state no-print" style="margin-bottom:14px;border:1px solid #fcd34d;background:#fffbeb">
     <strong>This is a sample report.</strong> The question is an example, but every figure is real U.S. Census Bureau data with its source linked. Your own report uses your decision, business type and locations. This sample is the full $79 Decision Report; a free brief covers your main city and one comparison.
@@ -26,7 +29,7 @@
     <header class="answer-header">
       <div>
         <p class="brand">ifYouMind</p>
-        <p class="eyebrow">Decision Brief</p>
+        <p class="eyebrow">{{ reportLabel }}</p>
         <h1>{{ project?.decision }}</h1>
         <p class="context">{{ project?.concept }} · {{ project?.location }}</p>
       </div>
@@ -36,7 +39,26 @@
       </div>
     </header>
 
-    <section class="executive-summary">
+    <nav *ngIf="sampleMode" class="jump-list no-print" aria-label="In this report">
+      <p class="eyebrow">In this report</p>
+      <ul>
+        <li><a href="/sample-report#recommendation" (click)="jumpTo($event,'recommendation')">Recommendation</a></li>
+        <li><a href="/sample-report#signals" (click)="jumpTo($event,'signals')">Signals</a></li>
+        <li *ngIf="brief.comparisons.length"><a href="/sample-report#comparison" (click)="jumpTo($event,'comparison')">City comparison</a></li>
+        <li *ngIf="decisionReport?.marketAnalysis"><a href="/sample-report#market-analysis" (click)="jumpTo($event,'market-analysis')">Market analysis</a></li>
+        <li *ngIf="decisionReport"><a href="/sample-report#action-plan" (click)="jumpTo($event,'action-plan')">Action plan</a></li>
+        <li *ngIf="decisionReport"><a href="/sample-report#change-the-call" (click)="jumpTo($event,'change-the-call')">What could change the call</a></li>
+        <li *ngIf="brief.sources?.length"><a href="/sample-report#sources" (click)="jumpTo($event,'sources')">Sources</a></li>
+      </ul>
+    </nav>
+
+    <aside *ngIf="showPurchasePrompt" class="state no-print intent-prompt" role="note" aria-labelledby="intent-title">
+      <h2 id="intent-title">Your free brief is ready. Want the full $79 Decision Report for this decision?</h2>
+      <p>It adds up to three comparison cities, the plan-ready write-up and the action plan. Payment is by secure Stripe checkout.</p>
+      <a [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Get the full report · $79</a>
+    </aside>
+
+    <section id="recommendation" class="executive-summary">
       <div class="recommendation">
         <p class="eyebrow">Executive recommendation</p>
         <h2>{{ recommendation }}</h2>
@@ -62,19 +84,19 @@
       </article>
     </section>
 
-    <section>
+    <section id="signals">
       <p class="eyebrow">The signals underneath</p>
       <div class="metrics">
         <article *ngFor="let metric of brief.metrics">
           <span>{{ metric.label }}</span>
           <strong>{{ formatMetric(metric.value, metric.unit) }}</strong>
-          <small>{{ metric.unit }}</small>
+          <small *ngIf="showUnit(metric.unit)">{{ metric.unit }}</small>
           <small *ngIf="metric.sourceLabel" class="source">{{ metric.sourceLabel }}</small>
         </article>
       </div>
     </section>
 
-    <section *ngIf="brief.comparisons.length">
+    <section id="comparison" *ngIf="brief.comparisons.length">
       <p class="eyebrow">How the other places compare</p>
       <div class="comparison-grid">
         <article>
@@ -106,14 +128,25 @@
         <h2>Get this analysis for your own question.</h2>
         <p>Start with a free Decision Brief: your city compared with one other. Upgrade to the $79 Decision Report for up to three comparisons, the plan-ready write-up and the action plan.</p>
       </div>
-      <a routerLink="/register">Start free</a>
+      <div class="offer-actions">
+        <a routerLink="/register" [queryParams]="{intent:'report'}" class="offer-primary">Get this report for your cities · $79</a>
+        <a routerLink="/register" class="offer-secondary">Start free</a>
+      </div>
     </section>
 
-    <section *ngIf="!reportPurchased" class="report-offer no-print">
+    <section *ngIf="!reportPurchased" class="report-offer report-adds no-print" aria-labelledby="report-adds-title">
       <div>
         <p class="eyebrow">Need something you can share?</p>
-        <h2>Turn this brief into a full Decision Report.</h2>
-        <p>Adds a business-plan-ready market analysis written for your business and locations, location rankings, an action plan, and what would change the call. Every figure is cited.</p>
+        <h2 id="report-adds-title">What the $79 report adds</h2>
+        <ul class="adds-list">
+          <li>Your main city compared with up to three other cities</li>
+          <li>A plan-ready market analysis written for your business, with location rankings and copy-as-text</li>
+          <li>An action plan: what to do before you commit</li>
+          <li>Comparison takeaways: where your main city leads and where it trails</li>
+          <li>What could change the call, plus the evidence boundaries</li>
+          <li>Print or save the full report as a PDF</li>
+        </ul>
+        <p>Every figure is cited.</p>
         <p *ngIf="project?.reportOnlyLocations?.length"><strong>Your full report also compares {{ project?.reportOnlyLocations?.join(' and ') }}.</strong> The free brief shows one comparison.</p>
         <p *ngIf="canUnlockWithPro">Included with your Pro plan: {{ status?.remainingIncludedReports }} of {{ status?.includedReportsPerMonth }} full reports left this month.</p>
         <p *ngIf="proAllowanceUsedUp">You have used all {{ status?.includedReportsPerMonth }} full reports included with Pro this month. They reset on the 1st, or you can buy this one individually.</p>
@@ -126,9 +159,9 @@
     </section>
 
     <ng-container *ngIf="decisionReport as reportDetail">
-      <app-market-analysis *ngIf="reportDetail.marketAnalysis as analysis" [section]="analysis"></app-market-analysis>
-      <section class="action-plan">
-        <p class="eyebrow">Action plan</p>
+      <app-market-analysis id="market-analysis" *ngIf="reportDetail.marketAnalysis as analysis" [section]="analysis" [includedInReport]="sampleMode"></app-market-analysis>
+      <section id="action-plan" class="action-plan">
+        <p class="eyebrow">Action plan <span *ngIf="sampleMode" class="paid-pill">Included in the $79 report</span></p>
         <h2>What to do before you commit.</h2>
         <div class="action-grid">
           <article *ngFor="let item of reportDetail.actionPlan">
@@ -140,7 +173,7 @@
       </section>
 
       <section *ngIf="reportDetail.comparisonFindings.length" class="comparison-findings">
-        <p class="eyebrow">Comparison takeaways</p>
+        <p class="eyebrow">Comparison takeaways <span *ngIf="sampleMode" class="paid-pill">Included in the $79 report</span></p>
         <h2>Where the primary market leads — and where it trails.</h2>
         <div class="finding-list">
           <article *ngFor="let item of reportDetail.comparisonFindings">
@@ -150,8 +183,8 @@
         </div>
       </section>
 
-      <section class="decision-triggers">
-        <p class="eyebrow">What could change the call</p>
+      <section id="change-the-call" class="decision-triggers">
+        <p class="eyebrow">What could change the call <span *ngIf="sampleMode" class="paid-pill">Included in the $79 report</span></p>
         <div class="trigger-grid">
           <article class="strengthens">
             <span>Would strengthen the case</span>
@@ -169,7 +202,7 @@
       </section>
 
       <section class="limitations">
-        <p class="eyebrow">Evidence boundaries</p>
+        <p class="eyebrow">Evidence boundaries <span *ngIf="sampleMode" class="paid-pill">Included in the $79 report</span></p>
         <h2>What this report does not know yet.</h2>
         <ul><li *ngFor="let item of reportDetail.limitations">{{ item }}</li></ul>
       </section>
@@ -181,7 +214,7 @@
       <ol><li *ngFor="let question of brief.questions">{{ question }}</li></ol>
     </section>
 
-    <section *ngIf="brief.sources?.length" class="sources">
+    <section id="sources" *ngIf="brief.sources?.length" class="sources">
       <p class="eyebrow">Sources</p>
       <ul>
         <li *ngFor="let source of brief.sources">

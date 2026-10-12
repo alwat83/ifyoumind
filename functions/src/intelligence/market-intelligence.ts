@@ -2,7 +2,7 @@ import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
-import { decisionReportAccess, decisionView, freeBriefComparisonCount, freeDecisionLimitReached, freeDecisionPeriodStart, FREE_DECISIONS_PER_MONTH, REPORT_COMPARISON_LIMIT } from './report-entitlement-logic';
+import { allowancePeriod, decisionLimitFor, decisionLimitMessage, decisionReportAccess, decisionView, freeBriefComparisonCount, freeDecisionPeriodStart, releaseDecision, reserveDecision, REPORT_COMPARISON_LIMIT } from './report-entitlement-logic';
 import { buildMarketAnalysis, businessPhrase, marketAnalysisText } from './market-analysis';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
@@ -338,77 +338,89 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
     const plan = orgData.plan === 'pro' ? 'pro' : 'free';
 
     stage='usage';
-    // Enforced everywhere, including the emulator, so the limit is tested the way customers meet it.
-    if (plan === 'free') {
-      const start = Timestamp.fromDate(freeDecisionPeriodStart());
-      const usage = await orgRef.collection('marketProjects')
-        .where('createdAt', '>=', start)
-        .count()
-        .get();
-      if (freeDecisionLimitReached(plan, usage.data().count)) {
-        throw new HttpsError(
-          'resource-exhausted',
-          `You have used your ${FREE_DECISIONS_PER_MONTH} free decisions this month. They reset on the 1st (UTC). You can still buy the full Decision Report for any decision you have already created.`,
-        );
-      }
-    }
-
-    stage='input';
-    const location = canonicalLocation(text(request.data?.location, 'Location', 160));
-    const concept = text(request.data?.concept, 'Business concept', 160);
-    const decision = text(request.data?.decision || 'Evaluate this market', 'Decision', 240);
-    const rawComparisons = Array.isArray(request.data?.comparisonLocations) ? request.data.comparisonLocations : [];
-    const comparisonLocations = rawComparisons
-      .filter((value: unknown): value is string => typeof value === 'string')
-      .map((value: string) => canonicalLocation(value.trim()))
-      .filter(Boolean)
-      .slice(0, REPORT_COMPARISON_LIMIT);
-
-    stage='market-data';
-    const [primary,...comparisonPlaces]=await Promise.all(
-      [location,...comparisonLocations].map(value=>fetchCensusPlace(value)),
-    );
-
-    stage='analysis';
-    const brief=buildLiveBrief(primary,comparisonPlaces,concept);
-    // Free briefs show one comparison; the other places are kept for the full Decision Report.
-    const freeComparisonCount=freeBriefComparisonCount(plan,comparisonPlaces.length);
-    const freeBrief=freeComparisonCount===null
-      ? null
-      : briefForEntitlement(buildLiveBrief(primary,comparisonPlaces.slice(0,freeComparisonCount),concept),false);
-
-    stage='save';
-    const ref = orgRef.collection('marketProjects').doc();
-    await ref.set({
-      schemaVersion:2,
-      location,
-      concept,
-      decision,
-      comparisonLocations,
-      mode:'live',
-      brief,
-      freeBrief,
-      freeComparisonCount,
-      status:'ready',
-      createdBy:scope.uid,
-      createdAt:FieldValue.serverTimestamp(),
-      updatedAt:FieldValue.serverTimestamp(),
+    // Free: 3 a month. Pro: 50 a month, as advertised. Both reset on the 1st (UTC), the same
+    // period as Pro's included reports. A reservation is taken in a transaction before any
+    // Census work, so concurrent requests can never exceed the limit.
+    const period = allowancePeriod();
+    const limit = decisionLimitFor(plan);
+    const counted = (await orgRef.collection('marketProjects')
+      .where('createdAt', '>=', Timestamp.fromDate(freeDecisionPeriodStart()))
+      .count()
+      .get()).data().count;
+    const reserved = await getFirestore().runTransaction(async tx => {
+      const current = (await tx.get(orgRef)).data()?.decisionAllowance;
+      const decision = reserveDecision(current, period, counted, limit);
+      if (decision.ok) tx.set(orgRef, { decisionAllowance: decision.next }, { merge: true });
+      return decision.ok;
     });
+    if (!reserved) throw new HttpsError('resource-exhausted', decisionLimitMessage(plan));
+    const release = () => getFirestore().runTransaction(async tx => {
+      const next = releaseDecision((await tx.get(orgRef)).data()?.decisionAllowance, period);
+      if (next) tx.set(orgRef, { decisionAllowance: next }, { merge: true });
+    }).catch(error => console.error('Could not release a decision reservation', scope.organizationId, error));
 
-    const view=decisionView({brief,freeBrief,freeComparisonCount,comparisonLocations},'none');
-    return {
-      id:ref.id,
-      location,
-      concept,
-      decision,
-      comparisonLocations:view.comparisonLocations,
-      reportOnlyLocations:view.reportOnlyLocations,
-      mode:'live',
-      brief:briefForEntitlement(view.brief,false),
-      decisionReportPurchased:false,
-      decisionReportAccess:'none',
-      dataNotice:'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.',
-    };
+    try {
+      stage='input';
+      const location = canonicalLocation(text(request.data?.location, 'Location', 160));
+      const concept = text(request.data?.concept, 'Business concept', 160);
+      const decision = text(request.data?.decision || 'Evaluate this market', 'Decision', 240);
+      const rawComparisons = Array.isArray(request.data?.comparisonLocations) ? request.data.comparisonLocations : [];
+      const comparisonLocations = rawComparisons
+        .filter((value: unknown): value is string => typeof value === 'string')
+        .map((value: string) => canonicalLocation(value.trim()))
+        .filter(Boolean)
+        .slice(0, REPORT_COMPARISON_LIMIT);
+
+      stage='market-data';
+      const [primary,...comparisonPlaces]=await Promise.all(
+        [location,...comparisonLocations].map(value=>fetchCensusPlace(value)),
+      );
+
+      stage='analysis';
+      const brief=buildLiveBrief(primary,comparisonPlaces,concept);
+      // Free briefs show one comparison; the other places are kept for the full Decision Report.
+      const freeComparisonCount=freeBriefComparisonCount(plan,comparisonPlaces.length);
+      const freeBrief=freeComparisonCount===null
+        ? null
+        : briefForEntitlement(buildLiveBrief(primary,comparisonPlaces.slice(0,freeComparisonCount),concept),false);
+
+      stage='save';
+      const ref = orgRef.collection('marketProjects').doc();
+      await ref.set({
+        schemaVersion:2,
+        location,
+        concept,
+        decision,
+        comparisonLocations,
+        mode:'live',
+        brief,
+        freeBrief,
+        freeComparisonCount,
+        status:'ready',
+        createdBy:scope.uid,
+        createdAt:FieldValue.serverTimestamp(),
+        updatedAt:FieldValue.serverTimestamp(),
+      });
+
+      const view=decisionView({brief,freeBrief,freeComparisonCount,comparisonLocations},'none');
+      return {
+        id:ref.id,
+        location,
+        concept,
+        decision,
+        comparisonLocations:view.comparisonLocations,
+        reportOnlyLocations:view.reportOnlyLocations,
+        mode:'live',
+        brief:briefForEntitlement(view.brief,false),
+        decisionReportPurchased:false,
+        decisionReportAccess:'none',
+        dataNotice:'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.',
+      };
+    } catch (error) {
+      // The decision was not created: give the reservation back so it doesn't count.
+      await release();
+      throw error;
+    }
   }catch(error){
     if(error instanceof HttpsError) throw error;
     console.error('Market decision creation failed',{stage,error});

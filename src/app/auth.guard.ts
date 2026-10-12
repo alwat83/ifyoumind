@@ -4,6 +4,7 @@ import { user } from '@angular/fire/auth';
 import { Auth } from '@angular/fire/auth';
 import { useLocalEmulators } from './firebase.config';
 import { map } from 'rxjs/operators';
+import { loginParams } from './return-url';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const auth = inject(Auth);
@@ -19,7 +20,7 @@ export const authGuard: CanActivateFn = (route, state) => {
           return false;
         }
       } else {
-        router.navigate(['/login']);
+        router.navigate(['/login'],{queryParams:loginParams(state.url)});
         return false;
       }
     }),

@@ -268,6 +268,29 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
   5. Approve Professional pricing.
   6. GA4 review (unblocks Wave B).
   7. Later: BLS and BEA keys, and R4/R5 approval.
+- **Phase 1 development, 2026-10-12 (Claude Code; founder-approved for draft branches; nothing merged or deployed).**
+  - **1.1 [#34](https://github.com/alwat83/ifyoumind/pull/34) `c296d10`:** login return URL plus homepage $79 intent.
+    - Security review done: allowlist, and property tests over about 25,000 inputs.
+    - QA checklist for signed-in checks: `docs/qa/return-url-and-intent.md`.
+    - Fast tests 41/41.
+  - **1.2 Wave B reconciled with master:** [#18](https://github.com/alwat83/ifyoumind/pull/18) `f55786f` and [#24](https://github.com/alwat83/ifyoumind/pull/24) `da1dcf9`.
+    - Footer: keeps both the support email and Cookie settings.
+    - Register and decision flow: keep both the funnel tracking and the purchase intent.
+    - Both merge cleanly with master. Still held for the GA4 review.
+  - **1.3 [#35](https://github.com/alwat83/ifyoumind/pull/35) `134b582`:** first-party events.
+    - `finding_viewed` (activation proxy: 30 s plus copy, source or print), `offer_viewed`, `intent_prompt_shown`, `intent_prompt_clicked`, `report_copied`, `report_exported`.
+    - Each event has a schema allowing only enumerations and an opaque project id; established events now also drop email-like values.
+    - Admin metrics add `decisionToFinding` and `repeatDecisionOrganizations`.
+    - Functions 53/53, fast 38/38, commerce 29/29.
+    - Conflicts with #29 in 3 report files (a mechanical merge).
+  - **1.4 [#36](https://github.com/alwat83/ifyoumind/pull/36) `4ee9aba`:**
+    - "Sources cited" replaces "High source coverage".
+    - Pricing button labels say what happens.
+    - The register button stays active and shows inline errors.
+    - A line on the pricing page says reports unlocked with Pro stay unlocked after cancelling (true per the entitlement code). Founder decision whether to keep it.
+    - Fast 39/39; axe 0.
+  - **1.5 Usability study toolkit:** https://claude.ai/code/artifact/8faa5869-ecea-4e6a-a741-7af3cfdfec6a. It has the screener, consent, moderator script, note-taker sheet, findings log, outreach drafts (not sent) and synthesis. No one has been contacted.
+  - **Release grouping when authorised:** #34 and #36 together (combined merge 45/45), then #35, then Wave B after the GA4 review.
 - **Phase 1 customer-experience proposal, 2026-10-12 (Claude Code; for founder review).**
   - **Documents:**
     - Proposal: https://claude.ai/code/artifact/bc794ad5-24aa-4544-bcfe-c52ba170b327.

@@ -1,0 +1,80 @@
+name: Authenticated QA (emulators)
+
+# Runs the authenticated customer journeys against the Firebase emulators for the
+# demo-ifyoumind project. It uses no secrets, deploys nothing and cannot reach ifyoumind-473fe.
+on:
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: authenticated-qa-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      CI: 'true'
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Use Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+      - name: Use Java 21 (Firestore emulator)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Refuse to run with cloud credentials
+        run: |
+          if [ -n "${GOOGLE_APPLICATION_CREDENTIALS:-}" ] || [ -n "${FIREBASE_TOKEN:-}" ] || [ -n "${GCP_SA_KEY:-}" ]; then
+            echo "Cloud credentials are present; this job must only ever use emulators." >&2
+            exit 1
+          fi
+      - name: Cache Firebase emulator downloads
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/firebase/emulators
+          key: firebase-emulators-${{ hashFiles('package-lock.json') }}
+      - name: Install app dependencies
+        run: npm ci
+      - name: Install functions dependencies
+        run: npm --prefix functions ci
+      - name: Build functions
+        run: npm --prefix functions run build
+      - name: Functions unit tests
+        run: npm --prefix functions test
+      - name: Fast web tests (including QA safety rails)
+        run: npm run test:seo
+      - name: Build the local (emulator) app bundle
+        run: npm run build:local
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+      - name: Firestore rules tests
+        run: npm run test:rules
+      - name: Organization tests
+        run: npm run test:organizations
+      - name: Commerce and entitlement tests
+        run: npm run test:commerce
+      - name: QA fixture and access tests
+        run: npm run test:qa-integration
+      - name: Authenticated browser tests (desktop and mobile)
+        run: npm run test:e2e
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7

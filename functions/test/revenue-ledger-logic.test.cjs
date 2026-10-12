@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { ledgerEntryFor, shouldApplyLedgerEvent, mergeLedgerData, revenueSummary, invoiceOrganizationId, LEDGER_EVENT_TYPES, orderingField, reconcileWithStripe, CLOSED_DISPUTE_STATUSES } =
+const { ledgerEntryFor, shouldApplyLedgerEvent, mergeLedgerData, revenueSummary, invoiceOrganizationId, LEDGER_EVENT_TYPES, orderingField, reconcileWithStripe, CLOSED_DISPUTE_STATUSES, resolveReversal } =
   require('../lib/intelligence/revenue-ledger-logic');
 
 const ev = (type, object, extra = {}) => ({ id: `evt_${type}`, type, created: 1000, livemode: true, data: { object }, ...extra });
@@ -75,17 +75,37 @@ test('closed dispute statuses include inquiries and prevented disputes', () => {
 
 const live = (fields) => ({ livemode: true, ...fields });
 
-test('genuine paying customers: live only, QA excluded, reversals subtracted, subscriptions matched by customer', () => {
+test('a reversal is tied to a purchase only by payment intent, or a customer with exactly one payment', () => {
+  const byIntent = new Map([['pi_r', { organizationId: 'org_a', paymentKey: 'session:cs_r' }]]);
+  const byCustomer = new Map([
+    ['cus_one', [{ organizationId: 'org_b', paymentKey: 'session:cs_b' }]],
+    ['cus_many', [{ organizationId: 'org_c', paymentKey: 'session:cs_c1' }, { organizationId: 'org_c', paymentKey: 'invoice:in_c2' }]],
+    ['cus_split', [{ organizationId: 'org_d', paymentKey: 'session:cs_d' }, { organizationId: 'org_e', paymentKey: 'session:cs_e' }]],
+  ]);
+  assert.deepEqual(resolveReversal({ paymentIntentId: 'pi_r', customerId: 'cus_many' }, byIntent, byCustomer),
+    { status: 'resolved', organizationId: 'org_a', paymentKey: 'session:cs_r', how: 'payment_intent' }, 'intent wins over customer');
+  assert.deepEqual(resolveReversal({ customerId: 'cus_one' }, byIntent, byCustomer),
+    { status: 'resolved', organizationId: 'org_b', paymentKey: 'session:cs_b', how: 'only_payment_for_customer' });
+  assert.deepEqual(resolveReversal({ customerId: 'cus_many' }, byIntent, byCustomer),
+    { status: 'unresolved', organizationId: 'org_c', reason: 'customer_has_several_payments' });
+  assert.deepEqual(resolveReversal({ customerId: 'cus_split' }, byIntent, byCustomer),
+    { status: 'unresolved', organizationId: null, reason: 'customer_in_several_workspaces' });
+  assert.deepEqual(resolveReversal({ paymentIntentId: 'pi_x', customerId: 'cus_x' }, byIntent, byCustomer), { status: 'unmatched' });
+});
+
+
+test('verified paying customers assume every unresolved reversal applies; the rest need review', () => {
   const payments = [
-    live({ offer: 'report', organizationId: 'org_a', paymentIntentId: 'pi_a', fulfilment: 'fulfilled' }),
-    live({ offer: 'report', organizationId: 'org_b', paymentIntentId: 'pi_b', fulfilment: 'fulfilled' }),
-    live({ offer: 'report', organizationId: 'org_c', paymentIntentId: 'pi_c', fulfilment: 'fulfilled' }),
+    live({ checkoutSessionId: 'cs_a', offer: 'report', organizationId: 'org_a', paymentIntentId: 'pi_a', fulfilment: 'fulfilled' }),
+    live({ checkoutSessionId: 'cs_b', offer: 'report', organizationId: 'org_b', paymentIntentId: 'pi_b', fulfilment: 'fulfilled' }),
+    live({ checkoutSessionId: 'cs_c', offer: 'report', organizationId: 'org_c', paymentIntentId: 'pi_c', fulfilment: 'fulfilled' }),
     // Pro checkouts have no payment intent on current Stripe API versions, only a customer.
-    live({ offer: 'pro', organizationId: 'org_d', paymentIntentId: null, customerId: 'cus_d' }),
-    live({ offer: 'pro', organizationId: 'org_e', paymentIntentId: null, customerId: 'cus_e' }),
-    { offer: 'report', organizationId: 'org_test', livemode: false, paymentIntentId: 'pi_t' },
-    live({ offer: 'report', organizationId: 'org_qa', paymentIntentId: 'pi_qa' }),
-    live({ offer: 'report', organizationId: 'org_a', paymentIntentId: 'pi_dup', fulfilment: 'duplicate' }),
+    live({ checkoutSessionId: 'cs_d', offer: 'pro', organizationId: 'org_d', paymentIntentId: null, customerId: 'cus_d' }),
+    live({ checkoutSessionId: 'cs_e', offer: 'pro', organizationId: 'org_e', paymentIntentId: null, customerId: 'cus_e' }),
+    live({ checkoutSessionId: 'cs_f', offer: 'pro', organizationId: 'org_f', paymentIntentId: null, customerId: 'cus_f' }),
+    { checkoutSessionId: 'cs_t', offer: 'report', organizationId: 'org_test', livemode: false, paymentIntentId: 'pi_t' },
+    live({ checkoutSessionId: 'cs_qa', offer: 'report', organizationId: 'org_qa', paymentIntentId: 'pi_qa' }),
+    live({ checkoutSessionId: 'cs_dup', offer: 'report', organizationId: 'org_a', paymentIntentId: 'pi_dup', fulfilment: 'duplicate' }),
   ];
   const ledger = [
     live({ kind: 'charge', chargeId: 'ch_b', paymentIntentId: 'pi_b', amountRefunded: 7900, fullyRefunded: true }),
@@ -93,29 +113,38 @@ test('genuine paying customers: live only, QA excluded, reversals subtracted, su
     live({ kind: 'charge', chargeId: 'ch_qa', paymentIntentId: 'pi_qa', amountRefunded: 7900, fullyRefunded: true }),
     live({ kind: 'charge', chargeId: 'ch_x', paymentIntentId: 'pi_unknown', customerId: 'cus_unknown', amountRefunded: 100 }),
     { kind: 'charge', livemode: false, chargeId: 'ch_t', paymentIntentId: 'pi_t', amountRefunded: 7900, fullyRefunded: true },
-    // org_d: Pro start + one renewal, then its first charge fully refunded → still paying (2 > 1).
-    live({ kind: 'invoice', status: 'paid', renewal: true, organizationId: 'org_d', customerId: 'cus_d' }),
+    // org_d: Pro start + a renewal; one refund by customer only → ambiguous, which payment? Unresolved.
+    // Even if it applies, one payment stands: verified.
+    live({ kind: 'invoice', invoiceId: 'in_d2', status: 'paid', renewal: true, organizationId: 'org_d', customerId: 'cus_d' }),
     live({ kind: 'charge', chargeId: 'ch_d1', customerId: 'cus_d', amountRefunded: 3900, fullyRefunded: true }),
-    // org_e: its only Pro payment is refunded (matched by customer) → not paying.
+    // org_e: one Pro payment only, refunded by customer → unambiguous, resolved: not paying.
     live({ kind: 'charge', chargeId: 'ch_e1', customerId: 'cus_e', amountRefunded: 3900, fullyRefunded: true, lastRefundStatus: 'failed' }),
-    live({ kind: 'invoice', status: 'paid', renewal: true, organizationId: 'org_qa' }),
-    { kind: 'invoice', livemode: false, status: 'paid', renewal: true, organizationId: 'org_d' },
-    live({ kind: 'invoice', status: 'payment_failed', renewal: true, organizationId: 'org_d' }),
-    live({ kind: 'dispute', disputeId: 'dp_open', chargeId: 'ch_e2', customerId: 'cus_e', status: 'needs_response' }),
+    // org_f: Pro start + renewal, TWO refunds by customer only → both unresolved → needs review.
+    live({ kind: 'invoice', invoiceId: 'in_f2', status: 'paid', renewal: true, organizationId: 'org_f', customerId: 'cus_f' }),
+    live({ kind: 'charge', chargeId: 'ch_f1', customerId: 'cus_f', amountRefunded: 3900, fullyRefunded: true }),
+    live({ kind: 'charge', chargeId: 'ch_f2', customerId: 'cus_f', amountRefunded: 3900, fullyRefunded: true }),
+    live({ kind: 'invoice', invoiceId: 'in_qa', status: 'paid', renewal: true, organizationId: 'org_qa' }),
+    { kind: 'invoice', invoiceId: 'in_t', livemode: false, status: 'paid', renewal: true, organizationId: 'org_d' },
+    live({ kind: 'invoice', invoiceId: 'in_d3', status: 'payment_failed', renewal: true, organizationId: 'org_d' }),
+    live({ kind: 'dispute', disputeId: 'dp_open', chargeId: 'ch_d9', customerId: 'cus_d', status: 'needs_response' }),
     live({ kind: 'dispute', disputeId: 'dp_inq', chargeId: 'ch_e3', customerId: 'cus_e', status: 'warning_closed' }),
   ];
-  const summary = revenueSummary({ payments, ledger, excludedOrganizations: new Set(['org_qa']) });
-  assert.equal(summary.genuinePayingCustomers, 2, 'org_a and org_d');
-  assert.equal(summary.reportPurchases, 3);
-  assert.equal(summary.reportPurchasesNetOfFullRefunds, 1, 'only org_a: b refunded, c lost');
-  assert.equal(summary.proSubscriptionsStarted, 2);
-  assert.equal(summary.proRenewalsPaid, 1, 'QA and test renewals excluded');
-  assert.equal(summary.proRenewalPaymentsFailed, 1);
-  assert.equal(summary.refundedMinorUnits, 7900 + 3900 + 3900, 'b, d1, e1; QA, test and unmatched excluded');
-  assert.equal(summary.refundsFailed, 1);
-  assert.equal(summary.disputesOpen, 1, 'warning_closed is closed');
-  assert.equal(summary.disputesLost, 1);
-  assert.equal(summary.unmatchedLedgerEntries, 1, 'only ch_x');
+  const s = revenueSummary({ payments, ledger, excludedOrganizations: new Set(['org_qa']) });
+  assert.equal(s.genuinePayingCustomers, 2, 'org_a and org_d');
+  assert.equal(s.payingCustomersNeedingReview, 1, 'org_f');
+  assert.equal(s.reportPurchases, 3);
+  assert.equal(s.reportPurchasesNetOfFullRefunds, 1, 'org_a only');
+  assert.equal(s.proSubscriptionsStarted, 3);
+  assert.equal(s.proRenewalsPaid, 2, 'org_d and org_f; QA and test excluded');
+  assert.equal(s.proRenewalPaymentsFailed, 1);
+  assert.equal(s.refundedMinorUnits, 7900 + 3900, 'resolved only: ch_b and ch_e1');
+  assert.equal(s.refundedMinorUnitsUnresolved, 3900 * 3, 'ch_d1, ch_f1, ch_f2');
+  assert.equal(s.refundsFailed, 1);
+  assert.equal(s.disputesOpen, 1, 'warning_closed is closed');
+  assert.equal(s.disputesLost, 1);
+  assert.deepEqual(s.unresolvedReversals.map(r => r.id).sort(), ['ch_d1', 'ch_f1', 'ch_f2', 'dp_open']);
+  assert.ok(s.unresolvedReversals.every(r => r.reason === 'customer_has_several_payments'));
+  assert.equal(s.unmatchedLedgerEntries, 1, 'only ch_x');
 });
 
 test('reconciliation lists every difference between Firestore and Stripe live records', () => {
@@ -155,13 +184,14 @@ test('reconciliation lists every difference between Firestore and Stripe live re
     ],
     disputes: [live({ id: 'dp_ok', status: 'won' }), live({ id: 'dp_stale', status: 'lost' }), live({ id: 'dp_new', status: 'needs_response' })],
   };
-  const r = reconcileWithStripe(records, stripe);
+  const { verified, discrepancies: r } = reconcileWithStripe(records, stripe);
+  assert.deepEqual(verified, { paymentsMatched: 1, renewalsMatched: 1, refundsMatched: 1, disputesMatched: 1 });
   assert.deepEqual(r.paymentsMissing, ['cs_missing']);
   assert.deepEqual(r.paymentAmountMismatch, ['cs_amount']);
   assert.deepEqual(r.paymentsNotInStripe, ['cs_ghost']);
   assert.deepEqual(r.renewalsMissing, ['in_missing']);
   assert.deepEqual(r.refundsMissingOrDifferent, ['ch_partial', 'ch_new']);
   assert.deepEqual(r.disputesMissingOrDifferent, ['dp_stale', 'dp_new']);
-  assert.equal(r.clean, false);
+  assert.equal(reconcileWithStripe(records, stripe).clean, false);
   assert.equal(reconcileWithStripe({ payments: [], ledger: [] }, { sessions: [], invoices: [], charges: [], disputes: [] }).clean, true);
 });

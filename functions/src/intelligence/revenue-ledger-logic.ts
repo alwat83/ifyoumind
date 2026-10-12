@@ -158,69 +158,118 @@ export interface RevenueInputs{
   excludedOrganizations:Set<string>;
 }
 
+export type ReversalResolution=
+  | {status:'resolved';organizationId:string;paymentKey:string;how:'payment_intent'|'only_payment_for_customer'}
+  | {status:'unresolved';organizationId:string|null;reason:'customer_has_several_payments'|'customer_in_several_workspaces'}
+  | {status:'unmatched'};
+
+/**
+ * Ties a refund or dispute to the purchase it reverses, or says it can't.
+ * - Same payment intent as a recorded payment (one-time reports): resolved to that payment.
+ * - Otherwise by Stripe customer, but ONLY when that customer has exactly one live payment in
+ *   exactly one workspace. A customer with several payments, subscriptions or reports is never
+ *   guessed: the reversal stays unresolved for a person to review.
+ */
+export function resolveReversal(
+  entry:Record<string,any>,
+  paymentsByIntent:Map<string,{organizationId:string;paymentKey:string}>,
+  paymentsByCustomer:Map<string,Array<{organizationId:string;paymentKey:string}>>,
+):ReversalResolution{
+  const direct=entry.paymentIntentId&&paymentsByIntent.get(entry.paymentIntentId);
+  if(direct)return {status:'resolved',...direct,how:'payment_intent'};
+  const candidates=entry.customerId?paymentsByCustomer.get(entry.customerId)||[]:[];
+  if(!candidates.length)return {status:'unmatched'};
+  const orgs=new Set(candidates.map(c=>c.organizationId));
+  if(orgs.size>1)return {status:'unresolved',organizationId:null,reason:'customer_in_several_workspaces'};
+  if(candidates.length>1)return {status:'unresolved',organizationId:candidates[0].organizationId,reason:'customer_has_several_payments'};
+  return {status:'resolved',...candidates[0],how:'only_payment_for_customer'};
+}
+
 /**
  * Founder-dashboard figures from Stripe-confirmed records only, live mode only, QA excluded.
- * Refunds and disputes are attributed to a workspace by payment intent (one-time reports) or, when
- * Stripe gives none (subscriptions on current API versions), by Stripe customer. A workspace is a
- * genuine paying customer when it has more confirmed live payments than fully reversed ones
- * (fully refunded, or a dispute lost). Amounts are in the currency's minor unit.
+ * Verified figures assume every unresolved reversal applies (the conservative reading); the
+ * difference is reported separately as needing review, never folded in. Amounts are minor units.
  */
 export function revenueSummary({payments,ledger,excludedOrganizations}:RevenueInputs){
   const isLive=(r:Record<string,any>)=>r.livemode===true;
   const excluded=(org:unknown)=>typeof org==='string'&&excludedOrganizations.has(org);
-  const livePayments=payments.filter(p=>isLive(p)&&p.organizationId);
-  const invoices=ledger.filter(e=>e.kind==='invoice'&&isLive(e));
 
-  const orgByIntent=new Map<string,string>();
-  const orgByCustomer=new Map<string,string>();
-  for(const p of livePayments){
-    if(p.paymentIntentId)orgByIntent.set(p.paymentIntentId,p.organizationId);
-    if(p.customerId)orgByCustomer.set(p.customerId,p.organizationId);
+  // Every confirmed live payment event: first payments (stripePayments) and paid renewals (ledger).
+  const confirmed:Array<{organizationId:string;paymentKey:string;offer:string;paymentIntentId?:string;customerId?:string;duplicate:boolean}>=[];
+  for(const p of payments){
+    if(!isLive(p)||!p.organizationId)continue;
+    confirmed.push({organizationId:p.organizationId,paymentKey:`session:${p.checkoutSessionId}`,offer:String(p.offer),
+      paymentIntentId:p.paymentIntentId||undefined,customerId:p.customerId||undefined,duplicate:p.fulfilment==='duplicate'});
   }
+  const invoices=ledger.filter(e=>e.kind==='invoice'&&isLive(e));
   for(const i of invoices){
-    if(i.paymentIntentId&&i.organizationId)orgByIntent.set(i.paymentIntentId,i.organizationId);
-    if(i.customerId&&i.organizationId)orgByCustomer.set(i.customerId,i.organizationId);
+    if(i.status!=='paid'||i.renewal!==true||!i.organizationId)continue;
+    confirmed.push({organizationId:i.organizationId,paymentKey:`invoice:${i.invoiceId}`,offer:'pro_renewal',
+      paymentIntentId:i.paymentIntentId||undefined,customerId:i.customerId||undefined,duplicate:false});
   }
-  const ownerOf=(e:Record<string,any>):string|null=>
-    (e.paymentIntentId&&orgByIntent.get(e.paymentIntentId))||(e.customerId&&orgByCustomer.get(e.customerId))||null;
+  const byIntent=new Map<string,{organizationId:string;paymentKey:string}>();
+  const byCustomer=new Map<string,Array<{organizationId:string;paymentKey:string}>>();
+  for(const c of confirmed){
+    const ref={organizationId:c.organizationId,paymentKey:c.paymentKey};
+    if(c.paymentIntentId)byIntent.set(c.paymentIntentId,ref);
+    if(c.customerId)byCustomer.set(c.customerId,[...(byCustomer.get(c.customerId)||[]),ref]);
+  }
 
   const charges=ledger.filter(e=>e.kind==='charge'&&isLive(e));
   const disputes=ledger.filter(e=>e.kind==='dispute'&&isLive(e));
-  const counted=(e:Record<string,any>)=>{const org=ownerOf(e);return !!org&&!excluded(org);};
+  const resolution=new Map<Record<string,any>,ReversalResolution>();
+  for(const e of [...charges,...disputes])resolution.set(e,resolveReversal(e,byIntent,byCustomer));
+  const orgOf=(r:ReversalResolution)=>r.status==='unmatched'?null:r.organizationId;
+  const counts=(e:Record<string,any>)=>{const org=orgOf(resolution.get(e)!);return org===null?resolution.get(e)!.status==='unresolved':!excluded(org);};
 
-  const reportPayments=livePayments.filter(p=>p.offer==='report'&&p.fulfilment!=='duplicate'&&!excluded(p.organizationId));
-  const proStarts=livePayments.filter(p=>p.offer==='pro'&&!excluded(p.organizationId));
-  const renewals=invoices.filter(e=>e.status==='paid'&&e.renewal===true&&!excluded(e.organizationId));
-  const failedRenewals=invoices.filter(e=>e.status==='payment_failed'&&!excluded(e.organizationId));
+  // A full reversal is a fully refunded charge or a lost dispute; one per charge.
+  const reversals=new Map<string,ReversalResolution>();
+  for(const c of charges)if(c.fullyRefunded===true)reversals.set(c.chargeId||c.paymentIntentId,resolution.get(c)!);
+  for(const d of disputes)if(d.status==='lost')reversals.set(d.chargeId||d.paymentIntentId||d.disputeId,resolution.get(d)!);
+  const reversedPayment=new Set([...reversals.values()].filter(r=>r.status==='resolved').map(r=>(r as any).paymentKey));
+  const unresolvedByOrg=new Map<string,number>();
+  let unresolvedAcrossWorkspaces=0;
+  for(const r of reversals.values()){
+    if(r.status!=='unresolved')continue;
+    if(r.organizationId)unresolvedByOrg.set(r.organizationId,(unresolvedByOrg.get(r.organizationId)||0)+1);
+    else unresolvedAcrossWorkspaces++;
+  }
 
-  // Reversals, one per charge (a refunded charge that was also disputed counts once).
-  const reversedCharges=new Map<string,string>();
-  for(const c of charges)if(c.fullyRefunded===true&&counted(c))reversedCharges.set(c.chargeId||c.paymentIntentId,ownerOf(c)!);
-  for(const d of disputes)if(d.status==='lost'&&counted(d))reversedCharges.set(d.chargeId||d.paymentIntentId,ownerOf(d)!);
-  const reversedReportIntents=new Set([...charges.filter(c=>c.fullyRefunded===true),...disputes.filter(d=>d.status==='lost')]
-    .map(e=>e.paymentIntentId).filter(Boolean));
+  const genuineVerified:string[]=[];
+  const needsReview:string[]=[];
+  const orgs=new Set(confirmed.filter(c=>!excluded(c.organizationId)&&!c.duplicate).map(c=>c.organizationId));
+  for(const org of orgs){
+    const standing=confirmed.filter(c=>c.organizationId===org&&!c.duplicate&&!reversedPayment.has(c.paymentKey)).length;
+    const unresolved=unresolvedByOrg.get(org)||0;
+    if(standing-unresolved>=1)genuineVerified.push(org);
+    else if(standing>=1)needsReview.push(org);
+  }
 
-  const paid=new Map<string,number>();
-  for(const p of [...reportPayments,...proStarts])paid.set(p.organizationId,(paid.get(p.organizationId)||0)+1);
-  for(const r of renewals)if(r.organizationId)paid.set(r.organizationId,(paid.get(r.organizationId)||0)+1);
-  const reversed=new Map<string,number>();
-  for(const org of reversedCharges.values())reversed.set(org,(reversed.get(org)||0)+1);
-  const genuine=[...paid.entries()].filter(([org,n])=>n>(reversed.get(org)||0)).map(([org])=>org);
+  const live=(offer:string)=>confirmed.filter(c=>c.offer===offer&&!c.duplicate&&!excluded(c.organizationId));
+  const unresolvedList=[...resolution.entries()].filter(([,r])=>r.status==='unresolved')
+    .map(([e,r])=>({kind:e.kind,id:e.chargeId&&e.kind==='charge'?e.chargeId:e.disputeId,reason:(r as any).reason}));
 
   return {
-    genuinePayingCustomers:genuine.length,
-    reportPurchases:reportPayments.length,
-    reportPurchasesNetOfFullRefunds:reportPayments.filter(p=>!reversedReportIntents.has(p.paymentIntentId)).length,
-    proSubscriptionsStarted:proStarts.length,
-    proRenewalsPaid:renewals.length,
-    proRenewalPaymentsFailed:failedRenewals.length,
-    refundedMinorUnits:charges.filter(counted).reduce((sum,c)=>sum+(Number(c.amountRefunded)||0),0),
+    /** Workspaces still paying even if every unresolved reversal turns out to apply to them. */
+    genuinePayingCustomers:genuineVerified.length,
+    /** Workspaces whose status depends on an unresolved reversal: review before counting them. */
+    payingCustomersNeedingReview:needsReview.length,
+    reportPurchases:live('report').length,
+    reportPurchasesNetOfFullRefunds:live('report').filter(c=>!reversedPayment.has(c.paymentKey)).length,
+    proSubscriptionsStarted:live('pro').length,
+    proRenewalsPaid:live('pro_renewal').length,
+    proRenewalPaymentsFailed:invoices.filter(e=>e.status==='payment_failed'&&!excluded(e.organizationId)).length,
+    refundedMinorUnits:charges.filter(c=>resolution.get(c)!.status==='resolved'&&counts(c)).reduce((sum,c)=>sum+(Number(c.amountRefunded)||0),0),
+    refundedMinorUnitsUnresolved:charges.filter(c=>resolution.get(c)!.status==='unresolved').reduce((sum,c)=>sum+(Number(c.amountRefunded)||0),0),
     /** A failed refund leaves the charge's recorded total too high until Stripe reports it again. */
-    refundsFailed:charges.filter(c=>counted(c)&&c.lastRefundStatus==='failed').length,
-    disputesOpen:disputes.filter(d=>counted(d)&&!CLOSED_DISPUTE_STATUSES.has(String(d.status))).length,
-    disputesLost:disputes.filter(d=>counted(d)&&d.status==='lost').length,
-    /** Live refunds or disputes that can't be tied to any workspace: investigate by hand. */
-    unmatchedLedgerEntries:[...charges,...disputes].filter(e=>!ownerOf(e)).length,
+    refundsFailed:charges.filter(c=>counts(c)&&c.lastRefundStatus==='failed').length,
+    disputesOpen:disputes.filter(d=>counts(d)&&!CLOSED_DISPUTE_STATUSES.has(String(d.status))).length,
+    disputesLost:disputes.filter(d=>counts(d)&&d.status==='lost').length,
+    /** Refunds and disputes that match a customer but not one specific purchase. Never guessed. */
+    unresolvedReversals:unresolvedList,
+    unresolvedAcrossWorkspaces,
+    /** Live refunds or disputes that match no recorded payment or customer: investigate by hand. */
+    unmatchedLedgerEntries:[...charges,...disputes].filter(e=>resolution.get(e)!.status==='unmatched').length,
   };
 }
 
@@ -243,7 +292,7 @@ export function reconcileWithStripe(records:{payments:Array<Record<string,any>>;
   const payments=new Map(records.payments.filter(p=>p.livemode===true).map(p=>[p.checkoutSessionId,p]));
   const ledger=new Map(records.ledger.filter(e=>e.livemode===true).map(e=>[`${e.kind}:${e.invoiceId||e.chargeId&&e.kind==='charge'&&e.chargeId||e.disputeId}`,e]));
   const paidSessions=stripe.sessions.filter(s=>s.livemode===true&&s.payment_status==='paid'&&['report','pro'].includes(s.metadata?.offer));
-  const result={
+  const discrepancies={
     paymentsMissing:[] as string[],
     paymentAmountMismatch:[] as string[],
     paymentsNotInStripe:[] as string[],
@@ -251,24 +300,29 @@ export function reconcileWithStripe(records:{payments:Array<Record<string,any>>;
     refundsMissingOrDifferent:[] as string[],
     disputesMissingOrDifferent:[] as string[],
   };
+  const verified={paymentsMatched:0,renewalsMatched:0,refundsMatched:0,disputesMatched:0};
   for(const s of paidSessions){
     const p=payments.get(s.id);
-    if(!p)result.paymentsMissing.push(s.id);
-    else if(p.amountTotal!==s.amount_total)result.paymentAmountMismatch.push(s.id);
+    if(!p)discrepancies.paymentsMissing.push(s.id);
+    else if(p.amountTotal!==s.amount_total)discrepancies.paymentAmountMismatch.push(s.id);
+    else verified.paymentsMatched++;
   }
   const stripeSessionIds=new Set(paidSessions.map(s=>s.id));
-  for(const id of payments.keys())if(!stripeSessionIds.has(id))result.paymentsNotInStripe.push(String(id));
+  for(const id of payments.keys())if(!stripeSessionIds.has(id))discrepancies.paymentsNotInStripe.push(String(id));
   for(const i of stripe.invoices){
     if(i.livemode!==true||i.status!=='paid'||i.billing_reason!=='subscription_cycle')continue;
-    if(ledger.get(`invoice:${i.id}`)?.status!=='paid')result.renewalsMissing.push(i.id);
+    if(ledger.get(`invoice:${i.id}`)?.status!=='paid')discrepancies.renewalsMissing.push(i.id);
+    else verified.renewalsMatched++;
   }
   for(const c of stripe.charges){
     if(c.livemode!==true||!(c.amount_refunded>0))continue;
-    if(ledger.get(`charge:${c.id}`)?.amountRefunded!==c.amount_refunded)result.refundsMissingOrDifferent.push(c.id);
+    if(ledger.get(`charge:${c.id}`)?.amountRefunded!==c.amount_refunded)discrepancies.refundsMissingOrDifferent.push(c.id);
+    else verified.refundsMatched++;
   }
   for(const d of stripe.disputes){
     if(d.livemode!==true)continue;
-    if(ledger.get(`dispute:${d.id}`)?.status!==d.status)result.disputesMissingOrDifferent.push(d.id);
+    if(ledger.get(`dispute:${d.id}`)?.status!==d.status)discrepancies.disputesMissingOrDifferent.push(d.id);
+    else verified.disputesMatched++;
   }
-  return {...result,clean:Object.values(result).every(list=>list.length===0)};
+  return {verified,discrepancies,clean:Object.values(discrepancies).every(list=>list.length===0)};
 }

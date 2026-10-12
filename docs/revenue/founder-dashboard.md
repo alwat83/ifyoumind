@@ -43,14 +43,15 @@ The following are **never** counted as revenue or as customers:
 
 | Figure | Definition |
 |---|---|
-| Genuine paying customers | Distinct workspaces with at least one live payment that isn't fully refunded or lost in a dispute, excluding QA, test and founder workspaces |
+| Genuine paying customers (verified) | Distinct workspaces with at least one live payment still standing after resolved reversals **and** after assuming every unresolved reversal applies to them. QA, test and founder workspaces are excluded |
+| Paying customers needing review | Workspaces that are paying only if their unresolved reversals turn out to apply to other purchases. **Not counted** until reviewed |
 | Report purchases | Live `stripePayments` with offer `report`, excluding duplicates (which are flagged for refund) |
 | Report purchases net of refunds | The above minus fully refunded ones |
 | Report conversion | Report purchases ÷ decisions created by non-excluded workspaces, in the same period |
 | Pro subscriptions started | Live `stripePayments` with offer `pro` |
 | Pro renewals paid / failed | Live ledger invoices with `renewal: true`: paid, or `payment_failed` |
 | Active Pro now | Workspaces with `plan: 'pro'` and `stripeSubscriptionStatus` `active` or `trialing`, live customer, not excluded |
-| Refunded amount | The sum of `amountRefunded` on live charges matched to the workspace's own payments |
+| Refunded amount (resolved / unresolved) | `amountRefunded` on live charges tied to a purchase, and separately on charges that match a customer but not one purchase |
 | Refunds failed | Matched charges whose latest refund status is `failed` |
 | Disputes open / lost | Live disputes not yet `won`/`lost`, and those `lost` |
 | Unmatched ledger entries | Live refunds or disputes that can't be tied to a recorded payment. **Investigate by hand; never guess** |
@@ -72,20 +73,26 @@ The following are **never** counted as revenue or as customers:
 | Duplicate dispute reviews | A dispute delivered as two events, or redelivered after a failed attempt, could open two `billingReviews`. | **Fixed:** the review ID is now `dispute_opened_{disputeId}`, created once. Tested |
 | Out-of-order refunds | A refund status update was ordered on the same clock as the charge totals, so a late `charge.refund.updated` was dropped behind a newer `charge.refunded`. | **Fixed:** refund status has its own `refundEventCreated`, and totals keep `eventCreated`. Tested in both directions |
 | Out-of-order invoices and disputes | An older event never overwrites a newer one. | OK, tested |
-| **Subscription refunds unmatched** | Checked against sandbox records on the current Stripe API version. Pro Checkout Sessions have `payment_intent: null`, and invoices carry no `payment_intent` or top-level `subscription`. The workspace lives in `parent.subscription_details.metadata`. Refunds and disputes on Pro charges therefore could never match a payment by intent. | **Fixed:** `stripePayments` now stores `customerId`. Charges and disputes match by payment intent (reports) or Stripe customer (Pro), and invoice entries map customer to workspace. Tested |
-| Genuine-customer rule | A Pro workspace with renewals was treated as not paying if its first charge was refunded. | **Fixed:** a workspace counts while its confirmed live payments (first payments + renewals) outnumber its fully reversed charges. Each charge is reversed at most once, even if it was both refunded and disputed |
+| **Subscription refunds unmatched** | Checked against sandbox records on the current Stripe API version. Pro Checkout Sessions have `payment_intent: null`, and invoices carry no `payment_intent` or top-level `subscription`. Refunds and disputes on Pro charges therefore could never match a payment by intent. | **Fixed, conservatively:** `stripePayments` now stores `customerId`. A reversal is tied to a purchase **only** when its payment intent matches, or when the Stripe customer has **exactly one** live payment in **exactly one** workspace. A customer with several payments, subscriptions or reports is **never guessed**; the reversal stays `unresolved` for review (`resolveReversal`). Tested |
+| Genuine-customer rule | A Pro workspace with renewals was treated as not paying if its first charge was refunded. | **Fixed:** `genuinePayingCustomers` counts a workspace only if at least one payment still stands **even when every unresolved reversal is assumed to apply to it**. Workspaces that depend on an unresolved reversal are reported separately as `payingCustomersNeedingReview`, never folded in. Each charge is reversed at most once |
 | Dispute status | `warning_closed` (inquiries) and `prevented` counted as open. | **Fixed:** `CLOSED_DISPUTE_STATUSES` |
 | Renewals vs first payment | `subscription_create` invoices aren't counted as renewals; that payment is already in `stripePayments`. `subscription_update` (proration) invoices are recorded but counted in neither. | OK, documented |
 | Entitlements | Refunds, disputes and failed renewals change no plan and no report access. | OK, tested |
 | **Live reconciliation** | The Stripe connector available to Claude reaches only the **sandbox** (`acct_1UNp…`, test mode), so **no live record has been compared.** | `reconcileWithStripe` (tested) plus the read-only `scripts/reconcile-stripe.mjs`. Founder-run after approval (below) |
 
 ## Reconciliation against Stripe live records (founder-run, read-only)
-1. **Create a restricted key** in Stripe live mode, with **Read** on Checkout Sessions, Charges, Disputes and Invoices and nothing else. Keep it in your password manager.
+1. **Create a restricted key** in Stripe live mode, with **Read** on Checkout Sessions, Charges, Disputes and Invoices and **None** on everything else. Keep it in your password manager. Delete it after the run.
 2. **Authenticate:** run `gcloud auth application-default login` as an account that can read Firestore.
 3. **Run:** `STRIPE_RECONCILE_KEY=rk_live_… node scripts/reconcile-stripe.mjs --project ifyoumind-473fe --since 2026-10-01`.
-   - The script refuses secret keys (`sk_…`), a missing `--project`, or a missing `--since`.
-   - It sends only GET requests and only reads Firestore.
-4. **Read the output.** It's JSON listing Stripe and Firestore IDs only:
+   - The script refuses secret keys (`sk_…`), test keys, a missing `--project`, or a missing `--since`.
+   - **It refuses a key that can read Customers** (names and emails), because that's broader than it needs.
+   - It sends only GET requests and only reads Firestore; `test/reconcile-script.test.mjs` proves the file has no write call.
+   - Errors print only the HTTP status; the key and Stripe's error bodies are never printed.
+   - Run it as a Google account with only **Cloud Datastore Viewer**, so even a bug couldn't write.
+4. **Read the output.** It's JSON with three parts, listing Stripe and Firestore IDs and counts only:
+   - `read`: how many records were read from each side;
+   - `verified`: records that match exactly;
+   - `discrepancies`, kept separate from what was verified:
    - `paymentsMissing`: paid live sessions not recorded;
    - `paymentAmountMismatch`;
    - `paymentsNotInStripe`;

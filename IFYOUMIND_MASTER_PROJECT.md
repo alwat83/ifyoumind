@@ -268,9 +268,45 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
   5. Approve Professional pricing.
   6. GA4 review (unblocks Wave B).
   7. Later: BLS and BEA keys, and R4/R5 approval.
+- **Release 2026-10-12 (Claude Code, founder-approved): #28 then #31.** Both are production verified for signed-out use.
+  - **#28:**
+    - Merged as `c1123aa` from head `a7a4cf4`, with CI green.
+    - Deploy run 38196963277 succeeded at 02:47Z. The live bundle is `main-PJPQPYNE.js`.
+    - Verified live:
+      - homepage pricing order;
+      - the sample report's labels and its CTAs linking to `/register?intent=report`;
+      - the intent note, with sessionStorage holding `{intent, at}` only;
+      - the intent allowlist;
+      - register validation without submitting;
+      - the Google popup and auth iframe;
+      - `/app/*` routes redirecting to `/login`;
+      - axe 0 violations, no overflow and no console errors.
+    - The signed-in purchase journey is **not** verified. It needs the QA accounts, and no live purchase was made.
+  - **#31:**
+    - Rebased, then merged as `d413a88` from head `d6aa6bd`, with CI green.
+    - Deploy run 38197794517 succeeded at 02:59Z.
+    - The frame and permissions rules exclude Firebase's reserved `/__/` paths, because `signInWithPopup` embeds `/__/auth/iframe` from another origin.
+    - Live headers on all pages and assets:
+      - Referrer-Policy: strict-origin-when-cross-origin
+      - nosniff
+      - X-Frame-Options: SAMEORIGIN
+      - Permissions-Policy
+    - `/__/auth/*` sends no X-Frame-Options and no Permissions-Policy.
+    - Behaviour checked:
+      - the Google popup still works;
+      - another origin can't embed the site;
+      - only the origin is sent as the referrer to Google Fonts;
+      - fonts load and clipboard-write is allowed;
+      - axe 0 violations;
+      - Stripe checkout and the portal are full-page redirects, unaffected.
+    - Rollback: revert the merge commit.
+  - **Follow-ups:**
+    - The favicon is missing: `/favicon.png` serves the index page. This predates the release.
+    - www doesn't redirect to the apex.
+    - No CSP yet.
 - **Readiness 2026-10-12 (Claude Code; nothing merged or deployed):**
   - **#26:** held until the Hestia QA mailbox baseline passes.
-  - **#28 (a7a4cf4, CI green):** can ship independently of #26. There's no code dependency and a trial merge is clean. The only new URL parameter is the allowlisted `intent=report`, so there's no PII in any URL. Rollback is a revert.
+  - **#28 (a7a4cf4):** shipped independently of #26 on 2026-10-12 (see the release entry above). There's no code dependency and a trial merge is clean. The only new URL parameter is the allowlisted `intent=report`, so there's no PII in any URL. Rollback is a revert.
   - **Live headers:** only HSTS and Cache-Control are sent. There's no Referrer-Policy (so the browser default applies), no CSP, no nosniff, no X-Frame-Options and no Permissions-Policy. www serves 200 rather than redirecting to the apex.
   - **#31 (c83fb54, draft):** adds the explicit headers, without CSP.
   - **#29 (82b41c5):** draft until the live Census harness passes with a dedicated dev key in an isolated environment.

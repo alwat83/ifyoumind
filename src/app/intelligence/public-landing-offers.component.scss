@@ -1,0 +1,15 @@
+/* R2: three business-plan-led use cases; the $79 report is the recommended plan. */
+.use-grid{grid-template-columns:repeat(3,1fr)}
+.price-grid article{display:flex;flex-direction:column}.price-grid a{margin-top:auto}.price-grid article>p+a,.price-grid .price-list+a{margin-top:auto}
+.price-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}.price-top span{font-size:11px;color:#c7d2fe;text-transform:uppercase;letter-spacing:.1em;font-weight:800}.price-top b{font-size:10px;text-transform:uppercase;letter-spacing:.06em;background:#fff;color:#312e81;padding:5px 8px;border-radius:999px}
+.price-list{margin:4px 0 18px;padding-left:18px}.price-list li{margin:6px 0;line-height:1.45;font-size:14px;color:#e4e7ff}
+.price-grid .featured{transform:translateY(-6px)}
+.price-grid article:not(.featured) a{margin-top:auto}
+footer .support{margin:0;color:#475467}footer .support a{color:#3730a3;text-decoration:underline;user-select:text}
+@media(max-width:820px){.use-grid{grid-template-columns:1fr}.price-grid .featured{transform:none}}
+.price-grid article:not(.featured) h3 small{color:#5f6b7d}
+.price-grid article:not(.featured) h3{color:#111827}
+.price-grid .price-for{margin:0 0 8px;color:#344054;font-weight:700}
+/* Light cards: the global dark-theme heading colour made these headings invisible on white. */
+.use-grid h3{color:#111827}
+.price-grid article>p:last-of-type{margin-bottom:18px}

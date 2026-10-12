@@ -1,0 +1,13 @@
+/* R2: paid-section label on the sample (#3730a3 on #eef2ff, about 9:1 contrast). */
+.paid-pill{display:inline-block;margin-left:6px;vertical-align:1px;padding:3px 8px;border:1px solid #c7d2fe;border-radius:999px;background:#eef2ff;color:#3730a3;font-size:10px;font-weight:800;letter-spacing:.02em;line-height:1.3;text-transform:none;white-space:nowrap}
+.jump-list{padding:18px 0 4px}.jump-list ul{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0}.jump-list li{margin:0}.jump-list a{display:inline-flex;align-items:center;min-height:36px;box-sizing:border-box;padding:6px 12px;border:1px solid #c7d2fe;border-radius:999px;background:#fff;color:#3730a3;font-size:12px;font-weight:750;text-decoration:none}.jump-list a:hover{background:#eef2ff}
+.report section[id],.report app-market-analysis{scroll-margin-top:16px}
+.report-offer .adds-list{margin:4px 0 12px;padding-left:20px}.report-offer .adds-list li{color:#e0e7ff;margin:6px 0;line-height:1.45}
+.report-offer>.offer-actions{display:flex;flex-direction:column;gap:8px;padding:0;background:none;border-radius:0}.offer-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;box-sizing:border-box;padding:12px 16px;border-radius:12px;text-decoration:none;font-weight:850;text-align:center}.offer-actions .offer-primary{background:#fff;color:#3730a3}.offer-actions .offer-secondary{border:1px solid rgba(255,255,255,.7);color:#fff;background:transparent}
+.report-nav>div>a:not(.report-upgrade){color:#4338ca}
+@media(max-width:720px){.report-offer>.offer-actions{width:100%}.report-nav>div{width:100%}.report-nav .report-upgrade{width:100%;box-sizing:border-box;text-align:center}}
+@media(max-width:720px){.report-nav .report-upgrade{order:-1}}
+.intent-prompt{display:grid;gap:8px;margin-bottom:14px;border:2px solid #4338ca;background:#eef2ff}
+.intent-prompt h2{margin:0;font-size:18px;color:#1e1b4b}
+.intent-prompt p{margin:0;color:#312e81}
+.intent-prompt .report-upgrade{justify-self:start}

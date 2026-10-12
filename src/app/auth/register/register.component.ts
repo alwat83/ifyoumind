@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PurchaseIntent, intentParams, parseIntent, readIntent, rememberIntent } from '../../purchase-intent';
 import {
@@ -29,6 +29,9 @@ export class RegisterComponent {
   email='';
   password='';
   errorMessage:string|null=null;
+  /** Field errors appear only after the first submit, so the form doesn't scold people while they type. */
+  showErrors=false;
+  submitting=false;
 
   private auth:Auth=inject(Auth);
   private router:Router=inject(Router);
@@ -37,6 +40,18 @@ export class RegisterComponent {
   readonly intent:PurchaseIntent|null=parseIntent(this.route.snapshot.queryParamMap.get('intent'))??readIntent();
 
   constructor(){rememberIntent(this.intent);}
+
+  /** The button is always active: an incomplete form shows what to fix instead of looking broken. */
+  async submit(form:NgForm):Promise<void>{
+    if(form.invalid){
+      this.showErrors=true;
+      (document.querySelector('.auth-card input[aria-invalid="true"], .auth-card input.ng-invalid') as HTMLInputElement|null)?.focus();
+      return;
+    }
+    this.submitting=true;
+    try{await this.register();}
+    finally{this.submitting=false;}
+  }
 
   async register(){
     try{

@@ -268,6 +268,19 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
   5. Approve Professional pricing.
   6. GA4 review (unblocks Wave B).
   7. Later: BLS and BEA keys, and R4/R5 approval.
+- **Release 2026-10-12 (Claude Code, founder-approved): Phase 1 RC [#37](https://github.com/alwat83/ifyoumind/pull/37), production verified (signed-out).**
+  - **Merge:** `3114840`, pinned to the reviewed head `d81b178`. CI was green; the diff was 13 files with no functions, rules, config or billing code.
+  - **Deploy:** run 38271849491 (#179) succeeded at 15:42:03Z on `3114840`. Bundle `main-UEXL42XX.js`.
+  - **Production checks, all 9 PASS:**
+    - deployed strings, homepage pricing links (prices unchanged), the intent note;
+    - register inline errors and focus;
+    - return URLs: decide and result keep their path, growth gets none, all three attack URLs stay on-site;
+    - the sample shows "Sources cited: 4 of 4";
+    - Google popup and auth iframe, the #31 headers, the guide;
+    - axe 0 at 390 and 1440 px, no overflow, no console errors apart from Google's COOP notice.
+  - #34 and #36 closed as superseded.
+  - **Not verified:** signed-in journeys (no ifYouMind test account), verification in a different browser (no Hestia QA mailboxes), Google sign-in completion (no ifYouMind Google account).
+  - **#35 spec v2 approved.** It stays a draft until its own release approval.
 - **Phase 1 release candidate and event spec, 2026-10-12 (Claude Code; awaiting founder approval; nothing merged or deployed).**
   - **RC [#37](https://github.com/alwat83/ifyoumind/pull/37) `d81b178`:** master `d413a88` plus #34 plus #36.
     - The homepage conflict was resolved by keeping #34's intent and #36's labels.

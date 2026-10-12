@@ -9,7 +9,13 @@ export type ProductEvent=
   |'checkout_started'
   |'checkout_success'
   |'checkout_cancelled'
-  |'billing_portal_opened';
+  |'billing_portal_opened'
+  |'finding_viewed'
+  |'offer_viewed'
+  |'intent_prompt_shown'
+  |'intent_prompt_clicked'
+  |'report_copied'
+  |'report_exported';
 
 @Injectable({providedIn:'root'})
 export class ProductAnalyticsService {

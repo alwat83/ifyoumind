@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrganizationService } from './organization.service';
 import { DecisionReportPayload, MarketIntelligenceService, MarketProject } from './market-intelligence.service';
@@ -7,6 +7,8 @@ import { ProductAnalyticsService } from './product-analytics.service';
 import { CommercialStatus, MonetizationService } from './monetization.service';
 import { MarketAnalysisComponent } from './market-analysis.component';
 import { clearIntent, parseIntent, readIntent } from '../purchase-intent';
+import { EngagementTracker, EngagementTrigger } from './engagement';
+import { ProductEvent } from './product-analytics.service';
 
 @Component({
   selector:'app-market-report',
@@ -15,7 +17,7 @@ import { clearIntent, parseIntent, readIntent } from '../purchase-intent';
   templateUrl:'./market-report.component.html',
   styleUrls:['./market-report.component.scss','./market-report-offers.component.scss'],
 })
-export class MarketReportComponent implements OnInit {
+export class MarketReportComponent implements OnInit, OnDestroy {
   private readonly route=inject(ActivatedRoute);
   private readonly organizations=inject(OrganizationService);
   private readonly market=inject(MarketIntelligenceService);
@@ -34,6 +36,8 @@ export class MarketReportComponent implements OnInit {
   error='';
   /** Set when the visitor came from the sample wanting the $79 report. */
   purchaseIntent=false;
+  private engagement:EngagementTracker|null=null;
+  private dwellTimer:ReturnType<typeof setTimeout>|null=null;
 
   get decisionReport():DecisionReportPayload|null{
     if(!this.reportPurchased)return null;
@@ -136,12 +140,48 @@ export class MarketReportComponent implements OnInit {
       void this.analytics.track(workspace.organizationId,'report_view',{
         paid:this.project.decisionReportPurchased?'yes':this.project.decisionReportAccess==='pro'?'pro':'no',
       });
+      this.startEngagement();
+      if(!this.reportPurchased)this.record('offer_viewed',{surface:'upgrade_panel',offer:'report'});
+      if(this.showPurchasePrompt)this.record('intent_prompt_shown');
     }catch(error){this.error=this.message(error);}
     finally{this.loading=false;}
   }
 
   printReport():void{
+    this.record('report_exported',{format:'print'});
+    this.engaged('export');
     window.print();
+  }
+
+  onIntentPromptClick():void{this.record('intent_prompt_clicked');}
+  onSourceOpened():void{this.engaged('source');}
+  onMarketAnalysisCopied():void{
+    this.record('report_copied',{section:'market_analysis'});
+    this.engaged('copy');
+  }
+
+  ngOnDestroy():void{
+    if(this.dwellTimer)clearTimeout(this.dwellTimer);
+  }
+
+  /** Signed-in reports only: the public sample has no workspace and records nothing. */
+  private record(event:ProductEvent,context:Record<string,string>={}):void{
+    if(this.sampleMode||!this.organizationId||!this.project?.id)return;
+    void this.analytics.track(this.organizationId,event,{...context,project:this.project.id});
+  }
+
+  private startEngagement():void{
+    const tracker=new EngagementTracker(Date.now());
+    this.engagement=tracker;
+    this.dwellTimer=setTimeout(()=>this.sendFinding(tracker.tick(Date.now())),tracker.msUntilDwell(Date.now()));
+  }
+
+  private engaged(trigger:EngagementTrigger):void{
+    this.sendFinding(this.engagement?.interact(trigger,Date.now())??null);
+  }
+
+  private sendFinding(trigger:EngagementTrigger|null):void{
+    if(trigger)this.record('finding_viewed',{trigger});
   }
 
   /** The formatted value already shows the unit for USD ($) and percentages (%). */

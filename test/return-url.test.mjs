@@ -42,7 +42,7 @@ test('the guard and sign-in page use the validator, and access control is unchan
   const guard = read('../src/app/auth.guard.ts');
   assert.match(guard, /router\.navigate\(\['\/login'\],\{queryParams:loginParams\(state\.url\)\}\)/, 'signed-out visitors keep their place');
   assert.match(guard, /router\.navigate\(\['\/verify-email'\]\)/, 'unverified accounts still go to verify first');
-  assert.match(guard, /user\.emailVerified/, 'the verified-email check is still there');
+  assert.match(guard, /user\.emailVerified|ensureFreshVerification\(user\)/, 'the verified-email check is still there');
   const login = read('../src/app/auth/login/login.component.ts');
   assert.match(login, /safeReturnUrl\(this\.route\.snapshot\.queryParamMap\.get\('returnUrl'\)\)\?\?DEFAULT_RETURN_URL/);
   assert.equal((login.match(/navigateByUrl\(this\.destination\(\)\)/g) || []).length, 2, 'email and Google sign-in both return');

@@ -8,7 +8,7 @@ import { CookiePreferencesService } from '../services/cookie-preferences.service
   standalone:true,
   imports:[CommonModule,RouterLink],
   templateUrl:'./public-landing.component.html',
-  styleUrls:['./public-landing.component.scss'],
+  styleUrls:['./public-landing.component.scss','./public-landing-offers.component.scss'],
 })
 export class PublicLandingComponent {
   private readonly cookiePreferences=inject(CookiePreferencesService);

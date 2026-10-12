@@ -24,7 +24,7 @@
     <article>
       <span class="label">Free</span>
       <h2>$0</h2>
-      <p>Try the product and run a few decisions each month.</p>
+      <p>Try it on your own cities: your main city compared with one other.</p>
       <ul>
         <li>3 decisions each month</li>
         <li>1 comparison place in the brief</li>
@@ -35,10 +35,27 @@
       <a routerLink="/app/decide" class="secondary">Start a decision</a>
     </article>
 
-    <article class="featured">
-      <div class="topline"><span class="label">Pro</span><b>Most useful</b></div>
+    <article class="featured" [class.highlight-report]="highlightedOffer === 'report'">
+      <div class="topline"><span class="label">One report</span><b>Recommended for one business plan</b></div>
+      <h2>${{ status.pricing.reportOneTimeUsd }}</h2>
+      <p>The full Decision Report for one decision, with no subscription.</p>
+      <ul>
+        <li>Your main city compared with up to three other cities</li>
+        <li>A plan-ready market analysis written for your business, with location rankings and copy-as-text</li>
+        <li>An action plan: what to do before you commit</li>
+        <li>Comparison takeaways: where your main city leads and where it trails</li>
+        <li>What could change the call, plus the evidence boundaries and source list</li>
+        <li>Print or save the full report as a PDF</li>
+      </ul>
+      <button type="button" (click)="request('report')" [disabled]="requesting">
+        {{ requesting === 'report' ? 'Opening checkout…' : 'Buy Decision Report' }}
+      </button>
+    </article>
+
+    <article>
+      <span class="label">Pro</span>
       <h2>${{ status.pricing.proMonthlyUsd }}<small>/month</small></h2>
-      <p>For people making location and market decisions regularly.</p>
+      <p>For advisers and anyone planning several locations a month.</p>
       <ul>
         <li>{{ proReportAllowance }} full Decision Reports included each month</li>
         <li>Up to 50 decisions each month</li>
@@ -46,25 +63,8 @@
         <li>Print / save reports as PDF</li>
         <li>Cancel anytime from your account</li>
       </ul>
-      <button type="button" (click)="request('pro')" [disabled]="requesting || status.plan==='pro'">
+      <button type="button" class="outline-button" (click)="request('pro')" [disabled]="requesting || status.plan==='pro'">
         {{ status.plan==='pro' ? 'Your current plan' : requesting === 'pro' ? 'Opening checkout…' : 'Get Pro access' }}
-      </button>
-    </article>
-
-    <article [class.highlight-report]="highlightedOffer === 'report'">
-      <span class="label">One report</span>
-      <h2>${{ status.pricing.reportOneTimeUsd }}</h2>
-      <p>For one important decision without starting a subscription.</p>
-      <ul>
-        <li>Full Decision Report for one decision, comparing your main location with up to three other places</li>
-        <li>Business-plan-ready market analysis written for your business, with copy-as-text</li>
-        <li>Location rankings, action plan and comparison takeaways</li>
-        <li>What would strengthen or weaken the case</li>
-        <li>Evidence boundaries and source list</li>
-        <li>Print / save as PDF</li>
-      </ul>
-      <button type="button" class="outline-button" (click)="request('report')" [disabled]="requesting">
-        {{ requesting === 'report' ? 'Opening checkout…' : 'Buy Decision Report' }}
       </button>
     </article>
   </section>

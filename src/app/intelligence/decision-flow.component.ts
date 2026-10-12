@@ -2,11 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { intentParams, parseIntent, readIntent, rememberIntent } from '../purchase-intent';
 import { OrganizationService } from './organization.service';
 import { MarketIntelligenceService } from './market-intelligence.service';
 import { ProductAnalyticsService } from './product-analytics.service';
-
-type DecisionType='business'|'compare'|'growth'|'custom';
+import { DecisionType, parseComparisons, requiresComparison, stepProgress } from './decision-steps';
 
 @Component({
   selector:'app-decision-flow',
@@ -23,6 +23,7 @@ export class DecisionFlowComponent implements OnInit {
   private readonly analytics=inject(ProductAnalyticsService);
 
   step=1;
+  startStep=1;
   type:DecisionType='business';
   location='';
   comparisonInput='';
@@ -32,11 +33,13 @@ export class DecisionFlowComponent implements OnInit {
   error='';
 
   ngOnInit():void{
+    rememberIntent(parseIntent(this.route.snapshot.queryParamMap.get('intent')));
     const type=this.route.snapshot.queryParamMap.get('type');
     if(type==='business'||type==='compare'||type==='growth'){
       this.type=type;
       this.applyDefaults();
       this.step=2;
+      this.startStep=2;
       return;
     }
     this.applyDefaults();
@@ -48,11 +51,18 @@ export class DecisionFlowComponent implements OnInit {
     this.step=2;
   }
 
-  next():void{if(this.step<4)this.step++;}
+  next():void{if(this.step<3)this.step++;}
   back():void{if(this.step>1)this.step--;}
 
+  get progress():{current:number;total:number}{return stepProgress(this.step,this.startStep);}
+  get comparisonCount():number{return parseComparisons(this.comparisonInput).length;}
+  get needsComparison():boolean{return requiresComparison(this.type);}
+  get canContinueFromPlace():boolean{
+    return !!this.location.trim()&&(!this.needsComparison||this.comparisonCount>0);
+  }
+
   async analyze():Promise<void>{
-    if(this.working||!this.location.trim())return;
+    if(this.working||!this.canContinueFromPlace)return;
     this.working=true; this.error='';
     try{
       let workspace=await this.organizations.getMyWorkspace();
@@ -62,7 +72,7 @@ export class DecisionFlowComponent implements OnInit {
       }
       if(!workspace) throw new Error('Could not create your workspace.');
 
-      const comparisons=this.comparisonInput.split(';').map(v=>v.trim()).filter(Boolean).slice(0,3);
+      const comparisons=parseComparisons(this.comparisonInput);
       const project=await this.market.create(
         workspace.organizationId,
         this.location.trim(),
@@ -74,14 +84,15 @@ export class DecisionFlowComponent implements OnInit {
         type:this.type,
         comparisons:String(comparisons.length),
       });
-      await this.router.navigate(['/app/result',project.id]);
+      await this.router.navigate(['/app/result',project.id],{queryParams:intentParams({},readIntent())});
     }catch(error){this.error=this.message(error);}
     finally{this.working=false;}
   }
 
   private applyDefaults():void{
     if(this.type==='business'){
-      this.concept='Fast-casual restaurant';
+      // Left blank so the brief is written for the visitor's own business, not a placeholder one.
+      this.concept='';
       this.decision='Should I open this business here?';
     }else if(this.type==='compare'){
       this.concept='Location comparison';

@@ -18,6 +18,7 @@
         <a routerLink="/register" class="primary">Build my market analysis free</a>
         <a routerLink="/sample-report" class="secondary">See a sample report</a>
       </div>
+      <p class="micro" style="margin:12px 0 0;max-width:560px">The free brief compares your city with one other. The $79 Decision Report adds up to two more cities and the plan-ready write-up.</p>
       <div class="trust-row" aria-label="Why people can trust ifYouMind">
         <span>Free to try</span>
         <span>No credit card</span>
@@ -61,10 +62,9 @@
       <h2>For decisions where one search result isn’t enough.</h2>
     </div>
     <div class="use-grid">
-      <article><span>Small business</span><h3>“Austin, Nashville, or Charlotte?”</h3><p>Compare live demographic and growth signals before spending real money.</p></article>
-      <article><span>Moving</span><h3>“Miami or Tampa?”</h3><p>Bring together population, housing, growth, and your own priorities.</p></article>
+      <article><span>Business plan</span><h3>“I need the market analysis section.”</h3><p>The $79 Decision Report includes a cited market analysis of population, growth, income and home values for your business and cities, ready to adapt for your plan.</p></article>
+      <article><span>Location</span><h3>“Austin, Nashville, or Charlotte?”</h3><p>Compare live demographic and growth signals before spending real money.</p></article>
       <article><span>Growth</span><h3>“Is Phoenix still growing?”</h3><p>See whether population and household signals are moving in the same direction—or not.</p></article>
-      <article><span>Your own data</span><h3>“What does this mean together?”</h3><p>Upload data and compare it with other information instead of staring at separate spreadsheets.</p></article>
     </div>
   </section>
 
@@ -86,9 +86,18 @@
       <h2>Try the thinking for free.</h2>
     </div>
     <div class="price-grid">
-      <article><span>Free</span><h3>$0</h3><p>A few decisions each month to see if ifYouMind is useful to you.</p><a routerLink="/register" class="secondary">Try it</a></article>
-      <article class="featured"><span>Pro</span><h3>$39<small>/month</small></h3><p>Five full Decision Reports a month, plus more decisions and comparison locations.</p><a routerLink="/register" class="primary">Start free</a></article>
-      <article><span>One report</span><h3>$79</h3><p>A polished, shareable report for one important market decision.</p><a routerLink="/register" class="secondary">Build a report</a></article>
+      <article><span>Free</span><h3>$0</h3><p>A Decision Brief for your main city compared with one other, a few decisions each month.</p><a routerLink="/register" class="secondary">Try it</a></article>
+      <article class="featured"><div class="price-top"><span>One report</span><b>Recommended for one business plan</b></div><h3>$79</h3><p>The full Decision Report for one decision, with no subscription.</p>
+        <ul class="price-list">
+          <li>Your main city compared with up to three other cities</li>
+          <li>A plan-ready market analysis written for your business, with location rankings and copy-as-text</li>
+          <li>An action plan: what to do before you commit</li>
+          <li>Comparison takeaways: where your main city leads and where it trails</li>
+          <li>What could change the call, plus the evidence boundaries</li>
+          <li>Print or save the full report as a PDF</li>
+        </ul>
+        <a routerLink="/register" class="primary">Build a report</a></article>
+      <article><span>Pro</span><h3>$39<small>/month</small></h3><p class="price-for">For advisers and anyone planning several locations a month.</p><p>Five full Decision Reports a month, plus more decisions and comparison locations.</p><a routerLink="/register" class="secondary">Start free</a></article>
     </div>
   </section>
 
@@ -101,6 +110,7 @@
   <footer>
     <a routerLink="/" class="brand">ifYouMind</a>
     <span>Decision intelligence, starting with where to build your business.</span>
+    <p class="support">Questions? <a href="mailto:support&#64;ifyoumind.com">support&#64;ifyoumind.com</a></p>
     <div><a href="/guides/market-analysis-business-plan/">How to write a market analysis</a><a routerLink="/privacy-policy">Privacy</a><a routerLink="/terms-of-conduct">Terms</a><a href="#cookie-settings" (click)="openCookieSettings($event)">Cookie settings</a></div>
   </footer>
 </main>

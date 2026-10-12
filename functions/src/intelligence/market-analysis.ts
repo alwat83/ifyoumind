@@ -60,9 +60,9 @@ function positionOf(ordered:Array<{location:string}>,location:string):number{
 
 function growthPhrase(pct:number|null):string{
   if(pct===null)return 'Five-year population change is not available for this place.';
-  if(pct>1)return `Population grew ${pct}% between the 2019 and 2024 ACS 5-year estimates, indicating an expanding resident base.`;
-  if(pct<0)return `Population declined ${Math.abs(pct)}% between the 2019 and 2024 ACS 5-year estimates, so the resident base is shrinking rather than growing.`;
-  return `Population was broadly stable (${pct}%) between the 2019 and 2024 ACS 5-year estimates.`;
+  if(pct>1)return `Population grew ${pct}% between the 2015–2019 and 2020–2024 ACS 5-year estimates, indicating an expanding resident base.`;
+  if(pct<0)return `Population declined ${Math.abs(pct)}% between the 2015–2019 and 2020–2024 ACS 5-year estimates, so the resident base is shrinking rather than growing.`;
+  return `Population was broadly stable (${pct}%) between the 2015–2019 and 2020–2024 ACS 5-year estimates.`;
 }
 
 export function buildMarketAnalysis(input:{

@@ -58,3 +58,35 @@ test('every $79 entry point carries the report intent; free and Pro stay plain',
   const sample = read('../src/app/intelligence/market-report.component.html');
   assert.equal((sample.match(/routerLink="\/register" \[queryParams\]="\{intent:'report'\}"/g) || []).length, 2);
 });
+
+test('property: any output is an allowlisted in-app path with allowlisted parameters', () => {
+  const parts = ['/', '//', '\\', 'app', 'decide', 'result', 'abc', '..', '.', '%2f', '%5C', '%2e', '?', '&', '=', '#', '@', ':', 'https:', 'evil.example',
+    'type', 'business', 'intent', 'report', 'offer', 'pro', 'projectId', 'checkout', 'success', ' ', '\t', '\n', '∕', '／', '%00', 'javascript:', 'APP'];
+  let seed = 7;
+  const rand = (n) => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed % n; };
+  const ok = /^\/app(\/decide|\/pricing|\/account|\/result\/[A-Za-z0-9_-]{1,64})?(\?(type=[a-z_]{1,32}|intent=report|offer=(report|pro)|projectId=[A-Za-z0-9_-]{1,64})(&(type=[a-z_]{1,32}|intent=report|offer=(report|pro)|projectId=[A-Za-z0-9_-]{1,64}))*)?$/;
+  for (let i = 0; i < 20000; i++) {
+    let s = rand(3) ? '/' : '';
+    for (let j = 0, n = 1 + rand(8); j < n; j++) s += parts[rand(parts.length)];
+    const out = safeReturnUrl(s);
+    if (out !== null) {
+      assert.match(out, ok, `input ${JSON.stringify(s)} gave ${out}`);
+      assert.equal(safeReturnUrl(out), out, 'output is stable when validated again');
+    }
+  }
+  // Valid paths with random query strings: unknown or malformed parameters must be dropped, never passed through.
+  const paths = ['/app', '/app/decide', '/app/pricing', '/app/account', '/app/result/p1'];
+  const keys = ['type', 'intent', 'offer', 'projectId', 'checkout', 'returnUrl', 'email', 'next'];
+  const vals = ['business', 'report', 'pro', 'p1', 'success', '//evil.example', 'a%40b.com', 'https://evil', 'BUSINESS', ''];
+  let kept = 0;
+  for (let i = 0; i < 5000; i++) {
+    const q = Array.from({ length: 1 + rand(4) }, () => `${keys[rand(keys.length)]}=${vals[rand(vals.length)]}`).join('&');
+    const out = safeReturnUrl(`${paths[rand(paths.length)]}?${q}`);
+    assert.ok(out, 'a valid path is never refused because of its query');
+    assert.match(out, ok, out);
+    if (out.includes('?')) kept++;
+  }
+  assert.ok(kept > 1000, 'allowlisted parameters are kept');
+  // Deliberately conservative: an encoded slash or backslash anywhere refuses the whole value.
+  assert.equal(safeReturnUrl('/app/decide?type=business&next=https%3A%2F%2Fevil'), null);
+});

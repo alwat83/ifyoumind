@@ -42,7 +42,12 @@
           {
             "key": "X-Content-Type-Options",
             "value": "nosniff"
-          },
+          }
+        ]
+      },
+      {
+        "regex": "^/(?:[^_].*|_[^_].*|_)?$",
+        "headers": [
           {
             "key": "X-Frame-Options",
             "value": "SAMEORIGIN"

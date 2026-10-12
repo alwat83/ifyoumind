@@ -53,8 +53,7 @@ test('the guard and sign-in page use the validator, and access control is unchan
 test('every $79 entry point carries the report intent; free and Pro stay plain', () => {
   const home = read('../src/app/intelligence/public-landing.component.html');
   assert.match(home, /<a routerLink="\/register" \[queryParams\]="\{intent:'report'\}" class="primary">Build a report<\/a>/);
-  assert.match(home, /<a routerLink="\/register" class="secondary">Try it<\/a>/);
-  assert.match(home, /<a routerLink="\/register" class="secondary">Start free<\/a>/);
+  assert.equal((home.match(/<a routerLink="\/register" class="secondary">[^<]+<\/a>/g) || []).length, 2, 'Free and Pro buttons stay plain, whatever their labels');
   const sample = read('../src/app/intelligence/market-report.component.html');
   assert.equal((sample.match(/routerLink="\/register" \[queryParams\]="\{intent:'report'\}"/g) || []).length, 2);
 });

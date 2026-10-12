@@ -11,6 +11,8 @@ import { MarketAnalysisSection } from './market-intelligence.service';
 })
 export class MarketAnalysisComponent {
   @Input({required:true}) section!:MarketAnalysisSection;
+  /** Sample report only: marks this section as part of the paid report. */
+  @Input() includedInReport=false;
   copied=false;
 
   async copy():Promise<void>{

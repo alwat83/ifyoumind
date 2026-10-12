@@ -246,9 +246,9 @@ export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],con
   const risks:string[]=[];
 
   if(growth!==null){
-    if(growth>1) opportunity.push(`Population increased ${growth}% between the 2019 and 2024 ACS 5-year estimates.`);
-    else if(growth<0) risks.push(`Population decreased ${Math.abs(growth)}% between the 2019 and 2024 ACS 5-year estimates.`);
-    else opportunity.push('Population was broadly stable across the 2019 and 2024 ACS 5-year estimates.');
+    if(growth>1) opportunity.push(`Population increased ${growth}% between the 2015–2019 and 2020–2024 ACS 5-year estimates.`);
+    else if(growth<0) risks.push(`Population decreased ${Math.abs(growth)}% between the 2015–2019 and 2020–2024 ACS 5-year estimates.`);
+    else opportunity.push('Population was broadly stable between the 2015–2019 and 2020–2024 ACS 5-year estimates.');
   }
   opportunity.push(`Median household income is ${new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(primary.income)}.`);
 
@@ -256,7 +256,7 @@ export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],con
     const higherIncome=comparisons.filter(place=>place.income>primary.income).length;
     const strongerGrowth=comparisons.filter(place=>(place.populationChangePct??-999)>(primary.populationChangePct??-999)).length;
     if(higherIncome) risks.push(`${higherIncome} comparison market${higherIncome===1?' has':'s have'} a higher median household income.`);
-    if(strongerGrowth) risks.push(`${strongerGrowth} comparison market${strongerGrowth===1?' shows':'s show'} stronger 5-year population change.`);
+    if(strongerGrowth) risks.push(`${strongerGrowth} comparison market${strongerGrowth===1?' shows':'s show'} higher estimated 5-year population change (differences may be within the margin of error).`);
   }
   if(!risks.length) risks.push('Census demographics alone do not measure competition, commercial rent, foot traffic, or concept-level demand.');
 

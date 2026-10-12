@@ -4,11 +4,19 @@
     <p class="eyebrow">Start free</p>
     <h1>Build your market analysis.</h1>
     <p class="sub">Create a free account. Your free brief compares your city with one other, with every figure cited to the U.S. Census.</p>
-    <form (ngSubmit)="register()" #registerForm="ngForm">
-      <label><span>Name</span><input name="displayName" type="text" required [(ngModel)]="displayName" /></label>
-      <label><span>Email</span><input name="email" type="email" required email [(ngModel)]="email" /></label>
-      <label><span>Password</span><input name="password" type="password" required minlength="6" [(ngModel)]="password" /></label>
-      <button type="submit" [disabled]="registerForm.invalid">Create free account</button>
+    <p class="next-steps">Next: verify your email, then two quick steps to your free brief. Google sign-ups skip the email check.</p>
+    <p *ngIf="intent" class="next-steps intent-note">You'll see your free brief first, then you can get the full $79 Decision Report for that decision.</p>
+    <form (ngSubmit)="submit(registerForm)" #registerForm="ngForm" novalidate>
+      <label><span>Name</span><input name="displayName" type="text" required [(ngModel)]="displayName" #nameField="ngModel"
+        [attr.aria-invalid]="showErrors && nameField.invalid" aria-describedby="name-error" /></label>
+      <p id="name-error" class="field-error" *ngIf="showErrors && nameField.invalid">Enter your name.</p>
+      <label><span>Email</span><input name="email" type="email" required email [(ngModel)]="email" #emailField="ngModel"
+        [attr.aria-invalid]="showErrors && emailField.invalid" aria-describedby="email-error" /></label>
+      <p id="email-error" class="field-error" *ngIf="showErrors && emailField.invalid">Enter an email address like name&#64;example.com.</p>
+      <label><span>Password</span><input name="password" type="password" required minlength="6" [(ngModel)]="password" #passwordField="ngModel"
+        [attr.aria-invalid]="showErrors && passwordField.invalid" aria-describedby="password-error" /></label>
+      <p id="password-error" class="field-error" *ngIf="showErrors && passwordField.invalid">Use at least 6 characters.</p>
+      <button type="submit" [disabled]="submitting">{{ submitting ? 'Creating your account…' : 'Create free account' }}</button>
     </form>
     <div class="divider"><span>or</span></div>
     <button class="google" type="button" (click)="googleLogin()">Continue with Google</button>

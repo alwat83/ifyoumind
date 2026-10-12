@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { intentParams, readIntent } from '../../purchase-intent';
 import { Router, RouterModule } from '@angular/router';
 import { Auth, sendEmailVerification, signOut } from '@angular/fire/auth';
 
@@ -35,7 +36,7 @@ export class VerifyEmailComponent {
       await user.reload();
       if (this.auth.currentUser?.emailVerified) {
         await this.auth.currentUser.getIdToken(true);
-        await this.router.navigate(['/app/decide'], { queryParams: { type: 'business' } });
+        await this.router.navigate(['/app/decide'], { queryParams: intentParams({ type: 'business' }, readIntent()) });
         return;
       }
       this.message = { type: 'error', text: 'Not verified yet. Open the link in the email we sent, then try again.' };

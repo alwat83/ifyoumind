@@ -62,3 +62,25 @@
     outline-offset: 3px;
   }
 }
+
+// Phones: the same three choices, laid out compactly so less of the page is covered.
+@media (max-width: 560px) {
+  .cookie-consent-banner {
+    padding: 12px 12px calc(12px + env(safe-area-inset-bottom));
+
+    p {
+      flex-basis: 100%;
+      font-size: 13px;
+    }
+
+    .actions {
+      width: 100%;
+      flex-wrap: nowrap;
+    }
+
+    button {
+      flex: 1 1 0;
+      padding: 10px 8px;
+    }
+  }
+}

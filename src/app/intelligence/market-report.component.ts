@@ -98,21 +98,14 @@ export class MarketReportComponent implements OnInit {
     return 'The evidence is mixed. Treat this as a validation decision rather than a clear go/no-go.';
   }
 
-  get confidenceLabel():string{
-    const brief=this.project?.brief;
-    if(!brief)return 'Building';
-    const sourced=brief.metrics.filter(metric=>!!metric.sourceLabel).length;
-    if(this.project?.mode==='live'&&sourced>=Math.max(2,Math.ceil(brief.metrics.length*.75)))return 'High source coverage';
-    if(sourced>0)return 'Moderate source coverage';
-    return 'Limited source coverage';
-  }
-
-  get evidenceSummary():string{
+  /** How many key figures cite their source. This counts citations; it is not a confidence score. */
+  get sourcesCited():string{
     const brief=this.project?.brief;
     if(!brief)return '';
     const sourced=brief.metrics.filter(metric=>!!metric.sourceLabel).length;
-    return `${sourced} of ${brief.metrics.length} key metrics include source attribution.`;
+    return `${sourced} of ${brief.metrics.length} key figures`;
   }
+
 
   async ngOnInit():Promise<void>{
     if(this.sampleMode){

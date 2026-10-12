@@ -11,11 +11,16 @@ export interface AnalysisPlace {
   stateFips:string;
 }
 
+export type AnalysisMetric='population'|'income'|'homeValue'|'growth';
+export type AnalysisVerdict='higher'|'lower'|'similar'|'not-testable';
+/** Difference-test results for the primary place against each comparison (from evidence.ts). */
+export type AnalysisConfidence=(metric:AnalysisMetric,otherLocation:string)=>AnalysisVerdict|undefined;
+
 export interface MarketAnalysisSection {
   title:string;
   intro:string;
   paragraphs:Array<{heading:string;text:string}>;
-  rankings:Array<{metric:string;unit:'people'|'USD'|'%';ordered:Array<{location:string;value:number}>}>;
+  rankings:Array<{metric:string;unit:'people'|'USD'|'%';ordered:Array<{location:string;value:number}>;note?:string}>;
   nextResearch:string[];
   citations:string[];
   disclaimer:string;
@@ -70,8 +75,10 @@ export function buildMarketAnalysis(input:{
   primary:AnalysisPlace;
   comparisons:AnalysisPlace[];
   retrievedAt:string;
+  /** When present, comparative wording follows the 90% difference tests instead of point estimates. */
+  confidence?:AnalysisConfidence;
 }):MarketAnalysisSection{
-  const {primary,comparisons}=input;
+  const {primary,comparisons,confidence}=input;
   const business=businessPhrase(input.concept);
   const all=[primary,...comparisons];
   const n=all.length;
@@ -82,11 +89,32 @@ export function buildMarketAnalysis(input:{
   const byHomeValue=rank(all,place=>place.homeValue);
   const byGrowth=rank(all,place=>place.populationChangePct);
 
+  // Without difference tests, positions describe the estimates only and say so.
   const where=(ordered:Array<{location:string}>)=>{
     const position=positionOf(ordered,primary.location);
-    if(position===1)return 'the highest';
-    if(position===ordered.length)return 'the lowest';
-    return `${ordinal(position)} highest`;
+    if(position===1)return 'the highest estimate';
+    if(position===ordered.length)return 'the lowest estimate';
+    return `the ${ordinal(position)} highest estimate`;
+  };
+  const verdicts=(metric:AnalysisMetric)=>comparisons.map(place=>({location:place.location,verdict:confidence?.(metric,place.location)}));
+  const tested=(metric:AnalysisMetric)=>!!confidence&&verdicts(metric).every(v=>v.verdict!==undefined);
+  const clearlyAll=(metric:AnalysisMetric,verdict:'higher'|'lower')=>tested(metric)&&verdicts(metric).every(v=>v.verdict===verdict);
+  /** "higher than A; statistically similar to B (within the margin of error)". */
+  const relation=(metric:AnalysisMetric)=>{
+    const groups:Record<AnalysisVerdict,string[]>={higher:[],lower:[],similar:[],'not-testable':[]};
+    for(const v of verdicts(metric))groups[v.verdict as AnalysisVerdict].push(v.location);
+    const parts:string[]=[];
+    if(groups.higher.length)parts.push(`higher than ${groups.higher.join(' and ')}`);
+    if(groups.lower.length)parts.push(`lower than ${groups.lower.join(' and ')}`);
+    if(groups.similar.length)parts.push(`statistically similar to ${groups.similar.join(' and ')} (the difference is within the margin of error)`);
+    if(groups['not-testable'].length)parts.push(`not reliably comparable with ${groups['not-testable'].join(' and ')}`);
+    return parts.join('; ');
+  };
+  const standing=(metric:AnalysisMetric,ordered:Array<{location:string}>)=>{
+    if(!tested(metric))return `${where(ordered)} of the ${n} locations evaluated (margins of error not checked)`;
+    if(clearlyAll(metric,'higher'))return `clearly the highest of the ${n} locations evaluated`;
+    if(clearlyAll(metric,'lower'))return `clearly the lowest of the ${n} locations evaluated`;
+    return relation(metric);
   };
 
   const paragraphs:Array<{heading:string;text:string}>=[];
@@ -97,13 +125,13 @@ export function buildMarketAnalysis(input:{
       `${primary.location} has an estimated population of ${count(primary.population)}.`,
       growthPhrase(primary.populationChangePct),
       n>1&&byGrowth.length===n
-        ? `Of the ${n} locations evaluated, it has ${where(byGrowth)} five-year growth rate.`
+        ? `Its five-year growth rate is ${standing('growth',byGrowth)}.`
         : '',
     ].filter(Boolean).join(' '),
   });
 
   const incomeComparison=comparisons.length
-    ? ` That is ${where(byIncome)} of the ${n} locations evaluated (${comparisons.map(place=>`${place.location}: ${usd(place.income)}`).join('; ')}).`
+    ? ` That is ${standing('income',byIncome)} (${comparisons.map(place=>`${place.location}: ${usd(place.income)}`).join('; ')}).`
     : '';
   paragraphs.push({
     heading:'Household purchasing power',
@@ -112,36 +140,54 @@ export function buildMarketAnalysis(input:{
 
   paragraphs.push({
     heading:'Property cost context',
-    text:`The median home value in ${primary.location} is ${usd(primary.homeValue)}${comparisons.length?`, ${where(byHomeValue)} of the ${n} locations`:''}. Home values are a rough signal of local property costs, not commercial rents; occupancy costs${business?` for your ${business}`:''} need to be confirmed with lease quotes for the specific site.`,
+    text:`The median home value in ${primary.location} is ${usd(primary.homeValue)}${comparisons.length?`, ${standing('homeValue',byHomeValue)}`:''}. Home values are a rough signal of local property costs, not commercial rents; occupancy costs${business?` for your ${business}`:''} need to be confirmed with lease quotes for the specific site.`,
   });
 
   if(comparisons.length){
     const leads:string[]=[];
     const trails:string[]=[];
-    for(const [label,ordered] of [
-      ['household income',byIncome],
-      ['population growth',byGrowth],
-      ['population',byPopulation],
+    const unclear:string[]=[];
+    for(const [label,metric,ordered] of [
+      ['household income','income',byIncome],
+      ['population growth','growth',byGrowth],
+      ['population','population',byPopulation],
     ] as const){
       if(ordered.length!==n)continue;
+      if(confidence){
+        if(!tested(metric)){unclear.push(label);continue;}
+        if(clearlyAll(metric,'higher'))leads.push(label);
+        else if(clearlyAll(metric,'lower'))trails.push(label);
+        else unclear.push(label);
+        continue;
+      }
       const position=positionOf(ordered,primary.location);
       if(position===1)leads.push(label);
       if(position===n)trails.push(label);
     }
     const parts=[`Compared with ${others.join(' and ')},`];
-    if(leads.length)parts.push(`${primary.location} leads on ${leads.join(' and ')}`);
+    const basis=confidence?'':' on the point estimates';
+    if(leads.length)parts.push(`${primary.location} leads on ${leads.join(' and ')}${basis}`);
     if(leads.length&&trails.length)parts.push('but');
-    if(trails.length)parts.push(`trails on ${trails.join(' and ')}`);
-    if(!leads.length&&!trails.length)parts.push(`${primary.location} sits between the comparison locations on every measure`);
-    paragraphs.push({heading:'Comparative position',text:`${parts.join(' ')}.`});
+    if(trails.length)parts.push(`${leads.length?'':`${primary.location} `}trails on ${trails.join(' and ')}${basis}`);
+    if(!leads.length&&!trails.length)parts.push(confidence?`${primary.location} is not clearly ahead or behind on any of these measures`:`${primary.location} sits between the comparison locations on every measure`);
+    let text=`${parts.join(' ')}.`;
+    if(confidence&&unclear.length)text+=` On ${unclear.join(' and ')}, the differences are within the margin of error or can't be tested, so the places shouldn't be ranked on them.`;
+    if(!confidence)text+=' Margins of error were not checked, so small differences may not be real.';
+    paragraphs.push({heading:'Comparative position',text});
   }
 
+  const rankNote=(metric:AnalysisMetric)=>{
+    if(!confidence||!tested(metric))return 'Ordered by estimate; margins of error not checked.';
+    return verdicts(metric).every(v=>v.verdict==='higher'||v.verdict==='lower')
+      ? undefined
+      : 'Ordered by estimate. Some differences are within the margin of error, so the order is not a clear ranking.';
+  };
   const rankings:MarketAnalysisSection['rankings']=[
-    {metric:'Population',unit:'people',ordered:byPopulation},
-    {metric:'Median household income',unit:'USD',ordered:byIncome},
-    {metric:'Median home value',unit:'USD',ordered:byHomeValue},
+    {metric:'Population',unit:'people',ordered:byPopulation,note:rankNote('population')},
+    {metric:'Median household income',unit:'USD',ordered:byIncome,note:rankNote('income')},
+    {metric:'Median home value',unit:'USD',ordered:byHomeValue,note:rankNote('homeValue')},
   ];
-  if(byGrowth.length)rankings.push({metric:'5-year population change',unit:'%',ordered:byGrowth});
+  if(byGrowth.length)rankings.push({metric:'5-year population change',unit:'%',ordered:byGrowth,note:rankNote('growth')});
 
   const retrieved=input.retrievedAt.slice(0,10);
   return {

@@ -13,11 +13,13 @@ export class MarketAnalysisComponent {
   @Input({required:true}) section!:MarketAnalysisSection;
   /** Sample report only: marks this section as part of the paid report. */
   @Input() includedInReport=false;
+  /** Further plain text appended when copying, such as the target-market and confidence section. */
+  @Input() extraText='';
   copied=false;
 
   async copy():Promise<void>{
     try{
-      await navigator.clipboard.writeText(this.section.plainText);
+      await navigator.clipboard.writeText(this.extraText ? `${this.section.plainText}\n\n${this.extraText}` : this.section.plainText);
       this.copied=true;
       setTimeout(()=>this.copied=false,2500);
     }catch{

@@ -45,6 +45,7 @@
         <li><a href="/sample-report#recommendation" (click)="jumpTo($event,'recommendation')">Recommendation</a></li>
         <li><a href="/sample-report#signals" (click)="jumpTo($event,'signals')">Signals</a></li>
         <li *ngIf="brief.comparisons.length"><a href="/sample-report#comparison" (click)="jumpTo($event,'comparison')">City comparison</a></li>
+        <li *ngIf="decisionReport?.evidence"><a href="/sample-report#report-evidence" (click)="jumpTo($event,'report-evidence')">Target market and confidence</a></li>
         <li *ngIf="decisionReport?.marketAnalysis"><a href="/sample-report#market-analysis" (click)="jumpTo($event,'market-analysis')">Market analysis</a></li>
         <li *ngIf="decisionReport"><a href="/sample-report#action-plan" (click)="jumpTo($event,'action-plan')">Action plan</a></li>
         <li *ngIf="decisionReport"><a href="/sample-report#change-the-call" (click)="jumpTo($event,'change-the-call')">What could change the call</a></li>
@@ -159,7 +160,8 @@
     </section>
 
     <ng-container *ngIf="decisionReport as reportDetail">
-      <app-market-analysis id="market-analysis" *ngIf="reportDetail.marketAnalysis as analysis" [section]="analysis" [includedInReport]="sampleMode"></app-market-analysis>
+      <app-report-evidence id="report-evidence" *ngIf="reportDetail.evidence as evidence" [evidence]="evidence" [includedInReport]="sampleMode"></app-report-evidence>
+      <app-market-analysis id="market-analysis" *ngIf="reportDetail.marketAnalysis as analysis" [section]="analysis" [includedInReport]="sampleMode" [extraText]="evidenceText(reportDetail)"></app-market-analysis>
       <section id="action-plan" class="action-plan">
         <p class="eyebrow">Action plan <span *ngIf="sampleMode" class="paid-pill">Included in the $79 report</span></p>
         <h2>What to do before you commit.</h2>
@@ -174,7 +176,7 @@
 
       <section *ngIf="reportDetail.comparisonFindings.length" class="comparison-findings">
         <p class="eyebrow">Comparison takeaways <span *ngIf="sampleMode" class="paid-pill">Included in the $79 report</span></p>
-        <h2>Where the primary market leads — and where it trails.</h2>
+        <h2>How the main location compares, difference by difference.</h2>
         <div class="finding-list">
           <article *ngFor="let item of reportDetail.comparisonFindings">
             <strong>{{ item.location }}</strong>

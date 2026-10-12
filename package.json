@@ -18,7 +18,8 @@
     "test:commerce": "npm --prefix functions run build && firebase emulators:exec --project demo-ifyoumind --only firestore \"node --test test/commerce.integration.test.mjs\"",
     "preflight": "node scripts/preflight.js",
     "test:seo": "node scripts/web-tests.js",
-    "build:guides": "node scripts/build-guides.js"
+    "build:guides": "node scripts/build-guides.js",
+    "validate:census": "npm --prefix functions run build && firebase emulators:exec --project demo-ifyoumind --only firestore \"node scripts/validate-census-evidence.mjs\""
   },
   "private": true,
   "dependencies": {

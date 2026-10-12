@@ -83,10 +83,10 @@
   <section id="pricing" class="pricing">
     <div class="section-copy">
       <p class="eyebrow">Pricing</p>
-      <h2>Try the thinking for free.</h2>
+      <h2>Start free. Pay when the answer is worth more.</h2>
     </div>
     <div class="price-grid">
-      <article><span>Free</span><h3>$0</h3><p>A Decision Brief for your main city compared with one other, a few decisions each month.</p><a routerLink="/register" class="secondary">Try it</a></article>
+      <article><span>Free</span><h3>$0</h3><p>A Decision Brief for your main city compared with one other, a few decisions each month.</p><a routerLink="/register" class="secondary">Start a free brief</a></article>
       <article class="featured"><div class="price-top"><span>One report</span><b>Recommended for one business plan</b></div><h3>$79</h3><p>The full Decision Report for one decision, with no subscription.</p>
         <ul class="price-list">
           <li>Your main city compared with up to three other cities</li>
@@ -96,8 +96,8 @@
           <li>What could change the call, plus the evidence boundaries</li>
           <li>Print or save the full report as a PDF</li>
         </ul>
-        <a routerLink="/register" class="primary">Build a report</a></article>
-      <article><span>Pro</span><h3>$39<small>/month</small></h3><p class="price-for">For advisers and anyone planning several locations a month.</p><p>Five full Decision Reports a month, plus more decisions and comparison locations.</p><a routerLink="/register" class="secondary">Start free</a></article>
+        <a routerLink="/register" [queryParams]="{intent:'report'}" class="primary">Build a report</a></article>
+      <article><span>Pro</span><h3>$39<small>/month</small></h3><p class="price-for">For advisers and anyone planning several locations a month.</p><p>Five full Decision Reports a month, plus more decisions and comparison locations.</p><a routerLink="/register" class="secondary">Create an account for Pro</a></article>
     </div>
   </section>
 

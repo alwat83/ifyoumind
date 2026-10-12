@@ -426,6 +426,44 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
 - **Security finding (open until #26 ships):** Cloud Functions do not check `email_verified`; only the browser guard does.
 - **Customer count:** 0 verified live paying customers; five is the target.
 
+## CUSTOMER VALIDATION & REVENUE READINESS SPRINT — 2026-10-12 (Claude, Anthropic)
+Documentation and research only. Nothing was merged, deployed, installed, purchased, sent or published, and production stays at `3114840`. Sprint doc: https://claude.ai/code/artifact/e2590099-12eb-4eb7-a0c2-084afb0334bd. The Notion Command Center entry is dated 2026-10-12.
+
+- **A · Authenticated QA:** 9 signed-in journeys from #37 are **unverified** because no QA account exists:
+  - checks 6–12 in `docs/qa/return-url-and-intent.md`;
+  - the signed-in pricing line;
+  - the paid report and PDF.
+
+  The sprint doc covers the setup and a 7-part authenticated QA script:
+  - **Hestia mailboxes:** `qa-a`, plus `qa-b` with aliases `qa-b1`–`qa-b9`. If the `ifyoumind.com` MX isn't on Hestia, they go on a separate `qa.ifyoumind.com` mail domain, so existing mail and Hosting records are untouched.
+  - **A dedicated QA Google account.** Firebase documents no Google test accounts.
+- **B · Analytics:** the doc has an 11-item GA4 property checklist (Google signals, ads personalization, granular data, product links, retention, enhanced measurement, data sharing, DebugView).
+  - **Compatibility:** #18 + #24 + #35 merge cleanly on master together (local trial: fast 57/57, functions 54/54, build passes).
+  - **Consent:** #18 uses basic consent mode, so GA isn't loaded before Allow.
+  - **Purchases vs clicks:** only the Stripe webhook counts as a purchase.
+  - **Privacy policy:** its AI-provider sentence is inaccurate (no production AI). #12 fixes it and should ship before or with #18. The GA4 retention period must be added to the policy.
+  - **Status:** #18 and #24 are still held.
+- **C · Customer validation:** the recruitment approval package (screener, invitation, consent, scheduling, no-spend channel) is prepared and **not sent**.
+- **D · Revenue:** the dashboard is defined. Its source of truth is Stripe live mode through `stripePayments` with `livemode=true`.
+
+  **Missing data:**
+  - `invoice.paid` renewals, refunds (`charge.refunded`) and disputes (`charge.dispute.created`) are not recorded;
+  - there's no list for excluding test and QA workspaces.
+
+  Recording these needs founder approval, because it touches the webhook. Entitlement logic would be unchanged.
+- **E · Reconciliation against `3114840`:**
+  - #26 now conflicts in `auth.guard.ts` (with #37's `loginParams`), and #12 conflicts too. Both need rebuilding on master with new commits, not force-pushes.
+  - #18, #24, #27, #29, #30, #32, #33 and #35 merge cleanly.
+  - Proposed order, each step separately approved: #33 → #26 → #12 → #35 → #18 → #24 → #29 → #30/#32.
+- **Founder actions:**
+  1. Hestia QA mailboxes and a QA Google account.
+  2. Whether Claude gets QA credentials.
+  3. The GA4 checklist and a retention choice.
+  4. The refund policy (#12).
+  5. The recruitment package.
+  6. Stripe live: the webhook event list and identifying real customers.
+  7. Release approvals.
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

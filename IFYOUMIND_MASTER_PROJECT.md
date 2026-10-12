@@ -539,6 +539,72 @@ Nothing was merged or deployed, and production stays at `3114840`. No production
 
 **Not tested anywhere:** the free 3-decisions-a-month limit, which the demo project skips. There is also no self-service account deletion.
 
+## RELEASE: PR #38 AUTOMATED QA — 2026-10-12 (Claude, Anthropic): deployed and production verified (signed out)
+Founder approved releasing PR #38 at reviewed head `c0e9894`.
+
+**Pre-merge checks:**
+- **Head and base:** the head was unchanged and master was still `3114840`; the merge was clean.
+- **CI:** both `qa` and `build` were green.
+- **Scope:** 28 files, matching the review.
+- **Production bundles built from master and from the PR head and compared by content.** The only behavioural differences were:
+  - the guard's `Pt||` (true only on localhost/127.0.0.1) and registration's localhost branch, both false on ifyoumind.com;
+  - two CSS rules (pricing contrast and account-card wrapping).
+
+  The master build hash `main-UEXL42XX.js` equals the previously live bundle, so the build is reproducible.
+- **Emulator safety:**
+  - every CI and emulator path uses `demo-ifyoumind` (Firebase demo projects never reach real resources);
+  - the fixture guard refuses non-local emulator hosts, other project IDs and cloud credentials;
+  - the CI job has no secrets and `contents: read`;
+  - the deploy workflow is unchanged.
+
+**Merged** as **`f98e19b`** (merge commit). **Deploy:** run 38306000061 (#180) succeeded at 20:47:31Z.
+
+**Production smoke checks** (read-only, 20:49Z): **9/9 pass**.
+- **Live bundle:** `main-B3S77CN4.js`, the build verified above.
+- **Bundle contents:**
+  - `ifyoumind-473fe` is present;
+  - no `demo-ifyoumind`, `demo-api-key`, `qa.ifyoumind.test`, fixture password, emulator endpoint or Admin SDK marker.
+- **Guard:** `a.emailVerified||e.url==="/profile"`, with no localhost exception.
+- **Headers:** unchanged.
+- **Pages:** 6 pages at 1280 and 390 px, with 0 console errors and 0 overflow.
+- **Signed-out redirects:**
+  - `/app/decide?…intent=report` keeps its returnUrl;
+  - `/app/growth` has no returnUrl;
+  - `//evil.example` stays on site.
+- **Registration:** empty-form errors show.
+
+**Remaining gaps:**
+- Signed-in journeys in production, which need QA accounts.
+- Real email delivery, Google OAuth and live payments.
+- `/favicon.png` still serves HTML (#33 fixes it).
+- `/login` and `/register` have a generic title.
+
+## FOLLOW-UPS AFTER #38 — 2026-10-12 (Claude, Anthropic): all drafts
+- **#40 free-limit tests** (`7a3d202`):
+  - The demo-project exemption is removed, so the 3-decisions-a-month limit is enforced in the emulator.
+  - The rule is now pure and unit-tested, with integration tests (4th refused with nothing written; earlier months don't count) and a browser test.
+  - **Results:** functions 49/49, QA integration 12 pass + 1 skipped, e2e 66/66.
+  - **Finding:** Pro's advertised "up to 50 decisions" is not enforced anywhere.
+- **#39 revenue ledger audit** (`4fc0306`). Fixes:
+  - refund-status ordering on its own clock;
+  - one billing review per dispute;
+  - **subscription refunds matched by Stripe customer**: sandbox records show Pro sessions and invoices have no payment intent on the current API version;
+  - genuine-customer rule counting renewals against reversals;
+  - `warning_closed` and `prevented` disputes are closed.
+
+  Also adds `reconcileWithStripe` and the founder-run, read-only `scripts/reconcile-stripe.mjs` (needs an `rk_live_` key).
+  - **Live records have not been compared,** because the connector reaches only the sandbox.
+  - **Results:** functions 57/57, commerce 39/39, e2e 64/64.
+  - Playwright output committed by mistake was removed in a follow-up commit.
+- **#18 banner fix** (`66a55cb`), plus master merged:
+  - The banner reserves bottom and scroll padding while open, with a compact layout at 560 px and below. Consent is unchanged.
+  - New consent-banner spec at 320, 360 and 390 px.
+  - Without the fix, 10 checks plus the mobile decision test fail; with it, the suite passes 78/78. Still held for GA4.
+- **#41 account-deletion proposal** (design only): data inventory, retention, subscriptions, Stripe customer, disputes, a safe order (Auth user last), audit log and test plan.
+- **#26:** unchanged, a draft until its baseline and verified-email gates are met.
+
+**Holds unchanged:** #12, #18, #24, #26, #29, #30, #32, #33, #35, #39, #40, #41, R4/R5, advertising, outreach and AI.
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

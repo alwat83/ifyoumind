@@ -268,6 +268,23 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
   5. Approve Professional pricing.
   6. GA4 review (unblocks Wave B).
   7. Later: BLS and BEA keys, and R4/R5 approval.
+- **Customer Value Expansion strategic assessment, 2026-10-12 (Claude Code; strategy only, for founder review).**
+  - **Documents:**
+    - Assessment: https://claude.ai/code/artifact/269b3bcd-c5ea-4e9b-8a80-2a2ba533f392. It covers the 12 deliverables and the original-brief traceability matrix.
+    - Design concepts: https://claude.ai/artifact/CtfueoihHaB8WGXZFa1q5H.
+  - **Status:** nothing implemented, merged or deployed.
+  - **Findings:**
+    - Nothing before sign-in is measured: GA4 never starts.
+    - One $39 Pro month (5 reports) undercuts the $79 report.
+    - The report covers demand but not competition or cost.
+    - The live report shows no MOE (#29 fixes this).
+    - Code review: `authGuard` sends signed-out users to `/login` with no return URL, and login always goes to `/app`. A verification link opened on another device therefore loses its destination and `intent=report`.
+    - The homepage $79 button links to plain `/register`.
+  - **Recommended next milestone, "First five, understood":**
+    1. Wave B makes the funnel measurable.
+    2. Run 6–8 observed sessions (programme in section 10; no outreach until approved).
+    3. Reach 5 genuine paying customers, each with a recorded reason for buying.
+  - **Quick wins proposed, not approved:** Q1 homepage intent; Q2 login return URL; Q3 verdict-first summary; Q4 rename "source coverage"; Q5 pricing copy; Q6 register button.
 - **Release 2026-10-12 (Claude Code, founder-approved): #28 then #31.** Both are production verified for signed-out use.
   - **#28:**
     - Merged as `c1123aa` from head `a7a4cf4`, with CI green.

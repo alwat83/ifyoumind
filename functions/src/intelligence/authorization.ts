@@ -11,16 +11,6 @@ export function requireIdentity(uid: string | undefined): string {
 }
 
 /**
- * True only inside the local Firebase emulator suite for the demo project
- * (`npm run emulators`), where auth-emulator accounts are unverified.
- * Never true in production: Cloud Functions does not set FUNCTIONS_EMULATOR
- * and the project id is never `demo-ifyoumind` there.
- */
-export function isLocalDemoEmulator(env: NodeJS.ProcessEnv = process.env): boolean {
-  return env.FUNCTIONS_EMULATOR === 'true' && env.GCLOUD_PROJECT === 'demo-ifyoumind';
-}
-
-/**
  * Requires a signed-in caller whose ID token says `email_verified: true`.
  * Call it first in every callable that writes data or touches billing, before
  * any membership read, Firestore write, Census or Stripe request.
@@ -42,10 +32,10 @@ export function isLocalDemoEmulator(env: NodeJS.ProcessEnv = process.env): boole
  */
 export function requireVerifiedIdentity(
   auth: { uid?: string; token?: Record<string, unknown> } | undefined,
-  env: NodeJS.ProcessEnv = process.env,
 ): string {
   const uid = requireIdentity(auth?.uid);
-  if (auth?.token?.email_verified !== true && !isLocalDemoEmulator(env)) {
+  // No emulator exception: local runs verify through the Auth emulator (npm run qa:seed).
+  if (auth?.token?.email_verified !== true) {
     throw new HttpsError('failed-precondition', 'Verify your email address to continue.');
   }
   return uid;

@@ -33,7 +33,17 @@ export function summarizePayments(payments:Array<Record<string,any>>){
   return {live,test,recentLive:recentLive.slice(0,25)};
 }
 
-const FUNNEL=['app_open','decision_created','report_view','pricing_view','checkout_started','checkout_success'] as const;
+const FUNNEL=['app_open','decision_created','report_view','result_engaged','intent_prompt_shown','intent_prompt_clicked','upgrade_panel_shown','market_analysis_copied','print_dialog_opened','pricing_view','checkout_started','checkout_success'] as const;
+
+/** Workspaces that created at least two decisions in the window: the repeat-use signal, derived rather than tracked. */
+export function repeatDecisionOrganizations(events:Array<{event?:unknown;organizationId?:unknown}>):number{
+  const perOrg=new Map<string,number>();
+  for(const e of events){
+    if(e.event!=='decision_created'||typeof e.organizationId!=='string')continue;
+    perOrg.set(e.organizationId,(perOrg.get(e.organizationId)||0)+1);
+  }
+  return [...perOrg.values()].filter(n=>n>=2).length;
+}
 
 export const getProductFunnelMetrics=onCall(async(request)=>{
   if(!request.auth) throw new HttpsError('unauthenticated','Authentication required.');
@@ -69,8 +79,12 @@ export const getProductFunnelMetrics=onCall(async(request)=>{
     counts,
     uniqueOrganizations,
     confirmedPayments:summarizePayments(paymentSnapshot.docs.map(doc=>doc.data())),
+    repeatDecisionOrganizations:repeatDecisionOrganizations(snapshot.docs.map(doc=>doc.data())),
     conversion:{
       appToDecision:Number(((uniqueOrganizations.decision_created/activated)*100).toFixed(1)),
+      decisionToEngaged:uniqueOrganizations.decision_created
+        ? Number(((uniqueOrganizations.result_engaged/uniqueOrganizations.decision_created)*100).toFixed(1))
+        : 0,
       decisionToPricing:uniqueOrganizations.decision_created
         ? Number(((uniqueOrganizations.pricing_view/uniqueOrganizations.decision_created)*100).toFixed(1))
         : 0,

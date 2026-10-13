@@ -55,7 +55,7 @@
     <aside *ngIf="showPurchasePrompt" class="state no-print intent-prompt" role="note" aria-labelledby="intent-title">
       <h2 id="intent-title">Your free brief is ready. Want the full $79 Decision Report for this decision?</h2>
       <p>It adds up to three comparison cities, the plan-ready write-up and the action plan. Payment is by secure Stripe checkout.</p>
-      <a [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Get the full report · $79</a>
+      <a (click)="onIntentPromptClick()" [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Get the full report · $79</a>
     </aside>
 
     <section id="recommendation" class="executive-summary">
@@ -159,7 +159,7 @@
     </section>
 
     <ng-container *ngIf="decisionReport as reportDetail">
-      <app-market-analysis id="market-analysis" *ngIf="reportDetail.marketAnalysis as analysis" [section]="analysis" [includedInReport]="sampleMode"></app-market-analysis>
+      <app-market-analysis id="market-analysis" *ngIf="reportDetail.marketAnalysis as analysis" [section]="analysis" [includedInReport]="sampleMode" (copiedText)="onMarketAnalysisCopied()"></app-market-analysis>
       <section id="action-plan" class="action-plan">
         <p class="eyebrow">Action plan <span *ngIf="sampleMode" class="paid-pill">Included in the $79 report</span></p>
         <h2>What to do before you commit.</h2>
@@ -219,7 +219,7 @@
       <ul>
         <li *ngFor="let source of brief.sources">
           <strong>{{ source.provider }}</strong> · {{ source.dataset }}
-          <a *ngIf="source.url" [href]="source.url" target="_blank" rel="noopener noreferrer">Open source</a>
+          <a *ngIf="source.url" [href]="source.url" target="_blank" rel="noopener noreferrer" (click)="onSourceOpened()">Open source</a>
         </li>
       </ul>
     </section>

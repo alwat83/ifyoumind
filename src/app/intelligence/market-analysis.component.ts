@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MarketAnalysisSection } from './market-intelligence.service';
 
 @Component({
@@ -13,12 +13,15 @@ export class MarketAnalysisComponent {
   @Input({required:true}) section!:MarketAnalysisSection;
   /** Sample report only: marks this section as part of the paid report. */
   @Input() includedInReport=false;
+  /** Emitted after the market analysis text was copied, so the report can record it. */
+  @Output() copiedText=new EventEmitter<void>();
   copied=false;
 
   async copy():Promise<void>{
     try{
       await navigator.clipboard.writeText(this.section.plainText);
       this.copied=true;
+      this.copiedText.emit();
       setTimeout(()=>this.copied=false,2500);
     }catch{
       this.copied=false;

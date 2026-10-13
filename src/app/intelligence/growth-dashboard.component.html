@@ -16,6 +16,8 @@
 
     <section class="conversion">
       <article><span>App → decision</span><strong>{{ m.conversion.appToDecision }}%</strong></article>
+      <article><span>Decision → engaged result</span><strong>{{ m.conversion.decisionToEngaged }}%</strong><small>Engagement only, not proof of understanding</small></article>
+      <article><span>Workspaces with 2+ decisions</span><strong>{{ m.repeatDecisionOrganizations ?? 0 }}</strong></article>
       <article><span>Decision → pricing</span><strong>{{ m.conversion.decisionToPricing }}%</strong></article>
       <article><span>Pricing → checkout</span><strong>{{ m.conversion.pricingToCheckout }}%</strong></article>
       <article><span>Checkout → return</span><strong>{{ m.conversion.checkoutToPaid }}%</strong></article>

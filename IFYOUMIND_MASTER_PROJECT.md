@@ -677,6 +677,35 @@ Founder approved releasing PR #33 at reviewed head `cb61084`.
 
 **Holds unchanged:** #26, #39, #40, #42, #18, #24 and all others.
 
+## RELEASE READINESS — 2026-10-13 (Claude, Anthropic)
+**Production is verified at `7c02795`** (#33 favicon on top of #38). The milestone is a trustworthy, customer-ready purchase experience, then customer acquisition.
+
+**Prepared this round (all drafts; nothing merged or deployed):**
+- **#40 free-limit tests** (`99dd855`, master merged): ready for final review.
+  - **Production behaviour is unchanged.** The removed exemption only matched the demo project. A side-by-side check showed the same period start, the same `>=3` rule and a byte-identical message.
+  - **Tests:** functions 49/49, fast 52/52, commerce 29/29, QA integration 12 + 1 skipped, e2e 66/66.
+- **#26 verified email** (`b0afde0`, master merged): final security review complete.
+  - **Enforcement:** a mechanical check of all 25 deployed functions found 13 that require a verified email first (12 plus the admin-only funnel metrics), the webhook protected by its Stripe signature, and 11 documented exemptions.
+  - **New:** the unreachable `/profile` exemption is removed, so every guarded page needs a verified email.
+  - **Unchanged:** #37's return-URL redirect. The guard fails closed.
+  - **Tests:** functions 52/52, fast 60/60, commerce 35/35, organizations 5/5, rules 5/5, **QA integration 11/11 (server check enforced)**, e2e 64/64.
+  - **Remaining gate:** the signed-in production baseline.
+- **#39 reconciliation** (`33e7652`, master merged): sandbox records confirm the matching design.
+  - The report refund matches by payment intent; the Pro refund matches only by its sole customer payment and becomes "unresolved" once a renewal exists.
+  - **Tests:** functions 59/59, commerce 39/39. The live run still needs the founder's restricted key.
+- **Production signed-in journey plan:** `docs/qa/production-signed-in-journey.md`.
+  - **Setup:** one dedicated Gmail QA account (no Hestia needed). Gmail `+tag` addresses give fresh email/password accounts with real delivery.
+  - **The run:** about 15 minutes, desktop plus phone.
+  - **Isolation:** QA workspaces go on the exclusion list, and no purchases are made.
+
+**Next priorities, in order:**
+1. Run the signed-in production journey. It is also #26's baseline.
+2. Release #26.
+3. Release #40.
+4. Run the reconciliation and select the webhook events, then release #39.
+5. Do the deferred live $79 purchase test, then refund it.
+6. Customer acquisition.
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

@@ -49,7 +49,7 @@ test('external links are marked noopener and nothing links to an unknown interna
   for(const guide of guides){
     const html=guidePage(guide);
     for(const [,href] of html.matchAll(/href="(\/[^"#]*)"/g)){
-      if(href.startsWith('/guides/guide.css')||href==='/favicon.png')continue;
+      if(href.startsWith('/guides/guide.css')||href==='/favicon.png'||href==='/apple-touch-icon.png')continue;
       assert.ok(known.has(href),`${guide.slug} links to unknown ${href}`);
     }
     for(const [tag] of html.matchAll(/<a href="https?:\/\/[^"]+"[^>]*>/g)){

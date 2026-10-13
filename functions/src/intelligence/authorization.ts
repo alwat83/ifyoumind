@@ -10,6 +10,37 @@ export function requireIdentity(uid: string | undefined): string {
   return uid;
 }
 
+/**
+ * Requires a signed-in caller whose ID token says `email_verified: true`.
+ * Call it first in every callable that writes data or touches billing, before
+ * any membership read, Firestore write, Census or Stripe request.
+ *
+ * Protected: createMarketIntelligenceProject, createCommercialCheckout,
+ * createBillingPortalSession, unlockDecisionReportWithPro, requestCommercialAccess,
+ * createUniversalDataset, addUniversalObservation, importUniversalObservations,
+ * seedUniversalDemoData, analyzeUniversalDatasets, reasonAcrossUniversalDatasets,
+ * askUniversalIntelligence; and getProductFunnelMetrics, which also requires the
+ * admin claim (admins must hold a verified identity, as the /app/growth route already does).
+ *
+ * Intentionally exempt: getSampleDecisionReport (public sample),
+ * stripeCommercialWebhook (Stripe signature, no user),
+ * createIntelligenceOrganization (runs before verification),
+ * getMyIntelligenceOrganization, getIntelligenceOrganization, getCommercialStatus,
+ * recordProductEvent, getRecentMarketIntelligenceProjects,
+ * getMarketIntelligenceProject, listUniversalDatasets, getUniversalDataset,
+ * getRecentUniversalAnalysisRuns (reads of the caller's own workspace).
+ */
+export function requireVerifiedIdentity(
+  auth: { uid?: string; token?: Record<string, unknown> } | undefined,
+): string {
+  const uid = requireIdentity(auth?.uid);
+  // No emulator exception: local runs verify through the Auth emulator (npm run qa:seed).
+  if (auth?.token?.email_verified !== true) {
+    throw new HttpsError('failed-precondition', 'Verify your email address to continue.');
+  }
+  return uid;
+}
+
 export function validateOrganizationId(value: unknown): string {
   if (typeof value !== 'string' || !/^[A-Za-z0-9_-]{1,128}$/.test(value)) {
     throw new HttpsError('invalid-argument', 'Invalid organization ID.');

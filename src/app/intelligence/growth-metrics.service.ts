@@ -1,5 +1,7 @@
 import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Functions, httpsCallable } from '@angular/fire/functions';
+import { redirectIfUnverified } from '../auth/email-verification';
 
 export interface PaymentTotals{
   payments:number;
@@ -35,10 +37,11 @@ export interface ProductFunnelMetrics{
 @Injectable({providedIn:'root'})
 export class GrowthMetricsService{
   private readonly functions=inject(Functions);
+  private readonly router=inject(Router);
   async get(days=30):Promise<ProductFunnelMetrics>{
     const call=httpsCallable<{days:number},ProductFunnelMetrics>(
       this.functions,'getProductFunnelMetrics'
     );
-    return (await call({days})).data;
+    return (await redirectIfUnverified(this.router, () => call({days}))).data;
   }
 }

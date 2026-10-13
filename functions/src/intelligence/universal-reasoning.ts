@@ -1,6 +1,6 @@
 import { FieldValue, getFirestore } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
-import { authorizeOrganization } from './authorization';
+import { authorizeOrganization, requireVerifiedIdentity } from './authorization';
 import { alignObservations, pearson, UniversalObservation } from './universal-analysis';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
@@ -64,6 +64,7 @@ async function loadDataset(organizationId: string, id: string): Promise<DatasetV
 }
 
 export const reasonAcrossUniversalDatasets = onCall(async (request) => {
+  requireVerifiedIdentity(request.auth);
   const scope = await authorizeOrganization(
     request.auth?.uid,
     request.data?.organizationId,

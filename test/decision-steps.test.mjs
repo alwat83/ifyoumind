@@ -38,5 +38,8 @@ test('new accounts start the market-analysis flow; verification keeps its gate',
   assert.match(register,/FIRST_DECISION_ROUTE=\['\/app\/decide'\]/);
   assert.match(register,/navigate\(\['\/verify-email'\]\)/);
   const guard=read('../src/app/auth.guard.ts');
-  assert.match(guard,/user\.emailVerified/);
+  assert.match(guard,/ensureFreshVerification\(user\)/);
+  assert.match(guard,/navigate\(\['\/verify-email'\]\)/);
+  const helper=read('../src/app/auth/email-verification.ts');
+  assert.match(helper,/user\.emailVerified/);
 });

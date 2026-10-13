@@ -1,7 +1,7 @@
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
-import { authorizeOrganization } from './authorization';
+import { authorizeOrganization, requireVerifiedIdentity } from './authorization';
 import { decisionReportAccess, decisionView, freeBriefComparisonCount, REPORT_COMPARISON_LIMIT } from './report-entitlement-logic';
 import { buildMarketAnalysis, businessPhrase, marketAnalysisText } from './market-analysis';
 
@@ -326,6 +326,7 @@ export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],con
 }
 
 export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, async (request) => {
+  requireVerifiedIdentity(request.auth);
   let stage='authorization';
   try{
     const scope = await authorizeOrganization(

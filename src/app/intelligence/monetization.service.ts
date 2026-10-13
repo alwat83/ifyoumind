@@ -1,5 +1,7 @@
 import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Functions, httpsCallable } from '@angular/fire/functions';
+import { redirectIfUnverified } from '../auth/email-verification';
 
 export interface CommercialStatus {
   plan:'free'|'pro';
@@ -19,6 +21,7 @@ export interface CommercialStatus {
 @Injectable({providedIn:'root'})
 export class MonetizationService {
   private readonly functions=inject(Functions);
+  private readonly router=inject(Router);
 
   async status(organizationId:string):Promise<CommercialStatus>{
     const call=httpsCallable<{organizationId:string},CommercialStatus>(
@@ -36,7 +39,7 @@ export class MonetizationService {
       {organizationId:string;offer:'pro'|'report';projectId:string},
       {url:string;sessionId:string}
     >(this.functions,'createCommercialCheckout');
-    return (await call({organizationId,offer,projectId})).data.url;
+    return (await redirectIfUnverified(this.router, () => call({organizationId,offer,projectId}))).data.url;
   }
 
   async unlockReportWithPro(organizationId:string,projectId:string):Promise<number>{
@@ -44,14 +47,14 @@ export class MonetizationService {
       {organizationId:string;projectId:string},
       {unlocked:boolean;remainingIncludedReports:number}
     >(this.functions,'unlockDecisionReportWithPro');
-    return (await call({organizationId,projectId})).data.remainingIncludedReports;
+    return (await redirectIfUnverified(this.router, () => call({organizationId,projectId}))).data.remainingIncludedReports;
   }
 
   async billingPortal(organizationId:string):Promise<string>{
     const call=httpsCallable<{organizationId:string},{url:string}>(
       this.functions,'createBillingPortalSession'
     );
-    return (await call({organizationId})).data.url;
+    return (await redirectIfUnverified(this.router, () => call({organizationId}))).data.url;
   }
 
   async requestAccess(
@@ -63,6 +66,6 @@ export class MonetizationService {
       {organizationId:string;offer:'pro'|'report';context:string},
       {ok:boolean;message:string}
     >(this.functions,'requestCommercialAccess');
-    return (await call({organizationId,offer,context})).data.message;
+    return (await redirectIfUnverified(this.router, () => call({organizationId,offer,context}))).data.message;
   }
 }

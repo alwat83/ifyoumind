@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { authorizeOrganization } = require('../lib/intelligence/authorization');
+const { authorizeOrganization, requireVerifiedIdentity } = require('../lib/intelligence/authorization');
 const denied = (code) => (error) => error.code === code;
 
 test('anonymous requests never reach membership storage', async () => {
@@ -26,4 +26,32 @@ test('viewer may read but cannot enter an owner/admin-only operation', async () 
   const reader = async () => ({ role: 'viewer', status: 'active' });
   assert.equal((await authorizeOrganization('alice', 'org-a', reader)).role, 'viewer');
   await assert.rejects(authorizeOrganization('alice', 'org-a', reader, ['owner', 'admin']), denied('permission-denied'));
+});
+
+const throwsCode = (fn, code) => assert.throws(fn, denied(code));
+
+test('verified identity: anonymous callers are unauthenticated', () => {
+  for (const auth of [undefined, {}, { token: { email_verified: true } }, { uid: '', token: { email_verified: true } }]) {
+    throwsCode(() => requireVerifiedIdentity(auth), 'unauthenticated');
+  }
+});
+test('verified identity: anything but email_verified === true is refused', () => {
+  for (const token of [undefined, {}, { email_verified: false }, { email_verified: 'true' }, { email_verified: 1 }, { email_verified: null }]) {
+    assert.throws(() => requireVerifiedIdentity({ uid: 'alice', token }),
+      (error) => error.code === 'failed-precondition' && error.message === 'Verify your email address to continue.');
+  }
+});
+test('verified identity: a verified token returns the uid', () => {
+  assert.equal(requireVerifiedIdentity({ uid: 'alice', token: { email_verified: true } }), 'alice');
+});
+test('verified identity: no environment, including the emulator, bypasses the check', () => {
+  const saved = { ...process.env };
+  try {
+    Object.assign(process.env, { FUNCTIONS_EMULATOR: 'true', GCLOUD_PROJECT: 'demo-ifyoumind' });
+    throwsCode(() => requireVerifiedIdentity({ uid: 'alice', token: {} }), 'failed-precondition');
+    throwsCode(() => requireVerifiedIdentity({ uid: 'alice', token: { email_verified: false } }), 'failed-precondition');
+    assert.equal(requireVerifiedIdentity({ uid: 'alice', token: { email_verified: true } }), 'alice');
+  } finally {
+    process.env = saved;
+  }
 });

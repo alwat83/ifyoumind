@@ -1,6 +1,6 @@
 import { FieldValue, getFirestore } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
-import { authorizeOrganization } from './authorization';
+import { authorizeOrganization, requireVerifiedIdentity } from './authorization';
 import { alignObservations, pearson, UniversalObservation } from './universal-analysis';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
@@ -60,6 +60,7 @@ function confidence(signals: Array<{ correlation:number; matchedObservations:num
 }
 
 export const askUniversalIntelligence = onCall(async (request) => {
+  requireVerifiedIdentity(request.auth);
   const scope = await authorizeOrganization(
     request.auth?.uid,
     request.data?.organizationId,

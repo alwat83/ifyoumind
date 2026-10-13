@@ -1,7 +1,7 @@
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
-import { authorizeOrganization } from './authorization';
+import { authorizeOrganization, requireVerifiedIdentity } from './authorization';
 import {
   grantsPro,
   shouldApplySubscriptionEvent,
@@ -124,6 +124,7 @@ export const getCommercialStatus = onCall({secrets:[stripeSecretKey]}, async (re
 });
 
 export const requestCommercialAccess = onCall(async (request) => {
+  requireVerifiedIdentity(request.auth);
   const scope = await authorizeOrganization(
     request.auth?.uid, request.data?.organizationId, readMembership,
   );
@@ -157,6 +158,7 @@ export const requestCommercialAccess = onCall(async (request) => {
 
 
 export const createBillingPortalSession = onCall({secrets:[stripeSecretKey]}, async (request) => {
+  requireVerifiedIdentity(request.auth);
   const scope=await authorizeOrganization(request.auth?.uid,request.data?.organizationId,readMembership);
   const org=(await organizations().doc(scope.organizationId).get()).data()||{};
   const customerId=typeof org.stripeCustomerId==='string'?org.stripeCustomerId.trim():'';
@@ -178,6 +180,7 @@ export const createBillingPortalSession = onCall({secrets:[stripeSecretKey]}, as
 });
 
 export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, async (request) => {
+  requireVerifiedIdentity(request.auth);
   const scope=await authorizeOrganization(request.auth?.uid,request.data?.organizationId,readMembership);
   const offer=request.data?.offer;
   if(offer!=='pro'&&offer!=='report') throw new HttpsError('invalid-argument','Choose a valid offer.');
@@ -317,6 +320,7 @@ async function handleReportPayment(session:Record<string,any>,event:{created:num
 }
 
 export const unlockDecisionReportWithPro = onCall(async (request) => {
+  requireVerifiedIdentity(request.auth);
   const scope=await authorizeOrganization(
     request.auth?.uid,request.data?.organizationId,readMembership,['owner','admin'],
   );

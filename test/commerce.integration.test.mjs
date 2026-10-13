@@ -8,6 +8,9 @@ import { createRequire } from 'node:module';
 const WEBHOOK_SECRET = 'whsec_integration_test';
 process.env.STRIPE_WEBHOOK_SECRET = WEBHOOK_SECRET;
 process.env.STRIPE_SECRET_KEY = 'sk_test_integration';
+// The verified-email check is bypassed only inside the local functions emulator;
+// make sure this suite always exercises the production behaviour.
+delete process.env.FUNCTIONS_EMULATOR;
 
 const require = createRequire(new URL('../functions/package.json', import.meta.url));
 const handlers = require('./lib/index.js');
@@ -21,9 +24,11 @@ let orgId;
 let projectCounter = 0;
 let stripeRequests = [];
 let stripeSubscriptions = {};
+let fetchedUrls = [];
 
 // Stand-in for the Stripe REST API: records checkout requests and serves subscriptions.
 globalThis.fetch = async (url, init = {}) => {
+  fetchedUrls.push(String(url));
   const path = String(url).replace('https://api.stripe.com/v1/', '');
   const json = (status, body) => ({ ok: status < 400, status, json: async () => body });
   if (path === 'checkout/sessions' && init.method === 'POST') {
@@ -38,12 +43,13 @@ globalThis.fetch = async (url, init = {}) => {
   throw new Error(`Unexpected fetch ${url}`);
 };
 
-async function call(name, data, uid = 'owner-uid') {
+async function call(name, data, uid = 'owner-uid', { emailVerified = true } = {}) {
   try {
-    const result = await handlers[name].run({ data, auth: uid ? { uid, token: { email: `${uid}@example.com` } } : undefined });
+    const token = { email: `${uid}@example.com`, ...(emailVerified === 'omit' ? {} : { email_verified: emailVerified }) };
+    const result = await handlers[name].run({ data, auth: uid ? { uid, token } : undefined });
     return { result };
   } catch (error) {
-    return { error: String(error.code) };
+    return { error: String(error.code), message: error.message };
   }
 }
 
@@ -85,7 +91,7 @@ async function deliver(type, object, { id = `evt_${++eventCounter}`, created = M
 }
 
 before(async () => { orgId = await newOrg(); });
-beforeEach(() => { stripeRequests = []; stripeSubscriptions = {}; process.env.STRIPE_SECRET_KEY = 'sk_test_integration'; });
+beforeEach(() => { stripeRequests = []; stripeSubscriptions = {}; fetchedUrls = []; process.env.STRIPE_SECRET_KEY = 'sk_test_integration'; });
 
 // ---- Report access ----
 
@@ -375,14 +381,31 @@ test('Pro is recorded as a payment only when the subscription grants Pro', async
 });
 
 test('the growth dashboard reports confirmed payments, not browser returns', async () => {
-  const admin = { uid: 'admin-uid', token: { admin: true } };
+  const admin = { uid: 'admin-uid', token: { admin: true, email_verified: true } };
   const result = await handlers.getProductFunnelMetrics.run({ data: { days: 30 }, auth: admin });
   assert.ok(result.confirmedPayments.live.payments >= 2);
   assert.ok(result.confirmedPayments.test.payments >= 1);
   assert.ok(result.confirmedPayments.recentLive.every((row) => row.checkoutSessionId));
   await assert.rejects(
-    handlers.getProductFunnelMetrics.run({ data: { days: 30 }, auth: { uid: 'owner-uid', token: {} } }),
+    handlers.getProductFunnelMetrics.run({ data: { days: 30 }, auth: { uid: 'owner-uid', token: { email_verified: true } } }),
     (error) => error.code === 'permission-denied',
+  );
+});
+
+test('the growth dashboard also requires a verified email, and an admin claim alone is not enough', async () => {
+  for (const token of [{ admin: true }, { admin: true, email_verified: false }, { admin: true, email_verified: 'true' }]) {
+    await assert.rejects(
+      handlers.getProductFunnelMetrics.run({ data: { days: 30 }, auth: { uid: 'admin-uid', token } }),
+      (error) => error.code === 'failed-precondition',
+    );
+  }
+  await assert.rejects(
+    handlers.getProductFunnelMetrics.run({ data: { days: 30 } }),
+    (error) => error.code === 'unauthenticated',
+  );
+  await assert.rejects(
+    handlers.getProductFunnelMetrics.run({ data: { days: 30 }, auth: { uid: 'owner-uid', token: {} } }),
+    (error) => error.code === 'failed-precondition',
   );
 });
 
@@ -461,4 +484,93 @@ test('a free decision with one comparison is unchanged', async () => {
   assert.equal(created.result.brief.comparisons.length, 1);
   assert.deepEqual(created.result.reportOnlyLocations, []);
   assert.equal((await project(free, created.result.id)).freeBrief, null);
+});
+
+// ---- Verified email is required before writes, analysis and billing ----
+
+const VERIFY_MESSAGE = 'Verify your email address to continue.';
+const PROTECTED = {
+  createMarketIntelligenceProject: (o) => ({ organizationId: o, location: 'Denver, CO', concept: 'Gym', decision: 'Open here?', comparisonLocations: ['Austin, TX'] }),
+  createCommercialCheckout: (o) => ({ organizationId: o, offer: 'pro' }),
+  createBillingPortalSession: (o) => ({ organizationId: o }),
+  unlockDecisionReportWithPro: (o, p) => ({ organizationId: o, projectId: p }),
+  requestCommercialAccess: (o) => ({ organizationId: o, offer: 'pro' }),
+  createUniversalDataset: (o) => ({ organizationId: o, name: 'Sales', metric: 'Revenue', unit: 'USD' }),
+  addUniversalObservation: (o) => ({ organizationId: o, datasetId: 'ds1', entity: 'A', period: '2026-01', value: 1 }),
+  importUniversalObservations: (o) => ({ organizationId: o, datasetId: 'ds1', rows: [] }),
+  seedUniversalDemoData: (o) => ({ organizationId: o }),
+  analyzeUniversalDatasets: (o) => ({ organizationId: o, datasetIds: ['ds1', 'ds2'] }),
+  reasonAcrossUniversalDatasets: (o) => ({ organizationId: o, datasetIds: ['ds1', 'ds2'], targetDatasetId: 'ds1' }),
+  askUniversalIntelligence: (o) => ({ organizationId: o, question: 'What changed?' }),
+};
+
+test('all twelve protected functions refuse unverified and unflagged tokens', async () => {
+  await seedCensus();
+  const pro = await newOrg({ plan: 'pro', stripeCustomerId: 'cus_verify' });
+  const projectId = await newProject(pro);
+  for (const [name, data] of Object.entries(PROTECTED)) {
+    for (const emailVerified of [false, 'omit', 'true']) {
+      const r = await call(name, data(pro, projectId), 'owner-uid', { emailVerified });
+      assert.equal(r.error, 'failed-precondition', `${name} with email_verified=${emailVerified}`);
+      assert.equal(r.message, VERIFY_MESSAGE, name);
+    }
+    assert.equal((await call(name, data(pro, projectId), null)).error, 'unauthenticated', name);
+  }
+  assert.equal(stripeRequests.length, 0);
+  assert.deepEqual(fetchedUrls, []);
+  const root = orgs().doc(pro);
+  assert.equal((await root.collection('marketProjects').get()).size, 1);
+  for (const sub of ['datasets', 'analysisRuns', 'commercialLeads', 'questions']) {
+    assert.equal((await root.collection(sub).get()).size, 0, sub);
+  }
+  assert.equal((await org(pro)).proReportAllowance, undefined);
+  assert.equal((await project(pro, projectId)).decisionReportIncludedWithPro, undefined);
+});
+
+test('an unverified decision request writes no project and makes no Census call', async () => {
+  const free = await newOrg();
+  const r = await call('createMarketIntelligenceProject', PROTECTED.createMarketIntelligenceProject(free), 'owner-uid', { emailVerified: false });
+  assert.equal(r.error, 'failed-precondition');
+  assert.equal((await orgs().doc(free).collection('marketProjects').get()).size, 0);
+  assert.deepEqual(fetchedUrls, []);
+});
+
+test('an unverified checkout makes no Stripe request; the same caller verified opens checkout', async () => {
+  const free = await newOrg();
+  const id = await newProject(free);
+  assert.equal((await call('createCommercialCheckout', { organizationId: free, offer: 'report', projectId: id }, 'owner-uid', { emailVerified: false })).error, 'failed-precondition');
+  assert.equal((await call('createCommercialCheckout', { organizationId: free, offer: 'pro' }, 'owner-uid', { emailVerified: false })).error, 'failed-precondition');
+  assert.equal(stripeRequests.length, 0);
+  assert.deepEqual(fetchedUrls, []);
+  const ok = await call('createCommercialCheckout', { organizationId: free, offer: 'pro' });
+  assert.equal(ok.result.url, 'https://checkout.stripe.com/c/pay/x');
+  assert.equal(stripeRequests.length, 1);
+});
+
+test('an unverified Pro unlock leaves the allowance unchanged', async () => {
+  const pro = await newOrg({ plan: 'pro', proReportAllowance: { period: allowancePeriod(), used: 2 } });
+  const id = await newProject(pro);
+  assert.equal((await call('unlockDecisionReportWithPro', { organizationId: pro, projectId: id }, 'owner-uid', { emailVerified: false })).error, 'failed-precondition');
+  assert.deepEqual((await org(pro)).proReportAllowance, { period: allowancePeriod(), used: 2 });
+  assert.equal((await project(pro, id)).decisionReportIncludedWithPro, undefined);
+});
+
+test('exempt workspace, status, analytics and read functions still work unverified', async () => {
+  const unverified = { emailVerified: false };
+  const created = await call('createIntelligenceOrganization', { name: 'New workspace' }, 'fresh-uid', unverified);
+  assert.equal(created.error, undefined);
+  const fresh = created.result.organizationId;
+  assert.equal((await call('getMyIntelligenceOrganization', {}, 'fresh-uid', unverified)).result.organization.organizationId, fresh);
+  assert.equal((await call('getIntelligenceOrganization', { organizationId: fresh }, 'fresh-uid', unverified)).result.role, 'owner');
+  assert.equal((await call('getCommercialStatus', { organizationId: fresh }, 'fresh-uid', unverified)).error, undefined);
+  assert.equal((await call('recordProductEvent', { organizationId: fresh, event: 'app_open' }, 'fresh-uid', unverified)).error, undefined);
+  assert.equal((await call('getRecentMarketIntelligenceProjects', { organizationId: fresh }, 'fresh-uid', unverified)).error, undefined);
+  assert.equal((await call('listUniversalDatasets', { organizationId: fresh }, 'fresh-uid', unverified)).error, undefined);
+  assert.equal((await call('getRecentUniversalAnalysisRuns', { organizationId: fresh }, 'fresh-uid', unverified)).error, undefined);
+  const id = await newProject(orgId);
+  assert.equal((await call('getMarketIntelligenceProject', { organizationId: orgId, projectId: id }, 'owner-uid', unverified)).error, undefined);
+  // A cached sample (stale fallback if Census is unreachable) is served to anyone.
+  await db().collection('publicSamples').doc('decision-report').set({ payload: { id: 'sample', sample: true }, schemaVersion: 2, generatedAtMs: Date.now() });
+  assert.deepEqual((await call('getSampleDecisionReport', {}, null)).result, { id: 'sample', sample: true });
+  assert.equal((await deliver('charge.refunded', { id: 'ch_verify' })).statusCode, 200);
 });

@@ -1,6 +1,6 @@
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
-import { authorizeOrganization } from './authorization';
+import { authorizeOrganization, requireVerifiedIdentity } from './authorization';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const readMembership = async (organizationId: string, uid: string) =>
@@ -26,6 +26,7 @@ function optionalText(value: unknown, max = 160): string | null {
 }
 
 export const createUniversalDataset = onCall(async (request) => {
+  requireVerifiedIdentity(request.auth);
   const scope = await authorizeOrganization(
     request.auth?.uid, request.data?.organizationId, readMembership, ['owner', 'admin'],
   );
@@ -53,6 +54,7 @@ export const createUniversalDataset = onCall(async (request) => {
 });
 
 export const addUniversalObservation = onCall(async (request) => {
+  requireVerifiedIdentity(request.auth);
   const scope = await authorizeOrganization(
     request.auth?.uid, request.data?.organizationId, readMembership, ['owner', 'admin'],
   );

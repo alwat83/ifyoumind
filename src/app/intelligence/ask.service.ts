@@ -1,5 +1,7 @@
 import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Functions, httpsCallable } from '@angular/fire/functions';
+import { redirectIfUnverified } from '../auth/email-verification';
 
 export interface UniversalAskSignal {
   datasetId: string;
@@ -30,9 +32,10 @@ export interface SavedQuestion { id:string; question:string; updatedAt:string|nu
 @Injectable({ providedIn: 'root' })
 export class AskService {
   private readonly functions = inject(Functions);
+  private readonly router = inject(Router);
   async ask(organizationId:string, question:string): Promise<UniversalAskResponse> {
     const call = httpsCallable<{organizationId:string;question:string},UniversalAskResponse>(this.functions,'askUniversalIntelligence');
-    return (await call({organizationId,question})).data;
+    return (await redirectIfUnverified(this.router, () => call({organizationId,question}))).data;
   }
   async recent(organizationId:string): Promise<RecentQuestion[]> {
     const call=httpsCallable<{organizationId:string},{questions:RecentQuestion[]}>(this.functions,'getRecentIntelligenceQuestions');

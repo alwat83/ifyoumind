@@ -1,6 +1,6 @@
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall } from 'firebase-functions/v2/https';
-import { authorizeOrganization } from './authorization';
+import { authorizeOrganization, requireVerifiedIdentity } from './authorization';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const readMembership = async (organizationId: string, uid: string) =>
@@ -57,6 +57,7 @@ const demo: DemoDataset[] = [
 ];
 
 export const seedUniversalDemoData = onCall(async (request) => {
+  requireVerifiedIdentity(request.auth);
   const scope = await authorizeOrganization(
     request.auth?.uid,
     request.data?.organizationId,

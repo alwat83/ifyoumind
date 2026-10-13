@@ -646,6 +646,37 @@ Founder approved releasing PR #38 at reviewed head `c0e9894`.
 6. #26 after the QA account baseline.
 7. #18/#24 after the GA4 review.
 
+## RELEASE: PR #33 FAVICON — 2026-10-13 (Claude, Anthropic): deployed and production verified
+Founder approved releasing PR #33 at reviewed head `cb61084`.
+
+**Pre-merge checks:**
+- **Head and base:** the head was unchanged, master was `f98e19b`, and the merge was clean.
+- **CI:** green (`build` and `qa`).
+- **Scope:** 7 files, all favicon-related:
+  - `src/favicon.png` (64×64);
+  - `public/favicon.ico` (16, 32 and 48 px);
+  - `public/apple-touch-icon.png` (180×180);
+  - an `apple-touch-icon` link tag in `src/index.html` and the guide generator;
+  - `test/favicon.test.mjs` and a one-line allowlist in `test/guides.test.mjs`.
+
+**Merged** as **`7c02795`** (merge commit). **Deploy:** run 38448419661 (#181) succeeded at 18:42:56Z. The main bundle is unchanged (`main-B3S77CN4.js`), as expected for static assets.
+
+**Production checks** (read-only, 18:47Z): **8/8 pass**.
+- **`/favicon.png`:** 200, `image/png`, 4,187 bytes, PNG signature, 64×64. The md5 matches the build (`b82ab645…`).
+- **`/favicon.ico`:** 200, `image/x-icon`, 4,833 bytes, ICO signature, 3 sizes. The md5 matches (`55b66a56…`).
+- **`/apple-touch-icon.png`:** 200, `image/png`, 180×180. The md5 matches (`8d362712…`).
+- **No HTML fallback:** none of the three bodies is the SPA HTML.
+- **Link tags:** the homepage and guide pages carry the icon and apple-touch-icon links.
+- **Headers:** security headers unchanged.
+- **Pages:** `/`, `/login`, `/register`, `/sample-report` and `/privacy-policy` load at 1280 and 390 px with 0 console errors and 0 overflow. Each page requested `/favicon.png` and got `image/png`.
+- **Redirects:** signed-out redirects keep the return URL.
+
+**Remaining issues:**
+- `/login` and `/register` have the generic title "ifYouMind" (cosmetic; pre-existing).
+- Signed-in production journeys are still unverified (no QA accounts).
+
+**Holds unchanged:** #26, #39, #40, #42, #18, #24 and all others.
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

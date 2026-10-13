@@ -195,3 +195,28 @@ test('reconciliation lists every difference between Firestore and Stripe live re
   assert.equal(reconcileWithStripe(records, stripe).clean, false);
   assert.equal(reconcileWithStripe({ payments: [], ledger: [] }, { sessions: [], invoices: [], charges: [], disputes: [] }).clean, true);
 });
+
+// Shapes copied from the ifYouMind Stripe SANDBOX (test mode), 2026-10-13: ids, amounts and links only.
+test('sandbox shapes: a report refund matches by payment intent; a Pro refund matches only by customer', () => {
+  const payments = [
+    // Report checkout: the session carries the charge's payment intent.
+    live({ checkoutSessionId: 'cs_test_a1UaDdVd', offer: 'report', organizationId: 'org_sbx', paymentIntentId: 'pi_3UOko3CZjBRiXCDe0I5i3njV', customerId: null, fulfilment: 'fulfilled' }),
+    // Pro checkout: payment_intent is null on the session; only the customer links it.
+    live({ checkoutSessionId: 'cs_test_a1G2PqT0', offer: 'pro', organizationId: 'org_sbx', paymentIntentId: null, customerId: 'cus_VPTo1VEVpgsPZ1', invoiceId: 'in_1UOeqnCZjBRiXCDer8lWgagM' }),
+  ];
+  const refunds = [
+    live({ kind: 'charge', chargeId: 'ch_3UOko3CZjBRiXCDe03z0xlPs', paymentIntentId: 'pi_3UOko3CZjBRiXCDe0I5i3njV', customerId: null, amountRefunded: 7900, fullyRefunded: true }),
+    live({ kind: 'charge', chargeId: 'ch_3UOeqnCZjBRiXCDe0mmlL8Dk', paymentIntentId: 'pi_3UOeqnCZjBRiXCDe0vTBtexQ', customerId: 'cus_VPTo1VEVpgsPZ1', amountRefunded: 3900, fullyRefunded: true }),
+  ];
+  const s = revenueSummary({ payments, ledger: refunds, excludedOrganizations: new Set() });
+  assert.equal(s.refundedMinorUnits, 7900 + 3900, 'both resolved: report by intent, Pro by its only payment for that customer');
+  assert.deepEqual(s.unresolvedReversals, []);
+  assert.equal(s.genuinePayingCustomers, 0, 'both purchases fully refunded');
+  // A Pro renewal for the same customer makes the Pro refund ambiguous: it is no longer guessed.
+  const withRenewal = revenueSummary({ payments, ledger: [...refunds, live({ kind: 'invoice', invoiceId: 'in_renewal', status: 'paid', renewal: true, organizationId: 'org_sbx', customerId: 'cus_VPTo1VEVpgsPZ1' })], excludedOrganizations: new Set() });
+  assert.deepEqual(withRenewal.unresolvedReversals.map(r => r.id), ['ch_3UOeqnCZjBRiXCDe0mmlL8Dk']);
+  assert.equal(withRenewal.refundedMinorUnitsUnresolved, 3900);
+  // Report refunded (resolved) leaves Pro start + renewal; even if the ambiguous refund applies, one stands.
+  assert.equal(withRenewal.genuinePayingCustomers, 1, 'conservative: still paying with the ambiguous refund applied');
+  assert.equal(withRenewal.payingCustomersNeedingReview, 0);
+});

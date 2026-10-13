@@ -67,6 +67,7 @@ test('local builds never land in the deploy directory', () => {
 test('no emulator exception weakens the verification gate', () => {
   const guard = readFileSync('src/app/auth.guard.ts', 'utf8');
   assert.doesNotMatch(guard, /useLocalEmulators/);
+  assert.doesNotMatch(guard, /state\.url ===|\/profile/, 'no page is exempt from verification');
   const register = readFileSync('src/app/auth/register/register.component.ts', 'utf8');
   assert.doesNotMatch(register, /useLocalEmulators/);
   assert.match(register, /await this\.sendVerification\(credential\.user\);\s*await this\.router\.navigate\(\['\/verify-email'\]\)/);

@@ -14,13 +14,9 @@ export const authGuard: CanActivateFn = (route, state) => {
     switchMap(async (user) => {
       if (user) {
         if (await ensureFreshVerification(user)) return true;
-        // No emulator exception: local and CI runs verify email exactly as production does.
-        if (state.url === '/profile') {
-          return true;
-        } else {
-          router.navigate(['/verify-email']);
-          return false;
-        }
+        // No exceptions: every guarded page needs a verified email, locally and in production.
+        router.navigate(['/verify-email']);
+        return false;
       } else {
         router.navigate(['/login'],{queryParams:loginParams(state.url)});
         return false;

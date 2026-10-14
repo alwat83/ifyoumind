@@ -930,6 +930,38 @@ After these gates, focus shifts to customer testing, conversion and revenue, not
 - **#46 assessment:** 4 files, no imports from production code, no package, config or secret changes; CI green; safe to merge independently. Note that any master merge triggers a production deploy run, which here is a behaviour-neutral redeploy.
 - **Business study approval package:** Notion child page plus `docs/research/business-study-approval.md`. Awaiting approval; no outreach.
 
+## FOUNDER DECISIONS AND FINAL RELEASE CHECKS — 2026-10-14 (Claude, Anthropic): release candidates, nothing merged or deployed
+**Founder decisions (2026-10-14):**
+- **#47:** approved as the priority release candidate, subject to final checks.
+- **#45:** direction approved; the equivalence wording had to be revised first.
+- **#46:** approved as the evidence-evaluation foundation, released separately from #45 and #47.
+- **`getUniversalDataset`:** keep for now.
+- **App Check:** plan only, no enforcement.
+- **Billing alert:** proposal only; no billing change without review.
+- **Study:**
+  - approved in principle: 4 founders and 4 advisers; at least 3 on phones; a two-week window; the founder moderates sessions 1–2; neutral invitations with at most one follow-up; no paid advertising;
+  - no incentive at first;
+  - final drafts must be approved before anything is sent.
+- **Unchanged:** Business is the near-term revenue priority; Life continues as a parallel research and design track; $79 and $39 pricing is preserved.
+
+**#47 at `86f2a2c` (CI green):**
+- **Caps:** the dataset and observation caps are now exact under parallel calls, because they check and write in one transaction on the parent document. Emulator: exactly 5 of 15, 2 of 10 and 2 of 6 parallel calls passed.
+- **New read quota:** 2,000 a day, shared by list, get and recent-runs.
+- **Counters:** carry `expiresAt` for an optional TTL policy.
+- **Worst case:** about $1.70 per account per day. Multi-account abuse scales linearly; the mitigations are App Check, #26 and the budget alert.
+- **Entry points:** all 10 functions are limited. `synthesizeUniversalAnalysis` has never been exported.
+- **Production check needed:** the frontend calls Ask-history and saved-question functions that are not in the deploy allowlist. Whether they are live needs a production `functions:list`.
+- **Tests:** functions 59/59, QA integration 24 + 1 skipped, rules 7/7, organizations 5/5, commerce 29/29, fast 52/52, browser 68/68, build pass.
+- **New docs:** `docs/security/app-check-rollout.md` and `docs/security/billing-alert-proposal.md`.
+
+**#45 at `1216414`:**
+- **Wording:** "About the same" / "no clear difference" are gone. Every gap is reported with its size, and gaps under 5% / 2 points are flagged "small gap that may not be real". The method note says that nothing has been significance-tested and that the flag is a reading aid.
+- **Tests:** fast 65/65; browser 75/76, with the one failure an emulator network flake that passed on re-run (52/52 across the affected specs); production build pass.
+
+**#46 at `37bd460`:** CI green on the unchanged master base `92b3196`. Merging deploys a behaviour-neutral production run.
+
+**Recruitment package:** `docs/research/business-study-recruitment.md` and Notion. Awaiting approval to send.
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

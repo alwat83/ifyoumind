@@ -706,6 +706,38 @@ Founder approved releasing PR #33 at reviewed head `cb61084`.
 5. Do the deferred live $79 purchase test, then refund it.
 6. Customer acquisition.
 
+## RELEASE: PR #40 FREE-LIMIT TESTS — 2026-10-14 (Claude, Anthropic): deployed and production verified (signed out)
+Founder approved releasing PR #40 at reviewed head `99dd855`.
+
+**Pre-merge checks:**
+- **Head, base and CI:** the head was unchanged, master was `7c02795`, the merge was clean, and CI was green (`build` and `qa`).
+- **No website change:** the diff touched no `src/` file.
+- **Production code:** the only change removed the demo-project exemption and moved the same rule into helpers. The period start, the `>= 3` check and the message are identical, verified side by side.
+
+**Merged** as **`4acc655`**. **Deploy:** run 38490120459 (#182) succeeded at 00:29:21Z. The main bundle is unchanged (`main-B3S77CN4.js`).
+
+**Production smoke checks** (read-only): **all pass**.
+- **Functions:** `createMarketIntelligenceProject` and `getCommercialStatus` are live and refuse a call without credentials (401 `UNAUTHENTICATED`).
+- **Public sample:** `getSampleDecisionReport` returns the sample (Austin, TX, 2 comparisons), and "Sources cited" renders.
+- **Pages:** 5 pages at 1280 and 390 px, with 0 console errors and 0 overflow.
+- **Headers, favicon and redirects:** headers unchanged, favicon OK, signed-out redirects correct.
+
+**Founder-metrics QA exclusion: it was NOT implemented.**
+- `getProductFunnelMetrics` counted every event and payment.
+- Draft **#43** (`2842983`) adds read-time exclusion of QA workspaces:
+  - the fixture domain is always excluded;
+  - `adminConfig/qaExclusion.emails`, with Gmail `+tag` aliases matching;
+  - the `qa` claim, or listed workspace IDs.
+- The dashboard shows what was excluded. `adminConfig` is closed to clients (rules-tested).
+- **Until #43 ships and the config is set, founder metrics must not be read as excluding QA.**
+
+**Pre-existing flake found:** draft **#44** (`598c3ea`) fixes a session-restore race on `/verify-email`: a quick click right after a page load could send a signed-in visitor to `/login`. Without the fix the suite failed in 2 of 5 runs; with it, 9 of 10 passed, and the one failure wasn't captured.
+
+**Holds unchanged:**
+- #26: release preparation done; the production signed-in QA run is mandatory.
+- #39: live reconciliation must be completed and reviewed first.
+- #42, #43, #44, #18, #24, #35, #41 and all others.
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

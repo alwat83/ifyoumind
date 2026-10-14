@@ -906,6 +906,30 @@ After these gates, focus shifts to customer testing, conversion and revenue, not
   - **AI pre-approval checklist.**
 - **Consolidation and dependencies:** `docs/strategy/execution-status.md`.
 
+## SECURITY AUDIT, #45 REVIEW, #46 ASSESSMENT, STUDY PACKAGE — 2026-10-14 (Claude, Anthropic): drafts only
+- **Universal-data audit** (`docs/security/universal-data-audit.md` in [#47](https://github.com/alwat83/ifyoumind/pull/47), draft, not deployed).
+  - **Today:** any free account can create unlimited datasets and observations; there are no rate limits and no App Check.
+  - **`askUniversalIntelligence`:** reads up to about 50,100 documents per call.
+  - **`listUniversalDatasets`:** its count queries are unbounded.
+  - **`getUniversalDataset`:** has no frontend caller.
+  - **#47's fixes:**
+    - per-user daily quotas;
+    - 50 datasets per workspace and 5,000 observations per dataset;
+    - Ask bounded to 6,550 reads;
+    - `maxInstances: 10`;
+    - stored results trimmed;
+    - dimensions validated.
+  - **Tests:** functions 59/59, QA integration 19 + 1 skipped, rules 7/7, browser 68/68.
+  - **Recommended separately:** retire `getUniversalDataset` (and later `seedUniversalDemoData`), App Check, a budget alert.
+- **#45 review fixes** (`8414730`):
+  - the method note now says the 5% band is a rule of thumb, not a significance test, and that larger gaps are untested;
+  - conflicting measures are named in the headline;
+  - older briefs are handled safely;
+  - the homepage drops "neighborhood" and "household signals".
+  - **Tests:** fast 63/63, browser 76/76, production build pass.
+- **#46 assessment:** 4 files, no imports from production code, no package, config or secret changes; CI green; safe to merge independently. Note that any master merge triggers a production deploy run, which here is a behaviour-neutral redeploy.
+- **Business study approval package:** Notion child page plus `docs/research/business-study-approval.md`. Awaiting approval; no outreach.
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

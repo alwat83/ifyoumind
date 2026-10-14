@@ -21,13 +21,15 @@ const charlotte=place('Charlotte, NC',82068,903844,385700,5.4);
 test('the live sample: no favorable/caution verdict, growth reported as mixed, not ranked within the band', () => {
   const s=summarizeEvidence(austin,[nashville,charlotte]);
   assert.equal(s.kind,'differences');
-  assert.equal(s.headline,'Austin, TX has higher median household income, population and median home value than both Nashville, TN and Charlotte, NC.');
+  assert.equal(s.headline,'Austin, TX has higher median household income, population and median home value than both Nashville, TN and Charlotte, NC. It is mixed on 5-year population change.');
   const growth=s.findings.find(f=>f.key==='growth');
   assert.equal(growth.position,'mixed');
   assert.match(growth.detail,/about the same as Nashville, TN \(4%\)/);
   assert.match(growth.detail,/lower than Charlotte, NC \(5\.4%\)/);
   for(const word of ['favorable','caution','recommend this','best','leads']) assert.ok(!s.headline.toLowerCase().includes(word),word);
   assert.match(s.limits,/cannot recommend a location/);
+  assert.match(s.method,/not a statistical test/);
+  assert.match(s.method,/without a significance test/);
 });
 
 test('no clear difference is a first-class result', () => {
@@ -65,4 +67,12 @@ test('the closeness band: under 5% (levels) or 2 points (rates) is about the sam
 test('missing measures are skipped, not invented', () => {
   const s=summarizeEvidence(place('A, TX',90000,100000,200000,null),[place('B, TX',70000,100000,200000,1)]);
   assert.ok(!s.findings.some(f=>f.key==='growth'));
+});
+
+test('older saved briefs: no comparisons field, or non-numeric values, never break the page', () => {
+  assert.equal(summarizeEvidence(austin, undefined).kind, 'single_place');
+  const odd={location:'Old, TX',metrics:[{key:'income',label:'Median household income',value:'n/a',unit:'USD'},{key:'population',label:'Population',value:1000,unit:'people'}]};
+  const s=summarizeEvidence(odd,[place('B, TX',70000,1200,200000,1)]);
+  assert.deepEqual(s.findings.map(f=>f.key),['population']);
+  assert.equal(summarizeEvidence({location:'X',metrics:undefined},[]).kind,'single_place');
 });

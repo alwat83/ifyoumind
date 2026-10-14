@@ -32,6 +32,7 @@ test('marketing copy makes no uploaded-data claim the reports do not support', (
   const landing=read('../src/app/intelligence/public-landing.component.html');
   assert.doesNotMatch(landing,/your own data/i);
   assert.match(landing,/From the real sample report/);
+  assert.doesNotMatch(landing,/neighborhood|household signals/i, 'city-level data only; no household trend');
   const home=read('../src/app/intelligence/consumer-home.component.html');
   assert.match(home,/isn’t used in Decision Reports yet/);
 });

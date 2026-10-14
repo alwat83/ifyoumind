@@ -96,7 +96,7 @@ export class MarketReportComponent implements OnInit {
   get summary():EvidenceSummary|null{
     const brief=this.project?.brief;
     if(!brief||!this.project)return null;
-    return summarizeEvidence({location:this.project.location,metrics:brief.metrics},brief.comparisons);
+    return summarizeEvidence({location:this.project.location,metrics:brief.metrics||[]},brief.comparisons||[]);
   }
 
   /** How many key figures cite their source. This counts citations; it is not a confidence score. */

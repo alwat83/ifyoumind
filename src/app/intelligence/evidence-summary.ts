@@ -63,9 +63,13 @@ function listLabels(labels:string[]):string{
   return listPlaces(lower);
 }
 
-export function summarizeEvidence(primary:SummaryPlace,comparisons:SummaryPlace[]):EvidenceSummary{
+export function summarizeEvidence(primaryIn:SummaryPlace,comparisonsIn:SummaryPlace[]|undefined|null):EvidenceSummary{
+  // Saved decisions from older schema versions may lack comparisons or carry non-numeric values.
+  const usable=(place:SummaryPlace):SummaryPlace=>({location:place?.location||'This place',metrics:(place?.metrics||[]).filter(metric=>typeof metric?.value==='number'&&Number.isFinite(metric.value))});
+  const primary=usable(primaryIn);
+  const comparisons=(comparisonsIn||[]).map(usable);
   const limits='These figures describe the people who live in each place. They do not measure demand for your business, competitors, rent or foot traffic, so on their own they cannot recommend a location.';
-  const method=`“About the same” means a gap under ${Math.round(CLOSE_RELATIVE*100)}% (or under ${CLOSE_POINTS} percentage points for population change). Census survey estimates carry error, so gaps that small may not be real.`;
+  const method=`“About the same” means a gap under ${Math.round(CLOSE_RELATIVE*100)}% (or under ${CLOSE_POINTS} percentage points for population change). Census survey estimates carry error, so gaps that small may not be real. This is a rule of thumb, not a statistical test: larger gaps are reported as higher or lower without a significance test.`;
   const keyed=(place:SummaryPlace)=>new Map(place.metrics.map(metric=>[metric.key,metric]));
   const mine=keyed(primary);
   const theirs=comparisons.map(place=>({location:place.location,metrics:keyed(place)}));
@@ -124,8 +128,11 @@ export function summarizeEvidence(primary:SummaryPlace,comparisons:SummaryPlace[
   const clauses:string[]=[];
   if(higher.length)clauses.push(`higher ${listLabels(higher)} than ${all}`);
   if(lower.length)clauses.push(`lower ${listLabels(lower)} than ${higher.length?(comparisons.length===1?'it':'each of them'):all}`);
+  const mixed=findings.filter(f=>f.position==='mixed').map(f=>f.label);
+  // Conflicting results are named in the headline too, so it never reads as one-sided.
+  const mixedNote=clauses.length&&mixed.length?` It is mixed on ${listLabels(mixed)}.`:'';
   const headline=clauses.length
-    ? `${primary.location} has ${clauses.join(', and ')}.`
+    ? `${primary.location} has ${clauses.join(', and ')}.${mixedNote}`
     : `${primary.location} is higher than some places and lower than others; no measure sets it apart from ${all}.`;
   return {kind:'differences',headline,findings,limits,method};
 }

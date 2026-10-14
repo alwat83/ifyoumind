@@ -962,6 +962,13 @@ After these gates, focus shifts to customer testing, conversion and revenue, not
 
 **Recruitment package:** `docs/research/business-study-recruitment.md` and Notion. Awaiting approval to send.
 
+## #47 RELEASE CHECKPOINT — 2026-10-14 (Claude, Anthropic): halted before merge; production unchanged at `92b3196`
+- **What the founder authorised:** merging and deploying #47 at exactly `86f2a2c`, provided its diff held no unrelated changes.
+- **What the pre-merge check found:** `86f2a2c` also carried a build-generated `src/sitemap.xml` date change, committed by mistake. **Not merged.**
+- **Corrected head `b6a43f5`:** restores the sitemap and is otherwise identical. It needs fresh founder approval.
+- **#45 and #46:** held. The master base is unchanged, and neither overlaps #47's files.
+- **B2C direction recorded:** consumer (Life) moves up to a near-term discovery and traction priority, in parallel with Business, which remains the revenue priority. Research, specification and prototypes only; a public beta needs separate approval.
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

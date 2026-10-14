@@ -882,6 +882,30 @@ After these gates, focus shifts to customer testing, conversion and revenue, not
   4. Claude writes the evidence-model spec and evaluation suite (test-only).
   5. Claude prepares the concierge pack and the Life concept prototype (no contact without approval).
 
+## 2.0 CONTROLLED EXECUTION — 2026-10-14 (Claude, Anthropic): drafts and research, nothing merged or deployed
+- **Directive:** the founder's consolidated ifYouMind 2.0 directive.
+- **Baseline verified:** production `92b3196` (#43), deploy #183 OK. The authenticated dashboard is not yet verified, and no QA account or exclusion entry exists.
+- **Direction clarified (founder):** the business-plan market-analysis message is the Business landing message only. The platform stays one decision engine with two audiences: Business (revenue priority) and Life (growth). Life now runs as a parallel research and design workstream, unbuilt and unlaunched until approved. This revises the blueprint's "Business door only through Phase C".
+- **WP1:** [#45](https://github.com/alwat83/ifyoumind/pull/45) trust fixes (draft).
+  - `summarizeEvidence` replaces the bullet-count verdict on result and sample pages, with "no clear difference" valid and a disclosed 5% / 2-point band until #29.
+  - The $79 prompt moves after the evidence, and the summary is on the first phone screen.
+  - Real sample figures on the homepage; the "your own data" claim removed.
+  - Forgot password (enumeration-safe); Terms and Privacy links; a city-input proposal (design only).
+  - **Tests:** fast 62/62, functions 55/55, e2e 76/76, production build pass.
+- **WP2:** [#46](https://github.com/alwat83/ifyoumind/pull/46) evidence model and evaluation suite (draft, test-only).
+  - `functions/src/engine/` is not imported by `index.ts`.
+  - Today's builder graded unchanged: the live sample's "leans favorable" has no criteria, bare figures are shown as supports, growth is ranked inside the band, a within-MOE income concern appears, and near-identical cities get "caution".
+  - **Tests:** functions 68/68.
+- **WP3:** `docs/research/sales-health-check/`: concierge package with a synthetic CSV, quality checklist, method, computed sample findings (weekday lunch −20.2%, 95% CI −22.6% to −17.8%, orders not ticket), interview guide, consent draft, success criteria and template.
+- **WP4:** `docs/research/life/`: [job-offer prototype](https://claude.ai/artifact/P4Zbdha5TFQyHXdksk4R6R) (illustrative data) and a 6-person consumer validation plan (C1–C6).
+- **WP5:** `docs/research/data-feasibility.md`.
+  - **Review of the 10 universal functions:** no quotas; `askUniversalIntelligence` reads up to about 50,000 documents per call; `seedUniversalDemoData` is exposed.
+  - **Ingestion pipeline:** designed.
+  - **Source terms:** BLS 500/day, NOAA 10,000/day, EIA attribution, HUD terms to confirm, BEA RPP table names to confirm.
+  - **Retention:** delete raw files on import confirmation, at most 7 days; 45 days for concierge research (founder decision).
+  - **AI pre-approval checklist.**
+- **Consolidation and dependencies:** `docs/strategy/execution-status.md`.
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

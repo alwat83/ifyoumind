@@ -262,3 +262,11 @@ export async function disableAccount(uid) {
   if (!isFixtureEmail(user.email)) throw new Error('Refusing to disable a non-fixture account');
   await auth.updateUser(uid, { disabled: true });
 }
+
+/** Gives a fixture the founder's admin claim, the way it is granted in production (Admin SDK). */
+export async function grantAdminClaim(uid) {
+  const { auth } = admin();
+  const user = await auth.getUser(uid);
+  if (!isFixtureEmail(user.email)) throw new Error('Refusing to grant admin to a non-fixture account');
+  await auth.setCustomUserClaims(uid, { ...(user.customClaims || {}), admin: true });
+}

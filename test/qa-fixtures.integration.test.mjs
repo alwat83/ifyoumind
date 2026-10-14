@@ -174,6 +174,29 @@ test('founder funnel metrics exclude QA workspaces and report that they did', as
   assert.ok(metrics.result.qaExclusion.excludedEvents >= 2);
   assert.ok(metrics.result.qaExclusion.excludedOrganizations >= 1);
   assert.equal(metrics.result.qaExclusion.configured, false, 'no adminConfig doc in the emulator: fixture domain still excluded');
+  assert.equal(metrics.result.qaExclusion.status, 'missing');
+  assert.match(metrics.result.qaExclusion.warnings[0], /has not been created/, 'a missing list is a warning, not a clean result');
+  assert.ok(metrics.result.qaExclusion.byRule.fixture >= 1);
+
+  // The founder's list, written the way the console writes it (Admin access; clients cannot).
+  const { getFirestore } = require('firebase-admin/firestore');
+  const config = getFirestore(app).collection('adminConfig').doc('qaExclusion');
+  try {
+    await config.set({ emails: 'not-a-list' });
+    const empty = (await callable('getProductFunnelMetrics', { days: 1 }, token)).result.qaExclusion;
+    assert.equal(empty.status, 'empty');
+    assert.equal(empty.ignoredEntries, 1);
+    assert.equal(empty.warnings.length, 2);
+
+    await config.set({ organizationIds: [qa.organizationId] });
+    const active = (await callable('getProductFunnelMetrics', { days: 1 }, token)).result.qaExclusion;
+    assert.equal(active.status, 'active');
+    assert.deepEqual(active.warnings, []);
+    assert.ok(active.byRule.organizationId >= 1, 'the listed workspace is counted under its rule');
+    assert.ok(active.excludedEvents >= 2, 'counts stay visible once configured');
+  } finally {
+    await config.delete();
+  }
 });
 
 test('cleanup refuses addresses that are not fixtures', async () => {

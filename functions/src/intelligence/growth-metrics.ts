@@ -1,7 +1,7 @@
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { getAuth } from 'firebase-admin/auth';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
-import { ExclusionDeps, excludedOrganizations, parseQaExclusionConfig } from './qa-exclusion';
+import { ExclusionDeps, QaUser, excludedOrganizations, hasExplicitEntries, parseQaExclusionConfig } from './qa-exclusion';
 
 /** Reads workspace creators and Auth users with the Admin SDK, in Firestore and Auth batch sizes. */
 const adminExclusionDeps=():ExclusionDeps=>({
@@ -18,10 +18,10 @@ const adminExclusionDeps=():ExclusionDeps=>({
     return out;
   },
   async usersOf(uids){
-    const out=new Map<string,{email?:string|null;customClaims?:Record<string,unknown>|null}>();
+    const out=new Map<string,QaUser>();
     for(let i=0;i<uids.length;i+=100){
       const result=await getAuth().getUsers(uids.slice(i,i+100).map(uid=>({uid})));
-      for(const user of result.users)out.set(user.uid,{email:user.email??null,customClaims:user.customClaims??null});
+      for(const user of result.users)out.set(user.uid,{email:user.email??null,emailVerified:user.emailVerified,customClaims:user.customClaims??null});
     }
     return out;
   },
@@ -59,6 +59,21 @@ export function summarizePayments(payments:Array<Record<string,any>>){
   return {live,test,recentLive:recentLive.slice(0,25)};
 }
 
+/**
+ * What the dashboard shows about QA exclusion. Every figure stays visible for auditing, and a
+ * missing or empty config is a warning, never an implication that the figures are clean.
+ */
+export function qaExclusionAudit(input:{exists:boolean;configured:boolean;ignoredEntries:number;excludedOrganizations:number;
+  byRule:Record<string,number>;unverifiedAddressMatches:number;excludedEvents:number;excludedPayments:number;excludedLivePayments:number}){
+  const {exists,...audit}=input;
+  const warnings:string[]=[];
+  if(!exists)warnings.push('The QA exclusion list (adminConfig/qaExclusion) has not been created. Only automated test accounts are excluded, so these figures may include your own QA activity.');
+  else if(!input.configured)warnings.push('The QA exclusion list (adminConfig/qaExclusion) has no usable entries. Only automated test accounts are excluded, so these figures may include your own QA activity.');
+  if(input.ignoredEntries)warnings.push(`${input.ignoredEntries} entr${input.ignoredEntries===1?'y':'ies'} in the QA exclusion list could not be used and were ignored.`);
+  if(input.unverifiedAddressMatches)warnings.push(`${input.unverifiedAddressMatches} workspace(s) use a QA address that has not been verified. They are still counted.`);
+  return {...audit,status:!exists?'missing':input.configured?'active':'empty',warnings};
+}
+
 const FUNNEL=['app_open','decision_created','report_view','pricing_view','checkout_started','checkout_success'] as const;
 
 export const getProductFunnelMetrics=onCall(async(request)=>{
@@ -80,7 +95,8 @@ export const getProductFunnelMetrics=onCall(async(request)=>{
     ...snapshot.docs.map(doc=>doc.data().organizationId),
     ...paymentSnapshot.docs.map(doc=>doc.data().organizationId),
   ].filter((id):id is string=>typeof id==='string'&&id.length>0);
-  const excluded=await excludedOrganizations(allOrganizationIds,config,adminExclusionDeps());
+  const exclusion=await excludedOrganizations(allOrganizationIds,config,adminExclusionDeps());
+  const excluded=exclusion.excluded;
   const isExcluded=(data:Record<string,any>)=>typeof data.organizationId==='string'&&excluded.has(data.organizationId);
   const events=snapshot.docs.map(doc=>doc.data()).filter(data=>!isExcluded(data));
   const payments=paymentSnapshot.docs.map(doc=>doc.data()).filter(data=>!isExcluded(data));
@@ -106,13 +122,17 @@ export const getProductFunnelMetrics=onCall(async(request)=>{
     counts,
     uniqueOrganizations,
     confirmedPayments:summarizePayments(payments),
-    qaExclusion:{
-      // false until the founder creates adminConfig/qaExclusion; the fixture domain is excluded regardless.
-      configured:configSnapshot.exists,
+    qaExclusion:qaExclusionAudit({
+      exists:configSnapshot.exists,
+      configured:hasExplicitEntries(config),
+      ignoredEntries:config.ignoredEntries,
       excludedOrganizations:excluded.size,
+      byRule:exclusion.byRule,
+      unverifiedAddressMatches:exclusion.unverifiedAddressMatches,
       excludedEvents:snapshot.size-events.length,
       excludedPayments:paymentSnapshot.size-payments.length,
-    },
+      excludedLivePayments:paymentSnapshot.docs.filter(doc=>doc.data().livemode===true&&isExcluded(doc.data())).length,
+    }),
     conversion:{
       appToDecision:Number(((uniqueOrganizations.decision_created/activated)*100).toFixed(1)),
       decisionToPricing:uniqueOrganizations.decision_created

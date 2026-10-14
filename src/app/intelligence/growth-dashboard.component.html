@@ -6,10 +6,16 @@
   <section *ngIf="error" class="notice error">{{ error }}</section>
 
   <ng-container *ngIf="metrics as m">
-    <p *ngIf="m.qaExclusion as q" class="notice qa-exclusion">
-      QA and test activity excluded: {{ q.excludedOrganizations }} workspace(s), {{ q.excludedEvents }} event(s), {{ q.excludedPayments }} payment(s).
-      <ng-container *ngIf="!q.configured"> The QA address list (adminConfig/qaExclusion) isn't set yet, so only test-fixture accounts are excluded.</ng-container>
-    </p>
+    <section *ngIf="m.qaExclusion as q" class="notice qa-exclusion" [class.error]="q.status !== 'active'">
+      <p>
+        QA and test activity excluded: {{ q.excludedOrganizations }} workspace(s), {{ q.excludedEvents }} event(s),
+        {{ q.excludedPayments }} payment(s), of which {{ q.excludedLivePayments }} live.
+      </p>
+      <p *ngFor="let warning of q.warnings" class="qa-warning">Warning: {{ warning }}</p>
+    </section>
+    <section *ngIf="!m.qaExclusion" class="notice error qa-exclusion">
+      <p>Warning: QA exclusion status is unavailable, so these figures may include QA activity.</p>
+    </section>
     <section class="funnel">
       <article><span>App visitors</span><strong>{{ m.uniqueOrganizations['app_open'] || 0 }}</strong></article>
       <article><span>Created a decision</span><strong>{{ m.uniqueOrganizations['decision_created'] || 0 }}</strong></article>

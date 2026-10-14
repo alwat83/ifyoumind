@@ -1,6 +1,6 @@
 // Free decision creation, saved-decision retrieval, ownership and restricted pages.
 import { test, expect, signInThroughUi } from '../support/test.mjs';
-import { FIXTURES } from '../support/fixtures.mjs';
+import { FIXTURES, grantAdminClaim } from '../support/fixtures.mjs';
 
 test('a verified free user creates a decision through the app and sees the free brief', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.FREE_NO_REPORTS, { workspace: false });
@@ -52,6 +52,18 @@ test('a non-admin account sees no founder metrics on /app/growth', async ({ page
   await page.goto('/app/growth');
   await expect(page.locator('.notice.error')).toBeVisible();
   await expect(page.locator('.notice.error')).not.toBeEmpty();
+});
+
+test('founder metrics warn when the QA exclusion list is missing and keep the counts visible', async ({ page, fixtures }) => {
+  const founder = await fixtures(FIXTURES.RESTRICTED_ROUTE);
+  await grantAdminClaim(founder.uid);
+  await signInThroughUi(page, founder);
+  await expect(page).toHaveURL(/\/app$/);
+  await page.goto('/app/growth');
+  const audit = page.locator('.qa-exclusion');
+  await expect(audit).toContainText(/QA and test activity excluded: \d+ workspace\(s\), \d+ event\(s\), \d+ payment\(s\), of which \d+ live/);
+  await expect(audit).toContainText('Warning: The QA exclusion list (adminConfig/qaExclusion) has not been created');
+  await expect(audit).toHaveClass(/error/);
 });
 
 test('the fourth free decision this month is refused with a clear message', async ({ page, fixtures, consoleErrors }) => {

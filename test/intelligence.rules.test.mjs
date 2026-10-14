@@ -47,3 +47,14 @@ test('members cannot write Pulse or read private connection state', async () => 
   await assertFails(setDoc(doc(db, 'intelligenceOrganizations/org-a/pulseReports/day'), { summary: 'Fake' }));
   await assertFails(getDoc(doc(db, 'intelligenceOrganizations/org-a/connections/stripe')));
 });
+test('QA exclusion config and billing records are closed to every client', async () => {
+  await env.withSecurityRulesDisabled(async (context) => {
+    await setDoc(doc(context.firestore(), 'adminConfig/qaExclusion'), { emails: ['qa@example.com'] });
+  });
+  for (const db of [env.unauthenticatedContext().firestore(), env.authenticatedContext('alice', { admin: true, email_verified: true }).firestore()]) {
+    await assertFails(getDoc(doc(db, 'adminConfig/qaExclusion')));
+    await assertFails(setDoc(doc(db, 'adminConfig/qaExclusion'), { emails: [] }));
+    await assertFails(getDoc(doc(db, 'stripePayments/cs_1')));
+    await assertFails(getDoc(doc(db, 'productEvents/e1')));
+  }
+});

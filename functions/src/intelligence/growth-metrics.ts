@@ -1,5 +1,31 @@
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
+import { getAuth } from 'firebase-admin/auth';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
+import { ExclusionDeps, excludedOrganizations, parseQaExclusionConfig } from './qa-exclusion';
+
+/** Reads workspace creators and Auth users with the Admin SDK, in Firestore and Auth batch sizes. */
+const adminExclusionDeps=():ExclusionDeps=>({
+  async creatorsOf(ids){
+    const db=getFirestore();
+    const out=new Map<string,string|null>();
+    for(let i=0;i<ids.length;i+=100){
+      const refs=ids.slice(i,i+100).map(id=>db.collection('intelligenceOrganizations').doc(id));
+      for(const snap of await db.getAll(...refs)){
+        const createdBy=snap.data()?.createdBy;
+        out.set(snap.id,typeof createdBy==='string'?createdBy:null);
+      }
+    }
+    return out;
+  },
+  async usersOf(uids){
+    const out=new Map<string,{email?:string|null;customClaims?:Record<string,unknown>|null}>();
+    for(let i=0;i<uids.length;i+=100){
+      const result=await getAuth().getUsers(uids.slice(i,i+100).map(uid=>({uid})));
+      for(const user of result.users)out.set(user.uid,{email:user.email??null,customClaims:user.customClaims??null});
+    }
+    return out;
+  },
+});
 
 // Revenue comes from Stripe-confirmed payments (written by the webhook), never from
 // checkout_success, which only means the browser came back from Checkout.
@@ -47,12 +73,23 @@ export const getProductFunnelMetrics=onCall(async(request)=>{
     getFirestore().collection('stripePayments').where('paidAt','>=',since).limit(5000).get(),
   ]);
 
+  // QA and test workspaces never count. Computed at read time; nothing is written.
+  const configSnapshot=await getFirestore().collection('adminConfig').doc('qaExclusion').get();
+  const config=parseQaExclusionConfig(configSnapshot.data());
+  const allOrganizationIds=[
+    ...snapshot.docs.map(doc=>doc.data().organizationId),
+    ...paymentSnapshot.docs.map(doc=>doc.data().organizationId),
+  ].filter((id):id is string=>typeof id==='string'&&id.length>0);
+  const excluded=await excludedOrganizations(allOrganizationIds,config,adminExclusionDeps());
+  const isExcluded=(data:Record<string,any>)=>typeof data.organizationId==='string'&&excluded.has(data.organizationId);
+  const events=snapshot.docs.map(doc=>doc.data()).filter(data=>!isExcluded(data));
+  const payments=paymentSnapshot.docs.map(doc=>doc.data()).filter(data=>!isExcluded(data));
+
   const counts:Record<string,number>={};
   const organizations:Record<string,Set<string>>={};
   for(const name of FUNNEL){counts[name]=0;organizations[name]=new Set<string>();}
 
-  for(const doc of snapshot.docs){
-    const data=doc.data();
+  for(const data of events){
     const event=String(data.event||'');
     if(!(event in counts))continue;
     counts[event]+=1;
@@ -68,7 +105,14 @@ export const getProductFunnelMetrics=onCall(async(request)=>{
     generatedAt:new Date().toISOString(),
     counts,
     uniqueOrganizations,
-    confirmedPayments:summarizePayments(paymentSnapshot.docs.map(doc=>doc.data())),
+    confirmedPayments:summarizePayments(payments),
+    qaExclusion:{
+      // false until the founder creates adminConfig/qaExclusion; the fixture domain is excluded regardless.
+      configured:configSnapshot.exists,
+      excludedOrganizations:excluded.size,
+      excludedEvents:snapshot.size-events.length,
+      excludedPayments:paymentSnapshot.size-payments.length,
+    },
     conversion:{
       appToDecision:Number(((uniqueOrganizations.decision_created/activated)*100).toFixed(1)),
       decisionToPricing:uniqueOrganizations.decision_created

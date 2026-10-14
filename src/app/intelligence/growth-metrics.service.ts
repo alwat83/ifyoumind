@@ -24,6 +24,8 @@ export interface ProductFunnelMetrics{
   counts:Record<string,number>;
   uniqueOrganizations:Record<string,number>;
   confirmedPayments?:{live:PaymentTotals;test:PaymentTotals;recentLive:ConfirmedPayment[]};
+  /** QA and test workspaces left out of every figure on this page. */
+  qaExclusion?:{configured:boolean;excludedOrganizations:number;excludedEvents:number;excludedPayments:number};
   conversion:{
     appToDecision:number;
     decisionToPricing:number;

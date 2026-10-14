@@ -10,6 +10,7 @@ import {
   subscriptionEventMayChangePlan,
   validStripeSignature,
 } from './stripe-commerce-logic';
+import { LEDGER_EVENT_TYPES, ledgerEntryFor, mergeLedgerData, orderingField, shouldApplyLedgerEvent } from './revenue-ledger-logic';
 import {
   allowancePeriod,
   blocksNewProCheckout,
@@ -270,6 +271,11 @@ async function recordConfirmedPayment(
       organizationId:session.metadata?.organizationId||null,
       projectId:session.metadata?.projectId||null,
       checkoutSessionId:String(session.id),
+      // Links later refunds and disputes (which reference the payment intent) to this payment.
+      paymentIntentId:typeof session.payment_intent==='string'?session.payment_intent:null,
+      invoiceId:typeof session.invoice==='string'?session.invoice:null,
+      // Subscription checkouts have no payment intent; their refunds and disputes match by customer.
+      customerId:typeof session.customer==='string'?session.customer:null,
       amountTotal:typeof session.amount_total==='number'?session.amount_total:null,
       currency:typeof session.currency==='string'?session.currency:null,
       livemode:event.livemode===true,
@@ -278,6 +284,41 @@ async function recordConfirmedPayment(
     });
   }catch(error){
     console.error('Could not record confirmed Stripe payment',session.id,error);
+  }
+}
+
+// Renewals, failed renewals, refunds and disputes, as Stripe reports them. Read-only for access:
+// nothing here changes plans or report entitlements. Older events never overwrite newer ones.
+async function recordLedgerEvent(event:{id:string;type:string;created:number;livemode?:boolean;data:{object:Record<string,any>}}){
+  const entry=ledgerEntryFor(event);
+  if(!entry)return;
+  const db=getFirestore();
+  const ref=db.collection('stripeLedger').doc(entry.id);
+  const applied=await db.runTransaction(async tx=>{
+    const existing=(await tx.get(ref)).data();
+    if(!shouldApplyLedgerEvent(event.created,existing?.[orderingField(entry)]))return false;
+    tx.set(ref,{...mergeLedgerData(existing,entry),updatedAt:FieldValue.serverTimestamp()});
+    return true;
+  });
+  if(!applied)console.info('Ignoring stale Stripe ledger event',event.id,event.type);
+  if(event.type==='charge.dispute.created'){
+    // One review per dispute, even if Stripe redelivers the event after a failed attempt.
+    const review=db.collection('billingReviews').doc(`dispute_opened_${entry.data.disputeId}`);
+    await review.create({
+      kind:'dispute_opened',
+      organizationId:null,
+      disputeId:entry.data.disputeId,
+      chargeId:entry.data.chargeId,
+      paymentIntentId:entry.data.paymentIntentId,
+      customerId:entry.data.customerId,
+      amount:entry.data.amount,
+      currency:entry.data.currency,
+      reason:entry.data.reason,
+      livemode:entry.data.livemode,
+      status:'open',
+      createdAt:FieldValue.serverTimestamp(),
+    }).catch((error:{code?:unknown})=>{if(error?.code!==6)throw error;}); // 6 = ALREADY_EXISTS
+    console.warn('Billing review needed','dispute_opened',entry.data.disputeId);
   }
 }
 
@@ -450,6 +491,8 @@ export const stripeCommercialWebhook = onRequest(
       }else if(event.type==='checkout.session.async_payment_succeeded'){
         // Delayed payment methods (bank debits) complete checkout unpaid and confirm payment later.
         if(event.data.object.metadata?.offer==='report')await handleReportPayment(event.data.object,event);
+      }else if(LEDGER_EVENT_TYPES.has(event.type)){
+        await recordLedgerEvent(event);
       }else if(event.type==='customer.subscription.updated'||event.type==='customer.subscription.deleted'){
         const subscription=event.data.object;
         const metadata=subscription.metadata||{};

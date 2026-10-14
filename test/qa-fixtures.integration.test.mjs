@@ -157,6 +157,48 @@ test('decisions from an earlier month do not count toward this month', async () 
   assert.equal(refused.error, 'RESOURCE_EXHAUSTED');
 });
 
+test('founder funnel metrics exclude QA workspaces and report that they did', async () => {
+  const { getAuth } = require('firebase-admin/auth');
+  const app = (await import('firebase-admin/app')).getApp('qa-fixtures');
+  const qa = await make(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
+  await callable('recordProductEvent', { organizationId: qa.organizationId, event: 'app_open' }, qa.idToken);
+  await callable('recordProductEvent', { organizationId: qa.organizationId, event: 'decision_created' }, qa.idToken);
+  // The founder's admin claim, set the way it is in production (Admin SDK custom claim).
+  const founder = await make(FIXTURES.RESTRICTED_ROUTE, { workspace: false });
+  await getAuth(app).setCustomUserClaims(founder.uid, { admin: true });
+  const token = (await signIn(founder.email)).idToken;
+  const metrics = await callable('getProductFunnelMetrics', { days: 1 }, token);
+  assert.ok(metrics.result, JSON.stringify(metrics));
+  assert.equal(metrics.result.counts.app_open, 0, 'QA app_open is not counted');
+  assert.equal(metrics.result.counts.decision_created, 0, 'QA decision_created is not counted');
+  assert.ok(metrics.result.qaExclusion.excludedEvents >= 2);
+  assert.ok(metrics.result.qaExclusion.excludedOrganizations >= 1);
+  assert.equal(metrics.result.qaExclusion.configured, false, 'no adminConfig doc in the emulator: fixture domain still excluded');
+  assert.equal(metrics.result.qaExclusion.status, 'missing');
+  assert.match(metrics.result.qaExclusion.warnings[0], /has not been created/, 'a missing list is a warning, not a clean result');
+  assert.ok(metrics.result.qaExclusion.byRule.fixture >= 1);
+
+  // The founder's list, written the way the console writes it (Admin access; clients cannot).
+  const { getFirestore } = require('firebase-admin/firestore');
+  const config = getFirestore(app).collection('adminConfig').doc('qaExclusion');
+  try {
+    await config.set({ emails: 'not-a-list' });
+    const empty = (await callable('getProductFunnelMetrics', { days: 1 }, token)).result.qaExclusion;
+    assert.equal(empty.status, 'empty');
+    assert.equal(empty.ignoredEntries, 1);
+    assert.equal(empty.warnings.length, 2);
+
+    await config.set({ organizationIds: [qa.organizationId] });
+    const active = (await callable('getProductFunnelMetrics', { days: 1 }, token)).result.qaExclusion;
+    assert.equal(active.status, 'active');
+    assert.deepEqual(active.warnings, []);
+    assert.ok(active.byRule.organizationId >= 1, 'the listed workspace is counted under its rule');
+    assert.ok(active.excludedEvents >= 2, 'counts stay visible once configured');
+  } finally {
+    await config.delete();
+  }
+});
+
 test('cleanup refuses addresses that are not fixtures', async () => {
   await assert.rejects(cleanupFixture({ email: 'customer@example.com', uid: 'abc' }), /non-fixture/);
   await assert.rejects(cleanupFixtureByEmail('owner@ifyoumind.com'), /non-fixture/);

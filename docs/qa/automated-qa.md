@@ -56,6 +56,7 @@ entitlements directly.
 | F08-return-url | Arrives through a valid return URL | return-url |
 | F09-hostile-return-url | Arrives through hostile or malformed return URLs | return-url |
 | F10-expired-session | Session expired, refresh refused (disabled account or bad refresh token) | session |
+| F11-free-limit | Free workspace that has used its 3 decisions this month | decisions, integration |
 | T01/T02 | Accounts the browser itself creates during registration tests | registration |
 
 **Lifecycle**
@@ -137,7 +138,7 @@ The integration suite adds API-level checks:
 
 ## Known limitations
 - **Census figures in the emulator are synthetic.** The real Census request path is tested only by #29's harness and production.
-- **The free plan's 3-decisions-a-month limit isn't tested anywhere.** `createMarketIntelligenceProject` skips it in the demo project (pre-existing code), and no unit test covers it. A follow-up could move the check into a pure function and test that.
+- **The free plan's 3-decisions-a-month limit is enforced in the emulator too** (since the free-limit PR). Locally, a workspace with 3 decisions this month is refused a fourth; use a new `npm run qa:seed` account. Pro's displayed "up to 50 decisions" is **not enforced** by `createMarketIntelligenceProject` (pre-existing; a product decision).
 - **Stripe is never called.** Checkout buttons aren't clicked, and paid views are covered by the commerce suite's signed test-mode webhooks.
 - **The browser is Chromium only.** No Safari/WebKit or Firefox, and no real phones.
 - **There is no self-service account deletion**, so "cleanup" covers fixtures only. Deleting a customer's data is a manual admin task today.

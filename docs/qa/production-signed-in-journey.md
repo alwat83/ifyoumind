@@ -34,12 +34,16 @@ Before and after the run, Claude runs the read-only signed-out smoke checks. You
 | 6 | **On the phone:** open the email's link, then sign in there as `…+r1` | You land on `/app/decide?type=business&intent=report`. This is the cross-device continue URL |
 | 7 | Back on the desktop window from step 4: click **I've verified, continue** | You continue to the same page without signing in again |
 | 8 | Register `…+r2@gmail.com` and **don't** verify. Open `/app` | You're sent to `/verify-email`. Once #26 ships, also confirm a decision can't be created |
-| 9 | Send Claude the times, sender and spam placement, the screenshots, and the **QA account emails** | Claude records the results and the exclusion list |
+| 9 | Now open the `…+r2` verification email and click its link | Verifies `+r2` so the dashboard recognises it as QA (unverified addresses are always counted as customers) |
+| 10 | Open `ifyoumind.com/app/growth` signed in as yourself | The QA box shows the excluded workspaces and **no warning** |
+| 11 | Send Claude the times, sender and spam placement, and the screenshots | Claude records the results |
 
 ## Keeping QA out of customer numbers
-- **Exclusion rule:** every Auth account whose email is `ifyoumind.qa…@gmail.com` (with or without `+tag`), and every workspace those accounts created, goes on the **QA exclusion list** used by #39's `revenueSummary` (`excludedOrganizations`) and by the funnel review.
-- **No payments:** QA accounts never make a purchase, so they can't affect revenue.
-- **After each run:** delete the `+rN` accounts in the Firebase console (Authentication → Users). Keep the main Google QA account and its workspace for returning-user checks.
+- **Before the first run:** finish `docs/qa/qa-account-setup.md`. Create the QA Gmail account, then add `adminConfig/qaExclusion` with `qaMailboxes: ["<the QA gmail>"]`. This needs #43 released.
+- **What's excluded:** the listed mailbox and its `+rN` aliases, **once the address is verified**. That covers every workspace those accounts created, in the funnel and in confirmed payments. #39's `revenueSummary` must use the same set when it ships.
+- **Nothing else is excluded.** No Gmail-wide or alias-wide rules apply.
+- **No payments:** QA accounts never make a purchase.
+- **Keep the QA accounts.** Don't delete the `+rN` accounts. Exclusion looks up each workspace creator's address, so a deleted account's workspace would count as a customer again. If one has to be deleted, first add its workspace id to `organizationIds`.
 - **Free limit:** each decision uses one of that workspace's 3 free decisions for the month. This plan creates one decision per run.
 
 ## What this still doesn't cover
@@ -48,4 +52,4 @@ Before and after the run, Claude runs the read-only signed-out smoke checks. You
 - A purchase intent that survives a device switch without the email link. It doesn't survive, by design: intent is stored per browser.
 
 ## Rollback
-Nothing changes in the product. To undo, delete the QA accounts.
+Nothing changes in the product. The QA accounts stay and remain excluded.

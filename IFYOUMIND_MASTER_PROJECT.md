@@ -738,6 +738,47 @@ Founder approved releasing PR #40 at reviewed head `99dd855`.
 - #39: live reconciliation must be completed and reviewed first.
 - #42, #43, #44, #18, #24, #35, #41 and all others.
 
+## QA ISOLATION AND TEST STABILITY — 2026-10-14 (Claude, Anthropic): drafts, nothing merged or deployed
+Founder accepted #40 as deployed at production commit `4acc655`. New priority: trustworthy QA isolation, then completing the real signed-in customer journey.
+
+**#43 QA exclusion: final review done, presented for release approval.**
+- **Head:** `e62de54`, which is `d27e2e6` plus a guide note. CI green (`build`, `qa`).
+- **Explicit identifiers only.** Matching uses `adminConfig/qaExclusion` with `qaMailboxes` (a declared QA-only mailbox and its `+` aliases), exact `emails`, `uids` and `organizationIds`, plus the `qa: true` claim and the reserved `.test` fixture domain.
+  - The earlier blanket `+tag` stripping of every listed email is removed.
+  - There are no Gmail, alias or domain-pattern rules.
+- **Verified addresses only.** An address rule excludes only when Firebase has verified that address. Unverified look-alikes are still counted and flagged.
+- **Audit visibility.** Excluded workspaces, events, payments and live payments are shown per rule. A missing, empty or invalid config is shown as a red warning, never as clean.
+- **Coverage.** Funnel counts, conversion, confirmed payments, gross revenue and the recent-payments list. `revenueSummary`/`genuinePayingCustomers` exist only on #39 and are not yet surfaced anywhere; they must take `excludedOrganizations()` from #43 when surfaced. **Merge #43 before #39.**
+- **Access.** `adminConfig` is closed to every client, including admin tokens (rules test). The callable is admin-only.
+- **Tests.**
+
+| Suite | Result |
+|---|---|
+| Functions | 55/55 |
+| Rules | 6/6 |
+| Organizations | 5/5 |
+| Commerce | 29/29 |
+| QA integration | 13 + 1 skipped (missing, invalid and active config) |
+| E2E | 66/66, plus a new dashboard-warning test |
+| Builds and bundle check | pass |
+
+- **Founder guide:** `docs/qa/qa-account-setup.md` (also in Notion).
+
+**#44 intermittent browser failures: two separate causes, both evidenced.**
+1. **Verify-email session-restore race (product bug).** A deterministic test holds back session restore. Without the fix it fails 4/4; with it, 40/40 pass. It didn't recur naturally in 12 master runs, so the deterministic test is the evidence that the fix works.
+2. **Teardown 403s (test-harness bug, unrelated).** These caused 2 of 12 master full-run failures. The traces show the fixture deleting the workspace while the app's last request was in flight. Fixed by leaving the page before cleanup.
+- **With both fixes** (`4cf8b4b`): 12/12 full runs, 840/840 tests.
+
+**Production QA plan updated** (`docs/qa/production-signed-in-journey.md`): #43 is a prerequisite, QA accounts are kept (no deletion), `+r2` is verified after its check, and the dashboard warning is checked.
+
+**Holds:**
+- #26 until the real email-verification and Google sign-in production checks are done.
+- #39 until the live Stripe reconciliation is reviewed.
+- #43 and #44 await approval.
+- All others held.
+
+After these gates, focus shifts to customer testing, conversion and revenue, not backlog expansion.
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

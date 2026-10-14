@@ -2,6 +2,8 @@ import { FieldValue, getFirestore } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { authorizeOrganization } from './authorization';
 import { alignObservations, pearson, UniversalObservation } from './universal-analysis';
+import { UNIVERSAL_LIMITS, enforceDailyQuota } from './universal-limits';
+import { withoutEvidence } from './universal-reasoning';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const readMembership = async (organizationId: string, uid: string) =>
@@ -59,23 +61,26 @@ function confidence(signals: Array<{ correlation:number; matchedObservations:num
   return 'low';
 }
 
-export const askUniversalIntelligence = onCall(async (request) => {
+export const askUniversalIntelligence = onCall({ maxInstances: UNIVERSAL_LIMITS.maxInstances }, async (request) => {
   const scope = await authorizeOrganization(
     request.auth?.uid,
     request.data?.organizationId,
     readMembership,
   );
+  await enforceDailyQuota(scope.uid, 'ask');
 
   const question: unknown = request.data?.question;
   if (typeof question !== 'string' || !question.trim() || question.trim().length > 500) {
     throw new HttpsError('invalid-argument', 'Question must contain 1–500 characters.');
   }
 
+  // Bounded reads: dataset metadata first (at most 50 documents), then observations only for the
+  // chosen target and its 12 most recently updated companions: at most 50 + 13 × 500 reads.
   const datasetSnapshot = await organizations()
     .doc(scope.organizationId)
     .collection('datasets')
     .orderBy('updatedAt', 'desc')
-    .limit(100)
+    .limit(UNIVERSAL_LIMITS.askMetadata)
     .get();
 
   if (datasetSnapshot.empty) {
@@ -86,20 +91,18 @@ export const askUniversalIntelligence = onCall(async (request) => {
     };
   }
 
-  const datasets: DatasetCandidate[] = [];
-  for (const doc of datasetSnapshot.docs) {
+  const datasets: DatasetCandidate[] = datasetSnapshot.docs.map((doc) => {
     const data = doc.data();
-    const observations = await doc.ref.collection('observations').orderBy('period', 'asc').limit(500).get();
-    datasets.push({
+    return {
       id: doc.id,
       name: data.name || doc.id,
       metric: data.metric || '',
       unit: data.unit || 'other',
       sourceLabel: data.sourceLabel || 'Unknown source',
       description: data.description || '',
-      observations: observations.docs.map((observation) => observation.data() as UniversalObservation),
-    });
-  }
+      observations: [],
+    };
+  });
 
   if (datasets.length < 2) {
     return {
@@ -109,9 +112,10 @@ export const askUniversalIntelligence = onCall(async (request) => {
     };
   }
 
+  // Ties on the keyword score go to the most recently updated dataset (the snapshot's order).
   const ranked = datasets
-    .map((dataset) => ({ dataset, score: lexicalScore(question.trim(), dataset) }))
-    .sort((a, b) => b.score - a.score || b.dataset.observations.length - a.dataset.observations.length);
+    .map((dataset, order) => ({ dataset, order, score: lexicalScore(question.trim(), dataset) }))
+    .sort((a, b) => b.score - a.score || a.order - b.order);
 
   const best = ranked[0];
   const tied = ranked.filter((candidate) => candidate.score === best.score && candidate.score > 0);
@@ -133,7 +137,13 @@ export const askUniversalIntelligence = onCall(async (request) => {
   }
 
   const target = best.dataset;
-  const candidates = datasets.filter((dataset) => dataset.id !== target.id);
+  const candidates = datasets.filter((dataset) => dataset.id !== target.id).slice(0, UNIVERSAL_LIMITS.askCandidates);
+  const loadObservations = async (dataset: DatasetCandidate) => {
+    const snapshot = await organizations().doc(scope.organizationId).collection('datasets').doc(dataset.id)
+      .collection('observations').orderBy('period', 'asc').limit(500).get();
+    dataset.observations = snapshot.docs.map((observation) => observation.data() as UniversalObservation);
+  };
+  await Promise.all([target, ...candidates].map(loadObservations));
   const scoredSignals = [];
 
   for (const candidate of candidates) {
@@ -201,7 +211,8 @@ export const askUniversalIntelligence = onCall(async (request) => {
     question: question.trim(),
     answer,
     intent: 'universal_reasoning',
-    evidence: result,
+    // Stored without the matched points so the history document stays small.
+    evidence: withoutEvidence(result),
     askedBy: scope.uid,
     createdAt: FieldValue.serverTimestamp(),
   });

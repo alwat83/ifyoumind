@@ -1,5 +1,6 @@
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall } from 'firebase-functions/v2/https';
+import { UNIVERSAL_LIMITS, enforceDailyQuota } from './universal-limits';
 import { authorizeOrganization } from './authorization';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
@@ -56,13 +57,14 @@ const demo: DemoDataset[] = [
   },
 ];
 
-export const seedUniversalDemoData = onCall(async (request) => {
+export const seedUniversalDemoData = onCall({ maxInstances: UNIVERSAL_LIMITS.maxInstances }, async (request) => {
   const scope = await authorizeOrganization(
     request.auth?.uid,
     request.data?.organizationId,
     readMembership,
     ['owner', 'admin'],
   );
+  await enforceDailyQuota(scope.uid, 'seedDemo');
 
   const root = organizations().doc(scope.organizationId);
   const batch = getFirestore().batch();

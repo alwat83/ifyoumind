@@ -9,6 +9,8 @@
       <label><span>Password</span><input name="password" type="password" required [(ngModel)]="password" /></label>
       <button type="submit" [disabled]="loginForm.invalid">Sign in</button>
     </form>
+    <button type="button" class="link-button" (click)="forgotPassword()" [disabled]="resetting">{{ resetting ? 'Sending…' : 'Forgot password?' }}</button>
+    <p *ngIf="resetMessage" class="notice" role="status">{{ resetMessage }}</p>
     <div class="divider"><span>or</span></div>
     <button class="google" type="button" (click)="googleLogin()">Continue with Google</button>
     <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>

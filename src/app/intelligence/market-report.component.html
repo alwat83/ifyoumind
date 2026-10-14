@@ -42,7 +42,7 @@
     <nav *ngIf="sampleMode" class="jump-list no-print" aria-label="In this report">
       <p class="eyebrow">In this report</p>
       <ul>
-        <li><a href="/sample-report#recommendation" (click)="jumpTo($event,'recommendation')">Recommendation</a></li>
+        <li><a href="/sample-report#recommendation" (click)="jumpTo($event,'recommendation')">What the figures show</a></li>
         <li><a href="/sample-report#signals" (click)="jumpTo($event,'signals')">Signals</a></li>
         <li *ngIf="brief.comparisons.length"><a href="/sample-report#comparison" (click)="jumpTo($event,'comparison')">City comparison</a></li>
         <li *ngIf="decisionReport?.marketAnalysis"><a href="/sample-report#market-analysis" (click)="jumpTo($event,'market-analysis')">Market analysis</a></li>
@@ -52,17 +52,11 @@
       </ul>
     </nav>
 
-    <aside *ngIf="showPurchasePrompt" class="state no-print intent-prompt" role="note" aria-labelledby="intent-title">
-      <h2 id="intent-title">Your free brief is ready. Want the full $79 Decision Report for this decision?</h2>
-      <p>It adds up to three comparison cities, the plan-ready write-up and the action plan. Payment is by secure Stripe checkout.</p>
-      <a [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Get the full report · $79</a>
-    </aside>
-
-    <section id="recommendation" class="executive-summary">
+    <section id="recommendation" class="executive-summary" *ngIf="summary as s">
       <div class="recommendation">
-        <p class="eyebrow">Executive recommendation</p>
-        <h2>{{ recommendation }}</h2>
-        <p>This recommendation is bounded by the evidence currently available for {{ project?.location }} and should be revisited as material facts change.</p>
+        <p class="eyebrow">What the figures show</p>
+        <h2>{{ s.headline }}</h2>
+        <p>{{ s.limits }}</p>
       </div>
       <aside class="confidence">
         <span>Sources cited</span>
@@ -71,17 +65,14 @@
       </aside>
     </section>
 
-    <section class="highlights">
-      <article class="highlight positive">
-        <p class="eyebrow">What supports it</p>
-        <strong>{{ brief.opportunities[0] }}</strong>
-        <p *ngIf="brief.opportunities[1]">{{ brief.opportunities[1] }}</p>
-      </article>
-      <article class="highlight caution">
-        <p class="eyebrow">What gives us pause</p>
-        <strong>{{ brief.risks[0] }}</strong>
-        <p *ngIf="brief.risks[1]">{{ brief.risks[1] }}</p>
-      </article>
+    <section *ngIf="summary?.findings?.length" class="findings" aria-label="Measure by measure">
+      <ul>
+        <li *ngFor="let finding of summary?.findings" [attr.data-position]="finding.position">
+          <strong>{{ finding.label }}</strong>
+          <span>{{ finding.detail }}</span>
+        </li>
+      </ul>
+      <p class="method">{{ summary?.method }}</p>
     </section>
 
     <section id="signals">
@@ -121,6 +112,12 @@
         </article>
       </div>
     </section>
+
+    <aside *ngIf="showPurchasePrompt" class="state no-print intent-prompt" role="note" aria-labelledby="intent-title">
+      <h2 id="intent-title">Your free brief is ready. Want the full $79 Decision Report for this decision?</h2>
+      <p>It adds up to three comparison cities, the plan-ready write-up and the action plan. Payment is by secure Stripe checkout.</p>
+      <a [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Get the full report · $79</a>
+    </aside>
 
     <section *ngIf="sampleMode" class="report-offer no-print">
       <div>

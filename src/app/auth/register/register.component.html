@@ -22,6 +22,6 @@
     <button class="google" type="button" (click)="googleLogin()">Continue with Google</button>
     <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
     <p class="switch">Already have an account? <a routerLink="/login">Sign in</a></p>
-    <p class="fine">By continuing, you agree to the Terms and Privacy Policy.</p>
+    <p class="fine">By continuing, you agree to the <a routerLink="/terms-of-conduct" target="_blank" rel="noopener">Terms</a> and <a routerLink="/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>.</p>
   </section>
 </main>

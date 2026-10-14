@@ -2,7 +2,7 @@
 // Before these limits a free account could create unlimited datasets and observations, and one
 // askUniversalIntelligence call could read about 50,000 documents. Every limit below is a hard
 // server-side bound; the client cannot raise it.
-import { getFirestore } from 'firebase-admin/firestore';
+import { CollectionReference, DocumentReference, FieldValue, Transaction, getFirestore } from 'firebase-admin/firestore';
 import { HttpsError } from 'firebase-functions/v2/https';
 
 export const UNIVERSAL_LIMITS = Object.freeze({
@@ -27,6 +27,8 @@ export const DAILY_QUOTAS = Object.freeze({
   analyze: 200,
   ask: 100,
   seedDemo: 5,
+  /** listUniversalDatasets, getUniversalDataset and getRecentUniversalAnalysisRuns, shared. */
+  read: 2000,
 });
 export type QuotaAction = keyof typeof DAILY_QUOTAS;
 
@@ -37,16 +39,19 @@ export function nextUsage(
   stored: { day?: unknown; counts?: unknown } | undefined,
   action: QuotaAction,
   now: Date,
-): { allowed: boolean; record: { day: string; counts: Record<string, number> } } {
+): { allowed: boolean; record: { day: string; counts: Record<string, number>; expiresAt: Date } } {
   const day = utcDay(now);
   const counts: Record<string, number> =
     stored && stored.day === day && stored.counts && typeof stored.counts === 'object'
       ? { ...(stored.counts as Record<string, number>) }
       : {};
+  // Two days after the counted day: lets an optional Firestore TTL policy delete idle counters.
+  const expiresAt = new Date(`${day}T00:00:00Z`);
+  expiresAt.setUTCDate(expiresAt.getUTCDate() + 2);
   const used = Number(counts[action] || 0);
-  if (used >= DAILY_QUOTAS[action]) return { allowed: false, record: { day, counts } };
+  if (used >= DAILY_QUOTAS[action]) return { allowed: false, record: { day, counts, expiresAt } };
   counts[action] = used + 1;
-  return { allowed: true, record: { day, counts } };
+  return { allowed: true, record: { day, counts, expiresAt } };
 }
 
 /**
@@ -70,12 +75,39 @@ export async function enforceDailyQuota(uid: string, action: QuotaAction, now = 
 
 /** Refuses a write that would take a dataset past its observation limit. */
 export function assertObservationRoom(existing: number, adding: number): void {
-  if (existing + adding > UNIVERSAL_LIMITS.observationsPerDataset) {
-    throw new HttpsError(
-      'failed-precondition',
-      `A dataset can hold up to ${UNIVERSAL_LIMITS.observationsPerDataset.toLocaleString('en-US')} observations. This one has ${existing.toLocaleString('en-US')}.`,
-    );
-  }
+  if (existing + adding > UNIVERSAL_LIMITS.observationsPerDataset) throw observationLimitError(existing);
+}
+
+/**
+ * Runs `write` only if `children` stays within `cap` after `adding` more documents. The check and
+ * the write share one transaction that also writes `lockRef` (the parent document), so parallel
+ * requests on the same parent run one at a time and cannot all pass the same count.
+ */
+export async function writeWithinCap(options: {
+  lockRef: DocumentReference;
+  lockField: string;
+  children: CollectionReference;
+  cap: number;
+  adding: number;
+  refuse: (existing: number) => HttpsError;
+  write: (tx: Transaction) => void;
+}): Promise<void> {
+  await getFirestore().runTransaction(async (tx) => {
+    const lock = await tx.get(options.lockRef);
+    if (!lock.exists) throw new HttpsError('not-found', 'Dataset not found.');
+    const existing = (await tx.get(options.children.count())).data().count;
+    if (existing + options.adding > options.cap) throw options.refuse(existing);
+    options.write(tx);
+    tx.set(options.lockRef, { [options.lockField]: FieldValue.serverTimestamp() }, { merge: true });
+  });
+}
+
+/** The refusal for a dataset that would pass its observation limit. */
+export function observationLimitError(existing: number): HttpsError {
+  return new HttpsError(
+    'failed-precondition',
+    `A dataset can hold up to ${UNIVERSAL_LIMITS.observationsPerDataset.toLocaleString('en-US')} observations. This one has ${existing.toLocaleString('en-US')}.`,
+  );
 }
 
 /** Dimensions on an observation: at most 20 string pairs, as the CSV import already enforces. */

@@ -185,6 +185,8 @@ export const getRecentUniversalAnalysisRuns = onCall({ maxInstances: UNIVERSAL_L
     readMembership,
   );
 
+  await enforceDailyQuota(scope.uid, 'read');
+
   const snapshot = await organizations()
     .doc(scope.organizationId)
     .collection('analysisRuns')

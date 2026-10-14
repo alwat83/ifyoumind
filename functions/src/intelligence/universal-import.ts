@@ -1,7 +1,7 @@
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { authorizeOrganization } from './authorization';
-import { UNIVERSAL_LIMITS, assertObservationRoom, enforceDailyQuota } from './universal-limits';
+import { UNIVERSAL_LIMITS, enforceDailyQuota, observationLimitError, writeWithinCap } from './universal-limits';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const readMembership = async (organizationId: string, uid: string) =>
@@ -39,15 +39,10 @@ export const importUniversalObservations = onCall(
       throw new HttpsError('invalid-argument', 'Invalid dataset ID.');
     }
 
-    await enforceDailyQuota(scope.uid, 'writeObservations');
     const observations: unknown = request.data?.observations;
     if (!Array.isArray(observations) || observations.length < 1 || observations.length > 400) {
       throw new HttpsError('invalid-argument', 'Import must contain between 1 and 400 observations.');
     }
-
-    const datasetRef = organizations().doc(scope.organizationId).collection('datasets').doc(datasetId);
-    if (!(await datasetRef.get()).exists) throw new HttpsError('not-found', 'Dataset not found.');
-    assertObservationRoom((await datasetRef.collection('observations').count().get()).data().count, observations.length);
 
     const validated: ImportObservation[] = observations.map((raw, index) => {
       if (!raw || typeof raw !== 'object') {
@@ -77,29 +72,34 @@ export const importUniversalObservations = onCall(
       return { value, period: period!, geography, entity, note, dimensions };
     });
 
-    const db = getFirestore();
-    const batch = db.batch();
+    await enforceDailyQuota(scope.uid, 'writeObservations');
+
+    const datasetRef = organizations().doc(scope.organizationId).collection('datasets').doc(datasetId);
     const observedAt = Timestamp.now();
-
-    for (const observation of validated) {
-      const ref = datasetRef.collection('observations').doc();
-      batch.set(ref, {
-        schemaVersion: 1,
-        datasetId,
-        ...observation,
-        observedAt,
-        createdBy: scope.uid,
-        importSource: 'csv',
-      });
-    }
-
-    batch.set(datasetRef, {
-      updatedAt: FieldValue.serverTimestamp(),
-      lastImportAt: FieldValue.serverTimestamp(),
-      lastImportCount: validated.length,
-    }, { merge: true });
-
-    await batch.commit();
+    await writeWithinCap({
+      lockRef: datasetRef,
+      lockField: 'updatedAt',
+      children: datasetRef.collection('observations'),
+      cap: UNIVERSAL_LIMITS.observationsPerDataset,
+      adding: validated.length,
+      refuse: observationLimitError,
+      write: (tx) => {
+        for (const observation of validated) {
+          tx.set(datasetRef.collection('observations').doc(), {
+            schemaVersion: 1,
+            datasetId,
+            ...observation,
+            observedAt,
+            createdBy: scope.uid,
+            importSource: 'csv',
+          });
+        }
+        tx.set(datasetRef, {
+          lastImportAt: FieldValue.serverTimestamp(),
+          lastImportCount: validated.length,
+        }, { merge: true });
+      },
+    });
     return { imported: validated.length };
   },
 );

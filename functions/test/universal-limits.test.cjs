@@ -7,7 +7,7 @@ const day = new Date('2026-10-14T12:00:00Z');
 
 test('daily quota counts per action, resets on a new UTC day, refuses at the limit', () => {
   let r = nextUsage(undefined, 'ask', day);
-  assert.deepEqual(r, { allowed: true, record: { day: '2026-10-14', counts: { ask: 1 } } });
+  assert.deepEqual(r, { allowed: true, record: { day: '2026-10-14', counts: { ask: 1 }, expiresAt: new Date('2026-10-16T00:00:00Z') } });
   r = nextUsage({ day: '2026-10-14', counts: { ask: DAILY_QUOTAS.ask - 1, seedDemo: 2 } }, 'ask', day);
   assert.equal(r.allowed, true);
   assert.equal(r.record.counts.ask, DAILY_QUOTAS.ask);

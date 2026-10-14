@@ -106,3 +106,76 @@ test('another workspace cannot use these functions on mine', async () => {
   const anon = await callable('listUniversalDatasets', { organizationId: owner.organizationId });
   assert.equal(anon.error, 'UNAUTHENTICATED');
 });
+
+const usageDoc = async (uid) => (await (await db()).collection('universalUsage').doc(uid).get()).data();
+const setUsage = async (uid, counts) =>
+  (await db()).collection('universalUsage').doc(uid).set({ day: new Date().toISOString().slice(0, 10), counts });
+const settle = (calls) => Promise.all(calls).then((results) => ({
+  ok: results.filter((r) => r.result).length,
+  errors: results.filter((r) => r.error).map((r) => r.error),
+}));
+
+test('parallel calls cannot exceed the daily quota', async () => {
+  const f = await make(FIXTURES.FREE_NO_REPORTS);
+  await setUsage(f.uid, { createDataset: 95 });
+  const { ok, errors } = await settle(Array.from({ length: 15 }, (_, i) =>
+    callable('createUniversalDataset', { organizationId: f.organizationId, name: `P${i}`, metric: 'm', unit: 'count' }, f.idToken)));
+  assert.equal(ok, 5, 'exactly the 5 remaining calls pass');
+  assert.ok(errors.every((e) => e === 'RESOURCE_EXHAUSTED'), JSON.stringify(errors));
+  assert.equal((await usageDoc(f.uid)).counts.createDataset, 100);
+  const created = (await (await db()).collection('intelligenceOrganizations').doc(f.organizationId).collection('datasets').count().get()).data().count;
+  assert.equal(created, ok);
+});
+
+test('parallel creates cannot pass the 50-dataset workspace cap', async () => {
+  const f = await make(FIXTURES.FREE_NO_REPORTS);
+  const firestore = await db();
+  const col = firestore.collection('intelligenceOrganizations').doc(f.organizationId).collection('datasets');
+  const batch = firestore.batch();
+  for (let i = 0; i < 48; i++) batch.set(col.doc(`d${i}`), { name: `D${i}`, metric: 'm', unit: 'count', updatedAt: new Date() });
+  await batch.commit();
+  const { ok, errors } = await settle(Array.from({ length: 10 }, (_, i) =>
+    callable('createUniversalDataset', { organizationId: f.organizationId, name: `P${i}`, metric: 'm', unit: 'count' }, f.idToken)));
+  const total = (await col.count().get()).data().count;
+  assert.equal(total, 50, 'exactly up to the cap');
+  assert.equal(ok, 2);
+  assert.ok(errors.every((e) => e === 'FAILED_PRECONDITION'), JSON.stringify(errors));
+});
+
+test('parallel imports cannot pass the 5,000-observation dataset cap', async () => {
+  const f = await make(FIXTURES.FREE_NO_REPORTS);
+  const ds = await callable('createUniversalDataset', { organizationId: f.organizationId, name: 'Sales', metric: 'net sales', unit: 'currency' }, f.idToken);
+  const firestore = await db();
+  const ref = firestore.collection('intelligenceOrganizations').doc(f.organizationId).collection('datasets').doc(ds.result.id).collection('observations');
+  for (let start = 0; start < 4990; start += 499) {
+    const batch = firestore.batch();
+    for (const row of rows(Math.min(499, 4990 - start), start)) batch.set(ref.doc(), row);
+    await batch.commit();
+  }
+  const { ok } = await settle(Array.from({ length: 6 }, (_, i) =>
+    callable('importUniversalObservations', { organizationId: f.organizationId, datasetId: ds.result.id, observations: rows(4, 9000 + i * 10) }, f.idToken)));
+  const total = (await ref.count().get()).data().count;
+  assert.equal(ok, 2, 'two 4-row imports fit in the last 10 places');
+  assert.equal(total, 4998);
+});
+
+test('read functions share a daily quota, counted per account', async () => {
+  const a = await make(FIXTURES.FREE_NO_REPORTS);
+  const b = await make(FIXTURES.OTHER_TENANT);
+  await setUsage(a.uid, { read: 2000 });
+  for (const [name, data] of [['listUniversalDatasets', {}], ['getRecentUniversalAnalysisRuns', {}], ['getUniversalDataset', { datasetId: 'missing' }]]) {
+    const r = await callable(name, { organizationId: a.organizationId, ...data }, a.idToken);
+    assert.equal(r.error, 'RESOURCE_EXHAUSTED', name);
+  }
+  const other = await callable('listUniversalDatasets', { organizationId: b.organizationId }, b.idToken);
+  assert.ok(other.result, 'another account is unaffected');
+  assert.equal((await usageDoc(b.uid)).counts.read, 1);
+  assert.equal((await usageDoc(a.uid)).counts.read, 2000, 'refused calls are not counted');
+});
+
+test('a user cannot spend another account\'s quota by naming its workspace', async () => {
+  const owner = await make(FIXTURES.FREE_NO_REPORTS);
+  const other = await make(FIXTURES.OTHER_TENANT);
+  await callable('listUniversalDatasets', { organizationId: owner.organizationId }, other.idToken);
+  assert.equal(await usageDoc(owner.uid), undefined, 'authorization runs before any counting');
+});

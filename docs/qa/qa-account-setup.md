@@ -51,6 +51,8 @@ If you see a warning:
 - **Excluded:** verified accounts on your listed QA mailbox (and its `+` aliases), and the automated test accounts.
 - **Never excluded:** anyone else, including other Gmail users and customers who use their own `+` aliases. The rule only matches the mailbox you listed.
 - **Nothing is deleted.** Excluded activity stays in the database. The dashboard simply doesn't count it, and shows how much it left out.
+- **Keep your QA accounts.** Don't delete QA users in Firebase Authentication. The dashboard recognises a QA workspace by its creator's address, so a deleted account's workspace would count as a customer again.
+- **Verify every test address.** An unverified address is always counted as a customer. Click the verification link even for accounts you created to test the "not verified" screen.
 
 Rarely needed, and only if something slips through, you can add these array fields to the same document:
 

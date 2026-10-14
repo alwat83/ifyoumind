@@ -59,7 +59,7 @@ export const test = base.extend({
   }, { auto: true }],
 
   /** Creates fixtures for this test only and always removes them, even when the test fails. */
-  fixtures: async ({}, use) => {
+  fixtures: async ({ page }, use) => {
     const created = [];
     const make = async (id, options) => {
       const fixture = await createFixture(id, options);
@@ -70,6 +70,10 @@ export const test = base.extend({
     /** For accounts the browser creates: cleaned up by address even if the test fails midway. */
     make.trackEmail = email => { created.push({ email, byEmail: true }); };
     await use(make);
+    // Leave the app before deleting its accounts. Otherwise a request still in flight (the app keeps
+    // loading status and recording events after the last assertion) reaches a deleted workspace and
+    // fails with 403, which the console-error check then reports as a test failure.
+    await page.goto('about:blank').catch(() => {});
     for (const fixture of created.reverse()) {
       if (fixture.byEmail) await cleanupFixtureByEmail(fixture.email);
       else if (fixture.uid && isFixtureEmail(fixture.email)) await cleanupFixture(fixture);

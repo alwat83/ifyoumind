@@ -962,6 +962,23 @@ After these gates, focus shifts to customer testing, conversion and revenue, not
 
 **Recruitment package:** `docs/research/business-study-recruitment.md` and Notion. Awaiting approval to send.
 
+## RELEASE: PR #47 UNIVERSAL-DATA LIMITS — 2026-10-14 (Claude, Anthropic): deployed; signed-out checks verified
+- **Release:** founder approved the corrected head `b6a43f5`. It was merged as `2cbbba3`, and [deploy run #184](https://github.com/alwat83/ifyoumind/actions/runs/38648558590) succeeded: all 25 functions updated, Hosting and rules released.
+- **Signed-out production checks (verified 22:40 UTC):**
+  - pages and guides return 200;
+  - the public sample report returns Austin and $93,658;
+  - all 10 universal functions refuse anonymous callers (401);
+  - browser access (CORS) from ifyoumind.com works;
+  - control functions return 401.
+- **Not yet checked:**
+  - signed-in dataset, Ask and isolation checks (need the dedicated QA account);
+  - function error rates (need Cloud Logging access).
+- **Deploy warning:** it couldn't clean up build images (`gcf-artifacts`), which may cost a small amount of storage.
+- **Remaining cost exposure (no hard cap):** see `docs/security/universal-data-audit.md`.
+- **#45 and #46** now have master merged in: #45 at `b224851`, #46 at `bd33cac`. Both are held for separate approval.
+- **B2C consumer package** (research and prototype only): `docs/research/life/b2c-beta-package.md`, Appendices A and B, and the prototype https://claude.ai/artifact/UPMV7T95KFu2zNEziiepXS.
+  - **Recommendation:** a static `/life` entry, a browser-only calculation with no backend and no stored inputs, and a consent-gated scorecard for the first 100 meaningful completed decisions.
+
 ## #47 RELEASE CHECKPOINT — 2026-10-14 (Claude, Anthropic): halted before merge; production unchanged at `92b3196`
 - **What the founder authorised:** merging and deploying #47 at exactly `86f2a2c`, provided its diff held no unrelated changes.
 - **What the pre-merge check found:** `86f2a2c` also carried a build-generated `src/sitemap.xml` date change, committed by mistake. **Not merged.**

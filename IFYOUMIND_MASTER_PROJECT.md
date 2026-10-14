@@ -833,6 +833,55 @@ After these gates, focus shifts to customer testing, conversion and revenue, not
   - forgot-password and Terms/Privacy links as ride-alongs;
   - removing the "own data" claims.
 
+## IFYOUMIND 2.0 BLUEPRINT — 2026-10-14 (Claude, Anthropic): strategy and design only
+- **Document:** https://claude.ai/code/artifact/0be07b0d-fe21-4e33-be83-c3e95349671a (20 sections).
+- **Status:** nothing implemented, merged, deployed, priced, sent or spent.
+- **Production confirmed:** `92b3196` (#43), not `4acc655`.
+- **Long-term vision:** one evidence-based decision engine with two front doors.
+  - **Business** (ifYouMind Business) stays the commercial priority and the conversion page at `/`.
+  - **Life** (everyday decisions) is a later growth engine.
+  - **Brand line hypothesis:** "From information to better decisions" (footer/About, not the business headline).
+- **Verified current state:**
+  - **Market analysis:** 4 ACS measures, a $79 report, $39 Pro, a 3-a-month free limit.
+  - **"Universal" engine:** 10 deployed functions (datasets/observations per workspace, CSV import of 400 rows parsed in the browser, alignment, Pearson correlation, keyword question matching, no AI). Reached only from `/app/data` and the canvas.
+  - **Not deployed:** OpenAI modules (`market-ai.ts`, `ai-synthesis.ts`). Whether older non-allowlisted functions still run is unverified.
+  - **No file storage pipeline, evidence model, account deletion or sharing.**
+- **Architecture (proposal):**
+  - **Modules:** intake → uploads, workspace data and connectors → deterministic validation and transformation → **evidence store** (typed, sourced objects with ids) → decision analysis → recommendation (templates; AI wording only if it beats templates on the eval suite) → results.
+  - **Evaluation suite in CI** gates every engine change.
+  - **Reuse:** Auth, workspaces, `authorizeOrganization`, closed rules, Stripe, QA. No rewrite.
+- **Ingestion:** CSV and manual entry first (server-side parsing, data review, quality report, provenance, raw files deleted after 30 days); Excel next; PDF and connectors deferred.
+- **Connectors:** official federal sources first (Census live; BLS, BEA, FHFA, HUD, EIA and NOAA proposed, terms to confirm). FRED excluded. Paid or licensed sources need approval.
+- **MVP (proposal):**
+  1. **Business:** a "Sales Health Check" (sales CSV → what changed → what to test first), preceded by a concierge test with 3 owners.
+  2. **Life:** a job-offer relocation comparison (typed inputs; OEWS, RPP, ACS).
+
+  The utility-bill scenario is deferred: utility-level tariffs are not freely available.
+- **Monetization:**
+  - **Business:** keep $79 as the anchor and fix the Pro conflict after the adviser evidence (T8). Then the adviser plan, report packs and the Health Check; teams, API and enterprise later.
+  - **Life:** free first; a one-time relocation report as a later hypothesis; no ads or affiliates.
+  - Metrics stay separate per audience.
+- **Safety:**
+  - **Before uploads ship:** #26 server verification, #41 account deletion, #12 plus counsel for privacy and AI terms.
+  - **Excluded from the MVP:** medical, legal, tax, credit, lending, insurance, investment and decisions about other people's employment.
+- **Roadmap** (each phase needs approval):
+  - **A** Protect the business ‖ **B** engine foundation (test-only first).
+  - **C** Business data and **D** Life MVP, each behind its own gate.
+  - **E** dual audience (homepage option C band).
+  - **F** advanced.
+- **Founder decisions V1–V9** (in addition to the Value Review's D1–D8):
+  - business-first; homepage A then C;
+  - MVP scenarios; the AI policy;
+  - Phase B in principle; Pro after T8;
+  - excluded domains; the concierge test;
+  - retiring `seedUniversalDemoData` and legacy rules.
+- **Five next actions:**
+  1. Founder trust gates.
+  2. Approve and launch the business study.
+  3. Claude drafts the Value Review fixes #1–#3 plus F22/F23 (held).
+  4. Claude writes the evidence-model spec and evaluation suite (test-only).
+  5. Claude prepares the concierge pack and the Life concept prototype (no contact without approval).
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

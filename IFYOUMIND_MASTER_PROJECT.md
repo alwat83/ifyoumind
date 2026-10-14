@@ -779,6 +779,60 @@ Founder accepted #40 as deployed at production commit `4acc655`. New priority: t
 
 After these gates, focus shifts to customer testing, conversion and revenue, not backlog expansion.
 
+## RELEASE: PR #43 QA EXCLUSION — 2026-10-14 (Claude, Anthropic): deployed and production verified (signed out)
+- **Approval:** the founder approved a controlled release at reviewed head `e62de54`.
+- **Merge:** `92b3196`. Before merging, the scope was confirmed unchanged: 10 files, no rules, workflow, package or config change, and no new function. CI was green (`build`, `qa`) and the merge was clean.
+- **Deploy:** run 38594984824 (#183) succeeded at 16:14:33Z. The main bundle is `main-6AST7NFN.js`.
+- **Read-only production checks: all pass.**
+  - `getProductFunnelMetrics`, `createMarketIntelligenceProject`, `getCommercialStatus` and `getMarketIntelligenceProject` refuse calls without credentials (401 `UNAUTHENTICATED`).
+  - The dashboard's exclusion and warning strings are deployed (`chunk-7ZGR3UJS.js`).
+  - Signed out, `/app/growth` redirects to `/login`.
+  - `/`, `/sample-report`, `/register` and `/login` at 390 and 1280 px: 0 console errors, no overflow.
+  - Favicon and headers are unchanged.
+- **Not verified:** the admin view of the dashboard, which needs a signed-in admin. No production QA account or `adminConfig/qaExclusion` was created (that needs separate approval). Until the founder sets it up, the dashboard should show the red "has not been created" warning.
+- **Held:** #44, #26, #39 and all others stay undeployed.
+
+## CUSTOMER VALUE & CONVERSION REVIEW — 2026-10-14 (Claude, Anthropic): research and design only
+- **Document:** https://claude.ai/code/artifact/6da37714-3949-4834-89b3-535726ef0aed
+- **Status:** nothing implemented, priced, deployed or sent.
+- **Evidence:**
+  - code at `92b3196`;
+  - a local emulator journey at 390 and 1280 px;
+  - a live read-only capture of the public pages.
+
+  Each finding is labelled verified or hypothesis.
+- **Key verified findings:**
+  - The verdict ("favorable", "caution" or "mixed") is set by counting bullet points. The live sample calls Austin "leans favorable" while also ranking it lowest on growth.
+  - Comparisons carry no margin of error (#29 is held).
+  - Every business type gets the same 4 Census measures, and the paid report adds wording and 2 cities, not new evidence.
+  - On a phone the $79 offer comes before the answer, and the sample's verdict starts at 1,096 px.
+  - Place entry uses semicolon-separated free text.
+  - The landing page claims "your own data", but uploads never feed a report.
+  - There is no forgot-password link on `/login`.
+  - Terms and Privacy are unlinked at sign-up.
+  - Pro at $39 for 5 reports undercuts $79.
+- **Proposal:** sell one job (the market analysis section of a business plan, for local US businesses and advisers).
+  - **Free brief:** one honest verdict line first.
+  - **The $79 report** finishes three plan jobs: paste-ready cited text with income-band sizing, a lender-facing city comparison, and a before-you-sign checklist.
+- **Five improvements, in priority order:**
+  1. An honest verdict (#29 logic).
+  2. Value before the offer.
+  3. Proof on the landing page.
+  4. Easy city entry on a phone.
+  5. A report that finishes the plan.
+
+  Run the existing 8-person toolkit study on today's production first.
+- **First five customers:** through the study's advisers and warm, approved one-to-one follow-ups, about 7 weeks, no spending.
+- **Decisions D1–D8 for the founder:**
+  - positioning;
+  - running the study first;
+  - the study's approvals;
+  - the build order after the study;
+  - the #29 release;
+  - the Pro decision after T8;
+  - forgot-password and Terms/Privacy links as ride-alongs;
+  - removing the "own data" claims.
+
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.
 

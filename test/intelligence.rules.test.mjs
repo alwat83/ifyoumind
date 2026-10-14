@@ -58,3 +58,10 @@ test('QA exclusion config and billing records are closed to every client', async
     await assertFails(getDoc(doc(db, 'productEvents/e1')));
   }
 });
+
+test('universal usage counters are closed to every client', async () => {
+  for (const db of [env.unauthenticatedContext().firestore(), env.authenticatedContext('alice', { email_verified: true }).firestore()]) {
+    await assertFails(getDoc(doc(db, 'universalUsage/alice')));
+    await assertFails(setDoc(doc(db, 'universalUsage/alice'), { day: '2026-10-14', counts: {} }));
+  }
+});

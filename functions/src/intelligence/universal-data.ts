@@ -1,6 +1,7 @@
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { authorizeOrganization } from './authorization';
+import { DATASET_ID, UNIVERSAL_LIMITS, assertObservationRoom, cleanDimensions, enforceDailyQuota } from './universal-limits';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const readMembership = async (organizationId: string, uid: string) =>
@@ -25,10 +26,15 @@ function optionalText(value: unknown, max = 160): string | null {
   return value.trim();
 }
 
-export const createUniversalDataset = onCall(async (request) => {
+export const createUniversalDataset = onCall({ maxInstances: UNIVERSAL_LIMITS.maxInstances }, async (request) => {
   const scope = await authorizeOrganization(
     request.auth?.uid, request.data?.organizationId, readMembership, ['owner', 'admin'],
   );
+  await enforceDailyQuota(scope.uid, 'createDataset');
+  const existing = (await organizations().doc(scope.organizationId).collection('datasets').count().get()).data().count;
+  if (existing >= UNIVERSAL_LIMITS.datasetsPerWorkspace) {
+    throw new HttpsError('failed-precondition', `A workspace can hold up to ${UNIVERSAL_LIMITS.datasetsPerWorkspace} datasets. Delete one to add another.`);
+  }
 
   const name = cleanText(request.data?.name, 'Dataset name');
   const metric = cleanText(request.data?.metric, 'Metric');
@@ -52,10 +58,11 @@ export const createUniversalDataset = onCall(async (request) => {
   return { id: ref.id };
 });
 
-export const addUniversalObservation = onCall(async (request) => {
+export const addUniversalObservation = onCall({ maxInstances: UNIVERSAL_LIMITS.maxInstances }, async (request) => {
   const scope = await authorizeOrganization(
     request.auth?.uid, request.data?.organizationId, readMembership, ['owner', 'admin'],
   );
+  await enforceDailyQuota(scope.uid, 'writeObservations');
 
   const datasetId = cleanText(request.data?.datasetId, 'Dataset ID', 128);
   if (!/^[A-Za-z0-9_-]+$/.test(datasetId)) {
@@ -64,6 +71,7 @@ export const addUniversalObservation = onCall(async (request) => {
 
   const datasetRef = organizations().doc(scope.organizationId).collection('datasets').doc(datasetId);
   if (!(await datasetRef.get()).exists) throw new HttpsError('not-found', 'Dataset not found.');
+  assertObservationRoom((await datasetRef.collection('observations').count().get()).data().count, 1);
 
   const value = Number(request.data?.value);
   if (!Number.isFinite(value)) throw new HttpsError('invalid-argument', 'Observation value must be numeric.');
@@ -82,8 +90,7 @@ export const addUniversalObservation = onCall(async (request) => {
     geography,
     entity,
     note,
-    dimensions: request.data?.dimensions && typeof request.data.dimensions === 'object'
-      ? request.data.dimensions : {},
+    dimensions: cleanDimensions(request.data?.dimensions),
     observedAt: Timestamp.now(),
     createdBy: scope.uid,
   });
@@ -92,7 +99,7 @@ export const addUniversalObservation = onCall(async (request) => {
   return { id: ref.id };
 });
 
-export const listUniversalDatasets = onCall(async (request) => {
+export const listUniversalDatasets = onCall({ maxInstances: UNIVERSAL_LIMITS.maxInstances }, async (request) => {
   const scope = await authorizeOrganization(
     request.auth?.uid, request.data?.organizationId, readMembership,
   );
@@ -101,7 +108,7 @@ export const listUniversalDatasets = onCall(async (request) => {
     .doc(scope.organizationId)
     .collection('datasets')
     .orderBy('updatedAt', 'desc')
-    .limit(100)
+    .limit(UNIVERSAL_LIMITS.listDatasets)
     .get();
 
   const datasets = [];
@@ -123,11 +130,12 @@ export const listUniversalDatasets = onCall(async (request) => {
   return { datasets };
 });
 
-export const getUniversalDataset = onCall(async (request) => {
+export const getUniversalDataset = onCall({ maxInstances: UNIVERSAL_LIMITS.maxInstances }, async (request) => {
   const scope = await authorizeOrganization(
     request.auth?.uid, request.data?.organizationId, readMembership,
   );
   const datasetId = cleanText(request.data?.datasetId, 'Dataset ID', 128);
+  if (!DATASET_ID.test(datasetId)) throw new HttpsError('invalid-argument', 'Invalid dataset ID.');
 
   const ref = organizations().doc(scope.organizationId).collection('datasets').doc(datasetId);
   const dataset = await ref.get();

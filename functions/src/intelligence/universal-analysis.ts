@@ -1,6 +1,7 @@
 import { getFirestore } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { authorizeOrganization } from './authorization';
+import { UNIVERSAL_LIMITS, enforceDailyQuota } from './universal-limits';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const readMembership = async (organizationId: string, uid: string) =>
@@ -83,12 +84,13 @@ function strength(r: number | null): string {
   return 'little';
 }
 
-export const analyzeUniversalDatasets = onCall(async (request) => {
+export const analyzeUniversalDatasets = onCall({ maxInstances: UNIVERSAL_LIMITS.maxInstances }, async (request) => {
   const scope = await authorizeOrganization(
     request.auth?.uid,
     request.data?.organizationId,
     readMembership,
   );
+  await enforceDailyQuota(scope.uid, 'analyze');
 
   const ids: unknown = request.data?.datasetIds;
   if (!Array.isArray(ids) || ids.length < 2 || ids.length > 8 ||

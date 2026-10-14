@@ -1,6 +1,7 @@
 import { FieldValue, getFirestore } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { authorizeOrganization } from './authorization';
+import { UNIVERSAL_LIMITS, enforceDailyQuota } from './universal-limits';
 import { alignObservations, pearson, UniversalObservation } from './universal-analysis';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
@@ -46,6 +47,16 @@ function confidence(signals: Signal[]): 'low' | 'medium' | 'high' {
   return 'low';
 }
 
+/** A copy of a reasoning result without the matched data points inside each signal. */
+export function withoutEvidence<T extends Record<string, unknown>>(result: T): T {
+  const strip = (signals: unknown) => Array.isArray(signals)
+    ? signals.map((signal) => { const { evidence, ...rest } = signal as Record<string, unknown>; return { ...rest, matchedPoints: Array.isArray(evidence) ? evidence.length : 0 }; })
+    : signals;
+  const copy: Record<string, unknown> = { ...result };
+  for (const key of ['supportingEvidence', 'counterEvidence', 'allSignals']) if (key in copy) copy[key] = strip(copy[key]);
+  return copy as T;
+}
+
 async function loadDataset(organizationId: string, id: string): Promise<DatasetView> {
   const ref = organizations().doc(organizationId).collection('datasets').doc(id);
   const snapshot = await ref.get();
@@ -63,12 +74,13 @@ async function loadDataset(organizationId: string, id: string): Promise<DatasetV
   };
 }
 
-export const reasonAcrossUniversalDatasets = onCall(async (request) => {
+export const reasonAcrossUniversalDatasets = onCall({ maxInstances: UNIVERSAL_LIMITS.maxInstances }, async (request) => {
   const scope = await authorizeOrganization(
     request.auth?.uid,
     request.data?.organizationId,
     readMembership,
   );
+  await enforceDailyQuota(scope.uid, 'analyze');
 
   const ids: unknown = request.data?.datasetIds;
   const targetId: unknown = request.data?.targetDatasetId;
@@ -157,7 +169,8 @@ export const reasonAcrossUniversalDatasets = onCall(async (request) => {
     schemaVersion: 1,
     targetDatasetId: target.id,
     datasetIds: ids,
-    result,
+    // The stored copy drops the matched points, so a run document stays far below Firestore's 1 MB limit.
+    result: withoutEvidence(result),
     createdBy: scope.uid,
     createdAt: FieldValue.serverTimestamp(),
   });
@@ -165,7 +178,7 @@ export const reasonAcrossUniversalDatasets = onCall(async (request) => {
   return { ...result, analysisRunId: runRef.id };
 });
 
-export const getRecentUniversalAnalysisRuns = onCall(async (request) => {
+export const getRecentUniversalAnalysisRuns = onCall({ maxInstances: UNIVERSAL_LIMITS.maxInstances }, async (request) => {
   const scope = await authorizeOrganization(
     request.auth?.uid,
     request.data?.organizationId,

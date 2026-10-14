@@ -108,3 +108,24 @@ test('free decisions: three a month, counted from the 1st at 00:00 UTC', () => {
   assert.equal(freeDecisionLimitReached(undefined, 3), true, 'a missing plan is free');
   assert.equal(freeDecisionLimitReached('pro', 300), false);
 });
+
+const { PRO_DECISIONS_PER_MONTH, decisionLimitFor, reserveDecision, releaseDecision, decisionLimitMessage } = require('../lib/intelligence/report-entitlement-logic');
+
+test('decision allowance: 3 free and 50 Pro per UTC month, reserved before work starts', () => {
+  assert.equal(decisionLimitFor('free'), 3);
+  assert.equal(decisionLimitFor(undefined), 3);
+  assert.equal(decisionLimitFor('pro'), PRO_DECISIONS_PER_MONTH);
+  assert.equal(PRO_DECISIONS_PER_MONTH, 50);
+  assert.deepEqual(reserveDecision(undefined, '2026-10', 0, 3), { ok: true, next: { period: '2026-10', used: 1 } });
+  assert.deepEqual(reserveDecision({ period: '2026-10', used: 2 }, '2026-10', 1, 3), { ok: true, next: { period: '2026-10', used: 3 } }, 'in-flight reservations count');
+  assert.deepEqual(reserveDecision({ period: '2026-10', used: 3 }, '2026-10', 3, 3), { ok: false, used: 3 });
+  assert.deepEqual(reserveDecision({ period: '2026-09', used: 50 }, '2026-10', 0, 50), { ok: true, next: { period: '2026-10', used: 1 } }, 'a new month starts at zero');
+  assert.deepEqual(reserveDecision({ period: '2026-10', used: 0 }, '2026-10', 49, 50), { ok: true, next: { period: '2026-10', used: 50 } }, 'stored decisions heal an old counter');
+  assert.deepEqual(reserveDecision({ period: '2026-10', used: 0 }, '2026-10', 50, 50), { ok: false, used: 50 });
+  assert.deepEqual(reserveDecision({ period: '2026-10', used: 'x' }, '2026-10', 0, 3), { ok: true, next: { period: '2026-10', used: 1 } });
+  assert.deepEqual(releaseDecision({ period: '2026-10', used: 2 }, '2026-10'), { period: '2026-10', used: 1 });
+  assert.deepEqual(releaseDecision({ period: '2026-10', used: 0 }, '2026-10'), { period: '2026-10', used: 0 });
+  assert.equal(releaseDecision({ period: '2026-09', used: 2 }, '2026-10'), null, 'never touches another month');
+  assert.match(decisionLimitMessage('pro'), /50 decisions included with Pro this month.*reset on the 1st \(UTC\).*stay available/);
+  assert.match(decisionLimitMessage('free'), /3 free decisions this month/);
+});

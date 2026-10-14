@@ -25,6 +25,9 @@ export class VerifyEmailComponent {
 
   /** Re-reads the account after the visitor clicks the link in another tab, then continues. */
   async continueIfVerified() {
+    // After a page load Firebase restores the session asynchronously; wait for it so an
+    // early click isn't treated as signed out.
+    await this.auth.authStateReady();
     const user = this.auth.currentUser;
     if (!user) {
       await this.router.navigate(['/login']);
@@ -50,6 +53,7 @@ export class VerifyEmailComponent {
   async resendVerificationEmail() {
     this.isResending = true;
     this.message = null;
+    await this.auth.authStateReady();
     const user = this.auth.currentUser;
     if (user) {
       try {

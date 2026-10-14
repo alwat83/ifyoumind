@@ -25,7 +25,10 @@ export class CookiePreferencesComponent {
   };
 
   constructor() {
-    this.consent = this.cookieService.getConsentStatus();
+    // Re-read the stored choice each time the panel opens, so it never shows a stale state.
+    this.isOpen$.subscribe(open => {
+      if (open) this.consent = { ...this.cookieService.getConsentStatus() };
+    });
   }
 
   close() {
@@ -38,7 +41,7 @@ export class CookiePreferencesComponent {
   }
 
   acceptAll() {
-    this.consent = { essential: true, analytics: true, functional: true, marketing: true };
+    this.consent = { essential: true, analytics: true, functional: false, marketing: false };
     this.save();
   }
 

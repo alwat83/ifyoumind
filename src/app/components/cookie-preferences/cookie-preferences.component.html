@@ -1,34 +1,24 @@
 <div class="modal-overlay" *ngIf="isOpen$ | async">
-  <div class="modal-content">
-    <h2>Cookie Preferences</h2>
-    <p>Manage your cookie settings. You can enable or disable different types of cookies below. Essential cookies are always enabled.</p>
+  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="cookie-preferences-title">
+    <h2 id="cookie-preferences-title">Cookie preferences</h2>
+    <p>Essential storage keeps you signed in and remembers this choice. Analytics uses Google Analytics to count visits and see which pages help. You can change this at any time.</p>
 
     <div class="cookie-category">
-      <label for="essential">Essential</label>
+      <label for="essential">Essential (always on)</label>
       <input type="checkbox" id="essential" [ngModel]="consent.essential" disabled="true">
     </div>
 
     <div class="cookie-category">
-      <label for="analytics">Analytics</label>
+      <label for="analytics">Analytics (Google Analytics)</label>
       <input type="checkbox" id="analytics" [(ngModel)]="consent.analytics">
     </div>
 
-    <div class="cookie-category">
-      <label for="functional">Functional</label>
-      <input type="checkbox" id="functional" [(ngModel)]="consent.functional">
-    </div>
-
-    <div class="cookie-category">
-      <label for="marketing">Marketing</label>
-      <input type="checkbox" id="marketing" [(ngModel)]="consent.marketing">
-    </div>
-
     <div class="actions">
-      <button (click)="save()">Save settings</button>
-      <button (click)="acceptAll()">Accept all</button>
-      <button (click)="rejectAll()">Reject all</button>
+      <button type="button" (click)="save()">Save settings</button>
+      <button type="button" (click)="acceptAll()">Allow analytics</button>
+      <button type="button" (click)="rejectAll()">Reject analytics</button>
     </div>
 
-    <button class="close-button" (click)="close()">&times;</button>
+    <button type="button" class="close-button" aria-label="Close cookie preferences" (click)="close()">&times;</button>
   </div>
 </div>

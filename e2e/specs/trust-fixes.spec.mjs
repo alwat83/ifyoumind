@@ -14,7 +14,8 @@ test('a free result opens with what the figures show, then the evidence, then th
   await expect(page.getByText('Executive recommendation')).toHaveCount(0);
   await expect(page.getByText('What supports it')).toHaveCount(0);
   await expect(page.locator('.findings li').first()).toBeVisible();
-  await expect(page.locator('.findings .method')).toContainText('About the same');
+  await expect(page.locator('.findings .method')).toContainText('None of these differences has been tested for statistical significance');
+  await expect(summary.locator('h2')).not.toHaveText(/about the same|no clear difference|equivalent/i);
 
   // The summary headline is on the first screen; the $79 prompt comes after the comparison.
   const viewport = page.viewportSize();

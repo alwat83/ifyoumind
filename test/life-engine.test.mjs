@@ -109,7 +109,7 @@ test('evidence carries provenance tags, and estimates stay distinct from the use
   assert.equal(byId['A.priceLevel'].tag,'fact');
   assert.equal(byId['A.housing'].tag,'user');
   assert.equal(byId['B.housing'].tag,'estimate');
-  assert.equal(byId['taxShare'].tag,'estimate');
+  assert.equal(byId['A.taxShare'].tag,'estimate');
   assert.equal(byId['A.money'].tag,'calculation');
   assert.equal(byId['B.priceLevel'].geography.level,'state');
   assert.match(r.nextSteps[0],/no metro price data/);
@@ -132,4 +132,119 @@ test('deterministic, and the engine source has no network, storage or DOM access
     const src=fs.readFileSync(path.join(engineDir,f),'utf8');
     assert.doesNotMatch(src,/\bfetch\(|XMLHttpRequest|localStorage|sessionStorage|indexedDB|document\.|window\.|navigator\.|@angular|firebase/, f);
   }
+});
+
+// ---------------------------------------------------------------------------------------------
+// Hand-verified examples. Every expected figure below was worked out by hand (shown in comments)
+// and documented in docs/life/l1-financial-examples.md. Price levels are illustrative.
+// ---------------------------------------------------------------------------------------------
+const near=(a,b,eps=0.01)=>Math.abs(a-b)<=eps;
+const ex=(a,b,extra={})=>({options:[a,b],taxShare:.20,taxShareSource:'user',stateTaxIncluded:true,weights:{money:3,time:0,career:0,people:0},...extra});
+const opt=(label,salary,housing,extra={})=>({label,salary,housing,housingSource:'user',commuteMinutes:20,priceLevel:100,priceLevelKind:'non_housing',priceLevelSource:'metro',priceLevelYear:2024,...extra});
+const texts=r=>r.claims.map(c=>c.text).join(' ')+' '+r.warnings.map(w=>w.text).join(' ');
+
+test('E1 different salaries, same place: the whole difference is the after-tax raise', () => {
+  // A: 60,000 × 0.80 / 12 = 4,000 take-home; − 1,500 housing = 2,500 left; ÷ 1.00 = 2,500
+  // B: 75,000 × 0.80 / 12 = 5,000; − 1,500 = 3,500. Gap 1,000 = 40% of 2,500.
+  const r=L.compareOptions(ex(opt('Same city',60000,1500),opt('Same city',75000,1500)));
+  assert.ok(near(r.money[0].takeHome,4000)&&near(r.money[1].takeHome,5000));
+  assert.ok(near(r.money[0].buyingPower,2500)&&near(r.money[1].buyingPower,3500));
+  assert.ok(near(r.comparison.gap,1000)&&near(r.comparison.relGap,.40,1e-9));
+  assert.match(r.claims.find(c=>c.id==='money').text,/leaves \$1,000 more a month .*\(40%\)/);
+});
+
+test('E2 different housing, same salary: housing is subtracted once, not also through the price level', () => {
+  // 80,000 × 0.75 / 12 = 5,000 each. A 5,000 − 1,200 = 3,800; B 5,000 − 2,000 = 3,000.
+  // Both price levels 100, so buying power = money left. Gap 800 = 26.7% of 3,000 → shown "27%".
+  const r=L.compareOptions(ex(opt('A',80000,1200),opt('B',80000,2000),{taxShare:.25}));
+  assert.ok(near(r.money[0].buyingPower,3800)&&near(r.money[1].buyingPower,3000));
+  assert.equal(r.comparison.leader,'A');
+  assert.match(r.claims.find(c=>c.id==='money').text,/^A leaves \$800 more a month .*\(27%\)/);
+  // An all-items index (rent included) is flagged as a possible double count, not silently used.
+  const allItems=L.compareOptions(ex(opt('A',80000,1200,{priceLevelKind:'all_items',priceLevel:110}),opt('B',80000,2000)));
+  assert.ok(allItems.warnings.some(w=>w.code==='price_level_includes_rent'&&w.option==='A'));
+});
+
+test('E3 different state-tax situations: per-option tax shares, and unmodelled taxes are named', () => {
+  // Federal estimate on 100,000 (single, 2026): taxable 83,900 → 1,240 + 4,560 + 22% × 33,500 (7,370) = 13,170;
+  // Social Security 6,200; Medicare 1,450 → 20,820 = 20.82%.
+  const est=L.estimateTax(100000);
+  assert.ok(near(est.federal,13170)&&near(est.total,20820));
+  // A (no state income tax, confirmed by the user): 20.82%. B: the user adds 5 points of state tax → 25.82%.
+  // A: 100,000 × 0.7918 / 12 = 6,598.33 − 2,000 = 4,598.33. B: 100,000 × 0.7418 / 12 = 6,181.67 − 2,000 = 4,181.67.
+  // Gap 416.67 = 9.96% of 4,181.67 → "10.0%".
+  const r=L.compareOptions(ex(
+    opt('No-income-tax state',100000,2000,{taxShare:.2082,taxShareSource:'estimate',stateTaxIncluded:true}),
+    opt('State with income tax',100000,2000,{taxShare:.2582,taxShareSource:'user',stateTaxIncluded:true})));
+  assert.ok(near(r.money[0].left,4598.33)&&near(r.money[1].left,4181.67));
+  assert.match(r.claims.find(c=>c.id==='money').text,/\$417 more a month .*\(10\.0%\)/);
+  assert.ok(!r.warnings.some(w=>w.code==='state_tax_not_included'));
+  // Same pair, but B's state tax not entered: the page says state tax is not included for B.
+  const missing=L.compareOptions(ex(opt('A',100000,2000,{taxShare:.2082,taxShareSource:'estimate',stateTaxIncluded:true}),opt('B',100000,2000,{taxShare:.2082,taxShareSource:'estimate'})));
+  assert.ok(missing.warnings.some(w=>w.code==='state_tax_not_included'&&w.option==='B'));
+  assert.match(missing.claims.find(c=>c.id==='limits').text,/estimated tax share \(federal income tax, Social Security and Medicare/);
+});
+
+test('E4 zero and negative money left: shortfalls are flagged and nothing divides by zero', () => {
+  // 36,000 × 0.80 / 12 = 2,400. A housing 2,400 → 0 left. B housing 2,600 → −200 left.
+  const r=L.compareOptions(ex(opt('A',36000,2400),opt('B',36000,2600)));
+  assert.ok(near(r.money[0].left,0)&&near(r.money[1].left,-200));
+  assert.deepEqual(r.warnings.filter(w=>w.code==='shortfall').map(w=>w.option),['A','B']);
+  // Leader A by 200; the other option's −200 is the base, so 200 / |−200| = 100%.
+  assert.equal(r.comparison.leader,'A'); assert.ok(near(r.comparison.relGap,1,1e-9));
+  // Base exactly zero: no percentage is printed.
+  const zero=L.compareOptions(ex(opt('A',36000,2400),opt('B',36000,2100)));
+  assert.equal(zero.comparison.relGap,null);
+  assert.match(zero.claims.find(c=>c.id==='money').text,/^B leaves \$300 more a month after housing and local prices, before/);
+  assert.doesNotMatch(texts(zero)+texts(r),/NaN|Infinity/);
+});
+
+test('E5 missing or outdated reference data: never a silent default', () => {
+  const r=L.compareOptions({...ex(opt('A',80000,1500,{priceLevel:NaN}),opt('B',80000,1500,{priceLevelYear:2020})),asOfYear:2026});
+  assert.ok(r.warnings.some(w=>w.code==='price_level_missing'&&w.option==='A'));
+  assert.ok(r.warnings.some(w=>w.code==='price_level_outdated'&&w.option==='B'));
+  assert.equal(r.evidence.find(e=>e.id==='A.priceLevel').kind,'estimate', 'an assumed U.S. average is an estimate, not a fact');
+  assert.equal(r.money[0].priceLevel,100);
+  assert.match(r.nextSteps[0],/no metro price data/);
+  const fallback=L.compareOptions(ex(opt('A',80000,1500,{priceLevelSource:'state_nonmetro',priceLevel:90}),opt('B',80000,1500)));
+  assert.ok(fallback.warnings.some(w=>w.code==='price_level_fallback'));
+});
+
+test('E6 near-identical outcomes: a tiny money gap does not decide the verdict', () => {
+  // 80,000 vs 81,000 × 0.80 / 12 = 5,333.33 vs 5,400 → left 3,833.33 vs 3,900 → gap 66.67 = 1.74%.
+  const r=L.compareOptions(ex(opt('A',80000,1500),opt('B',81000,1500)));
+  assert.ok(near(r.comparison.gap,66.67)&&r.comparison.small);
+  assert.equal(r.verdict.kind,'no_clear_winner', 'money is the only priority and it is not clearly different');
+  assert.ok(r.verdict.ignored.some(i=>i.criterion==='money'&&i.reason==='not_different'));
+  assert.match(r.claims.find(c=>c.id==='verdict').text,/Money left each month is too close between the options to decide this/);
+  // Commute within 5 minutes is treated the same way.
+  const commute=L.compareOptions(ex(opt('A',80000,1500,{commuteMinutes:20}),opt('B',80000,1500,{commuteMinutes:23}),{weights:{money:0,time:5,career:0,people:0}}));
+  assert.equal(commute.verdict.kind,'no_clear_winner');
+});
+
+test('E7 conflicting priorities: the verdict follows the weights and says when it is fragile', () => {
+  // B pays more (money favours B); A has the shorter commute and family nearby.
+  const a=opt('A',70000,1500,{commuteMinutes:15,people:5}), b=opt('B',110000,1500,{commuteMinutes:50,people:1});
+  // Equal pull: money 4 (B) vs time 2 + people 2 (A) → scores 4 vs 4 → no clear winner.
+  const tie=L.compareOptions(ex(a,b,{weights:{money:4,time:2,career:0,people:2}}));
+  assert.equal(tie.verdict.kind,'no_clear_winner');
+  // Money clearly first: 5 (B) vs 1 + 1 (A); every ±1 change keeps B ahead → B, with the scope stated.
+  const money=L.compareOptions(ex(a,b,{weights:{money:5,time:1,career:0,people:1}}));
+  assert.equal(money.verdict.leader,'B');
+  const text=money.claims.find(c=>c.id==='verdict').text;
+  assert.match(text,/On the priorities you set \(money left each month, commute time, being near family and friends\)/);
+  assert.match(text,/Not included: career growth \(not rated for both options\)/);
+  assert.match(text,/not a judgement of which option is better overall/);
+});
+
+test('E8 extreme but valid inputs stay finite and labelled', () => {
+  // 1,000,000 salary: federal 320,000.25 (see docs), Social Security 11,439 (capped), Medicare 14,500 + 7,200.
+  const t=L.estimateTax(1000000);
+  assert.ok(near(t.federal,320000.25)&&near(t.socialSecurity,11439)&&near(t.medicare,21700));
+  const r=L.compareOptions(ex(opt('A',1000000,0,{commuteMinutes:0,priceLevel:50}),opt('B',0,0,{commuteMinutes:180,priceLevel:200}),
+    {weights:{money:5,time:5,career:5,people:5},taxShare:.6}));
+  assert.doesNotMatch(texts(r),/NaN|Infinity|undefined/);
+  assert.ok(r.warnings.some(w=>w.code==='shortfall'&&w.option==='B'), 'zero salary and zero housing leaves nothing');
+  assert.equal(r.verdict.leader,'A');
+  for(const g of grade(r))assert.ok(g.ok,g.problems.join(','));
 });

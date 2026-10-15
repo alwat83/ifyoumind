@@ -962,6 +962,20 @@ After these gates, focus shifts to customer testing, conversion and revenue, not
 
 **Recruitment package:** `docs/research/business-study-recruitment.md` and Notion. Awaiting approval to send.
 
+## RELEASE: PR #45 CUSTOMER-TRUST FIXES — 2026-10-15 (Claude, Anthropic): deployed; signed-out checks verified
+- **Release:** founder approved head `fa33c3a` (15 reviewed files, CI green). It was merged as `4df2976`, and [deploy run #186](https://github.com/alwat83/ifyoumind/actions/runs/38661011491) succeeded.
+- **Signed-out browser checks (desktop and Pixel 7), passing:**
+  - homepage claims, the small-gap wording and $79/$39;
+  - the sample headline, the method note (no significance claim) and the gap sizes;
+  - the answer before the comparison and the upgrade prompt;
+  - "Forgot password?" (empty-email prompt only; nothing sent);
+  - the Terms and Privacy links and pages;
+  - the /app sign-in redirect, the guide, and no console errors.
+- **Pre-existing finding (not caused by #45):** on a phone the sample report's headline starts below the first screen (y=977 of 839), after the sample top bar with its $79 link, the banner and the jump list. A follow-up is proposed.
+- **Not tested:** signed-in pages, older saved decisions, reset-email delivery. These need the QA account.
+- **Life L1 (#48, draft):** review fixes made: per-option tax shares, data warnings, tiny gaps that don't decide the verdict, verdict wording scoped to the user's priorities, and 8 hand-verified examples (`docs/life/l1-financial-examples.md`). 17/17 tests. Not merged.
+- **Observability:** the founder will authorise directly in the `ifyou` session. No further relaying.
+
 ## RELEASE: PR #46 EVIDENCE ENGINE — 2026-10-15 (Claude, Anthropic): deployed; production behaviour unchanged
 - **Release:** founder approved head `bd33cac` (4 reviewed files, CI green). It was merged as `94d8838`, and [deploy run #185](https://github.com/alwat83/ifyoumind/actions/runs/38657107686) succeeded: 25 functions updated, Hosting released.
 - **Behaviour:** the engine is not imported by any deployed function, so nothing changes in production.

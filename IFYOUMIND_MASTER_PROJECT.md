@@ -962,6 +962,21 @@ After these gates, focus shifts to customer testing, conversion and revenue, not
 
 **Recruitment package:** `docs/research/business-study-recruitment.md` and Notion. Awaiting approval to send.
 
+## RELEASE: PR #46 EVIDENCE ENGINE — 2026-10-15 (Claude, Anthropic): deployed; production behaviour unchanged
+- **Release:** founder approved head `bd33cac` (4 reviewed files, CI green). It was merged as `94d8838`, and [deploy run #185](https://github.com/alwat83/ifyoumind/actions/runs/38657107686) succeeded: 25 functions updated, Hosting released.
+- **Behaviour:** the engine is not imported by any deployed function, so nothing changes in production.
+- **Signed-out re-check:** unchanged from the #47 checkpoint (pages, sample report, 401s, CORS).
+- **Production logging check — not possible from this session:**
+  - This session (environment "Default") has no Google credentials: gcloud and Firebase are not logged in, and the provided token is rejected (`CREDENTIALS_MISSING`).
+  - The `ifyou` environment session declined to use any credentials it may hold, because the request came from another session rather than the founder. It will run the read-only checks if the founder asks there directly.
+  - The only known credential is the deploy workflow's service-account secret, which is usable only inside the production deploy job.
+  - **Still unverified:** function errors, Firestore read trends, `getUniversalDataset`'s 30-day calls, the full function inventory, and whether the Ask-history and saved-question functions are deployed.
+- **#45:** held at `b224851`. Checklist: `docs/release/pr45-release-checklist.md`. It needs master `94d8838` merged in and CI re-run first.
+- **B2C:** the founder approved `/life` as the entry direction (2026-10-15).
+  - Implementation spec: `docs/research/life/mvp-implementation-spec.md`.
+  - Six-person study package: `docs/research/life/consumer-study-approval.md`.
+  - Nothing is built, published or deployed. No AI, no anonymous backend.
+
 ## RELEASE: PR #47 UNIVERSAL-DATA LIMITS — 2026-10-14 (Claude, Anthropic): deployed; signed-out checks verified
 - **Release:** founder approved the corrected head `b6a43f5`. It was merged as `2cbbba3`, and [deploy run #184](https://github.com/alwat83/ifyoumind/actions/runs/38648558590) succeeded: all 25 functions updated, Hosting and rules released.
 - **Signed-out production checks (verified 22:40 UTC):**

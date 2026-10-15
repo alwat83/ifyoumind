@@ -7,13 +7,14 @@ import { ProductAnalyticsService } from './product-analytics.service';
 import { CommercialStatus, MonetizationService } from './monetization.service';
 import { MarketAnalysisComponent } from './market-analysis.component';
 import { clearIntent, parseIntent, readIntent } from '../purchase-intent';
+import { EvidenceSummary, summarizeEvidence } from './evidence-summary';
 
 @Component({
   selector:'app-market-report',
   standalone:true,
   imports:[CommonModule,RouterLink,MarketAnalysisComponent],
   templateUrl:'./market-report.component.html',
-  styleUrls:['./market-report.component.scss','./market-report-offers.component.scss'],
+  styleUrls:['./market-report.component.scss','./market-report-offers.component.scss','./market-report-findings.component.scss'],
 })
 export class MarketReportComponent implements OnInit {
   private readonly route=inject(ActivatedRoute);
@@ -88,14 +89,14 @@ export class MarketReportComponent implements OnInit {
     finally{this.unlocking=false;}
   }
 
-  get recommendation():string{
+  /**
+   * What the figures show, measure by measure. Computed from the brief itself, so saved decisions and
+   * the sample get it too. It never says favorable or caution: four demographic measures cannot.
+   */
+  get summary():EvidenceSummary|null{
     const brief=this.project?.brief;
-    if(!brief)return '';
-    const support=brief.opportunities.length;
-    const caution=brief.risks.length;
-    if(support>caution)return 'The available evidence leans favorable, with important items to validate before committing.';
-    if(caution>support)return 'The available evidence suggests caution. Resolve the major risks before committing.';
-    return 'The evidence is mixed. Treat this as a validation decision rather than a clear go/no-go.';
+    if(!brief||!this.project)return null;
+    return summarizeEvidence({location:this.project.location,metrics:brief.metrics||[]},brief.comparisons||[]);
   }
 
   /** How many key figures cite their source. This counts citations; it is not a confidence score. */

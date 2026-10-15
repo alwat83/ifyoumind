@@ -8,6 +8,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
+  sendPasswordResetEmail,
 } from '@angular/fire/auth';
 
 @Component({
@@ -21,6 +22,9 @@ export class LoginComponent {
   email='';
   password='';
   errorMessage:string|null=null;
+  /** Shown after "Forgot password?"; the same wording whether or not the account exists. */
+  resetMessage:string|null=null;
+  resetting=false;
 
   private auth:Auth=inject(Auth);
   private router:Router=inject(Router);
@@ -36,6 +40,30 @@ export class LoginComponent {
       await signInWithEmailAndPassword(this.auth,this.email,this.password);
       await this.router.navigateByUrl(this.destination());
     }catch(error:any){this.errorMessage=error.message;}
+  }
+
+  /**
+   * Sends Firebase's password-reset email. The reply never says whether an account exists for the
+   * address (email enumeration protection); only a malformed address gets its own message.
+   */
+  async forgotPassword(){
+    this.errorMessage=null;
+    const email=this.email.trim();
+    if(!email){
+      this.resetMessage='Enter your email address above, then choose “Forgot password?” again.';
+      return;
+    }
+    this.resetting=true;
+    try{
+      await sendPasswordResetEmail(this.auth,email);
+      this.resetMessage=`If an account exists for ${email}, we’ve sent a link to reset the password. Check your inbox and spam folder.`;
+    }catch(error:any){
+      this.resetMessage=error?.code==='auth/invalid-email'
+        ? 'That doesn’t look like an email address. Check it and try again.'
+        : `If an account exists for ${email}, we’ve sent a link to reset the password. Check your inbox and spam folder.`;
+    }finally{
+      this.resetting=false;
+    }
   }
 
   async googleLogin(){

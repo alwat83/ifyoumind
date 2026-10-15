@@ -962,6 +962,21 @@ After these gates, focus shifts to customer testing, conversion and revenue, not
 
 **Recruitment package:** `docs/research/business-study-recruitment.md` and Notion. Awaiting approval to send.
 
+## RELEASE: PR #48 LIFE L1 ENGINE, AND L2/MOBILE DRAFTS — 2026-10-15 (Claude, Anthropic)
+- **L1 release (merged, deployed).** The founder approved reviewed head `9fa8eb0` (CI green). It contains only the engine, its tests and the approved docs. No route imports the engine, and there are no pricing, Stripe, rules or Business changes.
+  - Merged as `bb6744b`; [deploy run #187](https://github.com/alwat83/ifyoumind/actions/runs/38663118271) succeeded.
+  - Signed-out production checks: 47/48 passed. The one failure is the known pre-existing mobile sample-headline position, which #49 addresses. No regressions.
+- **#49 mobile sample report (draft, CI green, not merged).**
+  - On a phone the headline moves from y=1034 to y=617 (viewport 844). The top bar, the banner and the jump list are compacted.
+  - Desktop screenshots are byte-identical. Before/after screenshots are in `docs/ux/sample-report-mobile/`, and Playwright specs are added.
+- **#50 Life L2 place data (draft, not merged).**
+  - Official files are checksummed in `data/life/raw/MANIFEST.json`: BEA RPP 2024 (released 2026-02-19), ACS 2020–2024 rents with MOE (2026-01-29), OMB July 2023 areas. Of the ACS files only the CBSA extracts are committed; the full 55 MB files are not.
+  - The build is a deterministic stdlib script. It produces 935 areas and 1,294 principal cities. The price fallback order is metro, then state nonmetro, then none: Puerto Rico and Seaford, DE have no price level, and the engine warns.
+  - Spot checks against published values: San Francisco 115.613, Shreveport 84.766, U.S. nonmetro 88.699. 10 tests.
+  - **Founder decision:** the non-housing price composite (goods and other services, fitted weights 0.38/0.62), or one of the alternatives in `docs/life/l2-data-sources.md`.
+- **L3 readiness.** The `/life` UI can be built on the L2 contract (`findPlaces`, `priceInput`, `rentEstimate`) and the L1 engine (`compareOptions`). It needs a lazy-loaded data file and a hidden, unlinked route, and it stays unpublished.
+- **Still outstanding:** authenticated QA (needs the QA account) and production logs (the founder authorises in the `ifyou` session). The six-person study is prepared; no one has been invited.
+
 ## RELEASE: PR #45 CUSTOMER-TRUST FIXES — 2026-10-15 (Claude, Anthropic): deployed; signed-out checks verified
 - **Release:** founder approved head `fa33c3a` (15 reviewed files, CI green). It was merged as `4df2976`, and [deploy run #186](https://github.com/alwat83/ifyoumind/actions/runs/38661011491) succeeded.
 - **Signed-out browser checks (desktop and Pixel 7), passing:**

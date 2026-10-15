@@ -160,9 +160,875 @@ Strategy only: no features implemented, no pricing or entitlement changes, nothi
   - a DebugView check after deploy.
 
   #24 must merge after #18.
-- **Email-verification hardening:** [draft PR #26](https://github.com/alwat83/ifyoumind/pull/26) adds `requireVerifiedIdentity` to the 12 functions that write data or touch billing. Public, admin, setup and read-only functions are exempt. The auth guard refreshes a token that predates verification. Local suites pass. **Not merged or deployed; needs separate founder authorization.**
+- **Email-verification hardening:** [PR #26](https://github.com/alwat83/ifyoumind/pull/26), head `af7a535`, CI green. Status: **committed, not merged or deployed**.
+  - **What it does:** `requireVerifiedIdentity` runs first in 13 functions: the 12 that write data or touch billing, plus `getProductFunnelMetrics` (verified email, then the admin claim). 12 functions are exempt: the public sample, the Stripe webhook, workspace setup, the product-event log, and read-only functions of the caller's own workspace.
+  - **Fail-closed:** only the boolean claim `email_verified === true` passes.
+  - **Browser:** the auth guard reloads a stale unverified account once, and refreshes a token minted before verification.
+  - **Tests:** functions 52/52, commerce 35/35, organizations 5/5, rules 5/5, fast tests 24/24.
+  - **Release condition (founder, 2026-10-11):** release only after the 13-scenario onboarding baseline passes on production with internal test accounts, then re-test. **Blocked:** no ifYouMind-controlled inbox is available to the agent session. The domain's MX is `mail.ifyoumind.com`; Dose Ninja mailboxes must not be used.
+- **Phase 2, paid-report value (technical preparation approved; implementation not approved):**
+  - **Seven items:**
+    - significance flags (ACS MOE, Census Z-test at 90%);
+    - affordable households (B19001);
+    - target age (B01001);
+    - employer competitors (CBP 2023, county);
+    - owner-operated competitors (NES 2023, county);
+    - residential rent as a labelled proxy (B25064);
+    - a business-plan copy.
+  - **Labels:** every figure carries an evidence label (survey estimate, business count, calculated, proxy or customer evidence), plus its geography level and period.
+  - **Accuracy rules:** ratios only within one geography level, and no apportioning county figures to cities.
+- **FRED research (2026-10-11):**
+  - **Terms:** the FRED terms prohibit caching or storing FRED content and commercial use without the St. Louis Fed's written consent. Copyrighted series need owner permission.
+  - **Excluded:** Realtor.com, the Freddie Mac PMMS 30-year rate and UMich sentiment.
+  - **Recommendation:** FRED for research only. Production indicators come from the original public-domain agencies:
+    - BLS LAUS and QCEW;
+    - BEA county income and GDP;
+    - Census population estimates and building permits;
+    - FHFA HPI.
+
+    Each agency's API terms are to be confirmed before build.
+  - **Plan:** https://claude.ai/code/artifact/f2fecef4-4921-44da-ba45-a113a03e722a
+- **Official-source research (2026-10-11).** Plan: https://claude.ai/code/artifact/fd74813d-55a5-4ca9-a354-d82031e6e7bd
+  - **Census:** no US copyright (policy DS027). Every API request now needs a key. Required notice: "This product uses the Census Bureau Data API but is not endorsed or certified by the Census Bureau."
+  - **BLS:** public domain. Cite BLS and the retrieval date. v2 key allows 500 queries a day; v1 allows 25. The BLS quotes still need a manual check in a browser.
+  - **BEA:** public domain. Free key; 100 requests a minute. Required notice: "This product uses the Bureau of Economic Analysis (BEA) Data API but is not endorsed or certified by BEA."
+  - **FHFA HPI:** no API, downloads only. "FHFA HPI®" is a trademark; cite it as "Source: FHFA HPI®".
+  - **Caching:** none of the four restricts storage in the pages read.
+  - **Changes to the plan:**
+    - CBP has no planned release date for 2024 data, and NES changes method from 2025, after a Commerce order banning noise infusion. Use the 2023 data, labelled as the latest published, with BLS QCEW as the fallback for employer counts.
+    - Building permits are monthly at county level (since 2022), not only at metro level.
+- **Enhanced $79 report prototype:** https://claude.ai/artifact/3aabntWGixBsHtxLatJEyp. It mixes real figures (ACS from the guide; FHFA county HPI 2020–2025; Travis County LAUS) with clearly marked illustrative placeholders. Status: for founder review; not implemented.
+- **Release phases (estimates, each gated on founder approval):**
+  - R1: #26, then Wave B, then docs.
+  - R2: UX polish U1–U12, about 2–3 days.
+  - R3: evidence labels, significance tests, market sizing and export (Census only), about 4–5 days.
+  - R4: industry code, competitors and cost proxy, about 4–5 days.
+  - R5: BLS, BEA, permits and FHFA trends, about 5–7 days.
+- **Founder decisions (2026-10-11, late):**
+  - **R2 (conversion polish) and R3 (paid-report core):** approved for implementation as draft PRs. No merge or deploy.
+  - **R4 and R5:** stay at design stage.
+  - **The prototype:** the design baseline.
+  - **FRED:** research-only, pending legal review.
+  - **Official publishers first:** Census, BLS, BEA and FHFA, with licence notices and API conditions verified before production use.
+  - **Pricing:** a recommendation only, with no changes.
+- **[Draft PR #28](https://github.com/alwat83/ifyoumind/pull/28), R2 conversion polish.** Head `731979b`; CI green.
+  - **Changes:**
+    - the sample is labelled "Decision Report · Sample";
+    - "Included in the $79 report" pills;
+    - an unpaid "What the $79 report adds" panel;
+    - a direct "$79" CTA;
+    - the $79 card before Pro, with its contents listed;
+    - business-led homepage use cases;
+    - a support contact;
+    - a register next-step line;
+    - an "In this report" list;
+    - correct ACS period wording.
+  - **Tests:** fast tests 28/28, functions 48/48, commerce 29/29; axe 0 at 390 and 1280. Prices, Stripe and entitlements are unchanged.
+  - **Status:** committed (draft).
+- **[Draft PR #29](https://github.com/alwat83/ifyoumind/pull/29), R3 paid-report core.** Head `8fcdc7d`.
+  - **New code:** `functions/src/intelligence/evidence.ts` uses the Census Bureau formulas (SE = MOE/1.645, root-sum-of-squares totals, proportion and ratio MOEs, a 90% Z-test).
+  - **Report content:** households at four income thresholds (B19001), residents aged 25–44 (B01001), and difference checks that never rank places within the margin of error. Missing, open-ended and controlled values are explicit.
+  - **Fetching:** evidence is fetched only for entitled views, stored on the decision, and retried when Census is down. The key stays server-side.
+  - **Tests:** functions 61/61, commerce 31/31, fast tests 19/19, orgs and rules 5/5; axe 0. Screenshots use labelled fixture data.
+  - **Status:** committed (draft).
+- **Pricing recommendation (research only):**
+  - **The problem:** Pro at $39 a month includes 5 full reports, so it beats the $79 one-off for every buyer.
+  - **Recommendation:** keep $79 as the main offer, and reposition Pro as Professional at about $149 a month for 5 reports (about $30 per report), for advisers and multi-site operators. The alternative is $99 a month for 3 reports.
+  - **Unit economics:** variable cost per report is near zero. Net of the Stripe card fee, $79 yields about $76.41.
+  - **Status:** awaiting a founder decision.
+- **Release order (founder, 2026-10-11):** #26 (held for the mailbox baseline) → #28 → #29 → Wave B (held for the GA4 review) → docs #27. #29 is rebased onto #28; its CI tests the combined tree.
+- **#28 adds purchase intent:** the sample's $79 buttons carry `intent=report` through sign-up, verification and the first decision. The result page then offers the $79 report through the existing Stripe checkout. Verification and payment are unchanged.
+- **#29 narrative fix:** comparative wording follows the 90% difference tests. A place is never called higher or the highest within the margin of error.
+- **Combined R2+R3 check:**
+
+  | Suite | Result |
+  | --- | --- |
+  | Fast tests | 35/35 |
+  | Functions | 66/66 |
+  | Commerce | 31/31 |
+  | Orgs | 5/5 |
+  | Rules | 5/5 |
+
+  - **Accessibility:** axe 0 on six pages at 390 and 1280 px.
+  - **Exports:** the business-plan copy text and print/PDF are verified.
+  - **Evidence:** in `docs/integration-evidence/`.
+- **Professional at $149/month for 5 reports:** prepared as a specification only. Pending founder approval and a check for existing Pro subscribers in live Stripe. No Stripe, billing, entitlement or public-pricing change.
+- **Release readiness (2026-10-11, latest):**
+  - **#28:** ready for release review. A security review of the purchase-intent journey found no sensitive data in verification or continue URLs, an intent value limited to `report`, a same-origin continue URL, and unchanged verification, guard and payment controls.
+  - **#29:** head `82b41c5`. The Census key is proven never returned, stored or cached, and never in `src/` or `dist/`. Real-data validation (`npm run validate:census`, `docs/census-validation/`) waits on a dev `CENSUS_API_KEY` in a test environment.
+- **Professional pricing ($149/month for 5 reports):** preferred direction, not authorized. Grandfathering is automatic, because Stripe keeps existing subscription prices and access depends on subscription status. The live subscriber count is unknown, since the connector reaches only the sandbox (one $39 test subscription). The migration plan is in the Phase 2 plan, section 10.
+- **R4 and R5 sequence (design only):**
+  - R4.1 geography resolver → R4.2 industry-code picker → R4.3 CBP 2023 → R4.4 NES 2023 (needs a NAICS 2017→2022 crosswalk) → R4.5 rent proxy and lease quotes.
+  - R5.1 FHFA (no key) → R5.2 BLS LAUS → R5.3 BEA → R5.4 building permits.
+- **Founder checklist:**
+  1. Hestia QA mailboxes and the email steps (unblocks #26).
+  2. A dev Census key in a test environment (unblocks #29 validation).
+  3. Authorize #28, then #29.
+  4. Count live Pro subscriptions in Stripe.
+  5. Approve Professional pricing.
+  6. GA4 review (unblocks Wave B).
+  7. Later: BLS and BEA keys, and R4/R5 approval.
+- **Advertising and alternative revenue strategy, 2026-10-12 (Claude Code; research only; nothing applied for, contacted, installed or spent).**
+  - **Where it lives:** strategy doc https://claude.ai/code/artifact/edba208a-efd0-49c1-9231-a0f85fe9fcea; Notion entry "Advertising & Alternative Revenue Strategy (research only)" (https://app.notion.com/p/3f7c9bc5d8fd81719dd6ce961d2c1c74). The original discussion took place in ChatGPT and was not saved before.
+  - **Recommendation:** don't monetise yet; measure guide traffic first.
+    - **Then affiliates:** one labelled business-formation affiliate on guides only. ZenBusiness pays $75–$175, LegalZoom from $125 CPA and Northwest $100–$150, per their official pages.
+    - **Display ads last:** non-personalised AdSense on guides only. AdSense has no traffic minimum. Mediavine Journey needs 1,000 Tier 1 sessions, Raptive 25k pageviews and Ezoic 250k users.
+    - **Sponsorship:** only with an audience to show.
+  - **Never on product surfaces:** homepage, sample, sign-up, free result, paid report and PDF, pricing, checkout, account and workspace.
+  - **Model (assumptions only):** at 500, 3,000 and 15,000 guide pageviews a month, display ads earn about $1, $18 and $180, against about $76, $688 and $5,731 from $79 reports. A 5% drop in report conversion outweighs display ads in every scenario.
+  - **Gates:**
+    - A: 1,000+ Tier 1 guide sessions a month for 2 months, and the study complete.
+    - B: counsel review of the CMP, RDP and GPC consent design and the policy changes.
+    - C: no relative drop of 5% or more in report conversion during a 90-day pilot.
+  - **Google Ads customer acquisition stays a separate spending track.**
+- **Release 2026-10-12 (Claude Code, founder-approved): Phase 1 RC [#37](https://github.com/alwat83/ifyoumind/pull/37), production verified (signed-out).**
+  - **Merge:** `3114840`, pinned to the reviewed head `d81b178`. CI was green; the diff was 13 files with no functions, rules, config or billing code.
+  - **Deploy:** run 38271849491 (#179) succeeded at 15:42:03Z on `3114840`. Bundle `main-UEXL42XX.js`.
+  - **Production checks, all 9 PASS:**
+    - deployed strings, homepage pricing links (prices unchanged), the intent note;
+    - register inline errors and focus;
+    - return URLs: decide and result keep their path, growth gets none, all three attack URLs stay on-site;
+    - the sample shows "Sources cited: 4 of 4";
+    - Google popup and auth iframe, the #31 headers, the guide;
+    - axe 0 at 390 and 1440 px, no overflow, no console errors apart from Google's COOP notice.
+  - #34 and #36 closed as superseded.
+  - **Not verified:** signed-in journeys (no ifYouMind test account), verification in a different browser (no Hestia QA mailboxes), Google sign-in completion (no ifYouMind Google account).
+  - **#35 spec v2 approved.** It stays a draft until its own release approval.
+- **Phase 1 release candidate and event spec, 2026-10-12 (Claude Code; awaiting founder approval; nothing merged or deployed).**
+  - **RC [#37](https://github.com/alwat83/ifyoumind/pull/37) `d81b178`:** master `d413a88` plus #34 plus #36.
+    - The homepage conflict was resolved by keeping #34's intent and #36's labels.
+    - Checks:
+      - security review;
+      - fast 45/45, functions 48/48, commerce 29/29, rules 5/5, organisations 5/5, build passes;
+      - axe 0 and no overflow at 390 and 1280 px, no console errors;
+      - signed-out deep link goes to `/login?returnUrl=…`, and `//evil.example` stays on-site.
+    - The diff touches no functions, rules, config or billing code.
+    - The Pro cancellation line is kept (founder decision; it matches the entitlement code).
+    - The release checklist (before merge, deploy, signed-out and signed-in production checks, stop and rollback) is in the PR body.
+    - #34 and #36 are to be closed as superseded on release.
+  - **#35 spec v2 `2ca8350`:** `docs/analytics/product-events.md`.
+    - `result_engaged` is an **engagement** signal. Activation (understanding) is measured only in usability task T3.
+    - Events renamed to observable actions: `upgrade_panel_shown`, `intent_prompt_shown`, `intent_prompt_clicked`, `market_analysis_copied`, `print_dialog_opened`.
+    - Functions 54/54, fast 38/38.
+  - **Toolkit:** T1 is now the "10-second comprehension test". Consent supports notes-only, with no recording; those sessions are counted the same.
+- **Phase 1 development, 2026-10-12 (Claude Code; founder-approved for draft branches; nothing merged or deployed).**
+  - **1.1 [#34](https://github.com/alwat83/ifyoumind/pull/34) `c296d10`:** login return URL plus homepage $79 intent.
+    - Security review done: allowlist, and property tests over about 25,000 inputs.
+    - QA checklist for signed-in checks: `docs/qa/return-url-and-intent.md`.
+    - Fast tests 41/41.
+  - **1.2 Wave B reconciled with master:** [#18](https://github.com/alwat83/ifyoumind/pull/18) `f55786f` and [#24](https://github.com/alwat83/ifyoumind/pull/24) `da1dcf9`.
+    - Footer: keeps both the support email and Cookie settings.
+    - Register and decision flow: keep both the funnel tracking and the purchase intent.
+    - Both merge cleanly with master. Still held for the GA4 review.
+  - **1.3 [#35](https://github.com/alwat83/ifyoumind/pull/35) `134b582`:** first-party events.
+    - `finding_viewed` (activation proxy: 30 s plus copy, source or print), `offer_viewed`, `intent_prompt_shown`, `intent_prompt_clicked`, `report_copied`, `report_exported`.
+    - Each event has a schema allowing only enumerations and an opaque project id; established events now also drop email-like values.
+    - Admin metrics add `decisionToFinding` and `repeatDecisionOrganizations`.
+    - Functions 53/53, fast 38/38, commerce 29/29.
+    - Conflicts with #29 in 3 report files (a mechanical merge).
+  - **1.4 [#36](https://github.com/alwat83/ifyoumind/pull/36) `4ee9aba`:**
+    - "Sources cited" replaces "High source coverage".
+    - Pricing button labels say what happens.
+    - The register button stays active and shows inline errors.
+    - A line on the pricing page says reports unlocked with Pro stay unlocked after cancelling (true per the entitlement code). Founder decision whether to keep it.
+    - Fast 39/39; axe 0.
+  - **1.5 Usability study toolkit:** https://claude.ai/code/artifact/8faa5869-ecea-4e6a-a741-7af3cfdfec6a. It has the screener, consent, moderator script, note-taker sheet, findings log, outreach drafts (not sent) and synthesis. No one has been contacted.
+  - **Release grouping when authorised:** #34 and #36 together (combined merge 45/45), then #35, then Wave B after the GA4 review.
+- **Phase 1 customer-experience proposal, 2026-10-12 (Claude Code; for founder review).**
+  - **Documents:**
+    - Proposal: https://claude.ai/code/artifact/bc794ad5-24aa-4544-bcfe-c52ba170b327.
+    - Concepts v2: https://claude.ai/artifact/CtfueoihHaB8WGXZFa1q5H. They cover the verdict-first header, a dot-and-interval comparison and evidence cards; every element is tagged live, built, designed or illustrative.
+  - **Scope:**
+    - 1.1 Q1 + Q2: [draft PR #34](https://github.com/alwat83/ifyoumind/pull/34), `a0d488c`, CI green, fast tests 40/40, not merged.
+    - 1.2 merge master into #18/#24, which now conflict with master.
+    - 1.3 activation and offer events.
+    - 1.4 copy fixes Q4–Q6.
+    - 1.5 an 8-person usability study.
+  - **Phase 2 gate:**
+    - at least 4 of 6 complete and understand a first result unaided;
+    - at least 4 of 6 understand the $79 offer;
+    - non-buyers name missing evidence;
+    - 2 weeks of Wave B data.
+  - **Competition research (official pages, 2026-10-12):**
+    - CBP and NES have no place (city) geography.
+    - Minimum figure: CBP 2023 county `ESTAB` by 6-digit NAICS 2017, plus a density from the same county's population, labelled county/employer-only/2023. Counts aren't noised, but cells under 3 are dropped.
+    - NES 2024 (released 2026-09-29) uses NAICS 2022, and its method changes from 2025. Deferred.
+    - R4 stays design-only.
+- **Customer Value Expansion strategic assessment, 2026-10-12 (Claude Code; strategy only, for founder review).**
+  - **Documents:**
+    - Assessment: https://claude.ai/code/artifact/269b3bcd-c5ea-4e9b-8a80-2a2ba533f392. It covers the 12 deliverables and the original-brief traceability matrix.
+    - Design concepts: https://claude.ai/artifact/CtfueoihHaB8WGXZFa1q5H.
+  - **Status:** nothing implemented, merged or deployed.
+  - **Findings:**
+    - Nothing before sign-in is measured: GA4 never starts.
+    - One $39 Pro month (5 reports) undercuts the $79 report.
+    - The report covers demand but not competition or cost.
+    - The live report shows no MOE (#29 fixes this).
+    - Code review: `authGuard` sends signed-out users to `/login` with no return URL, and login always goes to `/app`. A verification link opened on another device therefore loses its destination and `intent=report`.
+    - The homepage $79 button links to plain `/register`.
+  - **Recommended next milestone, "First five, understood":**
+    1. Wave B makes the funnel measurable.
+    2. Run 6–8 observed sessions (programme in section 10; no outreach until approved).
+    3. Reach 5 genuine paying customers, each with a recorded reason for buying.
+  - **Quick wins proposed, not approved:** Q1 homepage intent; Q2 login return URL; Q3 verdict-first summary; Q4 rename "source coverage"; Q5 pricing copy; Q6 register button.
+- **Release 2026-10-12 (Claude Code, founder-approved): #28 then #31.** Both are production verified for signed-out use.
+  - **#28:**
+    - Merged as `c1123aa` from head `a7a4cf4`, with CI green.
+    - Deploy run 38196963277 succeeded at 02:47Z. The live bundle is `main-PJPQPYNE.js`.
+    - Verified live:
+      - homepage pricing order;
+      - the sample report's labels and its CTAs linking to `/register?intent=report`;
+      - the intent note, with sessionStorage holding `{intent, at}` only;
+      - the intent allowlist;
+      - register validation without submitting;
+      - the Google popup and auth iframe;
+      - `/app/*` routes redirecting to `/login`;
+      - axe 0 violations, no overflow and no console errors.
+    - The signed-in purchase journey is **not** verified. It needs the QA accounts, and no live purchase was made.
+  - **#31:**
+    - Rebased, then merged as `d413a88` from head `d6aa6bd`, with CI green.
+    - Deploy run 38197794517 succeeded at 02:59Z.
+    - The frame and permissions rules exclude Firebase's reserved `/__/` paths, because `signInWithPopup` embeds `/__/auth/iframe` from another origin.
+    - Live headers on all pages and assets:
+      - Referrer-Policy: strict-origin-when-cross-origin
+      - nosniff
+      - X-Frame-Options: SAMEORIGIN
+      - Permissions-Policy
+    - `/__/auth/*` sends no X-Frame-Options and no Permissions-Policy.
+    - Behaviour checked:
+      - the Google popup still works;
+      - another origin can't embed the site;
+      - only the origin is sent as the referrer to Google Fonts;
+      - fonts load and clipboard-write is allowed;
+      - axe 0 violations;
+      - Stripe checkout and the portal are full-page redirects, unaffected.
+    - Rollback: revert the merge commit.
+  - **Follow-ups:**
+    - The favicon is missing: `/favicon.png` serves the index page. This predates the release.
+    - www doesn't redirect to the apex.
+    - No CSP yet.
+- **Readiness 2026-10-12 (Claude Code; nothing merged or deployed):**
+  - **#26:** held until the Hestia QA mailbox baseline passes.
+  - **#28 (a7a4cf4):** shipped independently of #26 on 2026-10-12 (see the release entry above). There's no code dependency and a trial merge is clean. The only new URL parameter is the allowlisted `intent=report`, so there's no PII in any URL. Rollback is a revert.
+  - **Live headers:** only HSTS and Cache-Control are sent. There's no Referrer-Policy (so the browser default applies), no CSP, no nosniff, no X-Frame-Options and no Permissions-Policy. www serves 200 rather than redirecting to the apex.
+  - **#31 (c83fb54, draft):** adds the explicit headers, without CSP.
+  - **#29 (82b41c5):** draft until the live Census harness passes with a dedicated dev key in an isolated environment.
+  - **#30 (1466625, draft):** grandfathered-price display, cancellation messaging and a portal-config hook. No Stripe changes. Needs a rebase after #26.
+  - **#32 (756d92e, draft):** R4.1 city→county→metro resolver (CBSA July 2023). Never apportions county figures to a city. Not wired in.
+  - **Founder actions:**
+    1. QA mailboxes and the baseline (#26).
+    2. Dev Census key as `CENSUS_API_KEY` (#29).
+    3. Authorize #28, optionally with #31.
+    4. Count live Pro subscriptions.
+    5. Approve $149 and the portal configuration.
+    6. GA4 review.
+    7. Later: BLS/BEA keys and R4/R5 approval.
 - **Security finding (open until #26 ships):** Cloud Functions do not check `email_verified`; only the browser guard does.
 - **Customer count:** 0 verified live paying customers; five is the target.
+
+## CUSTOMER VALIDATION & REVENUE READINESS SPRINT — 2026-10-12 (Claude, Anthropic)
+Documentation and research only. Nothing was merged, deployed, installed, purchased, sent or published, and production stays at `3114840`. Sprint doc: https://claude.ai/code/artifact/e2590099-12eb-4eb7-a0c2-084afb0334bd. The Notion Command Center entry is dated 2026-10-12.
+
+- **A · Authenticated QA:** 9 signed-in journeys from #37 are **unverified** because no QA account exists:
+  - checks 6–12 in `docs/qa/return-url-and-intent.md`;
+  - the signed-in pricing line;
+  - the paid report and PDF.
+
+  The sprint doc covers the setup and a 7-part authenticated QA script:
+  - **Hestia mailboxes:** `qa-a`, plus `qa-b` with aliases `qa-b1`–`qa-b9`. If the `ifyoumind.com` MX isn't on Hestia, they go on a separate `qa.ifyoumind.com` mail domain, so existing mail and Hosting records are untouched.
+  - **A dedicated QA Google account.** Firebase documents no Google test accounts.
+- **B · Analytics:** the doc has an 11-item GA4 property checklist (Google signals, ads personalization, granular data, product links, retention, enhanced measurement, data sharing, DebugView).
+  - **Compatibility:** #18 + #24 + #35 merge cleanly on master together (local trial: fast 57/57, functions 54/54, build passes).
+  - **Consent:** #18 uses basic consent mode, so GA isn't loaded before Allow.
+  - **Purchases vs clicks:** only the Stripe webhook counts as a purchase.
+  - **Privacy policy:** its AI-provider sentence is inaccurate (no production AI). #12 fixes it and should ship before or with #18. The GA4 retention period must be added to the policy.
+  - **Status:** #18 and #24 are still held.
+- **C · Customer validation:** the recruitment approval package (screener, invitation, consent, scheduling, no-spend channel) is prepared and **not sent**.
+- **D · Revenue:** the dashboard is defined. Its source of truth is Stripe live mode through `stripePayments` with `livemode=true`.
+
+  **Missing data:**
+  - `invoice.paid` renewals, refunds (`charge.refunded`) and disputes (`charge.dispute.created`) are not recorded;
+  - there's no list for excluding test and QA workspaces.
+
+  Recording these needs founder approval, because it touches the webhook. Entitlement logic would be unchanged.
+- **E · Reconciliation against `3114840`:**
+  - #26 now conflicts in `auth.guard.ts` (with #37's `loginParams`), and #12 conflicts too. Both need rebuilding on master with new commits, not force-pushes.
+  - #18, #24, #27, #29, #30, #32, #33 and #35 merge cleanly.
+  - Proposed order, each step separately approved: #33 → #26 → #12 → #35 → #18 → #24 → #29 → #30/#32.
+- **Founder actions:**
+  1. Hestia QA mailboxes and a QA Google account.
+  2. Whether Claude gets QA credentials.
+  3. The GA4 checklist and a retention choice.
+  4. The refund policy (#12).
+  5. The recruitment package.
+  6. Stripe live: the webhook event list and identifying real customers.
+  7. Release approvals.
+
+## AUTOMATED QA INFRASTRUCTURE & REVENUE INTEGRITY — 2026-10-12 (Claude, Anthropic)
+Nothing was merged or deployed, and production stays at `3114840`. No production users or data were created, changed or deleted. Stripe configuration was not touched.
+
+**#38: automated authenticated QA** (`claude/jolly-ramanujan-ofr18a-qa-fixtures`, `c0e9894`, draft). CI is green on GitHub: the new `qa` job and `build`.
+- **Fixtures F01–F10** run on the Auth, Firestore and Functions emulators (`demo-ifyoumind`):
+  - real sign-up;
+  - real verification-code consumption;
+  - the real onboarding and decision callables;
+  - a seeded Census cache;
+  - targeted cleanup that refuses non-fixture accounts, and a leak check.
+- **The run fails closed** if the emulators aren't local, the project isn't `demo-ifyoumind`, cloud credentials are present, or the bundle references `ifyoumind-473fe`.
+- **Playwright: 32 scenarios × desktop and mobile = 64 tests, all passing.** They cover:
+  - registration errors;
+  - **the verification link opened in a separate browser, with the `$79` intent kept through the continue URL;**
+  - the unverified gate;
+  - protected routes;
+  - return URLs (valid ones, plus 12 hostile ones);
+  - a free decision;
+  - saved retrieval;
+  - cross-account denial;
+  - the non-admin `/app/growth` view;
+  - sign-out;
+  - expired and invalid sessions;
+  - layout, axe, console errors, and no external requests.
+- **Integration suite:** 10 pass, 1 skipped until #26. The skipped test checks the server-side verification refusal.
+- **New PR workflow `authenticated-qa.yml`:**
+  - runs every emulator suite plus Playwright;
+  - uses no secrets and has read-only permissions;
+  - the rules, organizations and commerce suites had never run in CI before.
+- **Production bundle check:** a new step in `launch-build-check.yml`. The deploy workflow is unchanged.
+- **Behaviour changes:**
+  - The emulator-only verification bypasses in the guard and register page are removed (dev and CI only; production unchanged).
+  - `build:local` now writes to `dist/ifyoumind-local`.
+  - Two fixes the new checks found: pricing "/month" contrast was 2.87:1, and account cards overflowed at 390 px with long email addresses.
+
+**#26** (head `1bd38de`) now carries master and #37:
+- The merge was a merge commit, not a force-push. The guard keeps both `ensureFreshVerification` and `loginParams`.
+- The server-side emulator bypass `isLocalDemoEmulator` is removed.
+- **Tests:** functions 52/52, fast 53/53, commerce 35/35.
+- **Combined with #38:** e2e 64/64, and the QA integration suite 11/11 with the server check enforced.
+- Still held for the QA account baseline.
+
+**#39: revenue ledger** (`claude/jolly-ramanujan-ofr18a-revenue-ledger`, `2d4b699`, draft). It records renewals, failed renewals, refunds and disputes in `stripeLedger`:
+- idempotent and out-of-order safe;
+- a new dispute opens a billing review;
+- **no access changes;**
+- `stripePayments` gains `paymentIntentId`;
+- `revenueSummary` counts genuine paying customers from live records only, excluding QA;
+- `docs/revenue/founder-dashboard.md`.
+
+**Tests:** functions 54/54, commerce 36/36. **Founder actions for #39:**
+1. Select the new events on the live webhook endpoint.
+2. Approve or decline a backfill.
+3. Provide the exclusion list.
+
+**Analytics compatibility** (local trial: #38 + #18 + #24 + #35, not pushed):
+- **#24 conflicts with #38** in `register.component.ts`. The fix is mechanical: keep `sign_up` tracking and the always-verify flow.
+- **Results:** fast 63/63, functions 54/54, e2e 63/64.
+- **The failure is a real #18 issue:** on mobile the cookie banner covers the decision flow's "Show me what the data says" button until it's dismissed. Fix it before #18 ships.
+- The local build never initialises GA, so this suite can't prove GA consent gating. #18's earlier production-config Chromium checks remain the evidence.
+
+**Docs:**
+- `docs/qa/automated-qa.md`: commands, environment variables, lifecycle, coverage matrix, CI and limitations.
+- `docs/qa/production-qa-proposal.md`: least-privilege, allowlisted, dry-run-by-default production QA accounts plus an audit log. **Not built.**
+
+**Remaining real-world gaps:**
+- real email delivery and the hosted action page;
+- Google OAuth;
+- real Census data;
+- live payments;
+- Safari and real devices;
+- intent across **devices** (only through the continue URL).
+
+**Not tested anywhere:** the free 3-decisions-a-month limit, which the demo project skips. There is also no self-service account deletion.
+
+## RELEASE: PR #38 AUTOMATED QA — 2026-10-12 (Claude, Anthropic): deployed and production verified (signed out)
+Founder approved releasing PR #38 at reviewed head `c0e9894`.
+
+**Pre-merge checks:**
+- **Head and base:** the head was unchanged and master was still `3114840`; the merge was clean.
+- **CI:** both `qa` and `build` were green.
+- **Scope:** 28 files, matching the review.
+- **Production bundles built from master and from the PR head and compared by content.** The only behavioural differences were:
+  - the guard's `Pt||` (true only on localhost/127.0.0.1) and registration's localhost branch, both false on ifyoumind.com;
+  - two CSS rules (pricing contrast and account-card wrapping).
+
+  The master build hash `main-UEXL42XX.js` equals the previously live bundle, so the build is reproducible.
+- **Emulator safety:**
+  - every CI and emulator path uses `demo-ifyoumind` (Firebase demo projects never reach real resources);
+  - the fixture guard refuses non-local emulator hosts, other project IDs and cloud credentials;
+  - the CI job has no secrets and `contents: read`;
+  - the deploy workflow is unchanged.
+
+**Merged** as **`f98e19b`** (merge commit). **Deploy:** run 38306000061 (#180) succeeded at 20:47:31Z.
+
+**Production smoke checks** (read-only, 20:49Z): **9/9 pass**.
+- **Live bundle:** `main-B3S77CN4.js`, the build verified above.
+- **Bundle contents:**
+  - `ifyoumind-473fe` is present;
+  - no `demo-ifyoumind`, `demo-api-key`, `qa.ifyoumind.test`, fixture password, emulator endpoint or Admin SDK marker.
+- **Guard:** `a.emailVerified||e.url==="/profile"`, with no localhost exception.
+- **Headers:** unchanged.
+- **Pages:** 6 pages at 1280 and 390 px, with 0 console errors and 0 overflow.
+- **Signed-out redirects:**
+  - `/app/decide?…intent=report` keeps its returnUrl;
+  - `/app/growth` has no returnUrl;
+  - `//evil.example` stays on site.
+- **Registration:** empty-form errors show.
+
+**Remaining gaps:**
+- Signed-in journeys in production, which need QA accounts.
+- Real email delivery, Google OAuth and live payments.
+- `/favicon.png` still serves HTML (#33 fixes it).
+- `/login` and `/register` have a generic title.
+
+## FOLLOW-UPS AFTER #38 — 2026-10-12 (Claude, Anthropic): all drafts
+- **#40 free-limit tests** (`7a3d202`):
+  - The demo-project exemption is removed, so the 3-decisions-a-month limit is enforced in the emulator.
+  - The rule is now pure and unit-tested, with integration tests (4th refused with nothing written; earlier months don't count) and a browser test.
+  - **Results:** functions 49/49, QA integration 12 pass + 1 skipped, e2e 66/66.
+  - **Finding:** Pro's advertised "up to 50 decisions" is not enforced anywhere.
+- **#39 revenue ledger audit** (`4fc0306`). Fixes:
+  - refund-status ordering on its own clock;
+  - one billing review per dispute;
+  - **subscription refunds matched by Stripe customer**: sandbox records show Pro sessions and invoices have no payment intent on the current API version;
+  - genuine-customer rule counting renewals against reversals;
+  - `warning_closed` and `prevented` disputes are closed.
+
+  Also adds `reconcileWithStripe` and the founder-run, read-only `scripts/reconcile-stripe.mjs` (needs an `rk_live_` key).
+  - **Live records have not been compared,** because the connector reaches only the sandbox.
+  - **Results:** functions 57/57, commerce 39/39, e2e 64/64.
+  - Playwright output committed by mistake was removed in a follow-up commit.
+- **#18 banner fix** (`66a55cb`), plus master merged:
+  - The banner reserves bottom and scroll padding while open, with a compact layout at 560 px and below. Consent is unchanged.
+  - New consent-banner spec at 320, 360 and 390 px.
+  - Without the fix, 10 checks plus the mobile decision test fail; with it, the suite passes 78/78. Still held for GA4.
+- **#41 account-deletion proposal** (design only): data inventory, retention, subscriptions, Stripe customer, disputes, a safe order (Auth user last), audit log and test plan.
+- **#26:** unchanged, a draft until its baseline and verified-email gates are met.
+
+**Holds unchanged:** #12, #18, #24, #26, #29, #30, #32, #33, #35, #39, #40, #41, R4/R5, advertising, outreach and AI.
+
+## STATUS AFTER #38 ACCEPTANCE — 2026-10-12 (Claude, Anthropic)
+**Production: verified.** Master and live are at `f98e19b` (PR #38, accepted by the founder as the production QA foundation).
+- **Live bundle:** `main-B3S77CN4.js`.
+- **Smoke checks:** 9/9 read-only checks passed at 20:49Z, all signed out.
+- **Still unverified:** signed-in production journeys, email delivery, Google OAuth and live payments.
+
+**Work this round (all drafts; nothing merged or deployed after #38):**
+- **Live Stripe reconciliation** (#39, `scripts/reconcile-stripe.mjs`): founder-approved as read-only, **prepared but not run.** It needs the founder's live restricted key, so it can't run from here.
+  - **Stripe safety:** a single GET-only fetch wrapper; it refuses non-`rk_live_` keys and keys that can read Customers; it prints only the HTTP status on errors, never the key or Stripe's message.
+  - **Firestore and entitlements:** no Firestore write calls and no entitlement code loaded, proved by `test/reconcile-script.test.mjs`. Run it as a viewer-only account.
+  - **Output:** `verified` matches and `discrepancies` are separate, with IDs and counts only.
+- **#39 ledger** (`ab0c973`; CI green; security review found no issues):
+  - **Customer fallback made conservative:** a refund or dispute is tied to a purchase only by payment intent, or by a Stripe customer with exactly one live payment in exactly one workspace. Anything else stays **unresolved for review**.
+  - `genuinePayingCustomers` assumes every unresolved reversal applies; `payingCustomersNeedingReview` and unresolved refund amounts are reported separately.
+  - **Tests:** functions 57/57, commerce 39/39, fast 54/54.
+- **#40 free-limit tests:** CI green. Unchanged since the last round.
+- **#42 Pro 50-decision allowance** (`93e923b`, built on #40; CI started by manual dispatch):
+  - A transaction-reserved counter, so concurrent requests can't exceed the limit; failures give the slot back; the counter heals from stored decisions.
+  - Period is the UTC calendar month, the same as Pro's included reports.
+  - Covers mid-month downgrades and a grandfathering check; design in `docs/billing/decision-allowance.md`.
+  - **Tests:** functions 50/50, commerce 34/34, e2e 66/66.
+- **#41 deletion proposal** (`56411b3`):
+  - Record retention is sourced from the IRS (3/6/7-year rules), CCPA (AG summary; statute text not fetched), GDPR 17(3), Stripe customer deletion (cancels subscriptions immediately), card dispute windows (120 days typical, up to 180) and Firebase recent sign-in.
+  - Recommended defaults for the four decisions: payment records 7 years; Stripe customer link 180 days; anonymise legacy posts; a confirmation email before deletion; a 7-day undo window.
+- **#33 favicon** (`cb61084`, master merged): built assets are real PNG and ICO files, the production bundle check passes, and fast tests pass 52/52. **Awaiting founder approval to merge.**
+
+**Holds:**
+- #26 (verified-email gates);
+- #18 and #24 (GA4 property and consent review);
+- #12, #29, #30, #32, #35, #39, #40, #41 and #42;
+- R4/R5, pricing, outreach, advertising and AI.
+
+**Next approval gates:**
+1. #33 release.
+2. Running the reconciliation with a live restricted key.
+3. #40, then #42: check that no Pro workspace has more than 50 decisions this month.
+4. #39, after selecting the webhook events.
+5. The four deletion decisions and counsel on retention.
+6. #26 after the QA account baseline.
+7. #18/#24 after the GA4 review.
+
+## RELEASE: PR #33 FAVICON — 2026-10-13 (Claude, Anthropic): deployed and production verified
+Founder approved releasing PR #33 at reviewed head `cb61084`.
+
+**Pre-merge checks:**
+- **Head and base:** the head was unchanged, master was `f98e19b`, and the merge was clean.
+- **CI:** green (`build` and `qa`).
+- **Scope:** 7 files, all favicon-related:
+  - `src/favicon.png` (64×64);
+  - `public/favicon.ico` (16, 32 and 48 px);
+  - `public/apple-touch-icon.png` (180×180);
+  - an `apple-touch-icon` link tag in `src/index.html` and the guide generator;
+  - `test/favicon.test.mjs` and a one-line allowlist in `test/guides.test.mjs`.
+
+**Merged** as **`7c02795`** (merge commit). **Deploy:** run 38448419661 (#181) succeeded at 18:42:56Z. The main bundle is unchanged (`main-B3S77CN4.js`), as expected for static assets.
+
+**Production checks** (read-only, 18:47Z): **8/8 pass**.
+- **`/favicon.png`:** 200, `image/png`, 4,187 bytes, PNG signature, 64×64. The md5 matches the build (`b82ab645…`).
+- **`/favicon.ico`:** 200, `image/x-icon`, 4,833 bytes, ICO signature, 3 sizes. The md5 matches (`55b66a56…`).
+- **`/apple-touch-icon.png`:** 200, `image/png`, 180×180. The md5 matches (`8d362712…`).
+- **No HTML fallback:** none of the three bodies is the SPA HTML.
+- **Link tags:** the homepage and guide pages carry the icon and apple-touch-icon links.
+- **Headers:** security headers unchanged.
+- **Pages:** `/`, `/login`, `/register`, `/sample-report` and `/privacy-policy` load at 1280 and 390 px with 0 console errors and 0 overflow. Each page requested `/favicon.png` and got `image/png`.
+- **Redirects:** signed-out redirects keep the return URL.
+
+**Remaining issues:**
+- `/login` and `/register` have the generic title "ifYouMind" (cosmetic; pre-existing).
+- Signed-in production journeys are still unverified (no QA accounts).
+
+**Holds unchanged:** #26, #39, #40, #42, #18, #24 and all others.
+
+## RELEASE READINESS — 2026-10-13 (Claude, Anthropic)
+**Production is verified at `7c02795`** (#33 favicon on top of #38). The milestone is a trustworthy, customer-ready purchase experience, then customer acquisition.
+
+**Prepared this round (all drafts; nothing merged or deployed):**
+- **#40 free-limit tests** (`99dd855`, master merged): ready for final review.
+  - **Production behaviour is unchanged.** The removed exemption only matched the demo project. A side-by-side check showed the same period start, the same `>=3` rule and a byte-identical message.
+  - **Tests:** functions 49/49, fast 52/52, commerce 29/29, QA integration 12 + 1 skipped, e2e 66/66.
+- **#26 verified email** (`b0afde0`, master merged): final security review complete.
+  - **Enforcement:** a mechanical check of all 25 deployed functions found 13 that require a verified email first (12 plus the admin-only funnel metrics), the webhook protected by its Stripe signature, and 11 documented exemptions.
+  - **New:** the unreachable `/profile` exemption is removed, so every guarded page needs a verified email.
+  - **Unchanged:** #37's return-URL redirect. The guard fails closed.
+  - **Tests:** functions 52/52, fast 60/60, commerce 35/35, organizations 5/5, rules 5/5, **QA integration 11/11 (server check enforced)**, e2e 64/64.
+  - **Remaining gate:** the signed-in production baseline.
+- **#39 reconciliation** (`33e7652`, master merged): sandbox records confirm the matching design.
+  - The report refund matches by payment intent; the Pro refund matches only by its sole customer payment and becomes "unresolved" once a renewal exists.
+  - **Tests:** functions 59/59, commerce 39/39. The live run still needs the founder's restricted key.
+- **Production signed-in journey plan:** `docs/qa/production-signed-in-journey.md`.
+  - **Setup:** one dedicated Gmail QA account (no Hestia needed). Gmail `+tag` addresses give fresh email/password accounts with real delivery.
+  - **The run:** about 15 minutes, desktop plus phone.
+  - **Isolation:** QA workspaces go on the exclusion list, and no purchases are made.
+
+**Next priorities, in order:**
+1. Run the signed-in production journey. It is also #26's baseline.
+2. Release #26.
+3. Release #40.
+4. Run the reconciliation and select the webhook events, then release #39.
+5. Do the deferred live $79 purchase test, then refund it.
+6. Customer acquisition.
+
+## RELEASE: PR #40 FREE-LIMIT TESTS — 2026-10-14 (Claude, Anthropic): deployed and production verified (signed out)
+Founder approved releasing PR #40 at reviewed head `99dd855`.
+
+**Pre-merge checks:**
+- **Head, base and CI:** the head was unchanged, master was `7c02795`, the merge was clean, and CI was green (`build` and `qa`).
+- **No website change:** the diff touched no `src/` file.
+- **Production code:** the only change removed the demo-project exemption and moved the same rule into helpers. The period start, the `>= 3` check and the message are identical, verified side by side.
+
+**Merged** as **`4acc655`**. **Deploy:** run 38490120459 (#182) succeeded at 00:29:21Z. The main bundle is unchanged (`main-B3S77CN4.js`).
+
+**Production smoke checks** (read-only): **all pass**.
+- **Functions:** `createMarketIntelligenceProject` and `getCommercialStatus` are live and refuse a call without credentials (401 `UNAUTHENTICATED`).
+- **Public sample:** `getSampleDecisionReport` returns the sample (Austin, TX, 2 comparisons), and "Sources cited" renders.
+- **Pages:** 5 pages at 1280 and 390 px, with 0 console errors and 0 overflow.
+- **Headers, favicon and redirects:** headers unchanged, favicon OK, signed-out redirects correct.
+
+**Founder-metrics QA exclusion: it was NOT implemented.**
+- `getProductFunnelMetrics` counted every event and payment.
+- Draft **#43** (`2842983`) adds read-time exclusion of QA workspaces:
+  - the fixture domain is always excluded;
+  - `adminConfig/qaExclusion.emails`, with Gmail `+tag` aliases matching;
+  - the `qa` claim, or listed workspace IDs.
+- The dashboard shows what was excluded. `adminConfig` is closed to clients (rules-tested).
+- **Until #43 ships and the config is set, founder metrics must not be read as excluding QA.**
+
+**Pre-existing flake found:** draft **#44** (`598c3ea`) fixes a session-restore race on `/verify-email`: a quick click right after a page load could send a signed-in visitor to `/login`. Without the fix the suite failed in 2 of 5 runs; with it, 9 of 10 passed, and the one failure wasn't captured.
+
+**Holds unchanged:**
+- #26: release preparation done; the production signed-in QA run is mandatory.
+- #39: live reconciliation must be completed and reviewed first.
+- #42, #43, #44, #18, #24, #35, #41 and all others.
+
+## QA ISOLATION AND TEST STABILITY — 2026-10-14 (Claude, Anthropic): drafts, nothing merged or deployed
+Founder accepted #40 as deployed at production commit `4acc655`. New priority: trustworthy QA isolation, then completing the real signed-in customer journey.
+
+**#43 QA exclusion: final review done, presented for release approval.**
+- **Head:** `e62de54`, which is `d27e2e6` plus a guide note. CI green (`build`, `qa`).
+- **Explicit identifiers only.** Matching uses `adminConfig/qaExclusion` with `qaMailboxes` (a declared QA-only mailbox and its `+` aliases), exact `emails`, `uids` and `organizationIds`, plus the `qa: true` claim and the reserved `.test` fixture domain.
+  - The earlier blanket `+tag` stripping of every listed email is removed.
+  - There are no Gmail, alias or domain-pattern rules.
+- **Verified addresses only.** An address rule excludes only when Firebase has verified that address. Unverified look-alikes are still counted and flagged.
+- **Audit visibility.** Excluded workspaces, events, payments and live payments are shown per rule. A missing, empty or invalid config is shown as a red warning, never as clean.
+- **Coverage.** Funnel counts, conversion, confirmed payments, gross revenue and the recent-payments list. `revenueSummary`/`genuinePayingCustomers` exist only on #39 and are not yet surfaced anywhere; they must take `excludedOrganizations()` from #43 when surfaced. **Merge #43 before #39.**
+- **Access.** `adminConfig` is closed to every client, including admin tokens (rules test). The callable is admin-only.
+- **Tests.**
+
+| Suite | Result |
+|---|---|
+| Functions | 55/55 |
+| Rules | 6/6 |
+| Organizations | 5/5 |
+| Commerce | 29/29 |
+| QA integration | 13 + 1 skipped (missing, invalid and active config) |
+| E2E | 66/66, plus a new dashboard-warning test |
+| Builds and bundle check | pass |
+
+- **Founder guide:** `docs/qa/qa-account-setup.md` (also in Notion).
+
+**#44 intermittent browser failures: two separate causes, both evidenced.**
+1. **Verify-email session-restore race (product bug).** A deterministic test holds back session restore. Without the fix it fails 4/4; with it, 40/40 pass. It didn't recur naturally in 12 master runs, so the deterministic test is the evidence that the fix works.
+2. **Teardown 403s (test-harness bug, unrelated).** These caused 2 of 12 master full-run failures. The traces show the fixture deleting the workspace while the app's last request was in flight. Fixed by leaving the page before cleanup.
+- **With both fixes** (`4cf8b4b`): 12/12 full runs, 840/840 tests.
+
+**Production QA plan updated** (`docs/qa/production-signed-in-journey.md`): #43 is a prerequisite, QA accounts are kept (no deletion), `+r2` is verified after its check, and the dashboard warning is checked.
+
+**Holds:**
+- #26 until the real email-verification and Google sign-in production checks are done.
+- #39 until the live Stripe reconciliation is reviewed.
+- #43 and #44 await approval.
+- All others held.
+
+After these gates, focus shifts to customer testing, conversion and revenue, not backlog expansion.
+
+## RELEASE: PR #43 QA EXCLUSION — 2026-10-14 (Claude, Anthropic): deployed and production verified (signed out)
+- **Approval:** the founder approved a controlled release at reviewed head `e62de54`.
+- **Merge:** `92b3196`. Before merging, the scope was confirmed unchanged: 10 files, no rules, workflow, package or config change, and no new function. CI was green (`build`, `qa`) and the merge was clean.
+- **Deploy:** run 38594984824 (#183) succeeded at 16:14:33Z. The main bundle is `main-6AST7NFN.js`.
+- **Read-only production checks: all pass.**
+  - `getProductFunnelMetrics`, `createMarketIntelligenceProject`, `getCommercialStatus` and `getMarketIntelligenceProject` refuse calls without credentials (401 `UNAUTHENTICATED`).
+  - The dashboard's exclusion and warning strings are deployed (`chunk-7ZGR3UJS.js`).
+  - Signed out, `/app/growth` redirects to `/login`.
+  - `/`, `/sample-report`, `/register` and `/login` at 390 and 1280 px: 0 console errors, no overflow.
+  - Favicon and headers are unchanged.
+- **Not verified:** the admin view of the dashboard, which needs a signed-in admin. No production QA account or `adminConfig/qaExclusion` was created (that needs separate approval). Until the founder sets it up, the dashboard should show the red "has not been created" warning.
+- **Held:** #44, #26, #39 and all others stay undeployed.
+
+## CUSTOMER VALUE & CONVERSION REVIEW — 2026-10-14 (Claude, Anthropic): research and design only
+- **Document:** https://claude.ai/code/artifact/6da37714-3949-4834-89b3-535726ef0aed
+- **Status:** nothing implemented, priced, deployed or sent.
+- **Evidence:**
+  - code at `92b3196`;
+  - a local emulator journey at 390 and 1280 px;
+  - a live read-only capture of the public pages.
+
+  Each finding is labelled verified or hypothesis.
+- **Key verified findings:**
+  - The verdict ("favorable", "caution" or "mixed") is set by counting bullet points. The live sample calls Austin "leans favorable" while also ranking it lowest on growth.
+  - Comparisons carry no margin of error (#29 is held).
+  - Every business type gets the same 4 Census measures, and the paid report adds wording and 2 cities, not new evidence.
+  - On a phone the $79 offer comes before the answer, and the sample's verdict starts at 1,096 px.
+  - Place entry uses semicolon-separated free text.
+  - The landing page claims "your own data", but uploads never feed a report.
+  - There is no forgot-password link on `/login`.
+  - Terms and Privacy are unlinked at sign-up.
+  - Pro at $39 for 5 reports undercuts $79.
+- **Proposal:** sell one job (the market analysis section of a business plan, for local US businesses and advisers).
+  - **Free brief:** one honest verdict line first.
+  - **The $79 report** finishes three plan jobs: paste-ready cited text with income-band sizing, a lender-facing city comparison, and a before-you-sign checklist.
+- **Five improvements, in priority order:**
+  1. An honest verdict (#29 logic).
+  2. Value before the offer.
+  3. Proof on the landing page.
+  4. Easy city entry on a phone.
+  5. A report that finishes the plan.
+
+  Run the existing 8-person toolkit study on today's production first.
+- **First five customers:** through the study's advisers and warm, approved one-to-one follow-ups, about 7 weeks, no spending.
+- **Decisions D1–D8 for the founder:**
+  - positioning;
+  - running the study first;
+  - the study's approvals;
+  - the build order after the study;
+  - the #29 release;
+  - the Pro decision after T8;
+  - forgot-password and Terms/Privacy links as ride-alongs;
+  - removing the "own data" claims.
+
+## IFYOUMIND 2.0 BLUEPRINT — 2026-10-14 (Claude, Anthropic): strategy and design only
+- **Document:** https://claude.ai/code/artifact/0be07b0d-fe21-4e33-be83-c3e95349671a (20 sections).
+- **Status:** nothing implemented, merged, deployed, priced, sent or spent.
+- **Production confirmed:** `92b3196` (#43), not `4acc655`.
+- **Long-term vision:** one evidence-based decision engine with two front doors.
+  - **Business** (ifYouMind Business) stays the commercial priority and the conversion page at `/`.
+  - **Life** (everyday decisions) is a later growth engine.
+  - **Brand line hypothesis:** "From information to better decisions" (footer/About, not the business headline).
+- **Verified current state:**
+  - **Market analysis:** 4 ACS measures, a $79 report, $39 Pro, a 3-a-month free limit.
+  - **"Universal" engine:** 10 deployed functions (datasets/observations per workspace, CSV import of 400 rows parsed in the browser, alignment, Pearson correlation, keyword question matching, no AI). Reached only from `/app/data` and the canvas.
+  - **Not deployed:** OpenAI modules (`market-ai.ts`, `ai-synthesis.ts`). Whether older non-allowlisted functions still run is unverified.
+  - **No file storage pipeline, evidence model, account deletion or sharing.**
+- **Architecture (proposal):**
+  - **Modules:** intake → uploads, workspace data and connectors → deterministic validation and transformation → **evidence store** (typed, sourced objects with ids) → decision analysis → recommendation (templates; AI wording only if it beats templates on the eval suite) → results.
+  - **Evaluation suite in CI** gates every engine change.
+  - **Reuse:** Auth, workspaces, `authorizeOrganization`, closed rules, Stripe, QA. No rewrite.
+- **Ingestion:** CSV and manual entry first (server-side parsing, data review, quality report, provenance, raw files deleted after 30 days); Excel next; PDF and connectors deferred.
+- **Connectors:** official federal sources first (Census live; BLS, BEA, FHFA, HUD, EIA and NOAA proposed, terms to confirm). FRED excluded. Paid or licensed sources need approval.
+- **MVP (proposal):**
+  1. **Business:** a "Sales Health Check" (sales CSV → what changed → what to test first), preceded by a concierge test with 3 owners.
+  2. **Life:** a job-offer relocation comparison (typed inputs; OEWS, RPP, ACS).
+
+  The utility-bill scenario is deferred: utility-level tariffs are not freely available.
+- **Monetization:**
+  - **Business:** keep $79 as the anchor and fix the Pro conflict after the adviser evidence (T8). Then the adviser plan, report packs and the Health Check; teams, API and enterprise later.
+  - **Life:** free first; a one-time relocation report as a later hypothesis; no ads or affiliates.
+  - Metrics stay separate per audience.
+- **Safety:**
+  - **Before uploads ship:** #26 server verification, #41 account deletion, #12 plus counsel for privacy and AI terms.
+  - **Excluded from the MVP:** medical, legal, tax, credit, lending, insurance, investment and decisions about other people's employment.
+- **Roadmap** (each phase needs approval):
+  - **A** Protect the business ‖ **B** engine foundation (test-only first).
+  - **C** Business data and **D** Life MVP, each behind its own gate.
+  - **E** dual audience (homepage option C band).
+  - **F** advanced.
+- **Founder decisions V1–V9** (in addition to the Value Review's D1–D8):
+  - business-first; homepage A then C;
+  - MVP scenarios; the AI policy;
+  - Phase B in principle; Pro after T8;
+  - excluded domains; the concierge test;
+  - retiring `seedUniversalDemoData` and legacy rules.
+- **Five next actions:**
+  1. Founder trust gates.
+  2. Approve and launch the business study.
+  3. Claude drafts the Value Review fixes #1–#3 plus F22/F23 (held).
+  4. Claude writes the evidence-model spec and evaluation suite (test-only).
+  5. Claude prepares the concierge pack and the Life concept prototype (no contact without approval).
+
+## 2.0 CONTROLLED EXECUTION — 2026-10-14 (Claude, Anthropic): drafts and research, nothing merged or deployed
+- **Directive:** the founder's consolidated ifYouMind 2.0 directive.
+- **Baseline verified:** production `92b3196` (#43), deploy #183 OK. The authenticated dashboard is not yet verified, and no QA account or exclusion entry exists.
+- **Direction clarified (founder):** the business-plan market-analysis message is the Business landing message only. The platform stays one decision engine with two audiences: Business (revenue priority) and Life (growth). Life now runs as a parallel research and design workstream, unbuilt and unlaunched until approved. This revises the blueprint's "Business door only through Phase C".
+- **WP1:** [#45](https://github.com/alwat83/ifyoumind/pull/45) trust fixes (draft).
+  - `summarizeEvidence` replaces the bullet-count verdict on result and sample pages, with "no clear difference" valid and a disclosed 5% / 2-point band until #29.
+  - The $79 prompt moves after the evidence, and the summary is on the first phone screen.
+  - Real sample figures on the homepage; the "your own data" claim removed.
+  - Forgot password (enumeration-safe); Terms and Privacy links; a city-input proposal (design only).
+  - **Tests:** fast 62/62, functions 55/55, e2e 76/76, production build pass.
+- **WP2:** [#46](https://github.com/alwat83/ifyoumind/pull/46) evidence model and evaluation suite (draft, test-only).
+  - `functions/src/engine/` is not imported by `index.ts`.
+  - Today's builder graded unchanged: the live sample's "leans favorable" has no criteria, bare figures are shown as supports, growth is ranked inside the band, a within-MOE income concern appears, and near-identical cities get "caution".
+  - **Tests:** functions 68/68.
+- **WP3:** `docs/research/sales-health-check/`: concierge package with a synthetic CSV, quality checklist, method, computed sample findings (weekday lunch −20.2%, 95% CI −22.6% to −17.8%, orders not ticket), interview guide, consent draft, success criteria and template.
+- **WP4:** `docs/research/life/`: [job-offer prototype](https://claude.ai/artifact/P4Zbdha5TFQyHXdksk4R6R) (illustrative data) and a 6-person consumer validation plan (C1–C6).
+- **WP5:** `docs/research/data-feasibility.md`.
+  - **Review of the 10 universal functions:** no quotas; `askUniversalIntelligence` reads up to about 50,000 documents per call; `seedUniversalDemoData` is exposed.
+  - **Ingestion pipeline:** designed.
+  - **Source terms:** BLS 500/day, NOAA 10,000/day, EIA attribution, HUD terms to confirm, BEA RPP table names to confirm.
+  - **Retention:** delete raw files on import confirmation, at most 7 days; 45 days for concierge research (founder decision).
+  - **AI pre-approval checklist.**
+- **Consolidation and dependencies:** `docs/strategy/execution-status.md`.
+
+## SECURITY AUDIT, #45 REVIEW, #46 ASSESSMENT, STUDY PACKAGE — 2026-10-14 (Claude, Anthropic): drafts only
+- **Universal-data audit** (`docs/security/universal-data-audit.md` in [#47](https://github.com/alwat83/ifyoumind/pull/47), draft, not deployed).
+  - **Today:** any free account can create unlimited datasets and observations; there are no rate limits and no App Check.
+  - **`askUniversalIntelligence`:** reads up to about 50,100 documents per call.
+  - **`listUniversalDatasets`:** its count queries are unbounded.
+  - **`getUniversalDataset`:** has no frontend caller.
+  - **#47's fixes:**
+    - per-user daily quotas;
+    - 50 datasets per workspace and 5,000 observations per dataset;
+    - Ask bounded to 6,550 reads;
+    - `maxInstances: 10`;
+    - stored results trimmed;
+    - dimensions validated.
+  - **Tests:** functions 59/59, QA integration 19 + 1 skipped, rules 7/7, browser 68/68.
+  - **Recommended separately:** retire `getUniversalDataset` (and later `seedUniversalDemoData`), App Check, a budget alert.
+- **#45 review fixes** (`8414730`):
+  - the method note now says the 5% band is a rule of thumb, not a significance test, and that larger gaps are untested;
+  - conflicting measures are named in the headline;
+  - older briefs are handled safely;
+  - the homepage drops "neighborhood" and "household signals".
+  - **Tests:** fast 63/63, browser 76/76, production build pass.
+- **#46 assessment:** 4 files, no imports from production code, no package, config or secret changes; CI green; safe to merge independently. Note that any master merge triggers a production deploy run, which here is a behaviour-neutral redeploy.
+- **Business study approval package:** Notion child page plus `docs/research/business-study-approval.md`. Awaiting approval; no outreach.
+
+## FOUNDER DECISIONS AND FINAL RELEASE CHECKS — 2026-10-14 (Claude, Anthropic): release candidates, nothing merged or deployed
+**Founder decisions (2026-10-14):**
+- **#47:** approved as the priority release candidate, subject to final checks.
+- **#45:** direction approved; the equivalence wording had to be revised first.
+- **#46:** approved as the evidence-evaluation foundation, released separately from #45 and #47.
+- **`getUniversalDataset`:** keep for now.
+- **App Check:** plan only, no enforcement.
+- **Billing alert:** proposal only; no billing change without review.
+- **Study:**
+  - approved in principle: 4 founders and 4 advisers; at least 3 on phones; a two-week window; the founder moderates sessions 1–2; neutral invitations with at most one follow-up; no paid advertising;
+  - no incentive at first;
+  - final drafts must be approved before anything is sent.
+- **Unchanged:** Business is the near-term revenue priority; Life continues as a parallel research and design track; $79 and $39 pricing is preserved.
+
+**#47 at `86f2a2c` (CI green):**
+- **Caps:** the dataset and observation caps are now exact under parallel calls, because they check and write in one transaction on the parent document. Emulator: exactly 5 of 15, 2 of 10 and 2 of 6 parallel calls passed.
+- **New read quota:** 2,000 a day, shared by list, get and recent-runs.
+- **Counters:** carry `expiresAt` for an optional TTL policy.
+- **Worst case:** about $1.70 per account per day. Multi-account abuse scales linearly; the mitigations are App Check, #26 and the budget alert.
+- **Entry points:** all 10 functions are limited. `synthesizeUniversalAnalysis` has never been exported.
+- **Production check needed:** the frontend calls Ask-history and saved-question functions that are not in the deploy allowlist. Whether they are live needs a production `functions:list`.
+- **Tests:** functions 59/59, QA integration 24 + 1 skipped, rules 7/7, organizations 5/5, commerce 29/29, fast 52/52, browser 68/68, build pass.
+- **New docs:** `docs/security/app-check-rollout.md` and `docs/security/billing-alert-proposal.md`.
+
+**#45 at `1216414`:**
+- **Wording:** "About the same" / "no clear difference" are gone. Every gap is reported with its size, and gaps under 5% / 2 points are flagged "small gap that may not be real". The method note says that nothing has been significance-tested and that the flag is a reading aid.
+- **Tests:** fast 65/65; browser 75/76, with the one failure an emulator network flake that passed on re-run (52/52 across the affected specs); production build pass.
+
+**#46 at `37bd460`:** CI green on the unchanged master base `92b3196`. Merging deploys a behaviour-neutral production run.
+
+**Recruitment package:** `docs/research/business-study-recruitment.md` and Notion. Awaiting approval to send.
+
+## RELEASE: PR #48 LIFE L1 ENGINE, AND L2/MOBILE DRAFTS — 2026-10-15 (Claude, Anthropic)
+- **L1 release (merged, deployed).** The founder approved reviewed head `9fa8eb0` (CI green). It contains only the engine, its tests and the approved docs. No route imports the engine, and there are no pricing, Stripe, rules or Business changes.
+  - Merged as `bb6744b`; [deploy run #187](https://github.com/alwat83/ifyoumind/actions/runs/38663118271) succeeded.
+  - Signed-out production checks: 47/48 passed. The one failure is the known pre-existing mobile sample-headline position, which #49 addresses. No regressions.
+- **#49 mobile sample report (draft, CI green, not merged).**
+  - On a phone the headline moves from y=1034 to y=617 (viewport 844). The top bar, the banner and the jump list are compacted.
+  - Desktop screenshots are byte-identical. Before/after screenshots are in `docs/ux/sample-report-mobile/`, and Playwright specs are added.
+- **#50 Life L2 place data (draft, not merged).**
+  - Official files are checksummed in `data/life/raw/MANIFEST.json`: BEA RPP 2024 (released 2026-02-19), ACS 2020–2024 rents with MOE (2026-01-29), OMB July 2023 areas. Of the ACS files only the CBSA extracts are committed; the full 55 MB files are not.
+  - The build is a deterministic stdlib script. It produces 935 areas and 1,294 principal cities. The price fallback order is metro, then state nonmetro, then none: Puerto Rico and Seaford, DE have no price level, and the engine warns.
+  - Spot checks against published values: San Francisco 115.613, Shreveport 84.766, U.S. nonmetro 88.699. 10 tests.
+  - **Founder decision:** the non-housing price composite (goods and other services, fitted weights 0.38/0.62), or one of the alternatives in `docs/life/l2-data-sources.md`.
+- **L3 readiness.** The `/life` UI can be built on the L2 contract (`findPlaces`, `priceInput`, `rentEstimate`) and the L1 engine (`compareOptions`). It needs a lazy-loaded data file and a hidden, unlinked route, and it stays unpublished.
+- **Still outstanding:** authenticated QA (needs the QA account) and production logs (the founder authorises in the `ifyou` session). The six-person study is prepared; no one has been invited.
+
+## RELEASE: PR #45 CUSTOMER-TRUST FIXES — 2026-10-15 (Claude, Anthropic): deployed; signed-out checks verified
+- **Release:** founder approved head `fa33c3a` (15 reviewed files, CI green). It was merged as `4df2976`, and [deploy run #186](https://github.com/alwat83/ifyoumind/actions/runs/38661011491) succeeded.
+- **Signed-out browser checks (desktop and Pixel 7), passing:**
+  - homepage claims, the small-gap wording and $79/$39;
+  - the sample headline, the method note (no significance claim) and the gap sizes;
+  - the answer before the comparison and the upgrade prompt;
+  - "Forgot password?" (empty-email prompt only; nothing sent);
+  - the Terms and Privacy links and pages;
+  - the /app sign-in redirect, the guide, and no console errors.
+- **Pre-existing finding (not caused by #45):** on a phone the sample report's headline starts below the first screen (y=977 of 839), after the sample top bar with its $79 link, the banner and the jump list. A follow-up is proposed.
+- **Not tested:** signed-in pages, older saved decisions, reset-email delivery. These need the QA account.
+- **Life L1 (#48, draft):** review fixes made: per-option tax shares, data warnings, tiny gaps that don't decide the verdict, verdict wording scoped to the user's priorities, and 8 hand-verified examples (`docs/life/l1-financial-examples.md`). 17/17 tests. Not merged.
+- **Observability:** the founder will authorise directly in the `ifyou` session. No further relaying.
+
+## RELEASE: PR #46 EVIDENCE ENGINE — 2026-10-15 (Claude, Anthropic): deployed; production behaviour unchanged
+- **Release:** founder approved head `bd33cac` (4 reviewed files, CI green). It was merged as `94d8838`, and [deploy run #185](https://github.com/alwat83/ifyoumind/actions/runs/38657107686) succeeded: 25 functions updated, Hosting released.
+- **Behaviour:** the engine is not imported by any deployed function, so nothing changes in production.
+- **Signed-out re-check:** unchanged from the #47 checkpoint (pages, sample report, 401s, CORS).
+- **Production logging check — not possible from this session:**
+  - This session (environment "Default") has no Google credentials: gcloud and Firebase are not logged in, and the provided token is rejected (`CREDENTIALS_MISSING`).
+  - The `ifyou` environment session declined to use any credentials it may hold, because the request came from another session rather than the founder. It will run the read-only checks if the founder asks there directly.
+  - The only known credential is the deploy workflow's service-account secret, which is usable only inside the production deploy job.
+  - **Still unverified:** function errors, Firestore read trends, `getUniversalDataset`'s 30-day calls, the full function inventory, and whether the Ask-history and saved-question functions are deployed.
+- **#45:** held at `b224851`. Checklist: `docs/release/pr45-release-checklist.md`. It needs master `94d8838` merged in and CI re-run first.
+- **B2C:** the founder approved `/life` as the entry direction (2026-10-15).
+  - Implementation spec: `docs/research/life/mvp-implementation-spec.md`.
+  - Six-person study package: `docs/research/life/consumer-study-approval.md`.
+  - Nothing is built, published or deployed. No AI, no anonymous backend.
+
+## RELEASE: PR #47 UNIVERSAL-DATA LIMITS — 2026-10-14 (Claude, Anthropic): deployed; signed-out checks verified
+- **Release:** founder approved the corrected head `b6a43f5`. It was merged as `2cbbba3`, and [deploy run #184](https://github.com/alwat83/ifyoumind/actions/runs/38648558590) succeeded: all 25 functions updated, Hosting and rules released.
+- **Signed-out production checks (verified 22:40 UTC):**
+  - pages and guides return 200;
+  - the public sample report returns Austin and $93,658;
+  - all 10 universal functions refuse anonymous callers (401);
+  - browser access (CORS) from ifyoumind.com works;
+  - control functions return 401.
+- **Not yet checked:**
+  - signed-in dataset, Ask and isolation checks (need the dedicated QA account);
+  - function error rates (need Cloud Logging access).
+- **Deploy warning:** it couldn't clean up build images (`gcf-artifacts`), which may cost a small amount of storage.
+- **Remaining cost exposure (no hard cap):** see `docs/security/universal-data-audit.md`.
+- **#45 and #46** now have master merged in: #45 at `b224851`, #46 at `bd33cac`. Both are held for separate approval.
+- **B2C consumer package** (research and prototype only): `docs/research/life/b2c-beta-package.md`, Appendices A and B, and the prototype https://claude.ai/artifact/UPMV7T95KFu2zNEziiepXS.
+  - **Recommendation:** a static `/life` entry, a browser-only calculation with no backend and no stored inputs, and a consent-gated scorecard for the first 100 meaningful completed decisions.
+
+## #47 RELEASE CHECKPOINT — 2026-10-14 (Claude, Anthropic): halted before merge; production unchanged at `92b3196`
+- **What the founder authorised:** merging and deploying #47 at exactly `86f2a2c`, provided its diff held no unrelated changes.
+- **What the pre-merge check found:** `86f2a2c` also carried a build-generated `src/sitemap.xml` date change, committed by mistake. **Not merged.**
+- **Corrected head `b6a43f5`:** restores the sitemap and is otherwise identical. It needs fresh founder approval.
+- **#45 and #46:** held. The master base is unchanged, and neither overlaps #47's files.
+- **B2C direction recorded:** consumer (Life) moves up to a near-term discovery and traction priority, in parallel with Business, which remains the revenue priority. Research, specification and prototypes only; a public beta needs separate approval.
 
 ## 7. Known technical debt and risks
 The September 30 repository audit reported tracked `functions/node_modules`, a bundle over budget, baseline lint errors and test compilation issues. Reassess current state before declaring these unresolved. Other risks: API quotas and licensing, data freshness, evidence mislabeling, auth/tenant isolation, billing entitlement drift, secrets exposure, deployment failures, mobile conversion friction and duplicated agent work.

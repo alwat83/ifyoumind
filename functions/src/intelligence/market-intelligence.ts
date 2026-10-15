@@ -2,7 +2,7 @@ import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
-import { decisionReportAccess, decisionView, freeBriefComparisonCount, REPORT_COMPARISON_LIMIT } from './report-entitlement-logic';
+import { decisionReportAccess, decisionView, freeBriefComparisonCount, freeDecisionLimitReached, freeDecisionPeriodStart, FREE_DECISIONS_PER_MONTH, REPORT_COMPARISON_LIMIT } from './report-entitlement-logic';
 import { buildMarketAnalysis, businessPhrase, marketAnalysisText } from './market-analysis';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
@@ -246,9 +246,9 @@ export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],con
   const risks:string[]=[];
 
   if(growth!==null){
-    if(growth>1) opportunity.push(`Population increased ${growth}% between the 2019 and 2024 ACS 5-year estimates.`);
-    else if(growth<0) risks.push(`Population decreased ${Math.abs(growth)}% between the 2019 and 2024 ACS 5-year estimates.`);
-    else opportunity.push('Population was broadly stable across the 2019 and 2024 ACS 5-year estimates.');
+    if(growth>1) opportunity.push(`Population increased ${growth}% between the 2015–2019 and 2020–2024 ACS 5-year estimates.`);
+    else if(growth<0) risks.push(`Population decreased ${Math.abs(growth)}% between the 2015–2019 and 2020–2024 ACS 5-year estimates.`);
+    else opportunity.push('Population was broadly stable between the 2015–2019 and 2020–2024 ACS 5-year estimates.');
   }
   opportunity.push(`Median household income is ${new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(primary.income)}.`);
 
@@ -256,7 +256,7 @@ export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],con
     const higherIncome=comparisons.filter(place=>place.income>primary.income).length;
     const strongerGrowth=comparisons.filter(place=>(place.populationChangePct??-999)>(primary.populationChangePct??-999)).length;
     if(higherIncome) risks.push(`${higherIncome} comparison market${higherIncome===1?' has':'s have'} a higher median household income.`);
-    if(strongerGrowth) risks.push(`${strongerGrowth} comparison market${strongerGrowth===1?' shows':'s show'} stronger 5-year population change.`);
+    if(strongerGrowth) risks.push(`${strongerGrowth} comparison market${strongerGrowth===1?' shows':'s show'} higher estimated 5-year population change (differences may be within the margin of error).`);
   }
   if(!risks.length) risks.push('Census demographics alone do not measure competition, commercial rent, foot traffic, or concept-level demand.');
 
@@ -336,20 +336,19 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
     stage='plan';
     const orgData = (await orgRef.get()).data() || {};
     const plan = orgData.plan === 'pro' ? 'pro' : 'free';
-    const isLocalDemo = process.env.GCLOUD_PROJECT === 'demo-ifyoumind';
 
     stage='usage';
-    if (!isLocalDemo && plan === 'free') {
-      const now = new Date();
-      const start = Timestamp.fromDate(new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)));
+    // Enforced everywhere, including the emulator, so the limit is tested the way customers meet it.
+    if (plan === 'free') {
+      const start = Timestamp.fromDate(freeDecisionPeriodStart());
       const usage = await orgRef.collection('marketProjects')
         .where('createdAt', '>=', start)
         .count()
         .get();
-      if (usage.data().count >= 3) {
+      if (freeDecisionLimitReached(plan, usage.data().count)) {
         throw new HttpsError(
           'resource-exhausted',
-          'You have used your 3 free decisions this month. They reset on the 1st (UTC). You can still buy the full Decision Report for any decision you have already created.',
+          `You have used your ${FREE_DECISIONS_PER_MONTH} free decisions this month. They reset on the 1st (UTC). You can still buy the full Decision Report for any decision you have already created.`,
         );
       }
     }

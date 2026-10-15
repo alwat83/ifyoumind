@@ -24,5 +24,7 @@ jobs:
         run: npm --prefix functions run build
       - name: Build app
         run: npm run build
+      - name: Production bundle has no emulator config or QA fixtures
+        run: npm run check:production-bundle
       - name: SEO checks
         run: npm run test:seo

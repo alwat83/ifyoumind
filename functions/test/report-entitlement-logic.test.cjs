@@ -95,3 +95,16 @@ test('decisions without a free brief (Pro, single comparison, older decisions) a
   assert.deepEqual(view.comparisonLocations, ['B']);
   assert.deepEqual(view.reportOnlyLocations, []);
 });
+
+const { FREE_DECISIONS_PER_MONTH, freeDecisionPeriodStart, freeDecisionLimitReached } = require('../lib/intelligence/report-entitlement-logic');
+
+test('free decisions: three a month, counted from the 1st at 00:00 UTC', () => {
+  assert.equal(FREE_DECISIONS_PER_MONTH, 3);
+  assert.equal(freeDecisionPeriodStart(new Date('2026-10-31T23:59:59Z')).toISOString(), '2026-10-01T00:00:00.000Z');
+  assert.equal(freeDecisionPeriodStart(new Date('2026-11-01T00:00:00Z')).toISOString(), '2026-11-01T00:00:00.000Z');
+  assert.equal(freeDecisionPeriodStart(new Date('2027-01-01T00:30:00+05:00')).toISOString(), '2026-12-01T00:00:00.000Z', 'UTC, not local time');
+  assert.equal(freeDecisionLimitReached('free', 2), false);
+  assert.equal(freeDecisionLimitReached('free', 3), true);
+  assert.equal(freeDecisionLimitReached(undefined, 3), true, 'a missing plan is free');
+  assert.equal(freeDecisionLimitReached('pro', 300), false);
+});

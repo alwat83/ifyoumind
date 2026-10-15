@@ -1,0 +1,23 @@
+/* Phones: show the analytical answer within the first screen. Only spacing and type size change;
+   every link, label and sentence stays in the page, so desktop, SEO and accessibility are unaffected. */
+@media(max-width:560px){
+  .report-shell{padding-top:12px}
+  /* Top bar on one compact row: back link left, actions right. */
+  .report-nav{flex-direction:row!important;align-items:center!important;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+  .report-nav>div{width:100%!important;flex-direction:row!important;align-items:center!important;justify-content:space-between;gap:8px}
+  .report-nav .report-upgrade{width:auto!important;order:0!important;min-height:40px;padding:8px 10px;font-size:12px}
+  /* Sample notice: same words, tighter box. */
+  .report-shell>aside.state{padding:10px 12px;font-size:13px;line-height:1.45;margin-bottom:10px!important}
+  .report{padding:18px!important}
+  header.answer-header{gap:10px;padding-bottom:16px}
+  .answer-header .brand{margin-bottom:10px;font-size:15px}
+  .answer-header h1{font-size:26px;line-height:1.12}
+  .answer-header .context{margin-top:6px;font-size:14px}
+  /* Contents: one horizontally scrolling row instead of a stacked list. Its label stays for
+     screen readers through the nav's aria-label. */
+  .jump-list{padding:10px 0 0}
+  .jump-list>.eyebrow{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .jump-list ul{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+  .jump-list a{white-space:nowrap;min-height:40px}
+  .report>section{padding:20px 0}
+}

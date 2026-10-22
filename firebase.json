@@ -20,6 +20,7 @@
   },
   "hosting": {
     "public": "dist/ifyoumind-deploy/browser",
+    "cleanUrls": true,
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -27,9 +28,13 @@
     ],
     "rewrites": [
       {
-        "source": "**",
-        "destination": "/index.html"
-      }
+        "source": "/login",
+        "destination": "/app-shell.html"
+      },
+      { "source": "/register", "destination": "/app-shell.html" },
+      { "source": "/verify-email", "destination": "/app-shell.html" },
+      { "source": "/app", "destination": "/app-shell.html" },
+      { "source": "/app/**", "destination": "/app-shell.html" }
     ],
     "headers": [
       {

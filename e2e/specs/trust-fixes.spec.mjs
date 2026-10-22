@@ -63,5 +63,7 @@ test('the homepage shows a real sample finding and claims no uploaded-data analy
   await expect(card).toContainText('From the real sample report');
   await expect(card).toContainText('$93,658');
   await expect(card.getByRole('link', { name: /See the full sample report/ })).toHaveAttribute('href', '/sample-report');
-  await expect(page.locator('body')).not.toContainText(/your own data/i);
+  await page.getByRole('button', { name: /Make sense of other options/ }).click();
+  await expect(page.locator('#decision-detail')).toContainText('Data uploads and flexible automated analysis are in development');
+  await expect(page.locator('#decision-detail')).toContainText('does not analyze a file or answer arbitrary questions');
 });

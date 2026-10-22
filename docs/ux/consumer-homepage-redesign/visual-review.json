@@ -1,0 +1,125 @@
+{
+  "reviewer": "OpenAI / Codex",
+  "reviewedAfterCaptures": [
+    {
+      "path": "screenshots/after-desktop-discovery-business.png",
+      "bytes": 102991,
+      "sha256": "df18ab312629a446ebad312e32595bb8ca11883179f78b3a04076748fff410b7",
+      "review": "Reviewed full-page bands and discovery contact sheets; no clipping, overlap of actionable content, or hidden pricing/limitations observed."
+    },
+    {
+      "path": "screenshots/after-desktop-discovery-career.png",
+      "bytes": 95185,
+      "sha256": "043a9f6871268d37528c4023f68dc87139cda6fc259d8857b9aee9b903eba5e5",
+      "review": "Reviewed full-page bands and discovery contact sheets; no clipping, overlap of actionable content, or hidden pricing/limitations observed."
+    },
+    {
+      "path": "screenshots/after-desktop-discovery-compare.png",
+      "bytes": 103620,
+      "sha256": "5eeba97e476a4293c1c60e7af1ef6a81386943146ac042af811f60a4e20f2b45",
+      "review": "Reviewed full-page bands and discovery contact sheets; no clipping, overlap of actionable content, or hidden pricing/limitations observed."
+    },
+    {
+      "path": "screenshots/after-desktop-fold.png",
+      "bytes": 134560,
+      "sha256": "1ae4f5fa4496e4c681707efd7501d9e398f1e2af840cb7ac329a5d5a5c888d90",
+      "review": "Reviewed full-page bands and discovery contact sheets; no clipping, overlap of actionable content, or hidden pricing/limitations observed."
+    },
+    {
+      "path": "screenshots/after-desktop-full.png",
+      "bytes": 594090,
+      "sha256": "921e9c9a3984080e93cf1908f4799b53f89e23a454610cdfec98b219ad64b032",
+      "review": "Reviewed full-page bands and discovery contact sheets; no clipping, overlap of actionable content, or hidden pricing/limitations observed."
+    },
+    {
+      "path": "screenshots/after-mobile-discovery-business.png",
+      "bytes": 87196,
+      "sha256": "4260713e8a42e0081e6fcb59a1f0e1ce9263daf6b9fe03ca7f399423b03e7a0f",
+      "review": "Reviewed full-page bands and discovery contact sheets; no clipping, overlap of actionable content, or hidden pricing/limitations observed."
+    },
+    {
+      "path": "screenshots/after-mobile-discovery-career.png",
+      "bytes": 81687,
+      "sha256": "0403456b56e38bc3dac1627df600e3d3576a3c674863e744be35c71a91fb07be",
+      "review": "Reviewed full-page bands and discovery contact sheets; no clipping, overlap of actionable content, or hidden pricing/limitations observed."
+    },
+    {
+      "path": "screenshots/after-mobile-discovery-compare.png",
+      "bytes": 86380,
+      "sha256": "72487cf82c4dfc4d050015eefec087683be4813a42d1c7c3f0081574bf258799",
+      "review": "Reviewed full-page bands and discovery contact sheets; no clipping, overlap of actionable content, or hidden pricing/limitations observed."
+    },
+    {
+      "path": "screenshots/after-mobile-fold.png",
+      "bytes": 74847,
+      "sha256": "d5a793c0487484e22baedab8a38efd2b9425e071fcc793d45655fb88d4b6c033",
+      "review": "Reviewed full-page bands and discovery contact sheets; no clipping, overlap of actionable content, or hidden pricing/limitations observed."
+    },
+    {
+      "path": "screenshots/after-mobile-full.png",
+      "bytes": 523477,
+      "sha256": "ccd77aa74c3671807313882b6cbb768e2bc73529fef4ae9b74d6bf3337ad0749",
+      "review": "Reviewed full-page bands and discovery contact sheets; no clipping, overlap of actionable content, or hidden pricing/limitations observed."
+    },
+    {
+      "path": "screenshots/after-narrow-discovery-business.png",
+      "bytes": 91373,
+      "sha256": "38dfc984cd54960c99d51d9c9f3f6ec5428e2f5620688b3dd5c114f1487146e3",
+      "review": "Reviewed full-page bands and discovery contact sheets; no clipping, overlap of actionable content, or hidden pricing/limitations observed."
+    },
+    {
+      "path": "screenshots/after-narrow-discovery-career.png",
+      "bytes": 83103,
+      "sha256": "109b8a05521d3089bf5a704ccfeee121c15bafa8602428c701335eab91dbc659",
+      "review": "Reviewed full-page bands and discovery contact sheets; no clipping, overlap of actionable content, or hidden pricing/limitations observed."
+    },
+    {
+      "path": "screenshots/after-narrow-discovery-compare.png",
+      "bytes": 88874,
+      "sha256": "dd9f350e6db42f2a2d0465d95313b278339f6284eaec92de46b43ffb1d5af3d2",
+      "review": "Reviewed full-page bands and discovery contact sheets; no clipping, overlap of actionable content, or hidden pricing/limitations observed."
+    },
+    {
+      "path": "screenshots/after-narrow-fold.png",
+      "bytes": 40046,
+      "sha256": "905a21342801a3200f541a1b64fa7b8c7cc62f8029b20decb6fd13945fbbf14f",
+      "review": "Reviewed full-page bands and discovery contact sheets; no clipping, overlap of actionable content, or hidden pricing/limitations observed."
+    },
+    {
+      "path": "screenshots/after-narrow-full.png",
+      "bytes": 521222,
+      "sha256": "36c4e78fdf528fb5645388de001005e2551a8380c05234efd00a30a6760b9d76",
+      "review": "Reviewed full-page bands and discovery contact sheets; no clipping, overlap of actionable content, or hidden pricing/limitations observed."
+    }
+  ],
+  "beforeEvidence": "../../releases/2026-10-22/integrated/screenshots/{desktop,mobile}-homepage-{fold,full}.png",
+  "beforeSource": "2eb17081f2feaa40163255a6c7de5a57f67f76b7; identical homepage source at baseline 91b5fb71e093f38ca9c7cb6e05b773c6446b866a; original files reused, no duplicate binaries",
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 800,
+      "overflow": 0,
+      "smallInteractiveTargets": 0,
+      "minimumHeadingContrast": 5.398844885639184
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "overflow": 0,
+      "smallInteractiveTargets": 0,
+      "minimumHeadingContrast": 5.398844885639184
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "overflow": 0,
+      "smallInteractiveTargets": 0,
+      "minimumHeadingContrast": 5.398844885639184
+    }
+  ],
+  "limits": [
+    "Headless Chrome with external fonts blocked; fallback font rendering.",
+    "No human five-second comprehension study, native Safari/iOS, manual screen reader or field Core Web Vitals claim.",
+    "Decorative note/card overlap is intentional; card is an illustrative list, not a financial result."
+  ]
+}

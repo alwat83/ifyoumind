@@ -1,141 +1,103 @@
 <main class="landing">
-  <nav class="nav">
-    <a routerLink="/" class="brand">ifYouMind</a>
-    <div>
-      <a href="#life-preview">Life decisions</a>
-      <a href="#how">How it works</a>
-      <a href="#pricing">Pricing</a>
+  <a class="skip-link" href="#decide">Skip to decision discovery</a>
+  <nav class="nav" aria-label="Main navigation">
+    <a routerLink="/" class="brand" aria-label="ifYouMind home"><span class="brand-mark" aria-hidden="true">↗</span>ifYouMind</a>
+    <div class="nav-links">
+      <a href="#decide" class="desktop-link">Explore decisions</a>
+      <a href="#business" class="desktop-link">For business</a>
       <a routerLink="/login">Sign in</a>
       <a routerLink="/register" class="nav-cta">Try it free</a>
     </div>
   </nav>
 
-  <section class="hero">
+  <section class="hero wrap" aria-labelledby="hero-title">
     <div class="hero-copy">
-      <p class="eyebrow">Clearer decisions, grounded in evidence</p>
-      <h1>Your question. The evidence. A clearer decision.</h1>
-      <p class="lede">Think beyond one kind of decision. From job offers and housing costs to business locations and community trends, ifYouMind helps you explore relevant factors, compare options, and understand what the evidence can — and cannot — show.</p>
-      <div class="audience-paths" aria-label="Choose what you are deciding">
-        <a class="audience-path" href="#life-preview"><strong>For your life <span>Preview</span></strong><small>Two job offers. Two cities. A clearer view of the trade-offs.</small><em>Explore Life →</em></a>
-        <a class="audience-path" href="#business"><strong>For your business <span>Available now</span></strong><small>Research cities and build a sourced market analysis.</small><em>Explore Business →</em></a>
-      </div>
+      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span>A little evidence. A lot more perspective.</p>
+      <h1 id="hero-title">Big decisions deserve <em>better answers.</em></h1>
+      <p class="lede">Compare your options, explore real-world data, and understand what matters before making your next move.</p>
       <div class="hero-actions">
-        <a routerLink="/register" class="primary">Build my market analysis free</a>
-        <a routerLink="/sample-report" class="secondary">See a sample report</a>
+        <a href="#decide" class="primary">Explore my decision <span aria-hidden="true">↗</span></a>
+        <a routerLink="/sample-report" class="text-link">View a sample report <span aria-hidden="true">→</span></a>
       </div>
-      <p class="micro" style="margin:12px 0 0;max-width:560px">The free brief compares your city with one other. The $79 Decision Report adds up to two more cities and the plan-ready write-up.</p>
-      <div class="trust-row" aria-label="Why people can trust ifYouMind">
-        <span>Free to try</span>
-        <span>No credit card</span>
-        <span>Live public data</span>
-        <span>Sources shown</span>
+      <p class="micro">Free guides. A public sample. A clearer place to start.</p>
+    </div>
+    <div class="perspective" aria-label="Illustrative decision priorities, not a calculated result">
+      <div class="orbit" aria-hidden="true"></div>
+      <span class="perspective-note">Room for a fresh perspective.</span>
+      <div class="question-card">
+        <span class="small-label">One decision. More than one factor.</span>
+        <p>A new city.<br><em>A new chapter.</em></p>
+        <ul><li><span aria-hidden="true">↗</span>Work &amp; opportunity</li><li><span aria-hidden="true">⌂</span>Cost of living</li><li><span aria-hidden="true">☼</span>Life beyond work</li></ul>
+        <span class="card-foot">Start with what matters to you.</span>
+      </div>
+      <div class="perspective-stamp" aria-hidden="true">More clarity.<br><strong>Your call.</strong></div>
+    </div>
+  </section>
+
+  <section id="decide" class="discovery wrap" aria-labelledby="discovery-title">
+    <div class="section-heading"><p class="eyebrow">Start with your world</p><h2 id="discovery-title">What are you trying to decide?</h2><p>You don’t need the perfect question. Just a place to begin.</p></div>
+    <div class="discovery-layout">
+      <div class="decision-choices" role="group" aria-label="Choose your decision">
+        <button *ngFor="let item of decisions" type="button" [attr.aria-pressed]="selected === item.id" aria-controls="decision-detail" (click)="selected = item.id">
+          <span class="choice-number" aria-hidden="true">{{ item.number }}</span><span><strong>{{ item.label }}</strong><small>{{ item.hint }}</small></span><span class="choice-arrow" aria-hidden="true">↗</span>
+        </button>
+      </div>
+      <div id="decision-detail" class="decision-detail" aria-live="polite" aria-atomic="true">
+        <span class="available"><span class="status-dot" aria-hidden="true"></span>Available today · {{ decision.available }}</span>
+        <h3>{{ decision.title }}</h3><p>{{ decision.description }}</p>
+        <ul><li *ngFor="let point of decision.points">{{ point }}</li></ul>
+        <a *ngIf="selected !== 'business'; else businessAction" [href]="decision.path" class="primary">{{ decision.action }} <span aria-hidden="true">→</span></a>
+        <ng-template #businessAction><a [routerLink]="decision.path" class="primary">{{ decision.action }} <span aria-hidden="true">→</span></a></ng-template>
+        <p class="availability-note">{{ decision.upcoming }}</p>
       </div>
     </div>
-
-    <div class="demo-card">
-      <p class="demo-label">From the real sample report</p>
-      <h3>Specialty coffee shop: Austin, TX vs Nashville, TN and Charlotte, NC</h3>
-      <div class="answer-row"><span>Shows</span><strong>Austin’s median household income is $93,658, higher than Nashville ($77,371) and Charlotte ($82,068).</strong></div>
-      <div class="answer-row"><span>Also shows</span><strong>Its 5-year population growth (3%) is lower than Nashville’s (4%) and Charlotte’s (5.4%); the 1-point gap with Nashville is small and may not be real.</strong></div>
-      <div class="answer-row"><span>Can’t tell you</span><strong>Competition, rent and foot traffic. The report says so and lists how to check each.</strong></div>
-      <div class="confidence"><span>Data source</span><b>U.S. Census ACS 2020–2024</b></div>
-      <a routerLink="/sample-report" class="demo-link">See the full sample report →</a>
-    </div>
+    <p class="discovery-note">Choose a starting point, not an automated answer. Your selection stays in this page; it is not submitted or saved.</p>
   </section>
 
-  <section class="any-data" aria-labelledby="any-data-title">
-    <p class="eyebrow">Beyond one type of question</p>
-    <h2 id="any-data-title">What would you like to understand?</h2>
-    <p>Bring the factors that matter to you. Explore questions about money, places, work, business, and more. We are expanding toward flexible analysis of user-provided data alongside trustworthy external sources.</p>
-    <div class="any-data-grid">
-      <article><strong>Choose your factors</strong><span>Income, housing, commute, growth, or another measure relevant to your decision.</span></article>
-      <article><strong>Compare the evidence</strong><span>See where figures come from, which assumptions you control, and what is missing.</span></article>
-      <article><strong>Go beyond a single answer</strong><span>Understand trade-offs and explore how different inputs change the picture.</span></article>
-    </div>
-    <p class="micro">Available now: sourced U.S. city and business market comparisons. In development: broader personal decision tools and flexible analysis of user-provided datasets. Not every data source or analysis type is supported yet.</p>
-  </section>
-
-  <section id="life-preview" class="life-preview" aria-labelledby="life-title">
-    <div><p class="eyebrow">ifYouMind Life · Preview</p><h2 id="life-title">Two job offers. More than two salaries.</h2><p>Thinking about relocating or choosing between offers? Our upcoming Life comparison will help you weigh pay, housing, commuting and your priorities together — with assumptions you can change and uncertainty clearly labelled.</p><p class="micro">The interactive Life comparison is in development. This preview does not calculate a result or collect your personal information.</p></div>
-    <div class="life-example" aria-label="Illustrative questions for a job comparison"><span>Questions worth asking</span><strong>What would I have left each month?</strong><strong>How much time would I spend commuting?</strong><strong>Which trade-offs matter most to me?</strong><small>No automatic winner. Your priorities matter.</small></div>
-  </section>
-
-  <section id="business" class="business-intro"><p class="eyebrow">ifYouMind Business · Available now</p><h2>Planning a business? Start with real market signals.</h2><p>Compare cities on population, growth, income and home values, with figures cited to the U.S. Census.</p><a routerLink="/sample-report" class="secondary">See a real Business report →</a></section>
-
-  <section class="question-strip">
-    <span>Should I open here?</span>
-    <span>Which place looks better?</span>
-    <span>Is this area growing?</span>
-    <span>What am I missing?</span>
-  </section>
-
-  <section id="how" class="how">
-    <div class="section-copy">
-      <p class="eyebrow">Simple by design</p>
-      <h2>Start with your question. We handle the data part.</h2>
-    </div>
+  <section id="how" class="how wrap" aria-labelledby="how-title">
+    <div class="section-heading"><p class="eyebrow">Less guesswork. More perspective.</p><h2 id="how-title">Make room for a better decision.</h2></div>
     <div class="steps">
-      <article><span>1</span><strong>Tell us what you’re considering</strong><p>A business idea and the U.S. cities you’re weighing.</p></article>
-      <article><span>2</span><strong>We put the signals together</strong><p>Population, growth, household income and home values from the U.S. Census, for every place you compare.</p></article>
-      <article><span>3</span><strong>You get a clear brief</strong><p>See the useful signals in plain English, compare places, and know what still needs checking.</p></article>
+      <article><span class="step-number">01 /</span><h3>Start with what matters.</h3><p>Choose the decision and the factors you care about. A useful comparison begins with your priorities.</p></article>
+      <article><span class="step-number">02 /</span><h3>Look at the evidence.</h3><p>Our guides help you organize the facts. Business briefs bring cited U.S. Census signals together.</p></article>
+      <article><span class="step-number">03 /</span><h3>See the trade-offs.</h3><p>Understand what the evidence supports, what’s missing, and what to check before your next step.</p></article>
     </div>
   </section>
 
-  <section class="use-cases">
-    <div class="section-copy">
-      <p class="eyebrow">Useful from day one</p>
-      <h2>For decisions where one search result isn’t enough.</h2>
-    </div>
-    <div class="use-grid">
-      <article><span>Business plan</span><h3>“I need the market analysis section.”</h3><p>The $79 Decision Report includes a cited market analysis of population, growth, income and home values for your business and cities, ready to adapt for your plan.</p></article>
-      <article><span>Location</span><h3>“Austin, Nashville, or Charlotte?”</h3><p>Compare live demographic and growth signals before spending real money.</p></article>
-      <article><span>Growth</span><h3>“Is Phoenix still growing?”</h3><p>See how its population changed over five years, next to the other cities you compare.</p></article>
+  <section class="sample wrap" aria-labelledby="sample-title">
+    <div class="sample-copy"><p class="eyebrow">A real example. Open to everyone.</p><h2 id="sample-title">Good evidence shows its work.</h2><p>See how a business idea becomes a sourced comparison of Austin, Nashville and Charlotte, with a clear action plan and honest limitations.</p><a routerLink="/sample-report" class="primary">Read the public sample <span aria-hidden="true">↗</span></a><p class="micro">Full Business Decision Report · No account needed</p></div>
+    <article class="demo-card">
+      <p class="small-label">From the real sample report</p><h3>A coffee shop. Three possible cities.</h3>
+      <p class="chart-label">Median household income</p>
+      <dl class="sample-chart"><div><dt>Austin, TX</dt><dd><span class="bar austin" aria-hidden="true"></span><b>$93,658</b></dd></div><div><dt>Nashville, TN</dt><dd><span class="bar nashville" aria-hidden="true"></span><b>$77,371</b></dd></div><div><dt>Charlotte, NC</dt><dd><span class="bar charlotte" aria-hidden="true"></span><b>$82,068</b></dd></div></dl>
+      <p class="source">U.S. Census ACS 2020–2024 · City-level estimates</p>
+      <p class="sample-limit"><strong>A signal, not a verdict.</strong> Income alone cannot tell you customer demand, competition, rent or foot traffic. The report explains what to check next.</p>
+      <a routerLink="/sample-report" class="text-link">See the full sample report <span aria-hidden="true">→</span></a>
+    </article>
+  </section>
+
+  <section class="trust wrap" aria-labelledby="trust-title">
+    <div class="section-heading"><p class="eyebrow">Clarity includes the caveats</p><h2 id="trust-title">Confidence without false certainty.</h2></div>
+    <div class="trust-grid">
+      <article><span aria-hidden="true">↗</span><h3>Follow the source.</h3><p>Business reports cite the U.S. Census and show data periods, so you can see where the figures came from.</p></article>
+      <article><span aria-hidden="true">≈</span><h3>Know what’s missing.</h3><p>Estimates have uncertainty. City averages don’t describe every neighborhood, and a comparison is not a guarantee.</p></article>
+      <article><span aria-hidden="true">◎</span><h3>Explore on your terms.</h3><p>Read guides and the sample without an account. Discovery asks for no personal financial information.</p><a routerLink="/privacy-policy" class="text-link">How we handle data <span aria-hidden="true">→</span></a></article>
     </div>
   </section>
 
-  <section class="comfort">
-    <div>
-      <p class="eyebrow">No data background needed</p>
-      <h2>You bring the question. We’ll handle the complicated part.</h2>
-    </div>
-    <div class="comfort-points">
-      <article><strong>Plain language</strong><p>No dashboards to learn before you can get an answer.</p></article>
-      <article><strong>Show your work</strong><p>We show where important numbers came from.</p></article>
-      <article><strong>No false certainty</strong><p>If the data cannot answer something yet, we say so.</p></article>
-    </div>
+  <section id="business" class="business wrap" aria-labelledby="business-title">
+    <div><p class="eyebrow">ifYouMind Business · Available now</p><h2 id="business-title">A business idea deserves a closer look, too.</h2><p>Opening somewhere new? Compare U.S. cities on population, growth, household income and home values. Start with a free brief, then decide if a full report is right for you.</p></div>
+    <a href="#pricing" class="secondary">Explore Business options <span aria-hidden="true">→</span></a>
   </section>
 
-  <section id="pricing" class="pricing">
-    <div class="section-copy">
-      <p class="eyebrow">Pricing</p>
-      <h2>Start free. Pay when the answer is worth more.</h2>
-    </div>
+  <section id="pricing" class="pricing wrap" aria-labelledby="pricing-title">
+    <div class="section-heading"><p class="eyebrow">For your next business decision</p><h2 id="pricing-title">Start free. Go deeper when you need to.</h2><p>These offers cover Business city comparisons. Personal calculators and data uploads are in development.</p></div>
     <div class="price-grid">
-      <article><span>Free</span><h3>$0</h3><p>A Decision Brief for your main city compared with one other, a few decisions each month.</p><a routerLink="/register" class="secondary">Start a free brief</a></article>
-      <article class="featured"><div class="price-top"><span>One report</span><b>Recommended for one business plan</b></div><h3>$79</h3><p>The full Decision Report for one decision, with no subscription.</p>
-        <ul class="price-list">
-          <li>Your main city compared with up to three other cities</li>
-          <li>A plan-ready market analysis written for your business, with location rankings and copy-as-text</li>
-          <li>An action plan: what to do before you commit</li>
-          <li>Comparison takeaways: where your main city leads and where it trails</li>
-          <li>What could change the call, plus the evidence boundaries</li>
-          <li>Print or save the full report as a PDF</li>
-        </ul>
-        <a routerLink="/register" [queryParams]="{intent:'report'}" class="primary">Build a report</a></article>
-      <article><span>Pro</span><h3>$39<small>/month</small></h3><p class="price-for">For advisers and anyone planning several locations a month.</p><p>Five full Decision Reports a month, plus more decisions and comparison locations.</p><a routerLink="/register" class="secondary">Create an account for Pro</a></article>
+      <article><span class="small-label">Free Decision Brief</span><h3>$0</h3><p>Start exploring a business location.</p><ul><li>Your main U.S. city compared with one other</li><li>Cited demographic and growth signals</li><li>A few decisions each month</li></ul><a routerLink="/register" class="secondary">Start a free brief</a><small>Free account · No credit card</small></article>
+      <article class="featured"><span class="small-label">Decision Report</span><h3>$79<span> / report</span></h3><p>One business decision. A fuller picture.</p><ul><li>Your main city and up to three comparison cities</li><li>Plan-ready market analysis with location rankings</li><li>Action plan, trade-offs and evidence limits</li><li>Copy as text, print or save as PDF</li></ul><a routerLink="/register" [queryParams]="{intent:'report'}" class="primary">Build a report <span aria-hidden="true">→</span></a><small>One payment · No subscription</small></article>
+      <article><span class="small-label">Pro</span><h3>$39<span> / month</span></h3><p>For advisers and repeat comparisons.</p><ul><li>Five full Decision Reports a month</li><li>More decisions and comparison locations</li><li>For an ongoing pipeline of business decisions</li></ul><a routerLink="/register" class="secondary">Create an account for Pro</a><small>Monthly subscription</small></article>
     </div>
   </section>
 
-  <section class="final">
-    <p class="eyebrow">Ask the question</p>
-    <h2>Before you commit time or money, see what the signals say.</h2>
-    <a routerLink="/register" class="primary">Try ifYouMind free</a>
-  </section>
-
-  <footer>
-    <a routerLink="/" class="brand">ifYouMind</a>
-    <span>Evidence for life and business decisions.</span>
-    <p class="support">Questions? <a href="mailto:support&#64;ifyoumind.com">support&#64;ifyoumind.com</a></p>
-    <div><a href="/guides/">Decision guides</a><a href="/guides/market-analysis-business-plan/">How to write a market analysis</a><a routerLink="/privacy-policy">Privacy</a><a routerLink="/terms-of-conduct">Terms</a></div>
-  </footer>
+  <section class="final wrap"><p class="eyebrow">Your next chapter starts with a question</p><h2>You don’t have to decide<br><em>in the dark.</em></h2><a href="#decide" class="primary">Find my starting point <span aria-hidden="true">↗</span></a></section>
+  <footer class="wrap"><div><a routerLink="/" class="brand">ifYouMind</a><p>A little more clarity.<br>For life’s bigger decisions.</p></div><div class="footer-links"><a href="/guides/">Decision guides</a><a href="/guides/market-analysis-business-plan/">Business plan guide</a><a routerLink="/privacy-policy">Privacy</a><a routerLink="/terms-of-conduct">Terms</a><a href="mailto:support&#64;ifyoumind.com">support&#64;ifyoumind.com</a></div><p class="footer-note">Better evidence. Your decision.</p></footer>
 </main>

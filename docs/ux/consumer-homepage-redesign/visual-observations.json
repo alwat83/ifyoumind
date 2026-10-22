@@ -1,0 +1,519 @@
+{
+  "observedAt": "2026-10-22T22:37:55.663Z",
+  "beforeSource": "2eb17081f2feaa40163255a6c7de5a57f67f76b7; homepage source identical at baseline 91b5fb71e093f38ca9c7cb6e05b773c6446b866a",
+  "fonts": "External fonts blocked; fallback fonts; headless installed Chrome",
+  "observations": [
+    {
+      "device": "desktop",
+      "width": 1280,
+      "height": 800,
+      "headings": [
+        {
+          "text": "Big decisions deserve better answers.",
+          "color": "rgb(17, 24, 39)",
+          "background": "rgb(251, 250, 247)",
+          "fontSize": 76.8,
+          "minimumRatio": 16.99563627445801
+        },
+        {
+          "text": "better answers.",
+          "color": "rgb(38, 115, 102)",
+          "background": "rgb(251, 250, 247)",
+          "fontSize": 76.8,
+          "minimumRatio": 5.398844885639184
+        },
+        {
+          "text": "What are you trying to decide?",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(243, 245, 237)",
+          "fontSize": 49,
+          "minimumRatio": 11.847578533130477
+        },
+        {
+          "text": "See the move from more than one angle.",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 30,
+          "minimumRatio": 12.911275687546928
+        },
+        {
+          "text": "Good evidence shows its work.",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(238, 241, 230)",
+          "fontSize": 49,
+          "minimumRatio": 11.391785186976135
+        },
+        {
+          "text": "Confidence without false certainty.",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(251, 250, 247)",
+          "fontSize": 49,
+          "minimumRatio": 12.483169021349081
+        },
+        {
+          "text": "A business idea deserves a closer look, too.",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(251, 250, 247)",
+          "fontSize": 34,
+          "minimumRatio": 12.483169021349081
+        },
+        {
+          "text": "Start free. Go deeper when you need to.",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(251, 250, 247)",
+          "fontSize": 49,
+          "minimumRatio": 12.483169021349081
+        }
+      ],
+      "h1Count": 1,
+      "documentHeight": 4495,
+      "overflow": 0,
+      "targets": [
+        {
+          "name": "Skip to decision discovery",
+          "height": 49.59375
+        },
+        {
+          "name": "↗ifYouMind",
+          "height": 44
+        },
+        {
+          "name": "Explore decisions",
+          "height": 44
+        },
+        {
+          "name": "For business",
+          "height": 44
+        },
+        {
+          "name": "Sign in",
+          "height": 44
+        },
+        {
+          "name": "Try it free",
+          "height": 44
+        },
+        {
+          "name": "Explore my decision ↗",
+          "height": 48
+        },
+        {
+          "name": "View a sample report →",
+          "height": 44
+        },
+        {
+          "name": "01Move somewhere newA different city. A new chapter.↗",
+          "height": 82.1875
+        },
+        {
+          "name": "02Choose between job offersMore to consider than the salary.↗",
+          "height": 82.1875
+        },
+        {
+          "name": "03Explore a business opportunityAn idea. A place. A next step.↗",
+          "height": 82.1875
+        },
+        {
+          "name": "04Make sense of other optionsYour choices. Your priorities.↗",
+          "height": 82.1875
+        },
+        {
+          "name": "Explore the relocation guide →",
+          "height": 48
+        },
+        {
+          "name": "Read the public sample ↗",
+          "height": 48
+        },
+        {
+          "name": "See the full sample report →",
+          "height": 44
+        },
+        {
+          "name": "How we handle data →",
+          "height": 44
+        },
+        {
+          "name": "Explore Business options →",
+          "height": 48
+        },
+        {
+          "name": "Start a free brief",
+          "height": 48
+        },
+        {
+          "name": "Build a report →",
+          "height": 48
+        },
+        {
+          "name": "Create an account for Pro",
+          "height": 48
+        },
+        {
+          "name": "Find my starting point ↗",
+          "height": 48
+        },
+        {
+          "name": "ifYouMind",
+          "height": 44
+        },
+        {
+          "name": "Decision guides",
+          "height": 44
+        },
+        {
+          "name": "Business plan guide",
+          "height": 44
+        },
+        {
+          "name": "Privacy",
+          "height": 44
+        },
+        {
+          "name": "Terms",
+          "height": 44
+        },
+        {
+          "name": "support@ifyoumind.com",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "device": "mobile",
+      "width": 390,
+      "height": 844,
+      "headings": [
+        {
+          "text": "Big decisions deserve better answers.",
+          "color": "rgb(17, 24, 39)",
+          "background": "rgb(251, 250, 247)",
+          "fontSize": 52,
+          "minimumRatio": 16.99563627445801
+        },
+        {
+          "text": "better answers.",
+          "color": "rgb(38, 115, 102)",
+          "background": "rgb(251, 250, 247)",
+          "fontSize": 52,
+          "minimumRatio": 5.398844885639184
+        },
+        {
+          "text": "What are you trying to decide?",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(243, 245, 237)",
+          "fontSize": 34,
+          "minimumRatio": 11.847578533130477
+        },
+        {
+          "text": "See the move from more than one angle.",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 29,
+          "minimumRatio": 12.911275687546928
+        },
+        {
+          "text": "Good evidence shows its work.",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(238, 241, 230)",
+          "fontSize": 34,
+          "minimumRatio": 11.391785186976135
+        },
+        {
+          "text": "Confidence without false certainty.",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(251, 250, 247)",
+          "fontSize": 34,
+          "minimumRatio": 12.483169021349081
+        },
+        {
+          "text": "A business idea deserves a closer look, too.",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(251, 250, 247)",
+          "fontSize": 32,
+          "minimumRatio": 12.483169021349081
+        },
+        {
+          "text": "Start free. Go deeper when you need to.",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(251, 250, 247)",
+          "fontSize": 34,
+          "minimumRatio": 12.483169021349081
+        }
+      ],
+      "h1Count": 1,
+      "documentHeight": 6909,
+      "overflow": 0,
+      "targets": [
+        {
+          "name": "Skip to decision discovery",
+          "height": 49.59375
+        },
+        {
+          "name": "↗ifYouMind",
+          "height": 44
+        },
+        {
+          "name": "Sign in",
+          "height": 44
+        },
+        {
+          "name": "Try it free",
+          "height": 44
+        },
+        {
+          "name": "Explore my decision ↗",
+          "height": 48
+        },
+        {
+          "name": "View a sample report →",
+          "height": 44
+        },
+        {
+          "name": "01Move somewhere newA different city. A new chapter.↗",
+          "height": 115
+        },
+        {
+          "name": "02Choose between job offersMore to consider than the salary.↗",
+          "height": 115
+        },
+        {
+          "name": "03Explore a business opportunityAn idea. A place. A next step.↗",
+          "height": 121.75
+        },
+        {
+          "name": "04Make sense of other optionsYour choices. Your priorities.↗",
+          "height": 121.75
+        },
+        {
+          "name": "Explore the relocation guide →",
+          "height": 48
+        },
+        {
+          "name": "Read the public sample ↗",
+          "height": 48
+        },
+        {
+          "name": "See the full sample report →",
+          "height": 44
+        },
+        {
+          "name": "How we handle data →",
+          "height": 44
+        },
+        {
+          "name": "Explore Business options →",
+          "height": 48
+        },
+        {
+          "name": "Start a free brief",
+          "height": 48
+        },
+        {
+          "name": "Build a report →",
+          "height": 48
+        },
+        {
+          "name": "Create an account for Pro",
+          "height": 48
+        },
+        {
+          "name": "Find my starting point ↗",
+          "height": 48
+        },
+        {
+          "name": "ifYouMind",
+          "height": 44
+        },
+        {
+          "name": "Decision guides",
+          "height": 44
+        },
+        {
+          "name": "Business plan guide",
+          "height": 44
+        },
+        {
+          "name": "Privacy",
+          "height": 44
+        },
+        {
+          "name": "Terms",
+          "height": 44
+        },
+        {
+          "name": "support@ifyoumind.com",
+          "height": 44
+        }
+      ]
+    },
+    {
+      "device": "narrow",
+      "width": 320,
+      "height": 568,
+      "headings": [
+        {
+          "text": "Big decisions deserve better answers.",
+          "color": "rgb(17, 24, 39)",
+          "background": "rgb(251, 250, 247)",
+          "fontSize": 50,
+          "minimumRatio": 16.99563627445801
+        },
+        {
+          "text": "better answers.",
+          "color": "rgb(38, 115, 102)",
+          "background": "rgb(251, 250, 247)",
+          "fontSize": 50,
+          "minimumRatio": 5.398844885639184
+        },
+        {
+          "text": "What are you trying to decide?",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(243, 245, 237)",
+          "fontSize": 34,
+          "minimumRatio": 11.847578533130477
+        },
+        {
+          "text": "See the move from more than one angle.",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 29,
+          "minimumRatio": 12.911275687546928
+        },
+        {
+          "text": "Good evidence shows its work.",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(238, 241, 230)",
+          "fontSize": 34,
+          "minimumRatio": 11.391785186976135
+        },
+        {
+          "text": "Confidence without false certainty.",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(251, 250, 247)",
+          "fontSize": 34,
+          "minimumRatio": 12.483169021349081
+        },
+        {
+          "text": "A business idea deserves a closer look, too.",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(251, 250, 247)",
+          "fontSize": 32,
+          "minimumRatio": 12.483169021349081
+        },
+        {
+          "text": "Start free. Go deeper when you need to.",
+          "color": "rgb(32, 53, 47)",
+          "background": "rgb(251, 250, 247)",
+          "fontSize": 34,
+          "minimumRatio": 12.483169021349081
+        }
+      ],
+      "h1Count": 1,
+      "documentHeight": 7578,
+      "overflow": 0,
+      "targets": [
+        {
+          "name": "Skip to decision discovery",
+          "height": 49.59375
+        },
+        {
+          "name": "↗ifYouMind",
+          "height": 44
+        },
+        {
+          "name": "Sign in",
+          "height": 44
+        },
+        {
+          "name": "Try it free",
+          "height": 44
+        },
+        {
+          "name": "Explore my decision ↗",
+          "height": 48
+        },
+        {
+          "name": "View a sample report →",
+          "height": 44
+        },
+        {
+          "name": "01Move somewhere newA different city. A new chapter.↗",
+          "height": 139.34375
+        },
+        {
+          "name": "02Choose between job offersMore to consider than the salary.↗",
+          "height": 139.34375
+        },
+        {
+          "name": "03Explore a business opportunityAn idea. A place. A next step.↗",
+          "height": 139.34375
+        },
+        {
+          "name": "04Make sense of other optionsYour choices. Your priorities.↗",
+          "height": 139.34375
+        },
+        {
+          "name": "Explore the relocation guide →",
+          "height": 63
+        },
+        {
+          "name": "Read the public sample ↗",
+          "height": 48
+        },
+        {
+          "name": "See the full sample report →",
+          "height": 44
+        },
+        {
+          "name": "How we handle data →",
+          "height": 44
+        },
+        {
+          "name": "Explore Business options →",
+          "height": 48
+        },
+        {
+          "name": "Start a free brief",
+          "height": 48
+        },
+        {
+          "name": "Build a report →",
+          "height": 48
+        },
+        {
+          "name": "Create an account for Pro",
+          "height": 48
+        },
+        {
+          "name": "Find my starting point ↗",
+          "height": 48
+        },
+        {
+          "name": "ifYouMind",
+          "height": 44
+        },
+        {
+          "name": "Decision guides",
+          "height": 44
+        },
+        {
+          "name": "Business plan guide",
+          "height": 44
+        },
+        {
+          "name": "Privacy",
+          "height": 44
+        },
+        {
+          "name": "Terms",
+          "height": 44
+        },
+        {
+          "name": "support@ifyoumind.com",
+          "height": 44
+        }
+      ]
+    }
+  ]
+}

@@ -4,7 +4,7 @@ Observed 2026-10-22, OpenAI / Codex. Owner: founder; technical execution: author
 
 ## Objective and authority
 
-Acquire five independently paying customers within the next 30 days, then establish a repeatable acquisition channel with positive contribution economics. **This is a target, not a claim that there are currently zero or five customers.** Existing independently paying customer count and revenue are unknown. Founder confirmation that purchases work is capability evidence, not a financial ledger.
+Acquire five independently paying customers within the next 30 days, then establish a repeatable acquisition channel with positive contribution economics. **This is a target, not achieved traction.** A scoped live financial baseline has been verified privately; its figures are withheld from GitHub pending explicit founder publication approval required by automatic approval review. Do not infer traction from unpublished data. The founder explicitly states they never confirmed purchases. Earlier contrary attribution was incorrect; historical development notes must not be used as financial evidence. Other accounts/off-Stripe receipts are outside the verified scope.
 
 Prioritize paying customers → revenue/conversion → faster discovery-to-value → retention/repeat purchases → cost discipline → directly supporting functionality. Consumer acquisition remains part of the vision; preserve the working Business offer. No speculative Life calculator release. Founder approval is required for production/master merges, pricing/Stripe changes, spending, transactions, external communications and major strategic changes. Draft work and analysis may proceed independently.
 
@@ -20,7 +20,7 @@ Source: `functions/src/intelligence/monetization.ts`, `market-report.component.*
 | Public sample | Complete example without registration | Demonstrate output before asking for account creation |
 | Consumer guides | Search-focused education; integrated candidate contains 4 guides, 9 sitemap entries | Acquisition; label unfinished data/Life tools accurately |
 
-Prices are configured presentation, not proof of live Stripe price objects or actual receipts. No pricing/configuration change proposed. Pro's five included reports are an existing founder-approved term; at full allowance use, $39/5 = **$7.80 gross per included report before costs**. This arithmetic is a capacity/margin risk to measure, not realized unit economics or a recommendation to change price.
+The reconnected live Stripe catalog independently confirms active USD prices of $79 one-time for ifYouMind Decision Report and $39/month for ifYouMind Pro. Price objects are not purchase evidence; [sanitized baseline](STRIPE_BASELINE_2026-10-22.json). No pricing/configuration change proposed. Pro's five included reports are an existing founder-approved term; at full allowance use, $39/5 = **$7.80 gross per included report before costs**. This arithmetic is a capacity/margin risk to measure, not realized unit economics or a recommendation to change price.
 
 The present Business output provides Census-backed city context, sources, limitations and comparison support. It does not establish site-level competition, rent, customer demand, a revenue forecast, loan eligibility or investment suitability. ACS estimates have uncertainty and comparison constraints; the Census guidance supports those evidence limits, not willingness to pay. [Census comparison guidance](https://www.census.gov/programs-surveys/acs/guidance/comparing-acs-data.html). The SBA's planning resources establish a relevant business-planning context, not validated demand for this product. [SBA planning overview](https://www.sba.gov/counseling/plan-your-business/).
 
@@ -37,11 +37,11 @@ Discovery (search/guide/referral) → homepage or public sample → registration
 
 ### Five largest obstacles, ranked by current evidence
 
-These are ranked operational obstacles, not quantified causes of lost sales; visitor/customer interviews and funnel data are unavailable.
+These are ranked operational obstacles, not quantified causes of lost sales. Live Stripe records are now available; qualified visitor data, buyer interviews and complete cost attribution remain unavailable.
 
 | Rank | Verified observation | Commercial implication / hypothesis | Resolution and evidence needed |
 |---|---|---|---|
-| 1 | No accessible, correctly scoped revenue/conversion baseline: Stripe connector authentication retries returned no accounts; Search Console lists no sites; analytics has no selected ifYouMind property | Cannot distinguish a distribution, conversion or retention bottleneck, or verify independent customers | Founder/account administrator restores correct scope; reconcile paid live transactions and refunds, excluding QA/founder/test; no account cross-contamination |
+| 1 | Live financial access is restored, but no qualified visitor baseline or buyer conversations are established | Financial activity alone does not establish current buyer need or explain non-purchase | Run the prepared permissioned buyer-validation sprint; confirm actual decision need and offer fit before speculative features. Reconcile historical account/mode only from evidence |
 | 2 | Acquisition/mobile/SEO candidate #60 is not approved or live | Proposed improvements cannot affect public conversion until authorized | Founder reviews exact green head and accepts documented risks; approved deploy and live smoke are separate tasks |
 | 3 | This audit has no verified qualified distribution pipeline or demonstrated channel conversion | More content alone may produce no buyers; search demand and willingness to pay remain unvalidated | Founder-approved targeted conversations/demos and tagged referrals; count decision-makers with an active decision, not impressions |
 | 4 | Personal results require registration/verification; public sample lacked an explicit print control | Buyers may struggle to evaluate the paid deliverable before committing effort; abandonment impact is unknown | Safe sample print improvement now; measure sample → registration → free completion → paid, then interview abandoners with approval |
@@ -81,24 +81,27 @@ Use sequential cohorts and qualitative evidence at low volume; do not claim A/B 
 
 ## Weekly revenue scoreboard
 
-Week **2026-10-19 through 2026-10-25 UTC**. Observation: 2026-10-22. Every value below is **unknown**, not zero. Tool access checks do not establish sales or traffic. Update this same table for the current week and append a dated prior-week snapshot here when rolling forward; preserve history. Never put customer PII, tokens or raw payment details in Git/Notion.
+Week **2026-10-19 through 2026-10-25 UTC**. Observation: **2026-10-22**. Read-only live Stripe access is restored and the scoped financial baseline was privately verified. Automatic approval review rejected publishing the actual financial payload to GitHub without specific founder authorization. The populated local scoreboard and sanitized source evidence are preserved under ignored `tmp/revenue-private/2026-10-22/`; the values are not unavailable or assumed zero. This public record intentionally withholds them pending approval. [Public access/method record](STRIPE_BASELINE_2026-10-22.json).
 
-| Metric | Actual | Definition / authoritative source / limitation |
+| Metric | Actual / publication state | Definition / source / limitation |
 |---|---|---|
-| Qualified visitors | Unknown | Unique human visits with relevant decision intent, scoped analytics + campaign context; define qualification and consent gaps; no selected property |
-| Completed free decision experiences | Unknown | Successfully persisted usable free brief, not signup/click; first-party project/event reconciliation; exclude QA/founder/demo |
-| Checkout initiations | Unknown | Successfully created Checkout session, separately from click/checkout_started event; dedupe session ID; correct product/org scope |
-| Successful paid purchases | Unknown | Settled/succeeded live payments with paid entitlement, not redirect/test; scoped Stripe + webhook ledger; reconcile renewals separately |
-| Independently paying customers | Unknown | Unique external buyers with their own funds; exclude founder/team/QA/refunded test arrangements; minimize retained identity data |
-| Active paying subscribers | Unknown | Live paid, current service period; exclude trial/unpaid/canceled-with-expired-access; reconcile subscription status and invoices |
-| Gross revenue | Unknown | Successful live receipts before refunds/fees, separately by currency and one-time/renewal; never sum mixed currencies |
-| Refunds | Unknown | Actual refunds in period, distinguish payment cohort and partial refunds; Stripe reconciliation required |
-| Payment fees | Unknown | Actual balance-transaction fees by receipt/currency; no generic percentage assumed |
-| Infrastructure costs | Unknown | Firebase/Google Cloud invoices and attributable usage, separate fixed/variable; shared-cost allocation explicitly documented |
-| AI costs | Unknown | Verified provider invoices/usage attributable to ifYouMind; no assumption of zero from optional code paths |
-| Estimated contribution margin | Unknown | Gross − refunds − payment fees − attributable variable infrastructure/AI costs; missing component means unknown; not net profit |
+| Qualified visitors | Unknown | No selected ifYouMind analytics property / accessible Search Console site; visits require qualification and QA exclusions |
+| Completed free decision experiences | Unknown | Raw creation events do not verify usable completed briefs or independent users |
+| Checkout initiations | Verified privately; publication held | Actual created live Checkout sessions, distinct from raw first-party start events; status and origin classified only from evidence |
+| Successful paid purchases | Verified privately; publication held | Captured live charges/PaymentIntents and paid invoices, not redirects or test activity |
+| Independently paying customers | Scoped evidence assessed privately; publication held | Requires independent funding and founder/QA exclusion; another account or off-Stripe receipts outside scope |
+| Active paying subscribers | Verified privately; publication held | Complete live subscription status/period and paid evidence; exclude trial/unpaid records |
+| Current recurring revenue | Verified privately; publication held | Current normalized paid subscription run rate, not forecast or receipts |
+| Gross revenue / receipts | Verified privately; publication held | Successful captured receipts by currency/window, not GAAP recognition |
+| Refunds | Verified privately; publication held | Actual successful refunds by period; no refund initiated |
+| Recorded payment fees | Verified privately; publication held | Actual balance transactions; no generic rate assumed; not total operating cost |
+| Infrastructure costs | Unknown | Billing enabled, no attributable invoice/usage-cost total obtained |
+| AI costs | Unknown | No verified ifYouMind-attributed provider invoice/usage total |
+| Estimated contribution margin | Unknown | Missing attributable costs; no profitability or percentage-margin claim |
 
-Source access evidence: fresh Search Console list returned `[]`; analytics account listing exposed no selected ifYouMind property (unrelated properties were not queried); Stripe account-list tool repeated an authentication retry response without returning accounts. Restore scoped access through [analytics source selection](https://app.hypd.ai/sources?utm_source=mcp&utm_content=none_selected). HYPD audit/research tools also reported plan restrictions; no upgrade/purchase requested. Existing founder dashboard is implemented, but no production dashboard totals were obtained this session. No business metric has been inferred from test fixtures.
+Access method: connected live account, authorized GET lists and completeness checks; no test-mode account assumed or queried. Public live catalog matches $79/report and $39/month Pro. Sigma execution required a paid plan; no subscription/upgrade was purchased, and standard GET access provided the baseline. Founder/internal QA classification is never invented. The founder explicitly corrected earlier agent attribution: **they never stated that purchases were confirmed**. Historical webhook markers have unresolved account/mode and are not purchase confirmation. No production writes, secrets retrieval, payments or configuration changes.
+
+Earlier first-party production activity evidence remains in [#63's existing package](https://github.com/alwat83/ifyoumind/pull/63); raw events are not a sequential funnel, independently paying customers or receipts. The explicit founder/manual QA exclusion document was missing. The scoped analytics property, usable-free-experience qualification and operating costs remain measurement blockers. [Select the correct analytics source](https://app.hypd.ai/sources?utm_source=mcp&utm_content=none_selected). Update the private scoreboard during project sessions; synchronize figures to public records only after explicit publication approval. No scheduled automation created.
 
 ## Targets, costs and retention
 
@@ -110,3 +113,16 @@ Source access evidence: fresh Search Console list returned `[]`; analytics accou
 ## Immediate execution and handoff
 
 Implemented on the isolated growth branch: permanent mandate and Business Impact reporting; this command center and outreach drafts; explicit no-registration sample print action with desktop/mobile regression coverage. [Desktop sample offer](evidence/sample-print-desktop.png) and [mobile sample offer](evidence/sample-print-mobile.png) were captured against demo emulators and visually reviewed. Exact test outcomes, commits and PR links belong in `CURRENT_STATUS.md` and the append-only development log. Revenue lift, new customers and profitability remain unverified. Next: founder release decision, restore scoped measurement, then approve and run a small buyer-validation sprint.
+
+
+## Consumer discovery candidate and ready buyer package — October 22 update
+
+Separate branch `codex/consumer-homepage-redesign`, based on #62 (`91b5fb71e093f38ca9c7cb6e05b773c6446b866a`), which descends from the integrated #60 candidate. Working consumer-first hero and four-choice discovery route to existing relocation/job-offer/comparison guides or Business registration. Public sample precedes Business pricing. Personal calculations/uploads stay explicitly in development. Selection is transient page state, not submitted or saved; no analytics/consent change, new dependency or checkout logic. [Visual review and test evidence](../ux/consumer-homepage-redesign/REVIEW.md). Not merged or live.
+
+**Conversion hypotheses, not outcomes:** clearer consumer purpose may increase relevant exploration; guide/sample access before registration may reduce premature signup friction; visible report evidence/limits may improve qualified Business purchases. No user study, lift, statistically valid A/B result or paid conversion is established. After an approved release, assess qualified visits → useful guide/sample/brief engagement → successful independent payment using consented data and direct buyer feedback. Do not count discovery button presses as completed decisions or add tracking to contradict its privacy copy.
+
+[Draft #63](https://github.com/alwat83/ifyoumind/pull/63) retains the twenty-group acquisition roster, five personalized unsent messages/demo agendas, buyer-validation tracker, $79 evidence-fit review and October 23–29 schedule. [Founder Revenue Action Brief](https://github.com/alwat83/ifyoumind/blob/codex/revenue-execution-sprint/docs/growth/sprint-2026-10-22/FOUNDER_REVENUE_ACTION_BRIEF.md). Its historical Stripe-access and purchase-attribution paragraphs are superseded by this baseline and the founder correction; the PR description is corrected. No buyer contacted.
+
+Priority five: Marilyn/Matt Willson (Skiptown Austin-area expansion); Viren Patel (Flying Biscuit Greenville and potential NC comparisons); Grant McDowell/Jeremy Press/Jason Twitty (three SC cities); Yasir/Aleeza Nadeem (three CA cities); Mark DeStefano/Mike Diskin (three PA city/borough plans). Public expansion announcements support relevance, not current need, consent or willingness to pay. Confirm city-level evidence fit before promising a tailored report; no competition/rent/traffic/forecast claim.
+
+**Highest-value next assignment:** founder-approved routing and first two buyer conversations (P01/P02), then the remaining three introductions/demos when recipients accept. Review the four transparent routing requests, five invitations, sender/channel and at most one follow-up after 2–3 business days. No sends are authorized yet. Compared with more speculative engineering, this has the shortest path to demand evidence or an independent $79 purchase, requires no new cash spend, and exposes offer-fit objections. Confidence in revenue impact remains low until actual conversations/purchases; no guaranteed five-buyer outcome.

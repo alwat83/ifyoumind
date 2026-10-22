@@ -1,0 +1,141 @@
+[
+  {
+    "baseRefName": "master",
+    "headRefName": "claude/jolly-ramanujan-ofr18a-sample-mobile",
+    "headRefOid": "8f6f935c734f740a12f192a2de1e7bf99083389f",
+    "isDraft": true,
+    "mergeable": "MERGEABLE",
+    "number": 49,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-15T01:20:27Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/alwat83/ifyoumind/actions/runs/38664446331/job/116193008079",
+        "name": "qa",
+        "startedAt": "2026-10-15T01:13:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Authenticated QA (emulators)"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-15T01:15:40Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/alwat83/ifyoumind/actions/runs/38664446336/job/116193008072",
+        "name": "build",
+        "startedAt": "2026-10-15T01:13:17Z",
+        "status": "COMPLETED",
+        "workflowName": "Launch build check"
+      }
+    ],
+    "url": "https://github.com/alwat83/ifyoumind/pull/49"
+  },
+  {
+    "baseRefName": "master",
+    "headRefName": "chatgpt/consumer-entry-preview",
+    "headRefOid": "738f7c2540978d6f06c9d66280221de3b3440c53",
+    "isDraft": true,
+    "mergeable": "MERGEABLE",
+    "number": 54,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-22T16:38:09Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/alwat83/ifyoumind/actions/runs/39815024312/job/119951185130",
+        "name": "qa",
+        "startedAt": "2026-10-22T16:33:21Z",
+        "status": "COMPLETED",
+        "workflowName": "Authenticated QA (emulators)"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-22T16:34:24Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/alwat83/ifyoumind/actions/runs/39815024600/job/119951185979",
+        "name": "build",
+        "startedAt": "2026-10-22T16:33:22Z",
+        "status": "COMPLETED",
+        "workflowName": "Launch build check"
+      }
+    ],
+    "url": "https://github.com/alwat83/ifyoumind/pull/54"
+  },
+  {
+    "baseRefName": "master",
+    "headRefName": "codex/development-reporting-protocol",
+    "headRefOid": "45aaf911f2f6ed232c4f3d5cb0b86b01bf65fba2",
+    "isDraft": true,
+    "mergeable": "MERGEABLE",
+    "number": 57,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-22T17:28:21Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/alwat83/ifyoumind/actions/runs/39820317195/job/119969623003",
+        "name": "qa",
+        "startedAt": "2026-10-22T17:10:35Z",
+        "status": "COMPLETED",
+        "workflowName": "Authenticated QA (emulators)"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-22T17:11:46Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/alwat83/ifyoumind/actions/runs/39820317190/job/119969559254",
+        "name": "build",
+        "startedAt": "2026-10-22T17:10:27Z",
+        "status": "COMPLETED",
+        "workflowName": "Launch build check"
+      }
+    ],
+    "url": "https://github.com/alwat83/ifyoumind/pull/57"
+  },
+  {
+    "baseRefName": "master",
+    "headRefName": "codex/seo-foundation",
+    "headRefOid": "9c17a6195ed20a0d6a5fc3f1858094a443df6563",
+    "isDraft": true,
+    "mergeable": "MERGEABLE",
+    "number": 58,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-22T16:57:01Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/alwat83/ifyoumind/actions/runs/39817392841/job/119959976111",
+        "name": "qa",
+        "startedAt": "2026-10-22T16:51:32Z",
+        "status": "COMPLETED",
+        "workflowName": "Authenticated QA (emulators)"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-22T16:51:32Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/alwat83/ifyoumind/actions/runs/39817392834/job/119959352958",
+        "name": "build",
+        "startedAt": "2026-10-22T16:50:23Z",
+        "status": "COMPLETED",
+        "workflowName": "Launch build check"
+      }
+    ],
+    "url": "https://github.com/alwat83/ifyoumind/pull/58"
+  },
+  {
+    "baseRefName": "codex/seo-foundation",
+    "headRefName": "codex/decision-intent-guides",
+    "headRefOid": "a96d37447c2e4549106d9d22116feea21d058a89",
+    "isDraft": true,
+    "mergeable": "MERGEABLE",
+    "number": 59,
+    "state": "OPEN",
+    "statusCheckRollup": [],
+    "url": "https://github.com/alwat83/ifyoumind/pull/59"
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "name": "qa",
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "2c4a6f5490576a449c0873eb95653a222c1f8901",
+    "html_url": "https://github.com/alwat83/ifyoumind/actions/runs/39828622050/job/119998491461"
+  },
+  {
+    "name": "build",
+    "status": "completed",
+    "conclusion": "success",
+    "head_sha": "2c4a6f5490576a449c0873eb95653a222c1f8901",
+    "html_url": "https://github.com/alwat83/ifyoumind/actions/runs/39828622077/job/119998491404"
+  }
+]

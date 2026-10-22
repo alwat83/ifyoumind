@@ -1,0 +1,70 @@
+# ifYouMind — Development log
+
+Append dated entries after every meaningful assignment; do not erase earlier entries. Record actual evidence and preserve the distinction between planned, in progress, committed, merged, deployed and production verified. Current snapshot: [CURRENT_STATUS.md](CURRENT_STATUS.md). Durable roadmap/history: [master project record](../../IFYOUMIND_MASTER_PROJECT.md).
+
+## 2026-10-22 — Homepage/Life verification and mobile release review
+
+**Provider/agent:** OpenAI / Codex, current “Prepare homepage release” chat. Earlier specific sessions are unknown unless independently recorded.
+
+**Completed:** inspected original Git state and all worktrees, preserved existing sitemap and #49 mobile work, verified #54/#55 exact-head CI, and completed combined #49/#54 mobile regression. #55's prior fix `4732c6a` rejects cleared numeric fields and restricts calculations to local builds; no new financial calculation changes here.
+
+**Changes:** #54 follow-up commit `738f7c2540978d6f06c9d66280221de3b3440c53` adds homepage keyboard/Business-funnel browser regression, optional local Chrome channel, release evidence/screenshots and master roadmap entry for #56. Enhanced the existing local #49 sample test for source keyboard access, all seven links, accessibility and registration intent. No dependency versions, Stripe configuration or backend behavior changed.
+
+**Verification:** production/local builds and production bundle guard PASS; 82 fast web tests PASS; 72 Functions unit tests PASS; 10 Life Chrome component tests PASS; 16 combined desktop/mobile emulator browser tests PASS (390x844 / 1280x800, plus 320px homepage overflow). Exact original #54 head `7a45016` CI build/QA SUCCESS. #55 `4732c6a` build/QA SUCCESS (runs `39811898425` / `39811898202`). #54 follow-up `738f7c2` build/QA queued at recording (runs `39815024600` / `39815024312`); do not transfer an old commit's CI result to the new head. Prior-session full lint has 91 existing errors and default Angular specs have legacy compilation failures. No manual screen-reader audit or production verification claimed.
+
+**Release/deployment:** #49/#54 prepared for founder review; drafts remain unmerged. #55 experimental/local-only, #51/#52 unresolved. No merge, deployment or payment changes. Master remains `bb6744b` at last fetch.
+
+**Coordination:** founder supplied accessible Notion hub `3eb02474659c81ecba55cc4eed184a71`; release handoff and #56 roadmap appended successfully. Earlier searches found historical duplicates and did not modify them. GitHub/repository documentation are development authority per founder correction.
+
+**Next:** verify new #54 CI; implement #56 technical SEO on a separate branch; prepare honest decision-intent content on its own branch. Full evidence/screenshots: [#54 release verification](https://github.com/alwat83/ifyoumind/blob/chatgpt/consumer-entry-preview/docs/releases/2026-10-22/verification.md).
+
+## 2026-10-22 — Permanent reporting and handoff protocol
+
+**Provider/agent:** OpenAI / Codex. **Status:** implementation in progress until commit/PR recorded.
+
+**Implemented:** integrated mandatory start/end workflow and A–F conversation report into root `AGENTS.md`, preserving unrelated project rules. Established this append-only log and the concise current snapshot; linked the existing master record rather than replacing its architecture/history. Corrected the Notion destination and development authority using explicit founder direction. No scheduled automation is necessary: agents follow repository instructions at each assignment boundary.
+
+**Files:** `AGENTS.md`, `docs/agent-handoff/DEVELOPMENT_LOG.md`, `docs/agent-handoff/CURRENT_STATUS.md`, `IFYOUMIND_MASTER_PROJECT.md`.
+
+**Verification:** inspected existing instructions/master/worktrees/GitHub, verified Notion append succeeded, reviewed paths and report requirements; whitespace/diff check required before commit. No application build/test rerun required for these documentation-only changes. Existing application results above belong to the homepage/Life assignment.
+
+**Git:** branch `codex/development-reporting-protocol`, based on `bb6744b`; commit and draft PR to be recorded after creation. No existing handoff log/snapshot existed at inspection, so no prior entries were overwritten.
+
+**Deployment/blockers:** documentation only; not merged or deployed. Protocol becomes part of the default branch only after founder-approved merge. Agents on feature branches must read this draft until then. Preserve all other worktrees and local mobile patch. SEO/content remain in progress/planned, not completed.
+
+**Next three tasks:** (1) verify protocol and #54 CI on exact final heads; (2) finish #56 technical audit/fixes with regression coverage; (3) prepare reviewed, cited decision guides on a separate draft PR. Recommended next assignment: #56 technical SEO, without changing pricing, analytics consent or public Life availability.
+
+
+## 2026-10-22 — Completed protocol, technical SEO and decision-content assignments
+
+**Provider/agent:** OpenAI / Codex. This entry updates the earlier in-progress records without erasing them. **Status: committed in draft PRs; not merged/deployed.**
+
+**Executive result:** permanent A–F reporting/start/end instructions implemented in root AGENTS.md; shared snapshot/log created; #54 mobile/homepage verification completed and pushed; #56 technical SEO defects fixed with regressions; three honest decision-intent guides prepared on a separate branch. Advances trustworthy consumer discovery while preserving the working Business funnel and founder release control.
+
+**Changes and Git references:**
+- #54 `738f7c2540978d6f06c9d66280221de3b3440c53`, `chatgpt/consumer-entry-preview`: release regression, local Chrome option, documentation/screenshots. Exact-head build/QA now SUCCESS (runs `39815024600` / `39815024312`). #55 unchanged at `4732c6a`, build/QA SUCCESS; local-only route remains held from public release.
+- Draft #57, `codex/development-reporting-protocol`, implementation `438f587f0936c9ba2ac1c449203b484cbc67deff`, plus this dated record follow-up: AGENTS.md, master record, CURRENT_STATUS.md and DEVELOPMENT_LOG.md. Implementation build/QA SUCCESS (`39815393239` / `39815392823`); initial QA npm install failed ECONNRESET, retried successfully. Record-only follow-up CI must be checked independently. Existing unrelated rules/history preserved; stale October 10 active-work text labelled historical.
+- Draft #58, `codex/seo-foundation`: `b77596e` initial fix/audit, `9c17a6195ed20a0d6a5fc3f1858094a443df6563` canonical redirect follow-up. New post-build initial head generator/private shell/404, homepage schema scoping, explicit sitemap revision dates, honest broad metadata, Hosting route/redirect changes, static QA server and regression/audit scripts. No new dependencies. Build SUCCESS (`39817392834`); QA in progress (`39817392841`) at observation, with unit/rules/organization/commerce/fixture steps already successful.
+- Draft #59, `codex/decision-intent-guides`, `35d8072594694711a2374f8452c526d0b62562f7`, stacked on #58: three Markdown guides, broader guide index, homepage/sample discoverability links, sitemap, guide regressions and six screenshots. Manual emulator QA dispatched on this exact head (`39818007298`) because its base is not master; in progress at observation. Normal launch-build PR workflow does not run for this stacked base; local production build/bundle validation passes.
+- #56 added to durable roadmap; remains open for measurement access, review and deployment gates. No issues closed or invented. No merge, production deployment, Stripe configuration change or public experimental calculations.
+
+**Verification newly executed:** homepage/mobile 82 fast tests + 72 Functions unit tests + 10 Life Chrome component tests + 16 combined emulator browser regressions PASS; SEO 86 fast tests, production/local builds, bundle guard and changed TS lint PASS; SEO 16 metadata/Business layout emulator regressions and 4 final redirect browser checks PASS; actual Firebase Hosting emulator 40-observation raw/rendered audit and canonical redirect probes PASS. Content 87 fast tests, production/local builds, production-bundle guard, changed HTML lint PASS; 6 article browser checks (3 × 390/1280px), zero WCAG A/AA axe violations and no overflow. Two representative screenshots visually reviewed. These counts belong to distinct test sets and are not added into a fictitious single-suite total. Prior full lint (91 existing errors) and legacy default Angular spec compilation remain historical baseline failures, not newly passed checks. No manual screen-reader audit, field CWV or live post-fix deployment verification.
+
+**Measured findings versus recommendations:** production browser audit recorded shared raw homepage metadata, initially indexable private/auth shells, unrelated inherited homepage offer schema and soft 404. Candidate corrects these, plus build-date sitemap churn; rendered route metadata already mostly worked. Legacy SeoService defaults are stale but inactive on current routes, so retained rather than attributed as a live bug. www returns 200 without redirect; domain configuration and full body SSR remain separate recommendations. Guide count 1→4 and sitemap entries 6→9; no search volume, rankings or conversion lift measured.
+
+**External coordination:** current Notion hub is founder-confirmed `3eb02474659c81ecba55cc4eed184a71`; earlier release/#56 append succeeded and was fetched back. No duplicate hub or historical-content overwrite. Search Console list returned zero sites; analytics shows no selected ifYouMind property. No unrelated account data queried. Property access/selection blocks organic/impression/click/CTR/indexed-page/conversion/CWV baselines; no numbers invented. Consent, tracking and pricing configuration unchanged.
+
+**Preserved local work:** original FRED checkout's sitemap edit unchanged; homepage review retains existing #49 mobile component/stylesheet/fixture/spec/screenshots and generated sitemap as uncommitted work, with enhanced local sample test; Life review clean. SEO/content work pushed; current reporting branch contains only its own status follow-up. No reset/stash/worktree deletion. No deployment claimed live; reports/PDF/purchases retain founder-confirmed working status.
+
+**Next three priorities:** (1) finish exact-head CI/review for all draft release candidates and account for #59's dependency on #58; (2) restore correct Search Console/analytics access and establish consent-respecting baselines; (3) obtain explicit founder release approval, then record authorized deploy revision and read-only mobile/desktop/Business/SEO verification. Recommended next assignment: coordinated exact-head release review, retaining #51/#52 Life approval gates. Coupled SEO routing/artifact rollback is documented in #58; content-only rollback in #59.
+
+
+## 2026-10-22 — Final GitHub and handoff observation
+
+OpenAI / Codex. #54 `738f7c2`, #55 `4732c6a`, #57 record head `5f0cae184bd93bb319f9f0d766e235992103921f` and #58 `9c17a61` all have successful exact-head build/QA checks. #57 follow-up runs: `39818503704` / `39818503701`. #58 full QA `39817392841` completed SUCCESS. Earlier pending observations above are historical, not current blockers on those heads.
+
+#59 implementation `35d8072` manual emulator QA `39818007298` completed SUCCESS. Follow-up `a96d37447c2e4549106d9d22116feea21d058a89` updates the sample report's actual content revision date to October 22; 87 fast tests, final production build and production-bundle guard PASS. Final-head manual emulator QA `39819357763` remains in progress at observation. A push reported a connection reset, but GitHub head verification and retry confirmed the exact final commit remotely; no unpushed content work remains. #59's stacked base does not trigger master-only launch CI, so do not invent a launch-build Actions result for it.
+
+Notion SEO/content/protocol append task succeeded at the founder-confirmed hub; no duplicate page or historical overwrite. All original local sitemap/mobile work remains preserved. Current branch is `codex/development-reporting-protocol`; this final record-only commit will need its own CI, independent of the prior green record head. No merge/deployment/publication/Stripe configuration change. #56 and #51/#52 remain open with their documented access/release/methodology gates. Guide publication dates need editorial review if launch occurs after drafting.
+
+Next three actions remain: exact-head/final combined release review (including #59 → #58 dependency), correct analytics/Search Console property access and baselines, then founder-approved release with actual deployment revision and live verification. First conversation report uses required A–F sections and must state any remaining pending CI explicitly.

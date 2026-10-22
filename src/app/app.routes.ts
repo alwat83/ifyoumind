@@ -12,6 +12,10 @@ export const routes:Routes=[
     loadComponent:()=>import('./intelligence/public-landing.component').then(m=>m.PublicLandingComponent),
   },
   {
+    path:'life/quick-compare',
+    loadComponent:()=>import('./life/life-quick-compare.component').then(m=>m.LifeQuickCompareComponent),
+  },
+  {
     path:'sample-report',
     data:{sample:true},
     loadComponent:()=>import('./intelligence/market-report.component').then(m=>m.MarketReportComponent),

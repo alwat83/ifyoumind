@@ -19,3 +19,12 @@
 .business-intro .secondary{margin-top:10px}
 @media(max-width:820px){.life-preview{grid-template-columns:1fr}}
 @media(max-width:560px){.audience-paths{grid-template-columns:1fr}.life-preview,.business-intro{width:calc(100% - 22px)}.life-preview{padding:22px}.life-example{padding:16px}.hero h1{font-size:clamp(42px,11vw,58px)}}
+
+.any-data{width:min(1120px,calc(100% - 36px));margin:35px auto 0;padding:42px 0 24px}
+.any-data h2{font-size:clamp(32px,4.5vw,56px);line-height:1.05;letter-spacing:-.055em;margin:12px 0 14px}
+.any-data>p:not(.eyebrow){max-width:780px;color:#526078;line-height:1.6}
+.any-data-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:22px 0}
+.any-data-grid article{background:#fff;border:1px solid #e0e4ea;border-radius:16px;padding:20px;display:grid;gap:10px}
+.any-data-grid strong{font-size:17px}.any-data-grid span{font-size:14px;color:#5f6b7d;line-height:1.5}
+@media(max-width:820px){.any-data-grid{grid-template-columns:1fr}}
+@media(max-width:560px){.any-data{width:calc(100% - 22px)}}

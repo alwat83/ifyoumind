@@ -2,6 +2,7 @@
   <nav class="nav">
     <a routerLink="/" class="brand">ifYouMind</a>
     <div>
+      <a href="#life-preview">Life decisions</a>
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
       <a routerLink="/login">Sign in</a>
@@ -11,9 +12,13 @@
 
   <section class="hero">
     <div class="hero-copy">
-      <p class="eyebrow">For business plans and location decisions</p>
-      <h1>The market analysis for your business plan, done in minutes.</h1>
-      <p class="lede">Compare the U.S. cities you’re considering on population, growth, income and home values, with every figure cited to the Census, written up for your business.</p>
+      <p class="eyebrow">Clearer decisions, grounded in evidence</p>
+      <h1>Your question. The evidence. A clearer decision.</h1>
+      <p class="lede">Think beyond one kind of decision. From job offers and housing costs to business locations and community trends, ifYouMind helps you explore relevant factors, compare options, and understand what the evidence can — and cannot — show.</p>
+      <div class="audience-paths" aria-label="Choose what you are deciding">
+        <a class="audience-path" href="#life-preview"><strong>For your life <span>Preview</span></strong><small>Two job offers. Two cities. A clearer view of the trade-offs.</small><em>Explore Life →</em></a>
+        <a class="audience-path" href="#business"><strong>For your business <span>Available now</span></strong><small>Research cities and build a sourced market analysis.</small><em>Explore Business →</em></a>
+      </div>
       <div class="hero-actions">
         <a routerLink="/register" class="primary">Build my market analysis free</a>
         <a routerLink="/sample-report" class="secondary">See a sample report</a>
@@ -37,6 +42,25 @@
       <a routerLink="/sample-report" class="demo-link">See the full sample report →</a>
     </div>
   </section>
+
+  <section class="any-data" aria-labelledby="any-data-title">
+    <p class="eyebrow">Beyond one type of question</p>
+    <h2 id="any-data-title">What would you like to understand?</h2>
+    <p>Bring the factors that matter to you. Explore questions about money, places, work, business, and more. We are expanding toward flexible analysis of user-provided data alongside trustworthy external sources.</p>
+    <div class="any-data-grid">
+      <article><strong>Choose your factors</strong><span>Income, housing, commute, growth, or another measure relevant to your decision.</span></article>
+      <article><strong>Compare the evidence</strong><span>See where figures come from, which assumptions you control, and what is missing.</span></article>
+      <article><strong>Go beyond a single answer</strong><span>Understand trade-offs and explore how different inputs change the picture.</span></article>
+    </div>
+    <p class="micro">Available now: sourced U.S. city and business market comparisons. In development: broader personal decision tools and flexible analysis of user-provided datasets. Not every data source or analysis type is supported yet.</p>
+  </section>
+
+  <section id="life-preview" class="life-preview" aria-labelledby="life-title">
+    <div><p class="eyebrow">ifYouMind Life · Preview</p><h2 id="life-title">Two job offers. More than two salaries.</h2><p>Thinking about relocating or choosing between offers? Our upcoming Life comparison will help you weigh pay, housing, commuting and your priorities together — with assumptions you can change and uncertainty clearly labelled.</p><p class="micro">The interactive Life comparison is in development. This preview does not calculate a result or collect your personal information.</p></div>
+    <div class="life-example" aria-label="Illustrative questions for a job comparison"><span>Questions worth asking</span><strong>What would I have left each month?</strong><strong>How much time would I spend commuting?</strong><strong>Which trade-offs matter most to me?</strong><small>No automatic winner. Your priorities matter.</small></div>
+  </section>
+
+  <section id="business" class="business-intro"><p class="eyebrow">ifYouMind Business · Available now</p><h2>Planning a business? Start with real market signals.</h2><p>Compare cities on population, growth, income and home values, with figures cited to the U.S. Census.</p><a routerLink="/sample-report" class="secondary">See a real Business report →</a></section>
 
   <section class="question-strip">
     <span>Should I open here?</span>
@@ -110,7 +134,7 @@
 
   <footer>
     <a routerLink="/" class="brand">ifYouMind</a>
-    <span>Decision intelligence, starting with where to build your business.</span>
+    <span>Evidence for life and business decisions.</span>
     <p class="support">Questions? <a href="mailto:support&#64;ifyoumind.com">support&#64;ifyoumind.com</a></p>
     <div><a href="/guides/market-analysis-business-plan/">How to write a market analysis</a><a routerLink="/privacy-policy">Privacy</a><a routerLink="/terms-of-conduct">Terms</a></div>
   </footer>

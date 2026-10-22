@@ -10,13 +10,15 @@ This file applies ONLY to the **ifYouMind** repository `alwat83/ifyoumind` and w
 Build a consumer-friendly, general-purpose, evidence-backed AI data intelligence platform. Users should be able to explore public and, later, permissioned private datasets, compare locations and other entities, generate clear Decision Reports, and understand data sources, limitations, and freshness. Business intelligence is one vertical, not the whole product. Prioritize mobile UX, trustworthy outputs, reliable production releases, monetization, and acquisition. Avoid geographically narrow demo examples.
 
 ## Source of truth — mandatory order
-**Notion is the central project coordination source of truth** for current priorities, completed work, roadmap, statuses, decisions, and cross-agent handoffs:
-https://app.notion.com/p/3f5c9bc5d8fd805ebaa6eae586db23bf
+**Founder correction, 2026-10-22: GitHub and repository documentation are the source of truth for development.** The accessible Notion coordination hub, confirmed by the founder, is:
+https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
 
-1. **Read the latest Notion operating directive and updates first.** Newer founder corrections supersede historical task lists.
+1. **Read this file, `docs/agent-handoff/CURRENT_STATUS.md`, recent `DEVELOPMENT_LOG.md` entries and current founder directives.** Newer founder corrections supersede historical task lists.
 2. **GitHub master, PRs, CI and Firebase** are authoritative evidence for what is committed, merged, built, deployed and production-verified; never infer production status from a commit.
 3. **[IFYOUMIND_MASTER_PROJECT.md](IFYOUMIND_MASTER_PROJECT.md)** preserves durable architecture, history, current handoff and roadmap; keep it synchronized with Notion.
 4. Other agent notes and conversations are supporting context, not a competing roadmap.
+
+Notion remains a synchronized coordination record. If unavailable, record the blocker and continue independent work; never create a duplicate hub or overwrite an unverified destination. The previous `3f5c9bc5d8fd805ebaa6eae586db23bf` hub ID returned NOT_FOUND. Historical Notion-first wording is superseded by this founder correction.
 
 **Current founder-confirmed working capabilities (2026-10-10):** Decision Reports, PDF generation and successful paid purchases. Do NOT reopen these as outstanding without new evidence of a regression. Stripe checkout, billing portal, webhook and report entitlement logic are implemented in master. **Next business priority: customer acquisition and revenue growth, after minimal release polish.**
 
@@ -42,3 +44,40 @@ Record: date, provider/agent (OpenAI historically; others only if newly involved
 
 ## Documentation rules
 Update `IFYOUMIND_MASTER_PROJECT.md` and the ifYouMind Notion project hub when milestones change. Use status labels: **planned**, **in progress**, **committed**, **merged**, **deployed**, **production verified**. Preserve historical decisions and open risks. Keep Dose Ninja documentation separate.
+
+## Permanent development reporting and handoff protocol — 2026-10-22
+
+This is a persistent project-level instruction for every Codex agent and all other authorized agents working in `alwat83/ifyoumind`. Follow it automatically at the end of every meaningful development session or completed assignment, without requiring the founder to repeat it. It is a session workflow, not a scheduled automation or permission to send messages externally.
+
+### Start of each assignment
+
+- Read root `AGENTS.md`, review `docs/agent-handoff/CURRENT_STATUS.md`, and consult recent entries in `docs/agent-handoff/DEVELOPMENT_LOG.md`.
+- Inspect actual branch, commit, uncommitted/unpushed changes, worktrees and relevant PR/CI status before changing files. Check for concurrent work; preserve it.
+- Consult the master project record for architecture/history and the current roadmap. Reconcile older notes against current founder directions and GitHub evidence.
+
+### End of each meaningful assignment
+
+- Append a dated entry to `docs/agent-handoff/DEVELOPMENT_LOG.md`; never erase or replace prior entries. Include work performed, provider/agent, files/components, verification commands/results, branch/commits/PRs/issues, release/deployment evidence, blockers and next steps. Mark unknown attribution as unknown.
+- Refresh `docs/agent-handoff/CURRENT_STATUS.md` as the concise current snapshot: latest verified GitHub status with exact heads and check links, release readiness, active priorities, unresolved blockers and local/unpushed work. Include the observation date and distinguish planned, in progress, committed, merged, deployed and production verified.
+- Keep `IFYOUMIND_MASTER_PROJECT.md` for durable product history, architecture and roadmap. Link detailed evidence rather than copying multiple competing status tables. Synchronize meaningful milestones to the verified Notion hub; document unavailable integrations and continue independent work.
+- Provide a comprehensive but readable report in the Codex conversation using all six sections below. Reference evidence and limitations; another agent must be able to continue without founder repetition. For interrupted or incomplete work, report the actual stopping point and do not label the assignment completed.
+
+### Required conversation report (A–F)
+
+**A. Executive Summary:** what was accomplished, why it matters, and which product goals it advances.
+
+**B. Development Changes:** features implemented, bugs fixed, files/components modified, and any architecture or dependency changes. Say explicitly when there were none.
+
+**C. Verification:** tests and results, build/lint results, GitHub Actions/CI status on exact commits, and what remains untested or unverified. Separate newly executed checks from historical evidence; skipped checks are not passes.
+
+**D. GitHub Activity:** current branch, commit hashes, PRs created/updated, issues created/resolved or still open, and uncommitted/unpushed changes. Report preserved work in other relevant worktrees as needed. Do not guess CI or commit states.
+
+**E. Deployment Status:** ready-for-release work, current live evidence versus development-only features, outstanding blockers, and required founder approvals. A green build or commit is not deployment proof.
+
+**F. Next Steps:** exactly three highest-priority actionable tasks, their dependencies/risks, and the recommended next assignment. Avoid reopening founder-confirmed completed capabilities without new regression evidence.
+
+### Release and safety rules
+
+Never merge into `master`, deploy production, alter Stripe configuration, or publish experimental financial calculations without explicit founder approval. Successful checks do not grant approval. Master-push workflows may deploy production; account for that consequence before any authorized merge.
+
+Preserve local changes and avoid overwriting another agent's work. Never invent test results, deployment confirmations, customer metrics, GitHub statuses or attribution. Clearly distinguish verified problems from recommendations. If an integration is unavailable, document the blocker and continue independent work.

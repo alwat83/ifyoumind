@@ -1,10 +1,14 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-10-10  
+**Updated:** 2026-10-22
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
-**Notion:** https://app.notion.com/p/3f5c9bc5d8fd805ebaa6eae586db23bf  
+**Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
 **Purpose:** Living project context for the founder and all current/future development agents.
+
+**Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format. This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
+
+**Active roadmap addition — [#56 SEO growth foundation](https://github.com/alwat83/ifyoumind/issues/56):** after #54/#55 verification and combined mobile checks, audit technical SEO, raw/rendered metadata, indexing, sitemap generation, structured data and actual legacy `SeoService` usage; fix verified defects with regressions on a separate feature branch/draft PR. Then prepare cited content for job offers, relocation, business locations and flexible data analysis on a separate branch. Preserve Business conversion paths; unfinished Life functionality stays clearly labelled and experimental calculations stay local-only. No merge or deployment without founder approval. See current snapshot/log for evidence and next steps.
 
 > **Legal operator (founder-confirmed 2026-10-11):** ifYouMind is a product and service operated by **Dose Ninja Inc.**; it is not a separate legal entity. The privacy policy and terms name Dose Ninja Inc. as operator, and that is intentional.
 >

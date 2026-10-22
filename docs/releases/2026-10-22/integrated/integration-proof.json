@@ -1,0 +1,47 @@
+{
+  "reviewedHead": "27b49ab7b9995c15c2bbfa441796ac5e54915a0b",
+  "base": "bb6744b330378e63506cb90334098e6dfe2b86ff",
+  "sources": [
+    {
+      "pr": 49,
+      "sourceHead": "8f6f935c734f740a12f192a2de1e7bf99083389f",
+      "uniqueCommitCount": 1,
+      "exactlyOnce": true,
+      "changedLinesMatchExcludingSharedEdits": true
+    },
+    {
+      "pr": 54,
+      "sourceHead": "738f7c2540978d6f06c9d66280221de3b3440c53",
+      "uniqueCommitCount": 7,
+      "exactlyOnce": true,
+      "changedLinesMatchExcludingSharedEdits": true
+    },
+    {
+      "pr": 57,
+      "sourceHead": "45aaf911f2f6ed232c4f3d5cb0b86b01bf65fba2",
+      "uniqueCommitCount": 3,
+      "exactlyOnce": true,
+      "changedLinesMatchExcludingSharedEdits": true
+    },
+    {
+      "pr": 58,
+      "sourceHead": "9c17a6195ed20a0d6a5fc3f1858094a443df6563",
+      "uniqueCommitCount": 2,
+      "exactlyOnce": true,
+      "changedLinesMatchExcludingSharedEdits": true
+    },
+    {
+      "pr": 59,
+      "sourceHead": "a96d37447c2e4549106d9d22116feea21d058a89",
+      "uniqueCommitCount": 2,
+      "exactlyOnce": true,
+      "changedLinesMatchExcludingSharedEdits": true
+    }
+  ],
+  "lifeUniqueCommitsExcluded": [
+    "31bb6384b7c360efee853938449da82ace26e2dd",
+    "3401d29641361c48ce4e4f77dbc1d70abbce17bd",
+    "4732c6acc3e7350ccd54e4a30c0f0743037ef7d1"
+  ],
+  "sharedEdits": "#54 master-record date already updated by #57; identical QA_BROWSER_CHANNEL override from #54/#58 retained exactly once. Other changed lines and binary additions match source commits."
+}

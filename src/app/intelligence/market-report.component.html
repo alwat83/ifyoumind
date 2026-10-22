@@ -211,6 +211,7 @@
       <ol><li *ngFor="let question of brief.questions">{{ question }}</li></ol>
     </section>
 
+    <p *ngIf="sampleMode" class="no-print"><a href="/guides/choose-business-location-evidence/">Business location evidence checklist</a> · <a href="/guides/">All decision guides</a></p>
     <section id="sources" *ngIf="brief.sources?.length" class="sources">
       <p class="eyebrow">Sources</p>
       <ul>

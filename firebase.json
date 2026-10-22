@@ -20,6 +20,12 @@
   },
   "hosting": {
     "public": "dist/ifyoumind-deploy/browser",
+    "cleanUrls": true,
+    "redirects": [
+      { "regex": "^/(sample-report|privacy-policy|terms-of-conduct|login|register|verify-email|app)/+$", "destination": "/:1", "type": 301 },
+      { "regex": "^/guides$", "destination": "/guides/", "type": 301 },
+      { "regex": "^/guides/([a-z0-9]+(?:-[a-z0-9]+)*)$", "destination": "/guides/:1/", "type": 301 }
+    ],
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -27,9 +33,13 @@
     ],
     "rewrites": [
       {
-        "source": "**",
-        "destination": "/index.html"
-      }
+        "source": "/login",
+        "destination": "/app-shell.html"
+      },
+      { "source": "/register", "destination": "/app-shell.html" },
+      { "source": "/verify-email", "destination": "/app-shell.html" },
+      { "source": "/app", "destination": "/app-shell.html" },
+      { "source": "/app/**", "destination": "/app-shell.html" }
     ],
     "headers": [
       {

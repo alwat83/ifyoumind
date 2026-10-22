@@ -1,0 +1,16 @@
+{
+  "codeCommit": "ae029b65861d22a94e737000fe0089f3193063ed",
+  "originalScreenshotsReviewed": 22,
+  "refreshedScreenshots": 22,
+  "finding": "Three pale-section homepage h2 headings inherited white text from global heading styles. Axe returned incomplete color-contrast checks on gradient backgrounds, despite zero automatic violations.",
+  "fix": "Explicit dark heading colors; direct WCAG large-text contrast regression on mobile and desktop.",
+  "beforeMinimumContrast": 1.0429294397922644,
+  "afterMinimumContrast": 15.864612738060616,
+  "threshold": 3,
+  "captureFix": "CSS-pixel scale avoids repeats in two oversized mobile full-page PNGs; DOM has exactly one h1. No UI content removed.",
+  "remainingLimits": [
+    "Automated axe has incomplete gradient contrast checks; not full accessibility conformance",
+    "Physical iOS/Safari and manual screen reader not tested",
+    "No real purchase or native PDF export performed"
+  ]
+}

@@ -65,3 +65,16 @@ test('the guides index lists every guide and the sitemap includes the index and 
   assert.ok(paths.includes('/guides/'));
   for(const guide of guides)assert.ok(paths.includes(guide.path),guide.path);
 });
+
+test('decision-intent guides distinguish manual workflows from available product features',()=>{
+  const required=['compare-job-offers-relocation','choose-business-location-evidence','compare-options-with-your-own-data'];
+  for(const slug of required){
+    const guide=guides.find(g=>g.slug===slug);
+    assert.ok(guide,slug);
+    assert.match(guide.body,/in development/i,slug);
+    assert.doesNotMatch(guide.body,/\/life\/quick-compare|upload your (?:data|dataset) now/i,slug);
+    assert.match(guide.body,/\[.+?\]\(https:\/\/(?:www\.)?(?:bls\.gov|bea\.gov|sba\.gov|census\.gov|gov\.uk|gov\.scot)\//,slug);
+    assert.match(guide.body,/invented/i,slug);
+  }
+  assert.equal(new Set(guides.map(g=>g.seoTitle)).size,guides.length);
+});

@@ -1,0 +1,285 @@
+{
+  "codeAndTestCommit": "2c4a6f5490576a449c0873eb95653a222c1f8901",
+  "baseCommit": "bb6744b330378e63506cb90334098e6dfe2b86ff",
+  "branch": "codex/release-consumer-seo-20261022",
+  "commits": [
+    {
+      "releaseCommit": "438f587f0936c9ba2ac1c449203b484cbc67deff",
+      "sourceCommit": "438f587f0936c9ba2ac1c449203b484cbc67deff",
+      "subject": "docs: establish permanent development reporting and handoff protocol"
+    },
+    {
+      "releaseCommit": "5f0cae184bd93bb319f9f0d766e235992103921f",
+      "sourceCommit": "5f0cae184bd93bb319f9f0d766e235992103921f",
+      "subject": "docs: record verified release review and SEO content handoff"
+    },
+    {
+      "releaseCommit": "45aaf911f2f6ed232c4f3d5cb0b86b01bf65fba2",
+      "sourceCommit": "45aaf911f2f6ed232c4f3d5cb0b86b01bf65fba2",
+      "subject": "docs: finalize exact-head CI and preserved-work handoff"
+    },
+    {
+      "releaseCommit": "7bd46c1644cc9b5a84506bdf9ad8f8d92f793f69",
+      "sourceCommit": "8f6f935c734f740a12f192a2de1e7bf99083389f",
+      "subject": "Sample report on phones: show the answer on the first screen"
+    },
+    {
+      "releaseCommit": "dfee1d874e1c1174ca1c36bb4be10cc0cdb65d9e",
+      "sourceCommit": "c9c2e6025ae35b9c3c4ca4f30b7ff740c4adc883",
+      "subject": "feat(marketing): introduce Life preview alongside Business on homepage"
+    },
+    {
+      "releaseCommit": "de511c71f46f8803613bf2f42df8a606955596f2",
+      "sourceCommit": "3614e611fe8a5ab4efbac53692825b00ed71ce62",
+      "subject": "style(marketing): responsive Life and Business homepage paths"
+    },
+    {
+      "releaseCommit": "035d5ecf41af721330a7438b3a532b040b867f3f",
+      "sourceCommit": "df8ff943ffd12776f0515d6d3e77ac20e645ca1c",
+      "subject": "feat(marketing): load responsive Life preview styles"
+    },
+    {
+      "releaseCommit": "30f0b354f331c7096039fe1d2df2d5a67b23fd4d",
+      "sourceCommit": "ed4ccea020f7e7a6a877db602154ebef4bd0f69c",
+      "subject": "feat(marketing): position ifYouMind as extensible data decision platform"
+    },
+    {
+      "releaseCommit": "358d3155c02f6536226f5ecf88f2e21074284657",
+      "sourceCommit": "40c21135f2125bcf9e32a481e89894f3ccbc910f",
+      "subject": "style(marketing): add responsive general-purpose analysis section"
+    },
+    {
+      "releaseCommit": "33e08c6075cdc17ee3a00f0fd9aeda97c87257d8",
+      "sourceCommit": "7a4501667f261b747a173d172830a57ecffc1f39",
+      "subject": "fix(marketing): respect data capability claims trust guardrail"
+    },
+    {
+      "releaseCommit": "f2c286b5e87081327f1469c36163caafa3b7b8a3",
+      "sourceCommit": "738f7c2540978d6f06c9d66280221de3b3440c53",
+      "subject": "test(marketing): verify homepage release paths and record mobile review"
+    },
+    {
+      "releaseCommit": "2dd603636173f3f69f490d09b6eacdac24752014",
+      "sourceCommit": "b77596efcc9c88ff250acc23353c4a42a2e21917",
+      "subject": "fix(seo): serve initial route metadata and noindex private app shell"
+    },
+    {
+      "releaseCommit": "f11bcf77143b05973d7c5cbca7176ad58b1d44e8",
+      "sourceCommit": "9c17a6195ed20a0d6a5fc3f1858094a443df6563",
+      "subject": "fix(seo): normalize canonical paths without redirect loops"
+    },
+    {
+      "releaseCommit": "06b949364e19b59df33c4cda403b29bd0181dd2a",
+      "sourceCommit": "35d8072594694711a2374f8452c526d0b62562f7",
+      "subject": "content: prepare sourced decision guides with honest product boundaries"
+    },
+    {
+      "releaseCommit": "bcdd45b47241231399f1f32b917e39c5c382f4fb",
+      "sourceCommit": "a96d37447c2e4549106d9d22116feea21d058a89",
+      "subject": "fix(content): date the sample report discoverability update"
+    },
+    {
+      "releaseCommit": "2c4a6f5490576a449c0873eb95653a222c1f8901",
+      "sourceCommit": "2c4a6f5490576a449c0873eb95653a222c1f8901",
+      "subject": "test(release): verify integrated consumer, commerce, mobile and SEO candidate"
+    }
+  ],
+  "hostingArtifacts": [
+    {
+      "path": "404.html",
+      "sha256": "3e2ee34bc1b703f50feb9495fb38ba90cc7a5543ee53e4c07c20374b429b762e",
+      "bytes": 461
+    },
+    {
+      "path": "app-shell.html",
+      "sha256": "2560f7b2890983108a0a5e5f52943d0101e827b1c36136018f78fc6239fe88e5",
+      "bytes": 19253
+    },
+    {
+      "path": "apple-touch-icon.png",
+      "sha256": "4f74a3417992dd413860d3b45998206e3769abdd965d723617eac93fec004f0d",
+      "bytes": 23576
+    },
+    {
+      "path": "chunk-2RGKSZBX.js",
+      "sha256": "98343b7ac407bee93ef860b973bd61f628790ccf17f96f76af32b27a0ccee80d",
+      "bytes": 138606
+    },
+    {
+      "path": "chunk-6H5MEBXB.js",
+      "sha256": "5ea60f6e93b8e31bab41d74585ba337d260adde5da78c0032c352432305db38c",
+      "bytes": 614
+    },
+    {
+      "path": "chunk-7R5O3K3J.js",
+      "sha256": "33e8113cc5aff67e9ce575446461b320a4ae33d43ba9d952a2f3a437df1ed5c5",
+      "bytes": 1620
+    },
+    {
+      "path": "chunk-CDFF5ZBK.js",
+      "sha256": "fe9fe1fb083462894ec16dd75e8a6e01bf1f9cc754f69f650df1c961fc8d2603",
+      "bytes": 14202
+    },
+    {
+      "path": "chunk-CU4PZRTL.js",
+      "sha256": "cd88ccdff00558307ac466c7b5370f4693f705b9f4361e2d40ef76ccfd9b22e0",
+      "bytes": 16316
+    },
+    {
+      "path": "chunk-EGQWR7EI.js",
+      "sha256": "cb0d0858c7b54f776ce7864285d79471ede980dea652c985e1548418e9bdb3e8",
+      "bytes": 15025
+    },
+    {
+      "path": "chunk-IAWLEXOU.js",
+      "sha256": "368c5b63a0a9d7526df64633f122843b22a5255891fa840a4ff4a1e8d2931914",
+      "bytes": 251401
+    },
+    {
+      "path": "chunk-IED4YLUP.js",
+      "sha256": "38de63617d58e7d6280969855389b702932dbf7070b72d4e522def4210542110",
+      "bytes": 10743
+    },
+    {
+      "path": "chunk-KMVX652I.js",
+      "sha256": "5b6f0e621572aace37a5f4a4e0e5efbf03495a7733264dd73d3b0e797b3bcdd7",
+      "bytes": 682
+    },
+    {
+      "path": "chunk-LZEGMRUA.js",
+      "sha256": "786d33c0233a0b0f6c9a0dc0aa46b34b172f9416ce8afe94ce418c6cfe76f75b",
+      "bytes": 857
+    },
+    {
+      "path": "chunk-MJNOAPTI.js",
+      "sha256": "e0e8816c7d53a13139bd29bedd34e1b452d15335f3f17e3e042a6ec2d6a8eec4",
+      "bytes": 474
+    },
+    {
+      "path": "chunk-N5O4DAGK.js",
+      "sha256": "8cda6ad36679855a5252074c8d8b6101f8ec760437d07f36262b7c36ba9c4339",
+      "bytes": 13842
+    },
+    {
+      "path": "chunk-OMGTIJHY.js",
+      "sha256": "cdc55e85aac0f6ac6abeefa507d026bbd9d6a1cf922e6cccfb7c49edc44a46f1",
+      "bytes": 9205
+    },
+    {
+      "path": "chunk-OW6GEZRA.js",
+      "sha256": "25c4ecd91cfad83c88b45e2f19cc7e51d3d61e36bb1c6a8be8512bf3b18b751f",
+      "bytes": 29467
+    },
+    {
+      "path": "chunk-OXPB2ODW.js",
+      "sha256": "15d1fa983cbf9c9a8cffdba8181725c5e3b3e8dd9cd68dc4314237789c77bccb",
+      "bytes": 48144
+    },
+    {
+      "path": "chunk-PVCDKEJJ.js",
+      "sha256": "7954f4c45841157b45208cc2c843685e9190f42d1986ff6adb9263212308de44",
+      "bytes": 28032
+    },
+    {
+      "path": "chunk-RIFQ4K7Z.js",
+      "sha256": "480ac4bc5b0b37b603149ad28bc8140977caf529d7ed845b99271791855d9a3b",
+      "bytes": 12304
+    },
+    {
+      "path": "chunk-UYLJZ6KC.js",
+      "sha256": "92a8146b6fa2302d5919cb31322d592d81f49f3d863fa4f76b4eaca20ce81b9b",
+      "bytes": 35634
+    },
+    {
+      "path": "chunk-YDRSLIXG.js",
+      "sha256": "86929497f59734f8ee97ffce9295e2da16940625e36f36e8ad9cbaac20cb4f5d",
+      "bytes": 1030
+    },
+    {
+      "path": "favicon.ico",
+      "sha256": "8f80b82a4e0238237fb46c29e4b36aafe2f93cde6bea90bb168eb6274beb9ec4",
+      "bytes": 4833
+    },
+    {
+      "path": "favicon.png",
+      "sha256": "58a828c8e41a7232eecbaa2b2ac2dafc1fe47e6097324a6720f809e7703f17eb",
+      "bytes": 4187
+    },
+    {
+      "path": "guides/choose-business-location-evidence/index.html",
+      "sha256": "1c8cbf1215b6e4168e711858742ecfc8a357fa1809ead025b2cb7fd022b6b316",
+      "bytes": 10173
+    },
+    {
+      "path": "guides/compare-job-offers-relocation/index.html",
+      "sha256": "66304fef06d94241c67f1d5d29b49170b4c8169ad18b6dbfc09c694133cd3f8a",
+      "bytes": 9876
+    },
+    {
+      "path": "guides/compare-options-with-your-own-data/index.html",
+      "sha256": "ce262b5fa640e4e4ea73543faeaab44adcbc17ee5f0412032bf4b27a9f9c73b5",
+      "bytes": 10084
+    },
+    {
+      "path": "guides/guide.css",
+      "sha256": "e9c6676d8de5b5923c6406198402785cb694d8d60516c6f5e5139859c7c4352e",
+      "bytes": 4887
+    },
+    {
+      "path": "guides/index.html",
+      "sha256": "a544ec0bbed2423c5e290a44994e54297b9171f1f776dac5a44fd591db9657c1",
+      "bytes": 5036
+    },
+    {
+      "path": "guides/market-analysis-business-plan/index.html",
+      "sha256": "4bfefb4e0e4aca669582b95218464c890bd378c010db529f28c40eb3fbc12453",
+      "bytes": 18719
+    },
+    {
+      "path": "index.html",
+      "sha256": "412300f571b724adbff66dcda5ba635a3e73054e8770a547f81d63200e60bd62",
+      "bytes": 20304
+    },
+    {
+      "path": "main-3B5GMLUL.js",
+      "sha256": "a548618e9de9c4871a63d8a2c4c28ee807982118922db14ad04ba87975e97098",
+      "bytes": 169016
+    },
+    {
+      "path": "polyfills-CJUPGK76.js",
+      "sha256": "15c6f58707b9b19116fde3a3f6a0ce9cf83427d64a91e95cb91fe1056c3da616",
+      "bytes": 34585
+    },
+    {
+      "path": "privacy-policy.html",
+      "sha256": "d731e430f628d8715135f6706e2fa2a35a8298d6a53ec3b957c1b06bb3c63077",
+      "bytes": 19474
+    },
+    {
+      "path": "robots.txt",
+      "sha256": "db92b36011be622fbfce10dbd51e06c68095a4daf2888e44389afa16e90684d5",
+      "bytes": 146
+    },
+    {
+      "path": "sample-report.html",
+      "sha256": "8d710f7a87cfc403a67fef7c181e04e0137fa659c1281cee98133119fe356070",
+      "bytes": 19757
+    },
+    {
+      "path": "sitemap.xml",
+      "sha256": "8f6ac017557c1542762a0e0207380e5f193beae8e110e6691fe527e367b04931",
+      "bytes": 1379
+    },
+    {
+      "path": "styles-WRCLW4G6.css",
+      "sha256": "ab75e8b4fa2fbbd5cc51376e8f7c6022e65f8ca91e5ad634313709a88d959dd1",
+      "bytes": 23635
+    },
+    {
+      "path": "terms-of-conduct.html",
+      "sha256": "a21fe5f0517cccfe48bae427d02dac07749b4c38c0a748f2bf12b774ec3a15a6",
+      "bytes": 19415
+    }
+  ],
+  "note": "Subsequent evidence-only commits do not alter this pinned application/test snapshot. No deployment authorization implied."
+}

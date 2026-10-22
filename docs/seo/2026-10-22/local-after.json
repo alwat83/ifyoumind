@@ -1,0 +1,1205 @@
+{
+  "observedAt": "2026-10-22T16:48:27.060Z",
+  "base": "http://127.0.0.1:4304",
+  "observations": [
+    {
+      "path": "/",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/",
+      "title": "ifYouMind — Evidence for clearer decisions",
+      "description": "Explore evidence for real decisions. Compare U.S. cities with Census-cited Business reports today; personal decision tools are in development.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/"
+      ],
+      "ogUrl": "https://ifyoumind.com/",
+      "twitterTitle": "ifYouMind — Evidence for clearer decisions",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "ifYouMind",
+          "url": "https://ifyoumind.com/",
+          "applicationCategory": "BusinessApplication",
+          "description": "A decision-support web application that organizes source-backed public data into clear comparisons and Decision Briefs.",
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Free",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Pro",
+              "price": "39",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Decision Report",
+              "price": "79",
+              "priceCurrency": "USD"
+            }
+          ]
+        }
+      ],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/sample-report?utm_source=seo-audit",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/sample-report?utm_source=seo-audit",
+      "title": "Sample Decision Report | ifYouMind",
+      "description": "See a full ifYouMind Decision Report: a location decision compared across three U.S. cities with cited U.S. Census data, an action plan, and clear limits.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/sample-report"
+      ],
+      "ogUrl": "https://ifyoumind.com/sample-report",
+      "twitterTitle": "Sample Decision Report | ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/privacy-policy",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/privacy-policy",
+      "title": "Privacy Policy | ifYouMind",
+      "description": "How ifYouMind collects, uses, stores and protects your information.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/privacy-policy"
+      ],
+      "ogUrl": "https://ifyoumind.com/privacy-policy",
+      "twitterTitle": "Privacy Policy | ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/terms-of-conduct",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/terms-of-conduct",
+      "title": "Terms of Service | ifYouMind",
+      "description": "The terms that apply when you use ifYouMind.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/terms-of-conduct"
+      ],
+      "ogUrl": "https://ifyoumind.com/terms-of-conduct",
+      "twitterTitle": "Terms of Service | ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/login",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/login",
+      "title": "ifYouMind",
+      "description": "Sign in to manage your ifYouMind decisions and reports.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/register?intent=report",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/register?intent=report",
+      "title": "ifYouMind",
+      "description": "Sign in to manage your ifYouMind decisions and reports.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/app/result/seo-audit",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/app/result/seo-audit",
+      "title": "ifYouMind",
+      "description": "Sign in to manage your ifYouMind decisions and reports.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/guides/",
+      "title": "Market research guides | ifYouMind",
+      "description": "Practical, source-cited guides to market research and location decisions for business plans, using free U.S. Census data.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/",
+      "twitterTitle": "Market research guides | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "ifYouMind guides",
+          "url": "https://ifyoumind.com/guides/"
+        }
+      ],
+      "h1": [
+        "Market research guides for your business plan"
+      ],
+      "bodyCharacters": 814,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/market-analysis-business-plan/",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/guides/market-analysis-business-plan/",
+      "title": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/market-analysis-business-plan/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+      "twitterTitle": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+              "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+              "datePublished": "2026-10-11",
+              "dateModified": "2026-10-11",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+                  "item": "https://ifyoumind.com/guides/market-analysis-business-plan/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)"
+      ],
+      "bodyCharacters": 10726,
+      "overflow": 0
+    },
+    {
+      "path": "/seo-audit-missing-page",
+      "javascript": false,
+      "width": 390,
+      "status": 404,
+      "url": "http://127.0.0.1:4304/seo-audit-missing-page",
+      "title": "Page not found | ifYouMind",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "schema": [],
+      "h1": [
+        "Page not found"
+      ],
+      "bodyCharacters": 117,
+      "overflow": 0
+    },
+    {
+      "path": "/",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/",
+      "title": "ifYouMind — Evidence for clearer decisions",
+      "description": "Explore evidence for real decisions. Compare U.S. cities with Census-cited Business reports today; personal decision tools are in development.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/"
+      ],
+      "ogUrl": "https://ifyoumind.com/",
+      "twitterTitle": "ifYouMind — Evidence for clearer decisions",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "ifYouMind",
+          "url": "https://ifyoumind.com/",
+          "applicationCategory": "BusinessApplication",
+          "description": "A decision-support web application that organizes source-backed public data into clear comparisons and Decision Briefs.",
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Free",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Pro",
+              "price": "39",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Decision Report",
+              "price": "79",
+              "priceCurrency": "USD"
+            }
+          ]
+        }
+      ],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/sample-report?utm_source=seo-audit",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/sample-report?utm_source=seo-audit",
+      "title": "Sample Decision Report | ifYouMind",
+      "description": "See a full ifYouMind Decision Report: a location decision compared across three U.S. cities with cited U.S. Census data, an action plan, and clear limits.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/sample-report"
+      ],
+      "ogUrl": "https://ifyoumind.com/sample-report",
+      "twitterTitle": "Sample Decision Report | ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/privacy-policy",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/privacy-policy",
+      "title": "Privacy Policy | ifYouMind",
+      "description": "How ifYouMind collects, uses, stores and protects your information.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/privacy-policy"
+      ],
+      "ogUrl": "https://ifyoumind.com/privacy-policy",
+      "twitterTitle": "Privacy Policy | ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/terms-of-conduct",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/terms-of-conduct",
+      "title": "Terms of Service | ifYouMind",
+      "description": "The terms that apply when you use ifYouMind.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/terms-of-conduct"
+      ],
+      "ogUrl": "https://ifyoumind.com/terms-of-conduct",
+      "twitterTitle": "Terms of Service | ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/login",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/login",
+      "title": "ifYouMind",
+      "description": "Sign in to manage your ifYouMind decisions and reports.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/register?intent=report",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/register?intent=report",
+      "title": "ifYouMind",
+      "description": "Sign in to manage your ifYouMind decisions and reports.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/app/result/seo-audit",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/app/result/seo-audit",
+      "title": "ifYouMind",
+      "description": "Sign in to manage your ifYouMind decisions and reports.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/guides/",
+      "title": "Market research guides | ifYouMind",
+      "description": "Practical, source-cited guides to market research and location decisions for business plans, using free U.S. Census data.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/",
+      "twitterTitle": "Market research guides | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "ifYouMind guides",
+          "url": "https://ifyoumind.com/guides/"
+        }
+      ],
+      "h1": [
+        "Market research guides for your business plan"
+      ],
+      "bodyCharacters": 814,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/market-analysis-business-plan/",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/guides/market-analysis-business-plan/",
+      "title": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/market-analysis-business-plan/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+      "twitterTitle": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+              "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+              "datePublished": "2026-10-11",
+              "dateModified": "2026-10-11",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+                  "item": "https://ifyoumind.com/guides/market-analysis-business-plan/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)"
+      ],
+      "bodyCharacters": 10632,
+      "overflow": 0
+    },
+    {
+      "path": "/seo-audit-missing-page",
+      "javascript": false,
+      "width": 1280,
+      "status": 404,
+      "url": "http://127.0.0.1:4304/seo-audit-missing-page",
+      "title": "Page not found | ifYouMind",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "schema": [],
+      "h1": [
+        "Page not found"
+      ],
+      "bodyCharacters": 117,
+      "overflow": 0
+    },
+    {
+      "path": "/",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/",
+      "title": "ifYouMind — Evidence for clearer decisions",
+      "description": "Explore evidence for real decisions. Compare U.S. cities with Census-cited Business reports today; personal decision tools are in development.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/"
+      ],
+      "ogUrl": "https://ifyoumind.com/",
+      "twitterTitle": "ifYouMind — Evidence for clearer decisions",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "ifYouMind",
+          "url": "https://ifyoumind.com/",
+          "applicationCategory": "BusinessApplication",
+          "description": "A decision-support web application that organizes source-backed public data into clear comparisons and Decision Briefs.",
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Free",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Pro",
+              "price": "39",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Decision Report",
+              "price": "79",
+              "priceCurrency": "USD"
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "The market analysis for your business plan, done in minutes."
+      ],
+      "bodyCharacters": 3494,
+      "overflow": 0
+    },
+    {
+      "path": "/sample-report?utm_source=seo-audit",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/sample-report?utm_source=seo-audit",
+      "title": "Sample Decision Report | ifYouMind",
+      "description": "See a full ifYouMind Decision Report: a location decision compared across three U.S. cities with cited U.S. Census data, an action plan, and clear limits.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/sample-report"
+      ],
+      "ogUrl": "https://ifyoumind.com/sample-report",
+      "twitterTitle": "Sample Decision Report | ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 427,
+      "overflow": 0
+    },
+    {
+      "path": "/privacy-policy",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/privacy-policy",
+      "title": "Privacy Policy | ifYouMind",
+      "description": "How ifYouMind collects, uses, stores and protects your information.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/privacy-policy"
+      ],
+      "ogUrl": "https://ifyoumind.com/privacy-policy",
+      "twitterTitle": "Privacy Policy | ifYouMind",
+      "schema": [],
+      "h1": [
+        "Privacy Policy"
+      ],
+      "bodyCharacters": 2711,
+      "overflow": 0
+    },
+    {
+      "path": "/terms-of-conduct",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/terms-of-conduct",
+      "title": "Terms of Service | ifYouMind",
+      "description": "The terms that apply when you use ifYouMind.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/terms-of-conduct"
+      ],
+      "ogUrl": "https://ifyoumind.com/terms-of-conduct",
+      "twitterTitle": "Terms of Service | ifYouMind",
+      "schema": [],
+      "h1": [
+        "Terms of Service"
+      ],
+      "bodyCharacters": 1901,
+      "overflow": 0
+    },
+    {
+      "path": "/login",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/login",
+      "title": "ifYouMind",
+      "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [
+        "Pick up where you left off."
+      ],
+      "bodyCharacters": 264,
+      "overflow": 0
+    },
+    {
+      "path": "/register?intent=report",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/register?intent=report",
+      "title": "ifYouMind",
+      "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [
+        "Build your market analysis."
+      ],
+      "bodyCharacters": 599,
+      "overflow": 0
+    },
+    {
+      "path": "/app/result/seo-audit",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/login?returnUrl=%2Fapp%2Fresult%2Fseo-audit",
+      "title": "ifYouMind",
+      "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [
+        "Pick up where you left off."
+      ],
+      "bodyCharacters": 264,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/guides/",
+      "title": "Market research guides | ifYouMind",
+      "description": "Practical, source-cited guides to market research and location decisions for business plans, using free U.S. Census data.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/",
+      "twitterTitle": "Market research guides | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "ifYouMind guides",
+          "url": "https://ifyoumind.com/guides/"
+        }
+      ],
+      "h1": [
+        "Market research guides for your business plan"
+      ],
+      "bodyCharacters": 814,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/market-analysis-business-plan/",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/guides/market-analysis-business-plan/",
+      "title": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/market-analysis-business-plan/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+      "twitterTitle": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+              "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+              "datePublished": "2026-10-11",
+              "dateModified": "2026-10-11",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+                  "item": "https://ifyoumind.com/guides/market-analysis-business-plan/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)"
+      ],
+      "bodyCharacters": 10726,
+      "overflow": 0
+    },
+    {
+      "path": "/seo-audit-missing-page",
+      "javascript": true,
+      "width": 390,
+      "status": 404,
+      "url": "http://127.0.0.1:4304/seo-audit-missing-page",
+      "title": "Page not found | ifYouMind",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "schema": [],
+      "h1": [
+        "Page not found"
+      ],
+      "bodyCharacters": 117,
+      "overflow": 0
+    },
+    {
+      "path": "/",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/",
+      "title": "ifYouMind — Evidence for clearer decisions",
+      "description": "Explore evidence for real decisions. Compare U.S. cities with Census-cited Business reports today; personal decision tools are in development.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/"
+      ],
+      "ogUrl": "https://ifyoumind.com/",
+      "twitterTitle": "ifYouMind — Evidence for clearer decisions",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "ifYouMind",
+          "url": "https://ifyoumind.com/",
+          "applicationCategory": "BusinessApplication",
+          "description": "A decision-support web application that organizes source-backed public data into clear comparisons and Decision Briefs.",
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Free",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Pro",
+              "price": "39",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Decision Report",
+              "price": "79",
+              "priceCurrency": "USD"
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "The market analysis for your business plan, done in minutes."
+      ],
+      "bodyCharacters": 3515,
+      "overflow": 0
+    },
+    {
+      "path": "/sample-report?utm_source=seo-audit",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/sample-report?utm_source=seo-audit",
+      "title": "Sample Decision Report | ifYouMind",
+      "description": "See a full ifYouMind Decision Report: a location decision compared across three U.S. cities with cited U.S. Census data, an action plan, and clear limits.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/sample-report"
+      ],
+      "ogUrl": "https://ifyoumind.com/sample-report",
+      "twitterTitle": "Sample Decision Report | ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 427,
+      "overflow": 0
+    },
+    {
+      "path": "/privacy-policy",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/privacy-policy",
+      "title": "Privacy Policy | ifYouMind",
+      "description": "How ifYouMind collects, uses, stores and protects your information.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/privacy-policy"
+      ],
+      "ogUrl": "https://ifyoumind.com/privacy-policy",
+      "twitterTitle": "Privacy Policy | ifYouMind",
+      "schema": [],
+      "h1": [
+        "Privacy Policy"
+      ],
+      "bodyCharacters": 2711,
+      "overflow": 0
+    },
+    {
+      "path": "/terms-of-conduct",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/terms-of-conduct",
+      "title": "Terms of Service | ifYouMind",
+      "description": "The terms that apply when you use ifYouMind.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/terms-of-conduct"
+      ],
+      "ogUrl": "https://ifyoumind.com/terms-of-conduct",
+      "twitterTitle": "Terms of Service | ifYouMind",
+      "schema": [],
+      "h1": [
+        "Terms of Service"
+      ],
+      "bodyCharacters": 1901,
+      "overflow": 0
+    },
+    {
+      "path": "/login",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/login",
+      "title": "ifYouMind",
+      "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [
+        "Pick up where you left off."
+      ],
+      "bodyCharacters": 264,
+      "overflow": 0
+    },
+    {
+      "path": "/register?intent=report",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/register?intent=report",
+      "title": "ifYouMind",
+      "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [
+        "Build your market analysis."
+      ],
+      "bodyCharacters": 599,
+      "overflow": 0
+    },
+    {
+      "path": "/app/result/seo-audit",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/login?returnUrl=%2Fapp%2Fresult%2Fseo-audit",
+      "title": "ifYouMind",
+      "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [
+        "Pick up where you left off."
+      ],
+      "bodyCharacters": 264,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/guides/",
+      "title": "Market research guides | ifYouMind",
+      "description": "Practical, source-cited guides to market research and location decisions for business plans, using free U.S. Census data.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/",
+      "twitterTitle": "Market research guides | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "ifYouMind guides",
+          "url": "https://ifyoumind.com/guides/"
+        }
+      ],
+      "h1": [
+        "Market research guides for your business plan"
+      ],
+      "bodyCharacters": 814,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/market-analysis-business-plan/",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "http://127.0.0.1:4304/guides/market-analysis-business-plan/",
+      "title": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/market-analysis-business-plan/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+      "twitterTitle": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+              "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+              "datePublished": "2026-10-11",
+              "dateModified": "2026-10-11",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+                  "item": "https://ifyoumind.com/guides/market-analysis-business-plan/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)"
+      ],
+      "bodyCharacters": 10632,
+      "overflow": 0
+    },
+    {
+      "path": "/seo-audit-missing-page",
+      "javascript": true,
+      "width": 1280,
+      "status": 404,
+      "url": "http://127.0.0.1:4304/seo-audit-missing-page",
+      "title": "Page not found | ifYouMind",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "schema": [],
+      "h1": [
+        "Page not found"
+      ],
+      "bodyCharacters": 117,
+      "overflow": 0
+    }
+  ],
+  "resources": [
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "body": "# Allow all web crawlers to access all content\nUser-agent: *\nAllow: /\n\n# Point crawlers to the sitemap\nSitemap: https://ifyoumind.com/sitemap.xml\n"
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n  <url>\n    <loc>https://ifyoumind.com/</loc>\n    <lastmod>2026-10-22</lastmod>\n    <priority>1.0</priority>\n  </url>\n  <url>\n    <loc>https://ifyoumind.com/sample-report</loc>\n    <lastmod>2026-10-14</lastmod>\n    <priority>0.8</priority>\n  </url>\n  <url>\n    <loc>https://ifyoumind.com/privacy-policy</loc>\n    <lastmod>2026-10-02</lastmod>\n    <priority>0.3</priority>\n  </url>\n  <url>\n    <loc>https://ifyoumind.com/terms-of-conduct</loc>\n    <lastmod>2026-10-11</lastmod>\n    <priority>0.3</priority>\n  </url>\n  <url>\n    <loc>https://ifyoumind.com/guides/</loc>\n    <lastmod>2026-10-11</lastmod>\n    <priority>0.6</priority>\n  </url>\n  <url>\n    <loc>https://ifyoumind.com/guides/market-analysis-business-plan/</loc>\n    <lastmod>2026-10-11</lastmod>\n    <priority>0.7</priority>\n  </url>\n</urlset>\n"
+    }
+  ],
+  "redirects": [
+    {
+      "path": "/sample-report/",
+      "status": 301,
+      "location": "/sample-report"
+    },
+    {
+      "path": "/sample-report.html",
+      "status": 301,
+      "location": "/sample-report"
+    },
+    {
+      "path": "/guides",
+      "status": 301,
+      "location": "/guides/"
+    },
+    {
+      "path": "/guides/market-analysis-business-plan",
+      "status": 301,
+      "location": "/guides/market-analysis-business-plan/"
+    }
+  ],
+  "www": null
+}

@@ -1,0 +1,13 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ifYouMind",
+  "url": "https://ifyoumind.com/",
+  "applicationCategory": "BusinessApplication",
+  "description": "A decision-support web application that organizes source-backed public data into clear comparisons and Decision Briefs.",
+  "offers": [
+    { "@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Pro", "price": "39", "priceCurrency": "USD" },
+    { "@type": "Offer", "name": "Decision Report", "price": "79", "priceCurrency": "USD" }
+  ]
+}

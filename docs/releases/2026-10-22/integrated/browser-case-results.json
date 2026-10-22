@@ -1,0 +1,652 @@
+{
+  "codeCommit": "ae029b65861d22a94e737000fe0089f3193063ed",
+  "caseCount": 92,
+  "caseFailures": 0,
+  "runnerStatus": "PASS: 92 passed (3.4m), exit 0; JUnit 92 tests, zero failures/errors/skips",
+  "results": [
+    {
+      "ordinal": 1,
+      "project": "desktop",
+      "test": "e2e/specs/decisions.spec.mjs:5:1 \u203a a verified free user creates a decision through the app and sees the free brief",
+      "duration": "5.4s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 2,
+      "project": "desktop",
+      "test": "e2e/specs/decisions.spec.mjs:27:1 \u203a a returning user finds the saved decision and reopens its report",
+      "duration": "6.0s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 3,
+      "project": "desktop",
+      "test": "e2e/specs/decisions.spec.mjs:36:1 \u203a another account's decision never loads, even with its exact id",
+      "duration": "780ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 4,
+      "project": "desktop",
+      "test": "e2e/specs/decisions.spec.mjs:47:1 \u203a a non-admin account sees no founder metrics on /app/growth",
+      "duration": "1.7s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 5,
+      "project": "desktop",
+      "test": "e2e/specs/decisions.spec.mjs:57:1 \u203a founder metrics warn when the QA exclusion list is missing and keep the counts visible",
+      "duration": "1.7s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 6,
+      "project": "desktop",
+      "test": "e2e/specs/decisions.spec.mjs:69:1 \u203a the fourth free decision this month is refused with a clear message",
+      "duration": "1.3s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 7,
+      "project": "desktop",
+      "test": "e2e/specs/homepage-release.spec.mjs:4:1 \u203a homepage: Life stays informational and Business paths remain usable",
+      "duration": "2.2s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 8,
+      "project": "desktop",
+      "test": "e2e/specs/layout-a11y.spec.mjs:6:3 \u203a public page / is accessible and fits the viewport",
+      "duration": "1.6s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 9,
+      "project": "desktop",
+      "test": "e2e/specs/layout-a11y.spec.mjs:6:3 \u203a public page /login is accessible and fits the viewport",
+      "duration": "1.2s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 10,
+      "project": "desktop",
+      "test": "e2e/specs/layout-a11y.spec.mjs:6:3 \u203a public page /register is accessible and fits the viewport",
+      "duration": "1.2s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 12,
+      "project": "desktop",
+      "test": "e2e/specs/layout-a11y.spec.mjs:14:1 \u203a homepage navigation reaches sign-in and registration",
+      "duration": "797ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 11,
+      "project": "desktop",
+      "test": "e2e/specs/layout-a11y.spec.mjs:6:3 \u203a public page /register?intent=report is accessible and fits the viewport",
+      "duration": "1.2s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 14,
+      "project": "desktop",
+      "test": "e2e/specs/registration.spec.mjs:5:1 \u203a empty and malformed registration shows inline errors and creates no account",
+      "duration": "1.2s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 15,
+      "project": "desktop",
+      "test": "e2e/specs/registration.spec.mjs:26:1 \u203a sign-up verifies by email; the link opened in another browser keeps the $79 intent",
+      "duration": "1.8s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 16,
+      "project": "desktop",
+      "test": "e2e/specs/release-readiness.spec.mjs:12:1 \u203a integrated public pages: pricing, report, guides, accessibility and approval screenshots",
+      "duration": "3.8s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 13,
+      "project": "desktop",
+      "test": "e2e/specs/layout-a11y.spec.mjs:23:1 \u203a signed-in pages are accessible, fit the viewport and the app navigation works",
+      "duration": "7.2s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 17,
+      "project": "desktop",
+      "test": "e2e/specs/release-readiness.spec.mjs:51:1 \u203a paid-report response contract: full report, copy and print controls remain usable",
+      "duration": "1.2s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 18,
+      "project": "desktop",
+      "test": "e2e/specs/release-readiness.spec.mjs:79:3 \u203a checkout link contract: report preserves the offer and report identity",
+      "duration": "1.1s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 19,
+      "project": "desktop",
+      "test": "e2e/specs/return-url.spec.mjs:10:3 \u203a signed out, /app/decide?type=business&intent=report goes to sign-in and remembers the page",
+      "duration": "421ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 21,
+      "project": "desktop",
+      "test": "e2e/specs/return-url.spec.mjs:10:3 \u203a signed out, /app/pricing?offer=report goes to sign-in and remembers the page",
+      "duration": "429ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 22,
+      "project": "desktop",
+      "test": "e2e/specs/return-url.spec.mjs:10:3 \u203a signed out, /app/account goes to sign-in and remembers the page",
+      "duration": "433ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 20,
+      "project": "desktop",
+      "test": "e2e/specs/release-readiness.spec.mjs:79:3 \u203a checkout link contract: pro preserves the offer and report identity",
+      "duration": "1.3s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 23,
+      "project": "desktop",
+      "test": "e2e/specs/return-url.spec.mjs:10:3 \u203a signed out, /app/result/abc123 goes to sign-in and remembers the page",
+      "duration": "546ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 24,
+      "project": "desktop",
+      "test": "e2e/specs/return-url.spec.mjs:18:3 \u203a signed out, /app goes to sign-in without a return URL",
+      "duration": "522ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 25,
+      "project": "desktop",
+      "test": "e2e/specs/return-url.spec.mjs:18:3 \u203a signed out, /app/growth goes to sign-in without a return URL",
+      "duration": "489ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 26,
+      "project": "desktop",
+      "test": "e2e/specs/return-url.spec.mjs:18:3 \u203a signed out, /app/data goes to sign-in without a return URL",
+      "duration": "420ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 27,
+      "project": "desktop",
+      "test": "e2e/specs/return-url.spec.mjs:18:3 \u203a signed out, /app/ask goes to sign-in without a return URL",
+      "duration": "469ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 28,
+      "project": "desktop",
+      "test": "e2e/specs/return-url.spec.mjs:18:3 \u203a signed out, /app/advanced goes to sign-in without a return URL",
+      "duration": "418ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 30,
+      "project": "desktop",
+      "test": "e2e/specs/return-url.spec.mjs:44:1 \u203a unknown query parameters are dropped and the page is kept",
+      "duration": "708ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 29,
+      "project": "desktop",
+      "test": "e2e/specs/return-url.spec.mjs:24:1 \u203a valid return URLs are restored after email sign-in",
+      "duration": "2.3s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 32,
+      "project": "desktop",
+      "test": "e2e/specs/sample-report-mobile.spec.mjs:8:1 \u203a sample report: the answer starts on the first screen, with nothing removed",
+      "duration": "2.3s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 33,
+      "project": "desktop",
+      "test": "e2e/specs/seo-metadata.spec.mjs:3:1 \u203a initial responses protect private routes and give public routes their own metadata",
+      "duration": "247ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 34,
+      "project": "desktop",
+      "test": "e2e/specs/seo-metadata.spec.mjs:29:1 \u203a client navigation removes homepage offers and updates robots and canonical",
+      "duration": "595ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 35,
+      "project": "desktop",
+      "test": "e2e/specs/session.spec.mjs:5:1 \u203a signing out ends the session and protected pages need sign-in again",
+      "duration": "1.2s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 36,
+      "project": "desktop",
+      "test": "e2e/specs/session.spec.mjs:33:1 \u203a an expired session for a disabled account is signed out and sent to sign-in",
+      "duration": "891ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 31,
+      "project": "desktop",
+      "test": "e2e/specs/return-url.spec.mjs:56:1 \u203a hostile or malformed return URLs always land on /app inside the site",
+      "duration": "7.5s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 37,
+      "project": "desktop",
+      "test": "e2e/specs/session.spec.mjs:44:1 \u203a a session with an invalid refresh token is signed out and sent to sign-in",
+      "duration": "874ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 38,
+      "project": "desktop",
+      "test": "e2e/specs/trust-fixes.spec.mjs:6:1 \u203a a free result opens with what the figures show, then the evidence, then the offer",
+      "duration": "846ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 39,
+      "project": "desktop",
+      "test": "e2e/specs/trust-fixes.spec.mjs:34:1 \u203a forgot password sends a reset email without revealing whether the account exists",
+      "duration": "1.0s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 40,
+      "project": "desktop",
+      "test": "e2e/specs/trust-fixes.spec.mjs:54:1 \u203a sign-up links the Terms and the Privacy Policy",
+      "duration": "549ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 41,
+      "project": "desktop",
+      "test": "e2e/specs/trust-fixes.spec.mjs:60:1 \u203a the homepage shows a real sample finding and claims no uploaded-data analysis",
+      "duration": "594ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 42,
+      "project": "desktop",
+      "test": "e2e/specs/verification-gate.spec.mjs:6:3 \u203a unverified account is sent to /verify-email from /app",
+      "duration": "912ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 43,
+      "project": "desktop",
+      "test": "e2e/specs/verification-gate.spec.mjs:6:3 \u203a unverified account is sent to /verify-email from /app/decide?type=business",
+      "duration": "831ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 44,
+      "project": "desktop",
+      "test": "e2e/specs/verification-gate.spec.mjs:6:3 \u203a unverified account is sent to /verify-email from /app/pricing",
+      "duration": "790ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 45,
+      "project": "desktop",
+      "test": "e2e/specs/verification-gate.spec.mjs:6:3 \u203a unverified account is sent to /verify-email from /app/account",
+      "duration": "797ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 46,
+      "project": "desktop",
+      "test": "e2e/specs/verification-gate.spec.mjs:6:3 \u203a unverified account is sent to /verify-email from /app/result/anything",
+      "duration": "678ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 48,
+      "project": "mobile",
+      "test": "e2e/specs/decisions.spec.mjs:27:1 \u203a a returning user finds the saved decision and reopens its report",
+      "duration": "1.9s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 47,
+      "project": "mobile",
+      "test": "e2e/specs/decisions.spec.mjs:5:1 \u203a a verified free user creates a decision through the app and sees the free brief",
+      "duration": "2.3s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 49,
+      "project": "mobile",
+      "test": "e2e/specs/decisions.spec.mjs:36:1 \u203a another account's decision never loads, even with its exact id",
+      "duration": "768ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 50,
+      "project": "mobile",
+      "test": "e2e/specs/decisions.spec.mjs:47:1 \u203a a non-admin account sees no founder metrics on /app/growth",
+      "duration": "982ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 51,
+      "project": "mobile",
+      "test": "e2e/specs/decisions.spec.mjs:57:1 \u203a founder metrics warn when the QA exclusion list is missing and keep the counts visible",
+      "duration": "1.0s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 52,
+      "project": "mobile",
+      "test": "e2e/specs/decisions.spec.mjs:69:1 \u203a the fourth free decision this month is refused with a clear message",
+      "duration": "1.3s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 53,
+      "project": "mobile",
+      "test": "e2e/specs/homepage-release.spec.mjs:4:1 \u203a homepage: Life stays informational and Business paths remain usable",
+      "duration": "1.6s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 54,
+      "project": "mobile",
+      "test": "e2e/specs/layout-a11y.spec.mjs:6:3 \u203a public page / is accessible and fits the viewport",
+      "duration": "1.4s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 55,
+      "project": "mobile",
+      "test": "e2e/specs/layout-a11y.spec.mjs:6:3 \u203a public page /login is accessible and fits the viewport",
+      "duration": "1.2s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 56,
+      "project": "mobile",
+      "test": "e2e/specs/layout-a11y.spec.mjs:6:3 \u203a public page /register is accessible and fits the viewport",
+      "duration": "1.1s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 57,
+      "project": "mobile",
+      "test": "e2e/specs/layout-a11y.spec.mjs:6:3 \u203a public page /register?intent=report is accessible and fits the viewport",
+      "duration": "1.2s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 58,
+      "project": "mobile",
+      "test": "e2e/specs/layout-a11y.spec.mjs:14:1 \u203a homepage navigation reaches sign-in and registration",
+      "duration": "680ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 60,
+      "project": "mobile",
+      "test": "e2e/specs/registration.spec.mjs:5:1 \u203a empty and malformed registration shows inline errors and creates no account",
+      "duration": "957ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 61,
+      "project": "mobile",
+      "test": "e2e/specs/registration.spec.mjs:26:1 \u203a sign-up verifies by email; the link opened in another browser keeps the $79 intent",
+      "duration": "1.8s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 59,
+      "project": "mobile",
+      "test": "e2e/specs/layout-a11y.spec.mjs:23:1 \u203a signed-in pages are accessible, fit the viewport and the app navigation works",
+      "duration": "7.2s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 62,
+      "project": "mobile",
+      "test": "e2e/specs/release-readiness.spec.mjs:12:1 \u203a integrated public pages: pricing, report, guides, accessibility and approval screenshots",
+      "duration": "4.4s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 63,
+      "project": "mobile",
+      "test": "e2e/specs/release-readiness.spec.mjs:79:3 \u203a checkout link contract: report preserves the offer and report identity",
+      "duration": "1.2s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 64,
+      "project": "mobile",
+      "test": "e2e/specs/release-readiness.spec.mjs:51:1 \u203a paid-report response contract: full report, copy and print controls remain usable",
+      "duration": "1.3s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 66,
+      "project": "mobile",
+      "test": "e2e/specs/return-url.spec.mjs:10:3 \u203a signed out, /app/decide?type=business&intent=report goes to sign-in and remembers the page",
+      "duration": "480ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 67,
+      "project": "mobile",
+      "test": "e2e/specs/return-url.spec.mjs:10:3 \u203a signed out, /app/pricing?offer=report goes to sign-in and remembers the page",
+      "duration": "484ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 65,
+      "project": "mobile",
+      "test": "e2e/specs/release-readiness.spec.mjs:79:3 \u203a checkout link contract: pro preserves the offer and report identity",
+      "duration": "1.3s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 68,
+      "project": "mobile",
+      "test": "e2e/specs/return-url.spec.mjs:10:3 \u203a signed out, /app/account goes to sign-in and remembers the page",
+      "duration": "473ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 69,
+      "project": "mobile",
+      "test": "e2e/specs/return-url.spec.mjs:10:3 \u203a signed out, /app/result/abc123 goes to sign-in and remembers the page",
+      "duration": "599ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 70,
+      "project": "mobile",
+      "test": "e2e/specs/return-url.spec.mjs:18:3 \u203a signed out, /app goes to sign-in without a return URL",
+      "duration": "523ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 71,
+      "project": "mobile",
+      "test": "e2e/specs/return-url.spec.mjs:18:3 \u203a signed out, /app/growth goes to sign-in without a return URL",
+      "duration": "535ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 72,
+      "project": "mobile",
+      "test": "e2e/specs/return-url.spec.mjs:18:3 \u203a signed out, /app/data goes to sign-in without a return URL",
+      "duration": "475ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 73,
+      "project": "mobile",
+      "test": "e2e/specs/return-url.spec.mjs:18:3 \u203a signed out, /app/ask goes to sign-in without a return URL",
+      "duration": "512ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 74,
+      "project": "mobile",
+      "test": "e2e/specs/return-url.spec.mjs:18:3 \u203a signed out, /app/advanced goes to sign-in without a return URL",
+      "duration": "484ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 76,
+      "project": "mobile",
+      "test": "e2e/specs/return-url.spec.mjs:44:1 \u203a unknown query parameters are dropped and the page is kept",
+      "duration": "799ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 75,
+      "project": "mobile",
+      "test": "e2e/specs/return-url.spec.mjs:24:1 \u203a valid return URLs are restored after email sign-in",
+      "duration": "2.3s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 78,
+      "project": "mobile",
+      "test": "e2e/specs/sample-report-mobile.spec.mjs:8:1 \u203a sample report: the answer starts on the first screen, with nothing removed",
+      "duration": "3.1s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 79,
+      "project": "mobile",
+      "test": "e2e/specs/seo-metadata.spec.mjs:3:1 \u203a initial responses protect private routes and give public routes their own metadata",
+      "duration": "253ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 80,
+      "project": "mobile",
+      "test": "e2e/specs/seo-metadata.spec.mjs:29:1 \u203a client navigation removes homepage offers and updates robots and canonical",
+      "duration": "720ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 81,
+      "project": "mobile",
+      "test": "e2e/specs/session.spec.mjs:5:1 \u203a signing out ends the session and protected pages need sign-in again",
+      "duration": "1.3s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 82,
+      "project": "mobile",
+      "test": "e2e/specs/session.spec.mjs:33:1 \u203a an expired session for a disabled account is signed out and sent to sign-in",
+      "duration": "1.1s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 77,
+      "project": "mobile",
+      "test": "e2e/specs/return-url.spec.mjs:56:1 \u203a hostile or malformed return URLs always land on /app inside the site",
+      "duration": "8.4s",
+      "status": "passed"
+    },
+    {
+      "ordinal": 83,
+      "project": "mobile",
+      "test": "e2e/specs/session.spec.mjs:44:1 \u203a a session with an invalid refresh token is signed out and sent to sign-in",
+      "duration": "893ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 84,
+      "project": "mobile",
+      "test": "e2e/specs/trust-fixes.spec.mjs:6:1 \u203a a free result opens with what the figures show, then the evidence, then the offer",
+      "duration": "738ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 85,
+      "project": "mobile",
+      "test": "e2e/specs/trust-fixes.spec.mjs:34:1 \u203a forgot password sends a reset email without revealing whether the account exists",
+      "duration": "828ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 86,
+      "project": "mobile",
+      "test": "e2e/specs/trust-fixes.spec.mjs:54:1 \u203a sign-up links the Terms and the Privacy Policy",
+      "duration": "420ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 87,
+      "project": "mobile",
+      "test": "e2e/specs/trust-fixes.spec.mjs:60:1 \u203a the homepage shows a real sample finding and claims no uploaded-data analysis",
+      "duration": "594ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 88,
+      "project": "mobile",
+      "test": "e2e/specs/verification-gate.spec.mjs:6:3 \u203a unverified account is sent to /verify-email from /app",
+      "duration": "993ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 89,
+      "project": "mobile",
+      "test": "e2e/specs/verification-gate.spec.mjs:6:3 \u203a unverified account is sent to /verify-email from /app/decide?type=business",
+      "duration": "953ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 90,
+      "project": "mobile",
+      "test": "e2e/specs/verification-gate.spec.mjs:6:3 \u203a unverified account is sent to /verify-email from /app/pricing",
+      "duration": "794ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 91,
+      "project": "mobile",
+      "test": "e2e/specs/verification-gate.spec.mjs:6:3 \u203a unverified account is sent to /verify-email from /app/account",
+      "duration": "908ms",
+      "status": "passed"
+    },
+    {
+      "ordinal": 92,
+      "project": "mobile",
+      "test": "e2e/specs/verification-gate.spec.mjs:6:3 \u203a unverified account is sent to /verify-email from /app/result/anything",
+      "duration": "823ms",
+      "status": "passed"
+    }
+  ]
+}

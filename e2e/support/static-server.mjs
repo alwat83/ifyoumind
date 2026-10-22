@@ -1,4 +1,4 @@
-// Serves the local (demo-project) build with the SPA fallback Firebase Hosting uses.
+// Serves the local build with the public clean URLs and private shell used by Firebase Hosting.
 // Binds to 127.0.0.1 only. Usage: node e2e/support/static-server.mjs [port]
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
@@ -16,8 +16,10 @@ async function file(path) {
 createServer(async (req, res) => {
   const url = new URL(req.url, 'http://127.0.0.1');
   const requested = normalize(join(root, decodeURIComponent(url.pathname)));
-  const target = (requested.startsWith(root) && await file(requested)) ||
-    await file(join(requested, 'index.html')) || join(root, 'index.html');
-  res.writeHead(200, { 'content-type': types[extname(target)] || 'application/octet-stream', 'cache-control': 'no-store' });
-  res.end(await readFile(target));
+  if (!requested.startsWith(`${root}/`) && requested !== root) { res.writeHead(404); res.end(); return; }
+  const privateRoute = /^\/(?:login|register|verify-email)\/?$/.test(url.pathname) || /^\/app(?:\/|$)/.test(url.pathname);
+  const target = await file(requested) || await file(`${requested}.html`) ||
+    await file(join(requested, 'index.html')) || (privateRoute ? join(root, 'app-shell.html') : null);
+  res.writeHead(target ? 200 : 404, { 'content-type': types[extname(target || '404.html')] || 'application/octet-stream', 'cache-control': 'no-store' });
+  res.end(await readFile(target || join(root, '404.html')));
 }).listen(port, '127.0.0.1', () => console.log(`QA static server on http://127.0.0.1:${port}`));

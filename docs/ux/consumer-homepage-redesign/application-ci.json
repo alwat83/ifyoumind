@@ -1,0 +1,210 @@
+{
+  "conclusion": "success",
+  "headSha": "802385af996fe3a74f493349dfa710a062d24e03",
+  "jobs": [
+    {
+      "completedAt": "2026-10-22T23:41:25Z",
+      "conclusion": "success",
+      "databaseId": 120146712266,
+      "name": "qa",
+      "startedAt": "2026-10-22T23:23:47Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-22T23:23:50Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-22T23:23:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:23:52Z",
+          "conclusion": "success",
+          "name": "Check out repository",
+          "number": 2,
+          "startedAt": "2026-10-22T23:23:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:23:57Z",
+          "conclusion": "success",
+          "name": "Use Node 20",
+          "number": 3,
+          "startedAt": "2026-10-22T23:23:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:23:57Z",
+          "conclusion": "success",
+          "name": "Use Java 21 (Firestore emulator)",
+          "number": 4,
+          "startedAt": "2026-10-22T23:23:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:23:57Z",
+          "conclusion": "success",
+          "name": "Refuse to run with cloud credentials",
+          "number": 5,
+          "startedAt": "2026-10-22T23:23:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:23:57Z",
+          "conclusion": "success",
+          "name": "Cache Firebase emulator downloads",
+          "number": 6,
+          "startedAt": "2026-10-22T23:23:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:26:11Z",
+          "conclusion": "success",
+          "name": "Install app dependencies",
+          "number": 7,
+          "startedAt": "2026-10-22T23:23:57Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:26:15Z",
+          "conclusion": "success",
+          "name": "Install functions dependencies",
+          "number": 8,
+          "startedAt": "2026-10-22T23:26:11Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:26:18Z",
+          "conclusion": "success",
+          "name": "Build functions",
+          "number": 9,
+          "startedAt": "2026-10-22T23:26:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:26:22Z",
+          "conclusion": "success",
+          "name": "Functions unit tests",
+          "number": 10,
+          "startedAt": "2026-10-22T23:26:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:26:25Z",
+          "conclusion": "success",
+          "name": "Fast web tests (including QA safety rails)",
+          "number": 11,
+          "startedAt": "2026-10-22T23:26:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:26:35Z",
+          "conclusion": "success",
+          "name": "Build the local (emulator) app bundle",
+          "number": 12,
+          "startedAt": "2026-10-22T23:26:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:37:02Z",
+          "conclusion": "success",
+          "name": "Install Chromium for Playwright",
+          "number": 13,
+          "startedAt": "2026-10-22T23:26:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:37:12Z",
+          "conclusion": "success",
+          "name": "Firestore rules tests",
+          "number": 14,
+          "startedAt": "2026-10-22T23:37:02Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:37:30Z",
+          "conclusion": "success",
+          "name": "Organization tests",
+          "number": 15,
+          "startedAt": "2026-10-22T23:37:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:37:51Z",
+          "conclusion": "success",
+          "name": "Commerce and entitlement tests",
+          "number": 16,
+          "startedAt": "2026-10-22T23:37:30Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:39:10Z",
+          "conclusion": "success",
+          "name": "QA fixture and access tests",
+          "number": 17,
+          "startedAt": "2026-10-22T23:37:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:41:16Z",
+          "conclusion": "success",
+          "name": "Authenticated browser tests (desktop and mobile)",
+          "number": 18,
+          "startedAt": "2026-10-22T23:39:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:41:16Z",
+          "conclusion": "skipped",
+          "name": "Upload Playwright report",
+          "number": 19,
+          "startedAt": "2026-10-22T23:41:16Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:41:19Z",
+          "conclusion": "success",
+          "name": "Post Cache Firebase emulator downloads",
+          "number": 35,
+          "startedAt": "2026-10-22T23:41:16Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:41:19Z",
+          "conclusion": "success",
+          "name": "Post Use Java 21 (Firestore emulator)",
+          "number": 36,
+          "startedAt": "2026-10-22T23:41:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:41:22Z",
+          "conclusion": "success",
+          "name": "Post Use Node 20",
+          "number": 37,
+          "startedAt": "2026-10-22T23:41:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:41:23Z",
+          "conclusion": "success",
+          "name": "Post Check out repository",
+          "number": 38,
+          "startedAt": "2026-10-22T23:41:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-22T23:41:23Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 39,
+          "startedAt": "2026-10-22T23:41:23Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/alwat83/ifyoumind/actions/runs/39871481866/job/120146712266"
+    }
+  ],
+  "status": "completed"
+}

@@ -60,3 +60,13 @@ Founder must explicitly approve each release scope and automatic master-push dep
 ## Rollback readiness
 
 Current live baseline was independently read as Hosting version `f91311de8f35458e`, release `1792026155391000` (October 15); refresh before any release. The integrated [decision/rollback brief](../../releases/2026-10-22/integrated/FINAL_DECISION.md) records the approval-gated Hosting clone and wider deployment considerations. New homepage changes are isolated to its source/test/metadata/documentation commit(s), so prepare a reviewed source revert and retest before any later authorized master push. A Hosting rollback does not roll back Functions/rules. No rollback command executed; it requires separate founder authorization.
+
+
+## Exact application commit and remote QA
+
+Draft [PR #64](https://github.com/alwat83/ifyoumind/pull/64), OPEN/DRAFT/MERGEABLE at observation. Application/test/visual snapshot **`802385af996fe3a74f493349dfa710a062d24e03`**: [manual emulator QA SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/39871481866); [job/step evidence](application-ci.json). Linux CI independently completed Functions units, fast tests, local build, rules, organizations, commerce/entitlements, fixture/usage limits and all **98 desktop/mobile browser cases**. This record-only follow-up does not change application/test source. Its final head is rerun separately; consult the PR's final exact-SHA outcome before approval. Master-targeted automatic launch-build does not run for the stacked #62 base; production build and bundle guard were verified locally. No deployment or expanded approval.
+
+
+**Measured presentation change:** paired CSS-pixel full-page captures are desktop 5525 → 4495px (18.6% shorter) and mobile 9085 → 6909px (24.0% shorter). The new primary exploration and public-sample links are visible in the 390×844 first-screen capture; the old paired capture did not show those hero CTAs. This measures rendered presentation, not user comprehension or conversion lift.
+
+Remote backend counts: Functions72, fast87, rules7, organizations5, commerce29 passed; fixture/access25 cases =24PASS +1existing intentional SKIP, zero failures. That skipped coverage is not claimed as executed; separate browser verification-gate checks passed.

@@ -15,6 +15,12 @@ async function file(path) {
 
 createServer(async (req, res) => {
   const url = new URL(req.url, 'http://127.0.0.1');
+  const appSlash = url.pathname.match(/^\/(sample-report|privacy-policy|terms-of-conduct|login|register|verify-email|app)\/+$/);
+  const guideBare = url.pathname === '/guides' || /^\/guides\/[a-z0-9]+(?:-[a-z0-9]+)*$/.test(url.pathname);
+  if (appSlash || guideBare) {
+    res.writeHead(301, { location: `${appSlash ? `/${appSlash[1]}` : `${url.pathname}/`}${url.search}` });
+    res.end(); return;
+  }
   const requested = normalize(join(root, decodeURIComponent(url.pathname)));
   if (!requested.startsWith(`${root}/`) && requested !== root) { res.writeHead(404); res.end(); return; }
   const privateRoute = /^\/(?:login|register|verify-email)\/?$/.test(url.pathname) || /^\/app(?:\/|$)/.test(url.pathname);

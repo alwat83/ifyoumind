@@ -17,6 +17,8 @@ Read-only Chrome audit: 10 paths × 2 widths (390/1280) × JavaScript on/off = 4
 
 `src/public-pages.json` remains the single public route/metadata registry. `scripts/build-seo.js` runs after Angular for production and local builds. This generates **initial head metadata, not server-rendered body content**. No new dependencies. `firebase.json` now uses clean URLs plus explicit private-shell rewrites; genuine unknown paths can return 404. Reserved Firebase Auth endpoints retain existing header rules. Production workflow already invokes `npm run build` and receives the generated artifacts.
 
+Explicit 301 rules normalize public/auth app entry trailing slashes and retain guide directory canonicals. A Hosting-emulator probe caught `/sample-report/` returning 404 under clean URLs; this was corrected before release review. `.html` URLs redirect to clean URLs. Bare guide URLs redirect to their trailing-slash canonicals; asset paths with extensions are excluded from that rule.
+
 ## Checks and limitations
 
 - Fast web tests: 86/86 PASS, including initial metadata, noindex shell, 404 artifact, deterministic sitemap and routing/header assertions.

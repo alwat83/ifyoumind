@@ -1,0 +1,69 @@
+{
+  "observedAt": "2026-10-22T20:26:31.587Z",
+  "pr60": {
+    "baseRefOid": "bb6744b330378e63506cb90334098e6dfe2b86ff",
+    "headRefOid": "2eb17081f2feaa40163255a6c7de5a57f67f76b7",
+    "isDraft": true,
+    "mergeable": "MERGEABLE",
+    "number": 60,
+    "state": "OPEN",
+    "statusCheckRollup": [
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-22T18:57:39Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/alwat83/ifyoumind/actions/runs/39834974902/job/120020770667",
+        "name": "qa",
+        "startedAt": "2026-10-22T18:51:07Z",
+        "status": "COMPLETED",
+        "workflowName": "Authenticated QA (emulators)"
+      },
+      {
+        "__typename": "CheckRun",
+        "completedAt": "2026-10-22T18:52:27Z",
+        "conclusion": "SUCCESS",
+        "detailsUrl": "https://github.com/alwat83/ifyoumind/actions/runs/39834974901/job/120020770174",
+        "name": "build",
+        "startedAt": "2026-10-22T18:51:07Z",
+        "status": "COMPLETED",
+        "workflowName": "Launch build check"
+      }
+    ],
+    "url": "https://github.com/alwat83/ifyoumind/pull/60"
+  },
+  "pr62": {
+    "baseRefName": "codex/release-consumer-seo-20261022",
+    "headRefOid": "91b5fb71e093f38ca9c7cb6e05b773c6446b866a",
+    "isDraft": true,
+    "mergeable": "MERGEABLE",
+    "number": 62,
+    "state": "OPEN",
+    "url": "https://github.com/alwat83/ifyoumind/pull/62"
+  },
+  "pr62ExactHeadManualQa": {
+    "conclusion": "success",
+    "headSha": "91b5fb71e093f38ca9c7cb6e05b773c6446b866a",
+    "status": "completed",
+    "url": "https://github.com/alwat83/ifyoumind/actions/runs/39840028543"
+  },
+  "hosting": {
+    "project": "ifyoumind-473fe",
+    "site": "ifyoumind-473fe",
+    "domains": [
+      {
+        "domainName": "ifyoumind.com",
+        "status": "DOMAIN_ACTIVE"
+      },
+      {
+        "domainName": "www.ifyoumind.com",
+        "status": "DOMAIN_ACTIVE"
+      }
+    ],
+    "release": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/channels/live/releases/1792026155391000",
+    "releaseTime": "2026-10-15T01:02:35.391Z",
+    "version": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/versions/f91311de8f35458e",
+    "status": "FINALIZED"
+  },
+  "authorization": "NONE; no merge/deploy/Stripe/customer communication approved",
+  "recommendation": "GO for founder review at exact #60 head, execution NO-GO until founder approval"
+}

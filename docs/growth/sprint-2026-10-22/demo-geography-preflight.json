@@ -1,0 +1,58 @@
+{
+  "observedAt": "2026-10-22T20:27:18.182Z",
+  "readOnly": true,
+  "source": "Public Census ACS endpoints; no app project/cache/payment created",
+  "results": [
+    {
+      "prospectId": "P01",
+      "state": "48",
+      "sourceUrls": [
+        "https://api.census.gov/data/2024/acs/acs5?get=NAME,B01003_001E,B19013_001E,B25077_001E&for=place:*&in=state:48",
+        "https://api.census.gov/data/2019/acs/acs5?get=NAME,B01003_001E,B19013_001E,B25077_001E&for=place:*&in=state:48"
+      ],
+      "status": "UNVERIFIED",
+      "error": "Unexpected token '<', \"<html styl\"... is not valid JSON"
+    },
+    {
+      "prospectId": "P02",
+      "state": "37",
+      "sourceUrls": [
+        "https://api.census.gov/data/2024/acs/acs5?get=NAME,B01003_001E,B19013_001E,B25077_001E&for=place:*&in=state:37",
+        "https://api.census.gov/data/2019/acs/acs5?get=NAME,B01003_001E,B19013_001E,B25077_001E&for=place:*&in=state:37"
+      ],
+      "status": "UNVERIFIED",
+      "error": "Unexpected token '<', \"<html styl\"... is not valid JSON"
+    },
+    {
+      "prospectId": "P03",
+      "state": "45",
+      "sourceUrls": [
+        "https://api.census.gov/data/2024/acs/acs5?get=NAME,B01003_001E,B19013_001E,B25077_001E&for=place:*&in=state:45",
+        "https://api.census.gov/data/2019/acs/acs5?get=NAME,B01003_001E,B19013_001E,B25077_001E&for=place:*&in=state:45"
+      ],
+      "status": "UNVERIFIED",
+      "error": "Unexpected token '<', \"<html styl\"... is not valid JSON"
+    },
+    {
+      "prospectId": "P04",
+      "state": "06",
+      "sourceUrls": [
+        "https://api.census.gov/data/2024/acs/acs5?get=NAME,B01003_001E,B19013_001E,B25077_001E&for=place:*&in=state:06",
+        "https://api.census.gov/data/2019/acs/acs5?get=NAME,B01003_001E,B19013_001E,B25077_001E&for=place:*&in=state:06"
+      ],
+      "status": "UNVERIFIED",
+      "error": "Unexpected token '<', \"<html styl\"... is not valid JSON"
+    },
+    {
+      "prospectId": "P05",
+      "state": "42",
+      "sourceUrls": [
+        "https://api.census.gov/data/2024/acs/acs5?get=NAME,B01003_001E,B19013_001E,B25077_001E&for=place:*&in=state:42",
+        "https://api.census.gov/data/2019/acs/acs5?get=NAME,B01003_001E,B19013_001E,B25077_001E&for=place:*&in=state:42"
+      ],
+      "status": "UNVERIFIED",
+      "error": "Unexpected token '<', \"<html styl\"... is not valid JSON"
+    }
+  ],
+  "clarification": "Keyless requests redirected to https://api.census.gov/data/missing_key.html; production uses configured server-side key, which was not retrieved. Custom-city coverage not verified; this is not an app regression finding."
+}

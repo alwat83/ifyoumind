@@ -191,3 +191,11 @@ All development so far: **OpenAI only**, per founder confirmation. Other AI prov
 - [Notion Metric/Evidence Contracts](https://app.notion.com/p/b92c9bc5d8fd832aa62281b47e427829)
 
 **Maintenance:** Keep this record current after meaningful releases; preserve historical milestones and distinguish planned, committed, deployed and verified. Never commit credentials or personal customer data.
+
+## Engineering handoff — 2026-10-22 coordinated consumer release review
+
+**Provider/agent:** OpenAI / Codex. **Status: in progress**, local fixes and validation on `codex/life-comparison-review`, based on draft PR #55 (`3401d29`). Master observed at `bb6744b`. [Detailed review, release gates and rollback](docs/releases/2026-10-22/review.md).
+
+Fixed null/empty numeric handling and restricted experimental comparison to explicit local builds. Added 10 passing browser component tests and responsive smoke checks. PR #54 builds; #54 plus #49 applies cleanly and builds. Both reviewed UI branches pass 82 fast tests; changed Life files pass ESLint. Full lint has 91 existing errors; default Angular specs have legacy compilation failures. Original PR heads #49/#50/#54/#55 have successful GitHub build and emulator-QA runs; local follow-up has no CI evidence yet. No merge, deployment, Stripe change or production-verification claim. Issues #51/#52 remain incomplete; founder approval required for any merge/deployment and public financial outputs.
+
+Current Notion hub from repository instructions returned NOT_FOUND; older supplied hub was read but not modified. Notion sync remains blocked on correct accessible destination. Existing checkout sitemap change was preserved. Screenshots and verification limits are recorded in the detailed review.

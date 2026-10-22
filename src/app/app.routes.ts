@@ -1,3 +1,4 @@
+import { useLocalEmulators } from './firebase.config';
 import { Routes } from '@angular/router';
 import { authGuard } from './auth.guard';
 import { RegisterComponent } from './auth/register/register.component';
@@ -11,6 +12,11 @@ export const routes:Routes=[
     path:'',
     loadComponent:()=>import('./intelligence/public-landing.component').then(m=>m.PublicLandingComponent),
   },
+  // Experimental calculations are available only in the explicit local build.
+  ...(useLocalEmulators ? [{
+    path:'life/quick-compare',
+    loadComponent:()=>import('./life/life-quick-compare.component').then(m=>m.LifeQuickCompareComponent),
+  }] : []),
   {
     path:'sample-report',
     data:{sample:true},

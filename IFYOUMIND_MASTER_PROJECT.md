@@ -1,6 +1,6 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-10-10  
+**Updated:** 2026-10-22
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3f5c9bc5d8fd805ebaa6eae586db23bf  
@@ -191,3 +191,16 @@ All development so far: **OpenAI only**, per founder confirmation. Other AI prov
 - [Notion Metric/Evidence Contracts](https://app.notion.com/p/b92c9bc5d8fd832aa62281b47e427829)
 
 **Maintenance:** Keep this record current after meaningful releases; preserve historical milestones and distinguish planned, committed, deployed and verified. Never commit credentials or personal customer data.
+
+## Current development roadmap — founder directive, 2026-10-22
+
+**GitHub and repository documentation are the source of truth for development**, per the founder's latest instruction; this supersedes older Notion-first coordination language. Preserve the Business funnel and founder-confirmed working reports, PDFs and purchases. No merge or deployment without founder approval. Experimental Life outputs remain local-only and are not part of the public homepage release.
+
+1. **Completed locally / CI verified:** PR #54 / #55 verification and combined #49 / #54 mobile regression (16/16 browser tests). Record exact heads, CI, emulator tests and screenshots in `docs/releases/2026-10-22/verification.md`.
+2. **Planned, next after verification:** [Issue #56 — SEO growth foundation](https://github.com/alwat83/ifyoumind/issues/56). Audit raw and rendered metadata, indexability, sitemap generation, structured data and actual legacy `SeoService` usage. Fix verified defects with regression coverage on a separate branch and draft PR; keep recommendations and missing measurement access distinct from confirmed problems.
+3. **Planned:** decision-intent content for job offers, relocation, business locations and flexible data analysis, on a separate content branch and draft PR. Cite sources, use illustrative examples honestly and keep working Business CTAs. Do not link to or advertise unfinished Life calculations as available.
+4. **Founder gate:** review exact PR heads and release evidence before any merge/deployment. After separately authorized deployment, record deployment SHA/run and read-only live verification.
+
+**Notion synchronization history (resolved by founder link):** repository hub `3f5c9bc5d8fd805ebaa6eae586db23bf` returns NOT_FOUND. Searches for "ifYouMind Hub", "Revenue Growth Command Center" and "Revenue Growth" found only October 10 historical copies (`3eb02474659c81ecba55cc4eed184a71`, `fe202474659c8262827c818dd3039dea`, `d6602474659c83bca81c815bec5ccbad`) and `ifYouMind Transfer` (`3f502474659c80349a0ccd19484bcca2`). Fetches verified these accessible IDs and historical content, but did not establish the current personal-workspace hub. No pages were created or overwritten. Continue using GitHub and this repository record until the current hub is accessible.
+
+Founder subsequently supplied and confirmed https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71 as the current destination. Its accessibility and ID were verified; the development handoff and #56 roadmap were appended successfully, preserving history. Use this URL going forward.

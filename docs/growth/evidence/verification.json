@@ -1,0 +1,55 @@
+{
+  "observedDate": "2026-10-22",
+  "implementationCommit": "9a1445d2a4cc34394849d8148cc9cf0ebc305eba",
+  "productionBuild": "PASS",
+  "localBuild": "PASS",
+  "productionBundleGuard": "PASS",
+  "fastWebTests": {
+    "passed": 87,
+    "failed": 0
+  },
+  "focusedSamplePrint": {
+    "passed": 2,
+    "failed": 0,
+    "exitCode": 0,
+    "durationSeconds": 6.9,
+    "projects": [
+      "desktop 1280x800",
+      "mobile 390x844"
+    ],
+    "coverage": [
+      "no registration",
+      "keyboard print invocation stub",
+      "preserved paid/free CTAs",
+      "print-media report content",
+      "overflow",
+      "WCAG A/AA axe"
+    ]
+  },
+  "fullLocalBrowserRun": {
+    "status": "INCOMPLETE",
+    "desktopCasesObservedPassed": 47,
+    "reason": "stalled between projects; task process stopped, not counted as suite pass"
+  },
+  "fullEslint": {
+    "status": "FAIL",
+    "errors": 91,
+    "identicalToCleanMasterSignatures": true,
+    "newErrors": 0
+  },
+  "angularGlobalSpecs": {
+    "status": "FAIL in verified #60 baseline; not rerun on HTML/SCSS growth change",
+    "legacyCompilerDiagnostics": 11
+  },
+  "limitations": [
+    "No native PDF export",
+    "No real transaction",
+    "No physical iOS/Safari or manual screen reader",
+    "No measured conversion lift or revenue",
+    "Final remote CI recorded in PR and Notion"
+  ],
+  "screenshots": {
+    "sample-print-mobile.png": "0d5e23731df61cd96ef83ad9ea14c341eda90e2f3d05720d5a01591df976155b",
+    "sample-print-desktop.png": "3590c084652346a2386a52d8e93de24fa7314a94a2503e1cf41cbef10be1b9dc"
+  }
+}

@@ -10,8 +10,8 @@ interface Offer { city: string; salary: number; housing: number; commute: number
   imports: [CommonModule, FormsModule, RouterLink],
   template: `
     <main class="life">
-      <nav><a routerLink="/">← ifYouMind</a><span>Life · Early preview</span></nav>
-      <header><p class="eyebrow">A small decision tool, built for real life</p><h1>Which job offer fits your life?</h1>
+      <nav><a routerLink="/">← ifYouMind</a><span>Life · Local development prototype</span></nav>
+      <header><p class="eyebrow">Illustrative inputs · Experimental prototype</p><h1>Which job offer fits your life?</h1>
       <p>Compare the numbers you know, then decide which trade-offs matter to you. No account needed.</p></header>
       <div class="notice" role="note">This is a simple, illustrative comparison using only numbers you enter. It does not estimate taxes, insurance, other living expenses, or local prices. Nothing is saved or sent to a server.</div>
       <section class="offers" aria-label="Enter two job offers">
@@ -59,7 +59,7 @@ interface Offer { city: string; salary: number; housing: number; commute: number
     input:focus-visible,a:focus-visible{outline:3px solid #6366f1;outline-offset:2px}
     .result{margin-top:20px}.result h2{font-size:30px;letter-spacing:-.04em}
     .numbers article{background:#f5f7ff;padding:20px;border-radius:14px}
-    .numbers h3{margin:0 0 12px}.numbers strong{font-size:clamp(25px,4vw,40px);letter-spacing:-.04em}.numbers small{font-size:14px;letter-spacing:normal}
+    .numbers h3{margin:0 0 12px;overflow-wrap:anywhere}.numbers strong{font-size:clamp(25px,4vw,40px);letter-spacing:-.04em}.numbers small{font-size:14px;letter-spacing:normal}
     .numbers p,.caveat{font-size:13px;line-height:1.5;color:#5f6b7d}
     .numbers span{font-size:14px}.insight{font-weight:750;margin-top:22px}
     .caveat{border-top:1px solid #e5e7eb;padding-top:15px}
@@ -72,8 +72,8 @@ export class LifeQuickCompareComponent {
     {city:'Offer A',salary:80000,housing:1800,commute:25},
     {city:'Offer B',salary:90000,housing:2500,commute:40}
   ]);
-  setOffer(index:number,key:keyof Offer,value:string|number):void {
-    this.offers.update(items => items.map((item,i) => i===index ? {...item,[key]:key==='city'?String(value):value === '' ? NaN : Number(value)} : item));
+  setOffer(index:number,key:keyof Offer,value:string|number|null):void {
+    this.offers.update(items => items.map((item,i) => i===index ? {...item,[key]:key==='city'?String(value):value === '' || value === null ? NaN : Number(value)} : item));
   }
   readonly valid = computed(() => this.offers().every(o => Number.isFinite(o.salary) && o.salary>=0 && o.salary<=100000000 && Number.isFinite(o.housing) && o.housing>=0 && o.housing<=1000000 && Number.isFinite(o.commute) && o.commute>=0 && o.commute<=1440));
   readonly leftovers = computed(() => this.offers().map(o => o.salary/12-o.housing));

@@ -1,6 +1,6 @@
 {
-  "observedAt": "2026-10-22T17:44:16.491Z",
-  "base": "http://127.0.0.1:4321",
+  "observedAt": "2026-10-22T18:42:35.442Z",
+  "base": "http://127.0.0.1:4333",
   "externalRequestsBlocked": true,
   "observations": [
     {
@@ -8,7 +8,7 @@
       "javascript": false,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/",
+      "url": "http://127.0.0.1:4333/",
       "title": "ifYouMind — Evidence for clearer decisions",
       "description": "Explore evidence for real decisions. Compare U.S. cities with Census-cited Business reports today; personal decision tools are in development.",
       "robots": [
@@ -58,7 +58,7 @@
       "javascript": false,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/sample-report?utm_source=seo-audit",
+      "url": "http://127.0.0.1:4333/sample-report?utm_source=seo-audit",
       "title": "Sample Decision Report | ifYouMind",
       "description": "See a full ifYouMind Decision Report: a location decision compared across three U.S. cities with cited U.S. Census data, an action plan, and clear limits.",
       "robots": [
@@ -79,7 +79,7 @@
       "javascript": false,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/privacy-policy",
+      "url": "http://127.0.0.1:4333/privacy-policy",
       "title": "Privacy Policy | ifYouMind",
       "description": "How ifYouMind collects, uses, stores and protects your information.",
       "robots": [
@@ -100,7 +100,7 @@
       "javascript": false,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/terms-of-conduct",
+      "url": "http://127.0.0.1:4333/terms-of-conduct",
       "title": "Terms of Service | ifYouMind",
       "description": "The terms that apply when you use ifYouMind.",
       "robots": [
@@ -121,7 +121,7 @@
       "javascript": false,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/login",
+      "url": "http://127.0.0.1:4333/login",
       "title": "ifYouMind",
       "description": "Sign in to manage your ifYouMind decisions and reports.",
       "robots": [
@@ -139,7 +139,7 @@
       "javascript": false,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/register?intent=report",
+      "url": "http://127.0.0.1:4333/register?intent=report",
       "title": "ifYouMind",
       "description": "Sign in to manage your ifYouMind decisions and reports.",
       "robots": [
@@ -157,7 +157,7 @@
       "javascript": false,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/app/result/seo-audit",
+      "url": "http://127.0.0.1:4333/app/result/seo-audit",
       "title": "ifYouMind",
       "description": "Sign in to manage your ifYouMind decisions and reports.",
       "robots": [
@@ -175,7 +175,7 @@
       "javascript": false,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/",
+      "url": "http://127.0.0.1:4333/guides/",
       "title": "Decision guides: jobs, places and evidence | ifYouMind",
       "description": "Source-cited guides for job offers, relocation, business locations and comparing your own evidence. Practical worksheets with clear limits and Business examples.",
       "robots": [
@@ -205,7 +205,7 @@
       "javascript": false,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/market-analysis-business-plan/",
+      "url": "http://127.0.0.1:4333/guides/market-analysis-business-plan/",
       "title": "How to Write a Business Plan Market Analysis (Free Census Data)",
       "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
       "robots": [
@@ -275,7 +275,7 @@
       "javascript": false,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/compare-job-offers-relocation/",
+      "url": "http://127.0.0.1:4333/guides/compare-job-offers-relocation/",
       "title": "Compare Job Offers and Relocation Trade-offs | ifYouMind",
       "description": "A practical worksheet for comparing job offers, housing, benefits and commute uncertainty when one offer means moving. No automatic winner or tax estimate.",
       "robots": [
@@ -345,7 +345,7 @@
       "javascript": false,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/choose-business-location-evidence/",
+      "url": "http://127.0.0.1:4333/guides/choose-business-location-evidence/",
       "title": "Choosing a Business Location: Evidence Checklist | ifYouMind",
       "description": "Compare business locations with public market evidence, real site quotes and field checks. A practical checklist that separates city signals from demand.",
       "robots": [
@@ -415,7 +415,7 @@
       "javascript": false,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/compare-options-with-your-own-data/",
+      "url": "http://127.0.0.1:4333/guides/compare-options-with-your-own-data/",
       "title": "Decision Matrix with Your Own Data: Practical Guide | ifYouMind",
       "description": "Build a useful comparison from your own data: define criteria, record sources, keep missing values visible and test whether assumptions change the decision.",
       "robots": [
@@ -485,7 +485,7 @@
       "javascript": false,
       "width": 390,
       "status": 404,
-      "url": "http://127.0.0.1:4321/seo-audit-missing-page",
+      "url": "http://127.0.0.1:4333/seo-audit-missing-page",
       "title": "Page not found | ifYouMind",
       "robots": [
         "noindex,nofollow"
@@ -503,7 +503,7 @@
       "javascript": false,
       "width": 390,
       "status": 404,
-      "url": "http://127.0.0.1:4321/life/quick-compare",
+      "url": "http://127.0.0.1:4333/life/quick-compare",
       "title": "Page not found | ifYouMind",
       "robots": [
         "noindex,nofollow"
@@ -521,7 +521,7 @@
       "javascript": false,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/",
+      "url": "http://127.0.0.1:4333/",
       "title": "ifYouMind — Evidence for clearer decisions",
       "description": "Explore evidence for real decisions. Compare U.S. cities with Census-cited Business reports today; personal decision tools are in development.",
       "robots": [
@@ -571,7 +571,7 @@
       "javascript": false,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/sample-report?utm_source=seo-audit",
+      "url": "http://127.0.0.1:4333/sample-report?utm_source=seo-audit",
       "title": "Sample Decision Report | ifYouMind",
       "description": "See a full ifYouMind Decision Report: a location decision compared across three U.S. cities with cited U.S. Census data, an action plan, and clear limits.",
       "robots": [
@@ -592,7 +592,7 @@
       "javascript": false,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/privacy-policy",
+      "url": "http://127.0.0.1:4333/privacy-policy",
       "title": "Privacy Policy | ifYouMind",
       "description": "How ifYouMind collects, uses, stores and protects your information.",
       "robots": [
@@ -613,7 +613,7 @@
       "javascript": false,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/terms-of-conduct",
+      "url": "http://127.0.0.1:4333/terms-of-conduct",
       "title": "Terms of Service | ifYouMind",
       "description": "The terms that apply when you use ifYouMind.",
       "robots": [
@@ -634,7 +634,7 @@
       "javascript": false,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/login",
+      "url": "http://127.0.0.1:4333/login",
       "title": "ifYouMind",
       "description": "Sign in to manage your ifYouMind decisions and reports.",
       "robots": [
@@ -652,7 +652,7 @@
       "javascript": false,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/register?intent=report",
+      "url": "http://127.0.0.1:4333/register?intent=report",
       "title": "ifYouMind",
       "description": "Sign in to manage your ifYouMind decisions and reports.",
       "robots": [
@@ -670,7 +670,7 @@
       "javascript": false,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/app/result/seo-audit",
+      "url": "http://127.0.0.1:4333/app/result/seo-audit",
       "title": "ifYouMind",
       "description": "Sign in to manage your ifYouMind decisions and reports.",
       "robots": [
@@ -688,7 +688,7 @@
       "javascript": false,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/",
+      "url": "http://127.0.0.1:4333/guides/",
       "title": "Decision guides: jobs, places and evidence | ifYouMind",
       "description": "Source-cited guides for job offers, relocation, business locations and comparing your own evidence. Practical worksheets with clear limits and Business examples.",
       "robots": [
@@ -718,7 +718,7 @@
       "javascript": false,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/market-analysis-business-plan/",
+      "url": "http://127.0.0.1:4333/guides/market-analysis-business-plan/",
       "title": "How to Write a Business Plan Market Analysis (Free Census Data)",
       "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
       "robots": [
@@ -788,7 +788,7 @@
       "javascript": false,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/compare-job-offers-relocation/",
+      "url": "http://127.0.0.1:4333/guides/compare-job-offers-relocation/",
       "title": "Compare Job Offers and Relocation Trade-offs | ifYouMind",
       "description": "A practical worksheet for comparing job offers, housing, benefits and commute uncertainty when one offer means moving. No automatic winner or tax estimate.",
       "robots": [
@@ -858,7 +858,7 @@
       "javascript": false,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/choose-business-location-evidence/",
+      "url": "http://127.0.0.1:4333/guides/choose-business-location-evidence/",
       "title": "Choosing a Business Location: Evidence Checklist | ifYouMind",
       "description": "Compare business locations with public market evidence, real site quotes and field checks. A practical checklist that separates city signals from demand.",
       "robots": [
@@ -928,7 +928,7 @@
       "javascript": false,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/compare-options-with-your-own-data/",
+      "url": "http://127.0.0.1:4333/guides/compare-options-with-your-own-data/",
       "title": "Decision Matrix with Your Own Data: Practical Guide | ifYouMind",
       "description": "Build a useful comparison from your own data: define criteria, record sources, keep missing values visible and test whether assumptions change the decision.",
       "robots": [
@@ -998,7 +998,7 @@
       "javascript": false,
       "width": 1280,
       "status": 404,
-      "url": "http://127.0.0.1:4321/seo-audit-missing-page",
+      "url": "http://127.0.0.1:4333/seo-audit-missing-page",
       "title": "Page not found | ifYouMind",
       "robots": [
         "noindex,nofollow"
@@ -1016,7 +1016,7 @@
       "javascript": false,
       "width": 1280,
       "status": 404,
-      "url": "http://127.0.0.1:4321/life/quick-compare",
+      "url": "http://127.0.0.1:4333/life/quick-compare",
       "title": "Page not found | ifYouMind",
       "robots": [
         "noindex,nofollow"
@@ -1034,7 +1034,7 @@
       "javascript": true,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/",
+      "url": "http://127.0.0.1:4333/",
       "title": "ifYouMind — Evidence for clearer decisions",
       "description": "Explore evidence for real decisions. Compare U.S. cities with Census-cited Business reports today; personal decision tools are in development.",
       "robots": [
@@ -1086,7 +1086,7 @@
       "javascript": true,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/sample-report?utm_source=seo-audit",
+      "url": "http://127.0.0.1:4333/sample-report?utm_source=seo-audit",
       "title": "Sample Decision Report | ifYouMind",
       "description": "See a full ifYouMind Decision Report: a location decision compared across three U.S. cities with cited U.S. Census data, an action plan, and clear limits.",
       "robots": [
@@ -1107,7 +1107,7 @@
       "javascript": true,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/privacy-policy",
+      "url": "http://127.0.0.1:4333/privacy-policy",
       "title": "Privacy Policy | ifYouMind",
       "description": "How ifYouMind collects, uses, stores and protects your information.",
       "robots": [
@@ -1130,7 +1130,7 @@
       "javascript": true,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/terms-of-conduct",
+      "url": "http://127.0.0.1:4333/terms-of-conduct",
       "title": "Terms of Service | ifYouMind",
       "description": "The terms that apply when you use ifYouMind.",
       "robots": [
@@ -1153,7 +1153,7 @@
       "javascript": true,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/login",
+      "url": "http://127.0.0.1:4333/login",
       "title": "ifYouMind",
       "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
       "robots": [
@@ -1173,7 +1173,7 @@
       "javascript": true,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/register?intent=report",
+      "url": "http://127.0.0.1:4333/register?intent=report",
       "title": "ifYouMind",
       "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
       "robots": [
@@ -1193,7 +1193,7 @@
       "javascript": true,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/login?returnUrl=%2Fapp%2Fresult%2Fseo-audit",
+      "url": "http://127.0.0.1:4333/login?returnUrl=%2Fapp%2Fresult%2Fseo-audit",
       "title": "ifYouMind",
       "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
       "robots": [
@@ -1213,7 +1213,7 @@
       "javascript": true,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/",
+      "url": "http://127.0.0.1:4333/guides/",
       "title": "Decision guides: jobs, places and evidence | ifYouMind",
       "description": "Source-cited guides for job offers, relocation, business locations and comparing your own evidence. Practical worksheets with clear limits and Business examples.",
       "robots": [
@@ -1243,7 +1243,7 @@
       "javascript": true,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/market-analysis-business-plan/",
+      "url": "http://127.0.0.1:4333/guides/market-analysis-business-plan/",
       "title": "How to Write a Business Plan Market Analysis (Free Census Data)",
       "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
       "robots": [
@@ -1313,7 +1313,7 @@
       "javascript": true,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/compare-job-offers-relocation/",
+      "url": "http://127.0.0.1:4333/guides/compare-job-offers-relocation/",
       "title": "Compare Job Offers and Relocation Trade-offs | ifYouMind",
       "description": "A practical worksheet for comparing job offers, housing, benefits and commute uncertainty when one offer means moving. No automatic winner or tax estimate.",
       "robots": [
@@ -1383,7 +1383,7 @@
       "javascript": true,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/choose-business-location-evidence/",
+      "url": "http://127.0.0.1:4333/guides/choose-business-location-evidence/",
       "title": "Choosing a Business Location: Evidence Checklist | ifYouMind",
       "description": "Compare business locations with public market evidence, real site quotes and field checks. A practical checklist that separates city signals from demand.",
       "robots": [
@@ -1453,7 +1453,7 @@
       "javascript": true,
       "width": 390,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/compare-options-with-your-own-data/",
+      "url": "http://127.0.0.1:4333/guides/compare-options-with-your-own-data/",
       "title": "Decision Matrix with Your Own Data: Practical Guide | ifYouMind",
       "description": "Build a useful comparison from your own data: define criteria, record sources, keep missing values visible and test whether assumptions change the decision.",
       "robots": [
@@ -1523,7 +1523,7 @@
       "javascript": true,
       "width": 390,
       "status": 404,
-      "url": "http://127.0.0.1:4321/seo-audit-missing-page",
+      "url": "http://127.0.0.1:4333/seo-audit-missing-page",
       "title": "Page not found | ifYouMind",
       "robots": [
         "noindex,nofollow"
@@ -1541,7 +1541,7 @@
       "javascript": true,
       "width": 390,
       "status": 404,
-      "url": "http://127.0.0.1:4321/life/quick-compare",
+      "url": "http://127.0.0.1:4333/life/quick-compare",
       "title": "Page not found | ifYouMind",
       "robots": [
         "noindex,nofollow"
@@ -1559,7 +1559,7 @@
       "javascript": true,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/",
+      "url": "http://127.0.0.1:4333/",
       "title": "ifYouMind — Evidence for clearer decisions",
       "description": "Explore evidence for real decisions. Compare U.S. cities with Census-cited Business reports today; personal decision tools are in development.",
       "robots": [
@@ -1611,7 +1611,7 @@
       "javascript": true,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/sample-report?utm_source=seo-audit",
+      "url": "http://127.0.0.1:4333/sample-report?utm_source=seo-audit",
       "title": "Sample Decision Report | ifYouMind",
       "description": "See a full ifYouMind Decision Report: a location decision compared across three U.S. cities with cited U.S. Census data, an action plan, and clear limits.",
       "robots": [
@@ -1632,7 +1632,7 @@
       "javascript": true,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/privacy-policy",
+      "url": "http://127.0.0.1:4333/privacy-policy",
       "title": "Privacy Policy | ifYouMind",
       "description": "How ifYouMind collects, uses, stores and protects your information.",
       "robots": [
@@ -1655,7 +1655,7 @@
       "javascript": true,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/terms-of-conduct",
+      "url": "http://127.0.0.1:4333/terms-of-conduct",
       "title": "Terms of Service | ifYouMind",
       "description": "The terms that apply when you use ifYouMind.",
       "robots": [
@@ -1678,7 +1678,7 @@
       "javascript": true,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/login",
+      "url": "http://127.0.0.1:4333/login",
       "title": "ifYouMind",
       "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
       "robots": [
@@ -1698,7 +1698,7 @@
       "javascript": true,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/register?intent=report",
+      "url": "http://127.0.0.1:4333/register?intent=report",
       "title": "ifYouMind",
       "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
       "robots": [
@@ -1718,7 +1718,7 @@
       "javascript": true,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/login?returnUrl=%2Fapp%2Fresult%2Fseo-audit",
+      "url": "http://127.0.0.1:4333/login?returnUrl=%2Fapp%2Fresult%2Fseo-audit",
       "title": "ifYouMind",
       "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
       "robots": [
@@ -1738,7 +1738,7 @@
       "javascript": true,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/",
+      "url": "http://127.0.0.1:4333/guides/",
       "title": "Decision guides: jobs, places and evidence | ifYouMind",
       "description": "Source-cited guides for job offers, relocation, business locations and comparing your own evidence. Practical worksheets with clear limits and Business examples.",
       "robots": [
@@ -1768,7 +1768,7 @@
       "javascript": true,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/market-analysis-business-plan/",
+      "url": "http://127.0.0.1:4333/guides/market-analysis-business-plan/",
       "title": "How to Write a Business Plan Market Analysis (Free Census Data)",
       "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
       "robots": [
@@ -1838,7 +1838,7 @@
       "javascript": true,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/compare-job-offers-relocation/",
+      "url": "http://127.0.0.1:4333/guides/compare-job-offers-relocation/",
       "title": "Compare Job Offers and Relocation Trade-offs | ifYouMind",
       "description": "A practical worksheet for comparing job offers, housing, benefits and commute uncertainty when one offer means moving. No automatic winner or tax estimate.",
       "robots": [
@@ -1908,7 +1908,7 @@
       "javascript": true,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/choose-business-location-evidence/",
+      "url": "http://127.0.0.1:4333/guides/choose-business-location-evidence/",
       "title": "Choosing a Business Location: Evidence Checklist | ifYouMind",
       "description": "Compare business locations with public market evidence, real site quotes and field checks. A practical checklist that separates city signals from demand.",
       "robots": [
@@ -1978,7 +1978,7 @@
       "javascript": true,
       "width": 1280,
       "status": 200,
-      "url": "http://127.0.0.1:4321/guides/compare-options-with-your-own-data/",
+      "url": "http://127.0.0.1:4333/guides/compare-options-with-your-own-data/",
       "title": "Decision Matrix with Your Own Data: Practical Guide | ifYouMind",
       "description": "Build a useful comparison from your own data: define criteria, record sources, keep missing values visible and test whether assumptions change the decision.",
       "robots": [
@@ -2048,7 +2048,7 @@
       "javascript": true,
       "width": 1280,
       "status": 404,
-      "url": "http://127.0.0.1:4321/seo-audit-missing-page",
+      "url": "http://127.0.0.1:4333/seo-audit-missing-page",
       "title": "Page not found | ifYouMind",
       "robots": [
         "noindex,nofollow"
@@ -2066,7 +2066,7 @@
       "javascript": true,
       "width": 1280,
       "status": 404,
-      "url": "http://127.0.0.1:4321/life/quick-compare",
+      "url": "http://127.0.0.1:4333/life/quick-compare",
       "title": "Page not found | ifYouMind",
       "robots": [
         "noindex,nofollow"

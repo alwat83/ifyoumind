@@ -4,7 +4,9 @@ Prepared 2026-10-22 by OpenAI / Codex. **DRAFT / NOT APPROVED / NOT DEPLOYED.**
 
 [Draft integrated PR #60](https://github.com/alwat83/ifyoumind/pull/60).
 
-Application and test snapshot: **`2c4a6f5490576a449c0873eb95653a222c1f8901`** on `codex/release-consumer-seo-20261022`, based on `bb6744b330378e63506cb90334098e6dfe2b86ff`. Later evidence-only commits are identified by the draft PR head. [Machine-readable manifest](candidate-manifest.json) pins source-to-release commits and SHA-256 checksums for all 39 local production Hosting files.
+Application and test snapshot after final visual-review fix: **`ae029b65861d22a94e737000fe0089f3193063ed`** on `codex/release-consumer-seo-20261022`, based on `bb6744b330378e63506cb90334098e6dfe2b86ff`. Later evidence-only commits are identified by the draft PR head. [Machine-readable manifest](candidate-manifest.json) pins source-to-release commits and SHA-256 checksums for all 39 local production Hosting files.
+
+**Final review:** [GO/NO-GO decision brief](FINAL_DECISION.md), [verified live Hosting/rollback target](hosting-rollback.json), [baseline diagnostic comparison](baseline-comparison.json). Three newly discovered pale-section heading contrast failures fixed (1.04:1 → 15.86:1). Current application commit needs its own exact-head checks; original commit results below are historical.
 
 ## Decision and scope
 
@@ -26,7 +28,7 @@ No source PR has founder release approval recorded. Combining candidate commits 
 
 ## Verification and limits
 
-[Integrated exact application/test commit CI](application-commit-ci.json): [build SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/39828622077) and [complete emulator QA SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/39828622050) on `2c4a6f5490576a449c0873eb95653a222c1f8901`. Evidence-only follow-up head must independently pass PR checks.
+[Historical pre-review application commit CI](history/pre-final-review-application-commit-ci.json): [build SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/39828622077) and [complete emulator QA SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/39828622050) on `2c4a6f5490576a449c0873eb95653a222c1f8901`. Evidence-only follow-up head must independently pass PR checks.
 
 - Production build, local build, and production bundle guard: PASS. No emulator project in the production bundle.
 - Fast web/unit checks: **87/87 PASS**. Functions unit checks: **72/72 PASS**.
@@ -34,15 +36,15 @@ No source PR has founder release approval recorded. Combining candidate commits 
 - Full desktop/mobile browser suite: **92/92 PASS; clean process exit 0, zero fixture accounts remaining**. Viewports 1280×800 and 390×844, plus 320px overflow checks. Includes registration/verification, return URLs, free brief creation, saved report retrieval, tenant isolation, limits, pricing, keyboard links, guides and report layouts.
 - New paid-report UI coverage intercepts a purchased-report response to exercise full rendering, copy, print invocation and print CSS. Backend commerce tests separately verify entitlements/webhooks using intercepted Stripe REST calls. New browser checkout contracts intercept both the callable response and destination, asserting offer/report identity and navigation. **No real checkout, charge, subscription or rendered PDF export was performed.** Existing purchases/PDFs remain founder-confirmed working capabilities; this is regression evidence, not a new live-payment claim.
 - Actual Firebase Hosting emulator serving the production build: **56 raw/rendered observations PASS**, 9 unique sitemap URLs, robots, JSON-LD, canonical redirects, private noindex and real missing/Life 404 responses. [Audit evidence](seo-audit.json). External calls were blocked; sample-report body checks use the separate emulator browser suite.
-- Scoped TS/HTML lint: PASS. **Full lint FAILS with 91 pre-existing errors; default Angular tests FAIL compilation with 11 legacy errors** (missing old components, stale AppComponent expectation, profile and Firestore mock types). These are verified baseline limitations, not green checks or new application regressions. No unrelated legacy rewrite was attempted.
+- Scoped TS/HTML lint: PASS. **Full lint FAILS with 91 pre-existing errors; default Angular tests FAIL compilation with 11 legacy errors** (missing old components, stale AppComponent expectation, profile and Firestore mock types). Clean-master comparison confirms identical error signatures/diagnostics and zero new errors. These are verified baseline limitations, not green checks or new application regressions. No unrelated legacy rewrite was attempted.
 - Production build warnings: initial bundle **653.49 kB** versus 500 kB warning threshold; report/homepage CSS about 7.97/7.98 kB versus 4 kB warning thresholds; existing data-canvas/consumer-home CSS warnings. Build error budgets pass. Performance optimization is a recommendation; no field CWV results are available.
 - No manual screen-reader, physical-device/iOS/Safari, field CWV, Google rich-result eligibility, organic traffic lift or post-deploy verification claimed. Automated WCAG checks do not establish complete accessibility conformance.
 
-The first all-in-one runner exposed cross-suite emulator state; it now resets only the guarded demo Auth/Firestore state between stages. An earlier browser attempt had two long timeouts and a stopped process left a server port open. Those attempts are retained as failures, not counted as passes; the final clean-server result above is the acceptance run. All 92 cases passed after restarting on a fresh port; zero QA fixture accounts remain. Worker shutdown was delayed but completed normally; the final run exited 0 in 6.8 minutes. [JUnit report](browser-junit.xml): 92 tests, zero failures/errors/skips. See [per-case results](browser-case-results.json) and the integrated PR checks. The global sample seed now prevents the homepage test from requesting unseeded Census data.
+The first all-in-one runner exposed cross-suite emulator state; it now resets only the guarded demo Auth/Firestore state between stages. An earlier browser attempt had two long timeouts and a stopped process left a server port open. Those attempts are retained as failures, not counted as passes; the final clean-server result above is the acceptance run. All 92 cases passed after restarting on a fresh port; zero QA fixture accounts remain. Worker shutdown was delayed but completed normally; the final run exited 0 in 3.4 minutes. [JUnit report](browser-junit.xml): 92 tests, zero failures/errors/skips. See [per-case results](browser-case-results.json) and the integrated PR checks. The global sample seed now prevents the homepage test from requesting unseeded Census data.
 
 ## Founder visual review
 
-Screenshots are captured from the integrated candidate with local deterministic Census fixtures. Review both first screen and full page before approving; examples are QA data, not customer metrics. 22 screenshots committed under [screenshots/](screenshots/). Representative homepage, sample and pricing views were visually inspected. The emulator-only warning banner in report/pricing captures is absent from production.
+Screenshots are captured from the integrated candidate with local deterministic Census fixtures. Review both first screen and full page before approving; examples are QA data, not customer metrics. 22 screenshots committed under [screenshots/](screenshots/). All 22 original screenshots were visually reviewed; refreshed CSS-scale homepage/report/guide/pricing evidence rechecked. Old oversized mobile full-page capture repeats were corrected; no DOM duplication was found. The emulator-only warning banner in report/pricing captures is absent from production.
 
 | View | Mobile | Desktop |
 |---|---|---|
@@ -62,7 +64,7 @@ Guide captures: [job offers/relocation](screenshots/mobile-compare-job-offers-re
 
 ## Rollback
 
-The last successful production workflow observed is [38663118271](https://github.com/alwat83/ifyoumind/actions/runs/38663118271), source **`bb6744b330378e63506cb90334098e6dfe2b86ff`** (2026-10-15). This is verified deployment-workflow evidence; the current live Firebase Hosting revision was not independently inspected. Before release, record the actual prior Hosting version/release so rollback can target it.
+The last successful production workflow observed is [38663118271](https://github.com/alwat83/ifyoumind/actions/runs/38663118271), source **`bb6744b330378e63506cb90334098e6dfe2b86ff`** (2026-10-15). This is verified deployment-workflow evidence; the current live version is now independently verified as `f91311de8f35458e`, release `1792026155391000`, on both production domains. See the final decision brief for evidence and the approval-gated rollback command; recheck immediately before deployment.
 
 If the authorized release regresses, stop further release steps and obtain founder rollback authorization. Prefer reverting the single future squash/merge commit via a reviewed rollback PR, rerunning build/guard/tests, then deploying through the existing authorized workflow. Record the actual future release commit; do not guess a revert SHA or reset master. The baseline source above is the recovery reference. Revert Hosting routing/config and generated metadata artifacts **together**; partial SEO rollback can break deep links or private noindex behavior. No data migration or Stripe configuration rollback is required by this candidate. Production rollback itself remains an approval-gated action.
 

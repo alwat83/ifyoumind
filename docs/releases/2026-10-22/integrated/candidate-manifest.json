@@ -1,5 +1,5 @@
 {
-  "codeAndTestCommit": "2c4a6f5490576a449c0873eb95653a222c1f8901",
+  "codeAndTestCommit": "ae029b65861d22a94e737000fe0089f3193063ed",
   "baseCommit": "bb6744b330378e63506cb90334098e6dfe2b86ff",
   "branch": "codex/release-consumer-seo-20261022",
   "commits": [
@@ -82,6 +82,11 @@
       "releaseCommit": "2c4a6f5490576a449c0873eb95653a222c1f8901",
       "sourceCommit": "2c4a6f5490576a449c0873eb95653a222c1f8901",
       "subject": "test(release): verify integrated consumer, commerce, mobile and SEO candidate"
+    },
+    {
+      "releaseCommit": "ae029b65861d22a94e737000fe0089f3193063ed",
+      "sourceCommit": "ae029b65861d22a94e737000fe0089f3193063ed",
+      "subject": "fix(marketing): restore readable preview headings and reliable mobile captures"
     }
   ],
   "hostingArtifacts": [
@@ -92,7 +97,7 @@
     },
     {
       "path": "app-shell.html",
-      "sha256": "2560f7b2890983108a0a5e5f52943d0101e827b1c36136018f78fc6239fe88e5",
+      "sha256": "3a53cbfad6cb770d7b5535164b64f2ea951f260157e48d11331a423ff54b9a6b",
       "bytes": 19253
     },
     {
@@ -104,6 +109,11 @@
       "path": "chunk-2RGKSZBX.js",
       "sha256": "98343b7ac407bee93ef860b973bd61f628790ccf17f96f76af32b27a0ccee80d",
       "bytes": 138606
+    },
+    {
+      "path": "chunk-3GAKW4YC.js",
+      "sha256": "4aa63b738ef375679cda4532a3998142ff11a615ce97975af85fd12a77b0c4e9",
+      "bytes": 29495
     },
     {
       "path": "chunk-6H5MEBXB.js",
@@ -164,11 +174,6 @@
       "path": "chunk-OMGTIJHY.js",
       "sha256": "cdc55e85aac0f6ac6abeefa507d026bbd9d6a1cf922e6cccfb7c49edc44a46f1",
       "bytes": 9205
-    },
-    {
-      "path": "chunk-OW6GEZRA.js",
-      "sha256": "25c4ecd91cfad83c88b45e2f19cc7e51d3d61e36bb1c6a8be8512bf3b18b751f",
-      "bytes": 29467
     },
     {
       "path": "chunk-OXPB2ODW.js",
@@ -237,12 +242,12 @@
     },
     {
       "path": "index.html",
-      "sha256": "412300f571b724adbff66dcda5ba635a3e73054e8770a547f81d63200e60bd62",
+      "sha256": "f372ba28371962cccd8e01dee0bfe7ae922898751390980088db04276e6cd4b5",
       "bytes": 20304
     },
     {
-      "path": "main-3B5GMLUL.js",
-      "sha256": "a548618e9de9c4871a63d8a2c4c28ee807982118922db14ad04ba87975e97098",
+      "path": "main-CHZQKUAA.js",
+      "sha256": "d9a15b2e923c741f36b205a66cf8ce77b4abcb93c4a26b14fee591b8a1ac7a32",
       "bytes": 169016
     },
     {
@@ -252,7 +257,7 @@
     },
     {
       "path": "privacy-policy.html",
-      "sha256": "d731e430f628d8715135f6706e2fa2a35a8298d6a53ec3b957c1b06bb3c63077",
+      "sha256": "69237671918f8e5fb37e022c619a8eb8ba8d0f7ec0a5f8a5ca9a1fbe3f4349b6",
       "bytes": 19474
     },
     {
@@ -262,7 +267,7 @@
     },
     {
       "path": "sample-report.html",
-      "sha256": "8d710f7a87cfc403a67fef7c181e04e0137fa659c1281cee98133119fe356070",
+      "sha256": "15558b1c58650293d985c5bf7f9998e1b68bf481d68da90c04dcc0ab94a5c768",
       "bytes": 19757
     },
     {
@@ -277,9 +282,9 @@
     },
     {
       "path": "terms-of-conduct.html",
-      "sha256": "a21fe5f0517cccfe48bae427d02dac07749b4c38c0a748f2bf12b774ec3a15a6",
+      "sha256": "fab7f9e2ccca0810fb03ac1fe4ba443dcd715a7a88a7d677d28adbb8f0676820",
       "bytes": 19415
     }
   ],
-  "note": "Subsequent evidence-only commits do not alter this pinned application/test snapshot. No deployment authorization implied."
+  "note": "Final application/test snapshot after visual-review contrast fix. Earlier snapshot evidence retained under history/. Subsequent evidence-only commits must independently pass CI."
 }

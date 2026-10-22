@@ -25,8 +25,8 @@ test('integrated public pages: pricing, report, guides, accessibility and approv
     }
     await expectNoHorizontalScroll(page);
     await allWcagChecks(page);
-    await page.screenshot({ path: testInfo.outputPath(`${name}-fold.png`) });
-    await page.screenshot({ path: testInfo.outputPath(`${name}-full.png`), fullPage: true });
+    await page.screenshot({ path: testInfo.outputPath(`${name}-fold.png`), scale: 'css' });
+    await page.screenshot({ path: testInfo.outputPath(`${name}-full.png`), fullPage: true, scale: 'css' });
   }
   for (const slug of ['compare-job-offers-relocation', 'choose-business-location-evidence', 'compare-options-with-your-own-data']) {
     await page.goto(`/guides/${slug}/`);
@@ -34,7 +34,7 @@ test('integrated public pages: pricing, report, guides, accessibility and approv
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://ifyoumind.com/guides/${slug}/`);
     await expectNoHorizontalScroll(page);
     await allWcagChecks(page);
-    await page.screenshot({ path: testInfo.outputPath(`${slug}.png`), fullPage: true });
+    await page.screenshot({ path: testInfo.outputPath(`${slug}.png`), fullPage: true, scale: 'css' });
   }
   if (testInfo.project.name === 'mobile') {
     await page.setViewportSize({ width: 320, height: 568 });
@@ -96,7 +96,7 @@ for (const offer of ['report', 'pro']) {
     await expect(page.locator('.billing-note').first()).toContainText('Stripe');
     await expectNoHorizontalScroll(page);
     await allWcagChecks(page);
-    await page.screenshot({ path: testInfo.outputPath(`pricing-${offer}.png`), fullPage: true });
+    await page.screenshot({ path: testInfo.outputPath(`pricing-${offer}.png`), fullPage: true, scale: 'css' });
     await page.getByRole('button', { name: offer === 'report' ? 'Buy Decision Report' : 'Get Pro access', exact: true }).click();
     await expect(page).toHaveURL('https://checkout.stripe.com/c/pay/qa-release-contract');
     expect(calls).toEqual([{ organizationId: user.organizationId, offer, projectId: user.projectIds[0] }]);

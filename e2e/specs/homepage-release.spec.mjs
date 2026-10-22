@@ -1,8 +1,15 @@
 import { test, expect, expectAccessible, expectNoHorizontalScroll } from '../support/test.mjs';
+import { homepageHeadingContrasts } from '../support/homepage-contrast.mjs';
 
 test('homepage: Life stays informational and Business paths remain usable', async ({ page }, testInfo) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Your question. The evidence. A clearer decision.');
+  const headings = await homepageHeadingContrasts(page);
+  expect(headings).toHaveLength(3);
+  for (const heading of headings) {
+    expect(heading.fontSize, heading.text).toBeGreaterThanOrEqual(24);
+    expect(heading.minimumRatio, `${heading.text}: ${heading.color}`).toBeGreaterThanOrEqual(3);
+  }
   const life = page.getByRole('link', { name: /For your life/ });
   await life.focus();
   await expect(life).toBeFocused();
@@ -27,7 +34,7 @@ test('homepage: Life stays informational and Business paths remain usable', asyn
   await page.goto('/');
   await expectNoHorizontalScroll(page);
   await expectAccessible(page);
-  await page.screenshot({ path: testInfo.outputPath('homepage.png'), fullPage: true });
+  await page.screenshot({ path: testInfo.outputPath('homepage.png'), fullPage: true, scale: 'css' });
   if (testInfo.project.name === 'mobile') {
     await page.setViewportSize({ width: 320, height: 568 });
     await expectNoHorizontalScroll(page);

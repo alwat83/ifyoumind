@@ -21,6 +21,9 @@ test('initial responses protect private routes and give public routes their own 
   expect(missing.status()).toBe(404);
   expect(await missing.text()).toContain('Page not found');
   expect((await request.get('/life/quick-compare')).status()).toBe(404);
+  const slash = await request.get('/sample-report/', { maxRedirects: 0 });
+  expect(slash.status()).toBe(301);
+  expect(slash.headers().location).toBe('/sample-report');
 });
 
 test('client navigation removes homepage offers and updates robots and canonical', async ({ page }) => {

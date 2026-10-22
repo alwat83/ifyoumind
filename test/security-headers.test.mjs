@@ -32,4 +32,9 @@ test('only known private app routes use the noindex shell; unknown URLs retain H
   assert.equal(config.hosting.cleanUrls, true);
   assert.deepEqual(config.hosting.rewrites, ['/login', '/register', '/verify-email', '/app', '/app/**'].map(source => ({ source, destination: '/app-shell.html' })));
   assert.ok(!config.hosting.rewrites.some(rule => rule.source === '**'));
+  const appRedirect = config.hosting.redirects[0];
+  assert.ok(new RegExp(appRedirect.regex).test('/sample-report/'));
+  assert.equal(appRedirect.destination, '/:1');
+  assert.equal(appRedirect.type, 301);
+  assert.ok(!new RegExp(appRedirect.regex).test('/guides/'));
 });

@@ -1,5 +1,5 @@
 {
-  "observedAt": "2026-10-22T16:45:43.066Z",
+  "observedAt": "2026-10-22T16:48:27.060Z",
   "base": "http://127.0.0.1:4304",
   "observations": [
     {
@@ -1182,8 +1182,8 @@
   "redirects": [
     {
       "path": "/sample-report/",
-      "status": 404,
-      "location": null
+      "status": 301,
+      "location": "/sample-report"
     },
     {
       "path": "/sample-report.html",
@@ -1192,13 +1192,13 @@
     },
     {
       "path": "/guides",
-      "status": 200,
-      "location": null
+      "status": 301,
+      "location": "/guides/"
     },
     {
       "path": "/guides/market-analysis-business-plan",
-      "status": 200,
-      "location": null
+      "status": 301,
+      "location": "/guides/market-analysis-business-plan/"
     }
   ],
   "www": null

@@ -1,0 +1,30 @@
+# Buyer-validation tracker
+
+Research state: October 22, 2026. **All outreach unsent; no demos scheduled or purchases verified by this sprint.** This is the editable activity record; `prospects.json` retains research provenance. Update this table and synchronize milestones to the existing Notion hub. Do not duplicate private contact records in Git. Keep actual addresses, consent details, receipt IDs and personal notes in an approved private system; use anonymous references here.
+
+States: outreach = approval pending / routing requested / sent / replied / declined / do not contact; demo = not scheduled / scheduled / completed; purchase = unknown / independently verified / refunded. Only evidence of a successful live, independently funded payment may change purchase to verified. Do not infer a purchase from a return, verbal intent or a demo. Record currency, gross/refund/fee and cost separately after reconciliation. Objections not yet asked are unknown, not absent. No follow-up date is promised before approval.
+
+| ID / prospect | Decision need to validate | Outreach | Demo | Objections | Purchase | Follow-up / next action |
+|---|---|---|---|---|---|---|
+| P01 — Marilyn and Matt Willson | Compare Austin city, Cedar Park and Pflugerville before narrowing the flagship search. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Founder approval → permission-based routing |
+| P02 — Viren Patel | Compare those three cities as context for a possible regional sequence. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Founder approval → permission-based routing |
+| P03 — Grant McDowell and Jeremy Press, with Jason Twitty | Make a cited city comparison useful to the six-location planning discussion. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Founder approval → permission-based routing |
+| P04 — Yasir and Aleeza Nadeem | Compare city context for the three-location development plan. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Founder approval → permission-based routing |
+| P05 — Mark DeStefano and Mike Diskin | Provide comparable city/borough evidence for later openings. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Founder approval → permission-based routing |
+| P06 — Clint and Jolene Coates | Ask which surrounding places remain under consideration for later stores. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Requalify after first five; no contact authorized |
+| P07 — Brittany and Jeff Ciaramita | Compare Clayton, Chesterfield and other named municipalities for subsequent shops. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Requalify after first five; no contact authorized |
+| P08 — Justin, Hannah, Craig and Diana Kirkland buying group | Ask whether municipality comparisons support later openings. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Requalify after first five; no contact authorized |
+| P09 — Coleen Jeter and Robin Richards | Ask about next municipalities and a current decision deadline. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Requalify after first five; no contact authorized |
+| P10 — David and Jimmy Mumby | Compare future cities if the owners confirm those decisions remain relevant. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Requalify after first five; no contact authorized |
+| P11 — Nitant, Niraj and Nimesh Patel buying group | Ask if city context is useful to the plan before offering a report. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Requalify after first five; no contact authorized |
+| P12 — Vinod Chand / Bliss Bites LLC | Ask which cities remain undecided and whether independent evidence helps. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Requalify after first five; no contact authorized |
+| P13 — BD, Bhavesh and Mihir Patel buying group | Compare municipalities for the regional pipeline if still undecided. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Requalify after first five; no contact authorized |
+| P14 — Andrew Walker / Happy Mountain Eats LLC | Ask about a current Scottsdale/Mesa/other-city decision. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Requalify after first five; no contact authorized |
+| P15 — PB Delaware LLC buying group | Ask about remaining towns in the expanded development agreement. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Requalify after first five; no contact authorized |
+| P16 — Steve Zahn buying group | Ask about subsequent city comparisons. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Requalify after first five; no contact authorized |
+| P17 — Steve and Vicky Dotson | Ask whether comparisons are still useful to the two-store plan. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Requalify after first five; no contact authorized |
+| P18 — William Ellis buying group | Requalify for a future city-level decision before any pitch. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Requalify after first five; no contact authorized |
+| P19 — Mitchell and Heather Wagner | Compare future places only if owners confirm next expansion decision. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Requalify after first five; no contact authorized |
+| P20 — Matt Thomas buying group | Ask which municipalities are being considered. | Approval pending; not sent | Not scheduled | Not asked | Unknown | Requalify after first five; no contact authorized |
+
+After each approved contact record date, channel, approval reference, reply/permission, specific decision/deadline, demo result, objection, next permissioned action and date. Stop on refusal/opt-out. Track introductions as introductions, not demos or new buyers. Target five independently paying customers by November 20; current independent customer count remains unknown.

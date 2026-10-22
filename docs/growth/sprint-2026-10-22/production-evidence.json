@@ -1,0 +1,138 @@
+{
+  "observedDate": "2026-10-22",
+  "aggregateProbe": {
+    "observedAt": "2026-10-22T20:18:32.260Z",
+    "project": "ifyoumind-473fe",
+    "readOnly": true,
+    "periods": {
+      "week": {
+        "since": "2026-10-19T00:00:00Z",
+        "productEvents": {
+          "rawCount": 2,
+          "qaFiltered": false
+        },
+        "stripePayments": {
+          "rawCount": 0,
+          "qaFiltered": false
+        }
+      },
+      "trailing30": {
+        "since": "2026-09-22T20:18:32.260Z",
+        "productEvents": {
+          "rawCount": 99,
+          "qaFiltered": false
+        },
+        "stripePayments": {
+          "rawCount": 0,
+          "qaFiltered": false
+        }
+      }
+    },
+    "qaExclusion": {
+      "status": "BLOCKED_OR_MISSING",
+      "error": "Request to https://firestore.googleapis.com/v1/projects/ifyoumind-473fe/databases/(default)/documents/adminConfig/qaExclusion had HTTP Error: 404, Document \"projects/ifyoumind-473fe/databases/(default)/documents/adminConfig/qaExclusion\" not found."
+    },
+    "billing": {
+      "billingEnabled": true,
+      "billingAccountAccessible": true,
+      "note": "Association is not an invoice or cost total"
+    }
+  },
+  "funnelAndCompleteness": {
+    "observedAt": "2026-10-22T20:20:56.636Z",
+    "project": "ifyoumind-473fe",
+    "readOnly": true,
+    "queryLimit": 5000,
+    "returned": 99,
+    "capped": false,
+    "qaConfig": "MISSING",
+    "automatedQaExclusionByRule": {
+      "organizationId": 0,
+      "uid": 0,
+      "claim": 0,
+      "fixture": 0,
+      "email": 0,
+      "mailbox": 0
+    },
+    "authLookupError": null,
+    "periods": {
+      "week": {
+        "since": "2026-10-19T00:00:00Z",
+        "rawEvents": 2,
+        "automatedQaExcluded": 0,
+        "eventCounts": {
+          "app_open": 1,
+          "report_view": 1
+        },
+        "uniqueOrganizationsByEvent": {
+          "app_open": 1,
+          "report_view": 1
+        },
+        "independentCustomerClassification": "UNKNOWN: no explicit founder/QA exclusion configuration"
+      },
+      "trailing30": {
+        "since": "2026-09-22T20:20:56.274Z",
+        "rawEvents": 99,
+        "automatedQaExcluded": 0,
+        "eventCounts": {
+          "app_open": 34,
+          "billing_portal_opened": 2,
+          "pricing_view": 17,
+          "decision_created": 11,
+          "report_view": 27,
+          "checkout_started": 6,
+          "checkout_success": 1,
+          "checkout_cancelled": 1
+        },
+        "uniqueOrganizationsByEvent": {
+          "app_open": 5,
+          "billing_portal_opened": 1,
+          "pricing_view": 6,
+          "decision_created": 5,
+          "report_view": 5,
+          "checkout_started": 3,
+          "checkout_success": 1,
+          "checkout_cancelled": 1
+        },
+        "independentCustomerClassification": "UNKNOWN: no explicit founder/QA exclusion configuration"
+      }
+    },
+    "stripePayments": {
+      "allTimeRawRecords": 0
+    },
+    "stripeEvents": {
+      "allTimeRawRecords": 3
+    },
+    "billingReviews": {
+      "allTimeRawRecords": 0
+    },
+    "billingExport": {
+      "accessibleDatasetCount": 0,
+      "invoiceCosts": "UNKNOWN; dataset listing is not invoice evidence"
+    }
+  },
+  "webhookMarkerSummary": {
+    "observedAt": "2026-10-22T20:22:00.049Z",
+    "project": "ifyoumind-473fe",
+    "rows": [
+      {
+        "type": "invoice.paid",
+        "status": "processed",
+        "updatedAt": "2026-10-09T14:32:49.607Z"
+      },
+      {
+        "type": "checkout.session.completed",
+        "status": "processed",
+        "updatedAt": "2026-10-09T14:32:49.969Z"
+      },
+      {
+        "type": "checkout.session.completed",
+        "status": "processed",
+        "updatedAt": "2026-10-09T20:54:22.381Z"
+      }
+    ],
+    "limitations": "No event payload, Stripe account, mode or payment amount read; these records alone do not establish revenue."
+  },
+  "independentRevenue": "UNKNOWN; zero first-party ledger records is not zero Stripe revenue",
+  "privacy": "No customer identities, raw payment payloads, billing account IDs or tokens retained"
+}

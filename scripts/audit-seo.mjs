@@ -5,13 +5,18 @@ import { dirname } from 'node:path';
 
 const base = process.argv[2] || 'https://ifyoumind.com';
 const output = process.argv[3] || '/private/tmp/ifyoumind-seo-audit.json';
-const paths = ['/', '/sample-report?utm_source=seo-audit', '/privacy-policy', '/terms-of-conduct', '/login', '/register?intent=report', '/app/result/seo-audit', '/guides/', '/guides/market-analysis-business-plan/', '/seo-audit-missing-page'];
+const paths = ['/', '/sample-report?utm_source=seo-audit', '/privacy-policy', '/terms-of-conduct', '/login', '/register?intent=report', '/app/result/seo-audit', '/guides/', '/guides/market-analysis-business-plan/', '/guides/compare-job-offers-relocation/', '/guides/choose-business-location-evidence/', '/guides/compare-options-with-your-own-data/', '/seo-audit-missing-page', '/life/quick-compare'];
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const observations = [];
 try {
   for (const javascript of [false, true]) {
     for (const width of [390, 1280]) {
       const context = await browser.newContext({ javaScriptEnabled: javascript, viewport: { width, height: 844 } });
+      // Inspect a production build locally without invoking production Firebase or analytics.
+      if (process.env.SEO_OFFLINE === '1') await context.route('**/*', route => {
+        const url = new URL(route.request().url());
+        return url.origin === new URL(base).origin ? route.continue() : route.abort();
+      });
       const page = await context.newPage();
       for (const path of paths) {
         const response = await page.goto(new URL(path, base).href, { waitUntil: 'networkidle' });
@@ -45,7 +50,7 @@ try {
     redirects.push({ path, status: response.status(), location: response.headers().location || null });
   }
   await mkdir(dirname(output), { recursive: true });
-  await writeFile(output, JSON.stringify({ observedAt: new Date().toISOString(), base, observations, resources, redirects, www: www ? { status: www.status(), location: www.headers().location || null } : null }, null, 2) + '\n');
+  await writeFile(output, JSON.stringify({ observedAt: new Date().toISOString(), base, externalRequestsBlocked: process.env.SEO_OFFLINE === '1', observations, resources, redirects, www: www ? { status: www.status(), location: www.headers().location || null } : null }, null, 2) + '\n');
   if (observations.some(row => row.path === '/' && row.status !== 200)) throw new Error('Homepage did not return 200; audit is invalid. Check the server/config path.');
   console.log(`Recorded ${observations.length} raw/rendered observations and ${resources.length} resources in ${output}`);
 } finally { await browser.close(); }

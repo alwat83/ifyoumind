@@ -1,0 +1,206 @@
+{
+  "build": "npm run build; production guard PASS (33 bundle files scanned)",
+  "initialBundleKb": 653.54,
+  "initialWarningKb": 500,
+  "homepageComponentStyleKb": 7.19,
+  "componentStyleWarningKb": 4,
+  "componentStyleErrorKb": 8,
+  "note": "No dependency/lockfile/backend/billing/rule/workflow changes. Artifact hashes identify the local reviewed build, not a deployed revision. Build warning sizes rounded from CLI output.",
+  "files": [
+    {
+      "path": "404.html",
+      "bytes": 461,
+      "sha256": "3e2ee34bc1b703f50feb9495fb38ba90cc7a5543ee53e4c07c20374b429b762e"
+    },
+    {
+      "path": "app-shell.html",
+      "bytes": 19253,
+      "sha256": "a53ea595dbe67d834feee477503fcb0951ab71432f12a98de29b35e429e174b3"
+    },
+    {
+      "path": "apple-touch-icon.png",
+      "bytes": 23576,
+      "sha256": "4f74a3417992dd413860d3b45998206e3769abdd965d723617eac93fec004f0d"
+    },
+    {
+      "path": "chunk-2RGKSZBX.js",
+      "bytes": 138606,
+      "sha256": "98343b7ac407bee93ef860b973bd61f628790ccf17f96f76af32b27a0ccee80d"
+    },
+    {
+      "path": "chunk-6H5MEBXB.js",
+      "bytes": 614,
+      "sha256": "5ea60f6e93b8e31bab41d74585ba337d260adde5da78c0032c352432305db38c"
+    },
+    {
+      "path": "chunk-7R5O3K3J.js",
+      "bytes": 1620,
+      "sha256": "33e8113cc5aff67e9ce575446461b320a4ae33d43ba9d952a2f3a437df1ed5c5"
+    },
+    {
+      "path": "chunk-CDFF5ZBK.js",
+      "bytes": 14202,
+      "sha256": "fe9fe1fb083462894ec16dd75e8a6e01bf1f9cc754f69f650df1c961fc8d2603"
+    },
+    {
+      "path": "chunk-CU4PZRTL.js",
+      "bytes": 16316,
+      "sha256": "cd88ccdff00558307ac466c7b5370f4693f705b9f4361e2d40ef76ccfd9b22e0"
+    },
+    {
+      "path": "chunk-EGQWR7EI.js",
+      "bytes": 15025,
+      "sha256": "cb0d0858c7b54f776ce7864285d79471ede980dea652c985e1548418e9bdb3e8"
+    },
+    {
+      "path": "chunk-HNXNJZQU.js",
+      "bytes": 32982,
+      "sha256": "6894e510fa17ad0bb882be9361f645708606d76400110ff9f2ef11dede1e73e2"
+    },
+    {
+      "path": "chunk-IAWLEXOU.js",
+      "bytes": 251401,
+      "sha256": "368c5b63a0a9d7526df64633f122843b22a5255891fa840a4ff4a1e8d2931914"
+    },
+    {
+      "path": "chunk-IED4YLUP.js",
+      "bytes": 10743,
+      "sha256": "38de63617d58e7d6280969855389b702932dbf7070b72d4e522def4210542110"
+    },
+    {
+      "path": "chunk-KMVX652I.js",
+      "bytes": 682,
+      "sha256": "5b6f0e621572aace37a5f4a4e0e5efbf03495a7733264dd73d3b0e797b3bcdd7"
+    },
+    {
+      "path": "chunk-LZEGMRUA.js",
+      "bytes": 857,
+      "sha256": "786d33c0233a0b0f6c9a0dc0aa46b34b172f9416ce8afe94ce418c6cfe76f75b"
+    },
+    {
+      "path": "chunk-MJNOAPTI.js",
+      "bytes": 474,
+      "sha256": "e0e8816c7d53a13139bd29bedd34e1b452d15335f3f17e3e042a6ec2d6a8eec4"
+    },
+    {
+      "path": "chunk-N5O4DAGK.js",
+      "bytes": 13842,
+      "sha256": "8cda6ad36679855a5252074c8d8b6101f8ec760437d07f36262b7c36ba9c4339"
+    },
+    {
+      "path": "chunk-OMGTIJHY.js",
+      "bytes": 9205,
+      "sha256": "cdc55e85aac0f6ac6abeefa507d026bbd9d6a1cf922e6cccfb7c49edc44a46f1"
+    },
+    {
+      "path": "chunk-PVCDKEJJ.js",
+      "bytes": 28032,
+      "sha256": "7954f4c45841157b45208cc2c843685e9190f42d1986ff6adb9263212308de44"
+    },
+    {
+      "path": "chunk-QZ5PNKO6.js",
+      "bytes": 48476,
+      "sha256": "289ff1d049e227a2c9783aebe1968558a0fa80af104f306e345ed74c18e4bddc"
+    },
+    {
+      "path": "chunk-RIFQ4K7Z.js",
+      "bytes": 12304,
+      "sha256": "480ac4bc5b0b37b603149ad28bc8140977caf529d7ed845b99271791855d9a3b"
+    },
+    {
+      "path": "chunk-UYLJZ6KC.js",
+      "bytes": 35634,
+      "sha256": "92a8146b6fa2302d5919cb31322d592d81f49f3d863fa4f76b4eaca20ce81b9b"
+    },
+    {
+      "path": "chunk-YDRSLIXG.js",
+      "bytes": 1030,
+      "sha256": "86929497f59734f8ee97ffce9295e2da16940625e36f36e8ad9cbaac20cb4f5d"
+    },
+    {
+      "path": "favicon.ico",
+      "bytes": 4833,
+      "sha256": "8f80b82a4e0238237fb46c29e4b36aafe2f93cde6bea90bb168eb6274beb9ec4"
+    },
+    {
+      "path": "favicon.png",
+      "bytes": 4187,
+      "sha256": "58a828c8e41a7232eecbaa2b2ac2dafc1fe47e6097324a6720f809e7703f17eb"
+    },
+    {
+      "path": "guides/choose-business-location-evidence/index.html",
+      "bytes": 10173,
+      "sha256": "1c8cbf1215b6e4168e711858742ecfc8a357fa1809ead025b2cb7fd022b6b316"
+    },
+    {
+      "path": "guides/compare-job-offers-relocation/index.html",
+      "bytes": 9876,
+      "sha256": "66304fef06d94241c67f1d5d29b49170b4c8169ad18b6dbfc09c694133cd3f8a"
+    },
+    {
+      "path": "guides/compare-options-with-your-own-data/index.html",
+      "bytes": 10084,
+      "sha256": "ce262b5fa640e4e4ea73543faeaab44adcbc17ee5f0412032bf4b27a9f9c73b5"
+    },
+    {
+      "path": "guides/guide.css",
+      "bytes": 4887,
+      "sha256": "e9c6676d8de5b5923c6406198402785cb694d8d60516c6f5e5139859c7c4352e"
+    },
+    {
+      "path": "guides/index.html",
+      "bytes": 5036,
+      "sha256": "a544ec0bbed2423c5e290a44994e54297b9171f1f776dac5a44fd591db9657c1"
+    },
+    {
+      "path": "guides/market-analysis-business-plan/index.html",
+      "bytes": 18719,
+      "sha256": "4bfefb4e0e4aca669582b95218464c890bd378c010db529f28c40eb3fbc12453"
+    },
+    {
+      "path": "index.html",
+      "bytes": 20370,
+      "sha256": "ec21e1e0cf6da23b557fb1b5fdb00847311fed5cefdce3670e17dd1471380cd1"
+    },
+    {
+      "path": "main-3PRFZFKU.js",
+      "bytes": 169041,
+      "sha256": "c08d51bf32202f0331237ec6555d292ca172c35152b23f89324db1458fae7d62"
+    },
+    {
+      "path": "polyfills-CJUPGK76.js",
+      "bytes": 34585,
+      "sha256": "15c6f58707b9b19116fde3a3f6a0ce9cf83427d64a91e95cb91fe1056c3da616"
+    },
+    {
+      "path": "privacy-policy.html",
+      "bytes": 19474,
+      "sha256": "b115a64fd328dcfaec097a97f913e9016145dea75cba46c9e349230ec6e8ffbb"
+    },
+    {
+      "path": "robots.txt",
+      "bytes": 146,
+      "sha256": "db92b36011be622fbfce10dbd51e06c68095a4daf2888e44389afa16e90684d5"
+    },
+    {
+      "path": "sample-report.html",
+      "bytes": 19757,
+      "sha256": "1439ac8fea2e573637b8ddd3ed3471960a8699dcf5f05329eaede1a402d8a487"
+    },
+    {
+      "path": "sitemap.xml",
+      "bytes": 1379,
+      "sha256": "8f6ac017557c1542762a0e0207380e5f193beae8e110e6691fe527e367b04931"
+    },
+    {
+      "path": "styles-4JIC4WKL.css",
+      "bytes": 23663,
+      "sha256": "069cbb5dd27393957312fcdcd1d90dd944244b326a30a14b799a9cc8215e0061"
+    },
+    {
+      "path": "terms-of-conduct.html",
+      "bytes": 19415,
+      "sha256": "b1ad7230ad6cb63c0b666bf73600ab778c5c1fc49917119ffd11ac18c53ef20c"
+    }
+  ]
+}

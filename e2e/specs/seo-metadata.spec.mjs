@@ -28,7 +28,7 @@ test('initial responses protect private routes and give public routes their own 
 
 test('client navigation removes homepage offers and updates robots and canonical', async ({ page }) => {
   await page.goto('/?utm_source=regression');
-  await expect(page).toHaveTitle('ifYouMind — Evidence for clearer decisions');
+  await expect(page).toHaveTitle('ifYouMind — Big decisions deserve better answers');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://ifyoumind.com/');
   await expect(page.locator('#page-structured-data')).toHaveCount(1);
   await page.locator('nav.nav').getByRole('link', { name: 'Try it free' }).click();

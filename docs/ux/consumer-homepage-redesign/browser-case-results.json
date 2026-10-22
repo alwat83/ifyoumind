@@ -1,0 +1,702 @@
+{
+  "observedAt": "2026-10-22T22:47:00Z",
+  "command": "CI=true QA_BROWSER_CHANNEL=chrome QA_PORT=4340 firebase emulators:exec --project demo-ifyoumind --only auth,firestore,functions \"playwright test --config e2e/playwright.config.mjs --workers=1\"",
+  "exitCode": 0,
+  "summary": {
+    "id": "",
+    "name": "",
+    "tests": "98",
+    "failures": "0",
+    "skipped": "0",
+    "errors": "0",
+    "time": "122.16637599999999"
+  },
+  "cases": [
+    {
+      "project": "desktop",
+      "suite": "decisions.spec.mjs",
+      "name": "a verified free user creates a decision through the app and sees the free brief",
+      "seconds": 6.167,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "decisions.spec.mjs",
+      "name": "a returning user finds the saved decision and reopens its report",
+      "seconds": 0.777,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "decisions.spec.mjs",
+      "name": "another account's decision never loads, even with its exact id",
+      "seconds": 0.649,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "decisions.spec.mjs",
+      "name": "a non-admin account sees no founder metrics on /app/growth",
+      "seconds": 1.538,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "decisions.spec.mjs",
+      "name": "founder metrics warn when the QA exclusion list is missing and keep the counts visible",
+      "seconds": 1.061,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "decisions.spec.mjs",
+      "name": "the fourth free decision this month is refused with a clear message",
+      "seconds": 0.99,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "homepage-release.spec.mjs",
+      "name": "homepage: consumer discovery opens real free experiences and keeps upcoming tools gated",
+      "seconds": 3.15,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "homepage-release.spec.mjs",
+      "name": "homepage: sample, Business prices, paid intent and registration remain usable",
+      "seconds": 0.915,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "homepage-release.spec.mjs",
+      "name": "homepage respects reduced motion and keeps discovery in page memory only",
+      "seconds": 1.026,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "layout-a11y.spec.mjs",
+      "name": "public page / is accessible and fits the viewport",
+      "seconds": 1.22,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "layout-a11y.spec.mjs",
+      "name": "public page /login is accessible and fits the viewport",
+      "seconds": 1.062,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "layout-a11y.spec.mjs",
+      "name": "public page /register is accessible and fits the viewport",
+      "seconds": 1.107,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "layout-a11y.spec.mjs",
+      "name": "public page /register?intent=report is accessible and fits the viewport",
+      "seconds": 1.073,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "layout-a11y.spec.mjs",
+      "name": "homepage navigation reaches sign-in and registration",
+      "seconds": 0.585,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "layout-a11y.spec.mjs",
+      "name": "signed-in pages are accessible, fit the viewport and the app navigation works",
+      "seconds": 6.502,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "registration.spec.mjs",
+      "name": "empty and malformed registration shows inline errors and creates no account",
+      "seconds": 0.826,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "registration.spec.mjs",
+      "name": "sign-up verifies by email; the link opened in another browser keeps the $79 intent",
+      "seconds": 1.592,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "release-readiness.spec.mjs",
+      "name": "integrated public pages: pricing, report, guides, accessibility and approval screenshots",
+      "seconds": 3.09,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "release-readiness.spec.mjs",
+      "name": "paid-report response contract: full report, copy and print controls remain usable",
+      "seconds": 0.981,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "release-readiness.spec.mjs",
+      "name": "checkout link contract: report preserves the offer and report identity",
+      "seconds": 0.996,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "release-readiness.spec.mjs",
+      "name": "checkout link contract: pro preserves the offer and report identity",
+      "seconds": 0.956,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/decide?type=business&intent=report goes to sign-in and remembers the page",
+      "seconds": 0.325,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/pricing?offer=report goes to sign-in and remembers the page",
+      "seconds": 0.335,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/account goes to sign-in and remembers the page",
+      "seconds": 0.333,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/result/abc123 goes to sign-in and remembers the page",
+      "seconds": 0.32,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app goes to sign-in without a return URL",
+      "seconds": 0.328,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/growth goes to sign-in without a return URL",
+      "seconds": 0.327,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/data goes to sign-in without a return URL",
+      "seconds": 0.33,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/ask goes to sign-in without a return URL",
+      "seconds": 0.331,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/advanced goes to sign-in without a return URL",
+      "seconds": 0.347,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "return-url.spec.mjs",
+      "name": "valid return URLs are restored after email sign-in",
+      "seconds": 1.797,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "return-url.spec.mjs",
+      "name": "unknown query parameters are dropped and the page is kept",
+      "seconds": 0.557,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "return-url.spec.mjs",
+      "name": "hostile or malformed return URLs always land on /app inside the site",
+      "seconds": 6.317,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "sample-report-demo.spec.mjs",
+      "name": "public sample can be printed without registration while preserving the paid offer",
+      "seconds": 0.836,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "sample-report-mobile.spec.mjs",
+      "name": "sample report: the answer starts on the first screen, with nothing removed",
+      "seconds": 2.118,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "seo-metadata.spec.mjs",
+      "name": "initial responses protect private routes and give public routes their own metadata",
+      "seconds": 0.186,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "seo-metadata.spec.mjs",
+      "name": "client navigation removes homepage offers and updates robots and canonical",
+      "seconds": 0.535,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "session.spec.mjs",
+      "name": "signing out ends the session and protected pages need sign-in again",
+      "seconds": 1.014,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "session.spec.mjs",
+      "name": "an expired session for a disabled account is signed out and sent to sign-in",
+      "seconds": 0.788,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "session.spec.mjs",
+      "name": "a session with an invalid refresh token is signed out and sent to sign-in",
+      "seconds": 0.671,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "trust-fixes.spec.mjs",
+      "name": "a free result opens with what the figures show, then the evidence, then the offer",
+      "seconds": 0.589,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "trust-fixes.spec.mjs",
+      "name": "forgot password sends a reset email without revealing whether the account exists",
+      "seconds": 0.742,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "trust-fixes.spec.mjs",
+      "name": "sign-up links the Terms and the Privacy Policy",
+      "seconds": 0.351,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "trust-fixes.spec.mjs",
+      "name": "the homepage shows a real sample finding and claims no uploaded-data analysis",
+      "seconds": 0.46,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "verification-gate.spec.mjs",
+      "name": "unverified account is sent to /verify-email from /app",
+      "seconds": 0.655,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "verification-gate.spec.mjs",
+      "name": "unverified account is sent to /verify-email from /app/decide?type=business",
+      "seconds": 0.642,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "verification-gate.spec.mjs",
+      "name": "unverified account is sent to /verify-email from /app/pricing",
+      "seconds": 0.656,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "verification-gate.spec.mjs",
+      "name": "unverified account is sent to /verify-email from /app/account",
+      "seconds": 0.764,
+      "status": "passed"
+    },
+    {
+      "project": "desktop",
+      "suite": "verification-gate.spec.mjs",
+      "name": "unverified account is sent to /verify-email from /app/result/anything",
+      "seconds": 0.65,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "decisions.spec.mjs",
+      "name": "a verified free user creates a decision through the app and sees the free brief",
+      "seconds": 1.462,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "decisions.spec.mjs",
+      "name": "a returning user finds the saved decision and reopens its report",
+      "seconds": 0.739,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "decisions.spec.mjs",
+      "name": "another account's decision never loads, even with its exact id",
+      "seconds": 0.644,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "decisions.spec.mjs",
+      "name": "a non-admin account sees no founder metrics on /app/growth",
+      "seconds": 0.788,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "decisions.spec.mjs",
+      "name": "founder metrics warn when the QA exclusion list is missing and keep the counts visible",
+      "seconds": 0.791,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "decisions.spec.mjs",
+      "name": "the fourth free decision this month is refused with a clear message",
+      "seconds": 1.228,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "homepage-release.spec.mjs",
+      "name": "homepage: consumer discovery opens real free experiences and keeps upcoming tools gated",
+      "seconds": 3.045,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "homepage-release.spec.mjs",
+      "name": "homepage: sample, Business prices, paid intent and registration remain usable",
+      "seconds": 0.87,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "homepage-release.spec.mjs",
+      "name": "homepage respects reduced motion and keeps discovery in page memory only",
+      "seconds": 0.996,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "layout-a11y.spec.mjs",
+      "name": "public page / is accessible and fits the viewport",
+      "seconds": 1.237,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "layout-a11y.spec.mjs",
+      "name": "public page /login is accessible and fits the viewport",
+      "seconds": 1.072,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "layout-a11y.spec.mjs",
+      "name": "public page /register is accessible and fits the viewport",
+      "seconds": 1.115,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "layout-a11y.spec.mjs",
+      "name": "public page /register?intent=report is accessible and fits the viewport",
+      "seconds": 1.103,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "layout-a11y.spec.mjs",
+      "name": "homepage navigation reaches sign-in and registration",
+      "seconds": 0.6,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "layout-a11y.spec.mjs",
+      "name": "signed-in pages are accessible, fit the viewport and the app navigation works",
+      "seconds": 6.419,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "registration.spec.mjs",
+      "name": "empty and malformed registration shows inline errors and creates no account",
+      "seconds": 0.864,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "registration.spec.mjs",
+      "name": "sign-up verifies by email; the link opened in another browser keeps the $79 intent",
+      "seconds": 1.781,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "release-readiness.spec.mjs",
+      "name": "integrated public pages: pricing, report, guides, accessibility and approval screenshots",
+      "seconds": 3.378,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "release-readiness.spec.mjs",
+      "name": "paid-report response contract: full report, copy and print controls remain usable",
+      "seconds": 1.021,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "release-readiness.spec.mjs",
+      "name": "checkout link contract: report preserves the offer and report identity",
+      "seconds": 1.045,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "release-readiness.spec.mjs",
+      "name": "checkout link contract: pro preserves the offer and report identity",
+      "seconds": 1.028,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/decide?type=business&intent=report goes to sign-in and remembers the page",
+      "seconds": 0.473,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/pricing?offer=report goes to sign-in and remembers the page",
+      "seconds": 0.372,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/account goes to sign-in and remembers the page",
+      "seconds": 0.46,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/result/abc123 goes to sign-in and remembers the page",
+      "seconds": 0.472,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app goes to sign-in without a return URL",
+      "seconds": 0.464,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/growth goes to sign-in without a return URL",
+      "seconds": 0.371,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/data goes to sign-in without a return URL",
+      "seconds": 0.468,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/ask goes to sign-in without a return URL",
+      "seconds": 0.37,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "return-url.spec.mjs",
+      "name": "signed out, /app/advanced goes to sign-in without a return URL",
+      "seconds": 0.378,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "return-url.spec.mjs",
+      "name": "valid return URLs are restored after email sign-in",
+      "seconds": 2.009,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "return-url.spec.mjs",
+      "name": "unknown query parameters are dropped and the page is kept",
+      "seconds": 0.695,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "return-url.spec.mjs",
+      "name": "hostile or malformed return URLs always land on /app inside the site",
+      "seconds": 7.253,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "sample-report-demo.spec.mjs",
+      "name": "public sample can be printed without registration while preserving the paid offer",
+      "seconds": 0.889,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "sample-report-mobile.spec.mjs",
+      "name": "sample report: the answer starts on the first screen, with nothing removed",
+      "seconds": 2.904,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "seo-metadata.spec.mjs",
+      "name": "initial responses protect private routes and give public routes their own metadata",
+      "seconds": 0.185,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "seo-metadata.spec.mjs",
+      "name": "client navigation removes homepage offers and updates robots and canonical",
+      "seconds": 0.551,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "session.spec.mjs",
+      "name": "signing out ends the session and protected pages need sign-in again",
+      "seconds": 1.067,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "session.spec.mjs",
+      "name": "an expired session for a disabled account is signed out and sent to sign-in",
+      "seconds": 0.832,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "session.spec.mjs",
+      "name": "a session with an invalid refresh token is signed out and sent to sign-in",
+      "seconds": 0.81,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "trust-fixes.spec.mjs",
+      "name": "a free result opens with what the figures show, then the evidence, then the offer",
+      "seconds": 0.637,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "trust-fixes.spec.mjs",
+      "name": "forgot password sends a reset email without revealing whether the account exists",
+      "seconds": 0.758,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "trust-fixes.spec.mjs",
+      "name": "sign-up links the Terms and the Privacy Policy",
+      "seconds": 0.355,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "trust-fixes.spec.mjs",
+      "name": "the homepage shows a real sample finding and claims no uploaded-data analysis",
+      "seconds": 0.508,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "verification-gate.spec.mjs",
+      "name": "unverified account is sent to /verify-email from /app",
+      "seconds": 0.686,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "verification-gate.spec.mjs",
+      "name": "unverified account is sent to /verify-email from /app/decide?type=business",
+      "seconds": 0.84,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "verification-gate.spec.mjs",
+      "name": "unverified account is sent to /verify-email from /app/pricing",
+      "seconds": 0.804,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "verification-gate.spec.mjs",
+      "name": "unverified account is sent to /verify-email from /app/account",
+      "seconds": 0.937,
+      "status": "passed"
+    },
+    {
+      "project": "mobile",
+      "suite": "verification-gate.spec.mjs",
+      "name": "unverified account is sent to /verify-email from /app/result/anything",
+      "seconds": 0.844,
+      "status": "passed"
+    }
+  ]
+}

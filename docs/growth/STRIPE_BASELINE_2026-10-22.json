@@ -1,0 +1,26 @@
+{
+  "observedDate": "2026-10-22",
+  "status": "ACCESS_RESTORED_PRIVATE_BASELINE_VERIFIED_PUBLICATION_HELD",
+  "mode": "live",
+  "scope": "Authorized connected ifYouMind account only; test activity and other accounts not inferred.",
+  "method": "Authorized read-only standard Stripe GET list operations, checking completeness; no writes or real transactions.",
+  "operations": [
+    "GetCharges",
+    "GetPaymentIntents",
+    "GetInvoices",
+    "GetRefunds",
+    "GetSubscriptions",
+    "GetBalanceTransactions",
+    "GetCheckoutSessions",
+    "GetPrices"
+  ],
+  "publicCatalog": {
+    "reportUsd": 79,
+    "proMonthlyUsd": 39
+  },
+  "financialMetrics": "Withheld from GitHub pending explicit founder publication approval required by automatic approval review. Private local scoreboard/evidence is retained under ignored tmp/revenue-private/2026-10-22/. Do not infer withheld figures are zero or unavailable.",
+  "classification": "Separate live/test, founder/internal QA and independent customer receipts; do not invent founder confirmations.",
+  "costs": "Infrastructure/AI attribution and contribution margin remain unverified.",
+  "mutations": "None. No payment/refund/subscription/configuration change.",
+  "pii": "No account/customer/payment identifiers, session URLs or raw payloads published."
+}

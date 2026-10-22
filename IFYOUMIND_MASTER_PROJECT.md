@@ -24,6 +24,8 @@
 
 > **Status discipline:** planned ≠ committed ≠ merged ≠ deployed ≠ production verified. GitHub commits are implementation evidence, not proof of a working live release. Historical Notion architecture is not necessarily the current shipped product.
 
+**Founder correction — 2026-10-22:** The founder states that they never confirmed purchases. Earlier attribution of successful purchases to the founder was incorrect and is retracted. Historical log/release-package statements cannot be used as purchase evidence. Live Stripe access was restored; scoped findings are preserved locally pending explicit financial-publication approval. Financial observations alone do not prove that purchase code is broken.
+
 ## Permanent commercial mandate — 2026-10-22
 
 Standing priorities: verified independently paying customers; revenue and conversion; faster discovery-to-value; retention/repeat purchases; lower unnecessary operating costs; functionality directly supporting these outcomes. Preserve the broad decision-platform vision and current Business funnel. Founder retains authority over financial commitments, pricing/Stripe changes, production/master merges, customer/partner communications and major strategy. No public experimental Life calculations without methodology approval.
@@ -43,7 +45,7 @@ Historical repository/Notion records describe Angular 19.x, TypeScript, Tailwind
 ## 3. Implemented/committed milestones (production validation separate)
 - **2026-09-30 foundation:** OpenAI/Codex branches `codex/ifyoumind-2-foundation` and `codex/ifyoumind-2-contracts` documented organization authorization, rules/emulator tests, metrics/evidence and connector contracts. Historical documentation records commits `b40cbee`, `9b5519a`.
 - **2026-10-03 consumer rebuild:** [PR #1](https://github.com/alwat83/ifyoumind/pull/1) merged to `master` with 275 commits, replacing the legacy site with a consumer-first public experience, authentication, guided decision flow, consumer results, pricing and data upload, while preserving intelligence backend.
-- **Stripe:** 2026-10-03 `13c9977` updated the production workflow for a Stripe commerce webhook. October 9 commits added self-service billing portal session/client/UI and related function deployment wiring (`6f399d6`, `9738403`, `cfc1ad3`, `bf7619c`, `743fb34`, `06173a1`). Founder confirms successful paid purchases; do not classify paid purchase as outstanding. Code/CI and production evidence remain separate from this founder confirmation.
+- **Stripe:** 2026-10-03 `13c9977` updated the production workflow for a Stripe commerce webhook. October 9 commits added self-service billing portal session/client/UI and related function deployment wiring (`6f399d6`, `9738403`, `cfc1ad3`, `bf7619c`, `743fb34`, `06173a1`). Purchase implementation is supported by source/CI, not a founder-confirmed transaction. The founder explicitly denied ever confirming purchases on 2026-10-22; the previous attribution was incorrect.
 - **Census:** October 9 commits `975f24a` (API key for live market data), `55a708e` (transient failure retry), `705fc98` (safe failure-stage reporting). Validate live responses, fallback, quotas and source freshness.
 - **Decision Report trust:** `20a1c82`, `456a394`, `5d60934` refined source coverage, report locations and decision triggers. Verify report labels accurately describe data coverage rather than unsupported certainty.
 - **Mobile UX:** `7e2bc0a`, `6d5f156`, `0308df5`, `9c30bc2` refined mobile report/pricing layouts.
@@ -65,7 +67,7 @@ Latest recent-commit search on 2026-10-10 returned `20a1c82` dated October 9. Th
 ## CURRENT HANDOFF — READ FIRST (2026-10-10)
 **Project coordination authority: [ifYouMind Notion hub](https://app.notion.com/p/3f5c9bc5d8fd805ebaa6eae586db23bf).** Read its newest founder decisions first. GitHub is implementation/CI evidence, and this Markdown is the durable engineering handoff. Do not use the historical phase table below to override the current consumer-first revenue priority.
 
-**Founder-confirmed working:** Decision Report generation, successful PDF output and paid purchases. Prior threads describe a Census-backed Decision Report with 4/4 attributed key metrics, evidence, decision triggers and action plan; do not rebuild or relabel these as unfinished. Stripe checkout, webhook, billing portal and report entitlement implementation exist on `master`. A founder-confirmed successful paid purchase is not an outstanding task.
+**Implemented capabilities, customer outcomes separate:** Earlier records describe report generation, PDF/print output, Census evidence and action plans. Stripe checkout, webhook, billing portal and report entitlement implementation exist on `master`. The previous claim that the founder confirmed successful purchases was incorrect, explicitly corrected by the founder on 2026-10-22. Source and emulator verification do not establish live purchases; scoped financial findings are retained privately pending publication approval.
 
 **Session stopping point (2026-10-10):** PR #3 checkout messaging merged; documentation PR #4 merged earlier at `c4dac410`. Founder requested a pause after these changes. Next session: confirm deployment status and prioritize marketing/customer acquisition. No new feature work now.
 
@@ -191,7 +193,7 @@ The September 30 repository audit reported tracked `functions/node_modules`, a b
 - [ ] Confirm current `master` HEAD, relevant GitHub Actions run results and deployed Hosting/Functions revision.
 - [ ] Run fresh build/tests; inspect baseline lint, bundles and dependency hygiene.
 - [x] Founder confirmed working Decision Reports and generated PDF; earlier Census-backed 4/4 metric report documented. Targeted regression checks only when making related changes.
-- [x] Founder confirmed paid purchases work. Other UX/mobile/billing-portal regression checks should be scoped to actual changes; do not relabel paid purchase outstanding.
+- [ ] Independently verified paying customers: not established. The former checked founder-purchase confirmation was incorrect and retracted on 2026-10-22. Preserve tested payment flows; verify real receipts without agent-initiated transactions.
 - [ ] Verify founder metrics events, permissions and reporting consistency.
 - [ ] Compare all outstanding branches with `master` and resolve unique changes.
 - [ ] Update the ifYouMind Notion hub and engineering tasks with evidence-backed statuses.
@@ -214,7 +216,7 @@ All development so far: **OpenAI only**, per founder confirmation. Other AI prov
 
 ## Current development roadmap — founder directive, 2026-10-22
 
-**GitHub and repository documentation are the source of truth for development**, per the founder's latest instruction; this supersedes older Notion-first coordination language. Preserve the Business funnel and founder-confirmed working reports, PDFs and purchases. No merge or deployment without founder approval. Experimental Life outputs remain local-only and are not part of the public homepage release.
+**GitHub and repository documentation are the source of truth for development**, per the founder's latest instruction; this supersedes older Notion-first coordination language. Preserve the implemented Business funnel, reports and PDF/print functionality. No founder-confirmed purchase exists; see the October 22 correction. No merge or deployment without founder approval. Experimental Life outputs remain local-only and are not part of the public homepage release.
 
 1. **Completed locally / CI verified:** PR #54 / #55 verification and combined #49 / #54 mobile regression (16/16 browser tests). Record exact heads, CI, emulator tests and screenshots in `docs/releases/2026-10-22/verification.md`.
 2. **Planned, next after verification:** [Issue #56 — SEO growth foundation](https://github.com/alwat83/ifyoumind/issues/56). Audit raw and rendered metadata, indexability, sitemap generation, structured data and actual legacy `SeoService` usage. Fix verified defects with regression coverage on a separate branch and draft PR; keep recommendations and missing measurement access distinct from confirmed problems.
@@ -224,3 +226,13 @@ All development so far: **OpenAI only**, per founder confirmation. Other AI prov
 **Notion synchronization history (resolved by founder link):** repository hub `3f5c9bc5d8fd805ebaa6eae586db23bf` returns NOT_FOUND. Searches for "ifYouMind Hub", "Revenue Growth Command Center" and "Revenue Growth" found only October 10 historical copies (`3eb02474659c81ecba55cc4eed184a71`, `fe202474659c8262827c818dd3039dea`, `d6602474659c83bca81c815bec5ccbad`) and `ifYouMind Transfer` (`3f502474659c80349a0ccd19484bcca2`). Fetches verified these accessible IDs and historical content, but did not establish the current personal-workspace hub. No pages were created or overwritten. Continue using GitHub and this repository record until the current hub is accessible.
 
 Founder subsequently supplied and confirmed https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71 as the current destination. Its accessibility and ID were verified; the development handoff and #56 roadmap were appended successfully, preserving history. Use this URL going forward.
+
+
+## 2026-10-22 — Consumer homepage candidate and restored live financial evidence
+
+A separate `codex/consumer-homepage-redesign` extends the #60 integrated lineage through #62, preserving all three existing drafts (#60/#62/#63). [Founder visual review](docs/ux/consumer-homepage-redesign/REVIEW.md) includes before/after desktop/mobile and 320px captures, four-choice consumer discovery, available-versus-upcoming boundaries, sample-first journey and unchanged Business $79/$39 offers. It is development-only. Local production/emulator builds, 87 fast tests, 72 Functions units, 98 complete browser cases and 56 Hosting SEO observations pass. The new selected-number contrast regression was fixed; full lint 91/Angular compiler 11 identical baseline failures remain disclosed. No dependencies, backend, billing, rules, workflows or experimental routes added. New exact-head remote QA is required; #60 checks cannot cover changed homepage source.
+
+Restored read-only Stripe access supplies private financial evidence; actual figures are withheld from GitHub pending explicit publication approval: [evidence](docs/growth/STRIPE_BASELINE_2026-10-22.json), [weekly scoreboard](docs/growth/REVENUE_GROWTH_PLAN.md). The founder explicitly denies ever confirming purchases, retracting older agent attribution throughout these handoff records. No financial/production/customer mutation performed. [Draft #63's buyer package](https://github.com/alwat83/ifyoumind/pull/63) is retained; its older access/attribution paragraphs are superseded. Current next revenue opportunity is founder-approved introductions and the first real buyer conversations, not more speculative features. Active status and next three actions are in CURRENT_STATUS; preserve historical log entries with the explicit correction.
+
+
+**Consumer candidate GitHub follow-up:** [draft #64](https://github.com/alwat83/ifyoumind/pull/64), application/review commit `802385af996fe3a74f493349dfa710a062d24e03`, exact-head [manual QA SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/39871481866) with all backend suites and 98 browser checks. Final record-only head must be independently verified; see PR and current snapshot. #60/#62/#63 heads remain unchanged. Issue #61 now records restored read-only access and the prepared twenty-group/five-demo package without publishing private financial figures. Specific aggregate-publication approval remains pending; populated local scoreboard is excluded from Git.

@@ -1,0 +1,2125 @@
+{
+  "observedAt": "2026-10-23T15:33:09.815Z",
+  "base": "https://ifyoumind.com",
+  "externalRequestsBlocked": true,
+  "observations": [
+    {
+      "path": "/",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/",
+      "title": "ifYouMind \u2014 Big decisions deserve better answers",
+      "description": "Explore free guides for life\u2019s big decisions and a public sample report. Compare U.S. cities with cited Business reports; personal tools are in development.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/"
+      ],
+      "ogUrl": "https://ifyoumind.com/",
+      "twitterTitle": "ifYouMind \u2014 Big decisions deserve better answers",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "ifYouMind",
+          "url": "https://ifyoumind.com/",
+          "applicationCategory": "BusinessApplication",
+          "description": "A decision-support web application that organizes source-backed public data into clear comparisons and Decision Briefs.",
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Free",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Pro",
+              "price": "39",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Decision Report",
+              "price": "79",
+              "priceCurrency": "USD"
+            }
+          ]
+        }
+      ],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/sample-report?utm_source=seo-audit",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/sample-report?utm_source=seo-audit",
+      "title": "Sample Decision Report | ifYouMind",
+      "description": "See a full ifYouMind Decision Report: a location decision compared across three U.S. cities with cited U.S. Census data, an action plan, and clear limits.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/sample-report"
+      ],
+      "ogUrl": "https://ifyoumind.com/sample-report",
+      "twitterTitle": "Sample Decision Report | ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/privacy-policy",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/privacy-policy",
+      "title": "Privacy Policy | ifYouMind",
+      "description": "How ifYouMind collects, uses, stores and protects your information.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/privacy-policy"
+      ],
+      "ogUrl": "https://ifyoumind.com/privacy-policy",
+      "twitterTitle": "Privacy Policy | ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/terms-of-conduct",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/terms-of-conduct",
+      "title": "Terms of Service | ifYouMind",
+      "description": "The terms that apply when you use ifYouMind.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/terms-of-conduct"
+      ],
+      "ogUrl": "https://ifyoumind.com/terms-of-conduct",
+      "twitterTitle": "Terms of Service | ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/login",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/login",
+      "title": "ifYouMind",
+      "description": "Sign in to manage your ifYouMind decisions and reports.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/register?intent=report",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/register?intent=report",
+      "title": "ifYouMind",
+      "description": "Sign in to manage your ifYouMind decisions and reports.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/app/result/seo-audit",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/app/result/seo-audit",
+      "title": "ifYouMind",
+      "description": "Sign in to manage your ifYouMind decisions and reports.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/",
+      "title": "Decision guides: jobs, places and evidence | ifYouMind",
+      "description": "Source-cited guides for job offers, relocation, business locations and comparing your own evidence. Practical worksheets with clear limits and Business examples.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/",
+      "twitterTitle": "Decision guides: jobs, places and evidence | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "ifYouMind guides",
+          "url": "https://ifyoumind.com/guides/"
+        }
+      ],
+      "h1": [
+        "Practical guides for decisions that matter"
+      ],
+      "bodyCharacters": 1570,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/market-analysis-business-plan/",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+      "title": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/market-analysis-business-plan/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+      "twitterTitle": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+              "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+              "datePublished": "2026-10-11",
+              "dateModified": "2026-10-11",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+                  "item": "https://ifyoumind.com/guides/market-analysis-business-plan/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)"
+      ],
+      "bodyCharacters": 10728,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/compare-job-offers-relocation/",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/compare-job-offers-relocation/",
+      "title": "Compare Job Offers and Relocation Trade-offs | ifYouMind",
+      "description": "A practical worksheet for comparing job offers, housing, benefits and commute uncertainty when one offer means moving. No automatic winner or tax estimate.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/compare-job-offers-relocation/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/compare-job-offers-relocation/",
+      "twitterTitle": "Compare Job Offers and Relocation Trade-offs | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "Compare job offers when one means relocating",
+              "description": "A practical worksheet for comparing job offers, housing, benefits and commute uncertainty when one offer means moving. No automatic winner or tax estimate.",
+              "datePublished": "2026-10-22",
+              "dateModified": "2026-10-22",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/compare-job-offers-relocation/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Compare job offers when one means relocating",
+                  "item": "https://ifyoumind.com/guides/compare-job-offers-relocation/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "Compare job offers when one means relocating"
+      ],
+      "bodyCharacters": 4681,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/choose-business-location-evidence/",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/choose-business-location-evidence/",
+      "title": "Choosing a Business Location: Evidence Checklist | ifYouMind",
+      "description": "Compare business locations with public market evidence, real site quotes and field checks. A practical checklist that separates city signals from demand.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/choose-business-location-evidence/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/choose-business-location-evidence/",
+      "twitterTitle": "Choosing a Business Location: Evidence Checklist | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "Choose a business location with evidence before a lease",
+              "description": "Compare business locations with public market evidence, real site quotes and field checks. A practical checklist that separates city signals from demand.",
+              "datePublished": "2026-10-22",
+              "dateModified": "2026-10-22",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/choose-business-location-evidence/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Choose a business location with evidence before a lease",
+                  "item": "https://ifyoumind.com/guides/choose-business-location-evidence/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "Choose a business location with evidence before a lease"
+      ],
+      "bodyCharacters": 4993,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/compare-options-with-your-own-data/",
+      "javascript": false,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/compare-options-with-your-own-data/",
+      "title": "Decision Matrix with Your Own Data: Practical Guide | ifYouMind",
+      "description": "Build a useful comparison from your own data: define criteria, record sources, keep missing values visible and test whether assumptions change the decision.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/compare-options-with-your-own-data/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/compare-options-with-your-own-data/",
+      "twitterTitle": "Decision Matrix with Your Own Data: Practical Guide | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "Compare options with a decision matrix and your own data",
+              "description": "Build a useful comparison from your own data: define criteria, record sources, keep missing values visible and test whether assumptions change the decision.",
+              "datePublished": "2026-10-22",
+              "dateModified": "2026-10-22",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/compare-options-with-your-own-data/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Compare options with a decision matrix and your own data",
+                  "item": "https://ifyoumind.com/guides/compare-options-with-your-own-data/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "Compare options with a decision matrix and your own data"
+      ],
+      "bodyCharacters": 4853,
+      "overflow": 0
+    },
+    {
+      "path": "/seo-audit-missing-page",
+      "javascript": false,
+      "width": 390,
+      "status": 404,
+      "url": "https://ifyoumind.com/seo-audit-missing-page",
+      "title": "Page not found | ifYouMind",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "schema": [],
+      "h1": [
+        "Page not found"
+      ],
+      "bodyCharacters": 117,
+      "overflow": 0
+    },
+    {
+      "path": "/life/quick-compare",
+      "javascript": false,
+      "width": 390,
+      "status": 404,
+      "url": "https://ifyoumind.com/life/quick-compare",
+      "title": "Page not found | ifYouMind",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "schema": [],
+      "h1": [
+        "Page not found"
+      ],
+      "bodyCharacters": 117,
+      "overflow": 0
+    },
+    {
+      "path": "/",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/",
+      "title": "ifYouMind \u2014 Big decisions deserve better answers",
+      "description": "Explore free guides for life\u2019s big decisions and a public sample report. Compare U.S. cities with cited Business reports; personal tools are in development.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/"
+      ],
+      "ogUrl": "https://ifyoumind.com/",
+      "twitterTitle": "ifYouMind \u2014 Big decisions deserve better answers",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "ifYouMind",
+          "url": "https://ifyoumind.com/",
+          "applicationCategory": "BusinessApplication",
+          "description": "A decision-support web application that organizes source-backed public data into clear comparisons and Decision Briefs.",
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Free",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Pro",
+              "price": "39",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Decision Report",
+              "price": "79",
+              "priceCurrency": "USD"
+            }
+          ]
+        }
+      ],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/sample-report?utm_source=seo-audit",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/sample-report?utm_source=seo-audit",
+      "title": "Sample Decision Report | ifYouMind",
+      "description": "See a full ifYouMind Decision Report: a location decision compared across three U.S. cities with cited U.S. Census data, an action plan, and clear limits.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/sample-report"
+      ],
+      "ogUrl": "https://ifyoumind.com/sample-report",
+      "twitterTitle": "Sample Decision Report | ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/privacy-policy",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/privacy-policy",
+      "title": "Privacy Policy | ifYouMind",
+      "description": "How ifYouMind collects, uses, stores and protects your information.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/privacy-policy"
+      ],
+      "ogUrl": "https://ifyoumind.com/privacy-policy",
+      "twitterTitle": "Privacy Policy | ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/terms-of-conduct",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/terms-of-conduct",
+      "title": "Terms of Service | ifYouMind",
+      "description": "The terms that apply when you use ifYouMind.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/terms-of-conduct"
+      ],
+      "ogUrl": "https://ifyoumind.com/terms-of-conduct",
+      "twitterTitle": "Terms of Service | ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/login",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/login",
+      "title": "ifYouMind",
+      "description": "Sign in to manage your ifYouMind decisions and reports.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/register?intent=report",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/register?intent=report",
+      "title": "ifYouMind",
+      "description": "Sign in to manage your ifYouMind decisions and reports.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/app/result/seo-audit",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/app/result/seo-audit",
+      "title": "ifYouMind",
+      "description": "Sign in to manage your ifYouMind decisions and reports.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [],
+      "bodyCharacters": 0,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/",
+      "title": "Decision guides: jobs, places and evidence | ifYouMind",
+      "description": "Source-cited guides for job offers, relocation, business locations and comparing your own evidence. Practical worksheets with clear limits and Business examples.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/",
+      "twitterTitle": "Decision guides: jobs, places and evidence | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "ifYouMind guides",
+          "url": "https://ifyoumind.com/guides/"
+        }
+      ],
+      "h1": [
+        "Practical guides for decisions that matter"
+      ],
+      "bodyCharacters": 1570,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/market-analysis-business-plan/",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+      "title": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/market-analysis-business-plan/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+      "twitterTitle": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+              "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+              "datePublished": "2026-10-11",
+              "dateModified": "2026-10-11",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+                  "item": "https://ifyoumind.com/guides/market-analysis-business-plan/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)"
+      ],
+      "bodyCharacters": 10634,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/compare-job-offers-relocation/",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/compare-job-offers-relocation/",
+      "title": "Compare Job Offers and Relocation Trade-offs | ifYouMind",
+      "description": "A practical worksheet for comparing job offers, housing, benefits and commute uncertainty when one offer means moving. No automatic winner or tax estimate.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/compare-job-offers-relocation/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/compare-job-offers-relocation/",
+      "twitterTitle": "Compare Job Offers and Relocation Trade-offs | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "Compare job offers when one means relocating",
+              "description": "A practical worksheet for comparing job offers, housing, benefits and commute uncertainty when one offer means moving. No automatic winner or tax estimate.",
+              "datePublished": "2026-10-22",
+              "dateModified": "2026-10-22",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/compare-job-offers-relocation/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Compare job offers when one means relocating",
+                  "item": "https://ifyoumind.com/guides/compare-job-offers-relocation/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "Compare job offers when one means relocating"
+      ],
+      "bodyCharacters": 4634,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/choose-business-location-evidence/",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/choose-business-location-evidence/",
+      "title": "Choosing a Business Location: Evidence Checklist | ifYouMind",
+      "description": "Compare business locations with public market evidence, real site quotes and field checks. A practical checklist that separates city signals from demand.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/choose-business-location-evidence/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/choose-business-location-evidence/",
+      "twitterTitle": "Choosing a Business Location: Evidence Checklist | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "Choose a business location with evidence before a lease",
+              "description": "Compare business locations with public market evidence, real site quotes and field checks. A practical checklist that separates city signals from demand.",
+              "datePublished": "2026-10-22",
+              "dateModified": "2026-10-22",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/choose-business-location-evidence/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Choose a business location with evidence before a lease",
+                  "item": "https://ifyoumind.com/guides/choose-business-location-evidence/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "Choose a business location with evidence before a lease"
+      ],
+      "bodyCharacters": 4945,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/compare-options-with-your-own-data/",
+      "javascript": false,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/compare-options-with-your-own-data/",
+      "title": "Decision Matrix with Your Own Data: Practical Guide | ifYouMind",
+      "description": "Build a useful comparison from your own data: define criteria, record sources, keep missing values visible and test whether assumptions change the decision.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/compare-options-with-your-own-data/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/compare-options-with-your-own-data/",
+      "twitterTitle": "Decision Matrix with Your Own Data: Practical Guide | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "Compare options with a decision matrix and your own data",
+              "description": "Build a useful comparison from your own data: define criteria, record sources, keep missing values visible and test whether assumptions change the decision.",
+              "datePublished": "2026-10-22",
+              "dateModified": "2026-10-22",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/compare-options-with-your-own-data/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Compare options with a decision matrix and your own data",
+                  "item": "https://ifyoumind.com/guides/compare-options-with-your-own-data/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "Compare options with a decision matrix and your own data"
+      ],
+      "bodyCharacters": 4806,
+      "overflow": 0
+    },
+    {
+      "path": "/seo-audit-missing-page",
+      "javascript": false,
+      "width": 1280,
+      "status": 404,
+      "url": "https://ifyoumind.com/seo-audit-missing-page",
+      "title": "Page not found | ifYouMind",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "schema": [],
+      "h1": [
+        "Page not found"
+      ],
+      "bodyCharacters": 117,
+      "overflow": 0
+    },
+    {
+      "path": "/life/quick-compare",
+      "javascript": false,
+      "width": 1280,
+      "status": 404,
+      "url": "https://ifyoumind.com/life/quick-compare",
+      "title": "Page not found | ifYouMind",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "schema": [],
+      "h1": [
+        "Page not found"
+      ],
+      "bodyCharacters": 117,
+      "overflow": 0
+    },
+    {
+      "path": "/",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/",
+      "title": "ifYouMind \u2014 Big decisions deserve better answers",
+      "description": "Explore free guides for life\u2019s big decisions and a public sample report. Compare U.S. cities with cited Business reports; personal tools are in development.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/"
+      ],
+      "ogUrl": "https://ifyoumind.com/",
+      "twitterTitle": "ifYouMind \u2014 Big decisions deserve better answers",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "ifYouMind",
+          "url": "https://ifyoumind.com/",
+          "applicationCategory": "BusinessApplication",
+          "description": "A decision-support web application that organizes source-backed public data into clear comparisons and Decision Briefs.",
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Free",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Pro",
+              "price": "39",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Decision Report",
+              "price": "79",
+              "priceCurrency": "USD"
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "Big decisions deserve better answers."
+      ],
+      "bodyCharacters": 4533,
+      "overflow": 0
+    },
+    {
+      "path": "/sample-report?utm_source=seo-audit",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/sample-report?utm_source=seo-audit",
+      "title": "Sample Decision Report | ifYouMind",
+      "description": "See a full ifYouMind Decision Report: a location decision compared across three U.S. cities with cited U.S. Census data, an action plan, and clear limits.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/sample-report"
+      ],
+      "ogUrl": "https://ifyoumind.com/sample-report",
+      "twitterTitle": "Sample Decision Report | ifYouMind",
+      "schema": [],
+      "h1": [
+        "Explore the sample"
+      ],
+      "bodyCharacters": 422,
+      "overflow": 0
+    },
+    {
+      "path": "/privacy-policy",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/privacy-policy",
+      "title": "Privacy Policy | ifYouMind",
+      "description": "How ifYouMind collects, uses, stores and protects your information.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/privacy-policy"
+      ],
+      "ogUrl": "https://ifyoumind.com/privacy-policy",
+      "twitterTitle": "Privacy Policy | ifYouMind",
+      "schema": [],
+      "h1": [
+        "Privacy Policy"
+      ],
+      "bodyCharacters": 2711,
+      "overflow": 0
+    },
+    {
+      "path": "/terms-of-conduct",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/terms-of-conduct",
+      "title": "Terms of Service | ifYouMind",
+      "description": "The terms that apply when you use ifYouMind.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/terms-of-conduct"
+      ],
+      "ogUrl": "https://ifyoumind.com/terms-of-conduct",
+      "twitterTitle": "Terms of Service | ifYouMind",
+      "schema": [],
+      "h1": [
+        "Terms of Service"
+      ],
+      "bodyCharacters": 1901,
+      "overflow": 0
+    },
+    {
+      "path": "/login",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/login",
+      "title": "ifYouMind",
+      "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [
+        "Pick up where you left off."
+      ],
+      "bodyCharacters": 197,
+      "overflow": 0
+    },
+    {
+      "path": "/register?intent=report",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/register?intent=report",
+      "title": "ifYouMind",
+      "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [
+        "Build your market analysis."
+      ],
+      "bodyCharacters": 532,
+      "overflow": 0
+    },
+    {
+      "path": "/app/result/seo-audit",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/login?returnUrl=%2Fapp%2Fresult%2Fseo-audit",
+      "title": "ifYouMind",
+      "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [
+        "Pick up where you left off."
+      ],
+      "bodyCharacters": 197,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/",
+      "title": "Decision guides: jobs, places and evidence | ifYouMind",
+      "description": "Source-cited guides for job offers, relocation, business locations and comparing your own evidence. Practical worksheets with clear limits and Business examples.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/",
+      "twitterTitle": "Decision guides: jobs, places and evidence | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "ifYouMind guides",
+          "url": "https://ifyoumind.com/guides/"
+        }
+      ],
+      "h1": [
+        "Practical guides for decisions that matter"
+      ],
+      "bodyCharacters": 1570,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/market-analysis-business-plan/",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+      "title": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/market-analysis-business-plan/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+      "twitterTitle": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+              "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+              "datePublished": "2026-10-11",
+              "dateModified": "2026-10-11",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+                  "item": "https://ifyoumind.com/guides/market-analysis-business-plan/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)"
+      ],
+      "bodyCharacters": 10728,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/compare-job-offers-relocation/",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/compare-job-offers-relocation/",
+      "title": "Compare Job Offers and Relocation Trade-offs | ifYouMind",
+      "description": "A practical worksheet for comparing job offers, housing, benefits and commute uncertainty when one offer means moving. No automatic winner or tax estimate.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/compare-job-offers-relocation/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/compare-job-offers-relocation/",
+      "twitterTitle": "Compare Job Offers and Relocation Trade-offs | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "Compare job offers when one means relocating",
+              "description": "A practical worksheet for comparing job offers, housing, benefits and commute uncertainty when one offer means moving. No automatic winner or tax estimate.",
+              "datePublished": "2026-10-22",
+              "dateModified": "2026-10-22",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/compare-job-offers-relocation/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Compare job offers when one means relocating",
+                  "item": "https://ifyoumind.com/guides/compare-job-offers-relocation/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "Compare job offers when one means relocating"
+      ],
+      "bodyCharacters": 4681,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/choose-business-location-evidence/",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/choose-business-location-evidence/",
+      "title": "Choosing a Business Location: Evidence Checklist | ifYouMind",
+      "description": "Compare business locations with public market evidence, real site quotes and field checks. A practical checklist that separates city signals from demand.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/choose-business-location-evidence/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/choose-business-location-evidence/",
+      "twitterTitle": "Choosing a Business Location: Evidence Checklist | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "Choose a business location with evidence before a lease",
+              "description": "Compare business locations with public market evidence, real site quotes and field checks. A practical checklist that separates city signals from demand.",
+              "datePublished": "2026-10-22",
+              "dateModified": "2026-10-22",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/choose-business-location-evidence/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Choose a business location with evidence before a lease",
+                  "item": "https://ifyoumind.com/guides/choose-business-location-evidence/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "Choose a business location with evidence before a lease"
+      ],
+      "bodyCharacters": 4993,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/compare-options-with-your-own-data/",
+      "javascript": true,
+      "width": 390,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/compare-options-with-your-own-data/",
+      "title": "Decision Matrix with Your Own Data: Practical Guide | ifYouMind",
+      "description": "Build a useful comparison from your own data: define criteria, record sources, keep missing values visible and test whether assumptions change the decision.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/compare-options-with-your-own-data/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/compare-options-with-your-own-data/",
+      "twitterTitle": "Decision Matrix with Your Own Data: Practical Guide | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "Compare options with a decision matrix and your own data",
+              "description": "Build a useful comparison from your own data: define criteria, record sources, keep missing values visible and test whether assumptions change the decision.",
+              "datePublished": "2026-10-22",
+              "dateModified": "2026-10-22",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/compare-options-with-your-own-data/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Compare options with a decision matrix and your own data",
+                  "item": "https://ifyoumind.com/guides/compare-options-with-your-own-data/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "Compare options with a decision matrix and your own data"
+      ],
+      "bodyCharacters": 4853,
+      "overflow": 0
+    },
+    {
+      "path": "/seo-audit-missing-page",
+      "javascript": true,
+      "width": 390,
+      "status": 404,
+      "url": "https://ifyoumind.com/seo-audit-missing-page",
+      "title": "Page not found | ifYouMind",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "schema": [],
+      "h1": [
+        "Page not found"
+      ],
+      "bodyCharacters": 117,
+      "overflow": 0
+    },
+    {
+      "path": "/life/quick-compare",
+      "javascript": true,
+      "width": 390,
+      "status": 404,
+      "url": "https://ifyoumind.com/life/quick-compare",
+      "title": "Page not found | ifYouMind",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "schema": [],
+      "h1": [
+        "Page not found"
+      ],
+      "bodyCharacters": 117,
+      "overflow": 0
+    },
+    {
+      "path": "/",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/",
+      "title": "ifYouMind \u2014 Big decisions deserve better answers",
+      "description": "Explore free guides for life\u2019s big decisions and a public sample report. Compare U.S. cities with cited Business reports; personal tools are in development.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/"
+      ],
+      "ogUrl": "https://ifyoumind.com/",
+      "twitterTitle": "ifYouMind \u2014 Big decisions deserve better answers",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "ifYouMind",
+          "url": "https://ifyoumind.com/",
+          "applicationCategory": "BusinessApplication",
+          "description": "A decision-support web application that organizes source-backed public data into clear comparisons and Decision Briefs.",
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Free",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Pro",
+              "price": "39",
+              "priceCurrency": "USD"
+            },
+            {
+              "@type": "Offer",
+              "name": "Decision Report",
+              "price": "79",
+              "priceCurrency": "USD"
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "Big decisions deserve better answers."
+      ],
+      "bodyCharacters": 4572,
+      "overflow": 0
+    },
+    {
+      "path": "/sample-report?utm_source=seo-audit",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/sample-report?utm_source=seo-audit",
+      "title": "Sample Decision Report | ifYouMind",
+      "description": "See a full ifYouMind Decision Report: a location decision compared across three U.S. cities with cited U.S. Census data, an action plan, and clear limits.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/sample-report"
+      ],
+      "ogUrl": "https://ifyoumind.com/sample-report",
+      "twitterTitle": "Sample Decision Report | ifYouMind",
+      "schema": [],
+      "h1": [
+        "Explore the sample"
+      ],
+      "bodyCharacters": 422,
+      "overflow": 0
+    },
+    {
+      "path": "/privacy-policy",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/privacy-policy",
+      "title": "Privacy Policy | ifYouMind",
+      "description": "How ifYouMind collects, uses, stores and protects your information.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/privacy-policy"
+      ],
+      "ogUrl": "https://ifyoumind.com/privacy-policy",
+      "twitterTitle": "Privacy Policy | ifYouMind",
+      "schema": [],
+      "h1": [
+        "Privacy Policy"
+      ],
+      "bodyCharacters": 2711,
+      "overflow": 0
+    },
+    {
+      "path": "/terms-of-conduct",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/terms-of-conduct",
+      "title": "Terms of Service | ifYouMind",
+      "description": "The terms that apply when you use ifYouMind.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/terms-of-conduct"
+      ],
+      "ogUrl": "https://ifyoumind.com/terms-of-conduct",
+      "twitterTitle": "Terms of Service | ifYouMind",
+      "schema": [],
+      "h1": [
+        "Terms of Service"
+      ],
+      "bodyCharacters": 1901,
+      "overflow": 0
+    },
+    {
+      "path": "/login",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/login",
+      "title": "ifYouMind",
+      "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [
+        "Pick up where you left off."
+      ],
+      "bodyCharacters": 197,
+      "overflow": 0
+    },
+    {
+      "path": "/register?intent=report",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/register?intent=report",
+      "title": "ifYouMind",
+      "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [
+        "Build your market analysis."
+      ],
+      "bodyCharacters": 532,
+      "overflow": 0
+    },
+    {
+      "path": "/app/result/seo-audit",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/login?returnUrl=%2Fapp%2Fresult%2Fseo-audit",
+      "title": "ifYouMind",
+      "description": "Compare the U.S. cities you're considering with Census-cited population, growth, income and home values.",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "twitterTitle": "ifYouMind",
+      "schema": [],
+      "h1": [
+        "Pick up where you left off."
+      ],
+      "bodyCharacters": 197,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/",
+      "title": "Decision guides: jobs, places and evidence | ifYouMind",
+      "description": "Source-cited guides for job offers, relocation, business locations and comparing your own evidence. Practical worksheets with clear limits and Business examples.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/",
+      "twitterTitle": "Decision guides: jobs, places and evidence | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": "ifYouMind guides",
+          "url": "https://ifyoumind.com/guides/"
+        }
+      ],
+      "h1": [
+        "Practical guides for decisions that matter"
+      ],
+      "bodyCharacters": 1570,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/market-analysis-business-plan/",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+      "title": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/market-analysis-business-plan/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+      "twitterTitle": "How to Write a Business Plan Market Analysis (Free Census Data)",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+              "description": "A step-by-step guide to the market analysis section of a business plan, using free U.S. Census data, with a worked three-city example, a template and a checklist.",
+              "datePublished": "2026-10-11",
+              "dateModified": "2026-10-11",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/market-analysis-business-plan/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)",
+                  "item": "https://ifyoumind.com/guides/market-analysis-business-plan/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "How to Write the Market Analysis Section of a Business Plan (With Free Census Data)"
+      ],
+      "bodyCharacters": 10634,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/compare-job-offers-relocation/",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/compare-job-offers-relocation/",
+      "title": "Compare Job Offers and Relocation Trade-offs | ifYouMind",
+      "description": "A practical worksheet for comparing job offers, housing, benefits and commute uncertainty when one offer means moving. No automatic winner or tax estimate.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/compare-job-offers-relocation/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/compare-job-offers-relocation/",
+      "twitterTitle": "Compare Job Offers and Relocation Trade-offs | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "Compare job offers when one means relocating",
+              "description": "A practical worksheet for comparing job offers, housing, benefits and commute uncertainty when one offer means moving. No automatic winner or tax estimate.",
+              "datePublished": "2026-10-22",
+              "dateModified": "2026-10-22",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/compare-job-offers-relocation/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Compare job offers when one means relocating",
+                  "item": "https://ifyoumind.com/guides/compare-job-offers-relocation/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "Compare job offers when one means relocating"
+      ],
+      "bodyCharacters": 4634,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/choose-business-location-evidence/",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/choose-business-location-evidence/",
+      "title": "Choosing a Business Location: Evidence Checklist | ifYouMind",
+      "description": "Compare business locations with public market evidence, real site quotes and field checks. A practical checklist that separates city signals from demand.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/choose-business-location-evidence/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/choose-business-location-evidence/",
+      "twitterTitle": "Choosing a Business Location: Evidence Checklist | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "Choose a business location with evidence before a lease",
+              "description": "Compare business locations with public market evidence, real site quotes and field checks. A practical checklist that separates city signals from demand.",
+              "datePublished": "2026-10-22",
+              "dateModified": "2026-10-22",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/choose-business-location-evidence/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Choose a business location with evidence before a lease",
+                  "item": "https://ifyoumind.com/guides/choose-business-location-evidence/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "Choose a business location with evidence before a lease"
+      ],
+      "bodyCharacters": 4945,
+      "overflow": 0
+    },
+    {
+      "path": "/guides/compare-options-with-your-own-data/",
+      "javascript": true,
+      "width": 1280,
+      "status": 200,
+      "url": "https://ifyoumind.com/guides/compare-options-with-your-own-data/",
+      "title": "Decision Matrix with Your Own Data: Practical Guide | ifYouMind",
+      "description": "Build a useful comparison from your own data: define criteria, record sources, keep missing values visible and test whether assumptions change the decision.",
+      "robots": [
+        "index,follow"
+      ],
+      "canonicals": [
+        "https://ifyoumind.com/guides/compare-options-with-your-own-data/"
+      ],
+      "ogUrl": "https://ifyoumind.com/guides/compare-options-with-your-own-data/",
+      "twitterTitle": "Decision Matrix with Your Own Data: Practical Guide | ifYouMind",
+      "schema": [
+        {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Article",
+              "headline": "Compare options with a decision matrix and your own data",
+              "description": "Build a useful comparison from your own data: define criteria, record sources, keep missing values visible and test whether assumptions change the decision.",
+              "datePublished": "2026-10-22",
+              "dateModified": "2026-10-22",
+              "mainEntityOfPage": "https://ifyoumind.com/guides/compare-options-with-your-own-data/",
+              "author": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "ifYouMind",
+                "url": "https://ifyoumind.com/"
+              }
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "ifYouMind",
+                  "item": "https://ifyoumind.com/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Guides",
+                  "item": "https://ifyoumind.com/guides/"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Compare options with a decision matrix and your own data",
+                  "item": "https://ifyoumind.com/guides/compare-options-with-your-own-data/"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "h1": [
+        "Compare options with a decision matrix and your own data"
+      ],
+      "bodyCharacters": 4806,
+      "overflow": 0
+    },
+    {
+      "path": "/seo-audit-missing-page",
+      "javascript": true,
+      "width": 1280,
+      "status": 404,
+      "url": "https://ifyoumind.com/seo-audit-missing-page",
+      "title": "Page not found | ifYouMind",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "schema": [],
+      "h1": [
+        "Page not found"
+      ],
+      "bodyCharacters": 117,
+      "overflow": 0
+    },
+    {
+      "path": "/life/quick-compare",
+      "javascript": true,
+      "width": 1280,
+      "status": 404,
+      "url": "https://ifyoumind.com/life/quick-compare",
+      "title": "Page not found | ifYouMind",
+      "robots": [
+        "noindex,nofollow"
+      ],
+      "canonicals": [],
+      "schema": [],
+      "h1": [
+        "Page not found"
+      ],
+      "bodyCharacters": 117,
+      "overflow": 0
+    }
+  ],
+  "resources": [
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "body": "# Allow all web crawlers to access all content\nUser-agent: *\nAllow: /\n\n# Point crawlers to the sitemap\nSitemap: https://ifyoumind.com/sitemap.xml\n"
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "body": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n  <url>\n    <loc>https://ifyoumind.com/</loc>\n    <lastmod>2026-10-22</lastmod>\n    <priority>1.0</priority>\n  </url>\n  <url>\n    <loc>https://ifyoumind.com/sample-report</loc>\n    <lastmod>2026-10-22</lastmod>\n    <priority>0.8</priority>\n  </url>\n  <url>\n    <loc>https://ifyoumind.com/privacy-policy</loc>\n    <lastmod>2026-10-02</lastmod>\n    <priority>0.3</priority>\n  </url>\n  <url>\n    <loc>https://ifyoumind.com/terms-of-conduct</loc>\n    <lastmod>2026-10-11</lastmod>\n    <priority>0.3</priority>\n  </url>\n  <url>\n    <loc>https://ifyoumind.com/guides/</loc>\n    <lastmod>2026-10-22</lastmod>\n    <priority>0.6</priority>\n  </url>\n  <url>\n    <loc>https://ifyoumind.com/guides/choose-business-location-evidence/</loc>\n    <lastmod>2026-10-22</lastmod>\n    <priority>0.7</priority>\n  </url>\n  <url>\n    <loc>https://ifyoumind.com/guides/compare-job-offers-relocation/</loc>\n    <lastmod>2026-10-22</lastmod>\n    <priority>0.7</priority>\n  </url>\n  <url>\n    <loc>https://ifyoumind.com/guides/compare-options-with-your-own-data/</loc>\n    <lastmod>2026-10-22</lastmod>\n    <priority>0.7</priority>\n  </url>\n  <url>\n    <loc>https://ifyoumind.com/guides/market-analysis-business-plan/</loc>\n    <lastmod>2026-10-11</lastmod>\n    <priority>0.7</priority>\n  </url>\n</urlset>\n"
+    }
+  ],
+  "redirects": [
+    {
+      "path": "/sample-report/",
+      "status": 301,
+      "location": "/sample-report"
+    },
+    {
+      "path": "/sample-report.html",
+      "status": 301,
+      "location": "/sample-report"
+    },
+    {
+      "path": "/guides",
+      "status": 301,
+      "location": "/guides/"
+    },
+    {
+      "path": "/guides/market-analysis-business-plan",
+      "status": 301,
+      "location": "/guides/market-analysis-business-plan/"
+    }
+  ],
+  "www": {
+    "status": 200,
+    "location": null
+  }
+}

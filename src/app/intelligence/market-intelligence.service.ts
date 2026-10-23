@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Functions, httpsCallable } from '@angular/fire/functions';
+import { SAMPLE_REQUEST_TIMEOUT_MS } from './sample-report-loading';
 
 export interface MarketMetric {
   key:string;
@@ -74,7 +75,7 @@ export class MarketIntelligenceService {
   }
 
   async sample():Promise<MarketProject>{
-    const call=httpsCallable<Record<string,never>,MarketProject>(this.functions,'getSampleDecisionReport');
+    const call=httpsCallable<Record<string,never>,MarketProject>(this.functions,'getSampleDecisionReport',{timeout:SAMPLE_REQUEST_TIMEOUT_MS});
     return (await call({})).data;
   }
 

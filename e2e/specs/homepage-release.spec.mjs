@@ -62,6 +62,8 @@ test('homepage: sample, Business prices, paid intent and registration remain usa
   await page.goto('/');
   await page.getByRole('link', { name: 'View a sample report' }).click();
   await expect(page).toHaveURL(/\/sample-report$/);
+  // Review the actual answer before leaving; a hard page.goto during the callable aborts it.
+  await expect(page.locator('#recommendation h2')).toContainText('Austin, TX');
   await page.goto('/');
   await page.getByRole('button', { name: /Explore a business opportunity/ }).click();
   await page.getByRole('link', { name: 'Start a free Business brief' }).click();

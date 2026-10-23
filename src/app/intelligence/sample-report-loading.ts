@@ -18,7 +18,7 @@ export function sampleFailureCopy(error:unknown,offline:boolean,repeated:boolean
   }
   return {
     title:repeated?'The sample still could not load.':'We could not load the sample.',
-    detail:'Please try again, or explore a free guide and come back later. You do not need to register or buy a report to view this sample.',
+    detail:'Try again, or read a free guide and return later. No registration or purchase needed.',
   };
 }
 

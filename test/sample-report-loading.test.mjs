@@ -64,5 +64,5 @@ test('SDK deadline, offline and repeated failure each have honest next steps',()
   assert.match(sampleFailureCopy({code:'functions/deadline-exceeded'},false,false).title,/taking too long/);
   assert.match(sampleFailureCopy({},true,true).title,/offline/);
   assert.match(sampleFailureCopy({},false,true).title,/still/);
-  assert.match(sampleFailureCopy({},false,true).detail,/do not need to register or buy/);
+  assert.match(sampleFailureCopy({},false,true).detail,/No registration or purchase needed/);
 });

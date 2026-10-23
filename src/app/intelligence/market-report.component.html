@@ -7,7 +7,10 @@
     </div>
   </nav>
   <aside *ngIf="sampleMode" class="state no-print" style="margin-bottom:14px;border:1px solid #fcd34d;background:#fffbeb">
-    <strong>This is a sample report.</strong> The question is an example, but every figure is real U.S. Census Bureau data with its source linked. Your own report uses your decision, business type and locations. This sample is the full $79 Decision Report; a free brief covers your main city and one comparison.
+    <ng-container *ngIf="project; else sampleIntroduction">
+      <strong>This is a sample report.</strong> The question is an example, but every figure is real U.S. Census Bureau data with its source linked. Your own report uses your decision, business type and locations. This sample is the full $79 Decision Report; a free brief covers your main city and one comparison.
+    </ng-container>
+    <ng-template #sampleIntroduction><strong>This sample is free.</strong> A full Decision Report example, with real Census data, sources and limits.</ng-template>
   </aside>
   <nav *ngIf="!sampleMode" class="report-nav no-print">
     <a routerLink="/app">← Your decisions</a>
@@ -23,8 +26,8 @@
   </nav>
 
   <section *ngIf="sampleMode && !project" class="state sample-state" aria-labelledby="sample-state-title">
-    <h1 id="sample-state-title">Explore a real Decision Report</h1>
-    <p>See how Austin, Nashville and Charlotte compare, with Census sources and evidence limits alongside the figures. No account needed.</p>
+    <h1 id="sample-state-title">Explore the sample</h1>
+    <p>Compare Austin, Nashville and Charlotte using sourced Census data.</p>
     <p role="status" aria-live="polite" aria-atomic="true">{{ loading ? 'Loading the sample report…' : '' }}</p>
     <div *ngIf="sampleFailure && !loading" role="alert" aria-atomic="true" class="sample-error">
       <h2>{{ sampleFailure.title }}</h2>

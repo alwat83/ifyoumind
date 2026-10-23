@@ -40,13 +40,15 @@ test('persistent failure keeps useful content and free navigation without automa
   await page.goto('/sample-report');
   await page.getByRole('button',{name:'Try again',exact:true}).click();
   await expect(page.getByRole('alert')).toContainText('The sample still could not load.');
-  await expect(page.getByRole('alert')).toContainText('do not need to register or buy');
+  await expect(page.getByRole('alert')).toContainText('No registration or purchase needed');
   await expect(page.locator('article.report')).toHaveCount(0);
-  await expect(page.locator('.sample-state')).toContainText('Census sources and evidence limits');
+  await expect(page.locator('.sample-state')).toContainText('sourced Census data');
   await page.waitForTimeout(250);expect(calls).toBe(2);
   await accessible(page);
   if(testInfo.project.name==='mobile'){
     await page.setViewportSize({width:320,height:568});await expectNoHorizontalScroll(page);
+    const retry=await page.getByRole('button',{name:'Try again',exact:true}).boundingBox();
+    expect(retry.y+retry.height,'retry stays within the first 568px').toBeLessThanOrEqual(568);
   }
   await page.screenshot({path:testInfo.outputPath('sample-persistent-error.png'),fullPage:true,scale:'css'});
   await page.getByRole('link',{name:'Read the free location guide'}).click();

@@ -1,0 +1,127 @@
+{
+  "approvedHead": "c0940b6862ec25aafcffcdfbe506b4bdfa0aed2a",
+  "mergeCommit": "1f09e6e0ad5b184cf6d4ac151bd361d53fa56e79",
+  "productionBase": "bb6744b330378e63506cb90334098e6dfe2b86ff",
+  "mergeMethod": "merge commit; exact expected-head guard; approved tree equals merged tree",
+  "pr": 66,
+  "founderAuthorization": "Explicit October 22 approval of PR #66 at approvedHead and its automatic production deployment, acknowledging baseline failures/skip/device/payment limits. Excludes source PR merges, Stripe changes, real transactions and outreach.",
+  "deploymentRun": 39883677345,
+  "deploymentUrl": "https://github.com/alwat83/ifyoumind/actions/runs/39883677345",
+  "deploymentResult": "SUCCESS",
+  "deploymentSteps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Check out production source",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Use Node 22",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Install app dependencies",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Install Functions dependencies",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Run production preflight",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Build Angular app",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Test Firebase Functions",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Build Firebase Functions",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Authenticate to Google Cloud",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Deploy consumer production",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Authenticate to Google Cloud",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Use Node 22",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Post Check out production source",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "hostingVersion": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/versions/e0c9142f16a5e741",
+  "hostingRelease": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/channels/live/releases/1792718839722000",
+  "hostingReleaseTimeUtc": "2026-10-23T01:27:19.722Z",
+  "hostingReleaseTimeChicago": "2026-10-22T20:27:19.722000-05:00",
+  "domains": [
+    {
+      "domainName": "ifyoumind.com",
+      "status": "DOMAIN_ACTIVE"
+    },
+    {
+      "domainName": "www.ifyoumind.com",
+      "status": "DOMAIN_ACTIVE"
+    }
+  ],
+  "rollbackVersion": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/versions/f91311de8f35458e",
+  "rollbackRelease": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/channels/live/releases/1792026155391000",
+  "premergeGates": "Approved head/base unchanged, build and QA SUCCESS, no additional branch required-status rules, CLEAN/MERGEABLE, 76-file scope and hashes unchanged, prior Hosting FINALIZED/domains active, no active deployment.",
+  "scope": "Consumer homepage/discovery, mobile reports, SEO/guides, sample print, mandate and approved aggregate docs. No product code changes in this handoff.",
+  "liveSmoke": {
+    "browserPass": 15,
+    "browserFail": 0,
+    "seoObservationsPass": 56,
+    "sitemapUrls": 9,
+    "readOnlyPublicSampleCalls": 2,
+    "createdAccounts": 0,
+    "emailsSent": 0,
+    "checkoutSessionsCreated": 0,
+    "paymentsInitiated": 0,
+    "stripeConfigurationWrites": 0,
+    "outreachSent": 0
+  },
+  "limitations": [
+    "Physical iOS/Safari and manual screen reader unverified",
+    "Field Core Web Vitals unverified",
+    "Positive live registration submission/email delivery/authenticated report/checkout fulfillment not exercised; negative form validation and routing passed; prior demo-emulator coverage remains separate",
+    "Native PDF export/real payment not exercised",
+    "Existing lint91 and Angular compiler11 failures and one server-verification skip explicitly accepted by founder, not waived or reported as passing"
+  ],
+  "history": "Only PR #66 merged; overlapping source PRs preserved. No rollback executed. Hosting rollback separately approval-gated and does not roll back Functions/rules. Hosting metadata does not embed a Git SHA; source association is verified via workflow plus merge-tree equality."
+}

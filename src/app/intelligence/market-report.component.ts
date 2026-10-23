@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrganizationService } from './organization.service';
 import { DecisionReportPayload, MarketIntelligenceService, MarketProject } from './market-intelligence.service';
@@ -8,15 +8,16 @@ import { CommercialStatus, MonetizationService } from './monetization.service';
 import { MarketAnalysisComponent } from './market-analysis.component';
 import { clearIntent, parseIntent, readIntent } from '../purchase-intent';
 import { EvidenceSummary, summarizeEvidence } from './evidence-summary';
+import { loadSampleBeforeDeadline, SampleLoadFailure, sampleFailureCopy } from './sample-report-loading';
 
 @Component({
   selector:'app-market-report',
   standalone:true,
   imports:[CommonModule,RouterLink,MarketAnalysisComponent],
   templateUrl:'./market-report.component.html',
-  styleUrls:['./market-report.component.scss','./market-report-offers.component.scss','./market-report-findings.component.scss','./market-report-mobile.component.scss'],
+  styleUrls:['./market-report.component.scss','./market-report-offers.component.scss','./market-report-findings.component.scss','./market-report-mobile.component.scss','./sample-report-state.component.scss'],
 })
-export class MarketReportComponent implements OnInit {
+export class MarketReportComponent implements OnInit, OnDestroy {
   private readonly route=inject(ActivatedRoute);
   private readonly organizations=inject(OrganizationService);
   private readonly market=inject(MarketIntelligenceService);
@@ -33,6 +34,19 @@ export class MarketReportComponent implements OnInit {
   unlocking=false;
   unlockError='';
   error='';
+  sampleFailure:{title:string;detail:string}|null=null;
+  sampleCanRetry=false;
+  private sampleAttempts=0;
+  private sampleController:AbortController|null=null;
+  private destroyed=false;
+  private focusRecoveredReport=false;
+
+  @ViewChild('reportTitle') set reportTitle(title:ElementRef<HTMLElement>|undefined){
+    if(title&&this.focusRecoveredReport){
+      this.focusRecoveredReport=false;
+      title.nativeElement.focus();
+    }
+  }
   /** Set when the visitor came from the sample wanting the $79 report. */
   purchaseIntent=false;
 
@@ -110,9 +124,7 @@ export class MarketReportComponent implements OnInit {
 
   async ngOnInit():Promise<void>{
     if(this.sampleMode){
-      try{this.project=await this.market.sample();}
-      catch(error){this.error=this.message(error);}
-      finally{this.loading=false;}
+      await this.loadSample();
       return;
     }
     try{
@@ -132,6 +144,42 @@ export class MarketReportComponent implements OnInit {
       });
     }catch(error){this.error=this.message(error);}
     finally{this.loading=false;}
+  }
+
+  async loadSample():Promise<void>{
+    if(!this.sampleMode||this.sampleController||this.destroyed)return;
+    const controller=new AbortController();
+    this.sampleController=controller;
+    this.loading=true;
+    this.sampleAttempts++;
+    try{
+      const project=await loadSampleBeforeDeadline(()=>{
+        if(!navigator.onLine)throw new SampleLoadFailure('offline');
+        return this.market.sample();
+      },controller.signal);
+      if(this.destroyed)return;
+      this.focusRecoveredReport=this.sampleCanRetry;
+      this.project=project;
+      this.sampleFailure=null;
+    }catch(error){
+      if(this.destroyed)return;
+      // Keep the original SDK error/code/stack for developer diagnostics, never public copy.
+      console.error('[ifYouMind] Public sample report failed.',error);
+      this.sampleFailure=sampleFailureCopy(error,!navigator.onLine,this.sampleAttempts>1);
+      this.sampleCanRetry=true;
+    }finally{
+      this.sampleController=null;
+      if(!this.destroyed)this.loading=false;
+    }
+  }
+
+  @HostListener('window:offline') sampleWentOffline():void{
+    this.sampleController?.abort('offline');
+  }
+
+  ngOnDestroy():void{
+    this.destroyed=true;
+    this.sampleController?.abort('cancelled');
   }
 
   printReport():void{

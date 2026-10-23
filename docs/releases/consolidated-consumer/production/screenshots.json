@@ -1,0 +1,50 @@
+{
+  "mode": "Fresh live deployed site; headless installed Chrome; 1280/390/320 CSS pixels; external fonts and analytics suppressed; internal QA not genuine visitor traffic.",
+  "images": [
+    {
+      "file": "screenshots/desktop-home-fold.png",
+      "sha256": "1ae4f5fa4496e4c681707efd7501d9e398f1e2af840cb7ac329a5d5a5c888d90",
+      "bytes": 134560
+    },
+    {
+      "file": "screenshots/desktop-home-full.png",
+      "sha256": "921e9c9a3984080e93cf1908f4799b53f89e23a454610cdfec98b219ad64b032",
+      "bytes": 594090
+    },
+    {
+      "file": "screenshots/desktop-sample-fold.png",
+      "sha256": "f3fe1abd26164fb5cd3a24729d01526134a578986abe30ba20f617888a92a09a",
+      "bytes": 159359
+    },
+    {
+      "file": "screenshots/desktop-sample-full.png",
+      "sha256": "d2d441bd6d148cac906f8efb72dc49fc1907d29251140a4434cdb22c682b0b09",
+      "bytes": 1021064
+    },
+    {
+      "file": "screenshots/mobile-home-fold.png",
+      "sha256": "d5a793c0487484e22baedab8a38efd2b9425e071fcc793d45655fb88d4b6c033",
+      "bytes": 74847
+    },
+    {
+      "file": "screenshots/mobile-home-full.png",
+      "sha256": "f04387f4b1df6586c189216b2afb692af47213c87aac0c6309498fd9e20e203c",
+      "bytes": 523437
+    },
+    {
+      "file": "screenshots/mobile-sample-fold.png",
+      "sha256": "29c3c08e5a6e37069712be79016cca5c01bed1df2e914f450822807089ced10b",
+      "bytes": 114373
+    },
+    {
+      "file": "screenshots/mobile-sample-full.png",
+      "sha256": "31d4222434c15509c22c155419cd10d3ff8f600f92fca56dd4c0f8421b0832b6",
+      "bytes": 882953
+    },
+    {
+      "file": "screenshots/narrow-home-full.png",
+      "sha256": "c314953d545cd79b6bc3ec9c98a026c4cde9884f2459f560c023eb5ccae4c9ad",
+      "bytes": 526331
+    }
+  ]
+}

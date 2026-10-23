@@ -1,0 +1,61 @@
+{
+  "applicationCommit": "ebf780a51d13cb20ce7726cf2ec350f335fc961e",
+  "captureNotes": "Local QA fixtures except before image uses browser-simulated live-page failure. Eight error/persistent/offline/timeout review captures hide only development banner. Recovered captures retain the dev banner. No buyer/account data.",
+  "screenshots": [
+    {
+      "path": "screenshots/before-mobile-error.png",
+      "sha256": "361d5c39fe5e56c50dcace614416aa595bec80aff274b3b1a38ff1ac0f9cc48a",
+      "bytes": 51693
+    },
+    {
+      "path": "screenshots/desktop-sample-error.png",
+      "sha256": "335ab87a7f68a58369887c92802c4d1583f06ffcf328cd7cbb43c02ed0cd34bf",
+      "bytes": 96391
+    },
+    {
+      "path": "screenshots/desktop-sample-offline.png",
+      "sha256": "764e1c21a8d44bd9240c2cffece66423448a335c5745f1a8545ecf5a87957441",
+      "bytes": 98756
+    },
+    {
+      "path": "screenshots/desktop-sample-persistent-error.png",
+      "sha256": "f3af29c8570777c2231c1bb71973c1aa9e35942e17bc0efbd310c3b6b8d9b2b1",
+      "bytes": 96041
+    },
+    {
+      "path": "screenshots/desktop-sample-recovered.png",
+      "sha256": "afcb8fbe87052bd25ac6901d7576823dbd8414ad64bfc3d2ea79d308706d1126",
+      "bytes": 1036866
+    },
+    {
+      "path": "screenshots/desktop-sample-timeout.png",
+      "sha256": "56f95179c72cb5559aaa5f7cc2b9076369d049536d7f02fb97b7e642568fd380",
+      "bytes": 96654
+    },
+    {
+      "path": "screenshots/mobile-sample-error.png",
+      "sha256": "221ccb0154738e7822fea853a9fd2f41363d73233cd7c4bcaa3dddf37be1e45f",
+      "bytes": 66636
+    },
+    {
+      "path": "screenshots/mobile-sample-offline.png",
+      "sha256": "26972be70430894d07708f846aa1b021af222f99b0a877770f7bfe1a9290fc42",
+      "bytes": 69429
+    },
+    {
+      "path": "screenshots/mobile-sample-persistent-error.png",
+      "sha256": "1eafd47c4974c051b62ca037c01eee5a264c980150cf1c811ed6d73e2ff2b0ef",
+      "bytes": 67735
+    },
+    {
+      "path": "screenshots/mobile-sample-recovered.png",
+      "sha256": "2dfc91876ebb9cd874261b187bcdbb211fe040b63f095b38146083d839c618df",
+      "bytes": 895274
+    },
+    {
+      "path": "screenshots/mobile-sample-timeout.png",
+      "sha256": "6a3dbadbfb29eb60e7a822ae9b7bcbeab5d7fc69c931b35be60e2990efd1966b",
+      "bytes": 66693
+    }
+  ]
+}

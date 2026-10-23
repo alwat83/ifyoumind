@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-23 CDT",
+  "agent": "OpenAI / Codex",
+  "applicationCommit": "ebf780a51d13cb20ce7726cf2ec350f335fc961e",
+  "baseHandoff": "7ef80a3e1a3242f8c636c207e16f99813aef045c",
+  "productionSource": "1f09e6e0ad5b184cf6d4ac151bd361d53fa56e79",
+  "productionBuild": "PASS",
+  "localBuild": "PASS",
+  "productionBundleGuard": "PASS",
+  "fast": {
+    "pass": 95,
+    "fail": 0,
+    "newUnit": 8
+  },
+  "functions": {
+    "pass": 72,
+    "fail": 0
+  },
+  "rules": {
+    "pass": 7,
+    "fail": 0
+  },
+  "organizations": {
+    "pass": 5,
+    "fail": 0
+  },
+  "commerce": {
+    "pass": 29,
+    "fail": 0,
+    "realPayments": 0
+  },
+  "fixturesAndLimits": {
+    "pass": 24,
+    "fail": 0,
+    "skip": 1,
+    "skipReason": "Existing intentional server verification integration skip"
+  },
+  "browser": {
+    "pass": 112,
+    "fail": 0,
+    "skip": 0,
+    "newRecoveryCases": 14,
+    "workers": 2,
+    "duration": "2.2 minutes"
+  },
+  "seo": {
+    "observations": 56,
+    "sitemapUrls": 9,
+    "result": "PASS",
+    "externalRequestsBlocked": true
+  },
+  "globalLint": {
+    "result": "FAIL",
+    "errors": 91,
+    "newSignatures": 0
+  },
+  "angular": {
+    "result": "FAIL before execution",
+    "compilerDiagnostics": 11,
+    "newSignatures": 0
+  },
+  "outbound": "Pending Founder Setup; unsent",
+  "deployment": "NONE",
+  "limitations": [
+    "Human five-second comprehension not measured",
+    "Manual screen reader and physical devices/Safari unverified",
+    "Live positive signup/email and paid fulfillment/real payment not exercised",
+    "Native PDF export and field performance unverified",
+    "Client cancellation does not abort already executing backend work"
+  ],
+  "narrowMobileRetry": {
+    "width": 320,
+    "height": 568,
+    "retryTop": 515.078125,
+    "retryBottom": 563.078125,
+    "overflow": 0
+  },
+  "focusedRecovery": {
+    "pass": 14,
+    "fail": 0
+  },
+  "incompleteRun": "Final one-worker local rerun stopped after56desktop cases stalled between projects; not counted as full pass"
+}

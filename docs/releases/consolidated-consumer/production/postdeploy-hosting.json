@@ -1,0 +1,80 @@
+{
+  "observedAt": "2026-10-23T01:28:11.426Z",
+  "project": "ifyoumind-473fe",
+  "site": "ifyoumind-473fe",
+  "domains": [
+    {
+      "domainName": "ifyoumind.com",
+      "status": "DOMAIN_ACTIVE"
+    },
+    {
+      "domainName": "www.ifyoumind.com",
+      "status": "DOMAIN_ACTIVE"
+    }
+  ],
+  "liveChannel": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/channels/live",
+  "url": "https://ifyoumind-473fe.web.app",
+  "release": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/channels/live/releases/1792718839722000",
+  "releaseTime": "2026-10-23T01:27:19.722Z",
+  "version": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/versions/e0c9142f16a5e741",
+  "status": "FINALIZED",
+  "config": {
+    "headers": [
+      {
+        "headers": {
+          "Referrer-Policy": "strict-origin-when-cross-origin",
+          "X-Content-Type-Options": "nosniff"
+        },
+        "glob": "**"
+      },
+      {
+        "headers": {
+          "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+          "X-Frame-Options": "SAMEORIGIN"
+        },
+        "regex": "^/(?:[^_].*|_[^_].*|_)?$"
+      }
+    ],
+    "redirects": [
+      {
+        "statusCode": 301,
+        "location": "/:1",
+        "regex": "^/(sample-report|privacy-policy|terms-of-conduct|login|register|verify-email|app)/+$"
+      },
+      {
+        "statusCode": 301,
+        "location": "/guides/",
+        "regex": "^/guides$"
+      },
+      {
+        "statusCode": 301,
+        "location": "/guides/:1/",
+        "regex": "^/guides/([a-z0-9]+(?:-[a-z0-9]+)*)$"
+      }
+    ],
+    "rewrites": [
+      {
+        "glob": "/login",
+        "path": "/app-shell.html"
+      },
+      {
+        "glob": "/register",
+        "path": "/app-shell.html"
+      },
+      {
+        "glob": "/verify-email",
+        "path": "/app-shell.html"
+      },
+      {
+        "glob": "/app",
+        "path": "/app-shell.html"
+      },
+      {
+        "glob": "/app/**",
+        "path": "/app-shell.html"
+      }
+    ],
+    "cleanUrls": true
+  },
+  "retainedReleaseCount": 2147483647
+}

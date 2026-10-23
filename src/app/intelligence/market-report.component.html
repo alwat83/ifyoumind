@@ -7,7 +7,10 @@
     </div>
   </nav>
   <aside *ngIf="sampleMode" class="state no-print" style="margin-bottom:14px;border:1px solid #fcd34d;background:#fffbeb">
-    <strong>This is a sample report.</strong> The question is an example, but every figure is real U.S. Census Bureau data with its source linked. Your own report uses your decision, business type and locations. This sample is the full $79 Decision Report; a free brief covers your main city and one comparison.
+    <ng-container *ngIf="project; else sampleIntroduction">
+      <strong>This is a sample report.</strong> The question is an example, but every figure is real U.S. Census Bureau data with its source linked. Your own report uses your decision, business type and locations. This sample is the full $79 Decision Report; a free brief covers your main city and one comparison.
+    </ng-container>
+    <ng-template #sampleIntroduction><strong>This sample is free.</strong> A full Decision Report example, with real Census data, sources and limits.</ng-template>
   </aside>
   <nav *ngIf="!sampleMode" class="report-nav no-print">
     <a routerLink="/app">← Your decisions</a>
@@ -22,15 +25,29 @@
     </div>
   </nav>
 
-  <section *ngIf="loading" class="state">Putting your answer together…</section>
-  <section *ngIf="error" class="state error">{{ error }}</section>
+  <section *ngIf="sampleMode && !project" class="state sample-state" aria-labelledby="sample-state-title">
+    <h1 id="sample-state-title">Explore the sample</h1>
+    <p>Compare Austin, Nashville and Charlotte using sourced Census data.</p>
+    <p role="status" aria-live="polite" aria-atomic="true">{{ loading ? 'Loading the sample report…' : '' }}</p>
+    <div *ngIf="sampleFailure && !loading" role="alert" aria-atomic="true" class="sample-error">
+      <h2>{{ sampleFailure.title }}</h2>
+      <p>{{ sampleFailure.detail }}</p>
+    </div>
+    <button *ngIf="sampleCanRetry" type="button" (click)="loadSample()" [attr.aria-disabled]="loading" [attr.aria-busy]="loading" class="sample-retry">{{ loading ? 'Trying again…' : 'Try again' }}</button>
+    <nav aria-label="Other ways to explore" class="sample-alternatives">
+      <a href="/guides/choose-business-location-evidence/">Read the free location guide</a>
+      <a routerLink="/">Back to the homepage</a>
+    </nav>
+  </section>
+  <section *ngIf="!sampleMode && loading" class="state">Putting your answer together…</section>
+  <section *ngIf="!sampleMode && error" class="state error">{{ error }}</section>
 
   <article *ngIf="project?.brief as brief" class="report">
     <header class="answer-header">
       <div>
         <p class="brand">ifYouMind</p>
         <p class="eyebrow">{{ reportLabel }}</p>
-        <h1>{{ project?.decision }}</h1>
+        <h1 #reportTitle [attr.tabindex]="sampleMode ? -1 : null">{{ project?.decision }}</h1>
         <p class="context">{{ project?.concept }} · {{ project?.location }}</p>
       </div>
       <div class="meta">

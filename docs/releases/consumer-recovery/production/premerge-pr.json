@@ -1,0 +1,30 @@
+{
+  "baseRefOid": "1f09e6e0ad5b184cf6d4ac151bd361d53fa56e79",
+  "headRefOid": "f75879544b610ae7e59905f4b317296a48b0fdb3",
+  "isDraft": true,
+  "mergeStateStatus": "CLEAN",
+  "mergeable": "MERGEABLE",
+  "state": "OPEN",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-23T14:48:32Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/alwat83/ifyoumind/actions/runs/39970201552/job/120476597758",
+      "name": "qa",
+      "startedAt": "2026-10-23T14:42:36Z",
+      "status": "COMPLETED",
+      "workflowName": "Authenticated QA (emulators)"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-23T14:31:13Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/alwat83/ifyoumind/actions/runs/39970202484/job/120470547670",
+      "name": "build",
+      "startedAt": "2026-10-23T14:30:27Z",
+      "status": "COMPLETED",
+      "workflowName": "Launch build check"
+    }
+  ]
+}

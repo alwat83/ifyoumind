@@ -1,0 +1,97 @@
+{
+  "observedAt": "2026-10-23T15:26:58.872Z",
+  "project": "ifyoumind-473fe",
+  "site": "ifyoumind-473fe",
+  "live": {
+    "channel": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/channels/live",
+    "url": "https://ifyoumind-473fe.web.app",
+    "release": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/channels/live/releases/1792769133782000",
+    "type": "DEPLOY",
+    "releaseTime": "2026-10-23T15:25:33.782Z",
+    "version": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/versions/a4b9fd4f6533ce8b"
+  },
+  "rollbackTarget": {
+    "name": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/versions/e0c9142f16a5e741",
+    "status": "FINALIZED",
+    "createTime": "2026-10-23T01:25:29.732132Z",
+    "finalizeTime": "2026-10-23T01:27:19.441190Z",
+    "deleteTime": null,
+    "fileCount": "41",
+    "versionBytes": "327645",
+    "config": {
+      "headers": [
+        {
+          "headers": {
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "X-Content-Type-Options": "nosniff"
+          },
+          "glob": "**"
+        },
+        {
+          "headers": {
+            "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+            "X-Frame-Options": "SAMEORIGIN"
+          },
+          "regex": "^/(?:[^_].*|_[^_].*|_)?$"
+        }
+      ],
+      "redirects": [
+        {
+          "statusCode": 301,
+          "location": "/:1",
+          "regex": "^/(sample-report|privacy-policy|terms-of-conduct|login|register|verify-email|app)/+$"
+        },
+        {
+          "statusCode": 301,
+          "location": "/guides/",
+          "regex": "^/guides$"
+        },
+        {
+          "statusCode": 301,
+          "location": "/guides/:1/",
+          "regex": "^/guides/([a-z0-9]+(?:-[a-z0-9]+)*)$"
+        }
+      ],
+      "rewrites": [
+        {
+          "glob": "/login",
+          "path": "/app-shell.html"
+        },
+        {
+          "glob": "/register",
+          "path": "/app-shell.html"
+        },
+        {
+          "glob": "/verify-email",
+          "path": "/app-shell.html"
+        },
+        {
+          "glob": "/app",
+          "path": "/app-shell.html"
+        },
+        {
+          "glob": "/app/**",
+          "path": "/app-shell.html"
+        }
+      ],
+      "cleanUrls": true
+    },
+    "labels": {
+      "deployment-tool": "cli-firebase"
+    }
+  },
+  "domains": [
+    {
+      "domain": "ifyoumind.com",
+      "hostState": "HOST_ACTIVE",
+      "ownershipState": "OWNERSHIP_ACTIVE",
+      "certState": "CERT_ACTIVE"
+    },
+    {
+      "domain": "www.ifyoumind.com",
+      "hostState": "HOST_ACTIVE",
+      "ownershipState": "OWNERSHIP_ACTIVE",
+      "certState": "CERT_ACTIVE"
+    }
+  ]
+}

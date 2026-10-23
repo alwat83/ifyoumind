@@ -129,3 +129,5 @@ Priority five: Marilyn/Matt Willson (Skiptown Austin-area expansion); Viren Pate
 
 
 **Review evidence:** [consumer homepage draft #64](https://github.com/alwat83/ifyoumind/pull/64), final head `067dbe29a5c880b95ad7bd9c7fbbafb2d26e35cb`, [exact-head manual QA SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/39873673761). Commercial benefit remains unmeasured; aggregate financial publication is now approved as documented above, while release/outreach remain unapproved. The private Founder Revenue Action Brief and populated scoreboard are retained locally under ignored `tmp/revenue-private/2026-10-22/`; public roster/drafts remain in #63.
+
+**Approved publication review:** [Separate draft #65](https://github.com/alwat83/ifyoumind/pull/65), initial aggregate commit `141e951bf4c987490e1a47b8232c8d00194b3b94`, stacked on unchanged #64. All aggregate/source, JSON, privacy and append-only-log checks PASS; five documentation files only. Issue #61 and the existing Notion hub now link this approved baseline. No application, deployment, Stripe or outreach change.

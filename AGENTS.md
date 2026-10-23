@@ -17,6 +17,10 @@ Prefer interaction-first, relatable, mobile-friendly entry points with minimal n
 
 Before major work, review the [automatic-discovery proposal](docs/product/AUTOMATIC_DISCOVERY_PROPOSAL.md): reuse existing ingestion/auth/data/reporting safely, build one narrow vertical slice, distinguish deterministic calculations/AI interpretations/external comparisons, require provenance/uncertainty, protect private files, bound retention/cost and reject unsupported conclusions. Two annual statements do not establish a trend, correlation or cause. No large rewrite, paid model activation, public file capability, new pricing, Life calculator, merge/deploy or outreach without the applicable founder approval. Preserve current Business79report/39monthlyPro and production. Outbound remains Pending Founder Setup; no sender questions.
 
+## Phase 1 authorization — local only, October23,2026
+
+Founder approved local implementation/testing of automatic-discovery Phase1 from #69exactee7d05be4a301a21918fbf20a2eb54ab4093304b. Working experience: no-prompt two-year property-tax example/recognized redactedCSV, traceable deterministic findings/corrections/clear and mobile/a11y tests. [Working review](docs/product/discovery-phase1/REVIEW.md). Keep its separate Angular entry/build outside the production app import/route/assets graph; no backend upload, persistence, AI/provider/API calls, new pricing or Business changes. This approval does not authorize merging/deployment or later PDF/AI/storage phases. Next design decisions follow interaction with this experience, not more homepage mockups. Outbound remains Pending Founder Setup.
+
 ## Source of truth — mandatory order
 **Founder correction, 2026-10-22: GitHub and repository documentation are the source of truth for development.** The accessible Notion coordination hub, confirmed by the founder, is:
 https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71

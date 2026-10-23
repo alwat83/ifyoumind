@@ -1,0 +1,70 @@
+{
+  "scope": "Actual standalone Angular preview, synthetic data only, unedited captures at CSS pixel scale",
+  "screenshots": [
+    {
+      "path": "screenshots/desktop-discovered-full.png",
+      "sha256": "cc5cde855a600568cd4fa45be69383b23e617704808284c3482b3ae988ee69e1",
+      "bytes": 256179
+    },
+    {
+      "path": "screenshots/desktop-discovery-fold.png",
+      "sha256": "bf08562db8969f8673e07dfded7c8076a04011c7cf603daa75640166bf7585ba",
+      "bytes": 105001
+    },
+    {
+      "path": "screenshots/desktop-evidence-full.png",
+      "sha256": "38aa026bd51fe9396c544dd89e8e9c260d7a07aa57314d19aee2ca75aaa6855b",
+      "bytes": 433618
+    },
+    {
+      "path": "screenshots/desktop-insufficient-full.png",
+      "sha256": "e6a442438e28b03e7fa331fe1b10cd5c90c74dbc9f4fb432c5f74e96ad8f9fbc",
+      "bytes": 192987
+    },
+    {
+      "path": "screenshots/desktop-welcome-fold.png",
+      "sha256": "49e97c77ac288a0ae324d135c632dd079b1ef27115a039c9504ed45b5759cefb",
+      "bytes": 124592
+    },
+    {
+      "path": "screenshots/mobile-corrected-full.png",
+      "sha256": "37654c42b21a70d29c574109f63c11847eb5e839450ee2e998793814b163c556",
+      "bytes": 334717
+    },
+    {
+      "path": "screenshots/mobile-discovered-full.png",
+      "sha256": "89799e4c34ca2da0e9b90411244960ba11876b0c37936d15141526883b5bcba3",
+      "bytes": 244755
+    },
+    {
+      "path": "screenshots/mobile-discovery-fold.png",
+      "sha256": "8d06198411f7a9c7305f15e259faba9d9d04dc29615b09ea6940e3c03ba7c0fa",
+      "bytes": 62310
+    },
+    {
+      "path": "screenshots/mobile-evidence-full.png",
+      "sha256": "00518fbc43927ac6e4a879e0fd62295c97d2f3d04306347d0f2e202525760d8f",
+      "bytes": 410355
+    },
+    {
+      "path": "screenshots/mobile-insufficient-full.png",
+      "sha256": "4725868b41cc0ff599d5cd40a43195e5e8ba35f383663e94ef42f8f9640df6a6",
+      "bytes": 189450
+    },
+    {
+      "path": "screenshots/mobile-welcome-fold.png",
+      "sha256": "05e5c0234939aede693ed4d4926671ee76ade87ac96db0f9b6cb387a40ede93e",
+      "bytes": 54650
+    },
+    {
+      "path": "screenshots/narrow-discovery-fold.png",
+      "sha256": "68a99a5d10486ad229fa35d4ccbb29f40e9deabf3207b76425481b6fc39e3cf8",
+      "bytes": 42411
+    },
+    {
+      "path": "screenshots/narrow-welcome-fold.png",
+      "sha256": "fe44c0f421678e7a26150330d2a8a7b8b4dec99ef2ab84bc09a43bdccefdd049",
+      "bytes": 38274
+    }
+  ]
+}

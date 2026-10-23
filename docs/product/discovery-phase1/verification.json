@@ -1,0 +1,92 @@
+{
+  "observedDate": "2026-10-23 CDT",
+  "authorization": "Phase1 local development/testing only; proposal PR69 ee7d05be4a301a21918fbf20a2eb54ab4093304b",
+  "branch": "codex/automatic-discovery-phase1",
+  "productionUnchanged": "74a91fb15d408893448f925cedcec4e47868dec0",
+  "unit": {
+    "newPass": 24,
+    "fail": 0
+  },
+  "fast": {
+    "pass": 119,
+    "fail": 0
+  },
+  "browser": {
+    "pass": 36,
+    "fail": 0,
+    "skip": 0,
+    "viewports": [
+      1280,
+      390,
+      320
+    ],
+    "duration": "19.3 seconds",
+    "autoAxeViolations": 0,
+    "externalRequests": 0,
+    "writes": 0,
+    "localStorageEntries": 0,
+    "sessionStorageEntries": 0,
+    "cookies": "none",
+    "indexedDbDatabases": 0
+  },
+  "builds": {
+    "discovery": "PASS",
+    "production": "PASS",
+    "productionBundleGuard": "PASS",
+    "isolationGuard": "PASS",
+    "noNewDependencies": true,
+    "discoveryComponentStyleKB": 6.71,
+    "styleWarningKB": 4,
+    "styleErrorKB": 8,
+    "productionInitialKB": 659.8,
+    "productionTransferKB": 178.02
+  },
+  "baseline": {
+    "lintBaseline": 91,
+    "lintCandidate": 91,
+    "lintNewSignatures": [],
+    "lintRemovedSignatures": [],
+    "angularBaseline": 11,
+    "angularCandidate": 11,
+    "angularNewSignatures": [],
+    "angularRemovedSignatures": []
+  },
+  "visualMeasurements": {
+    "scope": "Local installed Chrome on reference Mac, internal QA, not a human usability or field performance study",
+    "results": [
+      {
+        "name": "desktop",
+        "width": 1280,
+        "height": 900,
+        "firstClickElapsedMs": 131,
+        "firstFindingHeadingBottom": 481.21875,
+        "externalRequestsOrWrites": 0
+      },
+      {
+        "name": "mobile",
+        "width": 390,
+        "height": 844,
+        "firstClickElapsedMs": 54,
+        "firstFindingHeadingBottom": 496.546875,
+        "externalRequestsOrWrites": 0
+      },
+      {
+        "name": "narrow",
+        "width": 320,
+        "height": 568,
+        "firstClickElapsedMs": 58,
+        "firstFindingHeadingBottom": 544.1875,
+        "externalRequestsOrWrites": 0
+      }
+    ]
+  },
+  "ci": "Exact final head and workflow outcomes pinned in draft PR after push; not inferred from base/proposal checks",
+  "limitations": [
+    "Desktop Chromium/mobile emulation, not physical iOS/Safari",
+    "Manual screen-reader speech unverified",
+    "No novice usability study or conversion measurement",
+    "One explicit two-year USD CSV schema only; no PDFs/OCR/arbitrary files",
+    "No AI interpretation, external data, backend upload or saving",
+    "No production merge/deployment or real transactions"
+  ]
+}

@@ -77,3 +77,8 @@ Current safe opportunity: improve the public sample's recoverable service-error 
 ## Consumer reliability candidate — October23
 
 Public sample recovery implemented/tested on separate feature branch (not live): plain-language error, explicit retry/offline/timeout states, accessible focus and preserved free navigation. [Review/evidence](../ux/consumer-reliability/REVIEW.md):112browserPASS, no new lint/Angular baseline signatures. Existing79report/39monthlyPro paths retained; no price/backend/Stripe changes. Expected commercial benefit is less evaluation friction under faults; no actual user/revenue lift measured. Outbound stays Pending Founder Setup, never a development blocker; launch drafts remain private/unsent. No financial baseline refresh or analytics expansion.
+
+
+## October23 — Phase1 local discovery now works, not a launched offer
+
+[Working founder review](../product/discovery-phase1/REVIEW.md): one click on synthetic tax example→automatic grounded findings; recognized redactedCSV, source cells/calculations, corrections/rerun/clear and honest insufficiency. No registration/prompt/API/provider cost/persistence.24unit/36browser cases PASS; reference click54–131ms, not human usefulness/conversion evidence. Separate Angular entry excluded from production. Existing79report/39monthlyPro unchanged; no personal-tax price or subscription created. Expected opportunity: lower novice effort before a first useful insight, unvalidated. Founder should interact before further design/implementation decisions. Financial baseline/traffic/customer/revenue metrics unchanged; internal QA excluded. Outbound Pending Founder Setup, no sends. No new analytics platform, dependency, production merge/deploy or broad upload/AI claim.

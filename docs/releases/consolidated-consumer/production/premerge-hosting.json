@@ -1,0 +1,47 @@
+{
+  "observedAt": "2026-10-23T01:21:32.778Z",
+  "project": "ifyoumind-473fe",
+  "site": "ifyoumind-473fe",
+  "domains": [
+    {
+      "domainName": "ifyoumind.com",
+      "status": "DOMAIN_ACTIVE"
+    },
+    {
+      "domainName": "www.ifyoumind.com",
+      "status": "DOMAIN_ACTIVE"
+    }
+  ],
+  "liveChannel": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/channels/live",
+  "url": "https://ifyoumind-473fe.web.app",
+  "release": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/channels/live/releases/1792026155391000",
+  "releaseTime": "2026-10-15T01:02:35.391Z",
+  "version": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/versions/f91311de8f35458e",
+  "status": "FINALIZED",
+  "fileCount": "33",
+  "config": {
+    "headers": [
+      {
+        "headers": {
+          "X-Content-Type-Options": "nosniff",
+          "Referrer-Policy": "strict-origin-when-cross-origin"
+        },
+        "glob": "**"
+      },
+      {
+        "headers": {
+          "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+          "X-Frame-Options": "SAMEORIGIN"
+        },
+        "regex": "^/(?:[^_].*|_[^_].*|_)?$"
+      }
+    ],
+    "rewrites": [
+      {
+        "glob": "**",
+        "path": "/index.html"
+      }
+    ]
+  },
+  "retainedReleaseCount": 2147483647
+}

@@ -10,7 +10,7 @@ The consolidated candidate offers four-choice discovery, four free decision guid
 
 ## Market-entry milestones — sequential learning goals
 
-1. Public consumer-first homepage launched (candidate prepared; not deployed).
+1. **Public consumer-first homepage launched October22,2026 at8:27p.m.CDT** — PR #66 approved, merged and deployed; live15browser/56SEO smoke PASS.
 2. First 100 genuine visitors (unknown; do not count agents/bots/QA).
 3. First 10 meaningful product experiences (unknown; a click or signup alone is insufficient).
 4. First five qualified buyer conversations (none conducted in this sprint; prior total unknown).
@@ -29,7 +29,7 @@ Week October 19–25, 2026 UTC. Financial observation **October 22 22:40:04.919 
 | Independently paying customers | 0 verified in connected live account | Successful independently funded live payment, excluding founder/QA/test/duplicates |
 | Revenue / gross receipts | $0 USD in scoped live baseline | Reconcile actual receipts/refunds when a sale occurs; do not substitute intent or checkout return |
 | Most important user feedback | No real user feedback collected in this sprint | Ask what decision this helps, what is unclear and what would make it worth paying for |
-| Next launch action | Founder approval of exact consolidated release head | Then one authorized production release/live smoke and separately approved distribution |
+| Next launch action | Release and live smoke complete; launch/outreach approval pending | Authorize prepared copy/sender/channels, then get real people into a useful experience and first purchase opportunity |
 
 [Approved October 22 aggregate Stripe evidence](STRIPE_BASELINE_2026-10-22.json) is preserved unchanged: zero successful payments/paid subscriptions/refunds, $0 receipts/MRR/recorded payment fees; three expired unpaid checkouts (one report, two Pro). Other accounts/off-Stripe/test records outside scope. Founder never confirmed purchases; old attribution is retracted. Identifiers/raw records stay private. Costs and profitability remain unknown, not launch blockers; reconcile actual costs before claiming profit. [Lightweight measurement note](MEASUREMENT_READINESS.md).
 
@@ -43,8 +43,12 @@ Organic reach supports this: authentic founder launch post, one relevant communi
 
 ## Next three actions and authority
 
-1. Founder approves exact green consolidated release scope, existing baseline test debt and automatic master-push deployment consequence; then execute only that authorization.
+1. Completed: founder approved exact #66 head and acknowledged baseline limits; only #66 merged/deployed and live-smoke verified. Next approval is separately scoped launch/outreach.
 2. Separately approve sender/channel, the private routing/invitation scope, public launch materials and one permissioned follow-up; prioritize first real conversations and first sale.
 3. Observe actual use/feedback with the simple tracker and fix the single clearest usability or value obstacle. Select analytics if convenient; missing old data never delays getting the product into people's hands.
 
 No merge, deployment, spending, price/Stripe change, external communications or experimental financial publication without explicit founder approval. No measurement platform or dashboard build is part of this release.
+
+## October22 production milestone
+
+[PR #66](https://github.com/alwat83/ifyoumind/pull/66) merged as `1f09e6e0ad5b184cf6d4ac151bd361d53fa56e79`, automatic deployment39883677345 SUCCESS, Hosting `e0c9142f16a5e741`. [Production smoke/evidence](../releases/consolidated-consumer/production/LIVE_VERIFICATION.md):15browserPASS,56SEOobservationsPASS/9URLs. Launch milestone achieved; internal QA does not count toward genuine visitors/meaningful experiences/conversations/sales. Financial baseline above stays at its original observation time; no new Stripe query or customer outcome claimed. No outreach sent or separately authorized. Seven-day distribution work can begin once copy/sender/channels/routing/follow-up are approved; missing historical data is not a blocker.

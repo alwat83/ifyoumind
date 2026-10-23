@@ -1,0 +1,80 @@
+{
+  "captureMode": "Fresh consolidated local bundle; Chrome headless; external requests/fonts blocked; CSS pixels; emulated sizes, not physical devices",
+  "images": [
+    {
+      "file": "screenshots/after-desktop-discovery-business.png",
+      "sha256": "cf96ac8c46a261a081f5ff10fb5b89357545c4f50b28eabb2f21b714c3251f89",
+      "bytes": 102978
+    },
+    {
+      "file": "screenshots/after-desktop-discovery-career.png",
+      "sha256": "6c2329e3a021c7b3ab5aefd67a99196930e8d2a8825d8db1ab673ae45e7944b1",
+      "bytes": 95116
+    },
+    {
+      "file": "screenshots/after-desktop-discovery-compare.png",
+      "sha256": "959a5075bb002761f59b2f174704c32e12ba41e36b6152801e73d8cdef3bb6d3",
+      "bytes": 103628
+    },
+    {
+      "file": "screenshots/after-desktop-fold.png",
+      "sha256": "1ae4f5fa4496e4c681707efd7501d9e398f1e2af840cb7ac329a5d5a5c888d90",
+      "bytes": 134560
+    },
+    {
+      "file": "screenshots/after-desktop-full.png",
+      "sha256": "921e9c9a3984080e93cf1908f4799b53f89e23a454610cdfec98b219ad64b032",
+      "bytes": 594090
+    },
+    {
+      "file": "screenshots/after-mobile-discovery-business.png",
+      "sha256": "bf36a475944c1d12febe796d193edd821436e290429f51d1b668469714874f0b",
+      "bytes": 87306
+    },
+    {
+      "file": "screenshots/after-mobile-discovery-career.png",
+      "sha256": "6f12aa3bc70264591f92f29685f7e4f0f2cd3f5deaa88b4eddcc4015698228be",
+      "bytes": 81723
+    },
+    {
+      "file": "screenshots/after-mobile-discovery-compare.png",
+      "sha256": "27276b3dc4d1338b849a18fe9d1a9a9d6fe4078fd06c33cd1e488957790dbdb2",
+      "bytes": 86651
+    },
+    {
+      "file": "screenshots/after-mobile-fold.png",
+      "sha256": "d5a793c0487484e22baedab8a38efd2b9425e071fcc793d45655fb88d4b6c033",
+      "bytes": 74847
+    },
+    {
+      "file": "screenshots/after-mobile-full.png",
+      "sha256": "f04387f4b1df6586c189216b2afb692af47213c87aac0c6309498fd9e20e203c",
+      "bytes": 523437
+    },
+    {
+      "file": "screenshots/after-narrow-discovery-business.png",
+      "sha256": "906c2d647a92ea91f92fe04c517774e19353f4b0727fb2be2619dedfdd5dc568",
+      "bytes": 91454
+    },
+    {
+      "file": "screenshots/after-narrow-discovery-career.png",
+      "sha256": "7c00eb6d0312345427f76f87115c167025381e48459ed8362f9d9188f24bc46e",
+      "bytes": 83072
+    },
+    {
+      "file": "screenshots/after-narrow-discovery-compare.png",
+      "sha256": "59267fdc2b0378365365bdd86d68be10570b6fcd39e468b4b57b461394940348",
+      "bytes": 88843
+    },
+    {
+      "file": "screenshots/after-narrow-fold.png",
+      "sha256": "905a21342801a3200f541a1b64fa7b8c7cc62f8029b20decb6fd13945fbbf14f",
+      "bytes": 40046
+    },
+    {
+      "file": "screenshots/after-narrow-full.png",
+      "sha256": "36c4e78fdf528fb5645388de001005e2551a8380c05234efd00a30a6760b9d76",
+      "bytes": 521222
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "productionBase": "bb6744b330378e63506cb90334098e6dfe2b86ff",
+  "lintErrorCount": 91,
+  "identicalLintSignatures": true,
+  "newLintErrors": 0,
+  "angularCompileErrorCount": 11,
+  "identicalAngularDiagnostics": true,
+  "newAngularDiagnostics": [],
+  "diagnostics": [
+    "src/app/app.component.spec.ts:20:16 - error TS2339: Property 'title' does not exist on type 'AppComponent'.",
+    "src/app/components/back-to-top/back-to-top.component.spec.ts:3:36 - error TS2307: Cannot find module './back-to-top.component' or its corresponding type declarations.",
+    "src/app/components/checklist/checklist.component.spec.ts:3:36 - error TS2307: Cannot find module './checklist.component' or its corresponding type declarations.",
+    "src/app/components/onboarding/onboarding.component.spec.ts:3:37 - error TS2307: Cannot find module './onboarding.component' or its corresponding type declarations.",
+    "src/app/idea-list/idea-list.component.spec.ts:3:35 - error TS2307: Cannot find module './idea-list.component' or its corresponding type declarations.",
+    "src/app/idea-submit/idea-submit.component.spec.ts:3:37 - error TS2307: Cannot find module './idea-submit.component' or its corresponding type declarations.",
+    "src/app/pages/tag-list/tag-list.component.spec.ts:3:34 - error TS2307: Cannot find module './tag-list.component' or its corresponding type declarations.",
+    "src/app/profile/profile-flow.spec.ts:2:34 - error TS2307: Cannot find module './profile.component' or its corresponding type declarations.",
+    "src/app/profile/profile-flow.spec.ts:61:48 - error TS2345: Argument of type 'Observable<{ displayName: string; username: string; bio: string; totalIdeas: number; totalUpvotes: number; profilePicture: string; profilePicturePath: string; }>' is not assignable to parameter of type 'Observable<UserProfile | null>'.",
+    "src/app/profile/profile-flow.spec.ts:82:50 - error TS2345: Argument of type 'Observable<{ profilePicture: string; displayName: string; username: string; bio: string; totalIdeas: number; totalUpvotes: number; profilePicturePath: string; }>' is not assignable to parameter of type 'Observable<UserProfile | null>'.",
+    "src/app/services/idea.service.spec.ts:48:9 - error TS2345: Argument of type 'Firestore' is not assignable to parameter of type 'Expected<DocumentReference<unknown, DocumentData>>'."
+  ],
+  "baselineProvenance": "Earlier clean-master archive evidence at exact unchanged production SHA; candidate commands rerun in this assignment. Both global commands FAIL, not waived."
+}

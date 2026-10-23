@@ -1,0 +1,113 @@
+{
+  "observedAt": "2026-10-22T22:40:04.919Z",
+  "status": "VERIFIED_AGGREGATES_FOUNDER_APPROVED_FOR_GITHUB_DOCS",
+  "mode": "live",
+  "scope": "Only the connected ifYouMind account; not evidence about a historical test environment, another account or off-Stripe receipts.",
+  "publicationApproval": {
+    "date": "2026-10-22",
+    "founderInstruction": "Approve aggregate figures in GitHub docs",
+    "scope": "Aggregate counts and amounts in GitHub growth/handoff documentation only; no identifiers, individual session records or raw responses. No release, outreach or Stripe-write authorization."
+  },
+  "method": "Authorized read-only standard Stripe GET lists, limit 100, complete pagination checked. Snapshot was not re-queried for this publication.",
+  "completeness": [
+    {
+      "operation": "GetCharges",
+      "count": 0,
+      "hasMore": false,
+      "isComplete": true
+    },
+    {
+      "operation": "GetRefunds",
+      "count": 0,
+      "hasMore": false,
+      "isComplete": true
+    },
+    {
+      "operation": "GetSubscriptions",
+      "count": 0,
+      "hasMore": false,
+      "isComplete": true
+    },
+    {
+      "operation": "GetBalanceTransactions",
+      "count": 0,
+      "hasMore": false,
+      "isComplete": true
+    },
+    {
+      "operation": "GetPaymentIntents",
+      "count": 0,
+      "hasMore": false,
+      "isComplete": true
+    },
+    {
+      "operation": "GetInvoices",
+      "count": 0,
+      "hasMore": false,
+      "isComplete": true
+    },
+    {
+      "operation": "GetCheckoutSessions",
+      "count": 3,
+      "hasMore": false,
+      "isComplete": true
+    },
+    {
+      "operation": "GetPrices",
+      "count": 2,
+      "hasMore": false,
+      "isComplete": true
+    }
+  ],
+  "liveMetrics": {
+    "allTimeSuccessfulCapturedPayments": 0,
+    "allTimeGrossReceiptsUsd": 0,
+    "allTimeSucceededRefunds": 0,
+    "allTimeRefundAmountUsd": 0,
+    "activePaidSubscriptions": 0,
+    "currentMonthlyRecurringRevenueUsd": 0,
+    "allTimeRecordedPaymentFeesUsd": 0,
+    "independentlyPayingCustomersVerifiedInThisAccount": 0,
+    "weekSinceUtc": "2026-10-19T00:00:00Z",
+    "weekSuccessfulPayments": 0,
+    "weekGrossReceiptsUsd": 0,
+    "weekRefundsUsd": 0,
+    "weekRecordedPaymentFeesUsd": 0,
+    "weekCreatedCheckoutSessions": 0,
+    "trailing30DaysSuccessfulPayments": 0,
+    "trailing30DaysGrossReceiptsUsd": 0,
+    "trailing30DaysCreatedCheckoutSessions": 3
+  },
+  "checkoutAggregates": {
+    "total": 3,
+    "expiredUnpaid": 3,
+    "byOffer": {
+      "report": 1,
+      "pro": 2
+    },
+    "founderOrQaClassification": "Unknown; unpaid sessions are not purchases, revenue or independent buyers."
+  },
+  "publicCatalog": {
+    "reportUsd": 79,
+    "proMonthlyUsd": 39,
+    "currency": "USD",
+    "activeLivePricesVerified": true
+  },
+  "unknownMetrics": [
+    "qualified visitors",
+    "completed usable free decision experiences",
+    "infrastructure costs",
+    "AI costs",
+    "contribution margin"
+  ],
+  "limitations": [
+    "Week begins 2026-10-19T00:00:00Z; weekly and trailing-30-day counts end at observedAt, not a completed reporting week.",
+    "No test-mode account was returned; test receipts were not read or counted. No inference about another account or off-Stripe receipts.",
+    "No successful payments exist in this connected live scope, so no successful transactions require founder/QA subtraction. Origin of unpaid sessions is unknown.",
+    "The founder never stated purchases were confirmed. Earlier attribution is retracted. Historical first-party webhook markers have unresolved account/mode and are not receipt evidence.",
+    "Gross receipts are cash-collection observations, not GAAP revenue recognition. Zero recorded payment fees is not zero operating cost or proof of profitability.",
+    "Sigma required a paid plan; no upgrade purchased. Complete standard GET lists supplied the evidence."
+  ],
+  "mutations": "None. No payment, refund, subscription or configuration change.",
+  "privacy": "Only approved aggregate counts/amounts and public pricing. No account, customer, payment, organization or session IDs, session URLs, individual session timestamps or raw payloads."
+}

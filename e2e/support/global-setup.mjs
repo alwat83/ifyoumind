@@ -1,6 +1,6 @@
 import { readFile, readdir } from 'node:fs/promises';
 import { assertEmulatorEnv, bundleProblems } from './emulator-guard.mjs';
-import { seedCensusCache } from './fixtures.mjs';
+import { seedCensusCache, seedSampleReport } from './fixtures.mjs';
 
 /** Refuses to run unless both the backend and the app bundle are the local demo project. */
 export default async function globalSetup() {
@@ -15,4 +15,6 @@ export default async function globalSetup() {
   const problems = bundleProblems(await readFile(`${dir}/${main}`, 'utf8'));
   if (problems.length) throw new Error(`Refusing to test this bundle: ${problems.join('; ')}`);
   await seedCensusCache();
+  // Homepage navigation reaches the sample before its dedicated spec runs.
+  await seedSampleReport();
 }

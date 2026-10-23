@@ -69,7 +69,7 @@ function shell({ title, description, canonical, type, jsonLd, main }) {
 ${main}
   </main>
   <footer class="site-footer">
-    <p><a class="brand" href="/">ifYouMind</a> · Market analysis for your business plan, cited to the U.S. Census.</p>
+    <p><a class="brand" href="/">ifYouMind</a> · Evidence for real decisions. Business city reports available today.</p>
     <p><a href="/guides/">Guides</a> · <a href="/sample-report">Sample report</a> · <a href="/privacy-policy">Privacy</a> · <a href="/terms-of-conduct">Terms</a></p>
   </footer>
 </body>
@@ -133,8 +133,8 @@ function indexPage(guides) {
   const main = `    <section class="guide">
       <header class="guide-header">
         <p class="eyebrow">Guides</p>
-        <h1>Market research guides for your business plan</h1>
-        <p class="lede">Practical, source-cited guides to researching a market and choosing a location with free public data.</p>
+        <h1>Practical guides for decisions that matter</h1>
+        <p class="lede">Compare job offers and relocation trade-offs, research business locations, and build useful comparisons from your own evidence. Personal tools and flexible dataset analysis are in development; these guides are manual workflows.</p>
       </header>
       <ul class="guide-list">
 ${items}
@@ -142,7 +142,7 @@ ${items}
 ${ctaBox}
     </section>`;
   const jsonLd = { "@context": "https://schema.org", "@type": "CollectionPage", name: "ifYouMind guides", url: canonical };
-  return shell({ title: "Market research guides | ifYouMind", description: "Practical, source-cited guides to market research and location decisions for business plans, using free U.S. Census data.", canonical, type: "website", jsonLd, main });
+  return shell({ title: "Decision guides: jobs, places and evidence | ifYouMind", description: "Source-cited guides for job offers, relocation, business locations and comparing your own evidence. Practical worksheets with clear limits and Business examples.", canonical, type: "website", jsonLd, main });
 }
 
 function buildGuides() {

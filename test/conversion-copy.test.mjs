@@ -65,23 +65,23 @@ test('metric cards hide the unit line when the value already shows it',()=>{
 test('the $79 report comes before Pro on both pricing surfaces',()=>{
   const landingPricing=landingHtml.slice(landingHtml.indexOf('id="pricing"'));
   const order=(html,labels)=>labels.map(label=>html.indexOf(label));
-  const [lFree,lReport,lPro]=order(landingPricing,['<span>Free</span>','<span>One report</span>','<span>Pro</span>']);
+  const [lFree,lReport,lPro]=order(landingPricing,['<span class="small-label">Free Decision Brief</span>','<span class="small-label">Decision Report</span>','<span class="small-label">Pro</span>']);
   assert.ok(lFree>=0&&lFree<lReport&&lReport<lPro,'homepage: Free, One report, Pro');
   const [pFree,pReport,pPro]=order(pricingHtml,['<span class="label">Free</span>','<span class="label">One report</span>','<span class="label">Pro</span>']);
   assert.ok(pFree>=0&&pFree<pReport&&pReport<pPro,'pricing page: Free, One report, Pro');
-  assert.match(landingPricing,/<article class="featured"><div class="price-top"><span>One report<\/span>/,'homepage emphasises the $79 card');
+  assert.match(landingPricing,/<article class="featured"><span class="small-label">Decision Report<\/span>/,'homepage emphasises the $79 card');
   assert.match(pricingHtml,/<article class="featured"[^>]*>\s*<div class="topline"><span class="label">One report<\/span>/,'pricing page emphasises the $79 card');
-  for(const html of [landingHtml,pricingHtml]){
-    assert.ok(html.includes('For advisers and anyone planning several locations a month.'));
-    assert.ok(html.includes('Recommended for one business plan'));
-  }
+  assert.ok(landingPricing.includes('For advisers and repeat comparisons.'));
+  assert.ok(landingPricing.includes('Plan-ready market analysis with location rankings'));
+  assert.ok(pricingHtml.includes('For advisers and anyone planning several locations a month.'));
+  assert.ok(pricingHtml.includes('Recommended for one business plan'));
 });
 
 test('price amounts are unchanged',()=>{
   const landingPricing=landingHtml.slice(landingHtml.indexOf('id="pricing"'),landingHtml.indexOf('class="final"'));
   assert.ok(landingPricing.includes('<h3>$0</h3>'));
-  assert.ok(landingPricing.includes('<h3>$79</h3>'));
-  assert.ok(landingPricing.includes('<h3>$39<small>/month</small></h3>'));
+  assert.ok(landingPricing.includes('<h3>$79<span> / report</span></h3>'));
+  assert.ok(landingPricing.includes('<h3>$39<span> / month</span></h3>'));
   assert.ok(pricingHtml.includes('<h2>$0</h2>'));
   assert.ok(pricingHtml.includes('<h2>${{ status.pricing.reportOneTimeUsd }}</h2>'));
   assert.ok(pricingHtml.includes('<h2>${{ status.pricing.proMonthlyUsd }}<small>/month</small></h2>'));
@@ -96,16 +96,18 @@ test('population-change wording names the real ACS periods and the margin of err
   assert.ok(liveBrief.includes('higher estimated 5-year population change (differences may be within the margin of error).'));
 });
 
-test('homepage stays on the business-plan promise',()=>{
+test('consumer homepage preserves the Business entry point and plan-ready offer',()=>{
   assert.doesNotMatch(landingHtml,/Miami or Tampa/);
   assert.doesNotMatch(landingHtml,/<span>Your own data<\/span>/);
-  const cases=landingHtml.slice(landingHtml.indexOf('class="use-grid"'));
-  assert.ok(cases.indexOf('<span>Business plan</span>')<cases.indexOf('<span>Location</span>'));
+  assert.match(landingHtml,/id="business"/);
+  assert.match(landingHtml,/Business · Available now/);
+  assert.match(landingHtml,/Plan-ready market analysis/);
+  assert.ok(landingHtml.indexOf('id="decide"')<landingHtml.indexOf('id="business"'),'consumer discovery leads; Business remains available');
 });
 
 test('support email is visible text, plus the privacy link, in the homepage footer',()=>{
-  const footer=landingHtml.slice(landingHtml.indexOf('<footer>'));
-  assert.ok(footer.includes('Questions? <a href="mailto:support&#64;ifyoumind.com">support&#64;ifyoumind.com</a>'),'email is escaped for the Angular template compiler');
+  const footer=landingHtml.slice(landingHtml.indexOf('<footer'));
+  assert.ok(footer.includes('<a href="mailto:support&#64;ifyoumind.com">support&#64;ifyoumind.com</a>'),'email is escaped for the Angular template compiler');
   assert.ok(footer.includes('routerLink="/privacy-policy"'));
 });
 

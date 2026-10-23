@@ -1,0 +1,77 @@
+{
+  "productionBase": "bb6744b330378e63506cb90334098e6dfe2b86ff",
+  "environment": "Local Chrome desktop1280/mobile390 and narrow320; demo-ifyoumind emulators; no production writes or real transactions",
+  "productionBuild": "PASS",
+  "localBuild": "PASS",
+  "productionBundleGuard": "PASS",
+  "fastTests": {
+    "pass": 87,
+    "fail": 0
+  },
+  "functionsUnit": {
+    "pass": 72,
+    "fail": 0
+  },
+  "firestoreRules": {
+    "pass": 7,
+    "fail": 0
+  },
+  "organizations": {
+    "pass": 5,
+    "fail": 0
+  },
+  "commerce": {
+    "pass": 29,
+    "fail": 0,
+    "stripeRest": "intercepted"
+  },
+  "fixturesAndLimits": {
+    "pass": 24,
+    "fail": 0,
+    "skip": 1,
+    "skipReason": "Existing intentional server email-verification integration skip; separate browser verification-gate checks pass."
+  },
+  "browser": {
+    "pass": 98,
+    "fail": 0,
+    "skip": 0,
+    "workers": 1
+  },
+  "hostingSeo": {
+    "observations": 56,
+    "uniqueSitemapUrls": 9,
+    "result": "PASS",
+    "checks": "initial/rendered metadata, robots/canonical/share/schema, guides, redirects, private noindex and real missing/Life 404"
+  },
+  "accessibility": {
+    "axeWcag2And21A_AAViolations": 0,
+    "headingMinimumContrast": 5.398844885639184,
+    "visibleControlMinimumHeightPx": 44,
+    "documentOverflowPx": 0,
+    "widths": [
+      320,
+      390,
+      1280
+    ]
+  },
+  "baselineDebt": {
+    "fullLint": "FAIL:91 unchanged errors",
+    "angularTest": "FAIL before execution:11 unchanged TS diagnostics plus corresponding bundler/Karma load errors",
+    "newSignatures": 0,
+    "comparison": "baseline-comparison.json"
+  },
+  "warnings": [
+    "Initial bundle ~653.54kB vs500kB warning",
+    "Homepage CSS7.19kB vs4kB warning, below8kB hard limit; other existing style warnings"
+  ],
+  "notVerified": [
+    "physical iOS/Safari",
+    "manual screen reader",
+    "field Core Web Vitals",
+    "native PDF export",
+    "live payment",
+    "post-deploy behavior",
+    "user comprehension/conversion benefit"
+  ],
+  "invalidAttempt": "First Hosting audit used wrong config-relative build path and served no app. Retained privately as invalid harness run; corrected final audit passed. No product source change needed."
+}

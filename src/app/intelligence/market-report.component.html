@@ -128,6 +128,7 @@
       <div class="offer-actions">
         <a routerLink="/register" [queryParams]="{intent:'report'}" class="offer-primary">Get this report for your cities · $79</a>
         <a routerLink="/register" class="offer-secondary">Start free</a>
+        <button type="button" class="offer-secondary" (click)="printReport()">Print / save this sample</button>
       </div>
     </section>
 
@@ -211,6 +212,7 @@
       <ol><li *ngFor="let question of brief.questions">{{ question }}</li></ol>
     </section>
 
+    <p *ngIf="sampleMode" class="no-print"><a href="/guides/choose-business-location-evidence/">Business location evidence checklist</a> · <a href="/guides/">All decision guides</a></p>
     <section id="sources" *ngIf="brief.sources?.length" class="sources">
       <p class="eyebrow">Sources</p>
       <ul>

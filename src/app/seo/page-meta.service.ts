@@ -4,6 +4,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import publicPages from '../../public-pages.json';
+import homeStructuredData from '../../site-structured-data.json';
 import { PageMeta, PublicPage, pageMetaFor } from './page-meta';
 
 /** Keeps title, description, canonical, robots and share tags in step with the current route. */
@@ -33,6 +34,15 @@ export class PageMetaService{
     if(page.canonical)this.meta.updateTag({property:'og:url',content:page.canonical});
     else this.meta.removeTag("property='og:url'");
     this.setCanonical(page.canonical);
+    // Application offers describe the homepage, not login, legal pages or private reports.
+    this.document.getElementById('page-structured-data')?.remove();
+    if(page.canonical==='https://ifyoumind.com/'){
+      const script=this.document.createElement('script');
+      script.id='page-structured-data';
+      script.type='application/ld+json';
+      script.textContent=JSON.stringify(homeStructuredData);
+      this.document.head.appendChild(script);
+    }
   }
 
   private setCanonical(href:string|null):void{

@@ -41,7 +41,13 @@ export class TaxDiscoveryComponent {
     try{
       if(!/\.csv$/i.test(file.name))throw new Error('Choose the supported CSV. PDF, spreadsheets and scans are not supported.');
       if(file.size>2_000_000)throw new Error('The CSV must be 2 MB or smaller.');
-      const text=await file.text();
+      let text:string;
+      try{text=await file.text();}
+      catch(error){
+        // Keep a useful diagnostic code, never a private filename or browser error message.
+        console.warn('Discovery file read failed',error instanceof Error?error.name:'UnknownError');
+        throw new Error('Your browser couldn’t open this file. Choose it again, or try the example.');
+      }
       if(version!==this.readVersion)return;
       const parsed=parseTaxCsv(text);
       this.rows=parsed.rows.length===1?[...parsed.rows,blankRow()]:parsed.rows;

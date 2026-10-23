@@ -348,3 +348,20 @@ OpenAI / Codex. **A — Executive:** Consumer-first experience launched under ex
 **F — Next three:** (1) founder interact with example/CSV/source/correction/insufficiency/clear; (2) fix observed local usability issues and perform remainingmanualdevice/SRverification; (3) separately decide later PDF/AI/storage/pilot scopes only after Phase1usefulness review. No more mockups or speculative analytics by default, no release authority inferred.
 
 **G — Business:** Concrete first-value path now testable without AI literacy, accounts or provider fees. Intended benefit easier useful discovery/trust; no measured outside-user utility/conversion/willingness-to-pay/revenue. Existingoffers and approvedfinancialbaseline unchanged; internal runs excluded. Next commercial learning is founder interaction and later specifically approved real-user observation, not invented traction/newSKU. Notion/GitHub receive sanitized evidence only.
+
+
+## October23,2026 CDT — Phase1 founder review follow-up / OpenAI Codex
+
+**A — Executive:** Founder confirmed automatic discovery as product foundation. Improved existing PR70within local Phase1 scope; no redesign or public integration.
+
+**B — Changes:** Conversational charge/contribution/pattern labels with unchanged exact maths/sourcecells/steps/caveats. Incomplete/corrected input now has truthful non-result heading. Browser file-read rejection has helpful retry guidance instead of raw exception; console only retains error name.12additionalbrowserchecks,15updatedsyntheticcaptures, founder walkthrough and ranked narrow Phase2 proposal. No new dependencies/backend/Stripe/Business/pricing/production routing.
+
+**C — Verification:**24unit/119fastPASS,48browserPASS0FAIL0SKIP28.8s across1280/390/320;0automaticcheckedaxeviolations/externalrequests/writes/storage. Keyboard/source/corrections/insufficient/zero/duplicate/persistentreaderror→retry/clear/late-read replacement/oversize/empty checked. Production+previewbuild/preflight/33filebundle/21JSproductionexclusion/previewisolation/targetedlintPASS. Fresh global91lint/11AngularcompilerdiagnosticsFAIL identical signaturemultisets0new/removed; Angular failedbeforeexecution. ExistingintegrationSKIPnotwaived. Preview197.50kB/58.11transfer;6.71kBstylewarning4kB/below8error, budgetsunchanged;production659.80/178.02. Referencefirstclick107/50/100ms, firstfindingheading481.22/496.55/560.69inviewports;not human/field results. Initial45PASS/3FAIL was incorrect new empty-file test expectation vs actual “CSV is empty.”; corrected full48PASS. Physicaldevice/Safari/manualspokenSR/noviceusefulness unverified. Finalhead fullCI is pinned afterpush in GitHub, not assumed from d80.
+
+**D — GitHub:** Continued codex/automatic-discovery-phase1 from d80bf7bd24377113de484735bd1398365546ed25, clean/synced start. New follow-up commit/exactCI linked in same draftPR70 afterpush; no new overlapping PR/issueclosure. Other worktrees/69/master/private drafts preserved. Permanentinstructions/current/master/growth/review updated; GitHub/Notion receive sanitized evidence only.
+
+**E — Deployment:** Local4313only, production not changed/queried;lastverified74a91fb/Hostinga4b9fd4f6533ce8b. No merge/deploy/AI/PDF/externalcomparison/storage/upload/payment/Stripeprice/outreach. Current approval excludes release and Phase2implementation. Pending Founder Setup retained.
+
+**F — Next three:** (1) founder interact with updated evidence/correction/insufficient/clear; (2) address observed local friction and remainingmanualdevice/SRchecks; (3) decide explicit local electricity-bill second-category scope before implementation. No universal parser or speculative analytics.
+
+**G — Business:** Easier first-value comprehension and recovery are hypotheses supported by concrete copy/recovery defects, not measured conversion. First outside-user experience/firstindependentsale goals unchanged; actual customer/revenue metrics and approvedfinancialevidence untouched. Next revenue-relevant action is learn from use, not expand formats without evidence or invent traction.

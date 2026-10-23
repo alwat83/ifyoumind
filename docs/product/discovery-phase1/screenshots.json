@@ -1,70 +1,66 @@
 {
-  "scope": "Actual standalone Angular preview, synthetic data only, unedited captures at CSS pixel scale",
-  "screenshots": [
+  "observedDate": "2026-10-23 CDT",
+  "scope": "Actual local Angular Phase1 founder follow-up, synthetic data only, unedited browser screenshots",
+  "files": [
     {
       "path": "screenshots/desktop-discovered-full.png",
-      "sha256": "cc5cde855a600568cd4fa45be69383b23e617704808284c3482b3ae988ee69e1",
-      "bytes": 256179
+      "sha256": "eb4109710089a58b1e6b57cd56b00955458c67b9846de691a55f250afe9f47ae"
     },
     {
       "path": "screenshots/desktop-discovery-fold.png",
-      "sha256": "bf08562db8969f8673e07dfded7c8076a04011c7cf603daa75640166bf7585ba",
-      "bytes": 105001
+      "sha256": "3ca207ebe5d2e8617681add877947aacae886b3c64b5d536af93479504420156"
     },
     {
       "path": "screenshots/desktop-evidence-full.png",
-      "sha256": "38aa026bd51fe9396c544dd89e8e9c260d7a07aa57314d19aee2ca75aaa6855b",
-      "bytes": 433618
+      "sha256": "c434ab9c5a6bfa4c3b737703fae595180123a88b946a351b30557ca24cec3579"
     },
     {
       "path": "screenshots/desktop-insufficient-full.png",
-      "sha256": "e6a442438e28b03e7fa331fe1b10cd5c90c74dbc9f4fb432c5f74e96ad8f9fbc",
-      "bytes": 192987
+      "sha256": "4238a88f2a9963c8c6c4d57a4c8f7893ef9b2d20cd83f6e6ac047f2a0ebf3561"
+    },
+    {
+      "path": "screenshots/desktop-read-failure-full.png",
+      "sha256": "21ad33b1413b68fe4241212e4f5943734486780a7c992f2d4742b44e8784456c"
     },
     {
       "path": "screenshots/desktop-welcome-fold.png",
-      "sha256": "49e97c77ac288a0ae324d135c632dd079b1ef27115a039c9504ed45b5759cefb",
-      "bytes": 124592
+      "sha256": "49e97c77ac288a0ae324d135c632dd079b1ef27115a039c9504ed45b5759cefb"
     },
     {
       "path": "screenshots/mobile-corrected-full.png",
-      "sha256": "37654c42b21a70d29c574109f63c11847eb5e839450ee2e998793814b163c556",
-      "bytes": 334717
+      "sha256": "788c5985db3dd934dfc826625b0a461cd84b502d39b1bdde3900bc26d7e09120"
     },
     {
       "path": "screenshots/mobile-discovered-full.png",
-      "sha256": "89799e4c34ca2da0e9b90411244960ba11876b0c37936d15141526883b5bcba3",
-      "bytes": 244755
+      "sha256": "694297a60b3b2a86f94b0bc061303111ac3cc3e056fa419ce39827e04cc62c1d"
     },
     {
       "path": "screenshots/mobile-discovery-fold.png",
-      "sha256": "8d06198411f7a9c7305f15e259faba9d9d04dc29615b09ea6940e3c03ba7c0fa",
-      "bytes": 62310
+      "sha256": "79b8ba1fc056eab4069efbaaa9d221a254308c92484729636985a4deabae73a3"
     },
     {
       "path": "screenshots/mobile-evidence-full.png",
-      "sha256": "00518fbc43927ac6e4a879e0fd62295c97d2f3d04306347d0f2e202525760d8f",
-      "bytes": 410355
+      "sha256": "2c8ca08ecd08495098dd935025bfd86673434696343b105eb52adf83356caa12"
     },
     {
       "path": "screenshots/mobile-insufficient-full.png",
-      "sha256": "4725868b41cc0ff599d5cd40a43195e5e8ba35f383663e94ef42f8f9640df6a6",
-      "bytes": 189450
+      "sha256": "59cdb86462c1adbff8b57bd0717e5c563fc871e542061ca2816628f68a66fc2a"
+    },
+    {
+      "path": "screenshots/mobile-read-failure-full.png",
+      "sha256": "d5f3a7d427dc165faa85e29511d58f545214452ae5701d1081eb55f86e524782"
     },
     {
       "path": "screenshots/mobile-welcome-fold.png",
-      "sha256": "05e5c0234939aede693ed4d4926671ee76ade87ac96db0f9b6cb387a40ede93e",
-      "bytes": 54650
+      "sha256": "05e5c0234939aede693ed4d4926671ee76ade87ac96db0f9b6cb387a40ede93e"
     },
     {
       "path": "screenshots/narrow-discovery-fold.png",
-      "sha256": "68a99a5d10486ad229fa35d4ccbb29f40e9deabf3207b76425481b6fc39e3cf8",
-      "bytes": 42411
+      "sha256": "cd490759ced2955dca6efe698bcd1967547e8905721017a0da07a298232a77b0"
     },
     {
       "path": "screenshots/narrow-welcome-fold.png",
-      "sha256": "fe44c0f421678e7a26150330d2a8a7b8b4dec99ef2ab84bc09a43bdccefdd049",
-      "bytes": 38274
+      "sha256": "fe44c0f421678e7a26150330d2a8a7b8b4dec99ef2ab84bc09a43bdccefdd049"
     }
   ]
 }

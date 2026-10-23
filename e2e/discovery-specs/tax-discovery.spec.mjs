@@ -70,3 +70,28 @@ test('corrected valid values produce a new story with current source evidence',a
  await example(page);await page.getByRole('button',{name:'Review or correct data'}).click();await page.getByRole('textbox',{name:'CSV row 2 County',exact:true}).fill('1000.00');await page.getByRole('textbox',{name:'CSV row 2 Total billed',exact:true}).fill('4300.00');await expect(page.locator('.finding')).toHaveCount(0);await page.getByRole('button',{name:'Rerun discovery'}).click();await expect(page.locator('.finding').first()).toContainText('rose by $320.00');
  const card=page.locator('.finding').first();await card.locator('summary').click();await expect(card.locator('.source-note')).toContainText('Edited values are the source');await expect(card.getByRole('row',{name:/E2/})).toContainText('4300.00');await accessible(page);await page.screenshot({path:info.outputPath('corrected.png'),fullPage:true,scale:'css'});
 });
+
+test('welcome and plain-language findings are usable in the first screen',async({page})=>{
+ const cta=await page.getByRole('button',{name:'Try example data'}).boundingBox();expect(cta.y+cta.height).toBeLessThanOrEqual(page.viewportSize().height);
+ await example(page);await expect(page.getByRole('heading',{name:'School changed the most.',exact:true})).toBeVisible();await expect(page.locator('.finding').nth(1)).toContainText('School went up by $240.00. That makes up 57.1% of the $420.00 increase.');await expect(page.getByRole('heading',{name:'All three charges went up by 10%.',exact:true})).toBeVisible();await accessible(page);
+});
+test('repeated file-read failures show helpful copy and recover without private diagnostics',async({page},info)=>{
+ const warnings=[];page.on('console',message=>{if(message.type()==='warning')warnings.push(message.text());});
+ await example(page);
+ await page.evaluate(()=>{const read=File.prototype.text;let failures=2;File.prototype.text=function(){if(failures-->0)return Promise.reject(new DOMException('INTERNAL PRIVATE-ADDRESS.csv','NotReadableError'));return read.call(this);};});
+ for(let i=0;i<2;i++){
+  await upload(page);await expect(page.getByRole('alert')).toContainText('Your browser couldn’t open this file');await expect(page.locator('.finding')).toHaveCount(0);await expect(page.locator('body')).not.toContainText('INTERNAL');await expect(page.locator('body')).not.toContainText('PRIVATE-ADDRESS');await accessible(page);
+ }
+ expect(warnings).toEqual(['Discovery file read failed NotReadableError','Discovery file read failed NotReadableError']);await page.screenshot({path:info.outputPath('read-failure.png'),fullPage:true,scale:'css'});
+ await upload(page);await expect(page.locator('.finding')).toHaveCount(3);await expect(page.getByRole('alert')).toHaveCount(0);
+});
+test('incomplete inputs never announce a discovery and clear removes expanded evidence',async({page})=>{
+ await upload(page,CSV.split('\n').slice(0,2).join('\n'));await expect(page.locator('h1')).toHaveText('Let’s get the data ready.');await expect(page.getByRole('status')).toContainText('No findings');await expect(page.locator('.finding')).toHaveCount(0);
+ await page.getByRole('button',{name:'Reset to example data'}).click();await expect(page.locator('h1')).toHaveText('Here’s what changed.');await page.locator('.finding').first().locator('summary').click();await page.getByRole('button',{name:'Did my assessment or exemptions change?'}).click();await page.getByRole('button',{name:'Clear my data'}).click();await expect(page.getByRole('table')).toHaveCount(0);await expect(page.getByRole('region',{name:'Suggested next check'})).toHaveCount(0);await expect(page.locator('body')).not.toContainText('57.1%');await accessible(page);
+});
+test('example safely replaces a pending private read; oversize and empty files recover',async({page})=>{
+ await page.evaluate(()=>{const read=File.prototype.text;File.prototype.text=function(){return new Promise(resolve=>setTimeout(()=>resolve(read.call(this)),400));};});
+ await upload(page,CSV.replace('4620.00','9999'));await expect(page.getByRole('status')).toContainText('Reading the CSV');await page.getByRole('button',{name:'Try example data'}).click();await page.waitForTimeout(600);await expect(page.locator('.finding')).toHaveCount(3);await expect(page.getByRole('alert')).toHaveCount(0);await expect(page.locator('body')).not.toContainText('9999');
+ await upload(page,'x'.repeat(2_000_001));await expect(page.getByRole('alert')).toContainText('2 MB or smaller');await expect(page.locator('.finding')).toHaveCount(0);
+ await upload(page,'');await expect(page.getByRole('alert')).toContainText('CSV is empty.');await page.getByRole('button',{name:'Try example data'}).click();await expect(page.locator('.finding')).toHaveCount(3);await accessible(page);
+});

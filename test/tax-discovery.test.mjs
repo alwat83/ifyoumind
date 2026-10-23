@@ -36,13 +36,13 @@ test('decrease is signed and contribution remains an arithmetic share',()=>{
  const rows=example();[rows[0].tax_year,rows[1].tax_year]=['2025','2024'];const r=run(rows);assert.equal(r.delta,-42000);assert.equal(r.percent,'−9.1%');assert.match(r.findings[0].title,/fell/);assert.match(r.findings[1].detail,/57.1%/);
 });
 test('offsetting changes with zero net omit misleading percentages',()=>{
- const r=run(change(example(),1,{county_usd:'1000',school_usd:'2300',municipal_usd:'900',total_usd:'4200'}));assert.equal(r.status,'ready');assert.equal(r.delta,0);assert.match(r.findings[1].title,/parts changed/);assert.match(r.findings[1].detail,/offset/);assert.doesNotMatch(r.findings[1].detail,/\d+%/);
+ const r=run(change(example(),1,{county_usd:'1000',school_usd:'2300',municipal_usd:'900',total_usd:'4200'}));assert.equal(r.status,'ready');assert.equal(r.delta,0);assert.match(r.findings[1].title,/charges shifted/);assert.match(r.findings[1].detail,/offset/);assert.doesNotMatch(r.findings[1].detail,/\d+%/);
 });
 test('mixed-direction changes with nonzero net do not show contribution shares',()=>{
  const r=run(change(example(),1,{county_usd:'1100',school_usd:'2300',municipal_usd:'900',total_usd:'4300'}));assert.equal(r.status,'ready');assert.match(r.findings[1].detail,/offset/);assert.equal(r.findings.length,2);
 });
 test('tied largest contributors are identified honestly',()=>{
- const r=run(change(example(),1,{county_usd:'1000',school_usd:'2500',municipal_usd:'900',total_usd:'4400'}));assert.match(r.findings[1].title,/shares/);assert.match(r.findings[1].detail,/tied/);
+ const r=run(change(example(),1,{county_usd:'1000',school_usd:'2500',municipal_usd:'900',total_usd:'4400'}));assert.match(r.findings[1].title,/tie/);assert.match(r.findings[1].detail,/tied/);
 });
 test('component sums must reconcile exactly to the cent',()=>{
  const r=run(change(example(),1,{total_usd:'4620.01'}));assert.equal(r.status,'invalid');assert.match(r.issues[0].message,/add up/);assert.equal(r.findings.length,0);

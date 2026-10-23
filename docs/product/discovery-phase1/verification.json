@@ -12,7 +12,7 @@
     "fail": 0
   },
   "browser": {
-    "pass": 36,
+    "pass": 48,
     "fail": 0,
     "skip": 0,
     "viewports": [
@@ -20,7 +20,7 @@
       390,
       320
     ],
-    "duration": "19.3 seconds",
+    "duration": "28.8 seconds",
     "autoAxeViolations": 0,
     "externalRequests": 0,
     "writes": 0,
@@ -39,7 +39,9 @@
     "styleWarningKB": 4,
     "styleErrorKB": 8,
     "productionInitialKB": 659.8,
-    "productionTransferKB": 178.02
+    "productionTransferKB": 178.02,
+    "discoveryInitialKB": 197.5,
+    "discoveryTransferKB": 58.11
   },
   "baseline": {
     "lintBaseline": 91,
@@ -58,7 +60,7 @@
         "name": "desktop",
         "width": 1280,
         "height": 900,
-        "firstClickElapsedMs": 131,
+        "firstClickElapsedMs": 107,
         "firstFindingHeadingBottom": 481.21875,
         "externalRequestsOrWrites": 0
       },
@@ -66,7 +68,7 @@
         "name": "mobile",
         "width": 390,
         "height": 844,
-        "firstClickElapsedMs": 54,
+        "firstClickElapsedMs": 50,
         "firstFindingHeadingBottom": 496.546875,
         "externalRequestsOrWrites": 0
       },
@@ -74,13 +76,13 @@
         "name": "narrow",
         "width": 320,
         "height": 568,
-        "firstClickElapsedMs": 58,
-        "firstFindingHeadingBottom": 544.1875,
+        "firstClickElapsedMs": 100,
+        "firstFindingHeadingBottom": 560.6875,
         "externalRequestsOrWrites": 0
       }
     ]
   },
-  "ci": "Exact final head and workflow outcomes pinned in draft PR after push; not inferred from base/proposal checks",
+  "ci": "New exact head and completed workflow outcomes pinned to PR70 after push; d80 CI is historical, not substituted",
   "limitations": [
     "Desktop Chromium/mobile emulation, not physical iOS/Safari",
     "Manual screen-reader speech unverified",
@@ -88,5 +90,11 @@
     "One explicit two-year USD CSV schema only; no PDFs/OCR/arbitrary files",
     "No AI interpretation, external data, backend upload or saving",
     "No production merge/deployment or real transactions"
-  ]
+  ],
+  "sprint": "Founder Phase1 follow-up; prior exact head d80bf7bd24377113de484735bd1398365546ed25 preserved in history",
+  "initialFollowupAttempt": {
+    "pass": 45,
+    "fail": 3,
+    "reason": "New empty-file test expected schema wording instead of existing CSV-is-empty guidance; expectation fixed, full48pass."
+  }
 }

@@ -21,6 +21,8 @@ Before major work, review the [automatic-discovery proposal](docs/product/AUTOMA
 
 Founder approved local implementation/testing of automatic-discovery Phase1 from #69exactee7d05be4a301a21918fbf20a2eb54ab4093304b. Working experience: no-prompt two-year property-tax example/recognized redactedCSV, traceable deterministic findings/corrections/clear and mobile/a11y tests. [Working review](docs/product/discovery-phase1/REVIEW.md). Keep its separate Angular entry/build outside the production app import/route/assets graph; no backend upload, persistence, AI/provider/API calls, new pricing or Business changes. This approval does not authorize merging/deployment or later PDF/AI/storage phases. Next design decisions follow interaction with this experience, not more homepage mockups. Outbound remains Pending Founder Setup.
 
+**Founder review follow-up, October23:** Phase1 confirms the correct product direction; automatic discovery remains the foundation. Focus PR70 on conversational findings, mobile first-use validation, truthful failure/insufficient/correction/clear states and preserved evidence. [Follow-up review and narrowly scoped Phase2 recommendation](docs/product/discovery-phase1/FOUNDER_FOLLOWUP.md). Evaluate a second explicit dataset adapter before generalizing parsing; its implementation is not authorized by a recommendation. AI, PDF, external comparisons, server storage and production integration remain separate gates.
+
 ## Source of truth — mandatory order
 **Founder correction, 2026-10-22: GitHub and repository documentation are the source of truth for development.** The accessible Notion coordination hub, confirmed by the founder, is:
 https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71

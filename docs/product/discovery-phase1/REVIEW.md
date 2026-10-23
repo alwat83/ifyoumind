@@ -1,5 +1,7 @@
 # Phase 1 — working automatic discovery for founder review
 
+**October23 founder follow-up:** direction confirmed; focused copy/recovery improvements and a proposed second category are documented in [FOUNDER_FOLLOWUP.md](FOUNDER_FOLLOWUP.md). Local only; PR70 remains draft and approval-gated.
+
 October23,2026 CDT · OpenAI/Codex · **Implemented and tested locally; not merged, deployed or offered in production.** Founder authorized Phase1 of #69 at `ee7d05be4a301a21918fbf20a2eb54ab4093304b`. Dedicated branch `codex/automatic-discovery-phase1`; exact final head/CI pinned in its draft PR. Includes preserved #69 documentation history once; no separate #69 merge or production authorization.
 
 ## Try the actual experience
@@ -36,22 +38,22 @@ CSV/file/draft/finding state stays in component memory. File input is cleared af
 |---|---|
 | New pure engine/unit tests | **24PASS0FAIL** |
 | Fast web suite | **119PASS0FAIL**, includes those24 |
-| Standalone browser suite | **36PASS0FAIL0SKIP**,1280×900/390×844/320×568, final19.3s |
+| Standalone browser suite | **48PASS0FAIL0SKIP**,1280×900/390×844/320×568, follow-up28.8s |
 | Accessibility |0automatic WCAG2/2.1A/AA violations in checked welcome/findings/evidence/error/zero/follow-up/corrected states; keyboard first-click/disclosures/focus and source errors covered |
 | Privacy regressions |0external requests/writes; no local/session storage, cookies or IndexedDB; reload/clear/late-read cancellation checked |
 | Production + standalone builds and both bundle guards |PASS;21productionJS files exclude discovery;33production files pass emulator/fixture guard; preview has no provider endpoints |
 | Changed TS/template lint |PASS |
 | Global lint / Angular test |**91errors /11compiler diagnostics before execution**, same baseline signature multisets,0new/removed; not represented as passing |
 
-Reference installed-Chrome capture: first findings131ms desktop,54ms mobile,58ms narrow, after the explicit example click. First finding heading bottom481.22/496.55/544.19px, within each viewport. These are internal reference-Mac measurements, **not physical-device, field-performance, first-user comprehension or conversion results**. No real-user feedback/purchase/revenue outcome. Physical iOS/Safari/manual VoiceOver/NVDA speech remain unverified. Existing positive live signup/payment/PDF gaps and integration skip remain separate commercial baseline limitations.
+Follow-up installed-Chrome capture: first findings107ms desktop,50ms mobile,100ms narrow, after the explicit example click. First finding heading bottom481.22/496.55/560.69px, within each viewport. These are internal reference-Mac measurements, **not physical-device, field-performance, first-user comprehension or conversion results**. No real-user feedback/purchase/revenue outcome. Physical iOS/Safari/manual VoiceOver/NVDA speech remain unverified. Existing positive live signup/payment/PDF gaps and integration skip remain separate commercial baseline limitations.
 
-Discovery initial build≈195.6kB/57.7kB transfer. New preview stylesheet6.71kB carries a4kB warning, below8kB error limit; no budget relaxed. Production initial659.80kB/178.02kB transfer versus recorded659.78/178.01; no discovery JS/route imported. Existing production bundle/style warnings remain. Production functionality/Business79report/39monthlyPro unchanged; full existing emulator/Business regression outcomes are pinned in exact-head CI, not guessed from old green commits.
+Follow-up discovery initial build197.50kB/58.11kB transfer (previous195.6/57.7). New preview stylesheet6.71kB carries a4kB warning, below8kB error limit; no budget relaxed. Production initial659.80kB/178.02kB transfer versus recorded659.78/178.01; no discovery JS/route imported. Existing production bundle/style warnings remain. Production functionality/Business79report/39monthlyPro unchanged; full existing emulator/Business regression outcomes are pinned in exact-head CI, not guessed from old green commits.
 
 Earlier attempts: sandboxed Angular process aborted134; local build passed outside sandbox. First browser harness timed out before any cases because Angular emitted `discovery-index.html`; corrected explicit index output to `index.html`. Initial full33then36cases passed; a newly added first-screen regression subsequently found320px finding below568 (35PASS/1FAIL). Compact result layout and header brought heading bottom544.19; focused narrow1PASS and final36PASS. A new source-style preflight failure8347bytes was resolved by splitting responsive styles using existing project conventions; final production build/preflight/bundle checks passed. No failed attempt counted as a pass or hidden as baseline debt.
 
 ## Visual evidence
 
-All captures are the actual Angular preview with synthetic inputs; no image editing or private records. [Hash manifest](screenshots.json), [structured verification](verification.json).
+All15 current captures are the actual Angular preview with synthetic inputs; no image editing or private records. [Hash manifest](screenshots.json), [structured verification](verification.json).
 
 | View/state | Desktop | Mobile |
 |---|---|---|
@@ -60,11 +62,14 @@ All captures are the actual Angular preview with synthetic inputs; no image edit
 | Complete result | [Desktop](screenshots/desktop-discovered-full.png) | [Mobile](screenshots/mobile-discovered-full.png) |
 | Source cells/calculations | [Desktop](screenshots/desktop-evidence-full.png) | [Mobile](screenshots/mobile-evidence-full.png) |
 | Honest insufficient data | [Desktop](screenshots/desktop-insufficient-full.png) | [Mobile](screenshots/mobile-insufficient-full.png) |
+| Repeated native file-read failure | [Desktop](screenshots/desktop-read-failure-full.png) | [Mobile](screenshots/mobile-read-failure-full.png) |
 
 [Narrow320 first screen](screenshots/narrow-welcome-fold.png) · [Narrow320 first finding](screenshots/narrow-discovery-fold.png) · [Corrected source/result](screenshots/mobile-corrected-full.png).
 
+Follow-up attempt:45PASS/3FAIL because the new empty-file test expected a schema message instead of the actual helpful “CSV is empty.” Parser behavior was correct; test expectation corrected, full48PASS0FAIL. Native read failure messages now avoid raw exceptions, retaining only the diagnostic error name in the console. Incomplete/editing input no longer receives a completed-discovery heading. Public homepage integration remains deliberately absent pending release approval.
+
 ## Founder review / next decision
 
-Interact with the example, inspect one finding, make one correction, try insufficient data, and clear it. Evaluate whether the first result is useful and credible without a prompt. The next design change should follow this interaction, not another set of homepage mockups. Any physical-device/manual-SR/novice validation should report actual observations. Outbound remains **Pending Founder Setup**, no invitations/account requests.
+Interact with the example, inspect one finding, make one correction, try insufficient data, and clear it. Evaluate whether the first result is useful and credible without a prompt. The founder has confirmed automatic discovery as the foundation. The next changes should follow this interaction, not another set of homepage mockups; the electricity-bill proposal is for review only. Any physical-device/manual-SR/novice validation should report actual observations. Outbound remains **Pending Founder Setup**, no invitations/account requests.
 
 Phase1 local development/testing approval does **not** authorize any merge, production deployment, broad uploads, PDF/OCR, model/provider activation, pricing/subscription change or outreach. Existing production remains74a91fb/Hostinga4b9fd4f6533ce8b (last verified release). Follow-up Phase2/AI/private-storage/pilot gates remain separate. No Stripe changes, payments or speculative analytics added.

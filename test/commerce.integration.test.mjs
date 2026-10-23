@@ -462,3 +462,56 @@ test('a free decision with one comparison is unchanged', async () => {
   assert.deepEqual(created.result.reportOnlyLocations, []);
   assert.equal((await project(free, created.result.id)).freeBrief, null);
 });
+
+// ---- Decision allowance: 3 free, 50 Pro, per UTC month ----
+
+const decisionCount = async (organizationId) =>
+  (await orgs().doc(organizationId).collection('marketProjects').get()).size;
+
+test('Pro gets 50 decisions a month; the 51st is refused with the Pro message and nothing is written', async () => {
+  await seedCensus();
+  const pro = await newOrg({ plan: 'pro', stripeSubscriptionStatus: 'active' });
+  for (let i = 0; i < 50; i++) assert.equal((await createDecision(pro)).error, undefined, `decision ${i + 1}`);
+  const refused = await createDecision(pro);
+  assert.equal(refused.error, 'resource-exhausted');
+  assert.equal(await decisionCount(pro), 50);
+  assert.deepEqual((await org(pro)).decisionAllowance.used, 50);
+});
+
+test('concurrent requests can never exceed the allowance', async () => {
+  await seedCensus();
+  const free = await newOrg();
+  await createDecision(free);
+  const results = await Promise.all(Array.from({ length: 6 }, () => createDecision(free)));
+  assert.equal(results.filter(r => !r.error).length, 2, 'exactly the two remaining free decisions');
+  assert.equal(results.filter(r => r.error === 'resource-exhausted').length, 4);
+  assert.equal(await decisionCount(free), 3);
+});
+
+test('a decision that fails after reserving gives its slot back', async () => {
+  await seedCensus();
+  const free = await newOrg();
+  const bad = await call('createMarketIntelligenceProject', { organizationId: free, location: 'Nowhere', concept: 'x', decision: 'x' });
+  assert.equal(bad.error, 'invalid-argument');
+  assert.equal((await org(free)).decisionAllowance.used, 0);
+  for (let i = 0; i < 3; i++) assert.equal((await createDecision(free)).error, undefined);
+  assert.equal((await createDecision(free)).error, 'resource-exhausted');
+});
+
+test('downgrading from Pro mid-month applies the free limit to what was already used', async () => {
+  await seedCensus();
+  const ws = await newOrg({ plan: 'pro', stripeSubscriptionStatus: 'active' });
+  for (let i = 0; i < 4; i++) await createDecision(ws);
+  await orgs().doc(ws).set({ plan: 'free' }, { merge: true });
+  assert.equal((await createDecision(ws)).error, 'resource-exhausted');
+  const read = await call('getMarketIntelligenceProject', { organizationId: ws, projectId: (await orgs().doc(ws).collection('marketProjects').limit(1).get()).docs[0].id });
+  assert.ok(read.result, 'existing decisions stay readable');
+});
+
+test('decisions created before the counter existed still count (no extra allowance on rollout)', async () => {
+  await seedCensus();
+  const free = await newOrg();
+  for (let i = 0; i < 2; i++) await newProject(free, { createdAt: new Date() });
+  assert.equal((await createDecision(free)).error, undefined);
+  assert.equal((await createDecision(free)).error, 'resource-exhausted');
+});

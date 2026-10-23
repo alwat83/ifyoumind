@@ -90,3 +90,41 @@ export function freeDecisionPeriodStart(now:Date=new Date()):Date{
 export function freeDecisionLimitReached(plan:unknown,createdThisPeriod:number):boolean{
   return plan!=='pro'&&createdThisPeriod>=FREE_DECISIONS_PER_MONTH;
 }
+
+/** Pro workspaces may create this many decisions per calendar month (UTC), as advertised. */
+export const PRO_DECISIONS_PER_MONTH=50;
+
+export function decisionLimitFor(plan:unknown):number{
+  return plan==='pro'?PRO_DECISIONS_PER_MONTH:FREE_DECISIONS_PER_MONTH;
+}
+
+export interface DecisionAllowance{period:string;used:number}
+
+/**
+ * Reserves one decision for this period, or refuses. `counted` is the number of decisions already
+ * stored this period; the stored counter also includes reservations still in flight. Taking the
+ * larger of the two never under-counts (it heals a counter that predates this code), and running
+ * this inside a transaction on the workspace makes concurrent requests queue, so at most `limit`
+ * reservations succeed.
+ */
+export function reserveDecision(current:unknown,period:string,counted:number,limit:number):
+  {ok:true;next:DecisionAllowance}|{ok:false;used:number}{
+  const stored=current&&typeof current==='object'&&(current as DecisionAllowance).period===period
+    ? Math.max(0,Number((current as DecisionAllowance).used)||0)
+    : 0;
+  const used=Math.max(stored,counted);
+  if(used>=limit)return {ok:false,used};
+  return {ok:true,next:{period,used:used+1}};
+}
+
+/** Gives a reservation back when the decision could not be created. Never below zero. */
+export function releaseDecision(current:unknown,period:string):DecisionAllowance|null{
+  if(!current||typeof current!=='object'||(current as DecisionAllowance).period!==period)return null;
+  return {period,used:Math.max(0,(Number((current as DecisionAllowance).used)||0)-1)};
+}
+
+export function decisionLimitMessage(plan:unknown):string{
+  return plan==='pro'
+    ? `You have used the ${PRO_DECISIONS_PER_MONTH} decisions included with Pro this month. They reset on the 1st (UTC). Your existing decisions and reports stay available.`
+    : `You have used your ${FREE_DECISIONS_PER_MONTH} free decisions this month. They reset on the 1st (UTC). You can still buy the full Decision Report for any decision you have already created.`;
+}

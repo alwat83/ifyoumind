@@ -1,4 +1,8 @@
-# Seven-day zero-to-one launch — ready after approval
+# Zero-to-one launch preparation — Pending Founder Setup
+
+## Current founder decision — Pending Founder Setup
+
+October23,2026 CDT. LinkedIn publishing profile, official ifYouMind sending email and outreach channels will be configured and approved later. **Defer all external publishing and outreach.** Do not use Dose Ninja email or substitute any connected mailbox. Preserve every announcement, personalized note and launch asset as an unsent draft. Account setup is **Pending Founder Setup**, not a development blocker; do not repeatedly request sender details or distribution approval while this direction stands. Resume only after account setup and specific founder approval of audience, sender, channel and content. Continue safe product readiness, tests, launch preparation, documentation and organic planning; no merge/deploy/spend/Stripe change or speculative features.
 
 Prepared October 22, 2026. The production gate is complete: founder-approved #66 deployed October22 at8:27p.m.CDT and live15browser/56SEO checks passed. Day1 external activity begins only after separate communication approval. External materials require separate founder approval even after deployment. No messages/posts sent, spend, price changes or purchases initiated.
 
@@ -22,3 +26,8 @@ Founder approvals: exact release SHA and automatic deployment scope (plus option
 ## October23 execution refresh
 
 Actual private assets have been refreshed for the launched product and verified public contact limitations. Proposed dates October23–29 CDT: Friday sender/first launch-routing approval; weekend opted-in inbound/free experience and one approved promotion-thread contribution; Monday accepted introductions; Tuesday demonstrations/useful free experiences; Wednesday one separately approved follow-up after three business days; Thursday real-feedback/purchase review. Shift all dates if approval comes later; do not send automatically or promise meetings. Exact founder sender/profile and specific audience/channel/content must be approved first. Relevant community promotion is confined to verified designated spaces; unavailable rules mean hold that channel. All assets remain unsent. Current user/customer milestones outrank additional release work.
+
+
+## Account-independent work now
+
+Continue consumer readiness rather than waiting on publishing accounts: verify useful free journeys and honest available/upcoming labels; inspect mobile/source/error states; prepare focused feature-branch fixes for confirmed defects; preserve the demo, announcements, five personalized drafts and manual tracker. [Current readiness findings](CONSUMER_READINESS.md). No paid enrichment, substituted sender, outreach scheduling or automatic send. The older dated distribution sequence above is a retained proposal, suspended until founder setup and exact communication approval; shift dates after authorization rather than treating them as missed development milestones.

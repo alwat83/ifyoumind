@@ -9,6 +9,14 @@ This file applies ONLY to the **ifYouMind** repository `alwat83/ifyoumind` and w
 ## Product direction
 Build a consumer-friendly, general-purpose, evidence-backed AI data intelligence platform. Users should be able to explore public and, later, permissioned private datasets, compare locations and other entities, generate clear Decision Reports, and understand data sources, limitations, and freshness. Business intelligence is one vertical, not the whole product. Prioritize mobile UX, trustworthy outputs, reliable production releases, monetization, and acquisition. Avoid geographically narrow demo examples.
 
+## Founder product vision — automatic discovery, October23,2026
+
+**Mission:** make AI-driven data discovery accessible to everyday people, including people who have no AI or prompting experience. **Core promise: “You bring the data. We’ll find the story.”** The defining future experience is user-provided information followed by automatic, useful, evidence-backed findings before the user knows what to ask. This is product direction, not a claim of live arbitrary uploads or AI analysis.
+
+Prefer interaction-first, relatable, mobile-friendly entry points with minimal narrative; useful evidence should appear after a small first action, not require prompt writing or funnel every choice into a guide. The three homepage concepts are exploratory founder-review prototypes, not an approved redesign. The newer automatic-discovery direction governs architecture and any future implementation.
+
+Before major work, review the [automatic-discovery proposal](docs/product/AUTOMATIC_DISCOVERY_PROPOSAL.md): reuse existing ingestion/auth/data/reporting safely, build one narrow vertical slice, distinguish deterministic calculations/AI interpretations/external comparisons, require provenance/uncertainty, protect private files, bound retention/cost and reject unsupported conclusions. Two annual statements do not establish a trend, correlation or cause. No large rewrite, paid model activation, public file capability, new pricing, Life calculator, merge/deploy or outreach without the applicable founder approval. Preserve current Business79report/39monthlyPro and production. Outbound remains Pending Founder Setup; no sender questions.
+
 ## Source of truth — mandatory order
 **Founder correction, 2026-10-22: GitHub and repository documentation are the source of truth for development.** The accessible Notion coordination hub, confirmed by the founder, is:
 https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71

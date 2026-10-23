@@ -1,0 +1,26 @@
+{
+  "observations": 56,
+  "metadataStatusDifferences": [],
+  "redirects": [
+    {
+      "path": "/sample-report/",
+      "status": 301,
+      "location": "/sample-report"
+    },
+    {
+      "path": "/sample-report.html",
+      "status": 301,
+      "location": "/sample-report"
+    },
+    {
+      "path": "/guides",
+      "status": 301,
+      "location": "/guides/"
+    },
+    {
+      "path": "/guides/market-analysis-business-plan",
+      "status": 301,
+      "location": "/guides/market-analysis-business-plan/"
+    }
+  ]
+}

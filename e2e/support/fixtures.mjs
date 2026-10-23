@@ -255,6 +255,35 @@ export async function seedCensusCache() {
   }));
 }
 
+/**
+ * The public sample's three cities in the emulator's Census cache, so getSampleDecisionReport builds
+ * the sample without calling Census. Figures mirror the live sample (ACS 2020–2024); emulator only.
+ */
+export const SAMPLE_PLACES = Object.freeze([
+  { city: 'Austin', state: 'TX', stateFips: '48', placeFips: '05000', population: 979539, income: 93658, homeValue: 555300, populationChangePct: 3 },
+  { city: 'Nashville', state: 'TN', stateFips: '47', placeFips: '52006', population: 690130, income: 77371, homeValue: 413600, populationChangePct: 4 },
+  { city: 'Charlotte', state: 'NC', stateFips: '37', placeFips: '12000', population: 903844, income: 82068, homeValue: 385700, populationChangePct: 5.4 },
+]);
+
+export async function seedSampleReport() {
+  const { db } = admin();
+  const { FieldValue } = require('firebase-admin/firestore');
+  await db.collection('publicSamples').doc('decision-report').delete();
+  await Promise.all(SAMPLE_PLACES.map(place => db.collection('censusPlaceCache').doc(`acs5-2024-2019-${place.stateFips}-${place.city.toLowerCase()}`).set({
+    location: `${place.city}, ${place.state}`,
+    population: place.population,
+    income: place.income,
+    homeValue: place.homeValue,
+    populationFiveYearsAgo: Math.round(place.population / (1 + place.populationChangePct / 100)),
+    populationChangePct: place.populationChangePct,
+    placeFips: place.placeFips,
+    stateFips: place.stateFips,
+    sourceYears: [2019, 2024],
+    qaFixture: true,
+    cachedAt: FieldValue.serverTimestamp(),
+  })));
+}
+
 /** Disables an account, as an administrator suspending it would; its session must stop working. */
 export async function disableAccount(uid) {
   const { auth } = admin();

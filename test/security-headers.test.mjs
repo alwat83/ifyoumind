@@ -28,6 +28,13 @@ test('app pages cannot be framed by other sites, but Firebase Auth helpers under
   for (const path of ['/__/auth/iframe', '/__/auth/handler', '/__/firebase/init.js']) assert.equal(re.test(path), false, path);
 });
 
-test('the SPA rewrite is unchanged', () => {
-  assert.deepEqual(config.hosting.rewrites, [{ source: '**', destination: '/index.html' }]);
+test('only known private app routes use the noindex shell; unknown URLs retain HTTP 404', () => {
+  assert.equal(config.hosting.cleanUrls, true);
+  assert.deepEqual(config.hosting.rewrites, ['/login', '/register', '/verify-email', '/app', '/app/**'].map(source => ({ source, destination: '/app-shell.html' })));
+  assert.ok(!config.hosting.rewrites.some(rule => rule.source === '**'));
+  const appRedirect = config.hosting.redirects[0];
+  assert.ok(new RegExp(appRedirect.regex).test('/sample-report/'));
+  assert.equal(appRedirect.destination, '/:1');
+  assert.equal(appRedirect.type, 301);
+  assert.ok(!new RegExp(appRedirect.regex).test('/guides/'));
 });

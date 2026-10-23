@@ -14,7 +14,7 @@ import { EvidenceSummary, summarizeEvidence } from './evidence-summary';
   standalone:true,
   imports:[CommonModule,RouterLink,MarketAnalysisComponent],
   templateUrl:'./market-report.component.html',
-  styleUrls:['./market-report.component.scss','./market-report-offers.component.scss','./market-report-findings.component.scss'],
+  styleUrls:['./market-report.component.scss','./market-report-offers.component.scss','./market-report-findings.component.scss','./market-report-mobile.component.scss'],
 })
 export class MarketReportComponent implements OnInit {
   private readonly route=inject(ActivatedRoute);

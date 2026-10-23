@@ -21,6 +21,8 @@ export default defineConfig({
   outputDir: '../test-results/e2e',
   use: {
     baseURL: process.env.QA_BASE_URL,
+    // Local machines may use installed Chrome; CI keeps its pinned Playwright Chromium.
+    ...(process.env.QA_BROWSER_CHANNEL ? { channel: process.env.QA_BROWSER_CHANNEL } : {}),
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },

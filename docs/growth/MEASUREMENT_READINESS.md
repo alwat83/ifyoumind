@@ -1,0 +1,12 @@
+# Lightweight launch measurement
+
+October 22, 2026 founder reset: missing historical data is not a launch blocker. No dashboard or new tracking implementation is needed for zero-to-one entry. Use the seven-row launch scoreboard in the growth plan and the private conversation tracker as people actually use the product.
+
+- A real visitor is a human visitor, excluding agents/bots/QA; currently unknown. A meaningful experience means a person reviews a useful guide/sample or completed brief and can describe its value/limits, not a click/signup alone.
+- A qualified conversation confirms a current decision, timeframe and compatible city-level evidence need. Record anonymous code, date, decision, helpful/confusing feedback and permissioned next step privately. No real conversations were conducted in this preparation.
+- A paying customer requires successful independently funded live payment reconciled to fulfillment, excluding founder/internal QA/test/duplicate activity. Checkout return and stated willingness are not revenue. Preserve the approved October 22 aggregate snapshot; update with actual new receipts/refunds when they occur.
+- Authorized access checks found no usable ifYouMind analytics property in HYPD/Supermetrics and no Search Console site. HYPD selection: [sources](https://app.hypd.ai/sources?utm_source=mcp&utm_content=none_selected). Its Free plan limits active sources; no upgrade purchased. Do not query unrelated products. If convenient, select the correct property; proceed with approved distribution and direct feedback meanwhile.
+- Existing first-party event store is readable below its query cap, but explicit founder/QA exclusions are absent. Do not infer qualified cohorts or publish rates from raw events. Raw evidence stays private; no production configuration writes made.
+- No accessible billing-export dataset or attributable AI invoice was obtained. Costs/contribution/profitability remain unknown. Reconcile actual Cloud/AI invoices and Stripe fees before claiming profit; this is not a prerequisite for launch or the first sale. No export provisioning/spending or new measurement system.
+
+Observe just enough to choose the next useful action: real people → useful experience → qualified conversation → genuine purchase → actual feedback. Keep identifiers, outreach, consent notes and payment references outside Git. No new consent or analytics behavior introduced.

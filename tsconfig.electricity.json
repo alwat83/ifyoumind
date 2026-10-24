@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.discovery.json",
+  "files": [
+    "src/electricity-main.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ]
+}

@@ -1,0 +1,3 @@
+period_start,period_end,unit,currency,consumption_kwh,charge_basis,fixed_usd,variable_usd,other_usd,total_usd
+2025-07-01,2025-08-01,kWh,USD,600,identified,20.00,90.00,10.00,120.00
+2026-07-01,2026-08-01,kWh,USD,660,identified,20.00,115.20,10.00,145.20

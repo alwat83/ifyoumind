@@ -1,0 +1,284 @@
+{
+  "observedAt": "2026-10-23T15:27:40.170Z",
+  "base": "https://ifyoumind.com",
+  "sourceMerge": "74a91fb15d408893448f925cedcec4e47868dec0",
+  "userAgent": "ifYouMindReleaseSmoke/20261023; internal QA, not genuine customer traffic",
+  "restrictions": "No account created/email sent/checkout session/real transaction/Stripe change. Analytics blocked. Only read-only getSampleDecisionReport POST allowed.",
+  "allowedReads": [
+    {
+      "method": "POST",
+      "endpoint": "getSampleDecisionReport",
+      "purpose": "Read existing public sample only"
+    },
+    {
+      "method": "POST",
+      "endpoint": "getSampleDecisionReport",
+      "purpose": "Read existing public sample after synthetic recovery"
+    },
+    {
+      "method": "POST",
+      "endpoint": "getSampleDecisionReport",
+      "purpose": "Read existing public sample only"
+    },
+    {
+      "method": "POST",
+      "endpoint": "getSampleDecisionReport",
+      "purpose": "Read existing public sample after synthetic recovery"
+    }
+  ],
+  "blocked": [],
+  "results": [
+    {
+      "name": "desktop: live homepage and responsive first screen",
+      "status": "PASS",
+      "detail": {
+        "width": 1280,
+        "height": 800,
+        "minimumHeadingContrast": 5.398844885639184,
+        "minimumTargetHeight": 44,
+        "h1Count": 1
+      }
+    },
+    {
+      "name": "desktop: four-choice discovery, honest scope and accessibility",
+      "status": "PASS",
+      "detail": [
+        {
+          "label": "Move somewhere new",
+          "path": "/guides/compare-job-offers-relocation/",
+          "axeViolations": 0
+        },
+        {
+          "label": "Choose between job offers",
+          "path": "/guides/compare-job-offers-relocation/",
+          "axeViolations": 0
+        },
+        {
+          "label": "Explore a business opportunity",
+          "path": "/register",
+          "axeViolations": 0
+        },
+        {
+          "label": "Make sense of other options",
+          "path": "/guides/compare-options-with-your-own-data/",
+          "axeViolations": 0
+        }
+      ]
+    },
+    {
+      "name": "desktop: free guide navigation",
+      "status": "PASS",
+      "detail": {
+        "url": "https://ifyoumind.com/guides/compare-options-with-your-own-data/"
+      }
+    },
+    {
+      "name": "desktop: existing pricing and paid registration intent",
+      "status": "PASS",
+      "detail": {
+        "reportUsd": 79,
+        "proMonthlyUsd": 39,
+        "proIncludedReports": 5,
+        "url": "https://ifyoumind.com/register?intent=report"
+      }
+    },
+    {
+      "name": "desktop: registration form validation without creating an account",
+      "status": "PASS",
+      "detail": {
+        "submitted": false,
+        "createdAccount": false,
+        "verificationEmailSent": false
+      }
+    },
+    {
+      "name": "desktop: live public sample, source transparency and mobile answer",
+      "status": "PASS",
+      "detail": {
+        "answer": "Austin, TX has higher median household income, population and median home value than both Nashville, TN and Charlotte, NC, and lower 5-year population change than both. One gap is small and may not be real: 5-year population change against Nashville, TN (1 point).",
+        "sourceLinks": 2,
+        "answerTop": 802.0625,
+        "axeViolations": 0
+      }
+    },
+    {
+      "name": "desktop: public sample print and paid CTA, no purchase",
+      "status": "PASS",
+      "detail": {
+        "printHandlerInvoked": true,
+        "nativePdfExported": false,
+        "checkoutCreated": false,
+        "paymentInitiated": false
+      }
+    },
+    {
+      "name": "desktop: synthetic failure and repeated failure retain useful navigation",
+      "status": "PASS",
+      "detail": {
+        "synthetic": true,
+        "automaticRetries": 0,
+        "requests": 2,
+        "retryBottom": 434.671875,
+        "axeViolations": 0
+      }
+    },
+    {
+      "name": "desktop: offline retry sends no request",
+      "status": "PASS",
+      "detail": {
+        "synthetic": true,
+        "requestsWhileOffline": 0
+      }
+    },
+    {
+      "name": "desktop: bounded timeout, focus and duplicate guard",
+      "status": "PASS",
+      "detail": {
+        "synthetic": true,
+        "deadlineMs": 20000,
+        "requests": 3
+      }
+    },
+    {
+      "name": "desktop: explicit keyboard retry restores real public sample and sources",
+      "status": "PASS",
+      "detail": {
+        "realReadonlySample": true,
+        "focusRestored": true,
+        "sourceLinks": 2,
+        "axeViolations": 0
+      }
+    },
+    {
+      "name": "mobile: live homepage and responsive first screen",
+      "status": "PASS",
+      "detail": {
+        "width": 390,
+        "height": 844,
+        "minimumHeadingContrast": 5.398844885639184,
+        "minimumTargetHeight": 44,
+        "h1Count": 1
+      }
+    },
+    {
+      "name": "mobile: four-choice discovery, honest scope and accessibility",
+      "status": "PASS",
+      "detail": [
+        {
+          "label": "Move somewhere new",
+          "path": "/guides/compare-job-offers-relocation/",
+          "axeViolations": 0
+        },
+        {
+          "label": "Choose between job offers",
+          "path": "/guides/compare-job-offers-relocation/",
+          "axeViolations": 0
+        },
+        {
+          "label": "Explore a business opportunity",
+          "path": "/register",
+          "axeViolations": 0
+        },
+        {
+          "label": "Make sense of other options",
+          "path": "/guides/compare-options-with-your-own-data/",
+          "axeViolations": 0
+        }
+      ]
+    },
+    {
+      "name": "mobile: free guide navigation",
+      "status": "PASS",
+      "detail": {
+        "url": "https://ifyoumind.com/guides/compare-options-with-your-own-data/"
+      }
+    },
+    {
+      "name": "mobile: existing pricing and paid registration intent",
+      "status": "PASS",
+      "detail": {
+        "reportUsd": 79,
+        "proMonthlyUsd": 39,
+        "proIncludedReports": 5,
+        "url": "https://ifyoumind.com/register?intent=report"
+      }
+    },
+    {
+      "name": "mobile: registration form validation without creating an account",
+      "status": "PASS",
+      "detail": {
+        "submitted": false,
+        "createdAccount": false,
+        "verificationEmailSent": false
+      }
+    },
+    {
+      "name": "mobile: live public sample, source transparency and mobile answer",
+      "status": "PASS",
+      "detail": {
+        "answer": "Austin, TX has higher median household income, population and median home value than both Nashville, TN and Charlotte, NC, and lower 5-year population change than both. One gap is small and may not be real: 5-year population change against Nashville, TN (1 point).",
+        "sourceLinks": 2,
+        "answerTop": 616.578125,
+        "axeViolations": 0
+      }
+    },
+    {
+      "name": "mobile: public sample print and paid CTA, no purchase",
+      "status": "PASS",
+      "detail": {
+        "printHandlerInvoked": true,
+        "nativePdfExported": false,
+        "checkoutCreated": false,
+        "paymentInitiated": false
+      }
+    },
+    {
+      "name": "mobile: synthetic failure and repeated failure retain useful navigation",
+      "status": "PASS",
+      "detail": {
+        "synthetic": true,
+        "automaticRetries": 0,
+        "requests": 2,
+        "retryBottom": 563.078125,
+        "axeViolations": 0
+      }
+    },
+    {
+      "name": "mobile: offline retry sends no request",
+      "status": "PASS",
+      "detail": {
+        "synthetic": true,
+        "requestsWhileOffline": 0
+      }
+    },
+    {
+      "name": "mobile: bounded timeout, focus and duplicate guard",
+      "status": "PASS",
+      "detail": {
+        "synthetic": true,
+        "deadlineMs": 20000,
+        "requests": 3
+      }
+    },
+    {
+      "name": "mobile: explicit keyboard retry restores real public sample and sources",
+      "status": "PASS",
+      "detail": {
+        "realReadonlySample": true,
+        "focusRestored": true,
+        "sourceLinks": 2,
+        "axeViolations": 0
+      }
+    },
+    {
+      "name": "narrow 320px: live homepage controls and discovery",
+      "status": "PASS",
+      "detail": {
+        "width": 320,
+        "overflow": 0
+      }
+    }
+  ],
+  "passed": 23,
+  "failed": 0
+}

@@ -1,0 +1,31 @@
+{
+  "status": "Synthetic arithmetic fixture only; end-to-end feature proposed, not implemented",
+  "currency": "USD",
+  "property": "example-only-no-address",
+  "rows": [
+    {
+      "tax_year": 2024,
+      "county_cents": 90000,
+      "school_cents": 240000,
+      "municipal_cents": 90000,
+      "total_cents": 420000
+    },
+    {
+      "tax_year": 2025,
+      "county_cents": 99000,
+      "school_cents": 264000,
+      "municipal_cents": 99000,
+      "total_cents": 462000
+    }
+  ],
+  "expected": {
+    "total_change_cents": 42000,
+    "total_change_percent": "10",
+    "school_contribution_cents": 24000,
+    "school_share_of_change_percent_display": "57.1",
+    "correlation": null,
+    "causal_explanation": null,
+    "external_comparison": null
+  },
+  "providerCalls": 0
+}

@@ -1,0 +1,89 @@
+{
+  "date": "2026-10-23 CDT",
+  "authorization": "Local electricity CSV design/prototype only; no merge/deploy",
+  "phase1": {
+    "head": "169128cba5464bf9d1a89574ca2399aaaae18c4b",
+    "build": 40009760159,
+    "qa": 40009760130,
+    "status": "SUCCESS revalidated",
+    "recommendation": "GO for founder approval of reviewed local scope; no public discovery route"
+  },
+  "local": {
+    "fastPass": 135,
+    "taxUnitIncluded": 24,
+    "electricityUnitIncluded": 16,
+    "taxBrowserPass": 48,
+    "taxBrowserSeconds": 34.4,
+    "electricityBrowserPass": 27,
+    "electricityBrowserSeconds": 18.5,
+    "browserFail": 0,
+    "browserSkip": 0,
+    "checkedAutoAxeViolations": 0,
+    "externalRequests": 0,
+    "writes": 0,
+    "browserStorageEntries": 0
+  },
+  "builds": {
+    "tax": "PASS",
+    "electricity": "PASS",
+    "production": "PASS",
+    "productionExclusion": "21 JS files PASS",
+    "productionFixtureGuard": "33files PASS",
+    "electricityInitialKB": 209.75,
+    "electricityTransferKB": 61.55,
+    "hostStyleKB": 5.06,
+    "warningKB": 4,
+    "errorKB": 8,
+    "productionInitialKB": 659.83,
+    "productionTransferKB": 178.03
+  },
+  "baseline": {
+    "lintBaseline": 91,
+    "lintCurrent": 91,
+    "lintNew": [],
+    "lintRemoved": [],
+    "angularBaseline": 11,
+    "angularCurrent": 11,
+    "angularNew": [],
+    "angularRemoved": [],
+    "angularAdditionalHarnessIssue": "Karma EADDRINUSE:9876 after compiler failures; no tests executed"
+  },
+  "measurements": [
+    {
+      "name": "desktop",
+      "width": 1280,
+      "height": 900,
+      "firstFindingHeadingBottom": 452.71875,
+      "horizontalOverflow": 0
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "firstFindingHeadingBottom": 496.546875,
+      "horizontalOverflow": 0
+    },
+    {
+      "name": "narrow",
+      "width": 320,
+      "height": 568,
+      "firstFindingHeadingBottom": 560.6875,
+      "horizontalOverflow": 0
+    }
+  ],
+  "manual": {
+    "inAppKeyboard": "PASS example/evidence/correction/error/recovery/clear",
+    "nativeSafari": "UI control timed out; no pass",
+    "simulator": "Booted iPhone17Pro/iOS26.5 inventory only; UI control timed out",
+    "chromeExtension": "Founder reports installed; browser connection unavailable",
+    "spokenScreenReader": "Not verified",
+    "physicalDevice": "Not verified",
+    "noviceComprehension": "Not measured"
+  },
+  "ci": "Final new head/runs/results pinned in draft PR after push, not inferred from PR70 checks",
+  "attempts": [
+    "Shared tax extraction:47pass/1narrowfail; restored child typography, final48pass.",
+    "Electricity narrow capture580.19px; shortened badge while preserving exact evidence dates; final560.69px and first-result assertion passes.",
+    "Intervening clear-data test accidentally inherited a first-result assertion after clearing and timed out; test corrected, final27pass. Earlier attempt not counted as passing."
+  ]
+}

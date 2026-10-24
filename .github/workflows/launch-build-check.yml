@@ -26,7 +26,7 @@ jobs:
         run: npm run build
       - name: Production bundle has no emulator config or QA fixtures
         run: npm run check:production-bundle
-      - name: Local discovery is excluded from production
+      - name: Only approved discovery island ships; legacy previews stay isolated
         run: node scripts/check-discovery-isolation.mjs --production
       - name: SEO checks
         run: npm run test:seo

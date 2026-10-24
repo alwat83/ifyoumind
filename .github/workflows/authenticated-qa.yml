@@ -57,6 +57,10 @@ jobs:
         run: npm run test:seo
       - name: Build the local (emulator) app bundle
         run: npm run build:local
+      - name: Build production integration candidate
+        run: npm run build
+      - name: Public discovery isolation guard
+        run: node scripts/check-discovery-isolation.mjs --production
       - name: Build local-only discovery preview
         run: npm run build:discovery
       - name: Build local electricity prototype
@@ -77,6 +81,8 @@ jobs:
         run: npm run test:electricity
       - name: Unified discovery browser tests
         run: npm run test:unified
+      - name: Integrated discovery Hosting browser tests
+        run: npm run test:discover
       - name: Firestore rules tests
         run: npm run test:rules
       - name: Organization tests

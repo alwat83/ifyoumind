@@ -37,6 +37,10 @@ The founder reviewed PR72 at `73fc727486b0269a1a4d2680454ab4760299a71d`: the uni
 
 **After recording this direction, pause all further development until the next founder session.** Do not begin integration planning/implementation, create its feature branch, rerun engineering QA or expand scope today. Preserve PR70/71/72 and all existing worktrees/drafts. Outbound remains **Pending Founder Setup**. This newer decision supersedes older notes that public integration implementation still awaits scope approval; it does not supersede merge/deployment, AI/PDF/comparison/server-storage, pricing or outreach gates.
 
+## Founder resume — October 24, 2026: execute discovery integration
+
+Founder explicitly resumed development and authorized narrow `/discover/` implementation on a separate feature branch using reviewed PR72, superseding the prior pause. Do not restart architecture/planning or redesign. Integrate the existing two-category Angular experience while retaining its isolated browser-local bootstrap/privacy boundary; preserve production homepage except a sensible navigation link, Business/authentication79/39 and Stripe behavior. Verify examples, recognized CSVs, evidence/correction/retry/switch/clear, Hosting paths/headers, desktop/mobile/accessibility and baseline failures. Commit/push a draft integration PR and exact-head founder release package. **No merge/deploy without separate explicit approval**; no new AI/PDF/server uploads/comparisons/categories/pricing. Outbound Pending Founder Setup. Visual aesthetic remains unfinished, not a new redesign authorization.
+
 ## Source of truth — mandatory order
 **Founder correction, 2026-10-22: GitHub and repository documentation are the source of truth for development.** The accessible Notion coordination hub, confirmed by the founder, is:
 https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71

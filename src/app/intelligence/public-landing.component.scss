@@ -119,3 +119,5 @@ footer{grid-template-columns:1fr}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition:none!important;animation:none!important}
 .primary:hover{transform:none}
 }
+
+@media(max-width:700px){.nav-links{flex-wrap:wrap;justify-content:flex-end;gap:6px 14px}.nav-links .discovery-link{font-size:12px}.nav{gap:12px}}

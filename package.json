@@ -4,13 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "npm run preflight && node scripts/generate-sitemap.js && node scripts/build-guides.js && ng build && node scripts/build-seo.js",
+    "build": "npm run preflight && node scripts/generate-sitemap.js && node scripts/build-guides.js && ng build && node scripts/build-seo.js && npm run build:discover && node scripts/install-discovery.mjs",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
     "tailwind:init": "tailwindcss init -p",
     "start:local": "ng serve --configuration local",
-    "build:local": "node scripts/build-guides.js && ng build --configuration local --output-path dist/ifyoumind-local && node scripts/build-seo.js dist/ifyoumind-local/browser",
+    "build:local": "node scripts/build-guides.js && ng build --configuration local --output-path dist/ifyoumind-local && node scripts/build-seo.js dist/ifyoumind-local/browser && npm run build:discover && node scripts/install-discovery.mjs dist/ifyoumind-local/browser",
     "emulators": "npm --prefix functions run build && firebase emulators:start --project demo-ifyoumind --only auth,firestore,functions,storage",
     "test:rules": "firebase emulators:exec --project demo-ifyoumind --only firestore \"node --test test/intelligence.rules.test.mjs\"",
     "test:foundation": "npm --prefix functions test && npm run test:rules && npm run test:organizations",
@@ -32,7 +32,10 @@
     "test:electricity": "playwright test --config e2e/electricity.config.mjs",
     "build:unified": "ng build --configuration unified",
     "start:unified": "node e2e/support/discovery-server.mjs 4315 dist/ifyoumind-unified/browser",
-    "test:unified": "playwright test --config e2e/unified.config.mjs"
+    "test:unified": "playwright test --config e2e/unified.config.mjs",
+    "build:discover": "ng build --configuration discover",
+    "test:discover": "playwright test --config e2e/discover.config.mjs",
+    "start:discover": "node e2e/support/hosting-server.mjs"
   },
   "private": true,
   "dependencies": {

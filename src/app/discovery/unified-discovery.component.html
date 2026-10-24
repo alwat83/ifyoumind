@@ -1,7 +1,7 @@
 <a class="skip" [href]="category ? '#main' : '#discovery-entry'">Skip to discovery</a>
 <header class="shell-header" [class.active]="category">
-  <span class="brand">ifYouMind<span>.</span></span>
-  <span class="preview">Local preview</span>
+  <a *ngIf="publicEntry; else localBrand" class="brand" href="/" aria-label="ifYouMind home">ifYouMind<span>.</span></a><ng-template #localBrand><span class="brand">ifYouMind<span>.</span></span></ng-template>
+  <span class="preview">{{ publicEntry ? 'Bill discovery' : 'Local preview' }}</span>
   <ng-container *ngIf="category">
     <span class="category">{{ category === 'tax' ? 'Property tax' : 'Electricity bills' }}</span>
     <nav aria-label="Discovery actions"><button type="button" (click)="home()">Clear &amp; choose another</button><button *ngIf="hasData" type="button" (click)="clear()">Clear my data</button></nav>
@@ -35,5 +35,5 @@
   <p><strong>Your bills stay in this browser tab.</strong> We don’t upload or store them.</p>
   <p>Two supported CSV formats today. No PDFs, scans or other file types.</p>
   <details><summary>Privacy and supported files</summary><p>Remove names, addresses, account and meter or parcel identifiers before choosing a file. Each experience shows its exact CSV format and comparison rules. Calculations use the values you provide; no AI or external comparison is performed. Clearing, changing bill type or leaving the page discards data from this experience. Browser and device memory are outside its control.</p></details>
-  <p class="local">Local founder review only. Existing Business reports and pricing are unchanged.</p>
+  <p *ngIf="publicEntry" class="local"><a href="/">Home</a> · <a href="/sample-report">Business sample report</a> · <a href="/privacy-policy">Privacy policy</a></p><p *ngIf="!publicEntry" class="local">Local founder review only. Existing Business reports and pricing are unchanged.</p>
 </footer>

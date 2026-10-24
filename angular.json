@@ -157,6 +157,34 @@
                   "maximumError": "8kB"
                 }
               ]
+            },
+            "discover": {
+              "browser": "src/discover-main.ts",
+              "index": {
+                "input": "src/discover-index.html",
+                "output": "index.html"
+              },
+              "tsConfig": "tsconfig.discover.json",
+              "outputPath": "dist/ifyoumind-discover",
+              "styles": [],
+              "assets": [],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1.1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "baseHref": "/discover/",
+              "deployUrl": "/discover/"
             }
           },
           "defaultConfiguration": "production"

@@ -1,10 +1,11 @@
 import {CommonModule,NgComponentOutlet} from '@angular/common';
 import {Component,ElementRef,HostListener,Injector,ViewChild,inject} from '@angular/core';
 import {TaxDiscoveryComponent} from './tax-discovery.component';
-import {ELECTRICITY_MODE} from './discovery-mode';
+import {ELECTRICITY_MODE,PUBLIC_DISCOVERY} from './discovery-mode';
 
 @Component({selector:'app-unified-discovery',standalone:true,imports:[CommonModule,NgComponentOutlet],templateUrl:'./unified-discovery.component.html',styleUrls:['./unified-discovery.component.scss']})
 export class UnifiedDiscoveryComponent {
+ readonly publicEntry=inject(PUBLIC_DISCOVERY);
  readonly journeyComponent=TaxDiscoveryComponent;
  private readonly parentInjector=inject(Injector);
  category:'tax'|'electricity'|null=null;

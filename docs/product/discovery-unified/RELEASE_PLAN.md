@@ -1,5 +1,10 @@
 # Unified discovery — production integration and release proposal
 
+## Founder review update — October 24, 2026
+
+Founder accepts PR72's unified discovery product direction; **visual aesthetic is not final**. Planning and implementation of the narrow `/discover/` integration are now approved on a separate feature branch, preserving the current production homepage, Business functionality/prices and privacy restrictions. This supersedes older implementation-scope approval requests below; no merge or deployment is authorized. **Development is paused until the next founder session after recording this decision.** No integration implementation, additional redesign or feature expansion today. Existing release/capability gates and Pending Founder Setup remain.
+
+
 October23,2026 CDT. **Proposal only. This branch implements a local experience, not a production route. No merge or deployment approved.**
 
 ## Verified source ancestry and review order

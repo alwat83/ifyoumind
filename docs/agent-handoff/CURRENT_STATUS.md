@@ -1,8 +1,18 @@
 # ifYouMind — Current development status
 
-Observed October 23, 2026 CDT, OpenAI / Codex. GitHub/repository authoritative; existing Notion hub `3eb02474659c81ecba55cc4eed184a71` synchronized. Read AGENTS and recent append-only log. **Clean-slate zero-to-one product: consumer launch milestone achieved; real-user learning/first independent sale next.**
+Observed October 24, 2026 CDT, OpenAI / Codex. GitHub/repository authoritative; existing Notion hub `3eb02474659c81ecba55cc4eed184a71` synchronized. Read AGENTS and recent append-only log. **Clean-slate zero-to-one product: consumer launch milestone achieved; real-user learning/first independent sale next.**
 
-## Latest — unified local discovery, founder review candidate
+## Latest — founder direction approved; development paused
+
+**October 24 founder decision:** PR72's unified discovery **product direction accepted; visual aesthetic not final**. Narrow `/discover/` integration planning and implementation approved on a **separate feature branch after the next session resumes**. Current production homepage, Business functionality, $79/report and $39/month Pro, browser-local processing and privacy/capability restrictions must remain intact. No additional redesign or feature expansion authorized today. **Record this direction, then stop development until the next founder session.** No integration code or branch created today; no runtime changes.
+
+**Preserved review candidate:** [draft PR72](https://github.com/alwat83/ifyoumind/pull/72) freshly OPEN/DRAFT/MERGEABLE, exact `73fc727486b0269a1a4d2680454ab4760299a71d`. [Build40055489303](https://github.com/alwat83/ifyoumind/actions/runs/40055489303) / [QA40055489304](https://github.com/alwat83/ifyoumind/actions/runs/40055489304) are prior verified SUCCESS evidence at that candidate; no engineering tests/builds rerun for this documentation-only record. Existing 91 lint errors,11 Angular compiler diagnostics,1 integration skip and manual native-device/Safari/spoken-SR/novice-comprehension gaps remain. PR70/71 and other worktrees/private drafts preserved. Documentation-only `codex/discovery-founder-direction` branches from72 without moving its head; its final commit is linked in the PR72 decision comment.
+
+**Release status:** `/discover/` remains planned, not implemented or deployed. No merge/deployment authorization. Existing [integration/release plan](../product/discovery-unified/RELEASE_PLAN.md) is supporting context; its implementation gate is now satisfied, release gates are not. Production not re-queried today, no new production/customer/revenue claims. Outbound **Pending Founder Setup**; no sender questions or external communications.
+
+**Next three, only when the founder resumes:** (1) re-read this decision and inspect latest Git/PR/master state; (2) implement the approved narrow `/discover/` integration on a separate feature branch, preserving the current homepage and privacy boundary; (3) test the integrated candidate and present an exact-head package for separate founder release authorization. Visual design remains open, not authorization for a redesign.
+
+## Historical — unified local discovery, founder review candidate
 
 **Working locally:** `codex/unified-local-discovery`, based on PR71 `b26b5bd4e840b0fc5d59bd60b2d40412a1815a24`. Open **http://127.0.0.1:4315/**, choose property tax or electricity and try an example immediately. [Founder walkthrough, 27 screenshots and exact local evidence](../product/discovery-unified/REVIEW.md); [production integration/release proposal](../product/discovery-unified/RELEASE_PLAN.md). One shared host/engine/evidence renderer, explicit supported CSVs, browser-local processing, corrections/read-error recovery and clearing. Switching categories cancels pending reads and clears old data/evidence. No prompts, registration or provider calls.
 

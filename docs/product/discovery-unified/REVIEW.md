@@ -1,5 +1,10 @@
 # Unified discovery — consolidated founder demonstration
 
+## Founder review update — October 24, 2026
+
+Founder accepts PR72's unified discovery product direction; **visual aesthetic is not final**. Planning and implementation of the narrow `/discover/` integration are now approved on a separate feature branch, preserving the current production homepage, Business functionality/prices and privacy restrictions. This supersedes older implementation-scope approval requests below; no merge or deployment is authorized. **Development is paused until the next founder session after recording this decision.** No integration implementation, additional redesign or feature expansion today. Existing release/capability gates and Pending Founder Setup remain.
+
+
 October23,2026 CDT. **Working local-only candidate, ready for founder review.** Property tax and electricity now start from one entry, not separate technical demos. No public route, homepage replacement, new dataset, AI, PDF, server storage, price change, merge or deployment.
 
 ## Open and try it

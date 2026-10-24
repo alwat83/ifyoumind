@@ -26,7 +26,10 @@
     "build:discovery": "ng build --configuration discovery",
     "start:discovery": "node e2e/support/discovery-server.mjs 4313",
     "test:discovery": "playwright test --config e2e/discovery.config.mjs",
-    "check:discovery-isolation": "node scripts/check-discovery-isolation.mjs"
+    "check:discovery-isolation": "node scripts/check-discovery-isolation.mjs",
+    "build:electricity": "ng build --configuration electricity",
+    "start:electricity": "node e2e/support/discovery-server.mjs 4314 dist/ifyoumind-electricity/browser",
+    "test:electricity": "playwright test --config e2e/electricity.config.mjs"
   },
   "private": true,
   "dependencies": {

@@ -2,7 +2,7 @@
 import {createServer} from 'node:http';
 import {readFile} from 'node:fs/promises';
 import {resolve,extname} from 'node:path';
-const root=resolve('dist/ifyoumind-discovery/browser');
+const root=resolve(process.argv[3]||'dist/ifyoumind-discovery/browser');
 const types={'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css'};
 createServer(async(req,res)=>{
  try{

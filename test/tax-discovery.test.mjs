@@ -1,11 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import fs from 'node:fs';
-import ts from 'typescript';
-const compile=path=>ts.transpileModule(fs.readFileSync(path,'utf8'),{compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2022}}).outputText;
-const csvUrl='data:text/javascript;base64,'+Buffer.from(compile('src/app/intelligence/csv-parser.ts')).toString('base64');
-const engine=compile('src/app/discovery/tax-discovery.ts').replace("'../intelligence/csv-parser'",JSON.stringify(csvUrl));
-const {analyzeTax,parseTaxCsv,moneyCents,EXAMPLE_CSV,percentChange,TAX_FIELDS}=await import('data:text/javascript;base64,'+Buffer.from(engine).toString('base64'));
+import {loadDiscovery} from './helpers/load-discovery.mjs';
+const {analyzeTax,parseTaxCsv,moneyCents,EXAMPLE_CSV,percentChange,TAX_FIELDS}=await loadDiscovery('tax-discovery');
 const example=()=>parseTaxCsv(EXAMPLE_CSV).rows;
 const change=(rows,row,fields)=>rows.map((r,i)=>i===row?{...r,...fields}:r);
 const run=rows=>analyzeTax(rows);

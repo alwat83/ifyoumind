@@ -105,6 +105,32 @@
                   "maximumError": "8kB"
                 }
               ]
+            },
+            "electricity": {
+              "browser": "src/electricity-main.ts",
+              "index": {
+                "input": "src/electricity-index.html",
+                "output": "index.html"
+              },
+              "tsConfig": "tsconfig.electricity.json",
+              "outputPath": "dist/ifyoumind-electricity",
+              "styles": [],
+              "assets": [],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1.1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"

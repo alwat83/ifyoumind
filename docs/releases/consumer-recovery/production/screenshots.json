@@ -1,0 +1,36 @@
+{
+  "source": "Live production pages; browser-local synthetic faults in error captures, then real read-only sample recovery. No screenshot content edited.",
+  "mergeCommit": "74a91fb15d408893448f925cedcec4e47868dec0",
+  "screenshots": [
+    {
+      "path": "screenshots/desktop-home-fold.png",
+      "sha256": "1ae4f5fa4496e4c681707efd7501d9e398f1e2af840cb7ac329a5d5a5c888d90",
+      "bytes": 134560
+    },
+    {
+      "path": "screenshots/mobile-home-fold.png",
+      "sha256": "d5a793c0487484e22baedab8a38efd2b9425e071fcc793d45655fb88d4b6c033",
+      "bytes": 74847
+    },
+    {
+      "path": "screenshots/desktop-sample-repeated-error.png",
+      "sha256": "f3af29c8570777c2231c1bb71973c1aa9e35942e17bc0efbd310c3b6b8d9b2b1",
+      "bytes": 96041
+    },
+    {
+      "path": "screenshots/mobile-sample-repeated-error.png",
+      "sha256": "1eafd47c4974c051b62ca037c01eee5a264c980150cf1c811ed6d73e2ff2b0ef",
+      "bytes": 67735
+    },
+    {
+      "path": "screenshots/desktop-sample-recovered.png",
+      "sha256": "5ad57974e43720595a129f944d6103257455999d781e5958ba64bcc731b83b31",
+      "bytes": 1021265
+    },
+    {
+      "path": "screenshots/mobile-sample-recovered.png",
+      "sha256": "4d1fa2b3e31f8a6ac30cf4f8394b73015b8a786862c096182706450b8404ae1c",
+      "bytes": 906619
+    }
+  ]
+}

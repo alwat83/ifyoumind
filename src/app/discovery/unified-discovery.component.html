@@ -1,0 +1,39 @@
+<a class="skip" [href]="category ? '#main' : '#discovery-entry'">Skip to discovery</a>
+<header class="shell-header" [class.active]="category">
+  <span class="brand">ifYouMind<span>.</span></span>
+  <span class="preview">Local preview</span>
+  <ng-container *ngIf="category">
+    <span class="category">{{ category === 'tax' ? 'Property tax' : 'Electricity bills' }}</span>
+    <nav aria-label="Discovery actions"><button type="button" (click)="home()">Clear &amp; choose another</button><button *ngIf="hasData" type="button" (click)="clear()">Clear my data</button></nav>
+  </ng-container>
+</header>
+<main *ngIf="!category" id="discovery-entry" class="entry">
+  <p class="eyebrow">You bring the data. We’ll find the story.</p>
+  <h1 #entryHeading tabindex="-1">Two bills.<br>What changed?</h1>
+  <p class="lead">Pick an example. See what stands out—and check the numbers behind it.</p>
+  <p class="message" role="status" aria-live="polite">{{ message }}</p>
+  <div class="choices">
+    <article class="choice tax" aria-labelledby="tax-title">
+      <span class="symbol" aria-hidden="true">↗</span><p class="kicker">Year to year</p>
+      <h2 id="tax-title">Property tax discovery</h2>
+      <p>What changed in your bill—and which charges made up the difference?</p>
+      <div class="actions"><button class="primary" type="button" (click)="choose('tax')" aria-label="Try property tax example">Try example <span aria-hidden="true">↗</span></button><button class="quiet" type="button" (click)="choose('tax',false)" aria-label="Use a property tax CSV">Use my CSV</button></div>
+      <p class="format">Two annual statements · USD · one supported CSV format</p>
+    </article>
+    <article class="choice electricity" aria-labelledby="electricity-title">
+      <span class="symbol" aria-hidden="true">ϟ</span><p class="kicker">Use versus cost</p>
+      <h2 id="electricity-title">Electricity bill discovery</h2>
+      <p>Separate what you used from what you paid, including your whole-bill average.</p>
+      <div class="actions"><button class="primary" type="button" (click)="choose('electricity')" aria-label="Try electricity example">Try example <span aria-hidden="true">↗</span></button><button class="quiet" type="button" (click)="choose('electricity',false)" aria-label="Use an electricity CSV">Use my CSV</button></div>
+      <p class="format">Two compatible bills · kWh / USD · one supported CSV format</p>
+    </article>
+  </div>
+  <p class="reassurance">No account. No question to write. Start with made-up example data.</p>
+</main>
+<ng-container *ngIf="category && childInjector"><ng-container *ngComponentOutlet="journeyComponent; injector:childInjector; inputs:journeyInputs"></ng-container></ng-container>
+<footer class="shell-footer">
+  <p><strong>Your bills stay in this browser tab.</strong> We don’t upload or store them.</p>
+  <p>Two supported CSV formats today. No PDFs, scans or other file types.</p>
+  <details><summary>Privacy and supported files</summary><p>Remove names, addresses, account and meter or parcel identifiers before choosing a file. Each experience shows its exact CSV format and comparison rules. Calculations use the values you provide; no AI or external comparison is performed. Clearing, changing bill type or leaving the page discards data from this experience. Browser and device memory are outside its control.</p></details>
+  <p class="local">Local founder review only. Existing Business reports and pricing are unchanged.</p>
+</footer>

@@ -1,0 +1,77 @@
+{
+  "scope": "Actual local Angular prototype, synthetic data only, unedited screenshots",
+  "files": [
+    {
+      "path": "screenshots/desktop-corrected-full.png",
+      "sha256": "2d7df0b04eae6c4430784f8e5aa79db2890de7088b8364220f9b88e96f8bed44"
+    },
+    {
+      "path": "screenshots/desktop-discovered-full.png",
+      "sha256": "906e73d7b1c3f426d0acf217b437e2bb27c8d69c29ccfe667b7178b0736fc7f2"
+    },
+    {
+      "path": "screenshots/desktop-discovery-fold.png",
+      "sha256": "c0aecf2e98bffd306ec90f02f76484e90d4c524de56be37ea795fdcf8f10dbc2"
+    },
+    {
+      "path": "screenshots/desktop-evidence-full.png",
+      "sha256": "14b4e627ad5516e1b9f592f095f051170c250760cae7b49de7c919246bc5a63a"
+    },
+    {
+      "path": "screenshots/desktop-insufficient-full.png",
+      "sha256": "c8f2aaa2cc0efd47c678dcb2f5b3fcb699d7726079cb1e0eb2045b3f4cf6d0ac"
+    },
+    {
+      "path": "screenshots/desktop-unknown-full.png",
+      "sha256": "f02fa825793865b937d457203dc54a964363c22e4d8588900638cd5cd105008a"
+    },
+    {
+      "path": "screenshots/desktop-welcome-fold.png",
+      "sha256": "d1363e068e5a61b1428364252e415e23c2b33073b3c6ba357694d689497cbbb6"
+    },
+    {
+      "path": "screenshots/desktop-welcome-full.png",
+      "sha256": "a0a146fcf4f48b6614b2b09c881a5afa584c0e540ee556762851843714643950"
+    },
+    {
+      "path": "screenshots/mobile-corrected-full.png",
+      "sha256": "be7a36059dea1bc0e268e00e661d676ac146be543a331ff4cf858a1fb3d54b93"
+    },
+    {
+      "path": "screenshots/mobile-discovered-full.png",
+      "sha256": "49c06a2c8b5f6a20fb555901e5af3621a427e04eda8012e64701d1cd61928f03"
+    },
+    {
+      "path": "screenshots/mobile-discovery-fold.png",
+      "sha256": "cf58eb8d1d5b88abad1c3010b052ac941d2e861830e37f61cbdf6dd506e522ea"
+    },
+    {
+      "path": "screenshots/mobile-evidence-full.png",
+      "sha256": "c1cc43394bd9c3134042b869cd9193758eb37bb742a80f375620f076643b3815"
+    },
+    {
+      "path": "screenshots/mobile-insufficient-full.png",
+      "sha256": "294244608910179cb41f830220026e661530e66ccae48431671a15147271fc44"
+    },
+    {
+      "path": "screenshots/mobile-unknown-full.png",
+      "sha256": "c1279186a6a948a67445b2d53d43b6b7f4d7c5f64ef15caf8dd23c3e39f68682"
+    },
+    {
+      "path": "screenshots/mobile-welcome-fold.png",
+      "sha256": "fe8a114e9c98d67e0bcd4770b2afb9dc5b93a00370d0dccd3b9d44e89068eb6f"
+    },
+    {
+      "path": "screenshots/mobile-welcome-full.png",
+      "sha256": "c9623eeae346fc9b24d474374b17b50ae43742106d243099435c216d3dc3a9b1"
+    },
+    {
+      "path": "screenshots/narrow-discovery-fold.png",
+      "sha256": "c0fa34f3d1a6d56b0e1478cacfb9bb511d4c8633cf0481c7a9aed117a6afef08"
+    },
+    {
+      "path": "screenshots/narrow-welcome-fold.png",
+      "sha256": "50f7e204bf614fbe128789fba81b4c506a4d8de6c37bb0a1ef4b0ecf3c4a53f1"
+    }
+  ]
+}

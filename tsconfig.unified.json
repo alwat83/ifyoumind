@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.discovery.json",
+  "files": [
+    "src/unified-main.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ]
+}

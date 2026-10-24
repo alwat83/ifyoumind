@@ -79,6 +79,84 @@
                   "with": "src/app/firebase.config.local.ts"
                 }
               ]
+            },
+            "discovery": {
+              "browser": "src/discovery-main.ts",
+              "index": {
+                "input": "src/discovery-index.html",
+                "output": "index.html"
+              },
+              "tsConfig": "tsconfig.discovery.json",
+              "outputPath": "dist/ifyoumind-discovery",
+              "styles": [],
+              "assets": [],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1.1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ]
+            },
+            "electricity": {
+              "browser": "src/electricity-main.ts",
+              "index": {
+                "input": "src/electricity-index.html",
+                "output": "index.html"
+              },
+              "tsConfig": "tsconfig.electricity.json",
+              "outputPath": "dist/ifyoumind-electricity",
+              "styles": [],
+              "assets": [],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1.1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ]
+            },
+            "unified": {
+              "browser": "src/unified-main.ts",
+              "index": {
+                "input": "src/unified-index.html",
+                "output": "index.html"
+              },
+              "tsConfig": "tsconfig.unified.json",
+              "outputPath": "dist/ifyoumind-unified",
+              "styles": [],
+              "assets": [],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1.1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -94,6 +172,9 @@
             },
             "local": {
               "buildTarget": "ifyoumind:build:local"
+            },
+            "discovery": {
+              "buildTarget": "ifyoumind:build:discovery"
             }
           },
           "defaultConfiguration": "development"

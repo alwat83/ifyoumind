@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild, inject, Input, OnInit, OnDestroy } from '@angular/core';
 import {DiscoveryFindingsComponent} from './discovery-findings.component';
 import {ELECTRICITY_MODE} from './discovery-mode';
 import {analyzeElectricity,blankElectricity,ELECTRICITY_CSV,ELECTRICITY_FIELDS,ELECTRICITY_LABELS,parseElectricityCsv} from './electricity-discovery';
@@ -10,7 +10,15 @@ import { analyzeTax, blankRow, EXAMPLE_CSV, LABELS, parseTaxCsv, signedUsd, TAX_
   selector:'app-tax-discovery',standalone:true,imports:[CommonModule,DiscoveryFindingsComponent],
   templateUrl:'./tax-discovery.component.html',styleUrls:['./tax-discovery.component.scss','./tax-discovery-mobile.component.scss'],
 })
-export class TaxDiscoveryComponent {
+export class TaxDiscoveryComponent implements OnInit, OnDestroy {
+  @Input() embedded=false;
+  @Input() startWithExample=false;
+  @Input() startAtFile=false;
+  ngOnInit():void {
+    if(this.startWithExample)this.tryExample();
+    else if(this.startAtFile)setTimeout(()=>this.fileInput?.nativeElement.focus());
+  }
+  ngOnDestroy():void {this.clear(false);}
   readonly isElectricity=inject(ELECTRICITY_MODE);
   readonly fields:readonly string[]=this.isElectricity?ELECTRICITY_FIELDS:TAX_FIELDS;
   readonly labels:Record<string,string>=this.isElectricity?ELECTRICITY_LABELS:LABELS;
@@ -86,7 +94,7 @@ export class TaxDiscoveryComponent {
   run():void {
     this.fileError='';this.followup='';this.analysis=this.isElectricity?analyzeElectricity(this.rows as ElectricityDraft[],this.columns as ElectricityField[]):analyzeTax(this.rows as TaxDraft[],this.columns as TaxField[]);
     if(this.analysis.status!=='ready')this.editorOpen=true;
-    this.status=this.analysis.status==='ready'?`${this.analysis.findings.length} findings ready. Calculated locally from your two rows.`:'No findings created. Review the data below.';
+    this.status=this.analysis.status==='ready'?`${this.analysis.findings.length} findings ready. ${this.embedded?'Here’s what changed in these two bills.':'Calculated locally from your two rows.'}`:'No findings created. Review the data below.';
     setTimeout(()=>this.heading?.nativeElement.focus());
   }
   fieldError(row:number,field:string):string {

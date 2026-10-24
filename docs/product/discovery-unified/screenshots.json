@@ -1,0 +1,113 @@
+{
+  "scope": "Actual unified Angular preview, synthetic inputs only, unedited screenshots",
+  "files": [
+    {
+      "path": "screenshots/desktop-corrected-full.png",
+      "sha256": "0e737744f089bf1114b85861452263c772a248f7e5eacbd036c4418d56bb373a"
+    },
+    {
+      "path": "screenshots/desktop-electricity-evidence-full.png",
+      "sha256": "2a68a270b9b9e4d4c3338c5d77b3c3b93dc0b7e2472df72d626bd98dfb2c9349"
+    },
+    {
+      "path": "screenshots/desktop-electricity-findings-full.png",
+      "sha256": "81d27db7c6d23acce5ffc4f6fae449bfe050b4c0cd7c9220ea34b9108ffcf65b"
+    },
+    {
+      "path": "screenshots/desktop-electricity-fold.png",
+      "sha256": "9e1879ab316f5ec879a7087b4654555d51be97fb77fedca50c8a9266adb6d62e"
+    },
+    {
+      "path": "screenshots/desktop-entry-fold.png",
+      "sha256": "1c8d7e300557896bf8e63a5c8f544ba09269e19f36e74befd8f2ab528fd0c424"
+    },
+    {
+      "path": "screenshots/desktop-entry-full.png",
+      "sha256": "0133c90eb5018a5426c7ff299a4a87336b50ffcfb87ee17e1458119263a3c79d"
+    },
+    {
+      "path": "screenshots/desktop-insufficient-full.png",
+      "sha256": "d910ade73b72d6c525c3bf8352b204afe1fcb859a7a09cb64e1b455fbc5804a5"
+    },
+    {
+      "path": "screenshots/desktop-tax-evidence-full.png",
+      "sha256": "23dec87abc1b10983eda9b7f974d8a21e3d4538ba2e8475a1357fcca9b4b4358"
+    },
+    {
+      "path": "screenshots/desktop-tax-findings-full.png",
+      "sha256": "f8ac3e9e0900837c01267a7ae7f4b5b1ffa9622490621436179de1b59987c98d"
+    },
+    {
+      "path": "screenshots/desktop-tax-fold.png",
+      "sha256": "3104ef8fa01dc1b1544e4c002b5ad38faab39a3b9a4275da912c9dcaa1a169f6"
+    },
+    {
+      "path": "screenshots/desktop-unknown-full.png",
+      "sha256": "01ad69b1850a9731f160c763fb15919f0eb8aa60b428837d8efe67e17c1e81c3"
+    },
+    {
+      "path": "screenshots/desktop-wrong-category-full.png",
+      "sha256": "0a10144752637e34f0a7acf40583bd119d644e225193b14bff9c0fbada36a362"
+    },
+    {
+      "path": "screenshots/mobile-corrected-full.png",
+      "sha256": "8db8ce33b1fc8252ef6ddcde0fa4fd74108202d15db539200d86b21dbf3a6153"
+    },
+    {
+      "path": "screenshots/mobile-electricity-evidence-full.png",
+      "sha256": "cd696c1b0164a73976b62ac1dd3b5e2d299b47a573329f6270a8f740dce448e7"
+    },
+    {
+      "path": "screenshots/mobile-electricity-findings-full.png",
+      "sha256": "8d2beee0062577bfd70911fd0b97f040ffa406d91f57bd55f2572b90d1bfe19e"
+    },
+    {
+      "path": "screenshots/mobile-electricity-fold.png",
+      "sha256": "ec2129e5958dbc4d7d619679a15cb196f4b781b2607a381a34efd07e53ce55a4"
+    },
+    {
+      "path": "screenshots/mobile-entry-fold.png",
+      "sha256": "d80d2ba9c5121e81c9fd300c67eeccedf666e6ef9697def2341361bd102bde2f"
+    },
+    {
+      "path": "screenshots/mobile-entry-full.png",
+      "sha256": "0f10b03f7cd809fee6df013fd35af6ec369dbd27447093fb49e3a17fd1d552ea"
+    },
+    {
+      "path": "screenshots/mobile-insufficient-full.png",
+      "sha256": "b6f956a33ec74ad57f426a33d516be5024cf492b910fbffcbc26e3ee174a03a9"
+    },
+    {
+      "path": "screenshots/mobile-tax-evidence-full.png",
+      "sha256": "aba59c20a5d85b28e1d59efc38679118a00ee970bef59b63dcdccc176480adde"
+    },
+    {
+      "path": "screenshots/mobile-tax-findings-full.png",
+      "sha256": "529b6ad85b197891d4271ce453e2e4b727eff68960339ee14f1096d5f50d129e"
+    },
+    {
+      "path": "screenshots/mobile-tax-fold.png",
+      "sha256": "17c028e5baac3f308e6c1df0c0c6ef09da58bd62543484712fa460fde06105c0"
+    },
+    {
+      "path": "screenshots/mobile-unknown-full.png",
+      "sha256": "a66d78ba0d55e883dc0f3d78d5e8642f0b0cf7fac45d08ee7c6719ea5b8cbcdb"
+    },
+    {
+      "path": "screenshots/mobile-wrong-category-full.png",
+      "sha256": "ff3c63f24a0ce5f7d7ab78ddfd0acbca905e1b7eb7c590057e6c778291300191"
+    },
+    {
+      "path": "screenshots/narrow-electricity-fold.png",
+      "sha256": "55b68b5747de816eb2eeb192bb7b7827ac474387c05a3521d62c8f79e35cf2d7"
+    },
+    {
+      "path": "screenshots/narrow-entry-fold.png",
+      "sha256": "00ad2c67d82cd1225f2d68211ae47ed543b5be2f17daddefa4bb8251174b5873"
+    },
+    {
+      "path": "screenshots/narrow-tax-fold.png",
+      "sha256": "10495fb0d10495549807546ca4b06da641dba3d72ec3065294ef67b5c300e10f"
+    }
+  ]
+}

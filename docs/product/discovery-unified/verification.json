@@ -1,0 +1,147 @@
+{
+  "date": "2026-10-23 CDT",
+  "branch": "codex/unified-local-discovery",
+  "authorization": "Unified local entry and release proposal only, no merge/deploy",
+  "parents": {
+    "PR70": "169128cba5464bf9d1a89574ca2399aaaae18c4b",
+    "PR71": "b26b5bd4e840b0fc5d59bd60b2d40412a1815a24",
+    "mergeBase": "169128cba5464bf9d1a89574ca2399aaaae18c4b",
+    "state": "Both OPEN/DRAFT/MERGEABLE, exact-head build/QA SUCCESS revalidated"
+  },
+  "local": {
+    "fastPass": 135,
+    "unifiedBrowserPass": 36,
+    "unifiedSeconds": 48.6,
+    "taxBrowserPass": 48,
+    "taxDuration": "1.5min",
+    "electricityBrowserPass": 27,
+    "electricitySeconds": 40.1,
+    "browserFail": 0,
+    "browserSkip": 0,
+    "checkedAutoAxeViolations": 0,
+    "externalRequests": 0,
+    "writes": 0,
+    "browserStorageEntries": 0
+  },
+  "builds": {
+    "production": "PASS",
+    "tax": "PASS",
+    "electricity": "PASS",
+    "unified": "PASS",
+    "preflight": "PASS39files",
+    "productionFixtureGuard": "PASS33files",
+    "productionExclusion": "PASS21JSfiles",
+    "previewGuards": "Tax/electricity/unifiedPASS",
+    "targetedLint": "PASS",
+    "unifiedInitialKB": 226.97,
+    "unifiedTransferKB": 64.84,
+    "productionInitialKB": 659.83,
+    "productionTransferKB": 178.03,
+    "hostStyleKB": 5.06,
+    "styleWarningKB": 4,
+    "styleErrorKB": 8,
+    "budgetsChanged": false
+  },
+  "baseline": {
+    "lintBaseline": 91,
+    "lintCurrent": 91,
+    "lintNew": [],
+    "lintRemoved": [],
+    "angularBaseline": 11,
+    "angularCurrent": 11,
+    "angularNew": [],
+    "angularRemoved": [],
+    "karmaPortConflict": false
+  },
+  "layout": [
+    {
+      "name": "desktop",
+      "width": 1280,
+      "height": 900,
+      "entryButtons": [
+        {
+          "category": "tax",
+          "bottom": 612.375
+        },
+        {
+          "category": "electricity",
+          "bottom": 612.375
+        }
+      ],
+      "findings": [
+        {
+          "category": "tax",
+          "headingBottom": 469.21875
+        },
+        {
+          "category": "electricity",
+          "headingBottom": 440.71875
+        }
+      ],
+      "horizontalOverflow": 0
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844,
+      "entryButtons": [
+        {
+          "category": "tax",
+          "bottom": 472.1875
+        },
+        {
+          "category": "electricity",
+          "bottom": 737.1875
+        }
+      ],
+      "findings": [
+        {
+          "category": "tax",
+          "headingBottom": 498.046875
+        },
+        {
+          "category": "electricity",
+          "headingBottom": 498.046875
+        }
+      ],
+      "horizontalOverflow": 0
+    },
+    {
+      "name": "narrow",
+      "width": 320,
+      "height": 568,
+      "entryButtons": [
+        {
+          "category": "tax",
+          "bottom": 544.28125
+        },
+        {
+          "category": "electricity",
+          "bottom": 912.28125
+        }
+      ],
+      "findings": [
+        {
+          "category": "tax",
+          "headingBottom": 562.1875
+        },
+        {
+          "category": "electricity",
+          "headingBottom": 562.1875
+        }
+      ],
+      "horizontalOverflow": 0
+    }
+  ],
+  "manual": {
+    "inAppKeyboard": "PASS entry/tax/evidence/clear/electricity/clear with heading focus",
+    "nativeDeviceAndSpokenScreenReader": "Unverified, previous control/connection limits not closed",
+    "noviceComprehension": "Not measured"
+  },
+  "attempts": [
+    "Initial bootstrap root mismatch failed/timed out, interrupted; corrected HTML root and guard.",
+    "Next full34PASS/2narrowFAIL, both first headings630.69px outside568; compact navigation fixed562.19px, final36PASS."
+  ],
+  "ci": "Final exact SHA/runs/counts pinned in new draft PR after push; no inference from parent CI",
+  "production": "Unchanged; no public route/import/provider/Business/pricing/Stripe/deploy workflow change"
+}

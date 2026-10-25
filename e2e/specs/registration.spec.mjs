@@ -1,6 +1,6 @@
 // Registration validation and the real email-verification flow (Auth emulator captures the email).
-import { test, expect, newIsolatedContext, pathOf, expectAccessible } from '../support/test.mjs';
-import { fixtureEmail, newRunId, outbox, latestVerificationLink, FIXTURE_PASSWORD } from '../support/fixtures.mjs';
+import { test, expect, newIsolatedContext, pathOf, expectAccessible, signInThroughUi } from '../support/test.mjs';
+import { FIXTURES, fixtureEmail, newRunId, outbox, latestVerificationLink, FIXTURE_PASSWORD } from '../support/fixtures.mjs';
 
 test('empty and malformed registration shows inline errors and creates no account', async ({ page }) => {
   const email = fixtureEmail('T01-invalid-signup', newRunId());
@@ -64,3 +64,30 @@ test('sign-up verifies by email; the link opened in another browser keeps the $7
   await page.getByRole('button', { name: "I've verified, continue" }).click();
   await expect.poll(() => pathOf(page)).toBe('/app/decide?type=business&intent=report');
 });
+
+// Firebase restores a saved session asynchronously after every page load (an accounts:lookup
+// call). These tests hold that call back so the click is guaranteed to land before the restore
+// finishes: without waiting for authStateReady() the page treats the visitor as signed out.
+for (const [name, button, expected] of [
+  ['continue', "I've verified, continue", /Not verified yet/],
+  ['resend', 'Resend the email', /A new verification email has been sent/],
+]) {
+  test(`"${name}" clicked before the session is restored still uses the signed-in account`, async ({ page, fixtures }) => {
+    const user = await fixtures(FIXTURES.UNVERIFIED, { verified: false });
+    await signInThroughUi(page, user);
+    await expect(page).toHaveURL(/\/verify-email$/);
+    await expect(page.getByText(user.email)).toBeVisible();
+
+    let held = 0;
+    await page.route('**/accounts:lookup*', async route => {
+      held++;
+      await new Promise(resolve => setTimeout(resolve, 2500));
+      await route.continue().catch(() => {});
+    });
+    await page.reload();
+    await page.getByRole('button', { name: button }).click();
+    await expect(page.getByRole('status')).toHaveText(expected);
+    await expect(page).toHaveURL(/\/verify-email$/);
+    expect(held, 'the restore request was held back').toBeGreaterThan(0);
+  });
+}

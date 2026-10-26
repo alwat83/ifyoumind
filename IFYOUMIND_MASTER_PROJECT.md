@@ -336,3 +336,28 @@ PR73 unchanged atbb6cfde932804e7af01b86e461be0069eb76ed3c,OPEN/DRAFT/MERGEABLE; 
 ## October26,2026 — automatic discovery publicly released through PR73
 
 Founder explicitly authorized73exactbb6cfde and automatic deployment; only73merge operation performed after unchanged gates/rollback checks. **Production65dc4912a8bf7ccde31926651eb0f3c4b05cd039 /Hostingef3836b4e2285dfe**, [deployment40344228960SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/40344228960), released14:58:09.677Z/9:58a.m.CDT. Live `/discover/`: two local recognized CSV categories, immediate examples, shared deterministic evidence/correction/recovery/clear, no prompting/registration.27live desktop/mobile/320px checksPASS; no discoveryegress/storage and no real accounts/payments. [Evidence/screenshots/rollback/limits](docs/releases/discovery-production-20261026/LIVE_VERIFICATION.md). Existing Business79/39 intact, aesthetic unfinished/noindexpilot. Known91lint/11Angular/1skip/manualverification limits retained. Source70/71/72 auto-marked merged by GitHub through approved ancestry, no separate merges; original branches/heads preserved. Prior a4Hostingretained; no rollback needed. Outbound Pending Founder Setup. Next priority founder-arranged first-use feedback, not speculative expansion; no new customers/revenue claimed.
+
+
+## October26 — founder pivots to first-customer marketing
+
+Prepared [first-customer campaign](docs/growth/FIRST_CUSTOMER_SPRINT.md) and three draft social graphics using deployed capabilities. Ranked qualified buyer demos/warm introductions for first revenue, alongside free evidence-first bill discovery for consumer engagement. All materials unsent/unpublished; no source feature/dependency/pricing/Stripe/deploy changes, no user/revenue outcome claimed. Product vision unchanged, acquisition priority reaffirmed in AGENTS. Outbound Pending Founder Setup; exact communication approval still required. Prior production65dc491/Hostingef3836b4e2285dfe and financial baseline remain their recorded evidence, not re-queried for this marketing assignment.
+
+
+## October26 — recorded product proof and private first batch
+
+[Campaign execution update](docs/growth/FIRST_CUSTOMER_SPRINT.md): actual read-only live synthetic mobile electricity video, evidence/clear and caption/review assets; five tailored private invitations with rechecked source signals/qualification agendas/routing and simple tracker. Two conditional/three held, none qualified through contact. No identities in public GitHub/Notion; no sends, account setup reminders, spend, payment or runtime/release change. PR74remains a draft marketing review, not a production release or communication approval. Next: specifically authorized buyer introduction/demonstration after founder setup.
+
+
+## October26 — marketing ownership delegated, outbound pending
+
+Founder grants Codex ownership of ifYouMind marketing/customer acquisition, clarifies “Own marketing; keep outbound pending,” and reaffirms ifYouMind-only scope. AGENTS/growth/launch/current records now preserve autonomous preparation/prioritization and selected campaign choices. No other business accounts/assets/results, no sender-detail reminders, no campaign/send/publication/spend/Stripe/pricing/production release or scheduled work authorized. Existing product/revenue/privacy gates preserved; no new customer outcome claimed.
+
+
+## October26 — first-client inquiry prepared against verified professional route
+
+Improved conditional lead contactability using explicit published professional contact/role evidence; private exact R2invitation, buyer-specific demonstration brief and response playbook prepared, original drafts preserved. Anonymous current/growth/log records updated; no names/contacts imported to public artifacts. Only public Census cache metadata/data read, no customer records/writes; demo uses existing sample and states unavailable fresh comparisons honestly. No outreach, client, revenue, product release or new pricing claim. Outbound Pending Founder Setup remains; next action is a specifically authorized qualification inquiry when reopened.
+
+
+## October26 — founder broadens organic acquisition
+
+Prepared audience-specific social wave under ifYouMind brand: electricity/property-tax/curious-data examples and sharing, plus separate Business sample acquisition. Exact drafts/placement evidence in FIRST_CUSTOMER_SPRINT.md, new synthetic tax graphic. Primary community/platform checks distinguish designated promotion venue from unverified group permissions and video export compatibility. Prior no-more-campaign-prep suggestion superseded by this founder request; no outbound, paid ads, price, product/release or financial evidence change authorized. Private buyer details remain private; no audience/customer outcome claimed.

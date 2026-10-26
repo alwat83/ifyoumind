@@ -31,3 +31,18 @@ Actual private assets have been refreshed for the launched product and verified 
 ## Account-independent work now
 
 Continue consumer readiness rather than waiting on publishing accounts: verify useful free journeys and honest available/upcoming labels; inspect mobile/source/error states; prepare focused feature-branch fixes for confirmed defects; preserve the demo, announcements, five personalized drafts and manual tracker. [Current readiness findings](CONSUMER_READINESS.md). No paid enrichment, substituted sender, outreach scheduling or automatic send. The older dated distribution sequence above is a retained proposal, suspended until founder setup and exact communication approval; shift dates after authorization rather than treating them as missed development milestones.
+
+
+## October26 acquisition pivot — current execution packet
+
+Use [FIRST_CUSTOMER_SPRINT.md](FIRST_CUSTOMER_SPRINT.md) for ranked actions, actual C1–C5 copy, three graphics, demo flow and the relative seven-day schedule. Product release completed; next milestone is outside-user value and the first independent sale. This supersedes dated October23–29 scheduling, not the Pending Founder Setup or exact communication approval gates. No campaign has launched. Current scripts distinguish free consumer bills and paid Business city reports; preserve all earlier private personalized drafts.
+
+
+## Founder ownership clarification — October26
+
+Codex owns ifYouMind marketing/acquisition preparation and prioritization. Founder explicitly chose “Own marketing; keep outbound pending” and reaffirmed ifYouMind-only scope. Current lead assets/decisions are in FIRST_CUSTOMER_SPRINT.md; no repeated preparatory approvals or account questions. External day1 remains suspended until setup and exact communication approval; no send, publish, spend, Stripe/price change or release authorized.
+
+
+## October26 — broadened social wave
+
+Use the audience/channel matrix and exact C7/C8/C9/S1drafts in FIRST_CUSTOMER_SPRINT.md, alongside C6demo and C2Business sample. Relative first wave: day1example demo, day3tax graphic, day5one then-permitted Business promotion-thread comment, day7sharing/actual-question response within approved scope. No automated dates or extra account setup required now. Audience/sender/channel/content/reply approvals and Pending Founder Setup unchanged; no posting or results claimed.

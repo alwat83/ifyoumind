@@ -2,6 +2,20 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## Current acquisition mix — broader social net
+
+Founder requested broader organic social acquisition alongside targeted first-client conversations. [Exact audience-specific social drafts and first wave](FIRST_CUSTOMER_SPRINT.md#broader-organic-social-net--founder-direction-october26): household electricity/property tax, curious data users, sharing and qualified Business needs. Reuse existing real example demo/sample and add one verified synthetic tax graphic. Current platform/community checks constrain placement; no reach, willingness-to-pay or paid household offer claimed. Outbound Pending Founder Setup; no send/publish/spend/price change/account request. Scoreboard/historical financial evidence unchanged.
+
+## Accountable owner — founder-confirmed ifYouMind scope
+
+October26: founder delegates marketing/customer-acquisition ownership to Codex and explicitly keeps outbound pending. Independently run prioritization, qualification, campaign preparation and evidence-based reporting for ifYouMind only. Selected lead: actual C6electricity example for useful free experiences; sample-first qualified Business demonstrations for existing paid offers. No new traction/financial query. No sender-detail reminders or messages/posts until specific scope is approved after setup. Existing spend/payment/price/Stripe/merge/deployment gates remain. [Operating decisions](FIRST_CUSTOMER_SPRINT.md#marketing-ownership--founder-confirmed-october26).
+
+## Current — acquire first customers, October26
+
+Founder explicitly pivoted to fast acquisition/brand execution. [Ready first-customer campaign](FIRST_CUSTOMER_SPRINT.md): five qualified owner demonstrations for near-term Business purchases, evidence-first free electricity/property-tax creative for genuine consumer use, warm introductions and sample-before-signup proof. Includes actual draft copy, three social graphics,20second storyboard,10minute demo and relative seven-day actions. Current public discovery is deployed per the October26 release evidence; older local-only notes below are history. Consumer bills are free, not a new paid product or an assumed Business conversion funnel. Existing79once/39monthlyfiveReports unchanged and both presented honestly. All lift/targets are hypotheses, not results.
+
+Outbound **Pending Founder Setup**; no send/publish/spend/pricechange/deploy authorized by this preparation. Existing private research/drafts preserved. Approved October22 financial baseline retains original observation scope; real visitor/useful-experience/customer totals not refreshed or inferred. Week beginning October26: real visitors unknown, meaningful experiences unknown, qualified conversations none conducted by this assignment, independently paying customers not newly verified, current revenue not re-queried, user feedback none collected, next action review creative/buyer-demo package then execute only specifically approved distribution. No analytics build or private financial disclosure.
+
 ## Latest founder product direction — October23,2026
 
 **You bring the data. We’ll find the story.** Automatic evidence-backed discovery for people who do not know AI or prompts is the product destination. Interaction-first acquisition must lead to useful findings, not simply explain the platform or send every decision to a guide. [Reviewed architecture and narrow property-tax POC proposal](../product/AUTOMATIC_DISCOVERY_PROPOSAL.md) is planned, not shipped; one local supported-data slice precedes arbitrary files, optional AI or new consumer pricing. No new monetization SKU or paid AI use approved. Existing79report/39monthlyPro preserved. Learning targets are proposed comprehension/usefulness outcomes, not traction claims.
@@ -117,3 +131,13 @@ October26 release check: unchanged PR73 has verified green exact-head CI and ret
 ## October26,2026 — public discovery launch milestone verified
 
 **Shipped:** live https://ifyoumind.com/discover/ through founder-authorized73, production65dc491/Hostingef3836b4e2285dfe, deploymentSUCCESS.27internal live read-only/synthetic checksPASS demonstrate availability and working example/recognizedCSV/evidence/correction/recovery/clear across two categories. These checks and internal page visits are **not genuine outside-user experiences, customers or revenue**. Existing launch scoreboard values and approved October22financial baseline unchanged; no fabricated first sale, visitor count or profitability. Business79/39 preserved. [Evidence](../releases/discovery-production-20261026/LIVE_VERIFICATION.md). Highest-value next action: founder-arranged observed first-use walkthrough; record whether a person understands one finding, verifies evidence and clears data, then fix confirmed blockers only. Outbound Pending Founder Setup; no communications or account questions.
+
+
+## October26 — execution assets, not traction
+
+Actual live synthetic electricity recording/captions/review player now available in [campaign packet](FIRST_CUSTOMER_SPRINT.md), plus private five personalized buyer drafts, one routing request, agendas and tracker. Source rechecks narrow readiness to two conditional/three held; no five-qualified-buyers claim. No outreach/demos/customers generated; scoreboard/approved financial baseline unchanged. Free consumer discovery and existing paid Business remain separate journeys. Highest-value next action: accepted relevant buyer conversation after Pending Founder Setup and specific communication approval, no reminders. No account/price change, paid enrichment or new release.
+
+
+## October26 — first-client contactability improved
+
+A verified public professional email now supports the selected conditional lead; exact qualification-first inquiry and buyer-specific demo brief are private/unsent. This is a route, not confirmed demand or consent. Existing public sample used honestly; fresh custom three-city data not claimed. No new conversations/customers/revenue or financial query. Next essential step is one specifically authorized inquiry after Pending Founder Setup; preserve assets, avoid further speculative asset/feature expansion while contact remains pending.

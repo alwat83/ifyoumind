@@ -1,0 +1,269 @@
+{
+  "observedAt": "2026-10-26T14:59:45.145Z",
+  "base": "https://ifyoumind.com",
+  "productionCommit": "65dc4912a8bf7ccde31926651eb0f3c4b05cd039",
+  "scope": "Read-only live smoke; synthetic CSV stays in browser; analytics and all non-read requests blocked except existing public sample read. Internal QA is not traffic/customer/revenue.",
+  "allowedReads": [
+    {
+      "device": "desktop",
+      "endpoint": "getSampleDecisionReport",
+      "purpose": "Read existing public sample"
+    },
+    {
+      "device": "mobile",
+      "endpoint": "getSampleDecisionReport",
+      "purpose": "Read existing public sample"
+    }
+  ],
+  "blocked": [],
+  "privacy": [
+    {
+      "device": "desktop",
+      "externalRequestsOrWrites": 0,
+      "storageEntries": 0
+    },
+    {
+      "device": "mobile",
+      "externalRequestsOrWrites": 0,
+      "storageEntries": 0
+    },
+    {
+      "device": "narrow",
+      "externalRequestsOrWrites": 0,
+      "storageEntries": 0
+    }
+  ],
+  "results": [
+    {
+      "name": "desktop: homepage navigation and existing prices",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "desktop: discovery route, headers, metadata and accessible entry",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0,
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; font-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'"
+      }
+    },
+    {
+      "name": "desktop: tax example, keyboard focus and exact evidence",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "desktop: correction, invalid sum recovery and clear",
+      "status": "PASS",
+      "detail": {
+        "synthetic": true,
+        "dataCleared": true
+      }
+    },
+    {
+      "name": "desktop: repeated local CSV read failure and successful retry",
+      "status": "PASS",
+      "detail": {
+        "synthetic": true,
+        "failedReads": 2,
+        "recovery": true
+      }
+    },
+    {
+      "name": "desktop: electricity findings, source calculations and accessible switch",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "desktop: offline example, reset, reload and no storage or data egress",
+      "status": "PASS",
+      "detail": {
+        "offlineAfterLoad": true,
+        "reloadCleared": true,
+        "unexpectedRequests": 0
+      }
+    },
+    {
+      "name": "desktop: registration presentation and scoped privacy",
+      "status": "PASS",
+      "detail": {
+        "accountCreated": false,
+        "formSubmitted": false
+      }
+    },
+    {
+      "name": "desktop: real read-only public sample and sources",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0,
+        "realPublicSample": true
+      }
+    },
+    {
+      "name": "mobile: homepage navigation and existing prices",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "mobile: discovery route, headers, metadata and accessible entry",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0,
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; font-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'"
+      }
+    },
+    {
+      "name": "mobile: tax example, keyboard focus and exact evidence",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "mobile: correction, invalid sum recovery and clear",
+      "status": "PASS",
+      "detail": {
+        "synthetic": true,
+        "dataCleared": true
+      }
+    },
+    {
+      "name": "mobile: repeated local CSV read failure and successful retry",
+      "status": "PASS",
+      "detail": {
+        "synthetic": true,
+        "failedReads": 2,
+        "recovery": true
+      }
+    },
+    {
+      "name": "mobile: electricity findings, source calculations and accessible switch",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "mobile: offline example, reset, reload and no storage or data egress",
+      "status": "PASS",
+      "detail": {
+        "offlineAfterLoad": true,
+        "reloadCleared": true,
+        "unexpectedRequests": 0
+      }
+    },
+    {
+      "name": "mobile: registration presentation and scoped privacy",
+      "status": "PASS",
+      "detail": {
+        "accountCreated": false,
+        "formSubmitted": false
+      }
+    },
+    {
+      "name": "mobile: real read-only public sample and sources",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0,
+        "realPublicSample": true
+      }
+    },
+    {
+      "name": "narrow: homepage navigation and existing prices",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "narrow: discovery route, headers, metadata and accessible entry",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0,
+        "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; font-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'"
+      }
+    },
+    {
+      "name": "narrow: tax example, keyboard focus and exact evidence",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "narrow: correction, invalid sum recovery and clear",
+      "status": "PASS",
+      "detail": {
+        "synthetic": true,
+        "dataCleared": true
+      }
+    },
+    {
+      "name": "narrow: repeated local CSV read failure and successful retry",
+      "status": "PASS",
+      "detail": {
+        "synthetic": true,
+        "failedReads": 2,
+        "recovery": true
+      }
+    },
+    {
+      "name": "narrow: electricity findings, source calculations and accessible switch",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "narrow: offline example, reset, reload and no storage or data egress",
+      "status": "PASS",
+      "detail": {
+        "offlineAfterLoad": true,
+        "reloadCleared": true,
+        "unexpectedRequests": 0
+      }
+    },
+    {
+      "name": "narrow: registration presentation and scoped privacy",
+      "status": "PASS",
+      "detail": {
+        "accountCreated": false,
+        "formSubmitted": false
+      }
+    },
+    {
+      "name": "HTTP redirects, assets, sitemap and genuine 404",
+      "status": "PASS",
+      "detail": {
+        "redirect": 301,
+        "assetCount": 2,
+        "unknown404": true,
+        "noindexOutsideSitemap": true
+      }
+    }
+  ],
+  "passed": 27,
+  "failed": 0
+}

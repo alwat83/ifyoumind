@@ -1,0 +1,9 @@
+{
+  "observedAt": "2026-10-26T15:00:46.516Z",
+  "status": "FINALIZED",
+  "fileCount": "41",
+  "deleteTime": null,
+  "currentLiveRelease": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/channels/live/releases/1793026689677000",
+  "currentLiveReleaseTime": "2026-10-26T14:58:09.677Z",
+  "retainedVersion": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/versions/a4b9fd4f6533ce8b"
+}

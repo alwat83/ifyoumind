@@ -1,0 +1,142 @@
+{
+  "conclusion": "success",
+  "createdAt": "2026-10-26T14:55:31Z",
+  "headBranch": "master",
+  "headSha": "65dc4912a8bf7ccde31926651eb0f3c4b05cd039",
+  "jobs": [
+    {
+      "completedAt": "2026-10-26T14:58:13Z",
+      "conclusion": "success",
+      "databaseId": 121646741285,
+      "name": "deploy",
+      "startedAt": "2026-10-26T14:55:35Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-10-26T14:55:37Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-10-26T14:55:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-26T14:55:40Z",
+          "conclusion": "success",
+          "name": "Check out production source",
+          "number": 2,
+          "startedAt": "2026-10-26T14:55:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-26T14:55:45Z",
+          "conclusion": "success",
+          "name": "Use Node 22",
+          "number": 3,
+          "startedAt": "2026-10-26T14:55:40Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-26T14:56:05Z",
+          "conclusion": "success",
+          "name": "Install app dependencies",
+          "number": 4,
+          "startedAt": "2026-10-26T14:55:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-26T14:56:09Z",
+          "conclusion": "success",
+          "name": "Install Functions dependencies",
+          "number": 5,
+          "startedAt": "2026-10-26T14:56:05Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-26T14:56:09Z",
+          "conclusion": "success",
+          "name": "Run production preflight",
+          "number": 6,
+          "startedAt": "2026-10-26T14:56:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-26T14:56:22Z",
+          "conclusion": "success",
+          "name": "Build Angular app",
+          "number": 7,
+          "startedAt": "2026-10-26T14:56:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-26T14:56:26Z",
+          "conclusion": "success",
+          "name": "Test Firebase Functions",
+          "number": 8,
+          "startedAt": "2026-10-26T14:56:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-26T14:56:29Z",
+          "conclusion": "success",
+          "name": "Build Firebase Functions",
+          "number": 9,
+          "startedAt": "2026-10-26T14:56:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-26T14:56:29Z",
+          "conclusion": "success",
+          "name": "Authenticate to Google Cloud",
+          "number": 10,
+          "startedAt": "2026-10-26T14:56:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-26T14:58:10Z",
+          "conclusion": "success",
+          "name": "Deploy consumer production",
+          "number": 11,
+          "startedAt": "2026-10-26T14:56:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-26T14:58:10Z",
+          "conclusion": "success",
+          "name": "Post Authenticate to Google Cloud",
+          "number": 20,
+          "startedAt": "2026-10-26T14:58:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-26T14:58:10Z",
+          "conclusion": "success",
+          "name": "Post Use Node 22",
+          "number": 21,
+          "startedAt": "2026-10-26T14:58:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-26T14:58:10Z",
+          "conclusion": "success",
+          "name": "Post Check out production source",
+          "number": 22,
+          "startedAt": "2026-10-26T14:58:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-10-26T14:58:10Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 23,
+          "startedAt": "2026-10-26T14:58:10Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/alwat83/ifyoumind/actions/runs/40344228960/job/121646741285"
+    }
+  ],
+  "status": "completed",
+  "updatedAt": "2026-10-26T14:58:14Z",
+  "url": "https://github.com/alwat83/ifyoumind/actions/runs/40344228960"
+}

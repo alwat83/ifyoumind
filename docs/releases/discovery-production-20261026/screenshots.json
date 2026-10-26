@@ -1,0 +1,37 @@
+{
+  "scope": "Actual deployed site, synthetic discovery values and existing public sample only, unedited screenshots",
+  "files": [
+    {
+      "path": "screenshots/desktop-entry.png",
+      "sha256": "815ccb26e697481065267ecb242cf8d7eb7911b4ea678e428e6d2ef9a3384c48"
+    },
+    {
+      "path": "screenshots/mobile-entry.png",
+      "sha256": "37449c25dd515d28b7a83d1294f503cac519ad24889df8cfd978d224f55a3d5b"
+    },
+    {
+      "path": "screenshots/narrow-entry.png",
+      "sha256": "87f925a5d723d58ea93d07e073491e12301617a0bc363430d2b9fbd61b7396e0"
+    },
+    {
+      "path": "screenshots/desktop-tax-evidence.png",
+      "sha256": "8bcfa0218fb1f8c3b93d495f5181c9c5870739a95f2ef438a16df64590bd2270"
+    },
+    {
+      "path": "screenshots/mobile-electricity-evidence.png",
+      "sha256": "dc110621fb9212981ef1e267978ab52ed9d1e44dda8aa7d0d757827eb2abfc22"
+    },
+    {
+      "path": "screenshots/mobile-corrected.png",
+      "sha256": "28a654c279cd1740dc09eb396819642df72501dc66d57a3513f432605bb42477"
+    },
+    {
+      "path": "screenshots/mobile-sample.png",
+      "sha256": "31d4222434c15509c22c155419cd10d3ff8f600f92fca56dd4c0f8421b0832b6"
+    },
+    {
+      "path": "screenshots/desktop-home.png",
+      "sha256": "33326d2ad369181b896d0ac551b47efafa019a9a24fdeab32b5b24a6282f9468"
+    }
+  ]
+}

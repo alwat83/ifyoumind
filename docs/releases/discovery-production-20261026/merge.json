@@ -1,0 +1,9 @@
+{
+  "authorizedCandidate": "bb6cfde932804e7af01b86e461be0069eb76ed3c",
+  "productionCommit": "65dc4912a8bf7ccde31926651eb0f3c4b05cd039",
+  "baseBefore": "74a91fb15d408893448f925cedcec4e47868dec0",
+  "approvedAndProductionTree": "515634c1e80f75f8d6b7434f629fd808aecc05db",
+  "operation": "Only PR73 merge with expected-head guard; no branch deletion.",
+  "firstParentCommitsAddedToMaster": 1,
+  "sourcePRs": "GitHub auto-marked70/71/72 merged because their unchanged heads are in approved73ancestry; no separate merge operation."
+}

@@ -41,3 +41,8 @@ Use [FIRST_CUSTOMER_SPRINT.md](FIRST_CUSTOMER_SPRINT.md) for ranked actions, act
 ## Founder ownership clarification — October26
 
 Codex owns ifYouMind marketing/acquisition preparation and prioritization. Founder explicitly chose “Own marketing; keep outbound pending” and reaffirmed ifYouMind-only scope. Current lead assets/decisions are in FIRST_CUSTOMER_SPRINT.md; no repeated preparatory approvals or account questions. External day1 remains suspended until setup and exact communication approval; no send, publish, spend, Stripe/price change or release authorized.
+
+
+## October26 — broadened social wave
+
+Use the audience/channel matrix and exact C7/C8/C9/S1drafts in FIRST_CUSTOMER_SPRINT.md, alongside C6demo and C2Business sample. Relative first wave: day1example demo, day3tax graphic, day5one then-permitted Business promotion-thread comment, day7sharing/actual-question response within approved scope. No automated dates or extra account setup required now. Audience/sender/channel/content/reply approvals and Pending Founder Setup unchanged; no posting or results claimed.

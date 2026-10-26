@@ -53,6 +53,10 @@ Founder directed a pivot to customer acquisition and requested fast, credible ma
 
 Founder delegated ownership of **ifYouMind marketing and customer acquisition** to Codex and explicitly clarified: **“Own marketing; keep outbound pending.”** Scope is ifYouMind only; never mix another business's accounts, audiences, assets, credentials or results. Independently choose priorities, prepare/test truthful creative, research/qualify prospects, maintain private drafts and report actual acquisition outcomes within existing authorized access and cost limits. Do not repeatedly seek approval for those preparatory choices or ask for sender details while pending. External publishing/outreach remains **Pending Founder Setup** and still requires specific audience/sender/channel/content approval when reopened. No spending, transactions, Stripe/pricing changes, production merge/deployment, broader product promises or unattended automation is authorized by this delegation. Preserve privacy, reporting and existing release gates.
 
+## Broader social acquisition — founder direction, October26
+
+Founder requested a broader social net alongside targeted first-client work. Prepare audience-specific organic discovery, homeowner/electricity examples, referrals and Business sample posts under one ifYouMind brand, with truthful capability/evidence and scoped privacy. This supersedes prior suggestions to halt all further campaign preparation, not the explicitly retained outbound-pending gate. Verify community rules; no mass promotion, fabricated engagement or irrelevant Business upsell. [Selected social wave and exact drafts](docs/growth/FIRST_CUSTOMER_SPRINT.md#broader-organic-social-net--founder-direction-october26). No send/publish/account/spend/Stripe/pricing/merge/deploy authorization inferred.
+
 ## Source of truth — mandatory order
 **Founder correction, 2026-10-22: GitHub and repository documentation are the source of truth for development.** The accessible Notion coordination hub, confirmed by the founder, is:
 https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71

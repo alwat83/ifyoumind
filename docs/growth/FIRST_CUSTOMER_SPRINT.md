@@ -151,3 +151,80 @@ Found an explicit published professional email for the strongest conditional lea
 The demo uses the actual existing public sample, not an invented custom report. Read-only evidence preparation checked three exact public Census cache documents only (no customer/billing collections): one retained public-data record, two absent records. Normal product loading can populate cache misses; absence does not prove unsupported places or a production failure. An unauthenticated public Census query returned HTML, so no new three-place numeric comparison was fabricated or claimed completed. No API secret, paid lookup, signup or write used. Private brief labels the older ACS period/cached source/uncertainty and the limit between city context and site-specific decisions.
 
 Commercial next action: once founder setup and exact outbound scope are approved, make the selected single qualification inquiry and demonstrate only if welcomed. Do not expand into more campaign building while the next essential step is real contact. Outbound remains Pending Founder Setup; no account-detail question or send. No new customer or revenue outcome.
+
+## Broader organic social net — founder direction, October26
+
+Founder explicitly requested a broader social acquisition net alongside first-client work. This authorizes the preparation below, superseding the prior suggestion to avoid any more campaign expansion; **it does not reopen outbound**. ifYouMind only. Reach people through relatable tasks, then let them inspect actual evidence. Broader reach and paid-buyer qualification remain separate learning tracks.
+
+### Audiences, channels and selected assets
+
+| Audience | Candidate placement | Specific draft / value / destination | Readiness |
+|---|---|---|---|
+| People comparing household electricity bills | Approved founder-owned feed; later approved short-form channel | C6actual demo; distinguish total, consumption and whole-bill average; /discover/ → Try electricity example | Draft prepared. Sender/channel pending; raw WebM not claimed native-platform ready |
+| Homeowners curious about tax changes | Approved owned Facebook feed; a specifically permitted homeowner community only after current rules/administrator requirements checked | C7below + new tax.png; component changes and evidence; /discover/ → Try property tax example | Draft/render checked. No group selected, joined or cleared; no tax-appeal/savings claim |
+| People curious about everyday data | Approved owned feed / permitted maker feedback space | C8question below; C9share invitation; same two supported examples | Drafts only. r/SideProject not cleared: official rules body not accessible in research |
+| Business owners choosing U.S. cities / advisers with a relevant client decision | Founder-owned LinkedIn; r/smallbusiness designated Q4promotion thread only, after final current account/rules check | C2sample-first post or S1below; public sample→registered free brief→existing optional79/39offer | Specific thread verified as promotion venue, not an audience/placement approval. No independent promotional/research post there |
+
+Start with the configured/approved owned channel and one approved community placement, rather than setting up every platform before any real use. This is a channel-selection recommendation, not a claim that the founder has an existing reachable audience. Facebook, LinkedIn, Instagram/Reels and Reddit account access/audience/reach are unconfirmed. No account/profile details requested; no paid advertising, boosting, creators, list tools or new services purchased.
+
+### C7 — household property-tax post, exact draft
+
+Same home. Different tax bill. Which charges changed?
+
+In ifYouMind's made-up example, the total rises $420. The school line accounts for $240 of that difference. Open the finding to see the exact inputs and calculation.
+
+Try it without an account: https://ifyoumind.com/discover/ → Try property tax example.
+
+I'm the founder of ifYouMind. Today it compares two years in one supported redacted property-tax CSV format, locally in your discovery tab. It shows component differences, not why tax rates changed or whether you should appeal. No PDFs or AI analysis. Please don't post or send your private statements.
+
+Creative: [tax.png](first-customer-creative/tax.png). Alt text: “ifYouMind property-tax example: total difference plus420USD; school-charge difference plus240USD. Both figures are synthetic, with a link to try the example.”
+
+### C8 — owned-channel conversation starter, exact draft
+
+When a bill goes up, what do you look at first: the total, how much you used, or the individual charges?
+
+I'm building ifYouMind to make those differences easier to see. The free electricity example separates billed usage, total and the average across the whole bill—and lets you check every calculation.
+
+Try the made-up example: https://ifyoumind.com/discover/ → Try electricity example. No account or prompt needed.
+
+I'd like to hear which finding was useful or unclear. No private bill details, please. Today: two supported CSV formats; no PDFs, AI interpretation or claimed explanation of why prices changed.
+
+Use only on a specifically approved owned/feedback placement. Do not post this as market research in r/smallbusiness; its moderator notice prohibits that use. No broad DM solicitation, invented poll participation or suggested answers from fake users.
+
+### C9 — share invitation, exact draft
+
+Know someone who likes checking the numbers behind a bill? Share the example—not your bill: https://ifyoumind.com/discover/
+
+Choose electricity or property tax, try the made-up data, and open a finding to see its evidence. No account needed. I'm the founder of ifYouMind; today it supports two specific CSV formats processed in the discovery tab, with no PDFs or AI analysis.
+
+Organic sharing invitation only. No new built-in sharing feature, reward, referral code, contest, endorsement or claim of existing users. Never put household data in a shared URL or public comment.
+
+### S1 — designated business-promotion-thread comment, exact draft
+
+Disclosure: I'm the founder of ifYouMind.
+
+Choosing between U.S. cities for a business opening or expansion? Our complete public sample shows sourced demographic comparisons and their limits: https://ifyoumind.com/sample-report
+
+A registered free brief compares your main city with one other. A fuller Decision Report is $79 once; Pro is $39/month with five reports included. City-level context doesn't assess a particular property, rent, foot traffic or sales potential.
+
+We also have free browser-local property-tax/electricity examples at https://ifyoumind.com/discover/—two supported CSV formats, no PDFs or AI analysis.
+
+For the verified designated promotion thread only; no focus-group question, solicitation to DM or fabricated testimonial. Final rules/account eligibility/moderation and founder approval must be checked before submission. Posting approval and visibility are not guaranteed.
+
+### First social wave, relative to actual approval/setup
+
+- Day1: one owned-channel C6electricity demonstration. Keep the synthetic label/caption; record genuine responses and useful experiences, not view counts as customers.
+- Day3: C7property-tax graphic/post on an approved consumer placement. Respond to actual questions only within approved reply scope; never request private bills.
+- Day5: one S1comment in the then-current permitted business-promotion thread, if specifically approved. Show the sample before registration; no repeated promotion across unrelated discussions.
+- Day7: C9share invitation or a truthful reply to an actual useful question from the first wave. Compare real useful sessions/qualified inquiries across assets. C8is an optional replacement for a suitable owned/feedback post, not an extra blast.
+
+A separate approved buyer inquiry remains the near-term purchase lane. No paid household-analysis offer, forced Business upsell, paid API, retargeting pixel or extra discovery analytics. Start with existing private response tracker and a manual asset/source/usefulness/qualified-inquiry/purchase note; current audience, reach, clicks, conversations and independent-sales totals remain unknown/not newly measured.
+
+### Primary-source channel checks, October26
+
+- [LinkedIn video-sharing help](https://www.linkedin.com/help/linkedin/answer/a7486279) documents video/caption/visibility controls and safe zones. Existing20.8s/540×960 recording lies within the listed duration/dimensions, but container/encoding/platform upload is **not** verified. Use square art/link posts until the approved channel's export is validated. No platform upload attempted.
+- [r/smallbusiness Q4promotion thread](https://www.reddit.com/r/smallbusiness/comments/1wwpjlw/promote_your_business_thread_for_q4_2026/) expressly confines promotion/free offers to that thread and still prohibits spam. Its moderator notice rejects unsolicited focus-group/market-research posts. Thread presence is research evidence, not send permission or guaranteed moderation acceptance. Recheck at execution; do not use an old May thread.
+- [Meta public-group participation help](https://www.facebook.com/help/1414053028933409/) explains administrator approval requirements; no particular group's promotional permission was established. [Meta group-admin controls](https://about.fb.com/news/2021/06/new-tools-to-help-group-admins-manage-their-communities/amp/) include promotional-content moderation. Group eligibility remains pending, not assumed.
+- Official Reddit rules pages returned shells without rules text; third-party permissiveness claims were not used to clear r/SideProject or other communities. An initially opened LinkedIn help ID concerned unrelated skill assessments and was discarded; the video-specific official page above is the supporting source.
+
+Capability/price/example claims checked against current source and published release evidence; no new app tests/build/live transaction checks. All assets unsent/unpublished; no client or revenue lift claimed. Specific audience/sender/channel/content and reply/follow-up scope still require founder approval when outbound is reopened. No account-detail reminder.

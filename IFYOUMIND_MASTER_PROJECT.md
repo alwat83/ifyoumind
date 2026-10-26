@@ -356,3 +356,8 @@ Founder grants Codex ownership of ifYouMind marketing/customer acquisition, clar
 ## October26 — first-client inquiry prepared against verified professional route
 
 Improved conditional lead contactability using explicit published professional contact/role evidence; private exact R2invitation, buyer-specific demonstration brief and response playbook prepared, original drafts preserved. Anonymous current/growth/log records updated; no names/contacts imported to public artifacts. Only public Census cache metadata/data read, no customer records/writes; demo uses existing sample and states unavailable fresh comparisons honestly. No outreach, client, revenue, product release or new pricing claim. Outbound Pending Founder Setup remains; next action is a specifically authorized qualification inquiry when reopened.
+
+
+## October26 — founder broadens organic acquisition
+
+Prepared audience-specific social wave under ifYouMind brand: electricity/property-tax/curious-data examples and sharing, plus separate Business sample acquisition. Exact drafts/placement evidence in FIRST_CUSTOMER_SPRINT.md, new synthetic tax graphic. Primary community/platform checks distinguish designated promotion venue from unverified group permissions and video export compatibility. Prior no-more-campaign-prep suggestion superseded by this founder request; no outbound, paid ads, price, product/release or financial evidence change authorized. Private buyer details remain private; no audience/customer outcome claimed.

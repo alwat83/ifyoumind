@@ -2,6 +2,10 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## Accountable owner — founder-confirmed ifYouMind scope
+
+October26: founder delegates marketing/customer-acquisition ownership to Codex and explicitly keeps outbound pending. Independently run prioritization, qualification, campaign preparation and evidence-based reporting for ifYouMind only. Selected lead: actual C6electricity example for useful free experiences; sample-first qualified Business demonstrations for existing paid offers. No new traction/financial query. No sender-detail reminders or messages/posts until specific scope is approved after setup. Existing spend/payment/price/Stripe/merge/deployment gates remain. [Operating decisions](FIRST_CUSTOMER_SPRINT.md#marketing-ownership--founder-confirmed-october26).
+
 ## Current — acquire first customers, October26
 
 Founder explicitly pivoted to fast acquisition/brand execution. [Ready first-customer campaign](FIRST_CUSTOMER_SPRINT.md): five qualified owner demonstrations for near-term Business purchases, evidence-first free electricity/property-tax creative for genuine consumer use, warm introductions and sample-before-signup proof. Includes actual draft copy, three social graphics,20second storyboard,10minute demo and relative seven-day actions. Current public discovery is deployed per the October26 release evidence; older local-only notes below are history. Consumer bills are free, not a new paid product or an assumed Business conversion funnel. Existing79once/39monthlyfiveReports unchanged and both presented honestly. All lift/targets are hypotheses, not results.

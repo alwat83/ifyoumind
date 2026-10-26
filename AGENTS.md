@@ -49,6 +49,10 @@ Founder explicitly authorized onlyPR73 atbb6cfde932804e7af01b86e461be0069eb76ed3
 
 Founder directed a pivot to customer acquisition and requested fast, credible marketing gains. Prioritize ready campaign assets, relevant demonstrations and first independent purchases over speculative engineering. [First-customer sprint](docs/growth/FIRST_CUSTOMER_SPRINT.md) separates free consumer discovery from the existing paid Business offer. Demonstrate actual capabilities; label synthetic examples and hypotheses. This direction authorizes preparation, not sending/publishing: outbound remains **Pending Founder Setup**, with exact audience/sender/channel/content approval still required. No new feature, spend, discount, pricing/Stripe change or production release is authorized.
 
+## Founder marketing ownership — October26,2026
+
+Founder delegated ownership of **ifYouMind marketing and customer acquisition** to Codex and explicitly clarified: **“Own marketing; keep outbound pending.”** Scope is ifYouMind only; never mix another business's accounts, audiences, assets, credentials or results. Independently choose priorities, prepare/test truthful creative, research/qualify prospects, maintain private drafts and report actual acquisition outcomes within existing authorized access and cost limits. Do not repeatedly seek approval for those preparatory choices or ask for sender details while pending. External publishing/outreach remains **Pending Founder Setup** and still requires specific audience/sender/channel/content approval when reopened. No spending, transactions, Stripe/pricing changes, production merge/deployment, broader product promises or unattended automation is authorized by this delegation. Preserve privacy, reporting and existing release gates.
+
 ## Source of truth — mandatory order
 **Founder correction, 2026-10-22: GitHub and repository documentation are the source of truth for development.** The accessible Notion coordination hub, confirmed by the founder, is:
 https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71

@@ -346,3 +346,8 @@ Prepared [first-customer campaign](docs/growth/FIRST_CUSTOMER_SPRINT.md) and thr
 ## October26 — recorded product proof and private first batch
 
 [Campaign execution update](docs/growth/FIRST_CUSTOMER_SPRINT.md): actual read-only live synthetic mobile electricity video, evidence/clear and caption/review assets; five tailored private invitations with rechecked source signals/qualification agendas/routing and simple tracker. Two conditional/three held, none qualified through contact. No identities in public GitHub/Notion; no sends, account setup reminders, spend, payment or runtime/release change. PR74remains a draft marketing review, not a production release or communication approval. Next: specifically authorized buyer introduction/demonstration after founder setup.
+
+
+## October26 — marketing ownership delegated, outbound pending
+
+Founder grants Codex ownership of ifYouMind marketing/customer acquisition, clarifies “Own marketing; keep outbound pending,” and reaffirms ifYouMind-only scope. AGENTS/growth/launch/current records now preserve autonomous preparation/prioritization and selected campaign choices. No other business accounts/assets/results, no sender-detail reminders, no campaign/send/publication/spend/Stripe/pricing/production release or scheduled work authorized. Existing product/revenue/privacy gates preserved; no new customer outcome claimed.

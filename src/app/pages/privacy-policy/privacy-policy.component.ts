@@ -10,6 +10,6 @@ import { RouterLink } from '@angular/router';
 })
 export class PrivacyPolicyComponent {
   effectiveDate='October 2, 2026';
-  lastUpdated='October 2, 2026';
+  lastUpdated='October 24, 2026';
   contactEmail='privacy@ifyoumind.com';
 }

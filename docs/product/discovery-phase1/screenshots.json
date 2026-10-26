@@ -1,0 +1,66 @@
+{
+  "observedDate": "2026-10-23 CDT",
+  "scope": "Actual local Angular Phase1 founder follow-up, synthetic data only, unedited browser screenshots",
+  "files": [
+    {
+      "path": "screenshots/desktop-discovered-full.png",
+      "sha256": "eb4109710089a58b1e6b57cd56b00955458c67b9846de691a55f250afe9f47ae"
+    },
+    {
+      "path": "screenshots/desktop-discovery-fold.png",
+      "sha256": "3ca207ebe5d2e8617681add877947aacae886b3c64b5d536af93479504420156"
+    },
+    {
+      "path": "screenshots/desktop-evidence-full.png",
+      "sha256": "c434ab9c5a6bfa4c3b737703fae595180123a88b946a351b30557ca24cec3579"
+    },
+    {
+      "path": "screenshots/desktop-insufficient-full.png",
+      "sha256": "4238a88f2a9963c8c6c4d57a4c8f7893ef9b2d20cd83f6e6ac047f2a0ebf3561"
+    },
+    {
+      "path": "screenshots/desktop-read-failure-full.png",
+      "sha256": "21ad33b1413b68fe4241212e4f5943734486780a7c992f2d4742b44e8784456c"
+    },
+    {
+      "path": "screenshots/desktop-welcome-fold.png",
+      "sha256": "49e97c77ac288a0ae324d135c632dd079b1ef27115a039c9504ed45b5759cefb"
+    },
+    {
+      "path": "screenshots/mobile-corrected-full.png",
+      "sha256": "788c5985db3dd934dfc826625b0a461cd84b502d39b1bdde3900bc26d7e09120"
+    },
+    {
+      "path": "screenshots/mobile-discovered-full.png",
+      "sha256": "694297a60b3b2a86f94b0bc061303111ac3cc3e056fa419ce39827e04cc62c1d"
+    },
+    {
+      "path": "screenshots/mobile-discovery-fold.png",
+      "sha256": "79b8ba1fc056eab4069efbaaa9d221a254308c92484729636985a4deabae73a3"
+    },
+    {
+      "path": "screenshots/mobile-evidence-full.png",
+      "sha256": "2c8ca08ecd08495098dd935025bfd86673434696343b105eb52adf83356caa12"
+    },
+    {
+      "path": "screenshots/mobile-insufficient-full.png",
+      "sha256": "59cdb86462c1adbff8b57bd0717e5c563fc871e542061ca2816628f68a66fc2a"
+    },
+    {
+      "path": "screenshots/mobile-read-failure-full.png",
+      "sha256": "d5f3a7d427dc165faa85e29511d58f545214452ae5701d1081eb55f86e524782"
+    },
+    {
+      "path": "screenshots/mobile-welcome-fold.png",
+      "sha256": "05e5c0234939aede693ed4d4926671ee76ade87ac96db0f9b6cb387a40ede93e"
+    },
+    {
+      "path": "screenshots/narrow-discovery-fold.png",
+      "sha256": "cd490759ced2955dca6efe698bcd1967547e8905721017a0da07a298232a77b0"
+    },
+    {
+      "path": "screenshots/narrow-welcome-fold.png",
+      "sha256": "fe44c0f421678e7a26150330d2a8a7b8b4dec99ef2ab84bc09a43bdccefdd049"
+    }
+  ]
+}

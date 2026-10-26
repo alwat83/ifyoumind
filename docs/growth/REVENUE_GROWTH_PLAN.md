@@ -2,6 +2,12 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## Latest founder product direction — October23,2026
+
+**You bring the data. We’ll find the story.** Automatic evidence-backed discovery for people who do not know AI or prompts is the product destination. Interaction-first acquisition must lead to useful findings, not simply explain the platform or send every decision to a guide. [Reviewed architecture and narrow property-tax POC proposal](../product/AUTOMATIC_DISCOVERY_PROPOSAL.md) is planned, not shipped; one local supported-data slice precedes arbitrary files, optional AI or new consumer pricing. No new monetization SKU or paid AI use approved. Existing79report/39monthlyPro preserved. Learning targets are proposed comprehension/usefulness outcomes, not traction claims.
+
+PR68 reliability release is deployed as74a91fb, Hosting a4b9fd4f6533ce8b, fresh23live/56SEO checks pass. [Evidence](../releases/consumer-recovery/production/LIVE_VERIFICATION.md). Three earlier homepage concepts remain local review-only; no new homepage/functionality publication beyond approved68. Outbound **Pending Founder Setup**, first independent sale still the commercial milestone, approved October22 financial evidence/unknown traffic unchanged. No speculative analytics or large rewrite. Near-term small polish recommendation: clearer dataset source links; after founder POC review, prove one useful automatic story with traceable calculations.
+
 ## Mission and available value
 
 Launch an appealing, understandable, useful consumer-first product; get real people to try it; earn the first independent sale; learn and improve what matters. Long-term vision: anyone can make better decisions using real evidence. Business Decision Reports are the first monetization opportunity, not the company's entire identity.
@@ -71,3 +77,35 @@ Current safe opportunity: improve the public sample's recoverable service-error 
 ## Consumer reliability candidate — October23
 
 Public sample recovery implemented/tested on separate feature branch (not live): plain-language error, explicit retry/offline/timeout states, accessible focus and preserved free navigation. [Review/evidence](../ux/consumer-reliability/REVIEW.md):112browserPASS, no new lint/Angular baseline signatures. Existing79report/39monthlyPro paths retained; no price/backend/Stripe changes. Expected commercial benefit is less evaluation friction under faults; no actual user/revenue lift measured. Outbound stays Pending Founder Setup, never a development blocker; launch drafts remain private/unsent. No financial baseline refresh or analytics expansion.
+
+
+## October23 — Phase1 local discovery now works, not a launched offer
+
+[Working founder review](../product/discovery-phase1/REVIEW.md): one click on synthetic tax example→automatic grounded findings; recognized redactedCSV, source cells/calculations, corrections/rerun/clear and honest insufficiency. No registration/prompt/API/provider cost/persistence.24unit/36browser cases PASS; reference click54–131ms, not human usefulness/conversion evidence. Separate Angular entry excluded from production. Existing79report/39monthlyPro unchanged; no personal-tax price or subscription created. Expected opportunity: lower novice effort before a first useful insight, unvalidated. Founder should interact before further design/implementation decisions. Financial baseline/traffic/customer/revenue metrics unchanged; internal QA excluded. Outbound Pending Founder Setup, no sends. No new analytics platform, dependency, production merge/deploy or broad upload/AI claim.
+
+
+## October23 — focused discovery validation, local only
+
+Founder confirmed automatic discovery as the product foundation. PR70follow-up improves everyday-language findings and honest incomplete/file-read recovery;48internalbrowserchecksPASS across desktop/mobile/narrow with source/correction/clear/privacy preserved. These are QA runs, not visitors or meaningful outside-user experiences. Financial baseline/launch scoreboard unchanged; usefulness/conversion/willingness-to-pay unknown. No paid-providercost/newSKU/Business79report/39monthlyProchange. [Founder follow-up/second-category ranking](../product/discovery-phase1/FOUNDER_FOLLOWUP.md): one compatible-period electricity CSV proposed because it reuses evidence/money UI while adding usage, with sensitive household data handled locally. No demand evidence or Phase2implementation claimed. Highest-value next learning is actual interaction with Phase1, then fix observed friction; separate approval before a second category/public integration/real-user invitations. Outbound Pending Founder Setup, private drafts unsent.
+
+
+## October23 — cross-category local discovery, no new traction
+
+Phase1 readiness GO for founder review at exact169128c, not public-launch approval. Founder authorized one local electricity CSVprototype to learn whether discovery is useful beyond taxes. Shared evidence/comparison/UI avoids duplicated infrastructure/provider cost; concrete synthetic usage/total/average/charge findings work with honest unknown classification.135fast and75combinedbrowser checks are internal QA, not real visitors/meaningfuloutsideuserexperiences. No customer/revenue/feedback scoreboard change, independent sale still a goal. Business79/39unchanged;October22financialbaseline preserved. Next learning: founder use of both real local experiences and observed friction; no broader parser/analytics/AI expansion by default. Outbound Pending Founder Setup, no communications or real transactions. [Prototype design/review](../product/discovery-electricity/REVIEW.md).
+
+
+## October 23, 2026 — coherent first discovery, local candidate
+
+The unified local entry now offers property-tax and electricity examples with one click, shared traceable findings, correction and clearing. [Review/evidence](../product/discovery-unified/REVIEW.md); [public integration proposal](../product/discovery-unified/RELEASE_PLAN.md). This addresses observed fragmentation between separate local demos; reduced friction and willingness to share remain hypotheses.135fast/36unified/48tax/27electricitybrowser checks and all4builds passed. Public homepage and commercial79/39 paths remain unchanged; public discovery is not implemented/deployed. QA and synthetic examples are excluded from all launch/customer metrics. No new visitor/experience/buyer conversation/purchase/revenue evidence; retain existing unknowns and approved October22 financial snapshot. No additional analytics infrastructure or profitability claim.
+
+Highest-value next work: founder reviews both journeys, then approves narrow public /discover/ integration implementation on a feature branch; after verification and separate release authorization, seek a meaningful outside-user experience. No new dataset or homepage overhaul. Outbound remains **Pending Founder Setup**; private personalized messages/announcements remain unsent and no sender questions are requested.
+
+
+## October 24, 2026 — founder direction accepted; execution paused
+
+Founder accepts unified discovery product direction; aesthetic remains unfinished. Narrow public `/discover/` integration planning/implementation is approved for a separate feature branch **after the next session resumes**, preserving current homepage, Business79/39 and browser-local/privacy restrictions. Record this decision and pause today; no redesign, feature expansion, merge/deploy, Stripe change or outreach. This replaces the prior pending implementation-scope approval; separate release authorization is still required. No new customer/visitor/purchase/revenue evidence; existing scoreboard and approved financial snapshot unchanged. Next revenue-relevant assignment upon resume is the already approved narrow public integration, then verified release approval before real-user availability. Outbound **Pending Founder Setup**.
+
+
+## October 24, 2026 — public discovery entry candidate implemented
+
+Founder resumed the approved integration. Deployable candidate now links existing homepage to /discover/ with immediate property-tax/electricity examples, recognized browser-local CSVs and inspectable evidence/correction/clear. No signup barrier for discovery; Business79/39 preserved. [Review/evidence/release gate](../product/discovery-integration/RELEASE_REVIEW.md).137fast/48integrated Hosting browser checks pass; implementation is not yet merged/live. No new real visitors, meaningful outside-user experiences, buyer conversations, purchases or revenue evidence; QA excluded and October22 baseline retained. Expected first-use friction reduction remains a hypothesis. Next highest-value action is founder exact release approval after CI, then observe a real first-time experience. No new analytics infrastructure, outreach, pricing or categories; outbound Pending Founder Setup.

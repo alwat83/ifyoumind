@@ -1,0 +1,232 @@
+{
+  "observedAt": "2026-10-23T15:11:54.760Z",
+  "reviewedHead": "f75879544b610ae7e59905f4b317296a48b0fdb3",
+  "base": "1f09e6e0ad5b184cf6d4ac151bd361d53fa56e79",
+  "pr": 68,
+  "state": "OPEN/DRAFT",
+  "mergeable": true,
+  "mergeStateStatus": "CLEAN",
+  "protectedBranchRequiredChecks": [],
+  "branchProtection": "404 Branch not protected; effective branch rules []",
+  "checks": {
+    "build": {
+      "run": 39970202484,
+      "attempt": 1,
+      "conclusion": "SUCCESS"
+    },
+    "qa": {
+      "run": 39970201552,
+      "attempt": 2,
+      "conclusion": "SUCCESS",
+      "browserPass": 112,
+      "browserFail": 0,
+      "browserSkip": 0,
+      "fastPass": 95,
+      "functionsPass": 72,
+      "rulesPass": 7,
+      "organizationsPass": 5,
+      "commercePass": 29,
+      "fixturesPass": 24,
+      "fixturesSkip": 1
+    }
+  },
+  "newLocalUnit": {
+    "pass": 8,
+    "fail": 0,
+    "skip": 0
+  },
+  "screenshotManifest": {
+    "match": 11,
+    "total": 11
+  },
+  "productionSource": "1f09e6e0ad5b184cf6d4ac151bd361d53fa56e79",
+  "hosting": {
+    "live": {
+      "channel": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/channels/live",
+      "url": "https://ifyoumind-473fe.web.app",
+      "release": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/channels/live/releases/1792718839722000",
+      "type": "DEPLOY",
+      "releaseTime": "2026-10-23T01:27:19.722Z",
+      "version": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/versions/e0c9142f16a5e741"
+    },
+    "rollbackTarget": {
+      "name": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/versions/e0c9142f16a5e741",
+      "status": "FINALIZED",
+      "createTime": "2026-10-23T01:25:29.732132Z",
+      "finalizeTime": "2026-10-23T01:27:19.441190Z",
+      "deleteTime": null,
+      "fileCount": "41",
+      "versionBytes": "327645",
+      "config": {
+        "headers": [
+          {
+            "headers": {
+              "Referrer-Policy": "strict-origin-when-cross-origin",
+              "X-Content-Type-Options": "nosniff"
+            },
+            "glob": "**"
+          },
+          {
+            "headers": {
+              "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+              "X-Frame-Options": "SAMEORIGIN"
+            },
+            "regex": "^/(?:[^_].*|_[^_].*|_)?$"
+          }
+        ],
+        "redirects": [
+          {
+            "statusCode": 301,
+            "location": "/:1",
+            "regex": "^/(sample-report|privacy-policy|terms-of-conduct|login|register|verify-email|app)/+$"
+          },
+          {
+            "statusCode": 301,
+            "location": "/guides/",
+            "regex": "^/guides$"
+          },
+          {
+            "statusCode": 301,
+            "location": "/guides/:1/",
+            "regex": "^/guides/([a-z0-9]+(?:-[a-z0-9]+)*)$"
+          }
+        ],
+        "rewrites": [
+          {
+            "glob": "/login",
+            "path": "/app-shell.html"
+          },
+          {
+            "glob": "/register",
+            "path": "/app-shell.html"
+          },
+          {
+            "glob": "/verify-email",
+            "path": "/app-shell.html"
+          },
+          {
+            "glob": "/app",
+            "path": "/app-shell.html"
+          },
+          {
+            "glob": "/app/**",
+            "path": "/app-shell.html"
+          }
+        ],
+        "cleanUrls": true
+      },
+      "labels": {
+        "deployment-tool": "cli-firebase"
+      }
+    },
+    "domains": [
+      {
+        "domain": "ifyoumind.com",
+        "hostState": "HOST_ACTIVE",
+        "ownershipState": "OWNERSHIP_ACTIVE",
+        "certState": "CERT_ACTIVE"
+      },
+      {
+        "domain": "www.ifyoumind.com",
+        "hostState": "HOST_ACTIVE",
+        "ownershipState": "OWNERSHIP_ACTIVE",
+        "certState": "CERT_ACTIVE"
+      }
+    ]
+  },
+  "freshLiveBrowser": {
+    "observedAt": "2026-10-23T15:14:17.886Z",
+    "scope": "Read-only live rendered homepage and registration; all non-GET/external requests blocked; internal QA excluded from traction",
+    "viewports": [
+      {
+        "width": 1280,
+        "headline": "Big decisions deserve better answers.",
+        "has79": true,
+        "has39": true,
+        "overflow": 0,
+        "sampleLink": "/sample-report",
+        "registrationForm": true
+      },
+      {
+        "width": 390,
+        "headline": "Big decisions deserve better answers.",
+        "has79": true,
+        "has39": true,
+        "overflow": 0,
+        "sampleLink": "/sample-report",
+        "registrationForm": true
+      },
+      {
+        "width": 320,
+        "headline": "Big decisions deserve better answers.",
+        "has79": true,
+        "has39": true,
+        "overflow": 0,
+        "sampleLink": "/sample-report",
+        "registrationForm": true
+      }
+    ]
+  },
+  "freshHttp": {
+    "observedAt": "2026-10-23T15:13:22.030Z",
+    "scope": "Read-only HTTP; no JS, signup, sample callable, checkout, payment or customer metric",
+    "rows": [
+      {
+        "path": "/",
+        "status": 200,
+        "location": null
+      },
+      {
+        "path": "/sample-report",
+        "status": 200,
+        "location": null
+      },
+      {
+        "path": "/register",
+        "status": 200,
+        "location": null
+      },
+      {
+        "path": "/guides/choose-business-location-evidence/",
+        "status": 200,
+        "location": null
+      },
+      {
+        "path": "/robots.txt",
+        "status": 200,
+        "location": null
+      },
+      {
+        "path": "/sitemap.xml",
+        "status": 200,
+        "location": null
+      },
+      {
+        "path": "/pr68-review-not-a-page",
+        "status": 404,
+        "location": null
+      },
+      {
+        "path": "/life",
+        "status": 404,
+        "location": null
+      }
+    ]
+  },
+  "recommendation": "GO for founder approval; no merge/deployment authorization",
+  "manualGaps": [
+    "Physical iOS/Safari",
+    "Manual VoiceOver/NVDA spoken announcements",
+    "Positive live signup/email and authenticated fulfillment",
+    "Native PDF export",
+    "Field performance",
+    "Real payment not initiated"
+  ],
+  "baselineFailures": {
+    "lint": 91,
+    "angularCompiler": 11,
+    "newDiagnosticSignatures": 0
+  },
+  "outbound": "Pending Founder Setup",
+  "deploymentPerformed": false
+}

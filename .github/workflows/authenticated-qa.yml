@@ -57,8 +57,32 @@ jobs:
         run: npm run test:seo
       - name: Build the local (emulator) app bundle
         run: npm run build:local
+      - name: Build production integration candidate
+        run: npm run build
+      - name: Public discovery isolation guard
+        run: node scripts/check-discovery-isolation.mjs --production
+      - name: Build local-only discovery preview
+        run: npm run build:discovery
+      - name: Build local electricity prototype
+        run: npm run build:electricity
+      - name: Build unified local discovery
+        run: npm run build:unified
+      - name: Check unified discovery boundary
+        run: node scripts/check-discovery-isolation.mjs --unified
+      - name: Check electricity boundary
+        run: node scripts/check-discovery-isolation.mjs --electricity
+      - name: Check local-only discovery boundary
+        run: node scripts/check-discovery-isolation.mjs --preview
       - name: Install Chromium for Playwright
         run: npx playwright install --with-deps chromium
+      - name: Local-only discovery browser tests
+        run: npm run test:discovery
+      - name: Electricity discovery browser tests
+        run: npm run test:electricity
+      - name: Unified discovery browser tests
+        run: npm run test:unified
+      - name: Integrated discovery Hosting browser tests
+        run: npm run test:discover
       - name: Firestore rules tests
         run: npm run test:rules
       - name: Organization tests

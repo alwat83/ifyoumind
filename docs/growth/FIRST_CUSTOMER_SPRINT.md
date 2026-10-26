@@ -76,7 +76,7 @@ Three editable1080×1080 campaign cards: [electricity](first-customer-creative/e
 - 3–8s: open /discover/, click electricity Try example. Do not imply the link preselects the category.
 - 8–14s: show $120 → $145.20 and 600 → 660 kWh. Whole-bill average $0.20 → $0.22/kWh includes all charges, not a supplier tariff or demonstrated cause.
 - 14–18s: expand evidence, show exact source cells and calculation. No filmed private bill, account, meter ID or address.
-- 18–20s: “Try the example. No account.” Show URL and supported-CSV restriction. Actual recording still to be captured; prepared stills are not a video.
+- 18–20s: “Try the example. No account.” Show URL and supported-CSV restriction. Actual live capture is now prepared: [local review player](first-customer-creative/video-review.html), [WebM](first-customer-creative/electricity-live-demo.webm), [caption sidecar](first-customer-creative/electricity-live-demo.vtt). The original stills remain campaign art, not video.
 
 ## Ten-minute business demo and honest purchase invitation
 
@@ -112,3 +112,24 @@ Verified product evidence: [October26 production checks/screenshots](../releases
 External context: [Census small-business resources](https://www.census.gov/topics/business-economy/small-business/about/powerful-data.html) demonstrate legitimate city/demographic research uses and free alternatives. That supports a plausible buyer problem, **not** willingness to pay for ifYouMind or a claim that all Census tools are implemented here. [SBA business planning](https://www.sba.gov/counseling/plan-your-business/) reinforces choosing a specific customer segment and explaining value. Position the offer around readable comparisons/evidence, not exclusive access to public data. Research supports plausibility; only actual user conversations and independent purchases validate demand.
 
 Checked draft copy against current product and source constants; no new build/unit/browser suite run for marketing-only artifacts. Existing91lint/11Angular compiler diagnostics/1skipped integration and manual signup/payment/device limitations remain. No new traffic, conversations, sales or profitability results. Approved October22 financial baseline remains unchanged and historically scoped.
+
+
+## Execution assets completed — continuation October26
+
+Actual live20.8second540×960 electricity-example recording now accompanies the storyboard: five findings, consumption/whole-bill average, source table and Clear→entry. [Verification timestamps](first-customer-creative/demo-verification.json), [review image](first-customer-creative/video-review.png). Fresh synthetic read-only interaction, not real user traffic. All requests confined to same-originGET/HEAD; zero external/non-read attempts observed. Browser-native source UI unmodified. Playback/duration checked separately; no voice or burned-in captions. Caption sidecar/review-player synthetic badge supplied; platform-specific export/caption validation awaits the eventually approved channel. No video published.
+
+### C6 — exact draft caption for the live video
+
+Your bill went up21%. Your usage went up10%. Those numbers tell different stories.
+
+Watch this made-up example in ifYouMind: compare the bill, consumption and whole-bill average, then open the exact numbers behind a finding. It shows what changed—not why.
+
+Try the example without an account: https://ifyoumind.com/discover/
+
+Today: two specific CSV formats, processed in the discovery tab. No PDFs or AI analysis. I'm the founder of ifYouMind. You bring the data; we'll find the story.
+
+### Buyer batch readiness, not invented qualification
+
+Rechecked five earlier groups against current accessible source announcements; prepared five specific owner invitations, one exact published-business-inbox routing request, five demo qualification agendas and a five-row execution/approval tracker in ignored private storage. Two conditional candidates, three held: expansion announcements do not confirm an undecided city-level need. No direct owner address, consent or willingness to pay verified. One currently published business routing inbox, not a direct buyer. Same-brand routing deduplicated; customer/media/franchise-application forms excluded. Original packets preserved. No paid enrichment or external CRM/campaign creation.
+
+Use the private founder packet for identities and exact tailored copy; public package/Notion contain no prospect identities/routes. Next best safe preparation is complete; the next commercial action is an accepted relevant introduction/demonstration once founder setup and specific communication scope are approved. Outbound Pending Founder Setup; no setup-detail reminders, automatic follow-up or authorization inferred from “keep going.”

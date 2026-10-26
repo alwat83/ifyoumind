@@ -11,12 +11,47 @@
       "sha256": "1da068259630a28254047a7e236857b56a89fc75057a3d738cd3dc9c7e4a447c"
     },
     {
+      "path": "cards.html",
+      "sha256": "61fa85c0e6eeeb453d025bcd0c1242ef642f3c3a3d744fc524865b9ff4652fd1"
+    },
+    {
+      "path": "demo-verification.json",
+      "sha256": "cb924f8a8264e4b8ed66489040aef177c4ccc7d94be64ee28fc03134e6750105"
+    },
+    {
+      "path": "electricity-live-demo.vtt",
+      "sha256": "80f3698cbd2f84fdd25afef0082f3701780cc053025ccb20f3b1715ea6c66531"
+    },
+    {
+      "path": "electricity-live-demo.webm",
+      "sha256": "d9e06dc9889faa1ce3f441d9adfc2f97147ad37dc9b424779f2cfd76061b0bc7"
+    },
+    {
       "path": "electricity.png",
       "sha256": "0b908b8a2bdf95506f49070b0f5ed596a7809cc0141f4a0917d4e7154596cd28"
     },
     {
       "path": "story.png",
       "sha256": "6a581fcde4ba448be3145db883316781d27a2af55232f43fa19d5c5a08bcb49e"
+    },
+    {
+      "path": "video-review.html",
+      "sha256": "3e0041b057076b566f9f35ad0906dfe4a5661fc601b7efc6b69b416d0e0aa9ed"
+    },
+    {
+      "path": "video-review.png",
+      "sha256": "852b17355163f0ace2871e36ccee5ebdfc0b2ff626dcd363ba5354f5e9b3e847"
     }
-  ]
+  ],
+  "liveDemo": {
+    "duration": 20.8,
+    "width": 540,
+    "height": 960,
+    "format": "WebM",
+    "audio": false,
+    "burnedInCaptions": false,
+    "captionSidecar": "electricity-live-demo.vtt",
+    "status": "unpublished draft",
+    "verification": "Final actual live synthetic example, five findings, exact evidence and clear verified; local playback/decoded frame visually inspected; full-page recording artifact corrected"
+  }
 }

@@ -1,0 +1,40 @@
+{
+  "observedAt": "2026-10-26T15:42:59.770Z",
+  "scope": "Actual read-only live mobile example recording; synthetic data, internal QA not a visitor or customer. No account or payment.",
+  "viewport": {
+    "width": 540,
+    "height": 960
+  },
+  "events": [
+    {
+      "name": "Live unified entry; made-up example choice",
+      "seconds": 0.9
+    },
+    {
+      "name": "Example loaded; five actual findings",
+      "seconds": 3.1
+    },
+    {
+      "name": "Consumption finding",
+      "seconds": 7.1
+    },
+    {
+      "name": "Whole-bill average, not supplier tariff",
+      "seconds": 10.7
+    },
+    {
+      "name": "Exact source cells and arithmetic expanded",
+      "seconds": 14.2
+    },
+    {
+      "name": "Clear and return to examples",
+      "seconds": 18.8
+    }
+  ],
+  "blockedRequests": [],
+  "findings": 5,
+  "clearVerified": true,
+  "sourceEvidenceVerified": true,
+  "productionCommit": "65dc4912a8bf7ccde31926651eb0f3c4b05cd039",
+  "sourceAssociation": "Last verified deployment record, not a fresh backend-source query"
+}

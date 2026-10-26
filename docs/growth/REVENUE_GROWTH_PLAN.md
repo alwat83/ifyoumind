@@ -132,3 +132,8 @@ October26 release check: unchanged PR73 has verified green exact-head CI and ret
 ## October26 — execution assets, not traction
 
 Actual live synthetic electricity recording/captions/review player now available in [campaign packet](FIRST_CUSTOMER_SPRINT.md), plus private five personalized buyer drafts, one routing request, agendas and tracker. Source rechecks narrow readiness to two conditional/three held; no five-qualified-buyers claim. No outreach/demos/customers generated; scoreboard/approved financial baseline unchanged. Free consumer discovery and existing paid Business remain separate journeys. Highest-value next action: accepted relevant buyer conversation after Pending Founder Setup and specific communication approval, no reminders. No account/price change, paid enrichment or new release.
+
+
+## October26 — first-client contactability improved
+
+A verified public professional email now supports the selected conditional lead; exact qualification-first inquiry and buyer-specific demo brief are private/unsent. This is a route, not confirmed demand or consent. Existing public sample used honestly; fresh custom three-city data not claimed. No new conversations/customers/revenue or financial query. Next essential step is one specifically authorized inquiry after Pending Founder Setup; preserve assets, avoid further speculative asset/feature expansion while contact remains pending.

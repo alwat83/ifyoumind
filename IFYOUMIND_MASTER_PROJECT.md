@@ -351,3 +351,8 @@ Prepared [first-customer campaign](docs/growth/FIRST_CUSTOMER_SPRINT.md) and thr
 ## October26 — marketing ownership delegated, outbound pending
 
 Founder grants Codex ownership of ifYouMind marketing/customer acquisition, clarifies “Own marketing; keep outbound pending,” and reaffirms ifYouMind-only scope. AGENTS/growth/launch/current records now preserve autonomous preparation/prioritization and selected campaign choices. No other business accounts/assets/results, no sender-detail reminders, no campaign/send/publication/spend/Stripe/pricing/production release or scheduled work authorized. Existing product/revenue/privacy gates preserved; no new customer outcome claimed.
+
+
+## October26 — first-client inquiry prepared against verified professional route
+
+Improved conditional lead contactability using explicit published professional contact/role evidence; private exact R2invitation, buyer-specific demonstration brief and response playbook prepared, original drafts preserved. Anonymous current/growth/log records updated; no names/contacts imported to public artifacts. Only public Census cache metadata/data read, no customer records/writes; demo uses existing sample and states unavailable fresh comparisons honestly. No outreach, client, revenue, product release or new pricing claim. Outbound Pending Founder Setup remains; next action is a specifically authorized qualification inquiry when reopened.

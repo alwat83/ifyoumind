@@ -1,0 +1,22 @@
+{
+  "status": "unsent unpublished drafts",
+  "dimensions": [
+    1080,
+    1080
+  ],
+  "render": "installed Google Chrome, three final renders, zero card-container overflow; all three visually inspected",
+  "files": [
+    {
+      "path": "business.png",
+      "sha256": "1da068259630a28254047a7e236857b56a89fc75057a3d738cd3dc9c7e4a447c"
+    },
+    {
+      "path": "electricity.png",
+      "sha256": "0b908b8a2bdf95506f49070b0f5ed596a7809cc0141f4a0917d4e7154596cd28"
+    },
+    {
+      "path": "story.png",
+      "sha256": "6a581fcde4ba448be3145db883316781d27a2af55232f43fa19d5c5a08bcb49e"
+    }
+  ]
+}

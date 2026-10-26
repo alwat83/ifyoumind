@@ -31,3 +31,8 @@ Actual private assets have been refreshed for the launched product and verified 
 ## Account-independent work now
 
 Continue consumer readiness rather than waiting on publishing accounts: verify useful free journeys and honest available/upcoming labels; inspect mobile/source/error states; prepare focused feature-branch fixes for confirmed defects; preserve the demo, announcements, five personalized drafts and manual tracker. [Current readiness findings](CONSUMER_READINESS.md). No paid enrichment, substituted sender, outreach scheduling or automatic send. The older dated distribution sequence above is a retained proposal, suspended until founder setup and exact communication approval; shift dates after authorization rather than treating them as missed development milestones.
+
+
+## October26 acquisition pivot — current execution packet
+
+Use [FIRST_CUSTOMER_SPRINT.md](FIRST_CUSTOMER_SPRINT.md) for ranked actions, actual C1–C5 copy, three graphics, demo flow and the relative seven-day schedule. Product release completed; next milestone is outside-user value and the first independent sale. This supersedes dated October23–29 scheduling, not the Pending Founder Setup or exact communication approval gates. No campaign has launched. Current scripts distinguish free consumer bills and paid Business city reports; preserve all earlier private personalized drafts.

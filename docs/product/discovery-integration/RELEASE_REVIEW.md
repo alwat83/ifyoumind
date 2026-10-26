@@ -1,5 +1,7 @@
 # Discovery integration — founder release review
 
+**October26 revalidation:** candidate PR73 remains at `bb6cfde932804e7af01b86e461be0069eb76ed3c`, OPEN/DRAFT/MERGEABLE; [build40136837297](https://github.com/alwat83/ifyoumind/actions/runs/40136837297) and [QA40136837305](https://github.com/alwat83/ifyoumind/actions/runs/40136837305) remain SUCCESS at that exact head. No new application changes or test/build rerun. Fresh Hosting at2026-10-26T14:48:12Z confirms a4b9fd4f6533ce8b FINALIZED41files/notdeleted; production source/master74a91fb unchanged. Homepage/sample/register/guides200,discover404(expected),unknown404;local4317/discover200. **GO for explicit founder release authorization; no merge/deploy.** Prior failures, skip and manual gaps below remain acknowledged limitations. [Exact approval request](https://github.com/alwat83/ifyoumind/pull/73#issuecomment-6390353199). Preserve73head; this refresh is on a separate documentation branch.
+
 October 24, 2026 CDT · OpenAI / Codex · `codex/discovery-integration`. **Implemented and tested locally; not merged or deployed.** Final full SHA, draft PR and exact-head Actions results are pinned in the integration PR after push. Product direction accepted; aesthetic remains unfinished.
 
 ## Working experience and scope

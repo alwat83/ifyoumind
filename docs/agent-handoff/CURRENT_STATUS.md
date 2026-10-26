@@ -1,8 +1,18 @@
 # ifYouMind — Current development status
 
-Observed October 24, 2026 CDT, OpenAI / Codex. GitHub/repository authoritative; existing Notion hub `3eb02474659c81ecba55cc4eed184a71` synchronized. Read AGENTS and recent append-only log. **Clean-slate zero-to-one product: consumer launch milestone achieved; real-user learning/first independent sale next.**
+Observed October 26, 2026 CDT, OpenAI / Codex. GitHub/repository authoritative; existing Notion hub `3eb02474659c81ecba55cc4eed184a71` synchronized. Read AGENTS and recent append-only log. **Clean-slate zero-to-one product: consumer launch milestone achieved; real-user learning/first independent sale next.**
 
-## Latest — resumed discovery integration candidate, not deployed
+## Latest — October 26 release revalidation; founder authorization pending
+
+[Draft PR73](https://github.com/alwat83/ifyoumind/pull/73) remains OPEN/DRAFT/MERGEABLE at **bb6cfde932804e7af01b86e461be0069eb76ed3c**, base/master74a91fb15d408893448f925cedcec4e47868dec0. Fresh API revalidation confirms [build40136837297 SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/40136837297) and [QA40136837305 SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/40136837305) still apply to that unchanged head. No build/test rerun or application change today. Prior decoded full Linux CI includes112appbrowser/48integrated/137fast/72Functions and other recorded suites PASS,1existing integration skip.91lint/11Angular compiler failures and documented local worker/manual-device/Safari/spokenSR/payment limitations remain; no fresh manual pass claimed.
+
+Fresh read-only Hosting observation **2026-10-26T14:48:12Z**: current a4b9fd4f6533ce8b/live release1792769133782000 remains FINALIZED,41files,notdeleted. Homepage/sample/register/guides200; `/discover/`404 until release,unknown404. Preserved local demo **http://127.0.0.1:4317/discover/** returns200 with the public Angular entry. Source PRs/branches/worktrees/private drafts preserved. Documentation-only codex/discovery-release-check-20261026 records this review without moving73head; its commit is linked in the PR conversation.
+
+**GO for founder release authorization; no merge/deploy authorized or performed.** Current authorization covers implementation and verification. The standing release rule requires explicit approval of only73/fullSHA and automatic Hosting+listed Functions/rules/indexes/Storage deployment. [Release package](../product/discovery-integration/RELEASE_REVIEW.md), [prior exact approval request](https://github.com/alwat83/ifyoumind/pull/73#issuecomment-6390353199). No new category/redesign/provider/storage/pricing/Stripe/outreach work. Outbound Pending Founder Setup; no customer/revenue change.
+
+**Next three:** obtain explicit exact-head founder release authorization; once authorized, revalidate gates/then-current rollback and merge only73/monitor/read-onlysmoke; after release, observe a founder-arranged first-use session and record actual feedback. No speculative scope expansion while at the release gate.
+
+## Historical — resumed discovery integration candidate, not deployed
 
 Founder explicitly resumed development October24. **Implemented** `/discover/` on separate `codex/discovery-integration`, based on reviewed72head73fc727 plus founder documentation8ebff3c;70→71→72 source ancestry included once, original heads/PRs/worktrees preserved. [Exact scope, local results, screenshots, production/rollback evidence and approval package](../product/discovery-integration/RELEASE_REVIEW.md). Local production-artifact demo **http://127.0.0.1:4317/discover/**. Both examples/recognized CSVs/source evidence/correction/recovery/switch/clear work without signup or prompts. Existing Angular components are served through the isolated public bootstrap inside the production artifact; no Business providers in discovery. Homepage gets one navigation entry; Business/auth79/39/Stripe/backend/dependencies unchanged. Scoped privacy policy/Hosting headers/301/404 and noindex pilot metadata implemented.
 

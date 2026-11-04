@@ -59,11 +59,12 @@ test('sign-up links the Terms and the Privacy Policy', async ({ page }) => {
 
 test('the homepage shows a real sample finding and claims no uploaded-data analysis', async ({ page }) => {
   await page.goto('/');
-  const card = page.locator('.demo-card');
-  await expect(card).toContainText('From the real sample report');
+  const card = page.locator('.report-preview');
+  await expect(card).toContainText('From the public sample report');
   await expect(card).toContainText('$93,658');
-  await expect(card.getByRole('link', { name: /See the full sample report/ })).toHaveAttribute('href', '/sample-report');
-  await page.getByRole('button', { name: /Make sense of other options/ }).click();
-  await expect(page.locator('#decision-detail')).toContainText('Data uploads and flexible automated analysis are in development');
-  await expect(page.locator('#decision-detail')).toContainText('does not analyze a file or answer arbitrary questions');
+  await expect(page.getByRole('link', { name: 'See a Business sample', exact: true })).toHaveAttribute('href', '/sample-report');
+  await expect(card).toContainText('City-level estimates');
+  await expect(card).toContainText('not a forecast of demand, sales or rent');
+  await expect(page.locator('.privacy-strip')).toContainText('Two supported USD CSV formats. No PDFs or scans.');
+  await expect(page.locator('.privacy-strip')).toContainText('No uploads or saved copies.');
 });

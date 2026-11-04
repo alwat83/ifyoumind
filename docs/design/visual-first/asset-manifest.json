@@ -1,0 +1,47 @@
+[
+  {
+    "path": "docs/design/visual-first/screenshots/desktop-home-fold.png",
+    "bytes": 344940,
+    "sha256": "48c4ab67e373bd2f74f84983efcfa4fe4e75c0702d25de1fe3c9e2d3f300fa10"
+  },
+  {
+    "path": "docs/design/visual-first/screenshots/desktop-home-full.png",
+    "bytes": 601387,
+    "sha256": "df6dd326b835345e20752537378a74a3253db7f9750c2b58f1a3e120861aea5f"
+  },
+  {
+    "path": "docs/design/visual-first/screenshots/mobile-home-fold.png",
+    "bytes": 149231,
+    "sha256": "77a07567ebfe31c479f83d62eeb5d6220321feedc1bac1c3f9619a5fc836e5d6"
+  },
+  {
+    "path": "docs/design/visual-first/screenshots/mobile-home-full.png",
+    "bytes": 347673,
+    "sha256": "1c80e2c8711754e8aaa4168c285de29dfe6a902aa774557041b32d41164f1de3"
+  },
+  {
+    "path": "docs/design/visual-first/screenshots/narrow-home-fold.png",
+    "bytes": 71742,
+    "sha256": "d25312cfa2badd123826324a9b44490b8d0505f1dd22a3f12179f4a1d32325b5"
+  },
+  {
+    "path": "docs/design/visual-first/screenshots/narrow-home-full.png",
+    "bytes": 310303,
+    "sha256": "3f116fc092a213aeb3eeea4da3a288f0b35dadcbbdb1a4b7890cbd10a57a173e"
+  },
+  {
+    "path": "docs/design/visual-first/screenshots/desktop-discovery-entry.png",
+    "bytes": 130398,
+    "sha256": "7c3be1d05b71134eeb948a234691fc02c9298219e5925944ee2397fe61590706"
+  },
+  {
+    "path": "docs/design/visual-first/screenshots/mobile-discovery-entry.png",
+    "bytes": 102888,
+    "sha256": "b75588b94801cb68d22436840cadf7e4b9ed0e724b3f6f59952bcba1269466c3"
+  },
+  {
+    "path": "public/images/discovery/story-hero.jpg",
+    "bytes": 111083,
+    "sha256": "7d90095dfbc0be62fd098268eb45e2e69673c7347b9992b2de30a6f9e11e8b79"
+  }
+]

@@ -1,13 +1,14 @@
-import {CommonModule,NgComponentOutlet} from '@angular/common';
-import {Component,ElementRef,HostListener,Injector,ViewChild,inject} from '@angular/core';
+import {CommonModule,DOCUMENT,NgComponentOutlet} from '@angular/common';
+import {Component,ElementRef,HostListener,Injector,OnInit,ViewChild,inject} from '@angular/core';
 import {TaxDiscoveryComponent} from './tax-discovery.component';
 import {ELECTRICITY_MODE,PUBLIC_DISCOVERY} from './discovery-mode';
 
 @Component({selector:'app-unified-discovery',standalone:true,imports:[CommonModule,NgComponentOutlet],templateUrl:'./unified-discovery.component.html',styleUrls:['./unified-discovery.component.scss']})
-export class UnifiedDiscoveryComponent {
+export class UnifiedDiscoveryComponent implements OnInit {
  readonly publicEntry=inject(PUBLIC_DISCOVERY);
  readonly journeyComponent=TaxDiscoveryComponent;
  private readonly parentInjector=inject(Injector);
+ private readonly document=inject(DOCUMENT);
  category:'tax'|'electricity'|null=null;
  childInjector:Injector|null=null;
  journeyInputs={embedded:true,startWithExample:false,startAtFile:false};
@@ -16,6 +17,12 @@ export class UnifiedDiscoveryComponent {
  @ViewChild('entryHeading') entryHeading?:ElementRef<HTMLElement>;
  get current():TaxDiscoveryComponent|null{return this.outlet?.componentInstance||null;}
  get hasData():boolean{return !!this.current&&(this.current.source!=='none'||this.current.reading||!!this.current.fileError);}
+ ngOnInit():void {
+  // Public links may open only these synthetic examples. No file data in URLs.
+  if(!this.publicEntry)return;
+  const example=new URLSearchParams(this.document.location?.search||'').get('example');
+  if(example==='electricity'||example==='tax')this.choose(example);
+ }
  choose(category:'tax'|'electricity',example=true):void {
   // Clear before destroying a journey; pending reads cannot repopulate its replacement.
   this.current?.clear(false);

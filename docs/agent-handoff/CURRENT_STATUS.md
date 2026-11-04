@@ -1,5 +1,21 @@
 # ifYouMind — Current development status
 
+## Current — November 4, 2026: visual-first redesign candidate
+
+OpenAI / Codex. **Committed and locally tested, not merged/deployed.** [Draft PR75](https://github.com/alwat83/ifyoumind/pull/75), application `cff948a1207305b789ffeeca8bbb73b1d6c03957`. New-head CI was not yet listed immediately after PR creation; not a pass. Founder explicitly pivots to modern, clean, simple, imagery-led and playful design with less text and less effort understanding/trying ifYouMind. This supersedes earlier no-redesign assignment scope, while preserving release/outbound gates. [Working review and screenshots](../design/visual-first/REVIEW.md).
+
+Separate `codex/visual-first-discovery` starts from `origin/master` / production source `65dc4912a8bf7ccde31926651eb0f3c4b05cd039`. Current root checkout remains old FRED `1a7c78c` with pre-existing sitemap edit, preserved untouched. Isolated design worktree: `/private/tmp/ifyoumind-visual-discovery`; preview `http://127.0.0.1:4320/`. Latest acquisition handoff/marketing ownership is preserved at PR74 / `43fe802`; no private research or campaign ancestry imported.
+
+Custom optimized 3D image, concise visual homepage, keyboard-operated synthetic preview switch, allowlisted direct electricity/tax example links, matching discovery entry/result palette. Existing supported USD CSV/privacy/evidence/correction/recovery/clear and Business sample/free brief/$79 report/$39 monthly Pro with five reports/paid intent remain. Home metadata updated. No backend/dependency/price/auth/Stripe changes.
+
+**Fresh checks:** production and local builds PASS; fast137/137; actual Hosting/browser63/63 at1280/390/320; 18 additional public navigation/SEO/a11y browser checks PASS; targeted TS/HTML lint clean; production bundle and public/preview isolation guards PASS. Both example choices and hero action stay accessible on their tested first mobile screens, no overflow; automated WCAG checks and direct heading contrasts pass. First browser run62PASS/1FAIL caught a tall mobile entry; fixed, complete final63PASS0FAIL0SKIP. Initial sandbox build/server were blocked; approved local execution succeeded. Screenshot capture through in-app browser unavailable; real Playwright screenshots captured/reviewed and preserved. Known global lint91/Angular11/one integration skip are historical baseline evidence, not rerun or claimed resolved; real signup/payment, Safari/iOS, screen-reader speech, novice comprehension and conversion remain unverified. Main bundle660.52kB/500kB warning; styles retain warnings below8kB error budgets. Exact new commit/PR/CI evidence is linked in review/conversation; never substitute base CI.
+
+**Production:** October26 deployment40344228960 SUCCESS at65dc491; previous handoff Hostingef3836b4e2285dfe/live verification retained as dated historical evidence. November4 limited live check found both examples/evidence/clear working. This design is not merged/live; no new production deployment or current Hosting-version API claim. Outbound **Pending Founder Setup**. No new customers/revenue/traffic outcomes; October22 approved financial baseline remains dated, not refreshed.
+
+**Next three:** founder reviews/iterates this actual design; observe first-time understanding and successful example completion; after a separate explicit release approval and CI, merge/deploy only the reviewed candidate and verify live. Prioritize observed confusion over new categories/features. No sender/account reminders.
+
+## Earlier handoff (preserved history)
+
 Observed October 24, 2026 CDT, OpenAI / Codex. GitHub/repository authoritative; existing Notion hub `3eb02474659c81ecba55cc4eed184a71` synchronized. Read AGENTS and recent append-only log. **Clean-slate zero-to-one product: consumer launch milestone achieved; real-user learning/first independent sale next.**
 
 ## Latest — resumed discovery integration candidate, not deployed
@@ -138,3 +154,8 @@ Feature `codex/consumer-sample-recovery`, applicationebf780a51d13cb20ce7726cf2ec
 Fresh final local verification: production/local builds+bundle guard PASS; fast95/Functions72/rules7/organizations5/commerce29 PASS; fixtures24PASS+1existingSKIP; full browser112PASS0fail0skip, including14recovery cases; actual offline production Hosting56SEOobservations/9URLs PASS. Checked WCAG A/AA automatic violations0; keyboard/focus/error/loading semantics covered, manual screen-reader speech not claimed. Global lint FAIL91 and Angular test compile FAIL11 identical known diagnostic signatures, zero new; service's seven array-type lint errors pre-exist. Earlier failed/invalid harness attempts disclosed in review, corrected final runs distinguished. No actual five-second user study or real payment/signup-email/device verification.
 
 Active next three supersede the earlier unimplemented-retry recommendation: (1) founder reviews exact final candidate/CI/screenshots and authorizes any merge/automatic deployment separately; (2) prepare remaining manual accessibility/device checks without outbound account setup; (3) continue private launch/first-user observation preparation while distribution remains Pending Founder Setup. No sender/account request, external communication, merge/deploy/spend/Stripe mutation, experimental calculator exposure or new business outcome. October22 financial baseline unchanged. Final PR/head/check links pinned after push, not inferred from application hash.
+
+
+## November 4 release authorization and CI runner repair
+
+Founder explicitly requested “For now lets make that live,” authorizing the reviewed PR75 release. Exact0cbc3be build41882126193 PASS; automatic QA41882126106 and duplicate manual QA41882210679 stopped before browser tests because ubuntu-latest moved to Ubuntu26.04, unsupported by pinned Playwright1.56.0. This is not a successful full QA run. Pin the existing QA job to supported Ubuntu24.04; app/assets/auth/Stripe/dependencies unchanged. New exact-head build/full QA must pass before expected-head merge/automatic configured deployment. Premerge Hostingef3836b4e2285dfe FINALIZED44files/notdeleted, observed2026-11-04T17:58:45.864Z.

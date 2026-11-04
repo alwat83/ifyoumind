@@ -433,3 +433,29 @@ OpenAI / Codex. **A — Executive:** Consumer-first experience launched under ex
 **F — Next three:** founder integrated-demo/exact-package review; after explicit authorization, revalidate/merge only integrated PR/monitor/read-onlysmoke; observe first real outside-user discovery and record feedback after release. No category/design expansion.
 
 **G — Business:** Removes the missing public entry path to approved automatic discovery while protecting existing Business monetization. Expected easier first meaningful experience is a hypothesis; no customer/revenue/visitor/conversion outcome claimed. Approved financial snapshot and launch scoreboard unchanged. Next highest value is reviewed release then observed real use, not speculative feature work.
+
+
+## November 4, 2026 — visual-first discovery redesign / OpenAI Codex
+
+**A — Executive:** Founder pivot implemented as a modern, playful visual homepage and matching discovery flow; review candidate, not a production release.
+**B — Changes:** Homepage TS/template/styles and new mobile/offer styles; generated/optimized111kB illustration with saved prompt/provenance; allowlisted public synthetic-example query entry; discovery entry/shared results styling; homepage metadata/sitemap; copy/navigation/intent/accessibility regression updates; screenshot/hash manifest and durable handoffs/growth/master/instructions. No dependency/backend/entitlement/auth/Stripe changes. Existing root sitemap edit and all other worktrees/private drafts preserved.
+**C — Verification:** Fresh production/local builds PASS, fast137/137, actual Firebase Hosting/browser63/63 across1280/390/320, 18 additional public navigation/SEO/a11y browser checks PASS; targeted TS/HTML lint clean, bundle/isolation guards PASS. First pass62/63 identified second mobile action below first screen; compact illustrated cards fixed it, final63/63 exit0. Initial sandbox build abort/serverEPERM resolved through approved local execution. IAB screenshot service unavailable, real Playwright screenshots saved/reviewed. Existing global lint91/Angular11/one intentional integration skip are historical, not fresh passes or fixed claims. Build warnings disclosed. Real signup/payment/native Safari/iOS/spokenSR/human usefulness/conversion not verified.
+**D — GitHub:** codex/visual-first-discovery from exactmaster65dc491, isolated/tmp worktree; source commit/draft PR in conversation/review. FRED root1a7c78c plus pre-existing sitemap edit untouched; PR74marketing43fe802 and private drafts preserved. No master merge or campaign ancestry import. Verified Notion hub synchronized with sanitized milestone; no prospect data.
+**E — Deployment:** None for this assignment. Prior production65dc491/deploy40344228960 retained, no new Hosting-version API claim. Candidate needs founder visual review and separately scoped release authorization. Outbound Pending Founder Setup; no sends/spend/payment/price changes.
+**F — Next three:** founder visual iteration; first-use understanding/completion observation; after exact release approval/CI, deploy reviewed scope and verify live.
+**G — Business:** Addresses founder-identified text-heavy comprehension and try-it friction. Hero now opens actual findings in one click, Business offers stay explicit and separate from free bills. Expected improvements in useful example completion and qualified paid interest are hypotheses, not measured lift or traction. Existing approved dated financial baseline unchanged. Highest-value next assignment is feedback on this concrete experience, not another speculative feature.
+
+
+### November 4 design publication handoff
+
+Implementation `cff948a1207305b789ffeeca8bbb73b1d6c03957` committed/pushed on codex/visual-first-discovery; [draft PR75](https://github.com/alwat83/ifyoumind/pull/75) created and attached to the task. Existing Notion hub synchronized with sanitized design/verification milestone. First new-branch Actions query returned no runs yet; no CI success or release readiness inferred. Production unchanged; no merge/deploy/send. Final documentation head is reported separately in conversation; application/tests/assets unchanged by this handoff. Local final checks137fast/63Hosting-browser/18public-browser/targeted lint/build/bundle guards PASS as recorded above.
+
+
+### November 4 — founder authorizes release; QA runner compatibility repaired
+
+Founder asks “For now lets make that live,” approving reviewed PR75 deployment. Exact0cbc3be build41882126193SUCCESS; QA41882126106 and41882210679FAILED at browser dependency installation because ubuntu-latest changed to26.04, unsupported by installed Playwright1.56. Pinned only the QA job to Ubuntu24.04 (supported by installed registry). No design/runtime/dependency/Stripe change. Earlier local137fast/81focusedbrowser/build/targetedlint remains; no skipped CI suites counted as passes. Premerge Hosting API confirms ef3836b4e2285dfe FINALIZED44files/notdeleted. New-head CI and successful deployment/live smoke still required. No merge/deploy yet.
+
+
+### November 4 — release QA footer assertion updated
+
+Exactd58d74e build41883794956SUCCESS. Full QA41883794812 passed all prior stages, then authenticated browser110/112PASS: both desktop/mobile failures were the same stale exact footer-link label “Decision guides,” while the approved design displays “Guides” at the same /guides/ path. Update that selector only; no app/assets/workflow/dependency/entitlement change. The failed complete run is not a pass; new-head QA must clear before merge. Duplicate manual41883557361 canceled once automatic same-head QA progressed.

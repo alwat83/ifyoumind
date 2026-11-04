@@ -1,6 +1,6 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-10-22
+**Updated:** 2026-11-04
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
@@ -35,6 +35,10 @@ The [Revenue Growth Command Center](docs/growth/REVENUE_GROWTH_PLAN.md) owns the
 Permanent instructions in `AGENTS.md` now require Business Impact reporting and commercial prioritization after each assignment. Safe initial implementation: a public-sample print control reusing existing print behavior, on separate `codex/revenue-profitability-mandate`, stacked on #60 to preserve its approval scope. No pricing, backend or dependency change. Expected conversion benefit remains unverified. Next highest-value work: founder release decision and scoped baseline, followed by an approved five-demo buyer-validation sprint.
 
 Final #60 head `2eb17081f2feaa40163255a6c7de5a57f67f76b7` has [build](https://github.com/alwat83/ifyoumind/actions/runs/39834974901) and [QA](https://github.com/alwat83/ifyoumind/actions/runs/39834974902) SUCCESS and is MERGEABLE. GO for founder approval only; production held. Historical prior-head/pending observations above remain history, not current release status.
+
+## Current design work — November 4, 2026
+
+**Committed / locally tested, not deployed:** [draft PR75](https://github.com/alwat83/ifyoumind/pull/75), application `cff948a1207305b789ffeeca8bbb73b1d6c03957`; founder-directed modern visual redesign on `codex/visual-first-discovery`, based directly on production master `65dc4912a8bf7ccde31926651eb0f3c4b05cd039`. [Review, screenshots, verification and rollback](docs/design/visual-first/REVIEW.md). Original generated 3D illustration, shorter homepage, interactive electricity/tax previews, direct links into actual synthetic findings and matching discovery styling. Business sample, Free/$79/$39 Pro paths and paid intent preserved. Production/local builds, 137 fast checks, 63 actual-Hosting desktop/mobile/narrow browser checks, targeted lint and production/isolation guards pass. Earlier mobile first-screen regression fixed before final pass. No conversion/customer/revenue result inferred; no merge/deploy/outbound/Stripe change. Latest October26 campaign/ownership records remain on preserved PR74; no campaign branch or private research imported here.
 
 ## 1. Vision and positioning
 ifYouMind is becoming a general-purpose AI-powered data intelligence and decision platform, replacing the original social/idea-feed positioning. Combine trusted public datasets and, later, user-authorized data sources to produce understandable comparisons, actionable insights and **evidence-backed Decision Reports**. Make complex data accessible to consumers and businesses, with national/global examples rather than a Birmingham-only identity. The business goal is sustainable near-term revenue and a reliable product ready for marketing.

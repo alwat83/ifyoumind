@@ -126,9 +126,8 @@ test('leaving a pending sample keeps homepage discovery and Business registratio
     await expect(page.getByRole('status')).toHaveText('Loading the sample report…');
     await page.getByRole('link',{name:'Back to the homepage',exact:true}).click();
     release();
-    await expect(page.locator('h1')).toHaveText('Big decisions deserve better answers.');
-    await page.getByRole('button',{name:/Explore a business opportunity/}).click();
-    await page.getByRole('link',{name:'Start a free Business brief'}).click();
+    await expect(page.locator('h1')).toHaveText(/Oh, that’s\s*what changed\./);
+    await page.locator('#pricing').getByRole('link',{name:/Business brief/}).click();
     await expect(page).toHaveURL(/\/register$/);
     await expect(page.getByLabel('Email',{exact:true})).toBeVisible();
   }finally{release();}

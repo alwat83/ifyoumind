@@ -16,7 +16,7 @@ test('homepage navigation reaches sign-in and registration', async ({ page }) =>
   await page.locator('nav.nav').getByRole('link', { name: 'Sign in' }).click();
   await expect(page).toHaveURL(/\/login$/);
   await page.goto('/');
-  await page.locator('nav.nav').getByRole('link', { name: 'Try it free' }).click();
+  await page.locator('#pricing').getByRole('link', { name: /Business brief/ }).click();
   await expect(page).toHaveURL(/\/register$/);
 });
 

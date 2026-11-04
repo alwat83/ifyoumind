@@ -17,13 +17,12 @@ test('Q4: the report counts sources cited and no longer shows a "coverage" score
 
 test('Q5: pricing buttons say what happens, and the prices are unchanged', () => {
   const home = read('../src/app/intelligence/public-landing.component.html');
-  assert.match(home, /Start free\. Go deeper when you need to\./);
-  assert.match(home, /class="secondary">Start a free brief<\/a>/);
-  assert.match(home, /class="secondary">Create an account for Pro<\/a>/);
-  assert.doesNotMatch(home, /Try the thinking for free|class="secondary">Start free<\/a>/);
-  assert.match(home, /<h3>\$0<\/h3>/);
-  assert.match(home, /<h3>\$79<span> \/ report<\/span><\/h3>/);
-  assert.match(home, /<h3>\$39<span> \/ month<\/span><\/h3>/);
+  assert.match(home, /Bill discovery is free\. Business reports are optional\./);
+  assert.match(home, /Business account required\. No credit card for a free brief/);
+  assert.match(home, /Business brief/);
+  assert.match(home, /<b>Free /);
+  assert.match(home, /<b>\$79<small>one time<\/small><\/b>/);
+  assert.match(home, /<b>\$39<small>per month<\/small><\/b>/);
   const pricing = read('../src/app/intelligence/pricing.component.html');
   assert.match(pricing, /If you cancel Pro, reports you already unlocked with it stay unlocked\./);
   assert.match(pricing, /\$\{\{ status\.pricing\.proMonthlyUsd \}\}/, 'Pro price still comes from the server');

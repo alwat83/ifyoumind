@@ -41,6 +41,10 @@ The founder reviewed PR72 at `73fc727486b0269a1a4d2680454ab4760299a71d`: the uni
 
 Founder explicitly resumed development and authorized narrow `/discover/` implementation on a separate feature branch using reviewed PR72, superseding the prior pause. Do not restart architecture/planning or redesign. Integrate the existing two-category Angular experience while retaining its isolated browser-local bootstrap/privacy boundary; preserve production homepage except a sensible navigation link, Business/authentication79/39 and Stripe behavior. Verify examples, recognized CSVs, evidence/correction/retry/switch/clear, Hosting paths/headers, desktop/mobile/accessibility and baseline failures. Commit/push a draft integration PR and exact-head founder release package. **No merge/deploy without separate explicit approval**; no new AI/PDF/server uploads/comparisons/categories/pricing. Outbound Pending Founder Setup. Visual aesthetic remains unfinished, not a new redesign authorization.
 
+## Founder visual redesign direction — November 4, 2026
+
+Founder explicitly requests a modern, clean, simple, imagery-led and playful design with less text and less friction understanding ifYouMind, trying it and eventually choosing a paid offering. A focused homepage/discovery redesign on a separate feature branch is authorized; this supersedes earlier no-redesign scope limits for this assignment. Preserve truthful current capabilities, browser-local privacy, evidence, mobile/accessibility and the existing free/paid Business paths. No pricing/Stripe changes, speculative capabilities, master merge, production deployment or outbound communication are authorized. [Art direction and working-review evidence](docs/design/visual-first/REVIEW.md). Design approval, release approval and measured conversion are separate.
+
 ## Source of truth — mandatory order
 **Founder correction, 2026-10-22: GitHub and repository documentation are the source of truth for development.** The accessible Notion coordination hub, confirmed by the founder, is:
 https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71

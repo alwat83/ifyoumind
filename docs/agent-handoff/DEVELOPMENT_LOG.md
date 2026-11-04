@@ -459,3 +459,14 @@ Founder asks “For now lets make that live,” approving reviewed PR75 deployme
 ### November 4 — release QA footer assertion updated
 
 Exactd58d74e build41883794956SUCCESS. Full QA41883794812 passed all prior stages, then authenticated browser110/112PASS: both desktop/mobile failures were the same stale exact footer-link label “Decision guides,” while the approved design displays “Guides” at the same /guides/ path. Update that selector only; no app/assets/workflow/dependency/entitlement change. The failed complete run is not a pass; new-head QA must clear before merge. Duplicate manual41883557361 canceled once automatic same-head QA progressed.
+
+
+## November 4, 2026 — authorized visual redesign production release / OpenAI Codex
+
+**A — Executive:** Made reviewed PR75 live under explicit founder approval; deployed and read-only production verified, no customer/revenue result inferred.
+**B — Changes:** Approved visual app/artwork unchanged; release repairs only QA Ubuntu24.04 pin and stale exact footer label test. Evidence JSONs,8live screenshots/hashes, current/log/master/growth/review/instructions updated; Notion synchronized. No backend/auth/dependency/Stripe/pricing change.
+**C — Verification:** Exact4abebc6 build41886135353/fullQA41886135398SUCCESS:286browser/137fast/72Functions/rules7/org5/commerce29 PASS,fixture24PASS+1existingSKIP. Prior unsupported-runner failure and110/112stale-label run not passes. Production workflow41887559100SUCCESS, fresh30livePASS0FAIL. Full lint91/Angular11 historical debt, warnings/manual native-device/Safari/spokenSR/real signup/payment/PDF/human-comprehension limits retained.
+**D — GitHub:** Only75expected-head merge at4abebc65b379d5d87ff4433022c315f831cdfdfb. Production `c01c93cd1c270949b4c778f4d52e4af1f1e8b25e`, tree4a74b400f3c358c8b3bf3b5e5e43ca4626e07f0b identical to approved. One first-parent master commit. Source head/branch and root FRED/sitemap/PR74/private drafts preserved. Separate codex/visual-redesign-production-handoff evidence commit; no second master push.
+**E — Deployment:** Hosting608bc867ecf986ac/release1793817118849000 at2026-11-04T18:31:58.849Z / 2026-11-04 12:31:58 PM CST,FINALIZED45files. Prior ef3836b4e2285dfe retained FINALIZED44files/notdeleted; rollback not needed/performed. [Evidence](../releases/visual-discovery-20261104/LIVE_VERIFICATION.md). Two read-only public samplePOSTs; no signup/transaction/outreach.
+**F — Next three:** founder live review; first-use comprehension/completion observation; separate focused fixes based on observed friction.
+**G — Business:** Lower-friction visual product is now available; free discovery and optional79/39Business paths preserved. No measured conversion lift/new traffic/customer/revenue/profit claim; approved dated financial baseline unchanged. Outbound Pending Founder Setup.

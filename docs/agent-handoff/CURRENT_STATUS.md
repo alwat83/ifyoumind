@@ -1,5 +1,17 @@
 # ifYouMind — Current development status
 
+## Current — November 4, 2026: visual redesign live
+
+OpenAI / Codex. **Merged, deployed, production verified** within read-only scope. Founder explicitly authorized reviewed PR75 release. Source `4abebc6`, production `c01c93cd1c270949b4c778f4d52e4af1f1e8b25e`; tested/merged trees identical. [Build41886135353](https://github.com/alwat83/ifyoumind/actions/runs/41886135353)/[fullQA41886135398](https://github.com/alwat83/ifyoumind/actions/runs/41886135398) SUCCESS; [deployment41887559100](https://github.com/alwat83/ifyoumind/actions/runs/41887559100) SUCCESS. Hosting608bc867ecf986ac released 2026-11-04T18:31:58.849Z / 2026-11-04 12:31:58 PM CST. [Release evidence/live screenshots/rollback](../releases/visual-discovery-20261104/LIVE_VERIFICATION.md).
+
+30live desktop/mobile/320px checksPASS0FAIL; source cells/correction/clear/offline/privacy and two read-only public sample calls verified. Full CI:286browser/137fast/72Functions/rules7/org5/commerce29 PASS; fixture24PASS+1existingSKIP. Ubuntu-latest26.04 incompatibility repaired with QA-only24.04 pin; stale footer-label assertion repaired, final112appbrowserPASS. Earlier failed attempts not passes. No app change from approved design during release repairs.
+
+Prior Hostingef3836b4e2285dfe retained FINALIZED44files/notdeleted. No backend/dependency/auth/Stripe/pricing change, real signup/payment/outreach/new AI/PDF/storage/category or traction claim. Existing lint91/Angular11 historical debt, warnings/manual-device/Safari/SR/real-account/payment/human-comprehension limits remain. Financial baseline unchanged. Outbound Pending Founder Setup. Root FRED/sitemap, source PR75 head, PR74/private drafts preserved. Separate codex/visual-redesign-production-handoff stores evidence; no additional master push/deploy.
+
+**Next three:** founder reviews live design; observe first-use understanding and example completion; improve demonstrated friction separately. Release approval is fulfilled, not blanket future authority.
+
+## Previous snapshot (history)
+
 ## Current — November 4, 2026: visual-first redesign candidate
 
 OpenAI / Codex. **Committed and locally tested, not merged/deployed.** [Draft PR75](https://github.com/alwat83/ifyoumind/pull/75), application `cff948a1207305b789ffeeca8bbb73b1d6c03957`. New-head CI was not yet listed immediately after PR creation; not a pass. Founder explicitly pivots to modern, clean, simple, imagery-led and playful design with less text and less effort understanding/trying ifYouMind. This supersedes earlier no-redesign assignment scope, while preserving release/outbound gates. [Working review and screenshots](../design/visual-first/REVIEW.md).

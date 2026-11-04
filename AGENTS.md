@@ -45,6 +45,8 @@ Founder explicitly resumed development and authorized narrow `/discover/` implem
 
 Founder explicitly requests a modern, clean, simple, imagery-led and playful design with less text and less friction understanding ifYouMind, trying it and eventually choosing a paid offering. A focused homepage/discovery redesign on a separate feature branch is authorized; this supersedes earlier no-redesign scope limits for this assignment. Preserve truthful current capabilities, browser-local privacy, evidence, mobile/accessibility and the existing free/paid Business paths. No pricing/Stripe changes, speculative capabilities, master merge, production deployment or outbound communication are authorized. [Art direction and working-review evidence](docs/design/visual-first/REVIEW.md). Design approval, release approval and measured conversion are separate.
 
+**November 4 release completed:** reviewed PR75 is now merged/deployed and read-only production verified. [Exact release/CI/live evidence](docs/releases/visual-discovery-20261104/LIVE_VERIFICATION.md). This approval is fulfilled; future releases still need their applicable approval. Outbound remains Pending Founder Setup.
+
 ## Source of truth — mandatory order
 **Founder correction, 2026-10-22: GitHub and repository documentation are the source of truth for development.** The accessible Notion coordination hub, confirmed by the founder, is:
 https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71

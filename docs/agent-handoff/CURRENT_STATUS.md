@@ -2,7 +2,7 @@
 
 ## Current — November 4, 2026: visual-first redesign candidate
 
-OpenAI / Codex. **In progress; implemented and tested locally, not deployed.** Founder explicitly pivots to modern, clean, simple, imagery-led and playful design with less text and less effort understanding/trying ifYouMind. This supersedes earlier no-redesign assignment scope, while preserving release/outbound gates. [Working review and screenshots](../design/visual-first/REVIEW.md).
+OpenAI / Codex. **Committed and locally tested, not merged/deployed.** [Draft PR75](https://github.com/alwat83/ifyoumind/pull/75), application `cff948a1207305b789ffeeca8bbb73b1d6c03957`. New-head CI was not yet listed immediately after PR creation; not a pass. Founder explicitly pivots to modern, clean, simple, imagery-led and playful design with less text and less effort understanding/trying ifYouMind. This supersedes earlier no-redesign assignment scope, while preserving release/outbound gates. [Working review and screenshots](../design/visual-first/REVIEW.md).
 
 Separate `codex/visual-first-discovery` starts from `origin/master` / production source `65dc4912a8bf7ccde31926651eb0f3c4b05cd039`. Current root checkout remains old FRED `1a7c78c` with pre-existing sitemap edit, preserved untouched. Isolated design worktree: `/private/tmp/ifyoumind-visual-discovery`; preview `http://127.0.0.1:4320/`. Latest acquisition handoff/marketing ownership is preserved at PR74 / `43fe802`; no private research or campaign ancestry imported.
 

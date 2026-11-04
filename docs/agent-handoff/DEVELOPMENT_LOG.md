@@ -444,3 +444,8 @@ OpenAI / Codex. **A — Executive:** Consumer-first experience launched under ex
 **E — Deployment:** None for this assignment. Prior production65dc491/deploy40344228960 retained, no new Hosting-version API claim. Candidate needs founder visual review and separately scoped release authorization. Outbound Pending Founder Setup; no sends/spend/payment/price changes.
 **F — Next three:** founder visual iteration; first-use understanding/completion observation; after exact release approval/CI, deploy reviewed scope and verify live.
 **G — Business:** Addresses founder-identified text-heavy comprehension and try-it friction. Hero now opens actual findings in one click, Business offers stay explicit and separate from free bills. Expected improvements in useful example completion and qualified paid interest are hypotheses, not measured lift or traction. Existing approved dated financial baseline unchanged. Highest-value next assignment is feedback on this concrete experience, not another speculative feature.
+
+
+### November 4 design publication handoff
+
+Implementation `cff948a1207305b789ffeeca8bbb73b1d6c03957` committed/pushed on codex/visual-first-discovery; [draft PR75](https://github.com/alwat83/ifyoumind/pull/75) created and attached to the task. Existing Notion hub synchronized with sanitized design/verification milestone. First new-branch Actions query returned no runs yet; no CI success or release readiness inferred. Production unchanged; no merge/deploy/send. Final documentation head is reported separately in conversation; application/tests/assets unchanged by this handoff. Local final checks137fast/63Hosting-browser/18public-browser/targeted lint/build/bundle guards PASS as recorded above.

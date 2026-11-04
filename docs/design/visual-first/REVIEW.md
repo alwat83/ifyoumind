@@ -1,6 +1,8 @@
 # Visual-first redesign — founder review
 
-November 4, 2026 · OpenAI / Codex · **Locally implemented/tested; not deployed.**
+November 4, 2026 · OpenAI / Codex · **Committed and locally tested; not deployed.**
+
+[Draft PR75](https://github.com/alwat83/ifyoumind/pull/75) · Implementation `cff948a1207305b789ffeeca8bbb73b1d6c03957`. New-head CI was not yet listed at the first post-creation observation; no CI pass claimed.
 
 [Interactive local preview](http://127.0.0.1:4320/) · [Art direction and exact image prompt](ART_DIRECTION.md) · [Asset hashes](asset-manifest.json)
 

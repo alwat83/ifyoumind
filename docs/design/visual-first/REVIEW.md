@@ -61,3 +61,8 @@ Founder identified text-heavy design/comprehension friction. A familiar visual e
 1. Review this concrete design and refine the highest-priority visual feedback.
 2. Observe first-use understanding and example completion, without adding categories or speculative features.
 3. After exact release approval and current CI, deploy only the approved scope and verify live; outreach remains Pending Founder Setup.
+
+
+## November 4 release authorization and CI runner repair
+
+Founder explicitly requested “For now lets make that live,” authorizing the reviewed PR75 release. Exact0cbc3be build41882126193 PASS; automatic QA41882126106 and duplicate manual QA41882210679 stopped before browser tests because ubuntu-latest moved to Ubuntu26.04, unsupported by pinned Playwright1.56.0. This is not a successful full QA run. Pin the existing QA job to supported Ubuntu24.04; app/assets/auth/Stripe/dependencies unchanged. New exact-head build/full QA must pass before expected-head merge/automatic configured deployment. Premerge Hostingef3836b4e2285dfe FINALIZED44files/notdeleted, observed2026-11-04T17:58:45.864Z.

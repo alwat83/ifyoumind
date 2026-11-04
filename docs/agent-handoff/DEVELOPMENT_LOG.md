@@ -449,3 +449,8 @@ OpenAI / Codex. **A — Executive:** Consumer-first experience launched under ex
 ### November 4 design publication handoff
 
 Implementation `cff948a1207305b789ffeeca8bbb73b1d6c03957` committed/pushed on codex/visual-first-discovery; [draft PR75](https://github.com/alwat83/ifyoumind/pull/75) created and attached to the task. Existing Notion hub synchronized with sanitized design/verification milestone. First new-branch Actions query returned no runs yet; no CI success or release readiness inferred. Production unchanged; no merge/deploy/send. Final documentation head is reported separately in conversation; application/tests/assets unchanged by this handoff. Local final checks137fast/63Hosting-browser/18public-browser/targeted lint/build/bundle guards PASS as recorded above.
+
+
+### November 4 — founder authorizes release; QA runner compatibility repaired
+
+Founder asks “For now lets make that live,” approving reviewed PR75 deployment. Exact0cbc3be build41882126193SUCCESS; QA41882126106 and41882210679FAILED at browser dependency installation because ubuntu-latest changed to26.04, unsupported by installed Playwright1.56. Pinned only the QA job to Ubuntu24.04 (supported by installed registry). No design/runtime/dependency/Stripe change. Earlier local137fast/81focusedbrowser/build/targetedlint remains; no skipped CI suites counted as passes. Premerge Hosting API confirms ef3836b4e2285dfe FINALIZED44files/notdeleted. New-head CI and successful deployment/live smoke still required. No merge/deploy yet.

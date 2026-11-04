@@ -454,3 +454,8 @@ Implementation `cff948a1207305b789ffeeca8bbb73b1d6c03957` committed/pushed on co
 ### November 4 — founder authorizes release; QA runner compatibility repaired
 
 Founder asks “For now lets make that live,” approving reviewed PR75 deployment. Exact0cbc3be build41882126193SUCCESS; QA41882126106 and41882210679FAILED at browser dependency installation because ubuntu-latest changed to26.04, unsupported by installed Playwright1.56. Pinned only the QA job to Ubuntu24.04 (supported by installed registry). No design/runtime/dependency/Stripe change. Earlier local137fast/81focusedbrowser/build/targetedlint remains; no skipped CI suites counted as passes. Premerge Hosting API confirms ef3836b4e2285dfe FINALIZED44files/notdeleted. New-head CI and successful deployment/live smoke still required. No merge/deploy yet.
+
+
+### November 4 — release QA footer assertion updated
+
+Exactd58d74e build41883794956SUCCESS. Full QA41883794812 passed all prior stages, then authenticated browser110/112PASS: both desktop/mobile failures were the same stale exact footer-link label “Decision guides,” while the approved design displays “Guides” at the same /guides/ path. Update that selector only; no app/assets/workflow/dependency/entitlement change. The failed complete run is not a pass; new-head QA must clear before merge. Duplicate manual41883557361 canceled once automatic same-head QA progressed.

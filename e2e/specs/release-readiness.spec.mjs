@@ -20,7 +20,7 @@ test('integrated public pages: pricing, report, guides, accessibility and approv
     if (path === '/') {
       await expect(page.locator('#pricing')).toContainText('$79');
       await expect(page.locator('#pricing')).toContainText('$39');
-      await expect(page.getByRole('link', { name: 'Decision guides', exact: true })).toHaveAttribute('href', '/guides/');
+      await expect(page.getByRole('link', { name: 'Guides', exact: true })).toHaveAttribute('href', '/guides/');
       await expect(page.locator('a[href*="/life/quick-compare"]')).toHaveCount(0);
     }
     await expectNoHorizontalScroll(page);

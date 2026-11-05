@@ -6,7 +6,7 @@ test.beforeEach(async({context})=>{await context.route('**/*',r=>new URL(r.reque
 async function noOverflow(page){expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(0);}
 async function accessible(page){expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze()).violations).toEqual([]);}
 test('visual homepage puts a real free example in the first screen',async({page},info)=>{
- await page.goto('/');await expect(page.getByRole('heading',{level:1})).toHaveText(/Oh, that’s\s*what changed\./);
+ await page.goto('/');await expect(page.getByRole('heading',{level:1})).toHaveText(/Two bills\.\s*One clear story\./);
  const action=page.getByRole('link',{name:'Try a free example',exact:true});
  const bounds=await action.boundingBox();expect(bounds.y+bounds.height).toBeLessThanOrEqual(page.viewportSize().height);
  await expect(page.locator('.hero-art img')).toBeVisible();expect(await page.locator('.hero-art img').evaluate(img=>img.complete&&img.naturalWidth>0)).toBe(true);
@@ -30,4 +30,19 @@ test('Business remains a separate optional paid path with preserved prices and i
 });
 test('reduced motion is honored and preview state resets on reload',async({page})=>{
  await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/');await page.getByRole('button',{name:'Property tax',exact:true}).click();expect(await page.locator('.hero .primary').evaluate(n=>getComputedStyle(n).transitionDuration)).toBe('0s');await page.reload();await expect(page.getByRole('button',{name:'Electricity',exact:true})).toHaveAttribute('aria-pressed','true');await noOverflow(page);
+});
+
+test('first-screen preview exposes honest evidence and keeps it correct when switched',async({page})=>{
+ await page.goto('/');
+ const metric=await page.locator('.metric-pair').boundingBox();
+ expect(metric.y+metric.height).toBeLessThanOrEqual(page.viewportSize().height);
+ const proof=page.locator('.quick-proof');
+ await proof.locator('summary').focus();await page.keyboard.press('Enter');
+ await expect(proof).toHaveAttribute('open','');
+ await expect(proof).toContainText('21%');await expect(proof).toContainText('10%');
+ await expect(proof).toContainText('don’t tell us why');
+ await page.getByRole('button',{name:'Property tax',exact:true}).click();
+ await expect(proof).toContainText('57.1%');await expect(proof).not.toContainText('660');
+ await expect(page.getByRole('link',{name:'Try a free example',exact:true})).toHaveAttribute('href','/discover/?example=tax');
+ await expect(proof).toContainText('not a cause');await noOverflow(page);await accessible(page);
 });

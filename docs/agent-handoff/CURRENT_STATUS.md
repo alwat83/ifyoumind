@@ -1,5 +1,15 @@
 # ifYouMind — Current development status
 
+## Current — November 4, 2026: first-seconds engagement iteration
+
+OpenAI / Codex. Founder clarified the design must maintain engagement and earn attention in seconds. **Implemented and locally tested, not merged/deployed.** Branch `codex/first-seconds-discovery` from release handoff `da2ad4d`; live application base remains `c01c93c`. [Review/screenshots/evidence/rollback](../design/first-seconds/REVIEW.md). Concrete hero headline, first-screen interactive synthetic findings, category-aware free action, arithmetic disclosure, preserved playful art and optional Business funnel. No backend/engine/auth/Stripe/dependency change.
+
+Final production/local builds PASS, fast137 PASS, final actual-Hosting browser66 PASS at1280/390/320 (including first-screen metrics/CTA and open-evidence switch regression), targeted landing lint and production bundle guard PASS. Candidate exact-head CI/PR tracked in GitHub and final conversation, never inferred from base. Build warnings and historical global91lint/11Angular diagnostics remain disclosed; human comprehension/engagement/conversion/retention/native-device/payment checks not claimed. See review for precise coverage and limits. No release, production writes, new customer/revenue/spend/outreach; financial baseline unchanged, outbound Pending Founder Setup. Root FRED/sitemap and PR74/private campaign work preserved.
+
+**Next three:** founder design review; permitted five-second first-use observations; separate release decision and exact-head/live verification. Highest commercial opportunity is proving useful first sessions before further speculative design expansion.
+
+## Previous snapshots (history)
+
 ## Current — November 4, 2026: visual redesign live
 
 OpenAI / Codex. **Merged, deployed, production verified** within read-only scope. Founder explicitly authorized reviewed PR75 release. Source `4abebc6`, production `c01c93cd1c270949b4c778f4d52e4af1f1e8b25e`; tested/merged trees identical. [Build41886135353](https://github.com/alwat83/ifyoumind/actions/runs/41886135353)/[fullQA41886135398](https://github.com/alwat83/ifyoumind/actions/runs/41886135398) SUCCESS; [deployment41887559100](https://github.com/alwat83/ifyoumind/actions/runs/41887559100) SUCCESS. Hosting608bc867ecf986ac released 2026-11-04T18:31:58.849Z / 2026-11-04 12:31:58 PM CST. [Release evidence/live screenshots/rollback](../releases/visual-discovery-20261104/LIVE_VERIFICATION.md).

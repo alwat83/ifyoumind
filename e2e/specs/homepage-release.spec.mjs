@@ -3,7 +3,7 @@ import { homepageHeadingContrasts } from '../support/homepage-contrast.mjs';
 
 test('homepage: visual previews lead directly to working examples without signup', async ({ page }, info) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Oh, that’s\s*what changed\./);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(/Two bills\.\s*One clear story\./);
   const heroAction=page.getByRole('link',{name:'Try a free example',exact:true});
   expect((await heroAction.boundingBox()).y).toBeLessThan(page.viewportSize().height-50);
   for(const [name,path,number] of [['Electricity','electricity','+21'],['Property tax','tax','$420']]) {

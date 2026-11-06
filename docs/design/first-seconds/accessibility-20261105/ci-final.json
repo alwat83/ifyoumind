@@ -1,0 +1,81 @@
+{
+  "observation_date": "2026-11-05",
+  "timezone": "America/Chicago",
+  "repository": "alwat83/ifyoumind",
+  "pr": 76,
+  "head": "0971a1b48edf36a00acef78696bc8807528f27ac",
+  "base": "c01c93cd1c270949b4c778f4d52e4af1f1e8b25e",
+  "pr_state": "open",
+  "draft": true,
+  "mergeable": true,
+  "changed_files": 47,
+  "workflows": [
+    {
+      "id": 42140134230,
+      "name": "Launch build check",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 177,
+      "jobs_url": "https://api.github.com/repos/alwat83/ifyoumind/actions/runs/42140134230/jobs",
+      "logs_url": "https://api.github.com/repos/alwat83/ifyoumind/actions/runs/42140134230/logs",
+      "workflow_id": 374054969
+    },
+    {
+      "id": 42140134237,
+      "name": "Authenticated QA (emulators)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 92,
+      "jobs_url": "https://api.github.com/repos/alwat83/ifyoumind/actions/runs/42140134237/jobs",
+      "logs_url": "https://api.github.com/repos/alwat83/ifyoumind/actions/runs/42140134237/logs",
+      "workflow_id": 382504068
+    }
+  ],
+  "qa_job_id": 127638104270,
+  "decoded_totals": {
+    "functions": {
+      "pass": 72,
+      "fail": 0,
+      "skip": 0
+    },
+    "fast": {
+      "pass": 137,
+      "fail": 0,
+      "skip": 0
+    },
+    "browser": {
+      "property_tax": 48,
+      "electricity": 27,
+      "unified": 36,
+      "integrated_hosting": 72,
+      "authenticated": 112,
+      "total_pass": 295
+    },
+    "rules": {
+      "pass": 7,
+      "fail": 0,
+      "skip": 0
+    },
+    "organizations": {
+      "pass": 5,
+      "fail": 0,
+      "skip": 0
+    },
+    "commerce": {
+      "pass": 29,
+      "fail": 0,
+      "skip": 0
+    },
+    "fixtures": {
+      "pass": 24,
+      "fail": 0,
+      "skip": 1
+    }
+  },
+  "method": "Fresh read-only exact-commit workflow and PR queries; decoded completed QA job logs. Existing known fixture skip not counted as a pass.",
+  "limitations": [
+    "Global lint91/Angular compiler11 historical debt not claimed fixed.",
+    "No real-user study, native device/Safari/spoken screen-reader, real signup/payment or conversion result.",
+    "Not merge, deployment or release authorization."
+  ]
+}

@@ -1,5 +1,5 @@
 // The public sample report shows its analytical answer within the first screen on phones, and the
-// desktop layout keeps its top bar, notice and contents unchanged.
+// full report keeps its top bar, notice and contents available below the concise proof.
 import { test, expect, expectAccessible } from '../support/test.mjs';
 import { seedSampleReport } from '../support/fixtures.mjs';
 
@@ -7,8 +7,9 @@ test.beforeAll(async () => { await seedSampleReport(); });
 
 test('sample report: the answer starts on the first screen, with nothing removed', async ({ page }, testInfo) => {
   await page.goto('/sample-report');
-  const headline = page.locator('#recommendation h2');
-  await expect(headline).toContainText('Austin, TX has higher median household income');
+  const headline = page.locator('#proof-title');
+  await expect(headline).toContainText('Higher income here. More population change there.');
+  await expect(page.locator('#recommendation h2')).toContainText('Austin, TX has higher median household income');
   const viewport = page.viewportSize();
   const top = (await headline.boundingBox()).y;
   if (testInfo.project.name === 'mobile') {

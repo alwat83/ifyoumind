@@ -1,0 +1,180 @@
+{
+  "observed_date": "2026-11-06",
+  "master_sha": "e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e",
+  "master_tree": "affcf29051cdfb16e19a8a7857cfc7a299944e0c",
+  "pr": {
+    "number": 77,
+    "head": "9b0b2787cefd4c3953796be6b18e3fdad8060b4c",
+    "state": "open",
+    "draft": true,
+    "merged": false,
+    "mergeable": true
+  },
+  "ci": [
+    {
+      "id": 42297006341,
+      "name": "Launch build check",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/alwat83/ifyoumind/actions/runs/42297006341"
+    },
+    {
+      "id": 42297006429,
+      "name": "Authenticated QA (emulators)",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/alwat83/ifyoumind/actions/runs/42297006429"
+    }
+  ],
+  "qa_job": {
+    "id": 128164755620,
+    "conclusion": "success",
+    "steps": [
+      {
+        "name": "Set up job",
+        "conclusion": "success"
+      },
+      {
+        "name": "Check out repository",
+        "conclusion": "success"
+      },
+      {
+        "name": "Use Node 20",
+        "conclusion": "success"
+      },
+      {
+        "name": "Use Java 21 (Firestore emulator)",
+        "conclusion": "success"
+      },
+      {
+        "name": "Refuse to run with cloud credentials",
+        "conclusion": "success"
+      },
+      {
+        "name": "Cache Firebase emulator downloads",
+        "conclusion": "success"
+      },
+      {
+        "name": "Install app dependencies",
+        "conclusion": "success"
+      },
+      {
+        "name": "Install functions dependencies",
+        "conclusion": "success"
+      },
+      {
+        "name": "Build functions",
+        "conclusion": "success"
+      },
+      {
+        "name": "Functions unit tests",
+        "conclusion": "success"
+      },
+      {
+        "name": "Fast web tests (including QA safety rails)",
+        "conclusion": "success"
+      },
+      {
+        "name": "Build the local (emulator) app bundle",
+        "conclusion": "success"
+      },
+      {
+        "name": "Build production integration candidate",
+        "conclusion": "success"
+      },
+      {
+        "name": "Public discovery isolation guard",
+        "conclusion": "success"
+      },
+      {
+        "name": "Build local-only discovery preview",
+        "conclusion": "success"
+      },
+      {
+        "name": "Build local electricity prototype",
+        "conclusion": "success"
+      },
+      {
+        "name": "Build unified local discovery",
+        "conclusion": "success"
+      },
+      {
+        "name": "Check unified discovery boundary",
+        "conclusion": "success"
+      },
+      {
+        "name": "Check electricity boundary",
+        "conclusion": "success"
+      },
+      {
+        "name": "Check local-only discovery boundary",
+        "conclusion": "success"
+      },
+      {
+        "name": "Install Chromium for Playwright",
+        "conclusion": "success"
+      },
+      {
+        "name": "Local-only discovery browser tests",
+        "conclusion": "success"
+      },
+      {
+        "name": "Electricity discovery browser tests",
+        "conclusion": "success"
+      },
+      {
+        "name": "Unified discovery browser tests",
+        "conclusion": "success"
+      },
+      {
+        "name": "Integrated discovery Hosting browser tests",
+        "conclusion": "success"
+      },
+      {
+        "name": "Firestore rules tests",
+        "conclusion": "success"
+      },
+      {
+        "name": "Organization tests",
+        "conclusion": "success"
+      },
+      {
+        "name": "Commerce and entitlement tests",
+        "conclusion": "success"
+      },
+      {
+        "name": "QA fixture and access tests",
+        "conclusion": "success"
+      },
+      {
+        "name": "Authenticated browser tests (desktop and mobile)",
+        "conclusion": "success"
+      },
+      {
+        "name": "Upload Playwright report",
+        "conclusion": "skipped"
+      },
+      {
+        "name": "Post Cache Firebase emulator downloads",
+        "conclusion": "success"
+      },
+      {
+        "name": "Post Use Java 21 (Firestore emulator)",
+        "conclusion": "success"
+      },
+      {
+        "name": "Post Use Node 20",
+        "conclusion": "success"
+      },
+      {
+        "name": "Post Check out repository",
+        "conclusion": "success"
+      },
+      {
+        "name": "Complete job",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "scope": "Read-only observation of existing independent GitHub runs; not rerun or inherited to future source changes."
+}

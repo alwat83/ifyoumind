@@ -1,0 +1,54 @@
+[
+  {
+    "path": "screenshots/desktop-discovery.png",
+    "sha256": "fc5b6817812ca282111fa466825c8980a938278bb151533ff4eb61a9c267802a"
+  },
+  {
+    "path": "screenshots/desktop-home.png",
+    "sha256": "a1f0fa3670961838ebf695960de2c573f72d57882509c96e02b424ddd3408ff6"
+  },
+  {
+    "path": "screenshots/desktop-register.png",
+    "sha256": "e8c391c385f823722541099a5508f07f8f6fad026d5f335c8217954cbb64c4d4"
+  },
+  {
+    "path": "screenshots/desktop-sample-fold.png",
+    "sha256": "d465d00a3a205e0ab183587e3f05e8c9981cfdf969a5239b1592e7be3f5e2409"
+  },
+  {
+    "path": "screenshots/desktop-sample.png",
+    "sha256": "5b0002b6d033fe954780e275a5617324e96e1bbc392dd58c90783d60478460ef"
+  },
+  {
+    "path": "screenshots/mobile-discovery.png",
+    "sha256": "aed534c8fa5e7be1bb19e720a9e0cbc0c06919fbc761421bf2113198f52000d6"
+  },
+  {
+    "path": "screenshots/mobile-home.png",
+    "sha256": "9e47de01b885501033c9a36daf04cc2629b1df7ac3ad8d9495f38ea0277a2790"
+  },
+  {
+    "path": "screenshots/mobile-register.png",
+    "sha256": "e136a0800da8befd43f04f5242c25793f89db4cbc5ffc6c8545a21e2717b0d3a"
+  },
+  {
+    "path": "screenshots/mobile-sample-fold.png",
+    "sha256": "a1473998677b39aff01bb396b711efa7abab899d854431be44b64e8754839095"
+  },
+  {
+    "path": "screenshots/mobile-sample.png",
+    "sha256": "43d072943f1222ad518de2f2ec7d48f17e2b959e505e50146ef8041522fa518e"
+  },
+  {
+    "path": "screenshots/print-letter-backgrounds-last-page.png",
+    "sha256": "34905d3c83a9cb77a6659e23ddc3c56ac3a8445966e29644780fecbbbb1bec79"
+  },
+  {
+    "path": "screenshots/print-letter-default-last-page.png",
+    "sha256": "d81ef3164a75ea8785b3328f54274daf947532ff6ef12118b76d57d44dfa0b54"
+  },
+  {
+    "path": "screenshots/sample-print-contact-sheet.png",
+    "sha256": "d7b3634330a1bb02098762f0252903f7fa43d9e037c0d1c3e2d4b105e8f7ac58"
+  }
+]

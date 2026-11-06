@@ -1,0 +1,42 @@
+<section *ngIf="proof as p" class="proof" aria-labelledby="proof-title">
+  <p class="proof-eyebrow">The comparison, at a glance</p>
+  <h2 id="proof-title">{{ p.crossed ? 'Higher income here. More population change there.' : 'Each measure tells part of the story.' }}</h2>
+  <div class="proof-highlights">
+    <article *ngFor="let lens of p.lenses" class="proof-highlight" [class.change-highlight]="lens.key === 'growth'">
+      <h3>{{ lens.label }}</h3>
+      <strong *ngIf="lens.highest !== null; else incomplete">{{ number(lens.highest, lens.key) }}</strong>
+      <ng-template #incomplete><strong class="incomplete">Incomplete</strong></ng-template>
+      <p class="highlight-place">{{ lens.places || 'Some figures unavailable' }}</p>
+      <p class="highlight-label">{{ !lens.complete ? 'No highest estimate selected' : lens.highlightLabel }}</p>
+    </article>
+  </div>
+  <p class="proof-boundary">These estimates describe residents. They do not establish business demand, competitors, rent or a winning location.</p>
+  <p class="proof-uncertainty">Differences have not been tested for statistical significance. Small gaps may reflect survey error.</p>
+  <div class="proof-controls" role="group" aria-label="Choose a comparison measure">
+    <button *ngFor="let lens of p.lenses" type="button" [attr.aria-pressed]="selected === lens.key" [attr.aria-controls]="'proof-' + lens.key" (click)="selected = lens.key">{{ lens.label }}</button>
+  </div>
+  <span class="proof-announcement" aria-live="polite">Showing {{ selected === 'income' ? 'household income' : 'population change' }}. Exact figures follow.</span>
+  <div *ngFor="let lens of p.lenses" [id]="'proof-' + lens.key" class="proof-view" [class.inactive]="selected !== lens.key">
+    <table>
+      <caption>{{ lens.key === 'income' ? 'Median household income · USD' : 'Population change · percent, not annual growth' }}<span>{{ lens.period }}</span></caption>
+      <thead class="proof-announcement"><tr><th scope="col">City</th><th scope="col">Comparison</th><th scope="col">Estimate</th></tr></thead>
+      <tbody><tr *ngFor="let row of lens.rows"><th scope="row">{{ row.location }}</th><td class="proof-chart" aria-hidden="true"><span class="proof-track"><i class="proof-zero" [style.left.%]="lens.zero"></i><i class="proof-bar" [style.left.%]="row.left" [style.width.%]="row.width"></i></span></td><td>{{ row.value === null ? 'Unavailable' : number(row.value, lens.key) }}</td></tr></tbody>
+    </table>
+    <p *ngIf="!lens.complete" class="proof-missing">Some figures are unavailable; this comparison cannot identify the highest estimate across all cities.</p>
+  </div>
+  <details class="proof-sources"><summary>Check the sources <span aria-hidden="true">+</span></summary><ng-container *ngTemplateOutlet="sourceContent"></ng-container></details>
+  <div class="print-sources"><h3>Sources behind this comparison</h3><ng-container *ngTemplateOutlet="sourceContent"></ng-container></div>
+  <ng-template #sourceContent>
+    <div class="source-content">
+      <p>Population change compares two ACS 5-year population estimates. This saved report does not include margins of error, so differences are untested.</p>
+      <ul><li *ngFor="let source of p.sources"><a [href]="source.url" target="_blank" rel="noopener noreferrer">U.S. Census Bureau · {{ source.dataset }}</a><span>{{ source.period }}<ng-container *ngIf="source.retrievedAt"> · Report records retrieval {{ source.retrievedAt | date:'longDate':'UTC' }}</ng-container><ng-container *ngIf="!source.retrievedAt"> · Retrieval date unavailable</ng-container></span></li></ul>
+      <p *ngIf="!p.sources.length">Official dataset references are unavailable in this saved report. Check the full source section before using these figures.</p>
+      <ul class="city-sources"><li *ngFor="let row of p.lenses[0].rows"><a *ngIf="row.sourceUrl" [href]="row.sourceUrl" target="_blank" rel="noopener noreferrer">{{ row.location }} · saved ACS table</a></li></ul>
+      <p>The date is from the saved report, not today's page view. Household income is a survey estimate, not demand for this business.</p>
+    </div>
+  </ng-template>
+  <div class="proof-next">
+    <div><p class="proof-eyebrow">Before choosing a location</p><h3>Verify demand, competitors and site costs.</h3></div>
+    <nav aria-label="Use this report"><a href="/sample-report#market-analysis" (click)="jump($event,'market-analysis')">Read the market-analysis draft <span aria-hidden="true">↗</span></a><a href="/sample-report#action-plan" (click)="jump($event,'action-plan')">See the research checklist <span aria-hidden="true">↗</span></a></nav>
+  </div>
+</section>

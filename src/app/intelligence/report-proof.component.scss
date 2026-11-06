@@ -1,0 +1,68 @@
+:host { display: block; }
+.proof { padding: 28px 0; color: #292331; border-bottom: 1px solid #ddd7e7; }
+.proof-eyebrow { margin: 0 0 8px; font-size: 11px; font-weight: 750; letter-spacing: .09em; text-transform: uppercase; color: #665083; }
+h2 { margin: 0 0 22px; font-size: 32px; line-height: 1.16; letter-spacing: -.035em; color: #292331; max-width: 640px; }
+.proof-highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.proof-highlight { min-width: 0; border-radius: 18px; padding: 22px; background: #ede6f8; }
+.change-highlight { background: #e9edcc; }
+h3 { font-size: 13px; font-weight: 750; color: #3a3048; margin: 0; }
+.proof-highlight strong { display: block; margin: 12px 0 8px; font-size: clamp(26px, 4vw, 42px); line-height: 1.1; letter-spacing: -.04em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.proof-highlight .incomplete { font-size: 25px; }
+.highlight-place { font-size: 15px; font-weight: 650; margin: 0 0 5px; overflow-wrap: anywhere; }
+.highlight-label { margin: 0; font-size: 11px; line-height: 1.45; color: #51475e; }
+.proof-boundary { margin: 18px 0 8px; font-size: 14px; line-height: 1.6; color: #3e3549; }
+.proof-uncertainty, .proof-missing { margin: 0 0 20px; font-size: 12px; line-height: 1.55; color: #655a71; }
+.proof-controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0; }
+button { min-height: 44px; padding: 10px 16px; border: 1px solid #c9bddb; border-radius: 28px; color: #493362; background: white; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; }
+button[aria-pressed=true] { background: #493362; color: white; border-color: #493362; }
+button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid #2456bd; outline-offset: 4px; }
+.proof-view.inactive { display: none; }
+table { width: 100%; table-layout: fixed; border-collapse: collapse; }
+caption { text-align: left; font-size: 13px; font-weight: 750; padding-bottom: 12px; color: #3a3048; }
+caption span { display: block; font-size: 11px; font-weight: 400; margin-top: 4px; color: #655a71; }
+th { width: 36%; text-align: left; font-size: 13px; font-weight: 600; overflow-wrap: anywhere; }
+td { font-size: 14px; text-align: right; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+td:last-child { width: 24%; font-weight: 700; }
+th, td { padding: 12px 0; border-bottom: 1px solid #eee9f3; }
+.proof-chart { padding: 12px; }
+.proof-track { display: block; height: 10px; position: relative; background: #f0edf5; border-radius: 6px; }
+.proof-bar { position: absolute; top: 0; bottom: 0; background: #9676ba; border-radius: 5px; }
+.proof-zero { position: absolute; top: -3px; bottom: -3px; width: 1px; background: #665677; }
+.proof-sources { margin: 20px 0; border-top: 1px solid #ddd7e7; border-bottom: 1px solid #ddd7e7; }
+summary { display: flex; align-items: center; justify-content: space-between; min-height: 48px; font-size: 13px; font-weight: 700; color: #553b70; cursor: pointer; list-style: none; }
+summary::-webkit-details-marker { display: none; }
+summary span { font-size: 21px; }
+.source-content { padding: 0 0 16px; font-size: 12px; line-height: 1.6; color: #51475e; }
+.source-content ul { padding-left: 18px; margin: 14px 0; }
+.source-content li { margin: 12px 0; overflow-wrap: anywhere; }
+.source-content span { display: block; }
+a { color: #553b70; text-decoration: underline; text-underline-offset: 3px; }
+.proof-next { padding: 22px; background: #f7f5f9; border-radius: 16px; }
+.proof-next h3 { font-size: 18px; line-height: 1.4; }
+.proof-next nav { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 14px; }
+.proof-next a { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; font-size: 13px; font-weight: 650; }
+.print-sources { display: none; }
+.proof-announcement { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 560px) {
+  .proof { padding: 22px 0; } h2 { font-size: 26px; margin-bottom: 18px; }
+  .proof-highlights { gap: 10px; } .proof-highlight { padding: 17px 12px; border-radius: 15px; }
+  .proof-highlight strong { font-size: clamp(22px, 7vw, 29px); } .highlight-place { font-size: 13px; } h3 { font-size: 12px; }
+  .proof-chart { padding-left: 8px; padding-right: 8px; } td { font-size: 12px; } th { font-size: 12px; width: 38%; } td:last-child { width: 28%; }
+  .proof-next { padding: 18px; }
+}
+@media (max-width: 350px) { h2 { font-size: 22px; } .proof-highlight { padding-top: 13px; padding-bottom: 13px; } }
+@media print {
+  .proof { padding: 18px 0; } h2 { font-size: 20pt; }
+  .proof-highlights, .proof-highlight, .proof-view, .proof-next { break-inside: avoid; }
+  .proof-highlight strong { font-size: 27pt; }
+  .proof-controls, .proof-sources, .proof-announcement, .proof-next nav { display: none !important; }
+  .proof-view.inactive { display: block; } .proof-view { margin: 20px 0; }
+  .print-sources { display: block; break-inside: avoid; } .source-content { font-size: 10pt; }
+  th, td { font-size: 10pt; } .proof-boundary, .proof-uncertainty { font-size: 10pt; }
+}
+@media (forced-colors: active) {
+  .proof-highlight, .proof-next, button { border: 1px solid CanvasText; }
+  button[aria-pressed=true] { background: Highlight; color: HighlightText; }
+  .proof-bar { background: CanvasText; forced-color-adjust: none; } .proof-zero { background: CanvasText; }
+  button:focus-visible, a:focus-visible, summary:focus-visible { outline-color: Highlight; }
+}

@@ -38,6 +38,8 @@ Development review only. Live application remains the separately verified PR75 r
 
 ## Next three / commercial effect
 
+November5 continuation: [ready first-use facilitator packet, evidence decision rules and commercial priorities](FIRST_USE_VALIDATION.md), [blank session template](SESSION_TEMPLATE.md), [fresh exact-head CI observation](CI_OBSERVATION_2026-11-05.json). Prepared on a separate documentation branch to preserve this candidate head. No human results or additional app verification inferred.
+
 1. Founder reviews first-screen desktop/mobile captures and working preview; resolve any concrete readability or comprehension issue.
 2. With permitted real participants, check whether five seconds is enough to identify the purpose and next action, then observe example completion. Internal browser tests are not user research.
 3. After candidate review and explicit release authorization, complete exact-head checks and production verification; assess real use before further design expansion.

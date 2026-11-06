@@ -1,5 +1,17 @@
 # ifYouMind — Current development status
 
+## Current — November 5, 2026: keep focus; first-use validation ready
+
+OpenAI / Codex. Founder directs “Let's keep it going and the focus.” Continue the first-screen discovery work and validate actual comprehension before broader changes. **Prepared/source-reviewed, no new interface implementation or human study conducted.** Separate documentation branch `codex/first-use-validation-20261105` from PR76 exact `3eb27893c3be6aad43cb0c07e173d412c8ee8103` preserves its tested head and PR74 campaign. [Ready facilitator script, answer key, decision rules and ranked commercial opportunities](../design/first-seconds/FIRST_USE_VALIDATION.md); [blank private-session template](../design/first-seconds/SESSION_TEMPLATE.md). Candidate screenshots/source reviewed; no new confirmed defect. No app/dependency/backend changes.
+
+**Fresh read-only CI verification:** exact76head [build41969293482 SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/41969293482), [QA41969293743 SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/41969293743); individual build/browser/isolation/commerce/authenticated test steps completed successfully. [Observation JSON](../design/first-seconds/CI_OBSERVATION_2026-11-05.json). These are existing runs, not freshly executed tests; prior137fast/66browser results remain historical. Screenshot hashes, document links, append-only history and diff checks verified separately for this packet; no app build/test rerun. Historical91lint/11Angular debt, known fixture skip/warnings and device/Safari/spokenSR/real-signup/payment/human-comprehension limits retained.
+
+**Git/release:** PR76 remains draft/unmerged; documentation descendant is not a replacement candidate or release approval. Production last verified November4 PR75/`c01c93cd1c270949b4c778f4d52e4af1f1e8b25e`, Hosting608bc867ecf986ac; not newly queried/smoked here. No merge/deploy/outreach/spend/Stripe/pricing change. Existing campaign/private work and prunable prior-worktree records preserved. Notion synchronization/final documentation SHA recorded with this assignment's handoff; no unknown human/customer/revenue metrics converted to zero.
+
+**Next three:** (1) run the prepared small first-use round with already-permitted participants; no outbound recruitment while Pending Founder Setup; (2) choose at most one reproducible comprehension/navigation/evidence obstacle to fix, or retain the candidate if none is demonstrated; (3) submit the unchanged or revised exact-head release package for separate founder decision, then monitor/verify only if authorized. Recommended next assignment: observed mobile first-use sessions, not more speculative redesign or campaign volume.
+
+## Prior snapshot — November 4
+
 ## Current — November 4, 2026: first-seconds engagement iteration
 
 OpenAI / Codex. Founder clarified the design must maintain engagement and earn attention in seconds. **Implemented and locally tested, not merged/deployed.** Branch `codex/first-seconds-discovery` from release handoff `da2ad4d`; live application base remains `c01c93c`. [Review/screenshots/evidence/rollback](../design/first-seconds/REVIEW.md). Concrete hero headline, first-screen interactive synthetic findings, category-aware free action, arithmetic disclosure, preserved playful art and optional Business funnel. No backend/engine/auth/Stripe/dependency change.

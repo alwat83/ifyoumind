@@ -2,6 +2,8 @@
 
 November6,2026 · OpenAI / Codex. **Implemented locally; not merged or deployed.** Branch `codex/discovery-results-design-20261106`, from production handofffb2fc76 / released applicatione5d8f15. Exact new commit/PR/CI are recorded in GitHub after push, never inherited from the released base.
 
+**Committed review candidate:** [draft PR77](https://github.com/alwat83/ifyoumind/pull/77), exact `021f8e3130fc497067f994fcae252d6035557cf0`. New-head [build42278181407 SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/42278181407); [fullQA42278181425 running](https://github.com/alwat83/ifyoumind/actions/runs/42278181425) at the [recorded observation](CI_OBSERVATION.json). Local passes below are not a full CI pass or release authority.
+
 ## Founder direction
 
 Keep designing; participant testing belongs at the end of this design pass. Emphasize less friction for users. This supersedes participant recruitment/availability as the next gate. It does not expand the two supported CSV categories, calculations, privacy boundary, pricing or production/outbound authority.
@@ -36,7 +38,7 @@ Participant tests are deferred, not simulated by automated checks. Final local p
 
 Checks cover both examples/recognized CSVs, source tables, validation/refusal, corrections/rerun, clear/category switching, delayed-read privacy, offline-after-load, reload, keyboard focus and checked automated accessibility/overflow. New direct-evidence and correction-return checks run across desktop/mobile/narrow. None of these proves human understanding, engagement, willingness to pay or retention.
 
-Production/main-app styles retain their prior warnings. The shared findings stylesheet4.32kB and mobile overrides4.28kB exceed4kB warning thresholds but remain below8kB errors; no budget was relaxed. The public island is243.32kB raw/67.37kB estimated transfer; no new provider/service expense. Historical global91lint/11Angular test-compiler diagnostics and one known fixture skip remain disclosed; not claimed fixed. Native devices/Safari/spoken screen reader, participant comprehension and real signup/payment remain unverified.
+Production/main-app styles retain their prior warnings. The shared findings stylesheet4.32kB and mobile overrides4.28kB exceed4kB warning thresholds but remain below8kB errors; no budget was relaxed. The public island is243.32kB raw/67.37kB estimated transfer; no new paid service introduced. Historical global91lint/11Angular test-compiler diagnostics and one known fixture skip remain disclosed; not claimed fixed. Native devices/Safari/spoken screen reader, participant comprehension and real signup/payment remain unverified.
 
 ## Release and next design work
 

@@ -1,0 +1,31 @@
+{
+  "observed_date": "2026-11-06",
+  "timezone": "America/Chicago",
+  "pr": 77,
+  "url": "https://github.com/alwat83/ifyoumind/pull/77",
+  "head": "021f8e3130fc497067f994fcae252d6035557cf0",
+  "workflows": [
+    {
+      "id": 42278181425,
+      "name": "Authenticated QA (emulators)",
+      "status": "in_progress",
+      "conclusion": null,
+      "run_number": 93,
+      "jobs_url": "https://api.github.com/repos/alwat83/ifyoumind/actions/runs/42278181425/jobs",
+      "logs_url": "https://api.github.com/repos/alwat83/ifyoumind/actions/runs/42278181425/logs",
+      "workflow_id": 382504068
+    },
+    {
+      "id": 42278181407,
+      "name": "Launch build check",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 178,
+      "jobs_url": "https://api.github.com/repos/alwat83/ifyoumind/actions/runs/42278181407/jobs",
+      "logs_url": "https://api.github.com/repos/alwat83/ifyoumind/actions/runs/42278181407/logs",
+      "workflow_id": 374054969
+    }
+  ],
+  "scope": "Point-in-time read-only CI observation. Build success; full emulator QA still running. Not a full CI pass or release authorization. Local189browser/137fast/build/lint/isolation checks are separate recorded evidence.",
+  "participant_testing": "Deferred by founder until end of design pass; not conducted."
+}

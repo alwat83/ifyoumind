@@ -1,6 +1,6 @@
 # First-use validation — PR76
 
-November 5, 2026 CST · OpenAI / Codex. **Prepared, not conducted.** Candidate [PR76](https://github.com/alwat83/ifyoumind/pull/76), exact head `3eb27893c3be6aad43cb0c07e173d412c8ee8103`. This packet is separate from the application candidate; no new release or outreach authority.
+November 5, 2026 CST · OpenAI / Codex. **Prepared, not conducted.** Candidate [PR76](https://github.com/alwat83/ifyoumind/pull/76), updated exact head `0971a1b48edf36a00acef78696bc8807528f27ac`. The original packet was prepared against3eb2789; the continuation adds focused text-spacing/forced-colors fixes. See the [current release review](RELEASE_REVIEW.md) for new verification. No release or outreach authority inferred.
 
 ## One decision
 

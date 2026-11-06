@@ -1,0 +1,112 @@
+[
+  {
+    "case": "mobile-spacing",
+    "offscreen": [],
+    "textClips": [],
+    "documentOverflow": 0,
+    "keyboardDisclosure": true,
+    "matchingLink": "/discover/?example=tax",
+    "selected": {
+      "background": "rgba(255, 254, 250, 0.85)",
+      "color": "rgb(63, 49, 93)",
+      "border": "0px none rgb(63, 49, 93)",
+      "outline": "rgb(63, 49, 93) none 3px",
+      "shadow": "rgba(41, 37, 53, 0.04) 0px 1.70409px 4.26022px 0px"
+    },
+    "other": {
+      "background": "rgba(255, 254, 250, 0.075)",
+      "color": "rgb(83, 69, 98)",
+      "border": "0px none rgb(83, 69, 98)",
+      "outline": "rgb(83, 69, 98) none 3px",
+      "shadow": "rgba(41, 37, 53, 0.004) 0px 0.149742px 0.374356px 0px"
+    }
+  },
+  {
+    "case": "narrow-spacing",
+    "offscreen": [],
+    "textClips": [],
+    "documentOverflow": 0,
+    "keyboardDisclosure": true,
+    "matchingLink": "/discover/?example=tax",
+    "selected": {
+      "background": "rgba(255, 254, 250, 0.85)",
+      "color": "rgb(63, 49, 93)",
+      "border": "0px none rgb(63, 49, 93)",
+      "outline": "rgb(63, 49, 93) none 3px",
+      "shadow": "rgba(41, 37, 53, 0.04) 0px 1.70443px 4.26108px 0px"
+    },
+    "other": {
+      "background": "rgba(255, 254, 250, 0.15)",
+      "color": "rgb(83, 69, 98)",
+      "border": "0px none rgb(83, 69, 98)",
+      "outline": "rgb(83, 69, 98) none 3px",
+      "shadow": "rgba(41, 37, 53, 0.008) 0px 0.295567px 0.738918px 0px"
+    }
+  },
+  {
+    "case": "desktop-spacing",
+    "offscreen": [],
+    "textClips": [],
+    "documentOverflow": 0,
+    "keyboardDisclosure": true,
+    "matchingLink": "/discover/?example=tax",
+    "selected": {
+      "background": "rgba(255, 254, 250, 0.85)",
+      "color": "rgb(63, 49, 93)",
+      "border": "0px none rgb(63, 49, 93)",
+      "outline": "rgb(63, 49, 93) none 3px",
+      "shadow": "rgba(41, 37, 53, 0.04) 0px 1.70386px 4.25965px 0px"
+    },
+    "other": {
+      "background": "rgba(255, 254, 250, 0.15)",
+      "color": "rgb(83, 69, 98)",
+      "border": "0px none rgb(83, 69, 98)",
+      "outline": "rgb(83, 69, 98) none 3px",
+      "shadow": "rgba(41, 37, 53, 0.008) 0px 0.296138px 0.740345px 0px"
+    }
+  },
+  {
+    "case": "short-landscape",
+    "offscreen": [],
+    "textClips": [],
+    "documentOverflow": 0,
+    "keyboardDisclosure": true,
+    "matchingLink": "/discover/?example=tax",
+    "selected": {
+      "background": "rgba(255, 254, 250, 0.85)",
+      "color": "rgb(63, 49, 93)",
+      "border": "0px none rgb(63, 49, 93)",
+      "outline": "rgb(63, 49, 93) none 3px",
+      "shadow": "rgba(41, 37, 53, 0.04) 0px 1.70399px 4.25998px 0px"
+    },
+    "other": {
+      "background": "rgba(255, 254, 250, 0.15)",
+      "color": "rgb(83, 69, 98)",
+      "border": "0px none rgb(83, 69, 98)",
+      "outline": "rgb(83, 69, 98) none 3px",
+      "shadow": "rgba(41, 37, 53, 0.008) 0px 0.295643px 0.739106px 0px"
+    }
+  },
+  {
+    "case": "forced-colors",
+    "offscreen": [],
+    "textClips": [],
+    "documentOverflow": 0,
+    "keyboardDisclosure": true,
+    "matchingLink": "/discover/?example=tax",
+    "selected": {
+      "background": "rgba(255, 255, 255, 0.925)",
+      "color": "rgb(0, 0, 0)",
+      "border": "2px solid rgb(0, 0, 0)",
+      "outline": "rgb(0, 0, 0) none 3px",
+      "shadow": "none"
+    },
+    "other": {
+      "background": "rgba(255, 255, 255, 0.075)",
+      "color": "rgb(0, 0, 0)",
+      "border": "2px solid rgb(255, 255, 255)",
+      "outline": "rgb(0, 0, 0) none 3px",
+      "shadow": "none"
+    }
+  }
+]

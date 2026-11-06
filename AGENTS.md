@@ -61,6 +61,10 @@ Founder asks to keep designing, defer participant testing until the end of this 
 
 Founder asks to make the value clear, make exploration fun and add a “wow” factor. Continue the existing design branch/draft PR77 with immediately visible comparisons of already-supported findings, optional playful exploration and one-action exact evidence; no new analytical capability or unsupported causal explanation. [Working comparison design](docs/design/discovery-value-20261106/REVIEW.md). Participant testing remains deferred to the end of the pass, not a gate to designing. Existing calculation/privacy/category/Business/pricing and separate release/outbound gates remain; no new release authorization inferred.
 
+## Founder product-experience mission — November 6, 2026
+
+Founder supplied “Make ifYouMind an Irresistible Product”: first audit actual production/repository/architecture and complete homepage→demo→sample→purchase→delivery→return journey; distinguish available capabilities from planned, challenge paid value/positioning and prepare eight concrete product/UX/conversion/measurement/backlog deliverables. [Evidence-backed audit and execution brief](docs/product/experience-audit-20261106/README.md). Do not start a large redesign before baseline/safe scope. Current audit prepares a focused Business sample proof/print-quality slice, preserving automatic discovery as foundation and PR77 separately; recommendations are not implemented features. Existing prices/entitlements/auth/privacy, separate production release/architecture/provider/billing gates and Pending Founder Setup remain. Participant testing remains deferred until the design pass ends; no sender/participant questions or recruitment.
+
 ## Source of truth — mandatory order
 **Founder correction, 2026-10-22: GitHub and repository documentation are the source of truth for development.** The accessible Notion coordination hub, confirmed by the founder, is:
 https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71

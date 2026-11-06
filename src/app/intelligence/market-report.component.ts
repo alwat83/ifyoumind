@@ -15,7 +15,7 @@ import { loadSampleBeforeDeadline, SampleLoadFailure, sampleFailureCopy } from '
   standalone:true,
   imports:[CommonModule,RouterLink,MarketAnalysisComponent],
   templateUrl:'./market-report.component.html',
-  styleUrls:['./market-report.component.scss','./market-report-offers.component.scss','./market-report-findings.component.scss','./market-report-mobile.component.scss','./sample-report-state.component.scss'],
+  styleUrls:['./market-report.component.scss','./market-report-offers.component.scss','./market-report-findings.component.scss','./market-report-mobile.component.scss','./sample-report-state.component.scss','./market-report-print.component.scss'],
 })
 export class MarketReportComponent implements OnInit, OnDestroy {
   private readonly route=inject(ActivatedRoute);

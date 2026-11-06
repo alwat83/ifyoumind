@@ -1,0 +1,118 @@
+[
+  {
+    "step": "Functions unit tests",
+    "summary": "# tests 72"
+  },
+  {
+    "step": "Functions unit tests",
+    "summary": "# pass 72"
+  },
+  {
+    "step": "Functions unit tests",
+    "summary": "# fail 0"
+  },
+  {
+    "step": "Functions unit tests",
+    "summary": "# skipped 0"
+  },
+  {
+    "step": "Fast web tests (including QA safety rails)",
+    "summary": "# tests 137"
+  },
+  {
+    "step": "Fast web tests (including QA safety rails)",
+    "summary": "# pass 137"
+  },
+  {
+    "step": "Fast web tests (including QA safety rails)",
+    "summary": "# fail 0"
+  },
+  {
+    "step": "Fast web tests (including QA safety rails)",
+    "summary": "# skipped 0"
+  },
+  {
+    "step": "Local-only discovery browser tests",
+    "summary": "48 passed (29.6s)"
+  },
+  {
+    "step": "Electricity discovery browser tests",
+    "summary": "27 passed (20.6s)"
+  },
+  {
+    "step": "Unified discovery browser tests",
+    "summary": "36 passed (27.1s)"
+  },
+  {
+    "step": "Integrated discovery Hosting browser tests",
+    "summary": "63 passed (45.1s)"
+  },
+  {
+    "step": "Firestore rules tests",
+    "summary": "# tests 7"
+  },
+  {
+    "step": "Firestore rules tests",
+    "summary": "# pass 7"
+  },
+  {
+    "step": "Firestore rules tests",
+    "summary": "# fail 0"
+  },
+  {
+    "step": "Firestore rules tests",
+    "summary": "# skipped 0"
+  },
+  {
+    "step": "Organization tests",
+    "summary": "# tests 5"
+  },
+  {
+    "step": "Organization tests",
+    "summary": "# pass 5"
+  },
+  {
+    "step": "Organization tests",
+    "summary": "# fail 0"
+  },
+  {
+    "step": "Organization tests",
+    "summary": "# skipped 0"
+  },
+  {
+    "step": "Commerce and entitlement tests",
+    "summary": "# tests 29"
+  },
+  {
+    "step": "Commerce and entitlement tests",
+    "summary": "# pass 29"
+  },
+  {
+    "step": "Commerce and entitlement tests",
+    "summary": "# fail 0"
+  },
+  {
+    "step": "Commerce and entitlement tests",
+    "summary": "# skipped 0"
+  },
+  {
+    "step": "QA fixture and access tests",
+    "summary": "# tests 25"
+  },
+  {
+    "step": "QA fixture and access tests",
+    "summary": "# pass 24"
+  },
+  {
+    "step": "QA fixture and access tests",
+    "summary": "# fail 0"
+  },
+  {
+    "step": "QA fixture and access tests",
+    "summary": "# skipped 1"
+  },
+  {
+    "step": "Authenticated browser tests (desktop and mobile)",
+    "summary": "112 passed (1.4m)"
+  }
+]

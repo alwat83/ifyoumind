@@ -1,0 +1,348 @@
+{
+  "observation_date": "2026-11-05",
+  "timezone": "America/Chicago",
+  "provider_agent": "OpenAI / Codex",
+  "repository": "alwat83/ifyoumind",
+  "candidate_pr": 76,
+  "candidate_head": "3eb27893c3be6aad43cb0c07e173d412c8ee8103",
+  "method": "Read-only GitHub connector: fetch_commit_workflow_runs for exact candidate SHA; fetch_workflow_run_jobs for each resulting run. Existing completed runs inspected, not rerun.",
+  "workflows": [
+    {
+      "id": 41969293482,
+      "name": "Launch build check",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/alwat83/ifyoumind/actions/runs/41969293482",
+      "jobs": [
+        {
+          "id": 127053519563,
+          "name": "build",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41969293482,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Check out repository",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Use Node 20",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Install app dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Install functions dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Build functions",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Build app",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Production bundle has no emulator config or QA fixtures",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Only approved discovery island ships; legacy previews stay isolated",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "SEO checks",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Post Use Node 20",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            },
+            {
+              "name": "Post Check out repository",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 41969293743,
+      "name": "Authenticated QA (emulators)",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/alwat83/ifyoumind/actions/runs/41969293743",
+      "jobs": [
+        {
+          "id": 127053520086,
+          "name": "qa",
+          "status": "completed",
+          "conclusion": "success",
+          "run_id": 41969293743,
+          "logs_url": null,
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Check out repository",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Use Node 20",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Use Java 21 (Firestore emulator)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Refuse to run with cloud credentials",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 5
+            },
+            {
+              "name": "Cache Firebase emulator downloads",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Install app dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            },
+            {
+              "name": "Install functions dependencies",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Build functions",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            },
+            {
+              "name": "Functions unit tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 10
+            },
+            {
+              "name": "Fast web tests (including QA safety rails)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 11
+            },
+            {
+              "name": "Build the local (emulator) app bundle",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 12
+            },
+            {
+              "name": "Build production integration candidate",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 13
+            },
+            {
+              "name": "Public discovery isolation guard",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 14
+            },
+            {
+              "name": "Build local-only discovery preview",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 15
+            },
+            {
+              "name": "Build local electricity prototype",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 16
+            },
+            {
+              "name": "Build unified local discovery",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 17
+            },
+            {
+              "name": "Check unified discovery boundary",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 18
+            },
+            {
+              "name": "Check electricity boundary",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 19
+            },
+            {
+              "name": "Check local-only discovery boundary",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 20
+            },
+            {
+              "name": "Install Chromium for Playwright",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 21
+            },
+            {
+              "name": "Local-only discovery browser tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 22
+            },
+            {
+              "name": "Electricity discovery browser tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 23
+            },
+            {
+              "name": "Unified discovery browser tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 24
+            },
+            {
+              "name": "Integrated discovery Hosting browser tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 25
+            },
+            {
+              "name": "Firestore rules tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 26
+            },
+            {
+              "name": "Organization tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 27
+            },
+            {
+              "name": "Commerce and entitlement tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 28
+            },
+            {
+              "name": "QA fixture and access tests",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 29
+            },
+            {
+              "name": "Authenticated browser tests (desktop and mobile)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 30
+            },
+            {
+              "name": "Upload Playwright report",
+              "status": "completed",
+              "conclusion": "skipped",
+              "number": 31
+            },
+            {
+              "name": "Post Cache Firebase emulator downloads",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 59
+            },
+            {
+              "name": "Post Use Java 21 (Firestore emulator)",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 60
+            },
+            {
+              "name": "Post Use Node 20",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 61
+            },
+            {
+              "name": "Post Check out repository",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 62
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 63
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Job-step outcomes are not parsed test totals.",
+    "Skipped report-upload step is not a skipped test; the previously documented fixture test skip remains separately disclosed.",
+    "No application tests, build, live-browser run, real-user session, payment or deployment performed by this observation."
+  ]
+}

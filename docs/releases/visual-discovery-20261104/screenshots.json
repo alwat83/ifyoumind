@@ -1,0 +1,42 @@
+[
+  {
+    "path": "screenshots/desktop-home-fold.png",
+    "bytes": 301223,
+    "sha256": "9387cd07944b641879b524b038214368ad6654708d0f94da8815b9d3a174865e"
+  },
+  {
+    "path": "screenshots/desktop-home.png",
+    "bytes": 557688,
+    "sha256": "253ef406b1f58003bef892569fed693af81bcf32847821689cbaaa14ce43fb86"
+  },
+  {
+    "path": "screenshots/mobile-home-fold.png",
+    "bytes": 134553,
+    "sha256": "18bd65c65b8ffeb2beefb150dc93b9455f52a756b5971f519de4e60e33c6ace2"
+  },
+  {
+    "path": "screenshots/mobile-home.png",
+    "bytes": 334020,
+    "sha256": "a65c82d32694bc0adbb5feca3757561613fc28993067dd8c06e9ce15ecebae61"
+  },
+  {
+    "path": "screenshots/desktop-entry.png",
+    "bytes": 130398,
+    "sha256": "7c3be1d05b71134eeb948a234691fc02c9298219e5925944ee2397fe61590706"
+  },
+  {
+    "path": "screenshots/mobile-entry.png",
+    "bytes": 102888,
+    "sha256": "b75588b94801cb68d22436840cadf7e4b9ed0e724b3f6f59952bcba1269466c3"
+  },
+  {
+    "path": "screenshots/mobile-electricity-evidence.png",
+    "bytes": 625816,
+    "sha256": "85294a3f651585fbb4eedbfbf611aa8d16949ebac498a6e678949ce6168b624a"
+  },
+  {
+    "path": "screenshots/narrow-home-fold.png",
+    "bytes": 65680,
+    "sha256": "86f7fc495ae3f45db68ecbba8d083e68c482dff6a3e2352f9190163b0a232270"
+  }
+]

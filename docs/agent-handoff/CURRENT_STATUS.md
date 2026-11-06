@@ -1,5 +1,39 @@
 # ifYouMind — Current development status
 
+## Current — November 5, 2026: keep focus; first-use validation ready
+
+OpenAI / Codex. Founder directs “Let's keep it going and the focus.” Continue the first-screen discovery work and validate actual comprehension before broader changes. **Prepared/source-reviewed, no new interface implementation or human study conducted.** Separate documentation branch `codex/first-use-validation-20261105` from PR76 exact `3eb27893c3be6aad43cb0c07e173d412c8ee8103` preserves its tested head and PR74 campaign. [Ready facilitator script, answer key, decision rules and ranked commercial opportunities](../design/first-seconds/FIRST_USE_VALIDATION.md); [blank private-session template](../design/first-seconds/SESSION_TEMPLATE.md). Candidate screenshots/source reviewed; no new confirmed defect. No app/dependency/backend changes.
+
+**Fresh read-only CI verification:** exact76head [build41969293482 SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/41969293482), [QA41969293743 SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/41969293743); individual build/browser/isolation/commerce/authenticated test steps completed successfully. [Observation JSON](../design/first-seconds/CI_OBSERVATION_2026-11-05.json). These are existing runs, not freshly executed tests; prior137fast/66browser results remain historical. Screenshot hashes, document links, append-only history and diff checks verified separately for this packet; no app build/test rerun. Historical91lint/11Angular debt, known fixture skip/warnings and device/Safari/spokenSR/real-signup/payment/human-comprehension limits retained.
+
+**Git/release:** PR76 remains draft/unmerged; documentation descendant is not a replacement candidate or release approval. Production last verified November4 PR75/`c01c93cd1c270949b4c778f4d52e4af1f1e8b25e`, Hosting608bc867ecf986ac; not newly queried/smoked here. No merge/deploy/outreach/spend/Stripe/pricing change. Existing campaign/private work and prunable prior-worktree records preserved. Notion synchronization/final documentation SHA recorded with this assignment's handoff; no unknown human/customer/revenue metrics converted to zero.
+
+**Next three:** (1) run the prepared small first-use round with already-permitted participants; no outbound recruitment while Pending Founder Setup; (2) choose at most one reproducible comprehension/navigation/evidence obstacle to fix, or retain the candidate if none is demonstrated; (3) submit the unchanged or revised exact-head release package for separate founder decision, then monitor/verify only if authorized. Recommended next assignment: observed mobile first-use sessions, not more speculative redesign or campaign volume.
+
+## Prior snapshot — November 4
+
+## Current — November 4, 2026: first-seconds engagement iteration
+
+OpenAI / Codex. Founder clarified the design must maintain engagement and earn attention in seconds. **Implemented and locally tested, not merged/deployed.** Branch `codex/first-seconds-discovery` from release handoff `da2ad4d`; live application base remains `c01c93c`. [Review/screenshots/evidence/rollback](../design/first-seconds/REVIEW.md). Concrete hero headline, first-screen interactive synthetic findings, category-aware free action, arithmetic disclosure, preserved playful art and optional Business funnel. No backend/engine/auth/Stripe/dependency change.
+
+Final production/local builds PASS, fast137 PASS, final actual-Hosting browser66 PASS at1280/390/320 (including first-screen metrics/CTA and open-evidence switch regression), targeted landing lint and production bundle guard PASS. Candidate exact-head CI/PR tracked in GitHub and final conversation, never inferred from base. Build warnings and historical global91lint/11Angular diagnostics remain disclosed; human comprehension/engagement/conversion/retention/native-device/payment checks not claimed. See review for precise coverage and limits. No release, production writes, new customer/revenue/spend/outreach; financial baseline unchanged, outbound Pending Founder Setup. Root FRED/sitemap and PR74/private campaign work preserved.
+
+**Next three:** founder design review; permitted five-second first-use observations; separate release decision and exact-head/live verification. Highest commercial opportunity is proving useful first sessions before further speculative design expansion.
+
+## Previous snapshots (history)
+
+## Current — November 4, 2026: visual redesign live
+
+OpenAI / Codex. **Merged, deployed, production verified** within read-only scope. Founder explicitly authorized reviewed PR75 release. Source `4abebc6`, production `c01c93cd1c270949b4c778f4d52e4af1f1e8b25e`; tested/merged trees identical. [Build41886135353](https://github.com/alwat83/ifyoumind/actions/runs/41886135353)/[fullQA41886135398](https://github.com/alwat83/ifyoumind/actions/runs/41886135398) SUCCESS; [deployment41887559100](https://github.com/alwat83/ifyoumind/actions/runs/41887559100) SUCCESS. Hosting608bc867ecf986ac released 2026-11-04T18:31:58.849Z / 2026-11-04 12:31:58 PM CST. [Release evidence/live screenshots/rollback](../releases/visual-discovery-20261104/LIVE_VERIFICATION.md).
+
+30live desktop/mobile/320px checksPASS0FAIL; source cells/correction/clear/offline/privacy and two read-only public sample calls verified. Full CI:286browser/137fast/72Functions/rules7/org5/commerce29 PASS; fixture24PASS+1existingSKIP. Ubuntu-latest26.04 incompatibility repaired with QA-only24.04 pin; stale footer-label assertion repaired, final112appbrowserPASS. Earlier failed attempts not passes. No app change from approved design during release repairs.
+
+Prior Hostingef3836b4e2285dfe retained FINALIZED44files/notdeleted. No backend/dependency/auth/Stripe/pricing change, real signup/payment/outreach/new AI/PDF/storage/category or traction claim. Existing lint91/Angular11 historical debt, warnings/manual-device/Safari/SR/real-account/payment/human-comprehension limits remain. Financial baseline unchanged. Outbound Pending Founder Setup. Root FRED/sitemap, source PR75 head, PR74/private drafts preserved. Separate codex/visual-redesign-production-handoff stores evidence; no additional master push/deploy.
+
+**Next three:** founder reviews live design; observe first-use understanding and example completion; improve demonstrated friction separately. Release approval is fulfilled, not blanket future authority.
+
+## Previous snapshot (history)
+
 ## Current — November 4, 2026: visual-first redesign candidate
 
 OpenAI / Codex. **Committed and locally tested, not merged/deployed.** [Draft PR75](https://github.com/alwat83/ifyoumind/pull/75), application `cff948a1207305b789ffeeca8bbb73b1d6c03957`. New-head CI was not yet listed immediately after PR creation; not a pass. Founder explicitly pivots to modern, clean, simple, imagery-led and playful design with less text and less effort understanding/trying ifYouMind. This supersedes earlier no-redesign assignment scope, while preserving release/outbound gates. [Working review and screenshots](../design/visual-first/REVIEW.md).

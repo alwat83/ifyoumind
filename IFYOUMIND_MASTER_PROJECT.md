@@ -1,6 +1,6 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-04
+**Updated:** 2026-11-05
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
@@ -36,7 +36,19 @@ Permanent instructions in `AGENTS.md` now require Business Impact reporting and 
 
 Final #60 head `2eb17081f2feaa40163255a6c7de5a57f67f76b7` has [build](https://github.com/alwat83/ifyoumind/actions/runs/39834974901) and [QA](https://github.com/alwat83/ifyoumind/actions/runs/39834974902) SUCCESS and is MERGEABLE. GO for founder approval only; production held. Historical prior-head/pending observations above remain history, not current release status.
 
-## Current design work — November 4, 2026
+## November 5, 2026 — focused first-use validation
+
+Founder asks to continue and keep focus. Prepared [five-second purpose check, short example/evidence walkthrough, private blank notes template and concrete decision rules](docs/design/first-seconds/FIRST_USE_VALIDATION.md) on separate `codex/first-use-validation-20261105`, preserving PR76 at `3eb27893c3be6aad43cb0c07e173d412c8ee8103`. Fresh read-only exact-head build41969293482/QA41969293743 SUCCESS and individual job-step results verified; no test rerun or new app change. Candidate source/recorded mobile screens inspected, no new confirmed defect. The next evidence needed is real first-use comprehension; no study, traffic, acquisition, sale or lift claimed. Production remains last verified PR75/c01c93c; release approval and outbound Pending Founder Setup gates unchanged. Separate docs handoff keeps candidate CI tied to its original head; Notion receives a sanitized status only.
+
+## November 4, 2026 — first-seconds engagement design
+
+**In progress / locally tested, not deployed:** `codex/first-seconds-discovery`, from release handoff `da2ad4d`. Founder requests a further modern-design iteration that holds attention in the first seconds. [Working review and screenshots](docs/design/first-seconds/REVIEW.md). Interactive bill preview/key findings now appear in the hero; category selection updates the real example destination and expandable synthetic arithmetic. Playful identity/art, evidence, supported CSV privacy and Free/$79/$39 Business paths preserved. Final production/local builds,137fast/66browser checks, targeted lint and production guard PASS. Exact candidate commit/PR/CI tracked separately in GitHub and conversation. No engagement/conversion/customer lift claimed; real-user validation and a separately authorized release remain next. Previous PR75 live release is preserved below.
+
+## November 4, 2026 — visual redesign production verified
+
+Founder authorized PR75 release. **Merged/deployed/production verified:** `c01c93cd1c270949b4c778f4d52e4af1f1e8b25e`, Hosting608bc867ecf986ac, deployment41887559100SUCCESS. [Live evidence/screenshots/rollback](docs/releases/visual-discovery-20261104/LIVE_VERIFICATION.md). Exact4abebc6 build/fullQA PASS;286browser/137fast/72Functions and integration checks pass with1existing fixture skip. Fresh30live checksPASS0FAIL across desktop/mobile/320px. Reviewed visual app unchanged during QA runner/stale-selector repairs; Business/privacy/pricing preserved. Prior version retained; no rollback, financial refresh, real customer/payment/outreach result or second master deployment. Detailed handoff on codex/visual-redesign-production-handoff.
+
+## Historical design candidate — November 4, 2026 (superseded by release above)
 
 **Committed / locally tested, not deployed:** [draft PR75](https://github.com/alwat83/ifyoumind/pull/75), application `cff948a1207305b789ffeeca8bbb73b1d6c03957`; founder-directed modern visual redesign on `codex/visual-first-discovery`, based directly on production master `65dc4912a8bf7ccde31926651eb0f3c4b05cd039`. [Review, screenshots, verification and rollback](docs/design/visual-first/REVIEW.md). Original generated 3D illustration, shorter homepage, interactive electricity/tax previews, direct links into actual synthetic findings and matching discovery styling. Business sample, Free/$79/$39 Pro paths and paid intent preserved. Production/local builds, 137 fast checks, 63 actual-Hosting desktop/mobile/narrow browser checks, targeted lint and production/isolation guards pass. Earlier mobile first-screen regression fixed before final pass. No conversion/customer/revenue result inferred; no merge/deploy/outbound/Stripe change. Latest October26 campaign/ownership records remain on preserved PR74; no campaign branch or private research imported here.
 

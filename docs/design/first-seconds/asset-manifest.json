@@ -1,0 +1,34 @@
+[
+  {
+    "path": "docs/design/first-seconds/screenshots/desktop-fold.png",
+    "sha256": "c3c03ca8a8f115e724def5b424f6f8d5321b42b792984f940bd71fb58eafc445"
+  },
+  {
+    "path": "docs/design/first-seconds/screenshots/desktop-full.png",
+    "sha256": "062a70d6614258d3c668686d0655aa261fa6b2c9cf9458272b0604ef2a3c6993"
+  },
+  {
+    "path": "docs/design/first-seconds/screenshots/mobile-fold.png",
+    "sha256": "9e47de01b885501033c9a36daf04cc2629b1df7ac3ad8d9495f38ea0277a2790"
+  },
+  {
+    "path": "docs/design/first-seconds/screenshots/mobile-full.png",
+    "sha256": "e7ecf885dc7d1c41ff47fb3e57c1aa06ae081a7046c0d468d93c5ed3f4cd0907"
+  },
+  {
+    "path": "docs/design/first-seconds/screenshots/narrow-fold.png",
+    "sha256": "17040ba5a8cfe1c02e97b1bf3f67eb03fcfb360e60de3f8b3e570113d52f6eec"
+  },
+  {
+    "path": "docs/design/first-seconds/screenshots/narrow-full.png",
+    "sha256": "34c1684fe0255d2a8bbe43818639678f46d593488fac8ec006d8bec7929292eb"
+  },
+  {
+    "path": "docs/design/first-seconds/screenshots/desktop-tax.png",
+    "sha256": "589bc8c5966eed35dfe84c32d0a81a79ac5cd433986b34141f4cae421977959c"
+  },
+  {
+    "path": "docs/design/first-seconds/screenshots/mobile-tax.png",
+    "sha256": "85abf36266a2fde3514a85ce6b2c298eb75bb8e2349d8f3d345ec36feae3a28c"
+  }
+]

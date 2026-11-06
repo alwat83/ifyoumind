@@ -1,5 +1,8 @@
 # Visual-first redesign — founder review
 
+**Release update:** Founder approved publication. PR75 merged as `c01c93cd1c270949b4c778f4d52e4af1f1e8b25e`; deployment41887559100SUCCESS and30live checksPASS0FAIL. [Production evidence and actual live screenshots](../../releases/visual-discovery-20261104/LIVE_VERIFICATION.md). Original candidate review below is preserved history; release repairs changed QA runner/test selector only, not the design.
+
+
 November 4, 2026 · OpenAI / Codex · **Committed and locally tested; not deployed.**
 
 [Draft PR75](https://github.com/alwat83/ifyoumind/pull/75) · Implementation `cff948a1207305b789ffeeca8bbb73b1d6c03957`. New-head CI was not yet listed at the first post-creation observation; no CI pass claimed.

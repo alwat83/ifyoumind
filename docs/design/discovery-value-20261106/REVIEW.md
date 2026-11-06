@@ -2,6 +2,8 @@
 
 November 6, 2026 · OpenAI / Codex; specific model/session unknown. **Working design draft; not merged or deployed.** Continues [draft PR77](https://github.com/alwat83/ifyoumind/pull/77), preserving its initial021f8e3 and subsequent8c6fa67 records. Local branch `codex/discovery-value-playful-20261106`; normal fast-forward update to the existing PR source branch after verification.
 
+**Committed/pushed review head:** `9b0b2787cefd4c3953796be6b18e3fdad8060b4c`, [draft PR77](https://github.com/alwat83/ifyoumind/pull/77), normal fast-forward update preserving021f8e3/8c6fa67. Fresh [build42297006341](https://github.com/alwat83/ifyoumind/actions/runs/42297006341) and [fullQA42297006429](https://github.com/alwat83/ifyoumind/actions/runs/42297006429) **in progress**, not full CI passes at this observation. [Point-in-time record](CI_OBSERVATION.json). Separate `codex/discovery-value-handoff-20261106` records status without moving the reviewed design head. No release authorization inferred.
+
 ## Founder direction and acceptance
 
 Make the value clearer and the interaction fun; find a “wow” factor that earns attention. Continue designing with less friction, with participant testing deferred to the end of this pass. Acceptance is a truthful comparison visible immediately on desktop1280×900, mobile390×844 and narrow320×568, one-action evidence, keyboard return, unchanged correction/clear/privacy behavior and guarded ambiguous/zero cases. Engineering checks establish behavior, not human comprehension or commercial success.

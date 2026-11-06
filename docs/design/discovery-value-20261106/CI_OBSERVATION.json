@@ -1,0 +1,23 @@
+{
+  "observed_at": "2026-11-06T21:29:35.673564+00:00",
+  "source_head": "9b0b2787cefd4c3953796be6b18e3fdad8060b4c",
+  "pr": 77,
+  "state": "OPEN/DRAFT; not merged or deployed",
+  "runs": [
+    {
+      "id": 42297006341,
+      "name": "Launch build check",
+      "status": "in_progress",
+      "conclusion": null,
+      "url": "https://github.com/alwat83/ifyoumind/actions/runs/42297006341"
+    },
+    {
+      "id": 42297006429,
+      "name": "Authenticated QA (emulators)",
+      "status": "in_progress",
+      "conclusion": null,
+      "url": "https://github.com/alwat83/ifyoumind/actions/runs/42297006429"
+    }
+  ],
+  "prior_head_checks_not_inherited": true
+}

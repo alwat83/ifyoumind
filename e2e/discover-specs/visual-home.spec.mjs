@@ -46,3 +46,29 @@ test('first-screen preview exposes honest evidence and keeps it correct when swi
  await expect(page.getByRole('link',{name:'Try a free example',exact:true})).toHaveAttribute('href','/discover/?example=tax');
  await expect(proof).toContainText('not a cause');await noOverflow(page);await accessible(page);
 });
+
+test('increased text spacing keeps navigation and footer actions within the viewport',async({page})=>{
+ await page.goto('/');await page.locator('app-root[ng-version]').waitFor();
+ await page.addStyleTag({content:'*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}'});
+ for(const action of await page.locator('.nav a,footer a,.example-switch button,.quick-proof summary,.hero .primary').all()){
+  if(!await action.isVisible())continue;
+  const bounds=await action.boundingBox();expect(bounds.x).toBeGreaterThanOrEqual(0);expect(bounds.x+bounds.width).toBeLessThanOrEqual(page.viewportSize().width);
+ }
+ await page.getByRole('button',{name:'Property tax',exact:true}).click();
+ await expect(page.getByRole('button',{name:'Property tax',exact:true})).toHaveAttribute('aria-pressed','true');
+ await page.getByRole('link',{name:'Try a free example',exact:true}).click();
+ await expect(page.locator('.finding')).toHaveCount(3);
+});
+
+test('forced colors preserve the selected example and keyboard focus',async({page})=>{
+ await page.emulateMedia({forcedColors:'active'});await page.goto('/');await page.locator('app-root[ng-version]').waitFor();
+ const selected=page.locator('.example-switch button[aria-pressed=true]');
+ const border=async()=>selected.evaluate(n=>{const s=getComputedStyle(n);return {width:parseFloat(s.borderTopWidth),style:s.borderTopStyle,color:s.borderTopColor,other:getComputedStyle(n.parentElement.querySelector('[aria-pressed=false]')).borderTopColor};});
+ for(const name of ['Electricity','Property tax']){
+  const button=page.getByRole('button',{name,exact:true});await button.focus();await page.keyboard.press('Space');await expect(button).toHaveAttribute('aria-pressed','true');
+  const marker=await border();expect(marker.width).toBeGreaterThanOrEqual(2);expect(marker.style).toBe('solid');expect(marker.color).not.toBe(marker.other);
+  const focus=await button.evaluate(n=>({active:document.activeElement===n,style:getComputedStyle(n).outlineStyle,width:parseFloat(getComputedStyle(n).outlineWidth)}));
+  expect(focus.active).toBe(true);expect(focus.style).toBe('solid');expect(focus.width).toBeGreaterThanOrEqual(3);
+ }
+ await expect(page.getByRole('link',{name:'Try a free example',exact:true})).toHaveAttribute('href','/discover/?example=tax');await noOverflow(page);
+});

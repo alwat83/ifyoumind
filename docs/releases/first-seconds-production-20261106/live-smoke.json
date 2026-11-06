@@ -1,0 +1,426 @@
+{
+  "observedAt": "2026-11-06T15:32:36.486Z",
+  "base": "https://ifyoumind.com",
+  "productionCommit": "e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e",
+  "scope": "Internal live read-only verification. Synthetic data only; public sample is the only allowed POST. No signup/payment/outreach. Not customer traction.",
+  "results": [
+    {
+      "name": "desktop: first-screen homepage finding/action",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "desktop: keyboard evidence, tax selection and exact full example",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "desktop: Business prices, sample link and paid registration intent",
+      "status": "PASS",
+      "detail": {
+        "presentationOnly": true,
+        "noSignup": true
+      }
+    },
+    {
+      "name": "desktop: existing public Business sample and sources",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "desktop: isolated discovery entry/headers/metadata",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "desktop: tax findings and exact evidence",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "desktop: correction, refusal, recovery and clearing",
+      "status": "PASS",
+      "detail": {
+        "syntheticOnly": true,
+        "clear": true
+      }
+    },
+    {
+      "name": "desktop: repeated local CSV read failure and retry",
+      "status": "PASS",
+      "detail": {
+        "failedReads": 2,
+        "recovered": true,
+        "noUpload": true
+      }
+    },
+    {
+      "name": "desktop: electricity findings/evidence/category isolation",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "desktop: offline after load, clear/switch and clean reload",
+      "status": "PASS",
+      "detail": {
+        "afterLoadOnly": true,
+        "cleared": true
+      }
+    },
+    {
+      "name": "desktop: discovery no browser persistence or external/write attempts",
+      "status": "PASS",
+      "detail": {
+        "storageEntries": 0,
+        "externalOrWriteAttempts": 0
+      }
+    },
+    {
+      "name": "mobile: first-screen homepage finding/action",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "mobile: keyboard evidence, tax selection and exact full example",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "mobile: Business prices, sample link and paid registration intent",
+      "status": "PASS",
+      "detail": {
+        "presentationOnly": true,
+        "noSignup": true
+      }
+    },
+    {
+      "name": "mobile: existing public Business sample and sources",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "mobile: isolated discovery entry/headers/metadata",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "mobile: tax findings and exact evidence",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "mobile: correction, refusal, recovery and clearing",
+      "status": "PASS",
+      "detail": {
+        "syntheticOnly": true,
+        "clear": true
+      }
+    },
+    {
+      "name": "mobile: repeated local CSV read failure and retry",
+      "status": "PASS",
+      "detail": {
+        "failedReads": 2,
+        "recovered": true,
+        "noUpload": true
+      }
+    },
+    {
+      "name": "mobile: electricity findings/evidence/category isolation",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "mobile: offline after load, clear/switch and clean reload",
+      "status": "PASS",
+      "detail": {
+        "afterLoadOnly": true,
+        "cleared": true
+      }
+    },
+    {
+      "name": "mobile: discovery no browser persistence or external/write attempts",
+      "status": "PASS",
+      "detail": {
+        "storageEntries": 0,
+        "externalOrWriteAttempts": 0
+      }
+    },
+    {
+      "name": "narrow: first-screen homepage finding/action",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "narrow: keyboard evidence, tax selection and exact full example",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "narrow: Business prices, sample link and paid registration intent",
+      "status": "PASS",
+      "detail": {
+        "presentationOnly": true,
+        "noSignup": true
+      }
+    },
+    {
+      "name": "narrow: isolated discovery entry/headers/metadata",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "narrow: tax findings and exact evidence",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "narrow: correction, refusal, recovery and clearing",
+      "status": "PASS",
+      "detail": {
+        "syntheticOnly": true,
+        "clear": true
+      }
+    },
+    {
+      "name": "narrow: repeated local CSV read failure and retry",
+      "status": "PASS",
+      "detail": {
+        "failedReads": 2,
+        "recovered": true,
+        "noUpload": true
+      }
+    },
+    {
+      "name": "narrow: electricity findings/evidence/category isolation",
+      "status": "PASS",
+      "detail": {
+        "axeViolations": 0,
+        "horizontalOverflow": 0
+      }
+    },
+    {
+      "name": "narrow: offline after load, clear/switch and clean reload",
+      "status": "PASS",
+      "detail": {
+        "afterLoadOnly": true,
+        "cleared": true
+      }
+    },
+    {
+      "name": "narrow: discovery no browser persistence or external/write attempts",
+      "status": "PASS",
+      "detail": {
+        "storageEntries": 0,
+        "externalOrWriteAttempts": 0
+      }
+    },
+    {
+      "name": "320px increased text spacing retains navigation/footer controls",
+      "status": "PASS",
+      "detail": {
+        "clippedActions": 0
+      }
+    },
+    {
+      "name": "forced colors selected marker and keyboard focus",
+      "status": "PASS",
+      "detail": {
+        "bothSelections": true,
+        "keyboardFocus": true
+      }
+    },
+    {
+      "name": "Hosting redirect/assets/real404/sitemap/guides/privacy",
+      "status": "PASS",
+      "detail": {
+        "statusAndPrivacyPaths": true
+      }
+    }
+  ],
+  "allowedSampleReads": [
+    {
+      "endpoint": "getSampleDecisionReport",
+      "method": "POST"
+    },
+    {
+      "endpoint": "getSampleDecisionReport",
+      "method": "POST"
+    }
+  ],
+  "blocked": [
+    {
+      "discovery": false,
+      "origin": "https://fonts.gstatic.com",
+      "path": "/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "method": "GET"
+    },
+    {
+      "discovery": false,
+      "origin": "https://fonts.gstatic.com",
+      "path": "/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "method": "GET"
+    },
+    {
+      "discovery": false,
+      "origin": "https://fonts.gstatic.com",
+      "path": "/s/outfit/v15/QGYvz_MVcBeNP4NJtEtq.woff2",
+      "method": "GET"
+    },
+    {
+      "discovery": false,
+      "origin": "https://fonts.gstatic.com",
+      "path": "/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "method": "GET"
+    },
+    {
+      "discovery": false,
+      "origin": "https://fonts.gstatic.com",
+      "path": "/s/outfit/v15/QGYvz_MVcBeNP4NJtEtq.woff2",
+      "method": "GET"
+    },
+    {
+      "discovery": false,
+      "origin": "https://fonts.gstatic.com",
+      "path": "/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "method": "GET"
+    },
+    {
+      "discovery": false,
+      "origin": "https://fonts.gstatic.com",
+      "path": "/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "method": "GET"
+    },
+    {
+      "discovery": false,
+      "origin": "https://fonts.gstatic.com",
+      "path": "/s/outfit/v15/QGYvz_MVcBeNP4NJtEtq.woff2",
+      "method": "GET"
+    },
+    {
+      "discovery": false,
+      "origin": "https://fonts.gstatic.com",
+      "path": "/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "method": "GET"
+    },
+    {
+      "discovery": false,
+      "origin": "https://fonts.gstatic.com",
+      "path": "/s/outfit/v15/QGYvz_MVcBeNP4NJtEtq.woff2",
+      "method": "GET"
+    },
+    {
+      "discovery": false,
+      "origin": "https://fonts.gstatic.com",
+      "path": "/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "method": "GET"
+    },
+    {
+      "discovery": false,
+      "origin": "https://fonts.gstatic.com",
+      "path": "/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "method": "GET"
+    },
+    {
+      "discovery": false,
+      "origin": "https://fonts.gstatic.com",
+      "path": "/s/outfit/v15/QGYvz_MVcBeNP4NJtEtq.woff2",
+      "method": "GET"
+    },
+    {
+      "discovery": false,
+      "origin": "https://fonts.gstatic.com",
+      "path": "/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "method": "GET"
+    },
+    {
+      "discovery": false,
+      "origin": "https://fonts.gstatic.com",
+      "path": "/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "method": "GET"
+    }
+  ],
+  "privacy": [
+    {
+      "viewport": "desktop",
+      "storage": [
+        0,
+        0,
+        "",
+        0
+      ],
+      "externalOrWriteAttempts": 0
+    },
+    {
+      "viewport": "mobile",
+      "storage": [
+        0,
+        0,
+        "",
+        0
+      ],
+      "externalOrWriteAttempts": 0
+    },
+    {
+      "viewport": "narrow",
+      "storage": [
+        0,
+        0,
+        "",
+        0
+      ],
+      "externalOrWriteAttempts": 0
+    }
+  ],
+  "finishedAt": "2026-11-06T15:33:21.360Z",
+  "pass": 35,
+  "fail": 0
+}

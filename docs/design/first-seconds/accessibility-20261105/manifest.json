@@ -1,0 +1,18 @@
+[
+  {
+    "path": "after-forced-colors.png",
+    "sha256": "fa626d00c3ca905155199cd20c8cedca79b9f6b29df002d0aa622b4859048f03"
+  },
+  {
+    "path": "after-narrow-spacing.png",
+    "sha256": "72f2eb5f5a17105c6cbdee56f9dc09ad0f0d3faacdad6f4700436986ed68c460"
+  },
+  {
+    "path": "before-forced-colors.png",
+    "sha256": "eefd88311f2a99422bec89ec99d80fb6a2b9d7b2288a0365168e3c3f36d0e5d4"
+  },
+  {
+    "path": "before-narrow-spacing.png",
+    "sha256": "3ffc431b7b8e00fe78a0b8fa88ea8f668360007f4b4d9eaa1591ff64dae2aa8a"
+  }
+]

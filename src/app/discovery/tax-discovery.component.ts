@@ -50,6 +50,16 @@ export class TaxDiscoveryComponent implements OnInit, OnDestroy {
   private readVersion=0;
   @ViewChild('fileInput') fileInput?:ElementRef<HTMLInputElement>;
   @ViewChild('heading') heading?:ElementRef<HTMLElement>;
+  @ViewChild('editorHeading') editorHeading?:ElementRef<HTMLElement>;
+  @ViewChild('reviewButton') reviewButton?:ElementRef<HTMLButtonElement>;
+  toggleEditor():void {
+    this.editorOpen=!this.editorOpen;
+    setTimeout(()=>this.editorOpen?this.editorHeading?.nativeElement.focus():this.reviewButton?.nativeElement.focus());
+  }
+  closeEditor():void {
+    this.editorOpen=false;
+    setTimeout(()=>this.reviewButton?.nativeElement.focus());
+  }
   get ready():TaxAnalysis|null{return this.analysis?.status==='ready'?this.analysis:null;}
   trackRow(index:number):number{return index;}
   tryExample():void {

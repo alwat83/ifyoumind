@@ -10,6 +10,18 @@ test('synthetic example automatically yields exact totals, component contributio
  const r=run(example());assert.equal(r.status,'ready');assert.equal(r.delta,42000);assert.equal(r.percent,'10%');assert.equal(r.findings.length,3);
  assert.match(r.findings[1].detail,/57.1%/);assert.deepEqual(r.changes.map(c=>c.delta),[9000,24000,9000]);assert.match(r.findings[2].title,/10%/);
 });
+test('spotlight uses the supported charge finding and withholds a sole contributor for ties or offsets',()=>{
+ const r=run(example()),highlight=r.findings.find(f=>f.id==='components').highlight;
+ assert.deepEqual(highlight,{label:'School',value:'+$240.00',context:'$2,400.00 → $2,640.00'});
+ for(const values of [
+  {county_usd:'1000',school_usd:'2500',municipal_usd:'900',total_usd:'4400'},
+  {county_usd:'1100',school_usd:'2300',municipal_usd:'900',total_usd:'4300'},
+  {county_usd:'900',school_usd:'2400',municipal_usd:'900',total_usd:'4200'}
+ ]){
+  const result=run(change(example(),1,values));assert.equal(result.status,'ready');
+  assert.equal(result.findings.find(f=>f.id==='components').highlight,undefined);
+ }
+});
 test('every finding cites actual raw cells and a reproducible calculation',()=>{
  const rows=example(),r=run(rows);
  for(const f of r.findings){assert.ok(f.steps.length);assert.ok(f.cells.length);for(const c of f.cells){const row=Number(c.cell.slice(1))-2;assert.equal(c.raw,rows[row][c.field]);assert.equal(c.cell[0],String.fromCharCode(65+TAX_FIELDS.indexOf(c.field)));}}

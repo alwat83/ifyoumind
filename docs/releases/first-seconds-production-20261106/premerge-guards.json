@@ -1,0 +1,109 @@
+{
+  "observed_date": "2026-11-05",
+  "timezone": "America/Chicago",
+  "authorization": "Founder: Go ahead and merge if passed all guardchecks; in response to exact PR76/head and configured automatic Firebase deployment request.",
+  "pr": 76,
+  "head": "0971a1b48edf36a00acef78696bc8807528f27ac",
+  "base": "c01c93cd1c270949b4c778f4d52e4af1f1e8b25e",
+  "candidate_tree": "affcf29051cdfb16e19a8a7857cfc7a299944e0c",
+  "mergeable_state": "clean",
+  "files": [
+    "AGENTS.md",
+    "IFYOUMIND_MASTER_PROJECT.md",
+    "docs/agent-handoff/CURRENT_STATUS.md",
+    "docs/agent-handoff/DEVELOPMENT_LOG.md",
+    "docs/design/first-seconds/CI_OBSERVATION_2026-11-05.json",
+    "docs/design/first-seconds/FIRST_USE_VALIDATION.md",
+    "docs/design/first-seconds/REVIEW.md",
+    "docs/design/first-seconds/SESSION_TEMPLATE.md",
+    "docs/design/first-seconds/asset-manifest.json",
+    "docs/design/first-seconds/screenshots/desktop-fold.png",
+    "docs/design/first-seconds/screenshots/desktop-full.png",
+    "docs/design/first-seconds/screenshots/desktop-tax.png",
+    "docs/design/first-seconds/screenshots/mobile-fold.png",
+    "docs/design/first-seconds/screenshots/mobile-full.png",
+    "docs/design/first-seconds/screenshots/mobile-tax.png",
+    "docs/design/first-seconds/screenshots/narrow-fold.png",
+    "docs/design/first-seconds/screenshots/narrow-full.png",
+    "docs/design/visual-first/REVIEW.md",
+    "docs/growth/REVENUE_GROWTH_PLAN.md",
+    "docs/releases/visual-discovery-20261104/AUTHORIZATION.md",
+    "docs/releases/visual-discovery-20261104/LIVE_VERIFICATION.md",
+    "docs/releases/visual-discovery-20261104/build.json",
+    "docs/releases/visual-discovery-20261104/deployment.json",
+    "docs/releases/visual-discovery-20261104/hosting.json",
+    "docs/releases/visual-discovery-20261104/live-smoke.json",
+    "docs/releases/visual-discovery-20261104/merge.json",
+    "docs/releases/visual-discovery-20261104/premerge-hosting.json",
+    "docs/releases/visual-discovery-20261104/premerge-pr.json",
+    "docs/releases/visual-discovery-20261104/qa-totals.json",
+    "docs/releases/visual-discovery-20261104/qa.json",
+    "docs/releases/visual-discovery-20261104/retained-rollback.json",
+    "docs/releases/visual-discovery-20261104/screenshots.json",
+    "docs/releases/visual-discovery-20261104/screenshots/desktop-entry.png",
+    "docs/releases/visual-discovery-20261104/screenshots/desktop-home-fold.png",
+    "docs/releases/visual-discovery-20261104/screenshots/desktop-home.png",
+    "docs/releases/visual-discovery-20261104/screenshots/mobile-electricity-evidence.png",
+    "docs/releases/visual-discovery-20261104/screenshots/mobile-entry.png",
+    "docs/releases/visual-discovery-20261104/screenshots/mobile-home-fold.png",
+    "docs/releases/visual-discovery-20261104/screenshots/mobile-home.png",
+    "docs/releases/visual-discovery-20261104/screenshots/narrow-home-fold.png",
+    "e2e/discover-specs/integration.spec.mjs",
+    "e2e/discover-specs/visual-home.spec.mjs",
+    "e2e/specs/homepage-release.spec.mjs",
+    "e2e/specs/sample-recovery.spec.mjs",
+    "src/app/intelligence/public-landing-visual-mobile.component.scss",
+    "src/app/intelligence/public-landing.component.html",
+    "src/app/intelligence/public-landing.component.scss"
+  ],
+  "workflow_runs": [
+    {
+      "id": 42140134230,
+      "name": "Launch build check",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 177,
+      "jobs_url": "https://api.github.com/repos/alwat83/ifyoumind/actions/runs/42140134230/jobs",
+      "logs_url": "https://api.github.com/repos/alwat83/ifyoumind/actions/runs/42140134230/logs",
+      "workflow_id": 374054969
+    },
+    {
+      "id": 42140134237,
+      "name": "Authenticated QA (emulators)",
+      "status": "completed",
+      "conclusion": "success",
+      "run_number": 92,
+      "jobs_url": "https://api.github.com/repos/alwat83/ifyoumind/actions/runs/42140134237/jobs",
+      "logs_url": "https://api.github.com/repos/alwat83/ifyoumind/actions/runs/42140134237/logs",
+      "workflow_id": 382504068
+    }
+  ],
+  "check_runs": [
+    {
+      "id": 127638104270,
+      "name": "qa",
+      "head_sha": "0971a1b48edf36a00acef78696bc8807528f27ac",
+      "status": "completed",
+      "conclusion": "success"
+    },
+    {
+      "id": 127638103630,
+      "name": "build",
+      "head_sha": "0971a1b48edf36a00acef78696bc8807528f27ac",
+      "status": "completed",
+      "conclusion": "success"
+    }
+  ],
+  "branch_protected": false,
+  "protection": {
+    "enabled": false,
+    "required_status_checks": {
+      "enforcement_level": "off",
+      "contexts": [],
+      "checks": []
+    }
+  },
+  "rulesets": [],
+  "legacy_statuses": [],
+  "protection_endpoint_limitation": "Direct protection endpoint returned integration403; readable branch metadata explicitly reports protected:false/protection.enabled:false; rulesets empty."
+}

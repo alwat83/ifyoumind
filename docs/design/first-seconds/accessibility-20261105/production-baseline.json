@@ -1,0 +1,12 @@
+{
+  "observed_date_local": "2026-11-05",
+  "timezone": "America/Chicago",
+  "method": "read-only firebase hosting:channel:list; no deployment",
+  "live_release": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/channels/live/releases/1793817118849000",
+  "release_time": "2026-11-04T18:31:58.849Z",
+  "version": "projects/ifyoumind-473fe/sites/ifyoumind-473fe/versions/608bc867ecf986ac",
+  "status": "FINALIZED",
+  "file_count": "45",
+  "delete_time": null,
+  "source_association": "PR75/c01c93c from successful November4 deployment41887559100; Hosting metadata does not embed a Git SHA"
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "observedAt": "2026-11-06T15:33:26.434Z",
+    "version": "projects/528549191581/sites/ifyoumind-473fe/versions/608bc867ecf986ac",
+    "status": "FINALIZED",
+    "fileCount": "45",
+    "deleteTime": null
+  },
+  {
+    "observedAt": "2026-11-06T15:33:26.618Z",
+    "version": "projects/528549191581/sites/ifyoumind-473fe/versions/f76d7036fa558cf7",
+    "status": "FINALIZED",
+    "fileCount": "45",
+    "deleteTime": null
+  }
+]

@@ -1,0 +1,58 @@
+[
+  {
+    "path": "screenshots/desktop-electricity-fold.png",
+    "sha256": "e74ff99e59ce46b1ebc543fa8f2ae37d2655d62fb256b805bde7c9d52b952409"
+  },
+  {
+    "path": "screenshots/desktop-electricity-full.png",
+    "sha256": "41c8897db9bb57a7e19e203fd9c1406a5acfdde069fd639da5628827408a6c2d"
+  },
+  {
+    "path": "screenshots/desktop-tax-fold.png",
+    "sha256": "66124e31092edf5146dc373c08bbf7226c6e71dc547b026ffa46fcde486a9611"
+  },
+  {
+    "path": "screenshots/desktop-tax-full.png",
+    "sha256": "eba59f5b6ba028b678c68e5fb6f78bbc57c291786e814cfce79fdb13f9365a12"
+  },
+  {
+    "path": "screenshots/mobile-electricity-fold.png",
+    "sha256": "0165d79ba1acc39bb858621482c3c45685d3cc40bb2c8d67ebce551ff3617beb"
+  },
+  {
+    "path": "screenshots/mobile-electricity-full.png",
+    "sha256": "672270c67d18c9532f3ef6255053adafb95e1612bd25d13402cebe6c9abd3a6d"
+  },
+  {
+    "path": "screenshots/mobile-electricity-spotlight-proof.png",
+    "sha256": "3703201a4ddf4e64d8934c4f8b3128edd5ff66acc4bdd9730871aef235a88676"
+  },
+  {
+    "path": "screenshots/mobile-tax-fold.png",
+    "sha256": "c90a3b41c4aaa73810925dc8af0a543f59a1f504347945aa2ccf1f03cceb3d4c"
+  },
+  {
+    "path": "screenshots/mobile-tax-full.png",
+    "sha256": "71614d2d114aa0efac4d4ff188962b939df58f3044636ee0c623700bdd147676"
+  },
+  {
+    "path": "screenshots/mobile-tax-spotlight-proof.png",
+    "sha256": "9af0d3a94f8dd154f2a65e4cab659ec93d4f529fd8f697ab1f5f16ca1678eed9"
+  },
+  {
+    "path": "screenshots/narrow-electricity-fold.png",
+    "sha256": "372ecb0882f38f56c7034365392164ad5b13a9273014db9268ca91e00f25684c"
+  },
+  {
+    "path": "screenshots/narrow-electricity-full.png",
+    "sha256": "c9223f14839515bc347f203078e9367ab4749060b35ec4868ce7ce91ea6cac12"
+  },
+  {
+    "path": "screenshots/narrow-tax-fold.png",
+    "sha256": "e27d0765fd6c8a51146e55e14a8042838bc370723310da6ea20dcb536479a608"
+  },
+  {
+    "path": "screenshots/narrow-tax-full.png",
+    "sha256": "43e4746bc1597db6676cb6c2358bec2a7e79795a3ea377f33c8a9595dacb525d"
+  }
+]

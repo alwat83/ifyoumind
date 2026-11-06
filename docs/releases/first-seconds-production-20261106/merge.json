@@ -1,0 +1,14 @@
+{
+  "sha": "e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e",
+  "merged": true,
+  "message": "Pull Request successfully merged",
+  "approvedHead": "0971a1b48edf36a00acef78696bc8807528f27ac",
+  "base": "c01c93cd1c270949b4c778f4d52e4af1f1e8b25e",
+  "tree": "affcf29051cdfb16e19a8a7857cfc7a299944e0c",
+  "parents": [
+    "c01c93cd1c270949b4c778f4d52e4af1f1e8b25e",
+    "0971a1b48edf36a00acef78696bc8807528f27ac"
+  ],
+  "approvedTree": "affcf29051cdfb16e19a8a7857cfc7a299944e0c",
+  "treesIdentical": true
+}

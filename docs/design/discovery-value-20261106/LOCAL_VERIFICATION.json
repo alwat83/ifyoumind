@@ -1,0 +1,58 @@
+{
+  "observation_date": "2026-11-06",
+  "scope": "Internal synthetic local design verification; not participant or production checks",
+  "builds": [
+    "production",
+    "tax",
+    "electricity",
+    "unified"
+  ],
+  "fast": {
+    "passed": 139,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser": {
+    "tax": {
+      "passed": 48,
+      "failed": 0,
+      "skipped": 0
+    },
+    "electricity": {
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0
+    },
+    "unified": {
+      "passed": 36,
+      "failed": 0,
+      "skipped": 0
+    },
+    "public": {
+      "passed": 84,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "browser_total": 195,
+  "targeted_lint": "PASS",
+  "bundle_guard_files": 36,
+  "production_isolation": {
+    "root_js": 21,
+    "allowlisted_assets": 3
+  },
+  "initial_final_tax_attempt": {
+    "passed": 46,
+    "scan_timeouts": 2,
+    "counted_as_final_pass": false
+  },
+  "tax_rerun": "Complete one-worker48PASS with unchanged timeouts",
+  "screenshots": 14,
+  "capability": "Existing validated calculations with optional display metadata",
+  "limits": [
+    "No participant observation",
+    "No new production/live suite",
+    "New-head CI follows push",
+    "Historical lint/compiler debt and device/payment gaps retained"
+  ]
+}

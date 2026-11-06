@@ -1,0 +1,110 @@
+[
+  {
+    "name": "desktop",
+    "category": "electricity",
+    "headingBottom": 476.796875,
+    "proofBottom": 652.84375,
+    "viewportHeight": 900,
+    "spotlightValues": [
+      {
+        "text": "+21%",
+        "bottom": 498.26593017578125
+      },
+      {
+        "text": "+10%",
+        "bottom": 499.26593017578125
+      }
+    ],
+    "overflow": 0
+  },
+  {
+    "name": "desktop",
+    "category": "tax",
+    "headingBottom": 478.09375,
+    "proofBottom": 633.046875,
+    "viewportHeight": 900,
+    "spotlightValues": [
+      {
+        "text": "+$420.00",
+        "bottom": 478.8479919433594
+      },
+      {
+        "text": "+$240.00",
+        "bottom": 479.8479919433594
+      }
+    ],
+    "overflow": 0
+  },
+  {
+    "name": "mobile",
+    "category": "electricity",
+    "headingBottom": 415,
+    "proofBottom": 771.359375,
+    "viewportHeight": 844,
+    "spotlightValues": [
+      {
+        "text": "+21%",
+        "bottom": 538.9882202148438
+      },
+      {
+        "text": "+10%",
+        "bottom": 539.9882202148438
+      }
+    ],
+    "overflow": 0
+  },
+  {
+    "name": "mobile",
+    "category": "tax",
+    "headingBottom": 415,
+    "proofBottom": 729.171875,
+    "viewportHeight": 844,
+    "spotlightValues": [
+      {
+        "text": "+$420.00",
+        "bottom": 518.813232421875
+      },
+      {
+        "text": "+$240.00",
+        "bottom": 519.813232421875
+      }
+    ],
+    "overflow": 0
+  },
+  {
+    "name": "narrow",
+    "category": "electricity",
+    "headingBottom": 437.875,
+    "proofBottom": 823.03125,
+    "viewportHeight": 568,
+    "spotlightValues": [
+      {
+        "text": "+21%",
+        "bottom": 538.46875
+      },
+      {
+        "text": "+10%",
+        "bottom": 539.46875
+      }
+    ],
+    "overflow": 0
+  },
+  {
+    "name": "narrow",
+    "category": "tax",
+    "headingBottom": 437.875,
+    "proofBottom": 766.15625,
+    "viewportHeight": 568,
+    "spotlightValues": [
+      {
+        "text": "+$420.00",
+        "bottom": 526.375
+      },
+      {
+        "text": "+$240.00",
+        "bottom": 527.375
+      }
+    ],
+    "overflow": 0
+  }
+]

@@ -1,6 +1,6 @@
 # First-use validation — PR76
 
-November 5, 2026 CST · OpenAI / Codex. **Prepared, not conducted.** Candidate [PR76](https://github.com/alwat83/ifyoumind/pull/76), exact head `3eb27893c3be6aad43cb0c07e173d412c8ee8103`. This packet is separate from the application candidate; no new release or outreach authority.
+Originally prepared November5,2026 · OpenAI / Codex. **Prepared, not conducted. Participant testing deferred by founder on November6 until the current design pass is complete.** PR76 is now deployed as e5d8f15; [production evidence](../../releases/first-seconds-production-20261106/LIVE_VERIFICATION.md). The [current results-design work](../discovery-results-20261106/REVIEW.md) remains a separate local/draft iteration. This protocol is retained for the later feedback round, not a participant-availability gate to continuing design. No new release or outreach authority inferred.
 
 ## One decision
 
@@ -10,7 +10,7 @@ Can a first-time visitor understand the available value in five seconds, start a
 
 [Desktop](screenshots/desktop-fold.png), [mobile](screenshots/mobile-fold.png), [320px](screenshots/narrow-fold.png), [tax](screenshots/mobile-tax.png), and the [working design review](REVIEW.md) are immutable candidate evidence. For the five-second purpose check, show the matching first-screen image at its native size, without this document or the facilitator's answer key. Scaling an image to fit a different device is a limitation, not a native-device pass. Screenshots cannot validate taps, navigation or accessibility.
 
-For interactive tasks use a confirmed running local build of the exact candidate. The historical preview URL is not asserted running. Developer setup, if needed: use the lockfile and existing `npm run build`, then `DISCOVER_PORT=4316 npm run start:discover`; confirm the served homepage says “Two bills. One clear story.” and the checkout is the candidate or this documentation-only descendant. The server uses the production artifact and a loopback-only Hosting emulator. Do not point a candidate session at the live homepage: that remains PR75.
+When participant testing resumes, choose and record the exact version under review. Current local design preview uses http://127.0.0.1:4326/discover/ when its checked server is running; developer setup is the lockfile and `npm run build`, then `DISCOVER_PORT=4326 npm run start:discover` if no existing server owns that port. This uses the production artifact and a loopback-only Hosting emulator. The live site remains released PR76/e5d8f15 and does not contain the new results design; do not mix its observations with a local candidate session.
 
 ## People and handling
 
@@ -67,4 +67,4 @@ Fresh GitHub query confirms exact-head [build41969293482](https://github.com/alw
 | One qualified Business sample conversation after outbound reopens | Existing paid product and prepared private route; current need and willingness to pay unconfirmed | Low technical effort; audience/sender/channel/content approval required; earliest direct sale opportunity |
 | Further design/features or paid acquisition | No first-use evidence supporting expansion | Higher effort or expense; defer pending observed needs and applicable approval |
 
-Free bill discovery and optional Business purchases stay separate. No financial refresh, traffic/customer total, conversion lift or sale is claimed. Production remains the November4 verified PR75 release; PR76 requires separate founder release approval.
+Free bill discovery and optional Business purchases stay separate. No financial refresh, traffic/customer total, conversion lift or sale is claimed. Production is released PR76/e5d8f15; the current results-design iteration requires its own explicit release approval. Participant testing is deferred until the end of the design pass.

@@ -1,5 +1,21 @@
 # ifYouMind — Current development status
 
+## Current — November 6, 2026: PR76 merged, deployed and production verified
+
+OpenAI / Codex. Founder authorized **“Go ahead and merge if passed all guardchecks”** after the exact76head/automatic-deployment request. Revalidated unchanged0971a1b/basec01c93c, all two actual check runs/workflowsSUCCESS, clean mergeability, unchanged47file scope, protected:false/rulesets empty and then-current finalized rollback baseline. Marked/merged only76 using expected-head guard; **production `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`**, approved/merged treeaffcf29051cdfb16e19a8a7857cfc7a299944e0c identical. [Authorization/guards/deploy/live screenshots/limits](../releases/first-seconds-production-20261106/LIVE_VERIFICATION.md).
+
+**Deployment [42143112840 SUCCESS](https://github.com/alwat83/ifyoumind/actions/runs/42143112840):** Node22 production build,72Functions testsPASS0FAIL0SKIP, Functions build/configured deploySUCCESS. **Hostingf76d7036fa558cf7**, release1793928208205000/API releaseTime2026-11-06T01:23:28.205Z, FINALIZED45files/notdeleted. Workflow covers Hosting/listed unchanged Functions/Firestore rules+indexes/Storage. No new backend/Stripe/pricing/capability or extra master push.
+
+**Fresh live35PASS/0FAIL** at1280/390/320: first-screen finding/action/evidence switch, real examples, correction/refusal/retry/clear/offline/reload, new text-spacing and forced-colors corrections, Businesssample/prices/paid intent, isolation headers/assets/301/404/sitemap/guides/privacy. Exactly two public-sample read POSTs; all other non-read calls blocked/none attempted.15main-app Google fontGETs blocked by allowlist (Business views use fallback fonts), not a production font outage. All isolated discovery contexts: external/write attempts/storage0. Automated checked WCAG violations0. Seven actual live images/hashes. Internal synthetic QA is not traffic/acquisition.
+
+Candidate0971a1b [build42140134230](https://github.com/alwat83/ifyoumind/actions/runs/42140134230)/[fullQA42140134237](https://github.com/alwat83/ifyoumind/actions/runs/42140134237)SUCCESS,295browser/137fast/72Functions and recorded integration suitesPASS, fixtures24PASS+1existingSKIP; these are prior candidate checks, not rerun full suites during deployment. Historical91lint/11Angular diagnostics, budget warnings, native-device/Safari/spokenSR/novice-comprehension/real signup/email/payment/PDF limits remain.
+
+**Preserved:** source0971a1b, evidencebda5b03 and earlier branches/worktrees/FRED/sitemap/PR74/private drafts. Prior608bc867ecf986ac remains FINALIZED45files/notdeleted after release; no rollback needed/performed. Separate `codex/discovery76-production-handoff-20261106` starts from deployed master and carries only reviewed docs evidence/release records; final commit/push/Notion synchronization in PR/conversation. No additional production release authorized. Outbound **Pending Founder Setup**, no sender reminders/messages/posts/spend/Stripe changes, no new customer/revenue result.
+
+**Next three:** (1) observe permitted first-time mobile purpose/example/evidence use with the prepared short script; (2) fix only a reproduced material obstacle on a separate branch with relevant checks/separate release approval; (3) once outbound specifically reopens, execute the prepared relevant first-customer demonstration and record actual useful experiences/independent purchases. Recommended next assignment: real first-use feedback, not another speculative redesign.
+
+## Historical — PR76 pre-release review
+
 ## Current — November 5, 2026: first-screen accessibility corrections / release review
 
 OpenAI / Codex. Founder says “Let's keep going.” Continued PR76 with concrete local accessibility review. **Implemented/committed/pushed** candidate **`0971a1b48edf36a00acef78696bc8807528f27ac`** on `codex/first-seconds-discovery` / [draft PR76](https://github.com/alwat83/ifyoumind/pull/76). At320px with increased text spacing, navigation clipped; forced-colors mode erased the selected bill marker. Small wrapping/system-color-border fixes preserve the first-screen direction and existing product boundaries. New two-case regression executes across three viewport projects. [Exact release review, before/after evidence, verification limits and rollback](../design/first-seconds/RELEASE_REVIEW.md).

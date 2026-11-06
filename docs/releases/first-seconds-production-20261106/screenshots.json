@@ -1,0 +1,30 @@
+[
+  {
+    "path": "screenshots/desktop-home.png",
+    "sha256": "a1f0fa3670961838ebf695960de2c573f72d57882509c96e02b424ddd3408ff6"
+  },
+  {
+    "path": "screenshots/desktop-tax-evidence.png",
+    "sha256": "2e4bb9afbe51f4cf4149c2fac081b82f11079770be6e3cc5b543e863c8f26db5"
+  },
+  {
+    "path": "screenshots/mobile-electricity-evidence.png",
+    "sha256": "08227d4f83012337ce5606d38698167474fb1d4a47bb953ca61d2bf1b9bcd07c"
+  },
+  {
+    "path": "screenshots/mobile-forced-colors.png",
+    "sha256": "a49b561aa32ed6b69c96f4600b36cbbc1fe0c96864bef616495ca5dd7680151f"
+  },
+  {
+    "path": "screenshots/mobile-home.png",
+    "sha256": "9e47de01b885501033c9a36daf04cc2629b1df7ac3ad8d9495f38ea0277a2790"
+  },
+  {
+    "path": "screenshots/narrow-home.png",
+    "sha256": "17040ba5a8cfe1c02e97b1bf3f67eb03fcfb360e60de3f8b3e570113d52f6eec"
+  },
+  {
+    "path": "screenshots/narrow-text-spacing.png",
+    "sha256": "5b9fa73b04f5d627521c5bd99a3b40fa3fa38bdeb1ec3bae8e090ceec73cd9f6"
+  }
+]

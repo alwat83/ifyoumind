@@ -2,6 +2,8 @@
 
 November 5, 2026 CST · OpenAI / Codex. **Committed, locally verified and exact-head CI successful. GO for founder release review; not merged or deployed.** No human usefulness/conversion result claimed.
 
+**Subsequently authorized and released:** only76 merged as e5d8f15; deployment42143112840SUCCESS, Hostingf76d7036fa558cf7,35live checksPASS. [Current production evidence](../../releases/first-seconds-production-20261106/LIVE_VERIFICATION.md). The remaining pre-release text is preserved as the reviewed decision record, not current pending status.
+
 ## Decision and exact candidate
 
 Review only [PR76](https://github.com/alwat83/ifyoumind/pull/76) at **`0971a1b48edf36a00acef78696bc8807528f27ac`**, base/master `c01c93cd1c270949b4c778f4d52e4af1f1e8b25e`. Earlier green `3eb2789` remains history, not this candidate's CI. The existing first-use packet `a6f4c7c` and focused fix `0971a1b` are fast-forward descendants; no source branches replayed or merged.

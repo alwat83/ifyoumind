@@ -1,0 +1,117 @@
+{
+  "runId": 42143112840,
+  "url": "https://github.com/alwat83/ifyoumind/actions/runs/42143112840",
+  "headSha": "e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e",
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": {
+    "jobs": [
+      {
+        "id": 127648026485,
+        "name": "deploy",
+        "status": "completed",
+        "conclusion": "success",
+        "run_id": 42143112840,
+        "logs_url": null,
+        "steps": [
+          {
+            "name": "Set up job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 1
+          },
+          {
+            "name": "Check out production source",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 2
+          },
+          {
+            "name": "Use Node 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 3
+          },
+          {
+            "name": "Install app dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 4
+          },
+          {
+            "name": "Install Functions dependencies",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 5
+          },
+          {
+            "name": "Run production preflight",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 6
+          },
+          {
+            "name": "Build Angular app",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 7
+          },
+          {
+            "name": "Test Firebase Functions",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 8
+          },
+          {
+            "name": "Build Firebase Functions",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 9
+          },
+          {
+            "name": "Authenticate to Google Cloud",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 10
+          },
+          {
+            "name": "Deploy consumer production",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 11
+          },
+          {
+            "name": "Post Authenticate to Google Cloud",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 20
+          },
+          {
+            "name": "Post Use Node 22",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 21
+          },
+          {
+            "name": "Post Check out production source",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 22
+          },
+          {
+            "name": "Complete job",
+            "status": "completed",
+            "conclusion": "success",
+            "number": 23
+          }
+        ]
+      }
+    ]
+  },
+  "decodedFunctionsTests": {
+    "pass": 72,
+    "fail": 0,
+    "skip": 0
+  },
+  "scope": "Existing configured production workflow: Hosting, listed unchanged Functions, Firestore rules/indexes and Storage rules. No Stripe settings changed."
+}

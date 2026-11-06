@@ -10,6 +10,13 @@ test('example separates exact consumption, bill total, average cost and bill-ide
  const r=run(rows());assert.equal(r.status,'ready');assert.equal(r.delta,2520);assert.equal(r.percent,'21%');assert.equal(r.findings.length,5);
  assert.match(r.findings.find(f=>f.id==='consumption').title,/60 kWh more/);assert.match(r.findings.find(f=>f.id==='unit-cost').detail,/\$0.2000/);assert.match(r.findings.find(f=>f.id==='unit-cost').title,/\$0.2200/);assert.deepEqual(r.changes.map(c=>c.delta),[0,2520,0]);
 });
+test('consumption spotlight preserves direction and does not invent a percentage from zero usage',()=>{
+ assert.deepEqual(run(rows()).findings.find(f=>f.id==='consumption').highlight,{label:'Energy used',value:'+10%',context:'600 kWh → 660 kWh'});
+ const zero=run(change(rows(),0,{consumption_kwh:'0'}));assert.equal(zero.status,'ready');
+ const highlight=zero.findings.find(f=>f.id==='consumption').highlight;
+ assert.equal(highlight.value,'+660 kWh');assert.equal(highlight.context,'0 kWh → 660 kWh');assert.doesNotMatch(highlight.value,/%|Infinity|NaN/);
+ assert.equal(run(change(rows(),1,{consumption_kwh:'300'})).findings.find(f=>f.id==='consumption').highlight.value,'−50%');
+});
 test('unit-cost display is exact rational rounding, not a tariff claim',()=>{
  assert.equal(unitCost(12000,600000),'$0.2000');assert.equal(unitCost(1,3000),'$0.0033');assert.equal(unitCost(1,200000),'$0.0001');assert.equal(unitCost(1,999999999999),'$0.00000000001');assert.equal(unitCost(0,1000),'$0.0000');assert.equal(unitCost(100,0),null);
  assert.match(run(rows()).findings.find(f=>f.id==='unit-cost').detail,/not the supplier’s tariff/);

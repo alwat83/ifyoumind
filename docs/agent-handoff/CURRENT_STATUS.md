@@ -1,5 +1,21 @@
 # ifYouMind — Current development status
 
+## Current — November 6, 2026: clearer value and playful comparison draft
+
+OpenAI / Codex. Founder asks for clearer value, fun and a “wow” factor. Built a visible comparison using existing findings: made-up electricity bill+21% versus energy+10%; tax total+$420 versus School+$240. Tapping the second metric opens its actual source evidence and focuses that finding; keyboard return, optional curiosity buttons, shorter purpose/evidence copy and quiet color/icon treatment. Both bold comparison values must fit the first viewport at1280/390/320; detail/evidence at320 remains scrollable. [Working review,14 final captures, layout/hash records](../design/discovery-value-20261106/REVIEW.md). **Development draft only.** Participant testing remains deferred until the design pass ends; no recruitment/sender questions.
+
+Local branch `codex/discovery-value-playful-20261106` from8c6fa67; update existing [draft PR77](https://github.com/alwat83/ifyoumind/pull/77) by normal fast-forward push to `codex/discovery-results-design-20261106`, preserving021f8e3 and original records. Final candidate SHA/new-head CI recorded after push. Initial021f8e3 [build42278181407](https://github.com/alwat83/ifyoumind/actions/runs/42278181407) and [fullQA42278181425](https://github.com/alwat83/ifyoumind/actions/runs/42278181425) freshly observed SUCCESS; **not inherited by the revision**.
+
+Production/tax/electricity/unified builds PASS;139fast PASS; targeted TS/HTML lint,36file bundle guard,21rootJS/3allowlisted-assets privacy isolation and diff checks PASS. Final fresh browser48tax/27electricity/36unified/84public **195PASS0FAIL0SKIP**,14screenshots/hashes/layout records; both comparison values within all checked first viewports, overflow0. First post-polish tax run46PASS/2accessibility-scan timeouts; complete one-worker rerun48PASS, without raising timeouts. No failed or pre-polish run counted as final success. Existing91lint/11Angular diagnostic debt/fixture skip/budget warnings and native-device/Safari/spokenSR/real-payment/human-comprehension gaps retained.
+
+Optional highlight metadata added to existing finding factories/contract; validated calculations and schemas unchanged. Zero usage never invents a percentage; decreases preserve sign; property-tax ties/offsets/unchanged values retain the fallback comparison. No backend/AI/PDF/new category/private storage/auth/Business/homepage/dependency/Stripe/pricing/workflow change. Original worktrees/PR74/private campaign material preserved; no concurrent subagents. Current/master/growth/log/AGENTS synchronized; existing Notion hub receives sanitized milestone after push.
+
+**Production remains PR76/e5d8f15/Hostingf76d7036fa558cf7**, per existing release evidence below; no new live suite, merge/deploy or commercial outcome. Outbound **Pending Founder Setup**. Future release needs explicit exact-head approval; no action requested now while designing. Unknown business metrics and approved dated financial baseline unchanged.
+
+**Next three:** review the working comparison and refine concrete remaining comprehension friction; complete revised-head CI before any release proposal; conduct the deferred end-of-design participant walkthrough when resumed. Recommended next assignment is focused design review, not feature expansion/recruitment. Expected faster understanding/evidence use is a hypothesis, not measured engagement or revenue.
+
+## Earlier design pass
+
 ## Current — November 6, 2026: continue design, emphasize less friction
 
 OpenAI / Codex. **New founder steering:** keep designing; defer participant testing until the end of this design pass; emphasize less friction for users. Do not repeatedly request participants or sender setup. Implemented a focused results/evidence/correction design on `codex/discovery-results-design-20261106`, from production handofffb2fc76 / released appe5d8f15. [Working review, mobile/desktop/320px comparisons, evidence/editor/error/clear captures](../design/discovery-results-20261106/REVIEW.md). **Local/draft only, no new release.**

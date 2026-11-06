@@ -1,7 +1,9 @@
 import { parseCsv } from '../intelligence/csv-parser';
 export interface DiscoveryIssue { row:number|null; field:string|null; message:string }
 export interface EvidenceCell { cell:string; field:string; label:string; raw:string; used:string }
-export interface DiscoveryFinding { id:string; title:string; detail:string; steps:string[]; cells:EvidenceCell[] }
+/** Optional presentation of an already calculated finding, with its original values. */
+export interface DiscoveryHighlight { label:string; value:string; context:string }
+export interface DiscoveryFinding { id:string; title:string; detail:string; steps:string[]; cells:EvidenceCell[]; highlight?:DiscoveryHighlight }
 export interface ComponentChange { label:string; delta:number; before:number; after:number }
 export interface DiscoveryAnalysis {
   status:'ready'|'insufficient'|'invalid';issues:DiscoveryIssue[];findings:DiscoveryFinding[];
@@ -70,7 +72,7 @@ export function compareCharges(totalBefore:number,totalAfter:number,periods:(num
   const aligned=delta!==0&&changes.every(c=>c.delta===0||Math.sign(c.delta)===Math.sign(delta));
   findings.push({id:'components',title:biggest.delta===0?'The individual charges stayed the same, too.':delta===0?'The total stayed the same, but the charges shifted.':tied.length>1?'There’s a tie for the biggest change.':`${biggest.label} changed the most.`,
     detail:biggest.delta===0?(pattern?'The county, school and municipal charges are each unchanged between these two bills.':'Each identified charge is unchanged between these two bills.'):aligned&&tied.length===1?`${biggest.label} went ${biggest.delta>0?'up':'down'} by ${usd(Math.abs(biggest.delta))}. That makes up ${percentChange(Math.abs(biggest.delta),Math.abs(delta))} of the ${usd(Math.abs(delta))} ${delta>0?'increase':'decrease'}. This shows how the difference adds up, not why it happened.`:delta===0||!aligned?'Some charges went up while others went down, so they partly or fully offset each other. Showing a share of the overall change could be misleading.':'The biggest dollar changes are tied. No single charge changed the most.',
-    steps:[...changes.map(c=>`${c.label}: ${usd(c.after)} − ${usd(c.before)} = ${signedUsd(c.delta)}`),`${changes.map(c=>`(${signedUsd(c.delta)})`).join(' + ')} = ${signedUsd(delta)}`,...(aligned&&tied.length===1?[`(${usd(Math.abs(biggest.delta))} ÷ ${usd(Math.abs(delta))}) × 100 = ${percentChange(Math.abs(biggest.delta),Math.abs(delta))}`]:[])],cells:allCells});
+    steps:[...changes.map(c=>`${c.label}: ${usd(c.after)} − ${usd(c.before)} = ${signedUsd(c.delta)}`),`${changes.map(c=>`(${signedUsd(c.delta)})`).join(' + ')} = ${signedUsd(delta)}`,...(aligned&&tied.length===1?[`(${usd(Math.abs(biggest.delta))} ÷ ${usd(Math.abs(delta))}) × 100 = ${percentChange(Math.abs(biggest.delta),Math.abs(delta))}`]:[])],cells:allCells,...(aligned&&tied.length===1&&biggest.delta!==0?{highlight:{label:biggest.label,value:signedUsd(biggest.delta),context:usd(biggest.before)+' → '+usd(biggest.after)}}:{})});
   }
   const bases=changes.map(c=>c.before),deltas=changes.map(c=>c.delta);
   if(pattern && changes.length>0 && bases.every(n=>n>0)&&deltas[0]!==0&&deltas.every((n,i)=>BigInt(n)*BigInt(bases[0])===BigInt(deltas[0])*BigInt(bases[i]))){

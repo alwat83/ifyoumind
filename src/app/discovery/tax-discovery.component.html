@@ -4,9 +4,9 @@
   <section class="intro" [class.compact]="source !== 'none'">
     <div>
       <p class="eyebrow" *ngIf="source === 'none'">A little data. A new perspective.</p>
-      <h1 #heading tabindex="-1">{{ source === 'none' ? "You bring the data. We’ll find the story." : ready ? 'Here’s what changed.' : 'Let’s get the data ready.' }}</h1>
+      <h1 #heading tabindex="-1">{{ source === 'none' ? "You bring the data. We’ll find the story." : ready ? 'Your bills, made clearer.' : 'Let’s get the data ready.' }}</h1>
       <p class="lead" *ngIf="source === 'none'">{{ isElectricity ? 'Two electricity bills. What changed in your usage—and your bill?' : 'Two property-tax bills. What changed—and what’s worth a closer look?' }}</p>
-      <p class="lead provenance" *ngIf="source !== 'none'"><strong>{{ source === 'example' ? 'Made-up example' : 'Your CSV, on this device.' }}</strong><span *ngIf="edited">You’ve edited the source values.</span><span *ngIf="!ready && !edited">No question or account needed.</span></p>
+      <p class="lead provenance" *ngIf="source !== 'none'"><strong>{{ source === 'example' ? 'Made-up example' : 'Your CSV, on this device.' }}</strong><span *ngIf="ready && !edited" class="value-guide">See the change. Check it.</span><span *ngIf="edited">You’ve edited the source values.</span><span *ngIf="!ready && !edited">No question or account needed.</span></p>
       <div class="actions" *ngIf="source === 'none'"><button class="primary" type="button" (click)="tryExample()">Try example data <span aria-hidden="true">↗</span></button></div>
       <p class="privacy" *ngIf="source === 'none'">{{ embedded ? 'Your bills stay in this browser tab. Nothing is uploaded.' : 'Runs in your browser. Nothing uploaded. No AI or paid API calls.' }}</p>
     </div>

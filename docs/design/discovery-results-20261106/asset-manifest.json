@@ -1,0 +1,78 @@
+[
+  {
+    "path": "screenshots/desktop-electricity-fold.png",
+    "sha256": "610cb446d02e324aa0db3a075d65b62f0ab4f1d1a96dcf2b5cd2f6911310cd0a"
+  },
+  {
+    "path": "screenshots/desktop-electricity-full.png",
+    "sha256": "816462850b20b584057769f878c2b2eebec1cbcc7184d0205fe945fe0de3823a"
+  },
+  {
+    "path": "screenshots/desktop-tax-fold.png",
+    "sha256": "9b4533b4b013f1fb63ec98013865c5616e7577e5ba724ede6a22fbdff9f69819"
+  },
+  {
+    "path": "screenshots/desktop-tax-full.png",
+    "sha256": "f78bf3669d22b2ddf709791a498c48d5f4d37f2ffe3f057a76149e8c674f26b3"
+  },
+  {
+    "path": "screenshots/live-before-electricity.png",
+    "sha256": "aed534c8fa5e7be1bb19e720a9e0cbc0c06919fbc761421bf2113198f52000d6"
+  },
+  {
+    "path": "screenshots/live-before-tax.png",
+    "sha256": "79d725a14d8f57645d8172fd68f33b25fc61706e496f1fd4fd69e70581de3a63"
+  },
+  {
+    "path": "screenshots/mobile-cleared.png",
+    "sha256": "303f47881fadedfab742f028deb8193af3cee3b55ea8ec8a71a885cacf71aca3"
+  },
+  {
+    "path": "screenshots/mobile-editor.png",
+    "sha256": "3600fe07ebd865352c90cbc6a42dd02c31abf8b6a084860a44f8c7ba6096630f"
+  },
+  {
+    "path": "screenshots/mobile-electricity-evidence.png",
+    "sha256": "377f5f87a2540d2008f52d9a2573533afc1f6cbea78196bec6884b94d7074686"
+  },
+  {
+    "path": "screenshots/mobile-electricity-fold.png",
+    "sha256": "5941daeba607735cbbacc3d051616345ab8e3a3ad0cd2059bb8d8352b597e4b1"
+  },
+  {
+    "path": "screenshots/mobile-electricity-full.png",
+    "sha256": "1144b13accadd8bc75e3bf3d10d6c2bf16c678c1388e2f447d5bbe3d7570fd56"
+  },
+  {
+    "path": "screenshots/mobile-invalid.png",
+    "sha256": "de88e676b9c5dadc1597e17d148a069f726edd75d4ff68fc0b0b8a2bf2fb6f3e"
+  },
+  {
+    "path": "screenshots/mobile-tax-evidence.png",
+    "sha256": "1731917c98728ab02ccf8be7f74239999b763725bcfb3866855888a3f4a8838b"
+  },
+  {
+    "path": "screenshots/mobile-tax-fold.png",
+    "sha256": "08f646bcc8d7e91e9a7b0cbe88f47fc6ba8fa22cd57e2fdb0e960a3ac1a27102"
+  },
+  {
+    "path": "screenshots/mobile-tax-full.png",
+    "sha256": "86bc6d5d0cd67047ce5feeac6454fb1cd63746196586b7119dc07ad9244ed1c3"
+  },
+  {
+    "path": "screenshots/narrow-electricity-fold.png",
+    "sha256": "f6d2656c5d670d6451584bd80bd5f9a9e379642e6bd78c535390633cd5972e03"
+  },
+  {
+    "path": "screenshots/narrow-electricity-full.png",
+    "sha256": "466a9f77e572c0a6b2e164277e96f15367f2535f958281d9929200fecb024ab8"
+  },
+  {
+    "path": "screenshots/narrow-tax-fold.png",
+    "sha256": "b20b2de84919419e39fed762d6039bbbd7b2a5daec1e90f9f164b7dd3118989b"
+  },
+  {
+    "path": "screenshots/narrow-tax-full.png",
+    "sha256": "02c4264382b85cb5a7df6d9aade8abbbd752dff39b99b43751de72dc98773aac"
+  }
+]

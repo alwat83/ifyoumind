@@ -1,0 +1,47 @@
+{
+  "scope": "Internal local design review. Baseline screenshots are live PR76; no participant testing or production changes.",
+  "metrics": [
+    {
+      "name": "desktop",
+      "category": "electricity",
+      "firstHeadingBottom": 467.703125,
+      "viewportHeight": 900,
+      "overflow": 0
+    },
+    {
+      "name": "desktop",
+      "category": "tax",
+      "firstHeadingBottom": 478.90625,
+      "viewportHeight": 900,
+      "overflow": 0
+    },
+    {
+      "name": "mobile",
+      "category": "electricity",
+      "firstHeadingBottom": 417.234375,
+      "viewportHeight": 844,
+      "overflow": 0
+    },
+    {
+      "name": "mobile",
+      "category": "tax",
+      "firstHeadingBottom": 417.234375,
+      "viewportHeight": 844,
+      "overflow": 0
+    },
+    {
+      "name": "narrow",
+      "category": "electricity",
+      "firstHeadingBottom": 442.34375,
+      "viewportHeight": 568,
+      "overflow": 0
+    },
+    {
+      "name": "narrow",
+      "category": "tax",
+      "firstHeadingBottom": 442.34375,
+      "viewportHeight": 568,
+      "overflow": 0
+    }
+  ]
+}

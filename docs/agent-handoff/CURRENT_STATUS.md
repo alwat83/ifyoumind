@@ -1,5 +1,19 @@
 # ifYouMind — Current development status
 
+## Current — November 6, 2026: continue design, emphasize less friction
+
+OpenAI / Codex. **New founder steering:** keep designing; defer participant testing until the end of this design pass; emphasize less friction for users. Do not repeatedly request participants or sender setup. Implemented a focused results/evidence/correction design on `codex/discovery-results-design-20261106`, from production handofffb2fc76 / released appe5d8f15. [Working review, mobile/desktop/320px comparisons, evidence/editor/error/clear captures](../design/discovery-results-20261106/REVIEW.md). **Local/draft only, no new release.**
+
+Lead total-change card, quieter supporting findings, concise made-up-example provenance, accessible but visually nonrepeating ready announcement, readable native evidence panel and existing follow-up styling. Confirmed correction friction fixed: action now focuses the distant editor, with a return action while findings remain valid; editing still invalidates results immediately. Five presentation/controller files plus two new browser regression cases; engines/calculations/adapters/data lifecycle, homepage/Business/auth/Stripe/dependencies/Firebase/workflow unchanged.
+
+**Final local engineering checks at end of pass:** production/tax/electricity/unified buildsPASS;137fast;48tax/27electricity/36unified/78public-browserPASS (**189total,0FAIL/0SKIP**); targeted HTML/controller lint,36file production guard,21JS/3asset privacy isolation, syntax/diff PASS.19 synthetic design/live-baseline screenshots and hashes. Earlier186PASS before the focus change is historical, not double-counted. New-head PR/CI recorded after push; never inherit released76checks. Known91lint/11Angular test debt, fixture skip, budget warnings/manual-device/Safari/spokenSR/payment/human-comprehension gaps remain.
+
+**Production unchanged:** PR76/e5d8f15, Hostingf76d7036fa558cf7 per released evidence below; only two synthetic read-only live baseline captures for design comparison, not a new production-health/full-suite claim. No participant study, message/post/recruitment/spend/Stripe change/customer/revenue or new deployment. Original PR74/private campaigns/worktrees preserved; no demo asset claimed after founder steered back to design. Current/master/growth/log/AGENTS and verified Notion hub synchronized for the design milestone.
+
+**Next three:** review/refine the working results→evidence→correction→clear design; continue only concrete friction improvements within existing supported flows; perform deferred end-of-design participant walkthrough/release review when the founder resumes those stages. No participant gate to current design work, no new capabilities/categories or speculative features. Outbound **Pending Founder Setup**, future merge/deploy requires its own approval.
+
+## Released production baseline
+
 ## Current — November 6, 2026: PR76 merged, deployed and production verified
 
 OpenAI / Codex. Founder authorized **“Go ahead and merge if passed all guardchecks”** after the exact76head/automatic-deployment request. Revalidated unchanged0971a1b/basec01c93c, all two actual check runs/workflowsSUCCESS, clean mergeability, unchanged47file scope, protected:false/rulesets empty and then-current finalized rollback baseline. Marked/merged only76 using expected-head guard; **production `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`**, approved/merged treeaffcf29051cdfb16e19a8a7857cfc7a299944e0c identical. [Authorization/guards/deploy/live screenshots/limits](../releases/first-seconds-production-20261106/LIVE_VERIFICATION.md).

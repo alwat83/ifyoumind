@@ -53,6 +53,10 @@ Founder loves the deployed visual direction and requests another modern-design i
 
 **PR76 release completed; verified November6:** Founder explicitly authorized merge after guards in response to exact0971a1b and automatic configured Firebase scope. Only76 merged; productione5d8f15fb9171a3723fdfc324dd0066d8d5caf5e/Hostingf76d7036fa558cf7, deployment42143112840SUCCESS;35live read-only checksPASS. [Exact release/limits/retained rollback](docs/releases/first-seconds-production-20261106/LIVE_VERIFICATION.md). First-screen findings and text-spacing/forced-colors fixes are live. This supersedes release-pending status only for76; no future release/rollback/capability/spend/Stripe/outbound authorization. Pending Founder Setup and human-validation gaps remain.
 
+## Founder design continuation — November 6, 2026
+
+Founder asks to keep designing, defer participant testing until the end of this design pass, and emphasize less friction for users (expressed as “less traction” in context). Continue the existing discovery presentation after the homepage click: clear primary findings, less repeated copy, easy evidence/correction/clear, coherent mobile styling. Do not make recruitment or participant availability a gate to this design work. Retain engineering build/regression/accessibility checks for implementation reliability, and distinguish those from deferred human validation. [Working results-design review](docs/design/discovery-results-20261106/REVIEW.md). No calculation/adapter/privacy/capability expansion, new pricing/Stripe, production merge/deployment, spending or outbound authority inferred; Pending Founder Setup remains.
+
 ## Source of truth — mandatory order
 **Founder correction, 2026-10-22: GitHub and repository documentation are the source of truth for development.** The accessible Notion coordination hub, confirmed by the founder, is:
 https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71

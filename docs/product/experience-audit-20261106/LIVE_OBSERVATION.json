@@ -1,0 +1,186 @@
+{
+  "observedAt": "2026-11-06T21:41:27.653Z",
+  "scope": "Internal read-only product audit; public synthetic examples and existing public sample read only. Not customer use, performance benchmark, signup or checkout test.",
+  "screens": [
+    "desktop-home.png",
+    "desktop-sample.png",
+    "desktop-discovery.png",
+    "desktop-register.png",
+    "mobile-home.png",
+    "mobile-sample.png",
+    "mobile-discovery.png",
+    "mobile-register.png"
+  ],
+  "sampleReads": 2,
+  "sampleResponses": [
+    {
+      "status": 200,
+      "profile": "desktop"
+    },
+    {
+      "status": 200,
+      "profile": "mobile"
+    }
+  ],
+  "blocked": [],
+  "observations": [
+    {
+      "profile": "desktop",
+      "name": "home",
+      "requestedPath": "/",
+      "resultPath": "/",
+      "heading": [
+        "Two bills.One clear story."
+      ],
+      "height": 3138,
+      "overflow": 0,
+      "primaryCTA": "/discover/?example=electricity"
+    },
+    {
+      "profile": "desktop",
+      "name": "sample",
+      "requestedPath": "/sample-report",
+      "resultPath": "/sample-report",
+      "heading": [
+        "Should I open my specialty coffee shop in Austin, or in Nashville or Charlotte?"
+      ],
+      "height": 5459,
+      "overflow": 0,
+      "summary": "WHAT THE FIGURES SHOW\n\nAustin, TX has higher median household income, population and median home value than both Nashville, TN and Charlotte, NC, and lower 5-year population change than both. One gap is small and may not be real: 5-year population change against Nashville, TN (1 point).\n\nThese figures describe the people who live in each place. They do not measure demand for your business, competitors, rent or foot traffic, so on their own they cannot recommend a location.\n\nSources cited\n4 of 4 key figures\nEach links to its official table. This counts citations; it is not a measure of how certain the findings are.",
+      "marketAnalysis": "BUSINESS-PLAN READY Included in the $79 report\n\nMarket analysis: specialty coffee shop in Austin, TX\nCopy as text\n\nThis section summarizes public demographic evidence for opening your specialty coffee shop in Austin, TX, compared with Nashville, TN and Charlotte, NC. It is written so it can be adapted for the market analysis section of a business plan.\n\nMarket size and growth\n\nAustin, TX has an estimated population of 979,539. Population grew 3% between the 2019 and 2024 ACS 5-year estimates, indicating an expanding resident base. Of the 3 locations evaluated, it has the lowest five-year growth rate.\n\nHousehold purchasing power\n\nMedian household income in Austin, TX is $93,658. That is the highest of the 3 locations evaluated (Nashville, TN: $77,371; Charlotte, NC: $82,068). Household income indicates how much local residents may be able to spend; it does not measure demand for your specialty coffee shop.\n\nProperty cost context\n\nThe median home value in Austin, TX is $555,300, the highest of the 3 locations. Home values are a rough signal of local property costs, not commercial rents; occupancy costs for your specialty coffee shop need to be confirmed with lease quotes for the specific site.\n\nComparative position\n\nCompared with Nashville, TN and Charlotte, NC, Austin, TX leads on household income and population but trails on population growth.\n\nPopulation\n1\tAustin, TX\t979,539\n2\tCharlotte, NC\t903,844\n3\tNashville, TN\t690,130\nMedian household income\n1\tAustin, TX\t$93,658\n2\tCharlotte, NC\t$82,068\n3\tNashville, TN\t$77,371\nMedian home value\n1\tAustin, TX\t$555,300\n2\tNashville, TN\t$413,600\n3\tCharlotte, NC\t$385,700\n5-year population change\n1\tCharlotte, NC\t5.4%\n2\tNashville, TN\t4%\n3\tAustin, TX\t3%\nFurther research before committing\nCount existing specialty coffee shop competitors serving the same customers in your intended trade area, and note their pricing and positioning.\nObtain two or three commercial lease quotes for suitable sites in Austin, TX to replace home values with real occupancy costs.\nGather direct demand evidence for your specialty coffee shop: customer interviews, pre-orders, a waitlist, or foot-traffic counts at candidate sites.\nSources\nU.S. Census Bureau. American Community Survey 5-Year Estimates, 2020–2024: total population (B01003), median household income in 2024 inflation-adjusted dollars (B19013), median home value (B25077). Retrieved 2026-10-11 from https://api.census.gov/data/2024/acs/acs5.\nU.S. Census Bureau. American Community Survey 5-Year Estimates, 2015–2019: total population (B01003). Retrieved 2026-10-11 from https://api.census.gov/data/2019/acs/acs5.\n\nPrepared by ifYouMind from public U.S. Census Bureau data. Review and adapt it before using it in a business plan or sharing it with others. It is not financial, legal or lending advice, and it has not been reviewed or endorsed by any lender.",
+      "metadata": "SAMPLE · LIVE DATA\nOctober 11, 2026",
+      "paidSections": [
+        "Included in the $79 report",
+        "Included in the $79 report",
+        "Included in the $79 report",
+        "Included in the $79 report",
+        "Included in the $79 report"
+      ],
+      "buttons": "Get this report for your cities · $79\nStart free\nPrint / save this sample",
+      "printText": "ifYouMind\n\nDECISION REPORT · SAMPLE\n\nShould I open my specialty coffee shop in Austin, or in Nashville or Charlotte?\n\nSpecialty coffee shop · Austin, TX\n\nSAMPLE · LIVE DATA\nOctober 11, 2026\n\nWHAT THE FIGURES SHOW\n\nAustin, TX has higher median household income, population and median home value than both Nashville, TN and Charlotte, NC, and lower 5-year population change than both. One gap is small and may not be real: 5-year population change against Nashville, TN (1 point).\n\nThese figures describe the people who live in each place. They do not measure demand for your business, competitors, rent or foot traffic, so on their own they cannot recommend a location.\n\nSources cited\n4 of 4 key figures\nEach links to its official table. This counts citations; it is not a measure of how certain the findings are.\nMedian household income\n$93,658: $16,287 (21%) higher than Nashville, TN ($77,371); $11,590 (14%) higher than Charlotte, NC ($82,068).\nPopulation\n979,539: 289,409 (42%) higher than Nashville, TN (690,130); 75,695 (8.4%) higher than Charlotte, NC (903,844).\n5-year population change\n3%: 1 point lower than Nashville, TN (4%), a small gap that may not be real; 2.4 points lower than Charlotte, NC (5.4%).\nMedian home value\n$555,300: $141,700 (34%) higher than Nashville, TN ($413,600); $169,600 (44%) higher than Charlotte, NC ($385,700).\n\nNone of these differences has been tested for statistical significance. Census figures are survey estimates with margins of error, which this report does not show yet and which are wider for smaller places. Gaps under 5% (or under 2 points for population change) are flagged as small because survey error alone often produces gaps that size. The flag is a reading aid, not a test: a larger gap can also fall within the error, especially for smaller places.\n\nTHE SIGNALS UNDERNEATH\n\nPopulation\n979,539\npeople\nU.S. Census Bureau · 2024 ACS 5-year\nMedian household income\n$93,658\nU.S. Census Bureau · 2024 ACS 5-year\nMedian home value\n$555,300\nU.S. Census Bureau · 2024 ACS 5-year\n5-year population change\n3%\nU.S. Census Bureau · 2019–2024 ACS 5-year estimates\n\nHOW THE OTHER PLACES COMPARE\n\nAustin, TX\nYOUR MAIN LOCATION\nPopulation\n979,539\nMedian household income\n$93,658\nMedian home value\n$555,300\n5-year population change\n3%\nNashville, TN\nCOMPARISON\nPopulation\n690,130\nMedian household income\n$77,371\nMedian home value\n$413,600\n5-year population change\n4%\nCharlotte, NC\nCOMPARISON\nPopulation\n903,844\nMedian household income\n$82,068\nMedian home value\n$385,700\n5-year population change\n5.4%\n\nBUSINESS-PLAN READY Included in the $79 report\n\nMarket analysis: specialty coffee shop in Austin, TX\n\nThis section summarizes public demographic evidence for opening your specialty coffee shop in Austin, TX, compared with Nashville, TN and Charlotte, NC. It is written so it can be adapted for the market analysis section of a business plan.\n\nMarket size and growth\n\nAustin, TX has an estimated population of 979,539. Population grew 3% between the 2019 and 2024 ACS 5-year estimates, indicating an expanding resident base. Of the 3 locations evaluated, it has the lowest five-year growth rate.\n\nHousehold purchasing power\n\nMedian household income in Austin, TX is $93,658. That is the highest of the 3 locations evaluated (Nashville, TN: $77,371; Charlotte, NC: $82,068). Household income indicates how much local residents may be able to spend; it does not measure demand for your specialty coffee shop.\n\nProperty cost context\n\nThe median home value in Austin, TX is $555,300, the highest of the 3 locations. Home values are a rough signal of local property costs, not commercial rents; occupancy costs for your specialty coffee shop need to be confirmed with lease quotes for the specific site.\n\nComparative position\n\nCompared with Nashville, TN and Charlotte, NC, Austin, TX leads on household income and population but trails on population growth.\n\nPopulation\n1\tAustin, TX\t979,539\n2\tCharlotte, NC\t903,844\n3\tNashville, TN\t690,130\nMedian household income\n1\tAustin, TX\t$93,658\n2\tCharlotte, NC\t$82,068\n3\tNashville, TN\t$77,371\nMedian home value\n1\tAustin, TX\t$555,300\n2\tNashville, TN\t$413,600\n3\tCharlotte, NC\t$385,700\n5-year population change\n1\tCharlotte, NC\t5.4%\n2\tNashville, TN\t4%\n3\tAustin, TX\t3%\nFurther research before committing\nCount existing specialty coffee shop competitors serving the same customers in your intended trade area, and note their pricing and positioning.\nObtain two or three commercial lease quotes for suitable sites in Austin, TX to replace home values with real occupancy costs.\nGather direct demand evidence for your specialty coffee shop: customer interviews, pre-orders, a waitlist, or foot-traffic counts at candidate sites.\nSources\nU.S. Census Bureau. American Community Survey 5-Year Estimates, 2020–2024: total population (B01003), median household income in 2024 inflation-adjusted dollars (B19013), median home value (B25077). Retrieved 2026-10-11 from https://api.census.gov/data/2024/acs/acs5.\nU.S. Census Bureau. American Community Survey 5-Year Estimates, 2015–2019: total population (B01003). Retrieved 2026-10-11 from https://api.census.gov/data/2019/acs/acs5.\n\nPrepared by ifYouMind from public U.S. Census Bureau data. Review and adapt it before using it in a business plan or sharing it with others. It is not financial, legal or lending advice, and it has not been reviewed or endorsed by any lender.\n\nACTION PLAN Included in the $79 report\n\nWhat to do before you commit.\nVALIDATE FIRST\nResolve the biggest risk\n\n2 comparison markets show stronger 5-year population change.\n\nTHEN\nConfirm local demand\n\nWhat foot-traffic or customer-demand signal would confirm demand for your specialty coffee shop?\n\nBEFORE COMMITTING\nVerify operating economics\n\nWhat are current commercial rents and occupancy costs for the exact trade area?\n\nCOMPARISON TAKEAWAYS Included in the $79 report\n\nWhere the primary market leads — and where it trails.\nNashville, TN\nMedian household income is $16,287 higher than Nashville, TN.\nFive-year population change is 1 percentage points weaker than Nashville, TN.\nCharlotte, NC\nMedian household income is $11,590 higher than Charlotte, NC.\nFive-year population change is 2.4 percentage points weaker than Charlotte, NC.\n\nWHAT COULD CHANGE THE CALL Included in the $79 report\n\nWOULD STRENGTHEN THE CASE\n\nVerified demand for your specialty coffee shop plus acceptable occupancy costs would strengthen the case.\n\nWOULD WEAKEN THE CASE\n\n2 comparison markets show stronger 5-year population change.\n\nSTILL UNRESOLVED\n\nHow many specialty coffee shop competitors already serve your target customers in Austin, TX?\n\nEVIDENCE BOUNDARIES Included in the $79 report\n\nWhat this report does not know yet.\nACS estimates describe demographic context, not concept-level demand.\nCommercial rent, foot traffic, competition, and site-specific operating economics are not yet included.\n\nWHAT TO CHECK NEXT\n\nThese are the questions worth answering before you act.\nHow many specialty coffee shop competitors already serve your target customers in Austin, TX?\nWhat are current commercial rents and occupancy costs for the exact trade area?\nWhat foot-traffic or customer-demand signal would confirm demand for your specialty coffee shop?\n\nSOURCES\n\nU.S. Census Bureau\n· 2024 ACS 5-year estimates\nOpen source\nU.S. Census Bureau\n· 2019 ACS 5-year estimates\nOpen source\n\nSample report. Figures are real U.S. Census Bureau ACS 5-year estimates retrieved for this example; the decision itself is illustrative. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.\n\nifYouMind helps organize evidence around a decision. It does not guarantee an outcome. Validate material facts before committing time or money.\n\nGenerated by ifYouMind"
+    },
+    {
+      "profile": "desktop",
+      "name": "discovery",
+      "requestedPath": "/discover/?example=electricity",
+      "resultPath": "/discover/",
+      "heading": [
+        "Here’s what changed."
+      ],
+      "height": 2665,
+      "overflow": 0
+    },
+    {
+      "profile": "desktop",
+      "name": "register",
+      "requestedPath": "/register?intent=report",
+      "resultPath": "/register",
+      "heading": [
+        "Build your market analysis."
+      ],
+      "height": 900,
+      "overflow": 0
+    },
+    {
+      "profile": "desktop",
+      "name": "guarded-pricing",
+      "requestedPath": "/app/pricing?offer=report",
+      "resultPath": "/login",
+      "heading": [
+        "Pick up where you left off."
+      ],
+      "height": 900,
+      "overflow": 0
+    },
+    {
+      "profile": "desktop",
+      "name": "guarded-app",
+      "requestedPath": "/app",
+      "resultPath": "/login",
+      "heading": [
+        "Pick up where you left off."
+      ],
+      "height": 900,
+      "overflow": 0
+    },
+    {
+      "profile": "mobile",
+      "name": "home",
+      "requestedPath": "/",
+      "resultPath": "/",
+      "heading": [
+        "Two bills.One clear story."
+      ],
+      "height": 3343,
+      "overflow": 0,
+      "primaryCTA": "/discover/?example=electricity"
+    },
+    {
+      "profile": "mobile",
+      "name": "sample",
+      "requestedPath": "/sample-report",
+      "resultPath": "/sample-report",
+      "heading": [
+        "Should I open my specialty coffee shop in Austin, or in Nashville or Charlotte?"
+      ],
+      "height": 9051,
+      "overflow": 0,
+      "summary": "WHAT THE FIGURES SHOW\n\nAustin, TX has higher median household income, population and median home value than both Nashville, TN and Charlotte, NC, and lower 5-year population change than both. One gap is small and may not be real: 5-year population change against Nashville, TN (1 point).\n\nThese figures describe the people who live in each place. They do not measure demand for your business, competitors, rent or foot traffic, so on their own they cannot recommend a location.\n\nSources cited\n4 of 4 key figures\nEach links to its official table. This counts citations; it is not a measure of how certain the findings are.",
+      "marketAnalysis": "BUSINESS-PLAN READY Included in the $79 report\n\nMarket analysis: specialty coffee shop in Austin, TX\nCopy as text\n\nThis section summarizes public demographic evidence for opening your specialty coffee shop in Austin, TX, compared with Nashville, TN and Charlotte, NC. It is written so it can be adapted for the market analysis section of a business plan.\n\nMarket size and growth\n\nAustin, TX has an estimated population of 979,539. Population grew 3% between the 2019 and 2024 ACS 5-year estimates, indicating an expanding resident base. Of the 3 locations evaluated, it has the lowest five-year growth rate.\n\nHousehold purchasing power\n\nMedian household income in Austin, TX is $93,658. That is the highest of the 3 locations evaluated (Nashville, TN: $77,371; Charlotte, NC: $82,068). Household income indicates how much local residents may be able to spend; it does not measure demand for your specialty coffee shop.\n\nProperty cost context\n\nThe median home value in Austin, TX is $555,300, the highest of the 3 locations. Home values are a rough signal of local property costs, not commercial rents; occupancy costs for your specialty coffee shop need to be confirmed with lease quotes for the specific site.\n\nComparative position\n\nCompared with Nashville, TN and Charlotte, NC, Austin, TX leads on household income and population but trails on population growth.\n\nPopulation\n1\tAustin, TX\t979,539\n2\tCharlotte, NC\t903,844\n3\tNashville, TN\t690,130\nMedian household income\n1\tAustin, TX\t$93,658\n2\tCharlotte, NC\t$82,068\n3\tNashville, TN\t$77,371\nMedian home value\n1\tAustin, TX\t$555,300\n2\tNashville, TN\t$413,600\n3\tCharlotte, NC\t$385,700\n5-year population change\n1\tCharlotte, NC\t5.4%\n2\tNashville, TN\t4%\n3\tAustin, TX\t3%\nFurther research before committing\nCount existing specialty coffee shop competitors serving the same customers in your intended trade area, and note their pricing and positioning.\nObtain two or three commercial lease quotes for suitable sites in Austin, TX to replace home values with real occupancy costs.\nGather direct demand evidence for your specialty coffee shop: customer interviews, pre-orders, a waitlist, or foot-traffic counts at candidate sites.\nSources\nU.S. Census Bureau. American Community Survey 5-Year Estimates, 2020–2024: total population (B01003), median household income in 2024 inflation-adjusted dollars (B19013), median home value (B25077). Retrieved 2026-10-11 from https://api.census.gov/data/2024/acs/acs5.\nU.S. Census Bureau. American Community Survey 5-Year Estimates, 2015–2019: total population (B01003). Retrieved 2026-10-11 from https://api.census.gov/data/2019/acs/acs5.\n\nPrepared by ifYouMind from public U.S. Census Bureau data. Review and adapt it before using it in a business plan or sharing it with others. It is not financial, legal or lending advice, and it has not been reviewed or endorsed by any lender.",
+      "metadata": "SAMPLE · LIVE DATA\nOctober 11, 2026",
+      "paidSections": [
+        "Included in the $79 report",
+        "Included in the $79 report",
+        "Included in the $79 report",
+        "Included in the $79 report",
+        "Included in the $79 report"
+      ],
+      "buttons": "Get this report for your cities · $79\nStart free\nPrint / save this sample",
+      "printText": "ifYouMind\n\nDECISION REPORT · SAMPLE\n\nShould I open my specialty coffee shop in Austin, or in Nashville or Charlotte?\n\nSpecialty coffee shop · Austin, TX\n\nSAMPLE · LIVE DATA\nOctober 11, 2026\n\nWHAT THE FIGURES SHOW\n\nAustin, TX has higher median household income, population and median home value than both Nashville, TN and Charlotte, NC, and lower 5-year population change than both. One gap is small and may not be real: 5-year population change against Nashville, TN (1 point).\n\nThese figures describe the people who live in each place. They do not measure demand for your business, competitors, rent or foot traffic, so on their own they cannot recommend a location.\n\nSources cited\n4 of 4 key figures\nEach links to its official table. This counts citations; it is not a measure of how certain the findings are.\nMedian household income\n$93,658: $16,287 (21%) higher than Nashville, TN ($77,371); $11,590 (14%) higher than Charlotte, NC ($82,068).\nPopulation\n979,539: 289,409 (42%) higher than Nashville, TN (690,130); 75,695 (8.4%) higher than Charlotte, NC (903,844).\n5-year population change\n3%: 1 point lower than Nashville, TN (4%), a small gap that may not be real; 2.4 points lower than Charlotte, NC (5.4%).\nMedian home value\n$555,300: $141,700 (34%) higher than Nashville, TN ($413,600); $169,600 (44%) higher than Charlotte, NC ($385,700).\n\nNone of these differences has been tested for statistical significance. Census figures are survey estimates with margins of error, which this report does not show yet and which are wider for smaller places. Gaps under 5% (or under 2 points for population change) are flagged as small because survey error alone often produces gaps that size. The flag is a reading aid, not a test: a larger gap can also fall within the error, especially for smaller places.\n\nTHE SIGNALS UNDERNEATH\n\nPopulation\n979,539\npeople\nU.S. Census Bureau · 2024 ACS 5-year\nMedian household income\n$93,658\nU.S. Census Bureau · 2024 ACS 5-year\nMedian home value\n$555,300\nU.S. Census Bureau · 2024 ACS 5-year\n5-year population change\n3%\nU.S. Census Bureau · 2019–2024 ACS 5-year estimates\n\nHOW THE OTHER PLACES COMPARE\n\nAustin, TX\nYOUR MAIN LOCATION\nPopulation\n979,539\nMedian household income\n$93,658\nMedian home value\n$555,300\n5-year population change\n3%\nNashville, TN\nCOMPARISON\nPopulation\n690,130\nMedian household income\n$77,371\nMedian home value\n$413,600\n5-year population change\n4%\nCharlotte, NC\nCOMPARISON\nPopulation\n903,844\nMedian household income\n$82,068\nMedian home value\n$385,700\n5-year population change\n5.4%\n\nBUSINESS-PLAN READY Included in the $79 report\n\nMarket analysis: specialty coffee shop in Austin, TX\n\nThis section summarizes public demographic evidence for opening your specialty coffee shop in Austin, TX, compared with Nashville, TN and Charlotte, NC. It is written so it can be adapted for the market analysis section of a business plan.\n\nMarket size and growth\n\nAustin, TX has an estimated population of 979,539. Population grew 3% between the 2019 and 2024 ACS 5-year estimates, indicating an expanding resident base. Of the 3 locations evaluated, it has the lowest five-year growth rate.\n\nHousehold purchasing power\n\nMedian household income in Austin, TX is $93,658. That is the highest of the 3 locations evaluated (Nashville, TN: $77,371; Charlotte, NC: $82,068). Household income indicates how much local residents may be able to spend; it does not measure demand for your specialty coffee shop.\n\nProperty cost context\n\nThe median home value in Austin, TX is $555,300, the highest of the 3 locations. Home values are a rough signal of local property costs, not commercial rents; occupancy costs for your specialty coffee shop need to be confirmed with lease quotes for the specific site.\n\nComparative position\n\nCompared with Nashville, TN and Charlotte, NC, Austin, TX leads on household income and population but trails on population growth.\n\nPopulation\n1\tAustin, TX\t979,539\n2\tCharlotte, NC\t903,844\n3\tNashville, TN\t690,130\nMedian household income\n1\tAustin, TX\t$93,658\n2\tCharlotte, NC\t$82,068\n3\tNashville, TN\t$77,371\nMedian home value\n1\tAustin, TX\t$555,300\n2\tNashville, TN\t$413,600\n3\tCharlotte, NC\t$385,700\n5-year population change\n1\tCharlotte, NC\t5.4%\n2\tNashville, TN\t4%\n3\tAustin, TX\t3%\nFurther research before committing\nCount existing specialty coffee shop competitors serving the same customers in your intended trade area, and note their pricing and positioning.\nObtain two or three commercial lease quotes for suitable sites in Austin, TX to replace home values with real occupancy costs.\nGather direct demand evidence for your specialty coffee shop: customer interviews, pre-orders, a waitlist, or foot-traffic counts at candidate sites.\nSources\nU.S. Census Bureau. American Community Survey 5-Year Estimates, 2020–2024: total population (B01003), median household income in 2024 inflation-adjusted dollars (B19013), median home value (B25077). Retrieved 2026-10-11 from https://api.census.gov/data/2024/acs/acs5.\nU.S. Census Bureau. American Community Survey 5-Year Estimates, 2015–2019: total population (B01003). Retrieved 2026-10-11 from https://api.census.gov/data/2019/acs/acs5.\n\nPrepared by ifYouMind from public U.S. Census Bureau data. Review and adapt it before using it in a business plan or sharing it with others. It is not financial, legal or lending advice, and it has not been reviewed or endorsed by any lender.\n\nACTION PLAN Included in the $79 report\n\nWhat to do before you commit.\nVALIDATE FIRST\nResolve the biggest risk\n\n2 comparison markets show stronger 5-year population change.\n\nTHEN\nConfirm local demand\n\nWhat foot-traffic or customer-demand signal would confirm demand for your specialty coffee shop?\n\nBEFORE COMMITTING\nVerify operating economics\n\nWhat are current commercial rents and occupancy costs for the exact trade area?\n\nCOMPARISON TAKEAWAYS Included in the $79 report\n\nWhere the primary market leads — and where it trails.\nNashville, TN\nMedian household income is $16,287 higher than Nashville, TN.\nFive-year population change is 1 percentage points weaker than Nashville, TN.\nCharlotte, NC\nMedian household income is $11,590 higher than Charlotte, NC.\nFive-year population change is 2.4 percentage points weaker than Charlotte, NC.\n\nWHAT COULD CHANGE THE CALL Included in the $79 report\n\nWOULD STRENGTHEN THE CASE\n\nVerified demand for your specialty coffee shop plus acceptable occupancy costs would strengthen the case.\n\nWOULD WEAKEN THE CASE\n\n2 comparison markets show stronger 5-year population change.\n\nSTILL UNRESOLVED\n\nHow many specialty coffee shop competitors already serve your target customers in Austin, TX?\n\nEVIDENCE BOUNDARIES Included in the $79 report\n\nWhat this report does not know yet.\nACS estimates describe demographic context, not concept-level demand.\nCommercial rent, foot traffic, competition, and site-specific operating economics are not yet included.\n\nWHAT TO CHECK NEXT\n\nThese are the questions worth answering before you act.\nHow many specialty coffee shop competitors already serve your target customers in Austin, TX?\nWhat are current commercial rents and occupancy costs for the exact trade area?\nWhat foot-traffic or customer-demand signal would confirm demand for your specialty coffee shop?\n\nSOURCES\n\nU.S. Census Bureau\n· 2024 ACS 5-year estimates\nOpen source\nU.S. Census Bureau\n· 2019 ACS 5-year estimates\nOpen source\n\nSample report. Figures are real U.S. Census Bureau ACS 5-year estimates retrieved for this example; the decision itself is illustrative. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.\n\nifYouMind helps organize evidence around a decision. It does not guarantee an outcome. Validate material facts before committing time or money.\n\nGenerated by ifYouMind"
+    },
+    {
+      "profile": "mobile",
+      "name": "discovery",
+      "requestedPath": "/discover/?example=electricity",
+      "resultPath": "/discover/",
+      "heading": [
+        "Here’s what changed."
+      ],
+      "height": 3781,
+      "overflow": 0
+    },
+    {
+      "profile": "mobile",
+      "name": "register",
+      "requestedPath": "/register?intent=report",
+      "resultPath": "/register",
+      "heading": [
+        "Build your market analysis."
+      ],
+      "height": 985,
+      "overflow": 0
+    },
+    {
+      "profile": "mobile",
+      "name": "guarded-pricing",
+      "requestedPath": "/app/pricing?offer=report",
+      "resultPath": "/login",
+      "heading": [
+        "Pick up where you left off."
+      ],
+      "height": 844,
+      "overflow": 0
+    },
+    {
+      "profile": "mobile",
+      "name": "guarded-app",
+      "requestedPath": "/app",
+      "resultPath": "/login",
+      "heading": [
+        "Pick up where you left off."
+      ],
+      "height": 844,
+      "overflow": 0
+    }
+  ]
+}

@@ -84,6 +84,7 @@
   .pricing-copy, .pricing-action { grid-column: 1 / -1; }
   .offer { padding-left: 9px; min-height: 70px; }
   .offer b { font-size: 25px; }
+  .plan-summary { grid-template-columns: 1fr; }
   .site-footer { justify-content: start; flex-wrap: wrap; gap: 0 16px; padding-inline: 0; }
   .site-footer nav { flex-basis: 100%; gap: 0 15px; }
 }

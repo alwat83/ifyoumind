@@ -33,10 +33,14 @@ test('homepage sample, Business prices, paid intent and registration remain usab
 });
 
 test('homepage report creation and full pricing keep their sign-in return paths', async ({ page }) => {
-  for (const [label, destination] of [['Create a Report', '/app/decide'], ['See Pricing', '/app/pricing']]) {
-    await page.goto('/');
-    await page.getByRole('link', { name: label, exact: true }).click();
-    await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === destination);
-    await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
-  }
+  await page.goto('/');
+  await page.getByRole('link', { name: 'Create a Report', exact: true }).click();
+  await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/app/decide');
+  await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
+
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Compare Plans' }).click();
+  await page.getByRole('link', { name: /Open account pricing/ }).click();
+  await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/app/pricing');
+  await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
 });

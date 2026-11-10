@@ -103,10 +103,34 @@ test('homepage navigation, guides, legal pages and report offers lead to existin
   await expect(pricing).toContainText('Five full reports each month');
   await expect(pricing.getByRole('link', { name: /Business brief/ })).toHaveAttribute('href', '/register');
   await expect(pricing.getByRole('link', { name: /Business Pro/ })).toHaveAttribute('href', '/register');
-  await expect(pricing.getByRole('link', { name: 'See Pricing' })).toHaveAttribute('href', '/app/pricing');
+  await expect(pricing.getByRole('button', { name: 'Compare Plans' })).toBeVisible();
   await pricing.getByRole('link', { name: /Decision Report/ }).click();
   await expect(page).toHaveURL(/\/register\?intent=report$/);
   await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
+});
+
+test('visitors can compare the offers by keyboard before signing in', async ({ page }, info) => {
+  await page.goto('/');
+  const trigger = page.getByRole('button', { name: 'Compare Plans' });
+  const details = page.locator('#plan-details');
+  await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+  await expect(details).toBeHidden();
+  await trigger.focus();
+  await page.keyboard.press('Enter');
+  await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+  await expect(trigger).toBeFocused();
+  await expect(details).toBeVisible();
+  await expect(page).toHaveURL(origin + '/');
+  await expect(details).toContainText('Both paid options unlock the same full Decision Report.');
+  await expect(details).toContainText('without a subscription');
+  await expect(details).toContainText('renews monthly until cancelled');
+  await expect(details.getByRole('link', { name: /Open account pricing/ })).toHaveAttribute('href', '/app/pricing');
+  await noOverflow(page);
+  await accessible(page);
+  await page.locator('#pricing').screenshot({ path: info.outputPath('pricing-open.png'), scale: 'css' });
+  await page.keyboard.press('Space');
+  await expect(details).toBeHidden();
+  await expect(trigger).toHaveAttribute('aria-expanded', 'false');
 });
 
 test('keyboard opens the compact menu, Escape restores focus, and text spacing preserves actions', async ({ page }) => {

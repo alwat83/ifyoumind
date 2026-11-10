@@ -495,3 +495,9 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 OpenAI / Codex. Implemented the founder’s full visual reference on `codex/premium-homepage-redesign` from `e5d8f15`. The work changes the landing component, its scoped styles, the original imagery and SVG icons, and the tests that exercise the homepage. [Design evidence and verification](../design/premium-homepage-20261110/REVIEW.md). Earlier sharing work is preserved in local commit `9cf1e0f`. Drafts #77 and #78 remain separate.
 
 The production and local builds, targeted lint, 137 fast checks 63 final Hosting checks and 40 targeted authenticated browser checks passed. The candidate shows the same public prices observed on ifyoumind.com. A read of the existing public report confirmed all six Census values. Local performance and access evidence is in the review. Commercial effects and five-second comprehension remain unmeasured. The release requires separate founder approval.
+
+## 2026-11-10 — Public plan comparison
+
+OpenAI / Codex. The homepage redesign pointed its pricing CTA to an authenticated route, which required sign-in before visitors could read plan details. The `codex/public-plan-comparison` follow-up from `d376f38` adds an inline comparison to the landing component and styles, with Hosting and authenticated browser coverage for the new action. [Review](../design/public-plan-comparison-20261110/REVIEW.md).
+
+The display explains the free brief, the $79 report without a subscription, and the $39 monthly plan with five full reports. The account pricing and registration links use the established destinations. Reduced comparison friction is the intended commercial effect. Conversion remains unmeasured. The branch is a draft for review and requires separate approval for release.

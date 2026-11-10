@@ -1,5 +1,15 @@
 # ifYouMind — Current development status
 
+## November 9, 2026 — Business Report Proof draft
+
+OpenAI / Codex. **Committed** on `codex/business-report-proof-20261106` at `973aba77d5a49ca06b5026b3305d1540e7877350` and open for founder review in [draft PR #78](https://github.com/alwat83/ifyoumind/pull/78). The sample compares loaded Census estimates and shows their source periods and limitations. The report export fixes the dark print canvas. See the [review and sample export](../product/business-report-proof-20261106/REVIEW.md).
+
+The [Launch build](https://github.com/alwat83/ifyoumind/actions/runs/42641971516) passed. [Authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/42641971855/attempts/2) passed on attempt 2, including fixture/access tests and the desktop and mobile authenticated browser suite. In attempt 1, the concurrent workspace test confirmed exactly 50 stored datasets and two successful creates. One of the eight blocked calls returned `INTERNAL` after a Firestore emulator transaction lock timeout. The other seven returned the expected `FAILED_PRECONDITION`. The workflow skipped the authenticated browser suite. The same cap test passed in [the preceding QA run](https://github.com/alwat83/ifyoumind/actions/runs/42297006429).
+
+Seven focused tests passed on recheck. All 18 review image hashes and the sample PDF hash matched. This handoff uses a documentation branch to preserve the reviewed candidate. The prior production verification is PR #76 at `e5d8f15`. PR #78 awaits separate release approval. First-use comprehension remains unmeasured. The [ifYouMind Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71) carries the draft milestone and CI evidence.
+
+Review the mobile comparison and sample PDF. Resume the deferred first-use walkthrough when directed. Bring any release decision to the founder with the reviewed commit and separate approval.
+
 ## November6,2026 — Phase1 Business Report Proof implemented, release pending
 
 OpenAI / Codex. Founder explicitly authorized implementation from the completed audit. Separate `codex/business-report-proof-20261106` from freshly verified master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`; print fix committedb965d3e, final presentation/review commit and new draftPR/exact-head CI pinned after push. **Implemented/locally verified, not merged/deployed.** PR77/9b0b278 remains separate, not in this branch's ancestry; audit9fd6673 preserved, only authoritative docs/instructions imported. [Working review,18screenshots/print matrices/limits](../product/business-report-proof-20261106/REVIEW.md).

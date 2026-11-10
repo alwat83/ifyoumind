@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 10, 2026 — Public plan comparison
+
+OpenAI / Codex. The `codex/public-plan-comparison` follow-up starts from homepage PR #79 at `d376f38`. The pricing banner opens a comparison of the free brief, one-time report, and Pro before account creation. The link to account pricing uses the existing sign-in return path. [Captures and verification](../design/public-plan-comparison-20261110/REVIEW.md).
+
+Next steps. Review the expanded and collapsed pricing band. Resolve the homepage redesign’s release decision before retargeting this follow-up for master-based checks. When user testing resumes, observe whether visitors understand the one-time and monthly options and know where to continue.
+
 ## November 10, 2026 — Premium homepage redesign
 
 OpenAI / Codex. Founder supplied a production implementation brief and a visual reference. The `codex/premium-homepage-redesign` candidate starts at master `e5d8f15` and implements the skyline hero, sourced Austin–Charlotte comparison, process, use cases, pricing and footer. [Screenshots and review](../design/premium-homepage-20261110/REVIEW.md). The public site displayed $79 one time and $39 per month with five reports during the read-only check. The production sample returned the comparison figures and both ACS periods.

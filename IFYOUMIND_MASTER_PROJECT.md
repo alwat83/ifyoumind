@@ -8,6 +8,10 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 10, 2026 — Public plan comparison
+
+**Committed on a review branch** based on PR #79. The homepage pricing banner expands the free, one-time, and Pro details before sign-in. Existing account pricing remains reachable from the comparison. [Review and verification](docs/design/public-plan-comparison-20261110/REVIEW.md).
+
 ## November 10, 2026 — Premium homepage redesign
 
 **Committed on the review branch.** The founder supplied a reference-led redesign brief. The new home pairs the skyline hero with a dated Census comparison and direct paths to the free bill example, public Business sample, report creation, guides and pricing. [Visual review and verification](docs/design/premium-homepage-20261110/REVIEW.md). The redesign is based on master and has its own release review.

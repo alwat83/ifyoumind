@@ -8,4 +8,6 @@ import { RouterLink } from '@angular/router';
   templateUrl: './public-landing.component.html',
   styleUrls: ['./public-landing.component.scss', './public-landing-visual-offers.component.scss', './public-landing-visual-mobile.component.scss'],
 })
-export class PublicLandingComponent {}
+export class PublicLandingComponent {
+  plansExpanded = false;
+}

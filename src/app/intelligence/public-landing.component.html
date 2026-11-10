@@ -135,9 +135,31 @@
         <span>Five full reports each month</span>
       </a>
       <div class="pricing-action">
-        <a routerLink="/app/pricing" class="button button-light">See Pricing <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
+        <button type="button" class="button button-light" aria-controls="plan-details"
+          [attr.aria-expanded]="plansExpanded" (click)="plansExpanded = !plansExpanded">
+          Compare Plans <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg>
+        </button>
       </div>
       <p class="pricing-note">Business account required. No credit card for a free brief. Full reports include sources, limits, an action plan and print/PDF.</p>
+      <section id="plan-details" class="plan-details" aria-labelledby="plan-details-title" [hidden]="!plansExpanded">
+        <h3 id="plan-details-title">What’s included</h3>
+        <p>Both paid options unlock the same full Decision Report.</p>
+        <dl class="plan-summary">
+          <div>
+            <dt>Free Business brief</dt>
+            <dd>Compare your main city with one other and get a brief with sourced Census figures.</dd>
+          </div>
+          <div>
+            <dt>One-time Decision Report</dt>
+            <dd>Get one full report for a single decision without a subscription. Compare your main city with up to three others.</dd>
+          </div>
+          <div>
+            <dt>Business Pro</dt>
+            <dd>Get five full reports each month. Pro renews monthly until cancelled. Any reports you’ve already unlocked stay unlocked.</dd>
+          </div>
+        </dl>
+        <a routerLink="/app/pricing" class="text-link account-pricing">Open account pricing <span>(sign-in required)</span></a>
+      </section>
     </section>
   </main>
 

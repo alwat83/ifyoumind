@@ -27,7 +27,7 @@ export const HOME_EXAMPLES: readonly HomeExample[] = [
     icon: 'people',
     question: 'Where would a coffee shop do better?',
     label: 'Public Census sample',
-    context: 'Two U.S. cities, side by side. Figures from the public sample report.',
+    context: 'Figures from the public sample report, which also compares Nashville.',
     columns: ['Austin, TX', 'Charlotte, NC'],
     rows: [
       { label: 'Population', values: ['979,539', '903,844'] },

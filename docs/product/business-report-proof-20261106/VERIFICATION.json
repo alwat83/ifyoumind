@@ -1,0 +1,72 @@
+{
+  "observed_at": "2026-11-06T22:55:36.813679+00:00",
+  "provider": "OpenAI / Codex; specific model/session unknown",
+  "base_master": "e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e",
+  "base_audit": "9fd6673a343690277ded473fe835d36cebdeaddd",
+  "print_commit": "b965d3e2f6e18f72a89e2ef6a9eed6d2fc2ef123",
+  "baseline": {
+    "fast_pass": 137,
+    "production_build": "PASS"
+  },
+  "local": {
+    "production_build": "PASS",
+    "emulator_local_build": "PASS",
+    "fast": {
+      "pass": 144,
+      "fail": 0,
+      "skip": 0
+    },
+    "functions": {
+      "pass": 72,
+      "fail": 0,
+      "skip": 0
+    },
+    "rules_pass": 7,
+    "organizations_pass": 5,
+    "commerce_pass": 29,
+    "fixtures": {
+      "pass": 24,
+      "fail": 0,
+      "skip": 1,
+      "note": "Existing fixture skip, not waived"
+    },
+    "full_authenticated_browser": {
+      "pass": 124,
+      "fail": 0,
+      "skip": 0,
+      "note": "Complete bounded single-worker run; final print-only pagination and free rendering fixture refined afterward"
+    },
+    "final_focused_browser": {
+      "pass": 12,
+      "fail": 0,
+      "skip": 0,
+      "note": "Six proof scenarios across desktop/mobile, after final print and fixture refinements. Reruns overlap full suite; do not add counts."
+    },
+    "targeted_lint": "PASS, threeTS/twoHTML",
+    "production_bundle_files": 36,
+    "discovery_isolation": {
+      "root_js": 21,
+      "allowlisted_assets": 3
+    }
+  },
+  "attempts": [
+    "Initial immediate print-canvas assertion found color transition, corrected before final pass",
+    "Initial two-worker browser attempt passed desktop cases then stopped progressing at project transition; terminated, not a full pass",
+    "Complete one-worker124PASS; subsequent affected checks4PASS then final12PASS, not distinct added coverage"
+  ],
+  "pdf": {
+    "configurations": 16,
+    "source": "Public sample replay and explicit intercepted owned QA states; not purchases",
+    "visual_check_record": "PRINT_CHECKS.json",
+    "deliverable": "output/pdf/ifyoumind-business-sample.pdf",
+    "sha256": "42d4fb32e67f8de720323529578b10caa872c630c88027bc01acd19b4cd158e9"
+  },
+  "limitations": [
+    "No novice30second comprehension study",
+    "No real signup/email/payment",
+    "No native Safari/iOS/physical printer/spoken screen reader",
+    "Global91lint/11Angular compiler baseline debt not rerun/fixed",
+    "No new production release or financial query"
+  ],
+  "github_ci": "New exact-head CI follows draft PR creation; no inherited pass"
+}

@@ -156,3 +156,12 @@
   .report-offer{padding:20px!important}
   .metrics strong{font-size:18px}
 }
+
+/* The report host cannot paint the page canvas beyond its last printed fragment. */
+@media print {
+  body:has(app-market-report) {
+    background: #fff !important;
+    transition: none !important;
+    color: #151922;
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "scope": "Local production bundle, same public sample payload as master baseline; emulator-only warning hidden in capture, external fonts blocked/fallback fonts",
+  "observations": [
+    {
+      "name": "desktop",
+      "boxes": [
+        {
+          "text": "$93,658",
+          "bottom": 585.4375
+        },
+        {
+          "text": "5.4%",
+          "bottom": 585.4375
+        }
+      ],
+      "height": 6133,
+      "overflow": 0
+    },
+    {
+      "name": "mobile",
+      "boxes": [
+        {
+          "text": "$93,658",
+          "bottom": 537.734375
+        },
+        {
+          "text": "5.4%",
+          "bottom": 537.734375
+        }
+      ],
+      "height": 9669,
+      "overflow": 0
+    },
+    {
+      "name": "narrow",
+      "boxes": [
+        {
+          "text": "$93,658",
+          "bottom": 556.578125
+        },
+        {
+          "text": "5.4%",
+          "bottom": 556.578125
+        }
+      ],
+      "height": 11096,
+      "overflow": 0
+    }
+  ]
+}

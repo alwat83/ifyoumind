@@ -1,0 +1,74 @@
+[
+  {
+    "path": "screenshots/after-desktop-full.png",
+    "sha256": "889af91d814f2ac82b300d11df601e0c0ffbdc3829393b257e916cb91b4bec75"
+  },
+  {
+    "path": "screenshots/after-desktop.png",
+    "sha256": "3006ba43b8d00a909227ebc72563193ca22ee60956ed4817fa7ddfbdce23caf2"
+  },
+  {
+    "path": "screenshots/after-mobile-full.png",
+    "sha256": "76a692e79eeb6d6a6cb1895874254b4d4b7241e7f015a2c2d1d46578f50fa644"
+  },
+  {
+    "path": "screenshots/after-mobile-sources.png",
+    "sha256": "20daf486eb42f7f6e2eac9f1430a36c98609b776d3706fd80dce37fb0c9fd408"
+  },
+  {
+    "path": "screenshots/after-mobile.png",
+    "sha256": "1560d840efeda40f2c380f6777f026094f81d8b8094c8fcbe63622c37ea8f1bd"
+  },
+  {
+    "path": "screenshots/after-narrow-full.png",
+    "sha256": "5699f676a23c1fa7c0fd735c1d04dd50a0781fdaca578c08d0fd666e3b51ba59"
+  },
+  {
+    "path": "screenshots/after-narrow.png",
+    "sha256": "641596269b641a3aa1807f176707beea5562becb5999234cf9585b2cf32f542e"
+  },
+  {
+    "path": "screenshots/after-print-A4-backgrounds.png",
+    "sha256": "2c512ca521bef6ad3660a4420c80590e0f9a6395142f000dab795b376048d9c4"
+  },
+  {
+    "path": "screenshots/after-print-A4-default.png",
+    "sha256": "b5f21db92c2546e69c59f5c53a3c02c4ca7df3c0ba570d1fe6ec2d1849788863"
+  },
+  {
+    "path": "screenshots/after-print-Letter-backgrounds.png",
+    "sha256": "46f10ad2a7f86abf4f41b02c4f84516ff662302c7f49947ba58db85f94f48cd2"
+  },
+  {
+    "path": "screenshots/after-print-Letter-default.png",
+    "sha256": "301e366d5ef227a67f3956a07d396440d16c4fd97ce99712943df0efd7826fda"
+  },
+  {
+    "path": "screenshots/before-desktop.png",
+    "sha256": "b7d2c76d00d325ad30f845caea366cdd4f27876c42f87dca640ab7e7807f1c26"
+  },
+  {
+    "path": "screenshots/before-mobile.png",
+    "sha256": "e0d8f89c88494ca8805f593da236a5b85e40d1467035c6bb1bdb517331120993"
+  },
+  {
+    "path": "screenshots/before-narrow.png",
+    "sha256": "e493579913c9e854e258bb02fda8fde7deadcd5420a5be36840c9dc4a86218e1"
+  },
+  {
+    "path": "screenshots/owned-free-print-matrix.png",
+    "sha256": "5132450e2b5a43f5d65ddf72ce45a91ae30ef658baf94b11b36fcfb1ece377ef"
+  },
+  {
+    "path": "screenshots/owned-pro-print-matrix.png",
+    "sha256": "1ea3f4036bf00a1f685a2e7596d7fe1e848eedd42026c0ca54e75ecbc2a01a00"
+  },
+  {
+    "path": "screenshots/owned-purchased-print-matrix.png",
+    "sha256": "e31d2415fd2693d9793cba2b68fa604f5d6e0e4a8b828231b8a31c8c778fd8b6"
+  },
+  {
+    "path": "screenshots/print-fix-contact-sheet.png",
+    "sha256": "8c5da97a004ca61f11b9b44eee0eaea9ae9e2d22c2ce13189dc7e28f9517d23f"
+  }
+]

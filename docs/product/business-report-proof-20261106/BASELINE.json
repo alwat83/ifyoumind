@@ -1,0 +1,27 @@
+{
+  "source": "Mastere5d8f15 built locally; unchanged public sample payload replayed locally for consistent before/after, fallback fonts",
+  "metrics": [
+    {
+      "name": "desktop",
+      "height": 5458,
+      "body": "rgb(9, 9, 11)"
+    },
+    {
+      "printBody": "rgb(9, 9, 11)",
+      "printHost": {
+        "background": "rgb(255, 255, 255)",
+        "minHeight": "900px"
+      }
+    },
+    {
+      "name": "mobile",
+      "height": 8764,
+      "body": "rgb(9, 9, 11)"
+    },
+    {
+      "name": "narrow",
+      "height": 10090,
+      "body": "rgb(9, 9, 11)"
+    }
+  ]
+}

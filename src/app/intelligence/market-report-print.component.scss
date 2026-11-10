@@ -1,0 +1,13 @@
+@media print {
+  :host { min-height: 0; background: #fff; }
+  .report { overflow: visible; padding: 6mm 4mm; }
+  .answer-header h1 { font-size: 25pt; line-height: 1.15; }
+  .report > section { break-inside: auto; }
+  .report h2, .report h3, .report .eyebrow { break-after: avoid; }
+  .report > .executive-summary, .metrics article, .comparison-grid article,
+  .action-grid article, .trigger-grid article, .finding-list article,
+  .report > .sources, .comparison-grid, .findings li { break-inside: avoid; }
+  .report footer { break-inside: avoid; break-before: avoid; font-size: 10pt; }
+  .sources { break-after: avoid; }
+  .sources a { font-size: 10pt; }
+}

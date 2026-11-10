@@ -14,8 +14,17 @@ test('homepage leads with a sourced comparison and a free working example', asyn
 
 test('homepage sample, Business prices, paid intent and registration remain usable', async ({ page }) => {
   await page.goto('/');
+  const cityPreview = page.getByRole('table', { name: 'City estimates from the public Business sample' });
+  const incomeRow = cityPreview.getByRole('row', { name: /Median household income/ });
+  await expect(incomeRow).toContainText('$93,658');
+  await expect(incomeRow).toContainText('$82,068');
+  await expect(page.locator('#discovery-result')).toContainText('public sample report, which also compares Nashville');
   await page.getByRole('link', { name: 'View the Full Sample Report', exact: true }).click();
   await expect(page).toHaveURL(/\/sample-report$/);
+  const incomeProof = page.locator('#proof-income');
+  for (const [city, income] of [['Austin, TX', '$93,658'], ['Charlotte, NC', '$82,068'], ['Nashville, TN', '$77,371']]) {
+    await expect(incomeProof.getByRole('row', { name: new RegExp(city) })).toContainText(income);
+  }
   await expect(page.locator('#recommendation h2')).toContainText('Austin, TX');
   await page.goto('/');
   const pricing = page.locator('#pricing');

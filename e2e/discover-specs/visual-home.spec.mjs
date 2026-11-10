@@ -52,11 +52,72 @@ test('homepage fits six reference widths with a visible example action and reada
     await noOverflow(page);
     await accessible(page);
     const headings = await homepageHeadingContrasts(page);
-    expect(headings).toHaveLength(13);
+    expect(headings).toHaveLength(14);
     for (const heading of headings) {
       expect(heading.minimumRatio, heading.text).toBeGreaterThanOrEqual(heading.fontSize >= 24 ? 3 : 4.5);
     }
     await page.screenshot({ path: info.outputPath(`homepage-${width}.png`), fullPage: true, scale: 'css' });
+  }
+});
+
+test('homepage questions reveal the matching takeaway, source cells and next action', async ({ page }, info) => {
+  for (const [width, height] of sizesByProject[info.project.name]) {
+    await page.setViewportSize({ width, height });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/');
+    const feature = page.locator('#business');
+    const city = feature.getByRole('button', { name: /^Compare two cities/ });
+    const electricity = feature.getByRole('button', { name: /^Electricity bills/ });
+    const tax = feature.getByRole('button', { name: /^Property tax/ });
+    const evidence = feature.locator('details');
+    const summary = evidence.locator('summary');
+    await expect(city).toHaveAttribute('aria-pressed', 'true');
+    await expect(feature.getByText('+$11,590', { exact: true })).toBeVisible();
+    await summary.click();
+    await expect(evidence).toContainText('2.4 percentage points');
+    await expect(evidence.getByRole('link', { name: /Population table/ })).toBeVisible();
+
+    await electricity.focus();
+    await page.keyboard.press('Enter');
+    await expect(electricity).toBeFocused();
+    await expect(electricity).toHaveAttribute('aria-pressed', 'true');
+    await expect(city).toHaveAttribute('aria-pressed', 'false');
+    await expect(evidence).not.toHaveAttribute('open');
+    await expect(feature.getByRole('status')).toContainText('The bill rose faster than energy use.');
+    await expect(feature.getByText('Made-up bills', { exact: true })).toBeVisible();
+    await expect(feature.getByText('+21%', { exact: true })).toBeVisible();
+    await expect(feature.getByText('+10%', { exact: true })).toBeVisible();
+    await expect(feature.getByRole('link', { name: 'Explore the electricity example' }))
+      .toHaveAttribute('href', '/discover/?example=electricity');
+    await expect(page).toHaveURL(origin + '/');
+    expect(await electricity.evaluate(node => getComputedStyle(node).transitionDuration)).toBe('0s');
+    await noOverflow(page);
+    await accessible(page);
+    await feature.screenshot({ path: info.outputPath(`electricity-${width}.png`), scale: 'css' });
+
+    await summary.focus();
+    await page.keyboard.press('Enter');
+    await expect(evidence).toHaveAttribute('open', '');
+    await expect(evidence).toContainText('$145.20 − $120.00 = +$25.20');
+    await expect(evidence.getByRole('table', { name: 'Energy used source cells' })).toContainText('E3');
+    await expect(evidence.getByRole('table', { name: 'Energy used source cells' })).toContainText('660');
+    await noOverflow(page);
+    await accessible(page);
+    await feature.screenshot({ path: info.outputPath(`evidence-${width}.png`), scale: 'css' });
+
+    await tax.click();
+    await expect(tax).toHaveAttribute('aria-pressed', 'true');
+    await expect(evidence).not.toHaveAttribute('open');
+    await expect(feature).toContainText('School charges accounted for 57.1% of the increase.');
+    await expect(feature.getByRole('link', { name: 'Explore the property-tax example' }))
+      .toHaveAttribute('href', '/discover/?example=tax');
+    await summary.click();
+    await expect(evidence).toContainText('School: $2,640.00 − $2,400.00 = +$240.00');
+    await expect(evidence).not.toContainText('660');
+    await noOverflow(page);
+    await city.click();
+    await expect(evidence).not.toHaveAttribute('open');
+    await expect(feature.getByRole('link', { name: 'View the Full Sample Report' })).toHaveAttribute('href', '/sample-report');
   }
 });
 

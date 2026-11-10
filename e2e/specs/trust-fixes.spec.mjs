@@ -64,7 +64,7 @@ test('the homepage shows a real sample finding and claims no uploaded-data analy
   await expect(card).toContainText('$93,658');
   await expect(page.getByRole('link', { name: 'View the Full Sample Report', exact: true })).toHaveAttribute('href', '/sample-report');
   await expect(card).toContainText(/city-level estimates/i);
-  await expect(card).toContainText('further research into demand, competition, and rent');
+  await expect(card).toContainText('Check local demand, competition, and rent');
   await expect(page.locator('.explore-note')).toContainText('Two supported USD CSV formats. No PDFs or scans.');
   await expect(page.locator('.explore-note')).toContainText('No uploads or saved copies.');
 });

@@ -1,5 +1,13 @@
 # ifYouMind — Current development status
 
+## November 10, 2026 — Homepage discovery Phase 2
+
+OpenAI / Codex. `codex/home-discovery-phase-2` starts from PR #80 at `16884db`, which contains the homepage redesign from PR #79. The featured card now offers cities, electricity, and property tax with immediate takeaways, evidence, and existing continuation routes. PR #78’s report proof and PR #77’s discovery results remain separate review candidates. [Working evidence](../design/home-discovery-phase-2-20261110/REVIEW.md).
+
+Local builds, targeted lint, 138 fast, 69 Hosting, and 40 targeted authenticated browser checks passed. The six viewport widths include 320 through 1440 pixels. Consent and overlap with existing analytics are documented before any new event emissions. Separate founder approval is required for release.
+
+Next steps. Observe the deferred first-use walkthrough when testing resumes. Review the transition into PR #78’s full sample separately. Resolve consent and event overlap before measuring conversion.
+
 ## November 10, 2026 — Public plan comparison
 
 OpenAI / Codex. The `codex/public-plan-comparison` follow-up starts from homepage PR #79 at `d376f38`. The pricing banner opens a comparison of the free brief, one-time report, and Pro before account creation. The link to account pricing uses the existing sign-in return path. [Captures and verification](../design/public-plan-comparison-20261110/REVIEW.md).

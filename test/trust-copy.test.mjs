@@ -29,12 +29,12 @@ test('sign-up links its Terms and Privacy Policy; sign-in offers password recove
 });
 
 test('marketing copy makes no uploaded-data claim the reports do not support', () => {
-  const landing=read('../src/app/intelligence/public-landing.component.html');
+  const landing=read('../src/app/intelligence/public-landing.component.html')+read('../src/app/intelligence/home-discovery-examples.ts');
   assert.doesNotMatch(landing,/your own data/i);
   assert.match(landing,/from the public sample report/i);
   assert.doesNotMatch(landing,/about the same/i, 'small gaps are flagged as uncertain, never declared equal');
   assert.match(landing,/city-level estimates/i);
-  assert.match(landing,/further research into demand, competition, and rent/);
+  assert.match(landing,/Check local demand, competition, and rent/);
   assert.match(landing,/Two supported USD CSV formats\. No PDFs or scans/);
   assert.match(landing,/Bill discovery is free\./);
   assert.match(landing,/Bill files stay in your browser tab\. No uploads or saved copies/);

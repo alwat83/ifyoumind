@@ -50,36 +50,127 @@
     </section>
 
     <section id="business" class="shell featured" aria-labelledby="featured-title">
-      <div class="featured-intro">
-        <p class="eyebrow">Example analysis</p>
-        <h2 id="featured-title">Where would a coffee shop do better?</h2>
-        <p>Austin, TX and Charlotte, NC side by side. Figures from the public sample report.</p>
-        <a routerLink="/sample-report" class="button button-tinted">View the Full Sample Report <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
+      <div class="discovery-picker">
+        <div>
+          <p class="eyebrow">Discover something interesting</p>
+          <h2 id="featured-title">The answers are already in the data.</h2>
+          <p class="picker-lede">Explore a question. See what the evidence reveals.</p>
+        </div>
+        <div class="question-options" role="group" aria-label="Choose an example">
+          @for (option of examples; track option.id) {
+            <button type="button" class="question-option" [attr.aria-pressed]="example.id === option.id"
+              aria-controls="discovery-result" (click)="chooseExample(option, evidence)">
+              <svg class="icon" aria-hidden="true"><use [attr.href]="'/images/home/icons.svg#' + option.icon"/></svg>
+              <span><strong>{{ option.title }}</strong><small>{{ option.description }}</small></span>
+            </button>
+          }
+        </div>
       </div>
-      <div class="comparison">
-        <table aria-describedby="data-sources">
-          <caption class="sr-only">City estimates from the public Business sample</caption>
-          <thead>
-            <tr>
-              <th scope="col"><span class="sr-only">Measure</span></th>
-              <th scope="col"><span class="city-key austin" aria-hidden="true"></span>Austin, TX</th>
-              <th scope="col"><span class="city-key charlotte" aria-hidden="true"></span>Charlotte, NC</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><th scope="row"><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#people"/></svg>Population</th><td>979,539</td><td>903,844</td></tr>
-            <tr><th scope="row"><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#briefcase"/></svg>Median household income</th><td>$93,658</td><td>$82,068</td></tr>
-            <tr><th scope="row"><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#trend"/></svg>Population change</th><td>+3.0%</td><td>+5.4%</td></tr>
-          </tbody>
-        </table>
-        <p id="data-sources" class="source-note"><a href="https://www.census.gov/data/developers/data-sets/acs-5year.html">U.S. Census ACS</a> city-level estimates, 2020–2024. Population change compares 2015–2019 with 2020–2024. Differences may fall within survey margins of error.</p>
+
+      <p class="sr-only" role="status">{{ discoveryAnnouncement }}</p>
+      <section id="discovery-result" class="discovery-result" aria-labelledby="discovery-question">
+        <div class="featured-intro">
+          <p class="example-label">{{ example.label }}</p>
+          <h3 id="discovery-question">{{ example.question }}</h3>
+          <p>{{ example.context }}</p>
+        </div>
+        <aside class="takeaway" aria-labelledby="takeaway-title">
+          <h3 id="takeaway-title"><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#target"/></svg>Key Takeaway</h3>
+          <p>{{ example.takeaway }}</p>
+          <dl class="discovery-highlights">
+            @for (highlight of example.highlights; track highlight.label) {
+              <div>
+                <dt>{{ highlight.label }}</dt>
+                <dd>
+                  {{ highlight.value }}
+                  @if (highlight.width !== undefined) {
+                    <span class="evidence-bar" aria-hidden="true"><i [style.width.%]="highlight.width"></i></span>
+                  }
+                </dd>
+              </div>
+            }
+          </dl>
+          <p class="takeaway-note">{{ example.limit }}</p>
+        </aside>
+        <div class="comparison">
+          <table aria-describedby="data-sources">
+            <caption class="sr-only">{{ example.id === 'cities' ? 'City estimates from the public Business sample' : example.title + ' comparison' }}</caption>
+            <thead>
+              <tr>
+                <th scope="col"><span class="sr-only">Measure</span></th>
+                @for (column of example.columns; track column; let first = $first) {
+                  <th scope="col"><span class="city-key" [class.austin]="first" [class.charlotte]="!first" aria-hidden="true"></span>{{ column }}</th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of example.rows; track row.label) {
+                <tr>
+                  <th scope="row">{{ row.label }}</th>
+                  @for (value of row.values; track $index) {
+                    <td [class.is-highlight]="row.highlight === $index">{{ value }}</td>
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
+          <p id="data-sources" class="source-note">
+            @if (example.id === 'cities') {
+              <a href="https://www.census.gov/data/developers/data-sets/acs-5year.html">U.S. Census ACS</a> city-level estimates, 2020–2024. Population change compares 2015–2019 with 2020–2024. Differences may fall within survey margins of error.
+            } @else {
+              Values come from the public example CSV.
+            }
+          </p>
+        </div>
+      </section>
+
+      <div class="discovery-next">
+        <details #evidence class="home-evidence">
+          <summary>Show the evidence <span aria-hidden="true"></span></summary>
+          <div class="evidence-content">
+            @if (example.id === 'cities') {
+              <h3>How these figures compare</h3>
+              <p>The public sample was saved October 11, 2026. Population and median household income use 2020–2024 ACS five-year estimates. Income is in 2024 inflation-adjusted dollars.</p>
+              <ul>
+                <li>Median household income: $93,658 − $82,068 = $11,590.</li>
+                <li>Population change: 5.4% − 3.0% = 2.4 percentage points.</li>
+              </ul>
+              <p>Population change compares two ACS five-year estimates, 2015–2019 and 2020–2024. The displayed differences have not been tested for statistical significance.</p>
+              <div class="evidence-links">
+                <a href="https://api.census.gov/data/2024/acs/acs5/groups/B01003.html">Population table (B01003)</a>
+                <a href="https://api.census.gov/data/2024/acs/acs5/groups/B19013.html">Income table (B19013)</a>
+              </div>
+            } @else {
+              <h3>Calculations and source cells</h3>
+              <p>Cell references and raw values are from the made-up CSV used by the full example.</p>
+              <div class="evidence-groups">
+                @for (group of example.proof; track group.label) {
+                  <div>
+                    <h4>{{ group.label }}</h4>
+                    <ul>
+                      @for (step of group.steps; track step) { <li>{{ step }}</li> }
+                    </ul>
+                    <table>
+                      <caption class="sr-only">{{ group.label }} source cells</caption>
+                      <thead><tr><th scope="col">Cell</th><th scope="col">Field</th><th scope="col">Raw value</th></tr></thead>
+                      <tbody>
+                        @for (cell of group.cells; track cell.cell) {
+                          <tr><th scope="row">{{ cell.cell }}</th><td>{{ cell.label }}</td><td>{{ cell.raw }}</td></tr>
+                        }
+                      </tbody>
+                    </table>
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </details>
+        @if (example.id === 'cities') {
+          <a routerLink="/sample-report" class="button button-tinted">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
+        } @else {
+          <a [href]="'/discover/?example=' + example.id" class="button button-tinted">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
+        }
       </div>
-      <aside class="takeaway" aria-labelledby="takeaway-title">
-        <h3 id="takeaway-title"><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#target"/></svg>Key Takeaway</h3>
-        <p>Austin has the higher estimated household income. Charlotte’s estimated population increased more.</p>
-        <p class="takeaway-note">Use these estimates to plan further research into demand, competition, and rent.</p>
-        <div class="takeaway-art" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-      </aside>
     </section>
 
     <section id="how-it-works" class="shell process" aria-labelledby="process-title">

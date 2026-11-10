@@ -100,7 +100,8 @@ test('consumer homepage preserves the Business entry point and plan-ready offer'
   assert.doesNotMatch(landingHtml,/Miami or Tampa/);
   assert.doesNotMatch(landingHtml,/<span>Your own data<\/span>/);
   assert.match(landingHtml,/id="business"/);
-  assert.match(landingHtml,/routerLink="\/sample-report"[^>]*>View the Full Sample Report/);
+  assert.match(landingHtml,/routerLink="\/sample-report"/);
+  assert.match(read('src/app/intelligence/home-discovery-examples.ts'),/action: 'View the Full Sample Report'/);
   assert.match(landingHtml,/sources, limits, an action plan/);
   assert.ok(landingHtml.indexOf('id="try"')<landingHtml.indexOf('id="business"'),'consumer discovery leads; Business remains available');
 });

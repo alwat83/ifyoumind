@@ -501,3 +501,9 @@ The production and local builds, targeted lint, 137 fast checks 63 final Hosting
 OpenAI / Codex. The homepage redesign pointed its pricing CTA to an authenticated route, which required sign-in before visitors could read plan details. The `codex/public-plan-comparison` follow-up from `d376f38` adds an inline comparison to the landing component and styles, with Hosting and authenticated browser coverage for the new action. [Review](../design/public-plan-comparison-20261110/REVIEW.md).
 
 The display explains the free brief, the $79 report without a subscription, and the $39 monthly plan with five full reports. The account pricing and registration links use the established destinations. Reduced comparison friction is the intended commercial effect. Conversion remains unmeasured. The branch is a draft for review and requires separate approval for release.
+
+## 2026-11-10 — Homepage discovery Phase 2
+
+OpenAI / Codex. Implemented the Phase 2 brief on `codex/home-discovery-phase-2` from PR #80 at `16884db`. Changes cover the landing component, scoped discovery styles, public bill fixture projection and drift check, browser regressions, and review captures. [Design, screenshots, and evidence](../design/home-discovery-phase-2-20261110/REVIEW.md). Production and local builds, targeted lint, 138 fast checks, 69 Hosting checks and 40 targeted authenticated browser checks passed. The prior deployed release evidence remains in the PR #76 handoff. This candidate requires separate founder approval.
+
+Expected business impact is earlier value before registration and a more direct route to the public report or full bill example. No conversion result has been measured. Candidate event definitions are recorded for a later consent and measurement review.

@@ -1,0 +1,178 @@
+{
+  "electricity": {
+    "columns": [
+      "Jul 2025",
+      "Jul 2026"
+    ],
+    "rows": [
+      {
+        "label": "Total billed",
+        "values": [
+          "$120.00",
+          "$145.20"
+        ],
+        "highlight": 1
+      },
+      {
+        "label": "Energy used",
+        "values": [
+          "600 kWh",
+          "660 kWh"
+        ],
+        "highlight": 1
+      }
+    ],
+    "highlights": [
+      {
+        "label": "Bill increase",
+        "value": "+21%",
+        "width": 100
+      },
+      {
+        "label": "Energy use increase",
+        "value": "+10%",
+        "width": 47.61904761904762
+      }
+    ],
+    "proof": [
+      {
+        "label": "Total billed",
+        "steps": [
+          "$145.20 − $120.00 = +$25.20",
+          "(+$25.20 ÷ $120.00) × 100 = 21%"
+        ],
+        "cells": [
+          {
+            "cell": "J2",
+            "label": "Total billed (USD)",
+            "raw": "120.00"
+          },
+          {
+            "cell": "J3",
+            "label": "Total billed (USD)",
+            "raw": "145.20"
+          }
+        ]
+      },
+      {
+        "label": "Energy used",
+        "steps": [
+          "660 kWh − 600 kWh = +60 kWh",
+          "(60 ÷ 600) × 100 = 10% (rounded)"
+        ],
+        "cells": [
+          {
+            "cell": "E2",
+            "label": "Consumption (kWh)",
+            "raw": "600"
+          },
+          {
+            "cell": "E3",
+            "label": "Consumption (kWh)",
+            "raw": "660"
+          }
+        ]
+      }
+    ]
+  },
+  "tax": {
+    "share": "57.1%",
+    "columns": [
+      "2024",
+      "2025"
+    ],
+    "rows": [
+      {
+        "label": "Total tax",
+        "values": [
+          "$4,200.00",
+          "$4,620.00"
+        ],
+        "highlight": 1
+      },
+      {
+        "label": "School charges",
+        "values": [
+          "$2,400.00",
+          "$2,640.00"
+        ],
+        "highlight": 1
+      }
+    ],
+    "highlights": [
+      {
+        "label": "Total increase",
+        "value": "+$420.00",
+        "width": 100
+      },
+      {
+        "label": "School charges",
+        "value": "+$240.00",
+        "width": 57.142857142857146
+      }
+    ],
+    "proof": [
+      {
+        "label": "Total tax",
+        "steps": [
+          "$4,620.00 − $4,200.00 = +$420.00",
+          "(+$420.00 ÷ $4,200.00) × 100 = 10%"
+        ],
+        "cells": [
+          {
+            "cell": "E2",
+            "label": "Total billed",
+            "raw": "4200.00"
+          },
+          {
+            "cell": "E3",
+            "label": "Total billed",
+            "raw": "4620.00"
+          }
+        ]
+      },
+      {
+        "label": "How the charges add up",
+        "steps": [
+          "County: $990.00 − $900.00 = +$90.00",
+          "School: $2,640.00 − $2,400.00 = +$240.00",
+          "Municipal: $990.00 − $900.00 = +$90.00",
+          "(+$90.00) + (+$240.00) + (+$90.00) = +$420.00",
+          "($240.00 ÷ $420.00) × 100 = 57.1%"
+        ],
+        "cells": [
+          {
+            "cell": "B2",
+            "label": "County",
+            "raw": "900.00"
+          },
+          {
+            "cell": "C2",
+            "label": "School",
+            "raw": "2400.00"
+          },
+          {
+            "cell": "D2",
+            "label": "Municipal",
+            "raw": "900.00"
+          },
+          {
+            "cell": "B3",
+            "label": "County",
+            "raw": "990.00"
+          },
+          {
+            "cell": "C3",
+            "label": "School",
+            "raw": "2640.00"
+          },
+          {
+            "cell": "D3",
+            "label": "Municipal",
+            "raw": "990.00"
+          }
+        ]
+      }
+    ]
+  }
+}

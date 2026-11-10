@@ -1,7 +1,6 @@
 @media (max-width: 1100px) {
   .shell { width: calc(100% - 64px); }
-  .featured { gap: 14px; padding-inline: 24px; }
-  .featured-intro .button { font-size: 12px; }
+  .featured { padding-inline: 24px; }
   .comparison th, .comparison td { padding-inline: 6px; }
 }
 
@@ -33,9 +32,6 @@
     font-weight: 600;
   }
   .mobile-navigation nav a:hover { background: var(--soft-purple); }
-  .featured { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); }
-  .takeaway { grid-column: 1 / -1; }
-  .takeaway-art { display: none; }
   .explore-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .pricing { grid-template-columns: minmax(0, 1.35fr) repeat(2, minmax(0, 1fr)); }
   .pricing-action { grid-column: 1 / -1; margin-block: 4px 6px; }
@@ -63,8 +59,7 @@
   .trust-list { gap: 5px 13px; margin-top: 13px; }
   .trust-list li { gap: 5px; font-size: 11px; }
   .trust-list .icon { width: 15px; height: 15px; }
-  .featured { grid-template-columns: minmax(0, 1fr); gap: 15px; margin-top: -26px; padding: 19px 15px 15px; border-radius: 17px; }
-  .featured-intro h2 { max-width: 18ch; }
+  .featured { margin-top: -26px; padding: 19px 15px 15px; border-radius: 17px; }
   .comparison table { table-layout: fixed; }
   .comparison thead th { font-size: 11px; white-space: normal; overflow-wrap: anywhere; }
   .comparison thead th:first-child { width: 43%; }

@@ -8,6 +8,10 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 10, 2026 — Homepage discovery Phase 2
+
+**Committed on a review branch** based on PR #80. The homepage’s featured comparison now lets visitors switch between a dated Census city comparison and two deterministic bill examples. Each result exposes its takeaway, evidence, and supported next step before sign-in. [Review, screenshots, and measurements](docs/design/home-discovery-phase-2-20261110/REVIEW.md).
+
 ## November 10, 2026 — Public plan comparison
 
 **Committed on a review branch** based on PR #79. The homepage pricing banner expands the free, one-time, and Pro details before sign-in. Existing account pricing remains reachable from the comparison. [Review and verification](docs/design/public-plan-comparison-20261110/REVIEW.md).

@@ -75,6 +75,7 @@ test('homepage questions reveal the matching takeaway, source cells and next act
     await expect(feature.getByText('+$11,590', { exact: true })).toBeVisible();
     await summary.click();
     await expect(evidence).toContainText('2.4 percentage points');
+    await expect(evidence).toContainText('October 11, 2026 snapshot');
     await expect(evidence.getByRole('link', { name: /Population table/ })).toBeVisible();
 
     await electricity.focus();

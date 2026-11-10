@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 10, 2026 — integrated release candidate
+
+**Committed, in draft review.** OpenAI / Codex integrated #79 → #80 → #81 with independent #78 in [PR #82](https://github.com/alwat83/ifyoumind/pull/82) on `codex/integrated-release-20261110`, based on master `e5d8f15`. The Business sample adds Nashville to the homepage's Austin and Charlotte estimates. The homepage identifies its Census snapshot date. [Release review, visual evidence, QA, performance and rollback](../releases/integrated-20261110/REVIEW.md).
+
+The PR carries the candidate SHA and independent checks. Both workflows passed the initial application commit. Local builds, 145 fast tests and the visual review cover the final candidate. Live Stripe Price objects match the $79 one-time and $39 monthly public offers. Emulator checks cover the five-report allowance. Last verified production remains PR #76. Founder authorization is required for the master merge and its automatic deployment. Customer comprehension, paid conversion and fulfillment need real-user evidence. Outbound remains Pending Founder Setup.
+
 ## November 10, 2026 — Homepage discovery Phase 2
 
 OpenAI / Codex. `codex/home-discovery-phase-2` starts from PR #80 at `16884db`, which contains the homepage redesign from PR #79. The featured card now offers cities, electricity, and property tax with immediate takeaways, evidence, and existing continuation routes. PR #78’s report proof and PR #77’s discovery results remain separate review candidates. [Working evidence](../design/home-discovery-phase-2-20261110/REVIEW.md).

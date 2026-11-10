@@ -8,6 +8,12 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 10, 2026 — integrated release candidate
+
+**Committed, in draft review.** OpenAI / Codex integrated #79 → #80 → #81 with independent #78 in [PR #82](https://github.com/alwat83/ifyoumind/pull/82) on `codex/integrated-release-20261110`, based on master `e5d8f15`. The Business sample adds Nashville to the homepage's Austin and Charlotte estimates. The homepage identifies its Census snapshot date. [Release review, visual evidence, QA, performance and rollback](docs/releases/integrated-20261110/REVIEW.md).
+
+The PR carries the candidate SHA and independent checks. Both workflows passed the initial application commit. Local builds, 145 fast tests and the visual review cover the final candidate. Live Stripe Price objects match the $79 one-time and $39 monthly public offers. Emulator checks cover the five-report allowance. Last verified production remains PR #76. Founder authorization is required for the master merge and its automatic deployment. Customer comprehension, paid conversion and fulfillment need real-user evidence. Outbound remains Pending Founder Setup.
+
 ## November 10, 2026 — Homepage discovery Phase 2
 
 **Committed on a review branch** based on PR #80. The homepage’s featured comparison now lets visitors switch between a dated Census city comparison and two deterministic bill examples. Each result exposes its takeaway, evidence, and supported next step before sign-in. [Review, screenshots, and measurements](docs/design/home-discovery-phase-2-20261110/REVIEW.md).

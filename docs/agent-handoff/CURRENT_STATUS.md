@@ -4,7 +4,7 @@
 
 OpenAI / Codex. Founder supplied a production implementation brief and a visual reference. The `codex/premium-homepage-redesign` candidate starts at master `e5d8f15` and implements the skyline hero, sourced Austin–Charlotte comparison, process, use cases, pricing and footer. [Screenshots and review](../design/premium-homepage-20261110/REVIEW.md). The public site displayed $79 one time and $39 per month with five reports during the read-only check. The production sample returned the comparison figures and both ACS periods.
 
-The local builds, 137 fast tests, 63 Hosting tests, 28 targeted authenticated browser tests, targeted lint and bundle guards passed. The review records the six widths, the accessibility fixes and the limitations of loopback performance measurements. PRs #77 and #78 retain their own review history. This candidate requires separate release approval. Earlier release evidence remains under [PR #76](https://github.com/alwat83/ifyoumind/pull/76).
+The local builds, 137 fast tests, 63 Hosting tests, 40 targeted authenticated browser tests, targeted lint and bundle guards passed. The review records the six widths, the accessibility fixes and the limitations of loopback performance measurements. PRs #77 and #78 retain their own review history. This candidate requires separate release approval. Earlier release evidence remains under [PR #76](https://github.com/alwat83/ifyoumind/pull/76).
 
 Next steps. Review the desktop and mobile captures. Review this draft’s GitHub checks before any release decision. Once testing resumes, observe whether visitors can identify an appropriate next step within the first few seconds.
 

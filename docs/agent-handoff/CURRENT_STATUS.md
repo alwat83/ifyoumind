@@ -1,5 +1,13 @@
 # ifYouMind — Current development status
 
+## November 10, 2026 — Premium homepage redesign
+
+OpenAI / Codex. Founder supplied a production implementation brief and a visual reference. The `codex/premium-homepage-redesign` candidate starts at master `e5d8f15` and implements the skyline hero, sourced Austin–Charlotte comparison, process, use cases, pricing and footer. [Screenshots and review](../design/premium-homepage-20261110/REVIEW.md). The public site displayed $79 one time and $39 per month with five reports during the read-only check. The production sample returned the comparison figures and both ACS periods.
+
+The local builds, 137 fast tests, 63 Hosting tests, 28 targeted authenticated browser tests, targeted lint and bundle guards passed. The review records the six widths, the accessibility fixes and the limitations of loopback performance measurements. PRs #77 and #78 retain their own review history. This candidate requires separate release approval. Earlier release evidence remains under [PR #76](https://github.com/alwat83/ifyoumind/pull/76).
+
+Next steps. Review the desktop and mobile captures. Review this draft’s GitHub checks before any release decision. Once testing resumes, observe whether visitors can identify an appropriate next step within the first few seconds.
+
 ## Current — November 5, 2026: keep focus; first-use validation ready
 
 OpenAI / Codex. Founder directs “Let's keep it going and the focus.” Continue the first-screen discovery work and validate actual comprehension before broader changes. **Prepared/source-reviewed, no new interface implementation or human study conducted.** Separate documentation branch `codex/first-use-validation-20261105` from PR76 exact `3eb27893c3be6aad43cb0c07e173d412c8ee8103` preserves its tested head and PR74 campaign. [Ready facilitator script, answer key, decision rules and ranked commercial opportunities](../design/first-seconds/FIRST_USE_VALIDATION.md); [blank private-session template](../design/first-seconds/SESSION_TEMPLATE.md). Candidate screenshots/source reviewed; no new confirmed defect. No app/dependency/backend changes.

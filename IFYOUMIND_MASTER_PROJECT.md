@@ -1,12 +1,16 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-05
+**Updated:** 2026-11-10
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
 **Purpose:** Living project context for the founder and all current/future development agents.
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
+
+## November 10, 2026 — Premium homepage redesign
+
+**Committed on the review branch.** The founder supplied a reference-led redesign brief. The new home pairs the skyline hero with a dated Census comparison and direct paths to the free bill example, public Business sample, report creation, guides and pricing. [Visual review and verification](docs/design/premium-homepage-20261110/REVIEW.md). The redesign is based on master and has its own release review.
 
 **Active roadmap addition — [#56 SEO growth foundation](https://github.com/alwat83/ifyoumind/issues/56):** after #54/#55 verification and combined mobile checks, audit technical SEO, raw/rendered metadata, indexing, sitemap generation, structured data and actual legacy `SeoService` usage; fix verified defects with regressions on a separate feature branch/draft PR. Then prepare cited content for job offers, relocation, business locations and flexible data analysis on a separate branch. Preserve Business conversion paths; unfinished Life functionality stays clearly labelled and experimental calculations stay local-only. No merge or deployment without founder approval. See current snapshot/log for evidence and next steps.
 

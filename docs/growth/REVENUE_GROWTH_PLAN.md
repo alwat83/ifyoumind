@@ -2,6 +2,12 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## November6 — Business proof is implemented for review
+
+Founder authorized Phase1; [working sample/report/print slice](../product/business-report-proof-20261106/REVIEW.md) on a separate master-based feature branch, not deployed. Shows actual Census income/population-change differences with visible limits, provenance and practical next research; fixes promised print/PDF dark tail and page breaks. Local builds144fast/72Functions/124browser plus12focused rerun and recorded rules/commerce/isolation checksPASS;16PDFconfigurations and18screenshots. These are engineering/QA outcomes, not visitors, comprehension or purchases. Approximate30second first-use goal remains unvalidated while participant testing is deferred.
+
+[Commercial alignment](../product/business-report-proof-20261106/COMMERCIAL_ALIGNMENT.md) documents the actual79one-time versus39monthly/five-report trade-off: the single report's advantage is no subscription, not better analytics. Keep both offers/allowances/entitlements unchanged; propose clear adjacent factual wording for later focused work. Opportunity rank: review this completed low-service-cost proof/print slice; obtain deferred relevant-task usefulness evidence when testing resumes; then transparent offer/context continuity and specifically approved qualified Business demonstrations after outbound reopens. No financial/traffic/customer/revenue refresh or lift claim; dated scoped baseline unchanged, unknown stays unknown. Pending Founder Setup retained, no sender/recruitment reminder or publishing/spend. Separate exact-head release approval remains necessary.
+
 ## November 5 — focused path to first useful sessions
 
 Founder asks to continue and keep focus. [First-use packet](../design/first-seconds/FIRST_USE_VALIDATION.md) is ready: five-second purpose/next-action observation, unassisted full example, finding/evidence/clear, expectation check and private blank notes. Proposed five participants are a qualitative review round, not acquired users or a statistical conversion claim. No sessions conducted, no new outcomes, no financial refresh; prior scoreboard and approved baseline retain their original scope/date. First-screen source/captures show no new confirmed defect; exact76head build41969293482/fullQA41969293743 SUCCESS verified without rerunning.
@@ -48,6 +54,10 @@ Week October 19–25, 2026 UTC. Financial observation **October 22 22:40:04.919 
 | Next launch action | Outbound distribution: **Pending Founder Setup**; all assets unsent | Continue verified consumer usability/reliability work and private launch preparation; resume distribution only after founder setup and exact approval |
 
 [Approved October 22 aggregate Stripe evidence](STRIPE_BASELINE_2026-10-22.json) is preserved unchanged: zero successful payments/paid subscriptions/refunds, $0 receipts/MRR/recorded payment fees; three expired unpaid checkouts (one report, two Pro). Other accounts/off-Stripe/test records outside scope. Founder never confirmed purchases; old attribution is retracted. Identifiers/raw records stay private. Costs and profitability remain unknown, not launch blockers; reconcile actual costs before claiming profit. [Lightweight measurement note](MEASUREMENT_READINESS.md).
+
+### November 10, 2026 — integrated candidate observation
+
+[PR #82](https://github.com/alwat83/ifyoumind/pull/82) gives visitors immediate discovery, a sourced sample, and pricing before sign-in. Live Stripe confirmed both public prices. The live Billing Portal configuration query returned no records, so verify self-service billing before release. This observation covers product and billing configuration only. Visitor, checkout, purchase, revenue and customer feedback metrics retain their previously recorded scope and dates. Highest near-term priorities are a verified release, a short first-use round, then qualified founder introductions when authorized. Track whether visitors reach a finding, open evidence, start a brief and complete an independently funded report purchase.
 
 ## Seven days after authorized deployment
 

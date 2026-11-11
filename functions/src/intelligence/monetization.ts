@@ -1,12 +1,13 @@
 import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
-import { authorizeOrganization } from './authorization';
+import { authorizeOrganization, type OrganizationRole } from './authorization';
 import {
   grantsPro,
   shouldApplySubscriptionEvent,
   stripeKeyMode,
   stripePriceIds,
+  subscriptionCancellationScheduled,
   subscriptionEventMayChangePlan,
   validStripeSignature,
 } from './stripe-commerce-logic';
@@ -22,6 +23,7 @@ import {
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const stripeSecretKey = defineSecret('STRIPE_SECRET_KEY');
 const stripeWebhookSecret = defineSecret('STRIPE_WEBHOOK_SECRET');
+const billingRoles: readonly OrganizationRole[] = ['owner', 'admin'];
 
 async function stripeGet(path:string){
   const response=await fetch(`https://api.stripe.com/v1/${path}`,{
@@ -56,6 +58,10 @@ async function stripePost(path:string, body:URLSearchParams){
 }
 const readMembership = async (organizationId: string, uid: string) =>
   (await organizations().doc(organizationId).collection('members').doc(uid).get()).data();
+
+function billingCustomerId(value: unknown): string {
+  return typeof value === 'string' ? value.trim() : '';
+}
 
 export const COMMERCIAL_PLANS = {
   free: {
@@ -114,6 +120,8 @@ export const getCommercialStatus = onCall({secrets:[stripeSecretKey]}, async (re
     usedIncludedReports,
     remainingIncludedReports: Math.max(0, includedReportsPerMonth - usedIncludedReports),
     checkoutEnabled: true,
+    billingPortalAvailable: billingRoles.includes(scope.role) && Boolean(billingCustomerId(org.stripeCustomerId)),
+    cancellationScheduled: plan === 'pro' && org.stripeCancelAtPeriodEnd === true,
     paymentsLive: stripeKeyMode(stripeSecretKey.value()) === 'live',
     pricing: {
       proMonthlyUsd: COMMERCIAL_PLANS.pro.monthlyPriceUsd,
@@ -157,9 +165,9 @@ export const requestCommercialAccess = onCall(async (request) => {
 
 
 export const createBillingPortalSession = onCall({secrets:[stripeSecretKey]}, async (request) => {
-  const scope=await authorizeOrganization(request.auth?.uid,request.data?.organizationId,readMembership);
+  const scope=await authorizeOrganization(request.auth?.uid,request.data?.organizationId,readMembership,billingRoles);
   const org=(await organizations().doc(scope.organizationId).get()).data()||{};
-  const customerId=typeof org.stripeCustomerId==='string'?org.stripeCustomerId.trim():'';
+  const customerId=billingCustomerId(org.stripeCustomerId);
   if(!customerId){
     throw new HttpsError('failed-precondition','No Stripe billing account is connected yet.');
   }
@@ -170,9 +178,15 @@ export const createBillingPortalSession = onCall({secrets:[stripeSecretKey]}, as
 
   try{
     const session=await stripePost('billing_portal/sessions',params);
-    return {url:String(session.url||'')};
-  }catch(error){
-    console.error('Stripe billing portal creation failed',error);
+    const url=new URL(typeof session.url==='string'?session.url:'');
+    const sessionPath=/^\/p\/session\/[^/]+$/.test(url.pathname)||
+      (url.pathname==='/p/session'&&Boolean(url.searchParams.get('secret')));
+    if(url.origin!=='https://billing.stripe.com'||url.username||url.password||!sessionPath){
+      throw new Error('Invalid Stripe portal session URL.');
+    }
+    return {url:url.href};
+  }catch{
+    console.error('Stripe billing portal session unavailable');
     throw new HttpsError('internal','Billing management could not be opened.');
   }
 });
@@ -361,6 +375,30 @@ export const unlockDecisionReportWithPro = onCall(async (request) => {
   });
 });
 
+async function applyProSubscription(
+  organizationId:string,
+  subscription:{id:string;status:string;customer?:unknown;cancellationScheduled:boolean},
+  created:number,
+):Promise<void>{
+  const orgRef=organizations().doc(organizationId);
+  await getFirestore().runTransaction(async tx=>{
+    const snapshot=await tx.get(orgRef);
+    if(!snapshot.exists)return;
+    const current=snapshot.data()||{};
+    if(!subscriptionEventMayChangePlan(current,subscription.id,subscription.status)||
+      !shouldApplySubscriptionEvent(created,current.stripeSubscriptionEventCreated))return;
+    tx.set(orgRef,{
+      plan:grantsPro(subscription.status)?'pro':'free',
+      stripeCustomerId:billingCustomerId(subscription.customer)||current.stripeCustomerId||null,
+      stripeSubscriptionId:subscription.id,
+      stripeSubscriptionStatus:subscription.status,
+      stripeCancelAtPeriodEnd:subscription.cancellationScheduled,
+      stripeSubscriptionEventCreated:created,
+      planUpdatedAt:FieldValue.serverTimestamp(),
+    },{merge:true});
+  });
+}
+
 export const stripeCommercialWebhook = onRequest(
   {secrets:[stripeWebhookSecret,stripeSecretKey]},
   async(req,res)=>{
@@ -381,9 +419,7 @@ export const stripeCommercialWebhook = onRequest(
     const db=getFirestore();
     const eventRef=db.collection('stripeEvents').doc(event.id);
     const nowMs=Date.now();
-    let claimed=false;
-
-    await db.runTransaction(async tx=>{
+    const claimed=await db.runTransaction(async tx=>{
       const existing=await tx.get(eventRef);
       if(existing.exists){
         const data=existing.data()||{};
@@ -391,7 +427,7 @@ export const stripeCommercialWebhook = onRequest(
           data.status==='processing'&&
           Number.isFinite(Number(data.claimedAtMs))&&
           nowMs-Number(data.claimedAtMs)<5*60*1000;
-        if(data.status==='processed'||processingRecently)return;
+        if(data.status==='processed'||processingRecently)return false;
       }
       tx.set(eventRef,{
         type:event.type,
@@ -399,7 +435,7 @@ export const stripeCommercialWebhook = onRequest(
         claimedAtMs:nowMs,
         updatedAt:FieldValue.serverTimestamp(),
       },{merge:true});
-      claimed=true;
+      return true;
     });
 
     if(!claimed){
@@ -430,15 +466,12 @@ export const stripeCommercialWebhook = onRequest(
                   newSubscriptionId:subscription.id||subscriptionId,
                 });
               }
-              await organizations().doc(organizationId).set({
-                plan:'pro',
-                stripeCustomerId:subscription.customer||session.customer||null,
-                stripeSubscriptionId:subscription.id||subscriptionId,
-                stripeSubscriptionStatus:String(subscription.status),
-                stripeCancelAtPeriodEnd:Boolean(subscription.cancel_at_period_end),
-                stripeSubscriptionEventCreated:event.created,
-                planUpdatedAt:FieldValue.serverTimestamp(),
-              },{merge:true});
+              await applyProSubscription(organizationId,{
+                id:subscription.id||subscriptionId,
+                status:String(subscription.status),
+                customer:subscription.customer||session.customer,
+                cancellationScheduled:subscriptionCancellationScheduled(subscription),
+              },event.created);
               await recordConfirmedPayment(session,'pro',event,{subscriptionId:subscription.id||subscriptionId});
             }else{
               console.warn('Checkout completed without active Pro subscription',session.id,subscription.status);
@@ -454,26 +487,13 @@ export const stripeCommercialWebhook = onRequest(
         const subscription=event.data.object;
         const metadata=subscription.metadata||{};
         const organizationId=metadata.organizationId;
-        if(organizationId&&metadata.offer==='pro'){
-          const orgRef=organizations().doc(organizationId);
-          const current=(await orgRef.get()).data()||{};
-          const status=String(subscription.status||'unknown');
-          if(!subscriptionEventMayChangePlan(current,subscription.id,status)){
-            // e.g. a duplicate subscription being cancelled must not end the workspace's live one.
-            console.info('Ignoring event for a non-current Stripe subscription',event.id,subscription.id);
-          }else if(shouldApplySubscriptionEvent(event.created,current.stripeSubscriptionEventCreated)){
-            await orgRef.set({
-              plan:grantsPro(status)?'pro':'free',
-              stripeCustomerId:subscription.customer||null,
-              stripeSubscriptionId:subscription.id||null,
-              stripeSubscriptionStatus:status,
-              stripeCancelAtPeriodEnd:Boolean(subscription.cancel_at_period_end),
-              stripeSubscriptionEventCreated:event.created,
-              planUpdatedAt:FieldValue.serverTimestamp(),
-            },{merge:true});
-          }else{
-            console.info('Ignoring stale Stripe subscription event',event.id,event.created);
-          }
+        if(organizationId&&metadata.offer==='pro'&&typeof subscription.id==='string'&&subscription.id){
+          await applyProSubscription(organizationId,{
+            id:subscription.id,
+            status:String(subscription.status||'unknown'),
+            customer:subscription.customer,
+            cancellationScheduled:subscriptionCancellationScheduled(subscription),
+          },event.created);
         }
       }
 

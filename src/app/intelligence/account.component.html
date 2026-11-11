@@ -39,8 +39,9 @@
       <div class="usage-track"><i [style.width.%]="(status.usedMarketProjects / status.marketProjectsPerMonth) * 100"></i></div>
       <p *ngIf="status.plan==='free'">You can keep using the free plan, or move up when you need more decisions and comparisons.</p>
       <p *ngIf="status.plan==='pro'">Your Pro plan includes up to {{ status.marketProjectsPerMonth }} decisions each month.</p>
+      <p *ngIf="status.cancellationScheduled">Your Pro plan is scheduled to end. You can keep using Pro until it ends.</p>
       <a *ngIf="status.plan==='free'" routerLink="/app/pricing">View upgrade options</a>
-      <button *ngIf="status.plan==='pro'" type="button" (click)="manageBilling()">Manage billing</button>
+      <button *ngIf="status.billingPortalAvailable" type="button" (click)="manageBilling()">Manage billing</button>
     </section>
 
     <section class="card">

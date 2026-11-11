@@ -12,6 +12,8 @@ export interface CommercialStatus {
   usedIncludedReports:number;
   remainingIncludedReports:number;
   checkoutEnabled:boolean;
+  billingPortalAvailable:boolean;
+  cancellationScheduled:boolean;
   paymentsLive?:boolean;
   pricing:{proMonthlyUsd:number;reportOneTimeUsd:number;proIncludedReportsPerMonth?:number};
 }

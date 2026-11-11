@@ -1,0 +1,22 @@
+.sample-overview .answer-header { align-items: start; padding-bottom: 22px; gap: 20px; }
+.sample-overview .answer-header .brand { display: none; }
+.sample-overview .answer-header h1 { font-size: clamp(28px, 4vw, 42px); line-height: 1.12; max-width: 570px; }
+.sample-overview .meta { max-width: 200px; }
+.sample-overview .meta span { display: none; }
+.sample-note summary { cursor: pointer; line-height: 1.5; }
+.sample-note p { margin: 10px 0 0; line-height: 1.55; }
+.sample-note summary:focus-visible { outline: 3px solid #2456bd; outline-offset: 3px; }
+.sample-question { margin: 28px 0 0; color: #566273; line-height: 1.55; font-size: 13px; }
+.sample-question strong { color: #352645; display: block; }
+@media (max-width: 560px) {
+  .sample-overview .answer-header { gap: 10px; padding-bottom: 18px; }
+  .sample-overview .answer-header h1 { font-size: 28px; }
+  .sample-overview .answer-header .context { margin-bottom: 0; }
+  .sample-overview .meta { max-width: none; gap: 5px; }
+}
+@media print {
+  .sample-overview .answer-header h1 { font-size: 23pt; }
+  .sample-overview .answer-header .brand { display: block; }
+  .sample-overview .meta span { display: inline-block; }
+  .sample-question { break-inside: avoid; }
+}

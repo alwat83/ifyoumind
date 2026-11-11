@@ -13,7 +13,10 @@ for (const path of ['/', '/login', '/register', '/register?intent=report']) {
 
 test('homepage navigation reaches sign-in and registration', async ({ page }) => {
   await page.goto('/');
-  await page.locator('nav.nav').getByRole('link', { name: 'Sign in' }).click();
+  if (test.info().project.name === 'mobile') {
+    await page.locator('summary').filter({ hasText: 'Menu' }).click();
+  }
+  await page.getByRole('link', { name: 'Sign In', exact: true }).click();
   await expect(page).toHaveURL(/\/login$/);
   await page.goto('/');
   await page.locator('#pricing').getByRole('link', { name: /Business brief/ }).click();

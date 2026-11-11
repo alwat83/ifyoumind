@@ -8,7 +8,7 @@
   </nav>
   <aside *ngIf="sampleMode" class="state no-print" style="margin-bottom:14px;border:1px solid #fcd34d;background:#fffbeb">
     <ng-container *ngIf="project; else sampleIntroduction">
-      <strong>This is a sample report.</strong> The question is an example, but every figure is real U.S. Census Bureau data with its source linked. Your own report uses your decision, business type and locations. This sample is the full $79 Decision Report; a free brief covers your main city and one comparison.
+      <details class="sample-note"><summary><strong>This is a sample report.</strong> Real Census estimates.</summary><p>An example question with real Census estimates. This is the full $79 Decision Report; a free brief covers your main city and one comparison.</p></details>
     </ng-container>
     <ng-template #sampleIntroduction><strong>This sample is free.</strong> A full Decision Report example, with real Census data, sources and limits.</ng-template>
   </aside>
@@ -42,19 +42,23 @@
   <section *ngIf="!sampleMode && loading" class="state">Putting your answer together…</section>
   <section *ngIf="!sampleMode && error" class="state error">{{ error }}</section>
 
-  <article *ngIf="project?.brief as brief" class="report">
+  <article *ngIf="project?.brief as brief" class="report" [class.sample-overview]="sampleMode && sampleProof">
     <header class="answer-header">
       <div>
         <p class="brand">ifYouMind</p>
         <p class="eyebrow">{{ reportLabel }}</p>
-        <h1 #reportTitle [attr.tabindex]="sampleMode ? -1 : null">{{ project?.decision }}</h1>
+        <h1 #reportTitle [attr.tabindex]="sampleMode ? -1 : null">{{ sampleMode && sampleProof ? 'How do these cities compare?' : project?.decision }}</h1>
         <p class="context">{{ project?.concept }} · {{ project?.location }}</p>
       </div>
       <div class="meta">
-        <span>{{ sampleMode ? 'Sample · live data' : project?.mode === 'demo' ? 'Demo data' : 'Live data' }}</span>
-        <small>{{ project?.createdAt ? (project?.createdAt | date:'longDate') : '' }}</small>
+        <span>{{ sampleMode ? 'Sample · public Census estimates' : project?.mode === 'demo' ? 'Demo data' : 'Live data' }}</span>
+        <small *ngIf="sampleMode">Report saved {{ project?.createdAt ? (project?.createdAt | date:'longDate':'UTC') : 'date unavailable' }}</small>
+        <small *ngIf="!sampleMode">{{ project?.createdAt ? (project?.createdAt | date:'longDate') : '' }}</small>
       </div>
     </header>
+
+    <app-report-proof *ngIf="sampleMode && sampleProof" [proof]="sampleProof"></app-report-proof>
+    <p *ngIf="sampleMode && sampleProof" class="sample-question"><strong>Original example question</strong> {{ project?.decision }}</p>
 
     <nav *ngIf="sampleMode" class="jump-list no-print" aria-label="In this report">
       <p class="eyebrow">In this report</p>

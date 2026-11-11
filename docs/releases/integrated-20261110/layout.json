@@ -1,0 +1,92 @@
+[
+  {
+    "name": "desktop",
+    "state": "home",
+    "width": 1440,
+    "documentWidth": 1440
+  },
+  {
+    "name": "desktop",
+    "state": "electricity",
+    "width": 1440,
+    "documentWidth": 1440
+  },
+  {
+    "name": "desktop",
+    "state": "evidence",
+    "width": 1440,
+    "documentWidth": 1440
+  },
+  {
+    "name": "desktop",
+    "state": "pricing",
+    "width": 1440,
+    "documentWidth": 1440
+  },
+  {
+    "name": "desktop",
+    "state": "report",
+    "width": 1440,
+    "documentWidth": 1440
+  },
+  {
+    "name": "mobile",
+    "state": "home",
+    "width": 390,
+    "documentWidth": 390
+  },
+  {
+    "name": "mobile",
+    "state": "electricity",
+    "width": 390,
+    "documentWidth": 390
+  },
+  {
+    "name": "mobile",
+    "state": "evidence",
+    "width": 390,
+    "documentWidth": 390
+  },
+  {
+    "name": "mobile",
+    "state": "pricing",
+    "width": 390,
+    "documentWidth": 390
+  },
+  {
+    "name": "mobile",
+    "state": "report",
+    "width": 390,
+    "documentWidth": 390
+  },
+  {
+    "name": "narrow",
+    "state": "home",
+    "width": 320,
+    "documentWidth": 320
+  },
+  {
+    "name": "narrow",
+    "state": "electricity",
+    "width": 320,
+    "documentWidth": 320
+  },
+  {
+    "name": "narrow",
+    "state": "evidence",
+    "width": 320,
+    "documentWidth": 320
+  },
+  {
+    "name": "narrow",
+    "state": "pricing",
+    "width": 320,
+    "documentWidth": 320
+  },
+  {
+    "name": "narrow",
+    "state": "report",
+    "width": 320,
+    "documentWidth": 320
+  }
+]

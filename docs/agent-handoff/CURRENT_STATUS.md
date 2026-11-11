@@ -1,5 +1,53 @@
 # ifYouMind — Current development status
 
+## November 10, 2026 — Billing Portal release gate
+
+**Committed for draft review. Conditional GO.** OpenAI / Codex continued [PR #82](https://github.com/alwat83/ifyoumind/pull/82) on `codex/integrated-release-20261110` from `a26e56ad8fa90ac25e31d6f7c1078f51bd01b9ad`. The update restricts portal access to active workspace owners and admins, validates Stripe session URLs, keeps billing available after downgrade and processes scheduled and terminal cancellation state. Genuine Stripe sandbox sessions and events verified period-end scheduling and app entitlement transitions. [Billing verification, evidence and live setup](../releases/integrated-20261110/BILLING_PORTAL.md)
+
+Read-only live Stripe evidence confirmed the existing $79 one-time and $39 monthly prices and enabled subscription webhook events. The live configuration list returned zero records. An empty sandbox list still allowed Stripe to initialize a default on its first session. Confirm the desired live default and owner access before authorizing release. The live account, customer subscriptions and production deployment were untouched. Production last verified at PR #76. Commercial outcomes remain unmeasured.
+
+## November 10, 2026 — integrated release candidate
+
+**Committed, in draft review.** OpenAI / Codex integrated #79 → #80 → #81 with independent #78 in [PR #82](https://github.com/alwat83/ifyoumind/pull/82) on `codex/integrated-release-20261110`, based on master `e5d8f15`. The Business sample adds Nashville to the homepage's Austin and Charlotte estimates. The homepage identifies its Census snapshot date and restores the native keyboard tab stop for the mobile Menu. [Release review, visual evidence, QA, performance and rollback](../releases/integrated-20261110/REVIEW.md).
+
+The PR carries the candidate SHA and independent checks. Both workflows passed the integration and snapshot commits. The PR checks track the final Menu fix. Local builds, 145 fast tests and the visual review cover the final candidate. Live Stripe Price objects match the $79 one-time and $39 monthly public offers. Emulator checks cover the five-report allowance. A live read returned zero Billing Portal configurations. Confirm the default portal and self-service cancellation before production authorization or explicitly accept the gap. Last verified production remains PR #76. Founder authorization is required for the master merge and its automatic deployment. Customer comprehension, paid conversion and fulfillment need real-user evidence. Outbound remains Pending Founder Setup.
+
+## November 10, 2026 — Homepage discovery Phase 2
+
+OpenAI / Codex. `codex/home-discovery-phase-2` starts from PR #80 at `16884db`, which contains the homepage redesign from PR #79. The featured card now offers cities, electricity, and property tax with immediate takeaways, evidence, and existing continuation routes. PR #78’s report proof and PR #77’s discovery results remain separate review candidates. [Working evidence](../design/home-discovery-phase-2-20261110/REVIEW.md).
+
+Local builds, targeted lint, 138 fast, 69 Hosting, and 40 targeted authenticated browser checks passed. The six viewport widths include 320 through 1440 pixels. Consent and overlap with existing analytics are documented before any new event emissions. Separate founder approval is required for release.
+
+Next steps. Observe the deferred first-use walkthrough when testing resumes. Review the transition into PR #78’s full sample separately. Resolve consent and event overlap before measuring conversion.
+
+## November 10, 2026 — Public plan comparison
+
+OpenAI / Codex. The `codex/public-plan-comparison` follow-up starts from homepage PR #79 at `d376f38`. The pricing banner opens a comparison of the free brief, one-time report, and Pro before account creation. The link to account pricing uses the existing sign-in return path. [Captures and verification](../design/public-plan-comparison-20261110/REVIEW.md).
+
+Next steps. Review the expanded and collapsed pricing band. Resolve the homepage redesign’s release decision before retargeting this follow-up for master-based checks. When user testing resumes, observe whether visitors understand the one-time and monthly options and know where to continue.
+
+## November 10, 2026 — Premium homepage redesign
+
+OpenAI / Codex. Founder supplied a production implementation brief and a visual reference. The `codex/premium-homepage-redesign` candidate starts at master `e5d8f15` and implements the skyline hero, sourced Austin–Charlotte comparison, process, use cases, pricing and footer. [Screenshots and review](../design/premium-homepage-20261110/REVIEW.md). The public site displayed $79 one time and $39 per month with five reports during the read-only check. The production sample returned the comparison figures and both ACS periods.
+
+The local builds, 137 fast tests, 63 Hosting tests, 40 targeted authenticated browser tests, targeted lint and bundle guards passed. The review records the six widths, the accessibility fixes and the limitations of loopback performance measurements. PRs #77 and #78 retain their own review history. This candidate requires separate release approval. Earlier release evidence remains under [PR #76](https://github.com/alwat83/ifyoumind/pull/76).
+
+Next steps. Review the desktop and mobile captures. Review this draft’s GitHub checks before any release decision. Once testing resumes, observe whether visitors can identify an appropriate next step within the first few seconds.
+
+## November6,2026 — Phase1 Business Report Proof implemented, release pending
+
+OpenAI / Codex. Founder explicitly authorized implementation from the completed audit. Separate `codex/business-report-proof-20261106` from freshly verified master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`; print fix committedb965d3e, final presentation/review commit and new draftPR/exact-head CI pinned after push. **Implemented/locally verified, not merged/deployed.** PR77/9b0b278 remains separate, not in this branch's ancestry; audit9fd6673 preserved, only authoritative docs/instructions imported. [Working review,18screenshots/print matrices/limits](../product/business-report-proof-20261106/REVIEW.md).
+
+Sample-only concise question and actual loaded income/population-change comparison, native lens selection/source proof, explicit demographic/untested-difference boundaries and focus links to existing analysis/checklist. Ties/missing/zero/negative/extreme/unknown-date/inconsistent-vintage cases guarded. Original report/intent/copy/pricing/auth/server entitlement behavior preserved. Print-only white body canvas while report present, immediate transition-free color, host minimum removed, robust page breaks, readable citations/tables; both measures print regardless of selection.16PDFsettings/state combinations (public/free/purchased/Pro × Letter/A4 × backgrounds on/off), final public8pages, free3/paid6/Pro6; no dark tail/empty page or paid market section in free output. Owned states are intercepted rendering fixtures, not transactions; actual server commerce/rules tests remain separate. [Commercial mismatch/proposed truthful wording](../product/business-report-proof-20261106/COMMERCIAL_ALIGNMENT.md), no79/39/allowance/billing change.
+
+Baseline137fast/buildPASS. Candidate production/local builds,144fast/72Functions/targetedthreeTS+twoHTML lint,36file bundle guard and21rootJS/3discovery assets isolationPASS. Rules7/org5/commerce29PASS; fixtures24PASS+1existingSKIP. Full desktop/mobile124PASS; after final print/fixture refinements focused12PASS (overlaps, not extra136distinct). Actual16PDFmatrix rendered/visually reviewed,18image hashes and docs/scope checks. First immediate print assertion found a color transition; corrected. First two-worker browser attempt stopped progressing after desktop cases and was terminated, not a full pass; bounded one-worker full run succeeded. New-head CI tracked independently, not inherited. Historical91lint/11Angular default-test debt/skip/warnings and device/Safari/spokenSR/printer/payment/human30second gaps remain. Main662.05kB/lazyreport74.29kB/newstyle4.70kB warnings, no relaxed budgets.
+
+Production retained PR76/e5d8f15/Hostingf76d7036fa558cf7 per prior exact release evidence; no new Hosting API refresh/deploy/live source release/financial query. No engine/backend/provider/AI/PDFingestion/upload/storage/category/dependency/Stripe/auth/homepage/workflow change. Private campaigns/worktrees preserved, no concurrent agents. Notion/current/master/growth/append-only log/instructions synchronized at handoff; scoped dated business scoreboard unchanged, internalQA excluded. Outbound Pending Founder Setup; participant testing still deferred, no sender/participant questions. Exact future merge/deployment requires separate approval.
+
+Next three: review the working sample/export; resume deferred relevant-task30second comprehension/limit/usefulness check when directed; then improve transparent offer/context handoff based on actual observations without price changes. Recommended next implementation after review: offer clarity, not new data/AI or a new report engine.
+
+## Historical source snapshot
+
 ## Current — November 5, 2026: keep focus; first-use validation ready
 
 OpenAI / Codex. Founder directs “Let's keep it going and the focus.” Continue the first-screen discovery work and validate actual comprehension before broader changes. **Prepared/source-reviewed, no new interface implementation or human study conducted.** Separate documentation branch `codex/first-use-validation-20261105` from PR76 exact `3eb27893c3be6aad43cb0c07e173d412c8ee8103` preserves its tested head and PR74 campaign. [Ready facilitator script, answer key, decision rules and ranked commercial opportunities](../design/first-seconds/FIRST_USE_VALIDATION.md); [blank private-session template](../design/first-seconds/SESSION_TEMPLATE.md). Candidate screenshots/source reviewed; no new confirmed defect. No app/dependency/backend changes.

@@ -78,10 +78,10 @@ test('the $79 report comes before Pro on both pricing surfaces',()=>{
 });
 
 test('price amounts are unchanged',()=>{
-  const landingPricing=landingHtml.slice(landingHtml.indexOf('id="pricing"'),landingHtml.indexOf('class="last-call'));
-  assert.ok(landingPricing.includes('<b>Free '));
-  assert.ok(landingPricing.includes('<b>$79<small>one time</small></b>'));
-  assert.ok(landingPricing.includes('<b>$39<small>per month</small></b>'));
+  const landingPricing=landingHtml.slice(landingHtml.indexOf('id="pricing"'),landingHtml.indexOf('<footer'));
+  assert.ok(landingPricing.includes('Free to start'));
+  assert.ok(landingPricing.includes('<b>$79<small> one time</small></b>'));
+  assert.ok(landingPricing.includes('<b>$39<small> / month</small></b>'));
   assert.ok(pricingHtml.includes('<h2>$0</h2>'));
   assert.ok(pricingHtml.includes('<h2>${{ status.pricing.reportOneTimeUsd }}</h2>'));
   assert.ok(pricingHtml.includes('<h2>${{ status.pricing.proMonthlyUsd }}<small>/month</small></h2>'));
@@ -100,7 +100,8 @@ test('consumer homepage preserves the Business entry point and plan-ready offer'
   assert.doesNotMatch(landingHtml,/Miami or Tampa/);
   assert.doesNotMatch(landingHtml,/<span>Your own data<\/span>/);
   assert.match(landingHtml,/id="business"/);
-  assert.match(landingHtml,/See a Business sample/);
+  assert.match(landingHtml,/routerLink="\/sample-report"/);
+  assert.match(read('src/app/intelligence/home-discovery-examples.ts'),/action: 'View the Full Sample Report'/);
   assert.match(landingHtml,/sources, limits, an action plan/);
   assert.ok(landingHtml.indexOf('id="try"')<landingHtml.indexOf('id="business"'),'consumer discovery leads; Business remains available');
 });

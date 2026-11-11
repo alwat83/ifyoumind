@@ -1,0 +1,30 @@
+{
+  "observation_date": "2026-11-06",
+  "renderer": "Chrome156; Poppler PNG review",
+  "exports": [
+    {
+      "capture": "live-sample.pdf",
+      "pages": 7,
+      "last_page_text_characters": 516,
+      "source": "Existing public sample; internal Chrome export, not a new premium report"
+    },
+    {
+      "capture": "live-sample-letter-backgrounds.pdf",
+      "pages": 7,
+      "last_page_text_characters": 516,
+      "source": "Existing public sample; internal Chrome export, not a new premium report"
+    },
+    {
+      "capture": "live-sample-letter-default.pdf",
+      "pages": 7,
+      "last_page_text_characters": 516,
+      "source": "Existing public sample; internal Chrome export, not a new premium report"
+    }
+  ],
+  "observed_defects": [
+    "A4/Letter backgrounds-on large dark final-page tail",
+    "A4 Property cost context heading at page3 end; paragraph begins page4"
+  ],
+  "limits": "Existing public sample only; not all browsers or authenticated private reports. All initial7pages inspected as contact sheet plus full implicated pages. Underlying PDF captures remain ignored local audit material, not polished deliverables.",
+  "default_backgrounds_off": "Letter last page retains sources/footer (516extractable characters), visibly readable without a dark tail. Initial visual impression of a blank page was rejected by full PNG reinspection/text extraction; not a product defect."
+}

@@ -1,3 +1,6 @@
+import { ReportProofComponent } from './report-proof.component';
+import { buildReportProof } from './report-proof';
+import type { ReportProof } from './report-proof';
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -13,9 +16,9 @@ import { loadSampleBeforeDeadline, SampleLoadFailure, sampleFailureCopy } from '
 @Component({
   selector:'app-market-report',
   standalone:true,
-  imports:[CommonModule,RouterLink,MarketAnalysisComponent],
+  imports:[CommonModule,RouterLink,MarketAnalysisComponent,ReportProofComponent],
   templateUrl:'./market-report.component.html',
-  styleUrls:['./market-report.component.scss','./market-report-offers.component.scss','./market-report-findings.component.scss','./market-report-mobile.component.scss','./sample-report-state.component.scss'],
+  styleUrls:['./market-report.component.scss','./market-report-offers.component.scss','./market-report-findings.component.scss','./market-report-mobile.component.scss','./sample-report-state.component.scss','./market-report-print.component.scss','./market-report-sample.component.scss'],
 })
 export class MarketReportComponent implements OnInit, OnDestroy {
   private readonly route=inject(ActivatedRoute);
@@ -29,6 +32,7 @@ export class MarketReportComponent implements OnInit, OnDestroy {
 
   project:MarketProject|null=null;
   status:CommercialStatus|null=null;
+  sampleProof:ReportProof|null=null;
   organizationId='';
   loading=true;
   unlocking=false;
@@ -160,6 +164,7 @@ export class MarketReportComponent implements OnInit, OnDestroy {
       if(this.destroyed)return;
       this.focusRecoveredReport=this.sampleCanRetry;
       this.project=project;
+      this.sampleProof=buildReportProof(project.location,project.brief);
       this.sampleFailure=null;
     }catch(error){
       if(this.destroyed)return;

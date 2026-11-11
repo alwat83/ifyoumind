@@ -1,12 +1,36 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-05
+**Updated:** 2026-11-10
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
 **Purpose:** Living project context for the founder and all current/future development agents.
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
+
+## November 10, 2026 — Billing Portal release gate
+
+**Committed for draft review. Conditional GO.** OpenAI / Codex continued [PR #82](https://github.com/alwat83/ifyoumind/pull/82) on `codex/integrated-release-20261110` from `a26e56ad8fa90ac25e31d6f7c1078f51bd01b9ad`. The update restricts portal access to active workspace owners and admins, validates Stripe session URLs, keeps billing available after downgrade and processes scheduled and terminal cancellation state. Genuine Stripe sandbox sessions and events verified period-end scheduling and app entitlement transitions. [Billing verification, evidence and live setup](docs/releases/integrated-20261110/BILLING_PORTAL.md)
+
+Read-only live Stripe evidence confirmed the existing $79 one-time and $39 monthly prices and enabled subscription webhook events. The live configuration list returned zero records. An empty sandbox list still allowed Stripe to initialize a default on its first session. Confirm the desired live default and owner access before authorizing release. The live account, customer subscriptions and production deployment were untouched. Production last verified at PR #76. Commercial outcomes remain unmeasured.
+
+## November 10, 2026 — integrated release candidate
+
+**Committed, in draft review.** OpenAI / Codex integrated #79 → #80 → #81 with independent #78 in [PR #82](https://github.com/alwat83/ifyoumind/pull/82) on `codex/integrated-release-20261110`, based on master `e5d8f15`. The Business sample adds Nashville to the homepage's Austin and Charlotte estimates. The homepage identifies its Census snapshot date and restores the native keyboard tab stop for the mobile Menu. [Release review, visual evidence, QA, performance and rollback](docs/releases/integrated-20261110/REVIEW.md).
+
+The PR carries the candidate SHA and independent checks. Both workflows passed the integration and snapshot commits. The PR checks track the final Menu fix. Local builds, 145 fast tests and the visual review cover the final candidate. Live Stripe Price objects match the $79 one-time and $39 monthly public offers. Emulator checks cover the five-report allowance. A live read returned zero Billing Portal configurations. Confirm the default portal and self-service cancellation before production authorization or explicitly accept the gap. Last verified production remains PR #76. Founder authorization is required for the master merge and its automatic deployment. Customer comprehension, paid conversion and fulfillment need real-user evidence. Outbound remains Pending Founder Setup.
+
+## November 10, 2026 — Homepage discovery Phase 2
+
+**Committed on a review branch** based on PR #80. The homepage’s featured comparison now lets visitors switch between a dated Census city comparison and two deterministic bill examples. Each result exposes its takeaway, evidence, and supported next step before sign-in. [Review, screenshots, and measurements](docs/design/home-discovery-phase-2-20261110/REVIEW.md).
+
+## November 10, 2026 — Public plan comparison
+
+**Committed on a review branch** based on PR #79. The homepage pricing banner expands the free, one-time, and Pro details before sign-in. Existing account pricing remains reachable from the comparison. [Review and verification](docs/design/public-plan-comparison-20261110/REVIEW.md).
+
+## November 10, 2026 — Premium homepage redesign
+
+**Committed on the review branch.** The founder supplied a reference-led redesign brief. The new home pairs the skyline hero with a dated Census comparison and direct paths to the free bill example, public Business sample, report creation, guides and pricing. [Visual review and verification](docs/design/premium-homepage-20261110/REVIEW.md). The redesign is based on master and has its own release review.
 
 **Active roadmap addition — [#56 SEO growth foundation](https://github.com/alwat83/ifyoumind/issues/56):** after #54/#55 verification and combined mobile checks, audit technical SEO, raw/rendered metadata, indexing, sitemap generation, structured data and actual legacy `SeoService` usage; fix verified defects with regressions on a separate feature branch/draft PR. Then prepare cited content for job offers, relocation, business locations and flexible data analysis on a separate branch. Preserve Business conversion paths; unfinished Life functionality stays clearly labelled and experimental calculations stay local-only. No merge or deployment without founder approval. See current snapshot/log for evidence and next steps.
 
@@ -342,3 +366,8 @@ Founder reviewed [PR72](https://github.com/alwat83/ifyoumind/pull/72) at `73fc72
 ## October 24, 2026 — resumed /discover/ integration implemented, release pending
 
 Founder resumed; codex/discovery-integration contains reviewed70→71→72 once plus decision documentation, preserving all source heads. Public-path Angular entry now builds into production artifact without Firebase/auth/analytics providers in discovery. One homepage link, two immediate examples/recognized local CSVs, shared evidence/correction/recovery/clear; scoped privacy and Hosting301/CSP/real404/noindexpilot. No Business79/39/auth/Stripe/backend/lock/deploy-workflow changes. [Concise implementation/release evidence](docs/product/discovery-integration/RELEASE_REVIEW.md), local4317/discover/.137fast/48integrated browser and production/local builds/guards PASS;91lint/11Angular baseline failures unchanged, manual gaps explicit. Broad local Business56desktop pass followed by worker transition stall, not full pass; retry/exact-head CI pinned in new draft PR. Fresh production Hosting a4b9fd4f6533ce8b retained FINALIZED41files, master74a91fb unchanged. No merge/deploy; exact release approval still needed. Outbound Pending Founder Setup; no new traction.
+
+
+## November6,2026 — Phase1 Business Report Proof implementation
+
+Founder explicitly authorized the audit's focused slice. Separate master-based codex/business-report-proof-20261106; no PR77 source ancestry. [Working proof,18screenshots, export matrices, test and risk record](docs/product/business-report-proof-20261106/REVIEW.md). Print-only body/host/pagination repair committedb965d3e; new sample-only standalone component/pure presentation helper makes income/population-change estimates, limits, actual source vintages/dates and next research visible before detailed report. No data-generation/schema/backend/auth/Stripe/price/allowance change. Original full report/copy/intent remain, unsupported shapes fall back, all ties/missing/direction/period cases guarded. Final production/local builds144fast/72Functions/124browser plus12focusedrerun/lint/bundle/isolation checksPASS; rules7/org5/commerce29/fixtures24PASS+1existingSKIP,16actualPDFrender settings, data boundaries verified. Full CI/source head pinned after new draftPR, not inherited. Current/head/CI/handoff details in snapshot/log; Notion synchronized at completion. Live remains priorPR76/e5d8f15/Hostingf76d7036fa558cf7, no new release.30second novice understanding and revenue lift unmeasured; testing remains deferred and outbound Pending Founder Setup. [79one-time versus39monthly/five-report mismatch](docs/product/business-report-proof-20261106/COMMERCIAL_ALIGNMENT.md) documented transparently, no pricing/billing action. Recommended next step after review: actual relevant-task understanding, then offer/handoff clarity without speculative features.

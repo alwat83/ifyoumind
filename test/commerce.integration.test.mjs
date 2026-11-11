@@ -21,6 +21,8 @@ let orgId;
 let projectCounter = 0;
 let stripeRequests = [];
 let stripeSubscriptions = {};
+let portalRequests = [];
+let portalResponse = {};
 
 // Stand-in for the Stripe REST API: records checkout requests and serves subscriptions.
 globalThis.fetch = async (url, init = {}) => {
@@ -31,7 +33,8 @@ globalThis.fetch = async (url, init = {}) => {
     return json(200, { id: `cs_${stripeRequests.length}`, url: 'https://checkout.stripe.com/c/pay/x' });
   }
   if (path === 'billing_portal/sessions' && init.method === 'POST') {
-    return json(200, { url: 'https://billing.stripe.com/p/session/x' });
+    portalRequests.push(new URLSearchParams(String(init.body)));
+    return json(portalResponse.status, portalResponse.body);
   }
   const sub = path.match(/^subscriptions\/(.+)$/);
   if (sub) return stripeSubscriptions[sub[1]] ? json(200, stripeSubscriptions[sub[1]]) : json(404, { error: { message: 'No such subscription' } });
@@ -85,7 +88,13 @@ async function deliver(type, object, { id = `evt_${++eventCounter}`, created = M
 }
 
 before(async () => { orgId = await newOrg(); });
-beforeEach(() => { stripeRequests = []; stripeSubscriptions = {}; process.env.STRIPE_SECRET_KEY = 'sk_test_integration'; });
+beforeEach(() => {
+  stripeRequests = [];
+  stripeSubscriptions = {};
+  portalRequests = [];
+  portalResponse = { status: 200, body: { url: 'https://billing.stripe.com/p/session/x' } };
+  process.env.STRIPE_SECRET_KEY = 'sk_test_integration';
+});
 
 // ---- Report access ----
 
@@ -213,10 +222,41 @@ test('checkout and billing portal reject outsiders', async () => {
   assert.equal((await call('createBillingPortalSession', { organizationId: orgId }, 'stranger-uid')).error, 'permission-denied');
 });
 
-test('billing portal opens for a workspace with a Stripe customer', async () => {
-  const paid = await newOrg({ stripeCustomerId: 'cus_123' });
-  assert.equal((await call('createBillingPortalSession', { organizationId: paid })).result.url, 'https://billing.stripe.com/p/session/x');
+test('billing portal uses the linked customer and a fixed return URL for owners and admins', async () => {
+  const paid = await newOrg({ plan: 'free', stripeCustomerId: 'cus_123' });
+  const members = orgs().doc(paid).collection('members');
+  await members.doc('admin-uid').set({ role: 'admin', status: 'active' });
+  await members.doc('disabled-uid').set({ role: 'owner', status: 'disabled' });
+  const args = { organizationId: paid, customer: 'cus_other', return_url: 'https://other.example' };
+  for (const [uid, error] of [[null, 'unauthenticated'], ['stranger-uid', 'permission-denied'],
+    ['viewer-uid', 'permission-denied'], ['disabled-uid', 'permission-denied']]) {
+    assert.equal((await call('createBillingPortalSession', args, uid)).error, error);
+  }
   assert.equal((await call('createBillingPortalSession', { organizationId: orgId })).error, 'failed-precondition');
+  assert.equal(portalRequests.length, 0);
+  for (const uid of ['owner-uid', 'admin-uid']) {
+    assert.equal((await call('createBillingPortalSession', args, uid)).result.url, 'https://billing.stripe.com/p/session/x');
+    assert.equal((await call('getCommercialStatus', args, uid)).result.billingPortalAvailable, true);
+  }
+  assert.equal((await call('getCommercialStatus', args, 'viewer-uid')).result.billingPortalAvailable, false);
+  for (const params of portalRequests) {
+    assert.deepEqual(Object.fromEntries(params), { customer: 'cus_123', return_url: 'https://ifyoumind.com/app/account' });
+  }
+  const querySession = 'https://billing.stripe.com/p/session?secret=qa-session-token';
+  portalResponse = { status: 200, body: { url: querySession } };
+  assert.equal((await call('createBillingPortalSession', args)).result.url, querySession);
+});
+
+test('billing portal fails closed for provider errors and non-session redirects', async () => {
+  const paid = await newOrg({ stripeCustomerId: 'cus_123' });
+  const args = { organizationId: paid };
+  portalResponse = { status: 400, body: { error: { message: 'No default configuration' } } };
+  assert.equal((await call('createBillingPortalSession', args)).error, 'internal');
+  for (const url of [undefined, 'http://billing.stripe.com/p/session/x', 'https://billing.stripe.com.other.example/p/session/x',
+    'https://username@billing.stripe.com/p/session/x', 'https://billing.stripe.com/p/login/x', 'https://billing.stripe.com/p/session']) {
+    portalResponse = { status: 200, body: { url } };
+    assert.equal((await call('createBillingPortalSession', args)).error, 'internal');
+  }
 });
 
 // ---- Webhook ----
@@ -293,13 +333,35 @@ test('cancellation keeps Pro until the period ends, then removes it but keeps un
   const included = await newProject(pro, { decisionReportIncludedWithPro: true });
   const meta = { organizationId: pro, offer: 'pro' };
   await deliver('customer.subscription.updated', { id: 'sub_main', status: 'active', cancel_at_period_end: true, customer: 'cus_m', metadata: meta }, { created: 200 });
-  assert.equal((await org(pro)).plan, 'pro');
-  assert.equal((await org(pro)).stripeCancelAtPeriodEnd, true);
+  let status = (await call('getCommercialStatus', { organizationId: pro })).result;
+  assert.equal(status.plan, 'pro');
+  assert.equal(status.cancellationScheduled, true);
+  await deliver('customer.subscription.updated', { id: 'sub_main', status: 'active', cancel_at_period_end: false, cancel_at: null, customer: 'cus_m', metadata: meta }, { created: 210 });
+  assert.equal((await call('getCommercialStatus', { organizationId: pro })).result.cancellationScheduled, false);
+  await deliver('customer.subscription.updated', { id: 'sub_main', status: 'active', cancel_at_period_end: false, cancel_at: 300, customer: 'cus_m', metadata: meta }, { created: 220 });
+  status = (await call('getCommercialStatus', { organizationId: pro })).result;
+  assert.equal(status.plan, 'pro');
+  assert.equal(status.cancellationScheduled, true);
   await deliver('customer.subscription.deleted', { id: 'sub_main', status: 'canceled', customer: 'cus_m', metadata: meta }, { created: 300 });
-  assert.equal((await org(pro)).plan, 'free');
+  status = (await call('getCommercialStatus', { organizationId: pro })).result;
+  assert.equal(status.plan, 'free');
+  assert.equal(status.cancellationScheduled, false);
+  assert.equal(status.billingPortalAvailable, true);
   const read = await call('getMarketIntelligenceProject', { organizationId: pro, projectId: included });
   assert.equal(read.result.decisionReportAccess, 'pro');
   assert.equal((await call('unlockDecisionReportWithPro', { organizationId: pro, projectId: await newProject(pro) })).error, 'permission-denied');
+});
+
+test('same-second updates and checkout cannot reactivate a canceled subscription', async () => {
+  const pro = await newOrg({ plan: 'pro', stripeSubscriptionId: 'sub_ends', stripeSubscriptionStatus: 'active', stripeSubscriptionEventCreated: 100 });
+  const metadata = { organizationId: pro, offer: 'pro' };
+  const subscription = { id: 'sub_ends', customer: 'cus_ends', metadata };
+  await deliver('customer.subscription.deleted', { ...subscription, status: 'canceled' }, { created: 200 });
+  await deliver('customer.subscription.updated', { ...subscription, status: 'active' }, { created: 200 });
+  stripeSubscriptions.sub_ends = { ...subscription, status: 'active' };
+  await deliver('checkout.session.completed', { id: 'cs_ends', subscription: 'sub_ends', metadata }, { created: 200 });
+  assert.equal((await org(pro)).stripeSubscriptionStatus, 'canceled');
+  assert.equal((await org(pro)).plan, 'free');
 });
 
 test('an older subscription event cannot undo a newer one', async () => {

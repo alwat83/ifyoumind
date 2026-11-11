@@ -1,0 +1,117 @@
+{
+  "scope": "Actual Chrome PDF exports rendered by Poppler;16settings/state combinations. Public payload replay and intercepted owned QA states, not transactions or private customer reports. Emulator warning hidden in local capture only. Full PNG/matrix review recorded in review.",
+  "exports": [
+    {
+      "state": "public sample",
+      "format": "Letter",
+      "backgrounds": true,
+      "pages": 8,
+      "text_checks": "PASS"
+    },
+    {
+      "state": "public sample",
+      "format": "Letter",
+      "backgrounds": false,
+      "pages": 8,
+      "text_checks": "PASS"
+    },
+    {
+      "state": "public sample",
+      "format": "A4",
+      "backgrounds": true,
+      "pages": 8,
+      "text_checks": "PASS"
+    },
+    {
+      "state": "public sample",
+      "format": "A4",
+      "backgrounds": false,
+      "pages": 8,
+      "text_checks": "PASS"
+    },
+    {
+      "state": "free",
+      "capture": "intercepted QA rendering, not a real purchase",
+      "filename": "free-A4-backgrounds.pdf",
+      "pages": 3,
+      "no_paid_section_when_free": "PASS"
+    },
+    {
+      "state": "free",
+      "capture": "intercepted QA rendering, not a real purchase",
+      "filename": "free-A4-default.pdf",
+      "pages": 3,
+      "no_paid_section_when_free": "PASS"
+    },
+    {
+      "state": "free",
+      "capture": "intercepted QA rendering, not a real purchase",
+      "filename": "free-Letter-backgrounds.pdf",
+      "pages": 3,
+      "no_paid_section_when_free": "PASS"
+    },
+    {
+      "state": "free",
+      "capture": "intercepted QA rendering, not a real purchase",
+      "filename": "free-Letter-default.pdf",
+      "pages": 3,
+      "no_paid_section_when_free": "PASS"
+    },
+    {
+      "state": "purchased",
+      "capture": "intercepted QA rendering, not a real purchase",
+      "filename": "purchased-A4-backgrounds.pdf",
+      "pages": 6,
+      "no_paid_section_when_free": "PASS"
+    },
+    {
+      "state": "purchased",
+      "capture": "intercepted QA rendering, not a real purchase",
+      "filename": "purchased-A4-default.pdf",
+      "pages": 6,
+      "no_paid_section_when_free": "PASS"
+    },
+    {
+      "state": "purchased",
+      "capture": "intercepted QA rendering, not a real purchase",
+      "filename": "purchased-Letter-backgrounds.pdf",
+      "pages": 6,
+      "no_paid_section_when_free": "PASS"
+    },
+    {
+      "state": "purchased",
+      "capture": "intercepted QA rendering, not a real purchase",
+      "filename": "purchased-Letter-default.pdf",
+      "pages": 6,
+      "no_paid_section_when_free": "PASS"
+    },
+    {
+      "state": "pro",
+      "capture": "intercepted QA rendering, not a real purchase",
+      "filename": "pro-A4-backgrounds.pdf",
+      "pages": 6,
+      "no_paid_section_when_free": "PASS"
+    },
+    {
+      "state": "pro",
+      "capture": "intercepted QA rendering, not a real purchase",
+      "filename": "pro-A4-default.pdf",
+      "pages": 6,
+      "no_paid_section_when_free": "PASS"
+    },
+    {
+      "state": "pro",
+      "capture": "intercepted QA rendering, not a real purchase",
+      "filename": "pro-Letter-backgrounds.pdf",
+      "pages": 6,
+      "no_paid_section_when_free": "PASS"
+    },
+    {
+      "state": "pro",
+      "capture": "intercepted QA rendering, not a real purchase",
+      "filename": "pro-Letter-default.pdf",
+      "pages": 6,
+      "no_paid_section_when_free": "PASS"
+    }
+  ]
+}

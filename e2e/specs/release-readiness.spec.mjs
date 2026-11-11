@@ -73,6 +73,36 @@ test('paid-report response contract: full report, copy and print controls remain
   await expect(page.locator('#market-analysis')).toBeVisible();
 });
 
+test('Account keeps billing available after Pro ends and shows scheduled cancellation only while active', async ({ page, fixtures }) => {
+  const user = await fixtures(FIXTURES.FREE_WITH_DECISION);
+  const destination = 'https://billing.stripe.com/p/session/qa-billing-contract';
+  let scheduled = true;
+  await page.route('**/getCommercialStatus', async route => {
+    const response = await route.fetch();
+    const body = await response.json();
+    await route.fulfill({ json: { ...body, result: {
+      ...body.result, plan: scheduled ? 'pro' : 'free', planName: scheduled ? 'Pro' : 'Free',
+      billingPortalAvailable: true, cancellationScheduled: scheduled,
+    } } });
+  });
+  await page.route('**/createBillingPortalSession', async route => {
+    expect(route.request().postDataJSON().data).toEqual({ organizationId: user.organizationId });
+    await route.fulfill({ json: { result: { url: destination } } });
+  });
+  await page.route(destination, route => route.fulfill({ contentType: 'text/html', body: '<h1>Intercepted Stripe billing portal</h1>' }));
+  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Faccount');
+  const notice = page.getByText('Your Pro plan is scheduled to end.', { exact: false });
+  const manage = page.getByRole('button', { name: 'Manage billing' });
+  await expect(notice).toBeVisible();
+  await expect(manage).toBeVisible();
+  scheduled = false;
+  await page.reload();
+  await expect(page.getByRole('heading', { name: 'Free', exact: true })).toBeVisible();
+  await expect(notice).toBeHidden();
+  await manage.click();
+  await expect(page).toHaveURL(destination);
+});
+
 for (const offer of ['report', 'pro']) {
   // Both callable responses and the destination are intercepted: this verifies browser wiring,
   // never opens a real Stripe session and never changes a billing configuration or entitlement.

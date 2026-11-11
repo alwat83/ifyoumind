@@ -462,3 +462,100 @@ test('a free decision with one comparison is unchanged', async () => {
   assert.deepEqual(created.result.reportOnlyLocations, []);
   assert.equal((await project(free, created.result.id)).freeBrief, null);
 });
+
+// ---- Revenue ledger: renewals, refunds, disputes (records only; access never changes) ----
+
+const ledger = async (id) => (await db().collection('stripeLedger').doc(id).get()).data();
+
+test('a paid report payment records its payment intent so refunds can be matched', async () => {
+  const free = await newOrg();
+  const id = await newProject(free);
+  const session = reportSession(free, id, { payment_intent: 'pi_match_1' });
+  await deliver('checkout.session.completed', session, { livemode: true });
+  const payment = (await db().collection('stripePayments').doc(session.id).get()).data();
+  assert.equal(payment.paymentIntentId, 'pi_match_1');
+});
+
+test('a Pro renewal is recorded once in the ledger, even if Stripe delivers it twice', async () => {
+  const invoice = { id: 'in_renew_1', billing_reason: 'subscription_cycle', amount_paid: 3900, currency: 'usd', customer: 'cus_r',
+    subscription: 'sub_r', payment_intent: 'pi_renew_1', subscription_details: { metadata: { organizationId: 'org_renew', offer: 'pro' } } };
+  const first = await deliver('invoice.paid', invoice, { id: 'evt_renew_dup', livemode: true });
+  const second = await deliver('invoice.paid', invoice, { id: 'evt_renew_dup', livemode: true });
+  assert.equal(first.statusCode, 200);
+  assert.equal(second.body, 'Already processed or processing');
+  const entry = await ledger('invoice_in_renew_1');
+  assert.deepEqual([entry.renewal, entry.status, entry.organizationId, entry.amountPaid, entry.livemode], [true, 'paid', 'org_renew', 3900, true]);
+  assert.equal((await db().collection('stripeLedger').where('invoiceId', '==', 'in_renew_1').get()).size, 1);
+});
+
+test('an older ledger event delivered late never overwrites a newer one', async () => {
+  const charge = (amountRefunded) => ({ id: 'ch_order_1', amount: 7900, amount_refunded: amountRefunded, refunded: amountRefunded === 7900, payment_intent: 'pi_order_1', currency: 'usd' });
+  await deliver('charge.refunded', charge(7900), { created: 2000 });
+  await deliver('charge.refunded', charge(2000), { created: 1500 });
+  const entry = await ledger('charge_ch_order_1');
+  assert.deepEqual([entry.amountRefunded, entry.fullyRefunded, entry.eventCreated], [7900, true, 2000]);
+});
+
+test('a refund is recorded but never re-locks a purchased report or changes the plan', async () => {
+  const free = await newOrg();
+  const id = await newProject(free);
+  await deliver('checkout.session.completed', reportSession(free, id, { payment_intent: 'pi_refund_1' }));
+  assert.equal((await project(free, id)).decisionReportPurchased, true);
+  const res = await deliver('charge.refunded', { id: 'ch_refund_1', amount: 7900, amount_refunded: 7900, refunded: true, payment_intent: 'pi_refund_1' });
+  assert.equal(res.statusCode, 200);
+  assert.equal((await project(free, id)).decisionReportPurchased, true, 'access policy unchanged: refunds do not re-lock');
+  assert.equal((await org(free)).plan, undefined);
+  assert.equal((await ledger('charge_ch_refund_1')).fullyRefunded, true);
+});
+
+test('a failed refund update keeps the charge totals and records the failure', async () => {
+  await deliver('charge.refunded', { id: 'ch_fail_1', amount: 7900, amount_refunded: 7900, refunded: true, payment_intent: 'pi_fail_1' }, { created: 3000 });
+  await deliver('charge.refund.updated', { id: 're_fail_1', charge: 'ch_fail_1', status: 'failed', amount: 7900, payment_intent: 'pi_fail_1' }, { created: 3100 });
+  const entry = await ledger('charge_ch_fail_1');
+  assert.deepEqual([entry.amountRefunded, entry.lastRefundStatus, entry.lastRefundId], [7900, 'failed', 're_fail_1']);
+});
+
+test('a dispute is recorded, flagged for review, and changes no access', async () => {
+  const pro = await newOrg({ plan: 'pro', stripeSubscriptionId: 'sub_dp', stripeSubscriptionStatus: 'active', stripeSubscriptionEventCreated: 100 });
+  const before = await db().collection('billingReviews').where('kind', '==', 'dispute_opened').get();
+  await deliver('charge.dispute.created', { id: 'dp_1', charge: 'ch_dp_1', payment_intent: 'pi_dp_1', amount: 3900, currency: 'usd', status: 'needs_response', reason: 'fraudulent' }, { created: 4000, livemode: true });
+  await deliver('charge.dispute.closed', { id: 'dp_1', charge: 'ch_dp_1', payment_intent: 'pi_dp_1', amount: 3900, currency: 'usd', status: 'lost', reason: 'fraudulent' }, { created: 4100, livemode: true });
+  const entry = await ledger('dispute_dp_1');
+  assert.deepEqual([entry.status, entry.chargeId, entry.livemode], ['lost', 'ch_dp_1', true]);
+  const after = await db().collection('billingReviews').where('kind', '==', 'dispute_opened').get();
+  assert.equal(after.size, before.size + 1, 'one review for the opened dispute');
+  assert.equal((await org(pro)).plan, 'pro', 'a dispute never changes the plan by itself');
+});
+
+test('a failed renewal is recorded without changing the plan (subscription events decide access)', async () => {
+  const pro = await newOrg({ plan: 'pro', stripeSubscriptionId: 'sub_pf', stripeSubscriptionStatus: 'active', stripeSubscriptionEventCreated: 100 });
+  await deliver('invoice.payment_failed', { id: 'in_pf_1', billing_reason: 'subscription_cycle', attempt_count: 1, subscription: 'sub_pf',
+    subscription_details: { metadata: { organizationId: pro, offer: 'pro' } } }, { created: 5000 });
+  assert.equal((await ledger('invoice_in_pf_1')).status, 'payment_failed');
+  assert.equal((await org(pro)).plan, 'pro');
+});
+
+test('a refund update that arrives after a newer charge event is still recorded, without changing totals', async () => {
+  await deliver('charge.refunded', { id: 'ch_late_1', amount: 7900, amount_refunded: 7900, refunded: true, payment_intent: 'pi_late_1' }, { created: 6100 });
+  await deliver('charge.refund.updated', { id: 're_late_1', charge: 'ch_late_1', status: 'failed', amount: 7900 }, { created: 6050 });
+  const entry = await ledger('charge_ch_late_1');
+  assert.deepEqual([entry.amountRefunded, entry.eventCreated, entry.lastRefundStatus, entry.refundEventCreated], [7900, 6100, 'failed', 6050]);
+});
+
+test('a dispute delivered as two different events opens exactly one review', async () => {
+  const dispute = { id: 'dp_once', charge: 'ch_once', payment_intent: 'pi_once', amount: 7900, currency: 'usd', status: 'needs_response', reason: 'general' };
+  await deliver('charge.dispute.created', dispute, { id: 'evt_dp_once_a', created: 7000 });
+  await deliver('charge.dispute.created', dispute, { id: 'evt_dp_once_b', created: 7000 });
+  const reviews = await db().collection('billingReviews').where('disputeId', '==', 'dp_once').get();
+  assert.equal(reviews.size, 1);
+  assert.equal(reviews.docs[0].id, 'dispute_opened_dp_once');
+});
+
+test('a Pro payment records its Stripe customer so subscription refunds can be matched', async () => {
+  const pro = await newOrg();
+  stripeSubscriptions.sub_cust = { id: 'sub_cust', status: 'active', customer: 'cus_match' };
+  const session = { id: `cs_${++eventCounter}`, payment_status: 'paid', amount_total: 3900, currency: 'usd', customer: 'cus_match', subscription: 'sub_cust', payment_intent: null, metadata: { organizationId: pro, offer: 'pro' } };
+  await deliver('checkout.session.completed', session, { livemode: true });
+  const payment = (await db().collection('stripePayments').doc(session.id).get()).data();
+  assert.deepEqual([payment.customerId, payment.paymentIntentId, payment.offer], ['cus_match', null, 'pro']);
+});

@@ -1,0 +1,340 @@
+<title>ifYouMind Life Beta</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: one phone-width column of real screens on the left; on wide screens a quiet notes rail explains each screen's design decision. */
+:root{
+  --bg:#eef2f3; --surface:#ffffff; --ink:#14232b; --muted:#566871; --line:#d5dee1;
+  --accent:#0d6f63; --accent-ink:#ffffff; --accent-soft:#dcefeb;
+  --fact:#1f5fa8; --fact-soft:#e2ecf8; --est:#9a5b0b; --est-soft:#f8ecd9; --you:#6b3fa0; --you-soft:#efe6f8;
+  --warn:#8a4b00;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1a1f; --surface:#16252c; --ink:#e7eef0; --muted:#9fb1b8; --line:#2a3c44;
+  --accent:#4fc2b1; --accent-ink:#06211d; --accent-soft:#16352f;
+  --fact:#8db8ee; --fact-soft:#1a2b40; --est:#e7b46a; --est-soft:#3a2a12; --you:#c6a6ef; --you-soft:#2d2140; --warn:#f0b35c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1a1f; --surface:#16252c; --ink:#e7eef0; --muted:#9fb1b8; --line:#2a3c44;
+  --accent:#4fc2b1; --accent-ink:#06211d; --accent-soft:#16352f;
+  --fact:#8db8ee; --fact-soft:#1a2b40; --est:#e7b46a; --est-soft:#3a2a12; --you:#c6a6ef; --you-soft:#2d2140; --warn:#f0b35c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+.wrap{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:40px;align-items:start}
+@media (max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}.notes{order:2}}
+.banner{max-width:1040px;margin:0 auto 16px;font-size:13px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.banner b{color:var(--est)}
+.phone{background:var(--surface);border:1px solid var(--line);border-radius:26px;overflow:hidden;min-width:0}
+.top{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+.brand{font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:-.02em}
+.brand span{color:var(--accent)}
+.steps{display:flex;gap:4px}
+.steps i{width:22px;height:4px;border-radius:2px;background:var(--line)}
+.steps i.on{background:var(--accent)}
+.screen{padding:22px 18px 24px;display:grid;gap:16px}
+h1,h2{font-family:var(--display);letter-spacing:-.03em;text-wrap:balance;margin:0}
+h1{font-size:32px;line-height:1.05;font-weight:800}
+h2{font-size:22px;line-height:1.15;font-weight:600}
+p{margin:0}
+.lede{color:var(--muted)}
+.ask{display:grid;gap:8px}
+.ask textarea{width:100%;min-height:84px;border:1.5px solid var(--line);border-radius:var(--r);padding:12px 14px;font:inherit;color:var(--ink);background:var(--bg);resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.pick{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:8px 12px;font:inherit;font-size:14px;cursor:pointer;min-height:40px}
+.pick[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.pick.soon{color:var(--muted);cursor:not-allowed}
+.btn{appearance:none;border:0;border-radius:12px;background:var(--accent);color:var(--accent-ink);font:700 16px var(--body);padding:14px 16px;min-height:50px;cursor:pointer;width:100%}
+.btn.ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}
+.row{display:flex;gap:10px}
+.row>*{flex:1;min-width:0}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.offer{border:1px solid var(--line);border-radius:var(--r);padding:14px;display:grid;gap:10px}
+.offer h3{margin:0;font:700 15px var(--body);display:flex;justify-content:space-between;gap:8px}
+label.f{display:grid;gap:4px;font-size:14px;color:var(--muted)}
+label.f input,label.f select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-height:44px;width:100%}
+.tag{display:inline-flex;align-items:center;border-radius:999px;padding:1px 8px;font-size:12px;font-weight:700;white-space:nowrap}
+.tag.fact{background:var(--fact-soft);color:var(--fact)}
+.tag.est{background:var(--est-soft);color:var(--est)}
+.tag.you{background:var(--you-soft);color:var(--you)}
+.verdict{background:var(--accent-soft);border-radius:var(--r);padding:16px;display:grid;gap:6px}
+.verdict .k{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+.verdict strong{font-family:var(--display);font-size:22px;line-height:1.15;font-weight:600}
+.verdict.none{background:var(--est-soft)}
+.verdict.none .k{color:var(--est)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:14px}
+th,td{text-align:right;padding:8px 6px;border-bottom:1px solid var(--line)}
+th:first-child,td:first-child{text-align:left}
+thead th{font-size:12px;color:var(--muted);font-weight:700}
+tr.total td{font-weight:700;border-bottom:0}
+.flag{font-size:13px;color:var(--warn)}
+.prio{display:grid;gap:10px}
+.prio label{display:grid;grid-template-columns:1fr auto;gap:2px 10px;font-size:14px}
+.prio input{grid-column:1/-1;width:100%;accent-color:var(--accent)}
+details{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+summary{cursor:pointer;font-weight:700}
+.ev{display:grid;gap:10px;margin-top:10px;font-size:14px}
+.ev div{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:start}
+.ev small{color:var(--muted);display:block}
+ol.next{margin:0;padding-left:20px;display:grid;gap:6px}
+.sharebox{border:1px dashed var(--line);border-radius:var(--r);padding:14px;font-size:14px;white-space:pre-wrap;background:var(--bg)}
+.toggle{display:flex;gap:10px;align-items:center;font-size:14px}
+.toggle input{width:20px;height:20px;accent-color:var(--accent)}
+.note{font-size:13px;color:var(--muted)}
+.save{border-top:1px solid var(--line);padding-top:16px;display:grid;gap:10px}
+.notes{display:grid;gap:14px;min-width:0}
+.notes h2{font-size:20px}
+.note-card{display:grid;gap:4px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.note-card b{font-size:14px}
+.note-card p{font-size:14px;color:var(--muted);max-width:62ch}
+.note-card.on b{color:var(--accent)}
+.status{font-size:13px;color:var(--accent);min-height:1.2em}
+@media (prefers-reduced-motion:no-preference){.screen{animation:in .25s ease-out}@keyframes in{from{transform:translateY(6px)}to{transform:none}}}
+</style>
+
+<div class="banner"><b>Prototype · illustrative figures.</b> Price levels and rent benchmarks below are placeholders shaped like the real sources (BEA Regional Price Parities, Census ACS). Nothing is saved or sent anywhere; every calculation runs on this page.</div>
+
+<div class="wrap">
+  <main class="phone" aria-live="polite">
+    <div class="top"><div class="brand">ifYou<span>Mind</span></div><div class="steps" id="steps" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div></div>
+
+    <!-- 1 Landing / question -->
+    <section class="screen" id="s1">
+      <h1>What are you trying to figure out?</h1>
+      <p class="lede">Ask in your own words. We compare your options with official data and your own numbers, show what is known and what is assumed, and say plainly when there is no clear winner.</p>
+      <div class="ask">
+        <label for="q" class="note">Your question</label>
+        <textarea id="q">Should I take a job paying $95,000 in Denver or stay in Raleigh making $80,000?</textarea>
+      </div>
+      <div class="chips" role="group" aria-label="Decisions you can try">
+        <button class="pick" id="c1" aria-pressed="true">Compare two job offers</button>
+        <button class="pick soon" disabled>Is moving cheaper? · soon</button>
+        <button class="pick soon" disabled>Rent vs commute · soon</button>
+      </div>
+      <button class="btn" id="go1">Compare these options</button>
+      <p class="note">No account needed. Nothing you type leaves this device in the beta design.</p>
+    </section>
+
+    <!-- 2 Clarify -->
+    <section class="screen" id="s2" hidden>
+      <h2>We found two options. Is this right?</h2>
+      <div class="row">
+        <label class="f" for="cityA">Option A: stay in<input id="cityA" value="Raleigh, NC"></label>
+        <label class="f" for="cityB">Option B: move to<input id="cityB" value="Denver, CO"></label>
+      </div>
+      <p class="lede">Three quick questions so the comparison fits you.</p>
+      <label class="f" for="housing">Where would you live?
+        <select id="housing"><option value="1br">1-bedroom rental</option><option value="2br" selected>2-bedroom rental</option><option value="own">I'll enter my own housing cost</option></select></label>
+      <label class="f" for="move">Is the move paid for?
+        <select id="move"><option value="0">No / not sure</option><option value="1">Yes, relocation covered</option></select></label>
+      <label class="f" for="care">What matters most? (you can change this later)
+        <select id="care"><option value="money">Money left each month</option><option value="time">Less time commuting</option><option value="career">Career growth</option><option value="people">Being near family and friends</option></select></label>
+      <div class="row"><button class="btn ghost" data-back="1">Back</button><button class="btn" id="go2">Next</button></div>
+    </section>
+
+    <!-- 3 Numbers -->
+    <section class="screen" id="s3" hidden>
+      <h2>Your numbers</h2>
+      <p class="lede">Start from our estimates or type your own. Your numbers always win.</p>
+      <div class="offer">
+        <h3><span id="nA">Raleigh, NC</span><span class="tag you">Yours</span></h3>
+        <label class="f" for="salA">Salary per year ($)<input id="salA" type="number" inputmode="numeric" value="80000"></label>
+        <label class="f" for="rentA">Housing per month ($) <span><span class="tag est">Estimate</span> edit to use a real quote</span><input id="rentA" type="number" inputmode="numeric" value="1550"></label>
+        <label class="f" for="comA">Commute: minutes each way<input id="comA" type="number" inputmode="numeric" value="20"></label>
+      </div>
+      <div class="offer">
+        <h3><span id="nB">Denver, CO</span><span class="tag you">Yours</span></h3>
+        <label class="f" for="salB">Salary per year ($)<input id="salB" type="number" inputmode="numeric" value="95000"></label>
+        <label class="f" for="rentB">Housing per month ($) <span><span class="tag est">Estimate</span> edit to use a real quote</span><input id="rentB" type="number" inputmode="numeric" value="2050"></label>
+        <label class="f" for="comB">Commute: minutes each way<input id="comB" type="number" inputmode="numeric" value="35"></label>
+      </div>
+      <label class="f" for="tax">Share of pay that goes to taxes (%) <span><span class="tag est">Estimate</span> not a tax calculation</span><input id="tax" type="number" inputmode="decimal" value="23"></label>
+      <div class="row"><button class="btn ghost" data-back="2">Back</button><button class="btn" id="go3">See the comparison</button></div>
+    </section>
+
+    <!-- 4 Result -->
+    <section class="screen" id="s4" hidden>
+      <div class="verdict" id="verdict"><span class="k">On your priorities</span><strong id="vText"></strong><span class="note" id="vWhy"></span></div>
+      <h2>Money each month</h2>
+      <div style="overflow-x:auto"><table aria-label="Monthly money comparison">
+        <thead><tr><th></th><th id="hA">Raleigh</th><th id="hB">Denver</th></tr></thead>
+        <tbody>
+          <tr><td>Take-home <span class="tag est">Est.</span></td><td id="tkA"></td><td id="tkB"></td></tr>
+          <tr><td>Housing <span class="tag you">Yours</span></td><td id="hoA"></td><td id="hoB"></td></tr>
+          <tr><td>Left after housing</td><td id="lfA"></td><td id="lfB"></td></tr>
+          <tr class="total"><td>Buying power <span class="tag fact">Price level</span></td><td id="bpA"></td><td id="bpB"></td></tr>
+        </tbody></table></div>
+      <p class="flag" id="moneyFlag"></p>
+      <h2>Your priorities</h2>
+      <div class="prio" id="prio">
+        <label for="wMoney">Money left each month <b id="wMoneyV"></b><input id="wMoney" type="range" min="0" max="5" value="3"></label>
+        <label for="wTime">Less time commuting <b id="wTimeV"></b><input id="wTime" type="range" min="0" max="5" value="3"></label>
+        <label for="wCareer">Career growth <span class="tag you">you rate it below</span><b id="wCareerV"></b><input id="wCareer" type="range" min="0" max="5" value="3"></label>
+        <label for="wPeople">Near family and friends <b id="wPeopleV"></b><input id="wPeople" type="range" min="0" max="5" value="2"></label>
+      </div>
+      <div class="row">
+        <label class="f" for="carA">Career, A (1–5)<input id="carA" type="number" min="1" max="5" value="3"></label>
+        <label class="f" for="carB">Career, B (1–5)<input id="carB" type="number" min="1" max="5" value="4"></label>
+      </div>
+      <div class="row">
+        <label class="f" for="pplA">Family nearby, A (1–5)<input id="pplA" type="number" min="1" max="5" value="4"></label>
+        <label class="f" for="pplB">Family nearby, B (1–5)<input id="pplB" type="number" min="1" max="5" value="2"></label>
+      </div>
+      <details>
+        <summary>Where these numbers come from</summary>
+        <div class="ev">
+          <div><span class="tag fact">Fact</span><span>Everyday price level, rent excluded: <b id="rA"></b> vs <b id="rB"></b> (U.S. = 100).<small>BEA Regional Price Parities, metro areas · illustrative values in this prototype</small></span></div>
+          <div><span class="tag est">Estimate</span><span>Housing starting points from typical rents for the size you chose.<small>Census ACS median gross rent by bedrooms · you replaced them with your own figures if you edited them</small></span></div>
+          <div><span class="tag est">Estimate</span><span>Take-home = salary × (1 − your tax share). Real withholding depends on your state, filing status and benefits.</span></div>
+          <div><span class="tag you">Yours</span><span>Salaries, commute minutes and the 1–5 ratings come from you. We never check or store them.</span></div>
+          <div><span class="tag est">Calculation</span><span>Buying power = money left after housing ÷ (price level ÷ 100). Priority scores weight each option on your 0–5 sliders; the verdict must survive moving each slider one step.</span></div>
+        </div>
+      </details>
+      <h2>Before you decide</h2>
+      <ol class="next" id="next"></ol>
+      <div class="row"><button class="btn ghost" data-back="3">Edit numbers</button><button class="btn" id="go4">Share or save</button></div>
+    </section>
+
+    <!-- 5 Share / save -->
+    <section class="screen" id="s5" hidden>
+      <h2>Share the summary</h2>
+      <p class="lede">Send the findings to a partner or friend. Your salaries and rent stay out unless you choose to include them.</p>
+      <div class="toggle"><input type="checkbox" id="incl"><label for="incl">Include my salaries and housing costs</label></div>
+      <div class="sharebox" id="share"></div>
+      <button class="btn" id="copy">Copy summary</button>
+      <p class="status" id="copied" role="status"></p>
+      <div class="save">
+        <h2>Keep this comparison?</h2>
+        <p class="lede">An account lets you save it, come back when an offer changes, and compare a third option. Everything above works without one.</p>
+        <div class="row"><button class="btn ghost" id="later">Not now</button><button class="btn" id="acct">Create a free account</button></div>
+        <p class="status" id="acctMsg" role="status"></p>
+      </div>
+      <button class="btn ghost" data-back="4">Back to the result</button>
+    </section>
+  </main>
+
+  <aside class="notes" aria-label="Design notes">
+    <h2>Why each screen looks this way</h2>
+    <div class="note-card" data-n="1"><b>1 · Question first</b><p>One box, a real example already filled in, and only the decisions we can genuinely answer. Unsupported ones show as "soon" instead of producing a weak answer.</p></div>
+    <div class="note-card" data-n="2"><b>2 · Confirm, then three questions</b><p>We read the two options back so mistakes surface early. Clarifying questions are capped at three and each changes the result.</p></div>
+    <div class="note-card" data-n="3"><b>3 · Estimates you can overwrite</b><p>Every pre-filled figure is tagged. A tag tells you whether a number is a published fact, our estimate, or yours.</p></div>
+    <div class="note-card" data-n="4"><b>4 · Verdict, then the working</b><p>The answer comes first, on the user's own priorities. It must survive each slider moving one step, or the page says there is no clear winner. Money gaps under 5% are flagged as too small to rely on.</p></div>
+    <div class="note-card" data-n="5"><b>5 · Share without exposure, sign up only to save</b><p>The shared summary leaves out salaries and rent by default. An account is offered only when it adds something: saving and coming back.</p></div>
+    <p class="note">Beta design rule: no server call holds personal inputs. Price and rent tables would ship as a small static file and the calculation runs in the browser, so anonymous use costs almost nothing and stores nothing.</p>
+  </aside>
+</div>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  // Illustrative values shaped like BEA RPP (rent excluded) and ACS rent by bedrooms. Placeholders, not real figures.
+  var PLACES={
+    'raleigh, nc':{rpp:97,rent:{'1br':1350,'2br':1550}},
+    'denver, co':{rpp:104,rent:{'1br':1700,'2br':2050}},
+    'austin, tx':{rpp:100,rent:{'1br':1450,'2br':1750}},
+    'columbus, oh':{rpp:95,rent:{'1br':1050,'2br':1250}}
+  };
+  var cur=1;
+  function show(n){
+    for(var i=1;i<=5;i++){$('s'+i).hidden=i!==n;}
+    var bars=$('steps').children;for(var j=0;j<bars.length;j++){bars[j].className=j<n?'on':'';}
+    document.querySelectorAll('.note-card').forEach(function(c){c.classList.toggle('on',c.dataset.n==String(n));});
+    cur=n; if(n===4)render(); if(n===5)renderShare();
+    window.scrollTo({top:0});
+  }
+  function place(name){return PLACES[(name||'').trim().toLowerCase()]||{rpp:100,rent:{'1br':1400,'2br':1650},unknown:true};}
+  function num(id){var v=parseFloat($(id).value);return isFinite(v)?v:0;}
+  var money0=function(v){return '$'+Math.round(v).toLocaleString('en-US');};
+  function prefill(){
+    var h=$('housing').value;
+    ['A','B'].forEach(function(k){
+      var p=place($('city'+k).value);
+      $('n'+k).textContent=$('city'+k).value;
+      if(h!=='own'&&!$('rent'+k).dataset.edited)$('rent'+k).value=p.rent[h];
+    });
+  }
+  ['rentA','rentB'].forEach(function(id){$(id).addEventListener('input',function(){$(id).dataset.edited='1';});});
+  function calc(w){
+    var t=num('tax')/100, r={};
+    ['A','B'].forEach(function(k){
+      var p=place($('city'+k).value), take=num('sal'+k)*(1-t)/12, left=take-num('rent'+k);
+      r[k]={take:take,rent:num('rent'+k),left:left,bp:left/(p.rpp/100),rpp:p.rpp,com:num('com'+k),car:num('car'+k),ppl:num('ppl'+k),unknown:p.unknown};
+    });
+    // Each criterion scored 0..1 within this pair, then weighted by the user's 0-5 sliders.
+    function pair(a,b,higher){var lo=Math.min(a,b),hi=Math.max(a,b);if(hi===lo)return[0.5,0.5];var f=function(x){return higher?(x-lo)/(hi-lo):(hi-x)/(hi-lo)};return[f(a),f(b)];}
+    var crit={money:pair(r.A.bp,r.B.bp,true),time:pair(r.A.com,r.B.com,false),career:pair(r.A.car,r.B.car,true),people:pair(r.A.ppl,r.B.ppl,true)};
+    var sA=0,sB=0;Object.keys(w).forEach(function(c){sA+=w[c]*crit[c][0];sB+=w[c]*crit[c][1];});
+    r.score={A:sA,B:sB};return r;
+  }
+  function weights(){return{money:num('wMoney'),time:num('wTime'),career:num('wCareer'),people:num('wPeople')};}
+  function leader(s){return Math.abs(s.A-s.B)<0.25?'tie':(s.A>s.B?'A':'B');}
+  function render(){
+    var w=weights(), r=calc(w), nA=$('cityA').value, nB=$('cityB').value;
+    ['Money','Time','Career','People'].forEach(function(c){$('w'+c+'V').textContent=w[c.toLowerCase()];});
+    $('hA').textContent=nA.split(',')[0];$('hB').textContent=nB.split(',')[0];
+    $('tkA').textContent=money0(r.A.take);$('tkB').textContent=money0(r.B.take);
+    $('hoA').textContent='−'+money0(r.A.rent);$('hoB').textContent='−'+money0(r.B.rent);
+    $('lfA').textContent=money0(r.A.left);$('lfB').textContent=money0(r.B.left);
+    $('bpA').textContent=money0(r.A.bp);$('bpB').textContent=money0(r.B.bp);
+    $('rA').textContent=r.A.rpp+(r.A.unknown?' (no data: U.S. average used)':'');$('rB').textContent=r.B.rpp+(r.B.unknown?' (no data: U.S. average used)':'');
+    var gap=r.B.bp-r.A.bp, rel=Math.abs(gap)/Math.max(1,Math.min(Math.abs(r.A.bp),Math.abs(r.B.bp)));
+    var who=gap>0?nB.split(',')[0]:nA.split(',')[0];
+    $('moneyFlag').textContent=rel<0.05?'The buying-power gap is '+money0(Math.abs(gap))+' a month ('+(rel*100).toFixed(1)+'%). That is small enough that real rent quotes or taxes could reverse it.':who+' leaves '+money0(Math.abs(gap))+' more buying power a month ('+Math.round(rel*100)+'%), before moving costs.';
+    // Sensitivity: the leader must hold when any one slider moves one step either way.
+    var base=leader(r.score), stable=base!=='tie', flips=[];
+    Object.keys(w).forEach(function(c){[-1,1].forEach(function(d){var w2=Object.assign({},w);w2[c]=Math.max(0,Math.min(5,w2[c]+d));var l=leader(calc(w2).score);if(l!==base){stable=false;flips.push(c);}});});
+    var label={money:'money',time:'commute time',career:'career growth',people:'being near family'};
+    var v=$('verdict');
+    if(base==='tie'||!stable){
+      v.className='verdict none';v.querySelector('.k').textContent='No clear winner';
+      $('vText').textContent='On your priorities, neither option is clearly stronger.';
+      var f=flips.filter(function(x,i,a){return a.indexOf(x)===i;}).map(function(x){return label[x];});
+      $('vWhy').textContent=f.length?'The result changes if '+f.join(' or ')+' matters a little more or less to you. That is the real question to settle.':'The options score almost the same on what you said matters.';
+    }else{
+      v.className='verdict';v.querySelector('.k').textContent='On your priorities';
+      var winner=base==='A'?'Staying in '+nA.split(',')[0]:'Moving to '+nB.split(',')[0];
+      $('vText').textContent=winner+' looks stronger.';
+      $('vWhy').textContent='This holds when any one priority moves a step up or down. It is a reading of your own numbers and priorities, not advice.';
+    }
+    var tips=['Get the relocation package and start date in writing'+($('move').value==='1'?'.':', and price the move itself: it is not in these numbers.'),
+      'Replace our housing estimates with two real listings or quotes in each place.',
+      'Try the commute at rush hour before you sign.'];
+    if(r.A.unknown||r.B.unknown)tips.unshift('We have no price data for one of these places, so the U.S. average was used. Treat buying power as rough.');
+    $('next').innerHTML='';tips.forEach(function(t){var li=document.createElement('li');li.textContent=t;$('next').appendChild(li);});
+    return {r:r,base:base,stable:stable,rel:rel,gap:gap};
+  }
+  function renderShare(){
+    var o=render(), nA=$('cityA').value, nB=$('cityB').value, inc=$('incl').checked;
+    var lines=['Comparing: stay in '+nA+' vs move to '+nB+'.'];
+    lines.push((o.base==='tie'||!o.stable)?'Result: no clear winner on my priorities.':'Result: '+(o.base==='A'?'staying':'moving')+' looks stronger on my priorities.');
+    lines.push('Money after housing and local prices: '+(o.gap>0?nB:nA).split(',')[0]+' is about '+Math.round(o.rel*100)+'% ahead'+(o.rel<0.05?' (small gap, may not hold).':'.'));
+    if(inc)lines.push('My numbers: '+money0(num('salA'))+' vs '+money0(num('salB'))+' salary; '+money0(num('rentA'))+' vs '+money0(num('rentB'))+' housing a month.');
+    lines.push('Estimates and sources: ifyoumind.com (prototype)');
+    $('share').textContent=lines.join('\n');
+  }
+  $('go1').onclick=function(){
+    var q=$('q').value, m=q.match(/in ([A-Z][a-zA-Z .]+?)(?: or| vs|,|\?|$)/), s=q.match(/stay in ([A-Z][a-zA-Z .]+?)(?: making| at|,|\?|$)/);
+    if(m&&PLACES[(m[1].trim()+', co').toLowerCase()])$('cityB').value=m[1].trim()+', CO';
+    if(s&&PLACES[(s[1].trim()+', nc').toLowerCase()])$('cityA').value=s[1].trim()+', NC';
+    show(2);
+  };
+  $('go2').onclick=function(){prefill();show(3);};
+  $('go3').onclick=function(){show(4);};
+  $('go4').onclick=function(){show(5);};
+  document.querySelectorAll('[data-back]').forEach(function(b){b.onclick=function(){show(+b.dataset.back);};});
+  ['wMoney','wTime','wCareer','wPeople','carA','carB','pplA','pplB'].forEach(function(id){$(id).addEventListener('input',render);});
+  $('incl').addEventListener('change',renderShare);
+  $('copy').onclick=function(){
+    var t=$('share').textContent;
+    var done=function(){$('copied').textContent='Copied. Paste it into a message.';};
+    try{navigator.clipboard.writeText(t).then(done,function(){sel();});}catch(e){sel();}
+    function sel(){var r=document.createRange();r.selectNodeContents($('share'));var s=getSelection();s.removeAllRanges();s.addRange(r);$('copied').textContent='Text selected. Copy it with your device’s copy command.';}
+  };
+  $('later').onclick=function(){$('acctMsg').textContent='No problem. Your comparison stays on this screen until you close it.';};
+  $('acct').onclick=function(){$('acctMsg').textContent='In the beta this would open sign-up and save this comparison to your account. The prototype does not create accounts.';};
+  prefill(); render(); show(1);
+})();
+</script>

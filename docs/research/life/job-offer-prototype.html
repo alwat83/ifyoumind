@@ -1,0 +1,290 @@
+<title>Job Offer Compare</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a phone-width working prototype on the left, the research notes beside it; one column on phones. */
+:root{
+  --ink:#1b2740; --paper:#f3f5f8; --card:#ffffff; --line:#d6dce6; --muted:#5b6578;
+  --accent:#0d7f72; --accent-soft:#dff2ef; --est:#8a5a0b; --est-soft:#fbefd9; --you:#3f4fb8; --you-soft:#e7e9fb;
+  --display:"Outfit",ui-sans-serif,system-ui,sans-serif;
+  --body:"Source Sans 3",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --data:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --ink:#e6ebf3; --paper:#0f1522; --card:#172033; --line:#2c374d; --muted:#9aa6ba;
+  --accent:#3cc4b2; --accent-soft:#12332f; --est:#e3ad55; --est-soft:#352711; --you:#9ea9f5; --you-soft:#1f2547; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --ink:#e6ebf3; --paper:#0f1522; --card:#172033; --line:#2c374d; --muted:#9aa6ba;
+  --accent:#3cc4b2; --accent-soft:#12332f; --est:#e3ad55; --est-soft:#352711; --you:#9ea9f5; --you-soft:#1f2547; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px}
+h1,h2,h3{font-family:var(--display);line-height:1.15;text-wrap:balance;margin:0}
+h1{font-size:clamp(26px,4vw,34px);font-weight:700}
+h2{font-size:19px;font-weight:600}
+h3{font-size:15px;font-weight:600}
+p{margin:0}
+.page{max-width:1080px;margin:0 auto;display:grid;gap:24px}
+.top{display:grid;gap:8px;max-width:70ch}
+.banner{font-size:14px;color:var(--est);background:var(--est-soft);border-radius:8px;padding:8px 12px}
+.layout{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:32px;align-items:start}
+@media (max-width:860px){.layout{grid-template-columns:1fr}}
+.phone{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;display:grid;gap:18px;min-width:0}
+.step{display:grid;gap:10px;border-top:1px solid var(--line);padding-top:16px}
+.step:first-child{border-top:0;padding-top:0}
+.label{font-family:var(--data);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+textarea,input[type=number],input[type=text]{width:100%;font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+textarea{min-height:64px;resize:vertical}
+input:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ask{display:grid;gap:6px}
+.ask p{font-size:14px;color:var(--muted)}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{display:grid;gap:8px;min-width:0}
+.opt b{font-family:var(--display);font-size:15px}
+.field{display:grid;gap:3px;font-size:13px;color:var(--muted)}
+.field input{font-family:var(--data);font-size:14px;padding:8px 10px}
+.chip{display:inline-block;font-family:var(--data);font-size:10.5px;padding:2px 7px;border-radius:5px;white-space:nowrap}
+.chip.you{background:var(--you-soft);color:var(--you)}
+.chip.est{background:var(--est-soft);color:var(--est)}
+.chip.src{background:var(--accent-soft);color:var(--accent)}
+.sources{display:grid;gap:8px;font-size:14px}
+.src-row{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;align-items:baseline}
+.src-row small{grid-column:2;color:var(--muted);font-size:12.5px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:600}
+td.num{font-family:var(--data);font-variant-numeric:tabular-nums;white-space:nowrap}
+.better{color:var(--accent);font-weight:600}
+.weights{display:grid;gap:10px}
+.weight{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;font-size:14px}
+.weight input{grid-column:1/-1;width:100%;accent-color:var(--accent)}
+.weight output{font-family:var(--data);font-size:13px;color:var(--muted)}
+.verdict{border-radius:14px;padding:14px;display:grid;gap:6px;background:var(--accent-soft)}
+.verdict.none{background:var(--est-soft)}
+.verdict strong{font-family:var(--display);font-size:18px;font-weight:600;line-height:1.25}
+.verdict span{font-size:14px;color:var(--muted)}
+ul.plain{margin:0;padding-left:18px;display:grid;gap:6px;font-size:14px}
+.notes{display:grid;gap:18px;min-width:0}
+.note{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:8px}
+.note p,.note li{font-size:15px;color:var(--muted)}
+.note ol{margin:0;padding-left:20px;display:grid;gap:6px}
+.status{display:flex;gap:8px;flex-wrap:wrap}
+.status span{font-family:var(--data);font-size:11px;border:1px solid var(--line);border-radius:999px;padding:2px 8px;color:var(--muted)}
+.scroll{overflow-x:auto}
+@media (prefers-reduced-motion:no-preference){.verdict{transition:background .2s}}
+</style>
+
+<div class="page">
+  <header class="top">
+    <span class="label">ifYouMind Life · research prototype · Work Package 4</span>
+    <h1>Should I take the job in another city?</h1>
+    <p>A working sketch of a consumer decision on the same evidence rules as the business product. Change any number or priority and the comparison, the verdict and its sensitivity update.</p>
+    <p class="banner">Every external figure here is illustrative, made up for testing the design. It is not real data, not financial advice, and not a live product.</p>
+  </header>
+
+  <div class="layout">
+    <main class="phone" aria-label="Prototype">
+      <section class="step" aria-labelledby="s1">
+        <span class="label">1 · Your question</span>
+        <label for="question" id="s1" class="label" style="text-transform:none;letter-spacing:0;font-size:14px;color:var(--ink)">What are you trying to decide?</label>
+        <textarea id="question">I have an offer in Denver that pays more. Should I take it, or stay in Raleigh?</textarea>
+        <div class="ask">
+          <h3>Three quick questions</h3>
+          <p>We found two options in your question: stay in Raleigh, or move to Denver. We'll compare what you keep each month after rent and everyday prices, your commute, and what matters to you.</p>
+        </div>
+      </section>
+
+      <section class="step" aria-labelledby="s2">
+        <h2 id="s2">2 · Your numbers</h2>
+        <div class="opts">
+          <div class="opt"><b>Stay: Raleigh, NC</b>
+            <label class="field" for="salA">Salary ($/yr) <span class="chip you">Your number</span><input id="salA" type="number" inputmode="numeric" value="82000"></label>
+            <label class="field" for="rentA">Rent ($/mo) <span class="chip you">Your number</span><input id="rentA" type="number" inputmode="numeric" value="1550"></label>
+            <label class="field" for="comA">Commute (min each way)<input id="comA" type="number" inputmode="numeric" value="25"></label>
+            <label class="field" for="famA">Near family and friends (1–5)<input id="famA" type="number" min="1" max="5" value="4"></label>
+            <label class="field" for="carA">Career growth (1–5)<input id="carA" type="number" min="1" max="5" value="3"></label>
+          </div>
+          <div class="opt"><b>Move: Denver, CO</b>
+            <label class="field" for="salB">Salary ($/yr) <span class="chip you">Your number</span><input id="salB" type="number" inputmode="numeric" value="94000"></label>
+            <label class="field" for="rentB">Rent ($/mo) <span class="chip you">Your number</span><input id="rentB" type="number" inputmode="numeric" value="1950"></label>
+            <label class="field" for="comB">Commute (min each way)<input id="comB" type="number" inputmode="numeric" value="35"></label>
+            <label class="field" for="famB">Near family and friends (1–5)<input id="famB" type="number" min="1" max="5" value="2"></label>
+            <label class="field" for="carB">Career growth (1–5)<input id="carB" type="number" min="1" max="5" value="4"></label>
+          </div>
+        </div>
+        <label class="field" for="tax">Share of pay lost to taxes (%) <span class="chip est">Estimate · editable</span><input id="tax" type="number" value="22"></label>
+      </section>
+
+      <section class="step" aria-labelledby="s3">
+        <h2 id="s3">3 · What we added</h2>
+        <div class="sources">
+          <div class="src-row"><span class="chip src">Source</span><span>Everyday price level (rent excluded): Raleigh <b id="rppAOut">97</b>, Denver <b id="rppBOut">106</b>, where 100 is the U.S. average</span>
+            <small>Shape: BEA Regional Price Parities by metro area · <b>values here are illustrative</b></small></div>
+          <div class="src-row"><span class="chip src">Source</span><span>Typical rent check: we'd show the area's median rent next to yours</span>
+            <small>Shape: Census ACS B25064, county or metro · not shown in this prototype</small></div>
+          <div class="src-row"><span class="chip est">Estimate</span><span>Take-home pay = salary × (1 − your tax share). Not a tax calculation.</span>
+            <small>Editable above</small></div>
+        </div>
+      </section>
+
+      <section class="step" aria-labelledby="s4">
+        <h2 id="s4">4 · Side by side</h2>
+        <div class="scroll">
+          <table aria-describedby="tableNote">
+            <thead><tr><th scope="col">Per month</th><th scope="col">Raleigh</th><th scope="col">Denver</th></tr></thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+        <p id="tableNote" class="label" style="text-transform:none;letter-spacing:0;font-size:12.5px">“About the same” means within 5% for money, or within 1 point on your 1–5 ratings. Small gaps can come from the estimates themselves.</p>
+      </section>
+
+      <section class="step" aria-labelledby="s5">
+        <h2 id="s5">5 · What matters to you</h2>
+        <div class="weights" id="weights"></div>
+      </section>
+
+      <section class="step" aria-labelledby="s6">
+        <h2 id="s6">6 · Where this leaves you</h2>
+        <div id="verdict" class="verdict" role="status"></div>
+        <div>
+          <h3>What could change this</h3>
+          <ul class="plain" id="changes"></ul>
+        </div>
+        <div>
+          <h3>Next steps</h3>
+          <ul class="plain">
+            <li>Ask the Denver employer for the relocation package and start date in writing.</li>
+            <li>Price two real rentals near each office this week; replace the rent above.</li>
+            <li>Do the Denver commute once at rush hour, or check it in a maps app for 8 a.m.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <aside class="notes" aria-label="Research notes">
+      <div class="note">
+        <h2>What this prototype tests</h2>
+        <ol>
+          <li><b>Plain-language intake.</b> The question is typed normally. The system proposes options and asks only what changes the answer.</li>
+          <li><b>Facts, estimates and your numbers look different.</b> Each figure carries a chip, so nobody mistakes an estimate for a fact.</li>
+          <li><b>Honest comparison.</b> Small gaps read “about the same”, using the same rule as the business reports.</li>
+          <li><b>Your priorities decide.</b> The weights are yours. The verdict says “given your priorities”, never “the best city”.</li>
+          <li><b>Sensitivity.</b> If moving any one weight by 20% flips the result, the page says there is no clear winner.</li>
+          <li><b>A next step you can do.</b> Each step is a real-world check, not an upsell.</li>
+        </ol>
+      </div>
+      <div class="note">
+        <h2>Session tasks (consumer track)</h2>
+        <p>C1 10-second test · C2 compare your own two offers unaided in under 8 minutes · C3 state the result, including what is an estimate · C4 trust 1–5 · C5 would you return or share it, and with whom · C6 what would you pay for, if anything. Stated answers are never counted as demand.</p>
+      </div>
+      <div class="note">
+        <h2>Status</h2>
+        <div class="status"><span>Design proposal</span><span>Not built</span><span>Illustrative data</span><span>/life not launched</span></div>
+        <p>A real version would reuse the shared engine (evidence model, comparison tests, weighted options), not a separate consumer engine. External figures would come from official publishers after their terms are confirmed.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+(function(){
+  var RPP={A:97,B:106};           // illustrative regional price parities (rent excluded)
+  var WEIGHTS=[
+    {key:'money',label:'Money left each month',w:3},
+    {key:'commute',label:'Shorter commute',w:2},
+    {key:'family',label:'Near family and friends',w:3},
+    {key:'career',label:'Career growth',w:3}
+  ];
+  var $=function(id){return document.getElementById(id)};
+  var num=function(id){var v=parseFloat($(id).value);return isFinite(v)?v:0};
+  var usd=function(v){return '$'+Math.round(v).toLocaleString('en-US')};
+
+  function inputs(){
+    var t=num('tax')/100;
+    var money=function(s,r,p){return ((s*(1-t))/12-r)/(p/100)};
+    return {
+      money:{A:money(num('salA'),num('rentA'),RPP.A),B:money(num('salB'),num('rentB'),RPP.B),better:'higher',kind:'money'},
+      commute:{A:num('comA'),B:num('comB'),better:'lower',kind:'minutes'},
+      family:{A:num('famA'),B:num('famB'),better:'higher',kind:'rating'},
+      career:{A:num('carA'),B:num('carB'),better:'higher',kind:'rating'},
+      takeA:num('salA')*(1-t)/12, takeB:num('salB')*(1-t)/12
+    };
+  }
+  // 1 = A better, -1 = B better, 0 = about the same
+  function side(m){
+    var gap=m.A-m.B;
+    if(m.kind==='rating'){ if(Math.abs(gap)<1) return 0; }
+    else { var base=Math.max(Math.abs(m.A),Math.abs(m.B),1); if(Math.abs(gap)/base<0.05) return 0; }
+    var aBetter=m.better==='higher'?gap>0:gap<0;
+    return aBetter?1:-1;
+  }
+  function score(d,weights){
+    var a=0,b=0;
+    WEIGHTS.forEach(function(c,i){var s=side(d[c.key]);var w=weights[i];
+      if(s===1)a+=w; else if(s===-1)b+=w; else {a+=w/2;b+=w/2;}});
+    return {A:a,B:b};
+  }
+  function winner(sc){ return sc.A>sc.B?'A':sc.B>sc.A?'B':null; }
+
+  function renderWeights(){
+    var box=$('weights');
+    box.innerHTML='';
+    WEIGHTS.forEach(function(c,i){
+      var wrap=document.createElement('div');wrap.className='weight';
+      wrap.innerHTML='<label for="w-'+c.key+'">'+c.label+'</label><output id="o-'+c.key+'" for="w-'+c.key+'">'+c.w+'</output>'+
+        '<input id="w-'+c.key+'" type="range" min="0" max="5" step="1" value="'+c.w+'" aria-describedby="o-'+c.key+'">';
+      box.appendChild(wrap);
+      wrap.querySelector('input').addEventListener('input',function(e){c.w=+e.target.value;$('o-'+c.key).textContent=c.w;render();});
+    });
+  }
+
+  function render(){
+    var d=inputs();
+    var names={A:'Raleigh',B:'Denver'};
+    var cell=function(m,which,text){var s=side(m);var better=(s===1&&which==='A')||(s===-1&&which==='B');
+      return '<td class="num'+(better?' better':'')+'">'+text+'</td>';};
+    var sameNote=function(m){return side(m)===0?'<br><small style="color:var(--muted)">about the same</small>':''};
+    $('rows').innerHTML=
+      '<tr><th scope="row">Take-home pay <span class="chip est">Estimate</span></th><td class="num">'+usd(d.takeA)+'</td><td class="num">'+usd(d.takeB)+'</td></tr>'+
+      '<tr><th scope="row">Left after rent, in everyday buying power <span class="chip est">Estimate</span>'+sameNote(d.money)+'</th>'+cell(d.money,'A',usd(d.money.A))+cell(d.money,'B',usd(d.money.B))+'</tr>'+
+      '<tr><th scope="row">Commute each way'+sameNote(d.commute)+'</th>'+cell(d.commute,'A',d.commute.A+' min')+cell(d.commute,'B',d.commute.B+' min')+'</tr>'+
+      '<tr><th scope="row">Near family and friends <span class="chip you">Your rating</span>'+sameNote(d.family)+'</th>'+cell(d.family,'A',d.family.A+' / 5')+cell(d.family,'B',d.family.B+' / 5')+'</tr>'+
+      '<tr><th scope="row">Career growth <span class="chip you">Your rating</span>'+sameNote(d.career)+'</th>'+cell(d.career,'A',d.career.A+' / 5')+cell(d.career,'B',d.career.B+' / 5')+'</tr>';
+
+    var weights=WEIGHTS.map(function(c){return c.w});
+    var total=weights.reduce(function(a,b){return a+b},0);
+    var sc=score(d,weights), top=winner(sc);
+    // sensitivity: move each weight by +/-20% (and at least 1 step), see if the top option changes
+    var flips=[];
+    WEIGHTS.forEach(function(c,i){[-1,1].forEach(function(dir){
+      var w=weights.slice();var step=Math.max(1,Math.round(w[i]*0.2));w[i]=Math.max(0,w[i]+dir*step);
+      var t=winner(score(d,w));if(t!==top)flips.push(c.label+(dir>0?' matters a little more':' matters a little less'));});});
+    var v=$('verdict');
+    if(!total){v.className='verdict none';v.innerHTML='<strong>Set at least one priority to compare.</strong>';$('changes').innerHTML='';return;}
+    if(!top||flips.length){
+      v.className='verdict none';
+      v.innerHTML='<strong>No clear winner on your priorities.</strong><span>'+(top?names[top]+' edges ahead, but a small change in how much one thing matters would flip it.':'The two options come out even.')+' This is a real answer: the choice depends on what you value most.</span>';
+    }else{
+      var other=top==='A'?'B':'A';
+      v.className='verdict';
+      v.innerHTML='<strong>'+(top==='A'?'Staying in Raleigh':'Moving to Denver')+' looks stronger given your priorities.</strong><span>It stays ahead when any one priority moves by 20%. Score '+sc[top].toFixed(1)+' vs '+sc[other].toFixed(1)+' out of '+total+'.</span>';
+    }
+    var tips=[];
+    if(flips.length)tips=flips.map(function(f){return 'If '+f.toLowerCase()+', the result flips.';});
+    else{
+      WEIGHTS.forEach(function(c,i){
+        for(var w=weights[i]+1;w<=10;w++){var ws=weights.slice();ws[i]=w;if(winner(score(d,ws))!==top){tips.push('If '+c.label.toLowerCase()+' mattered '+w+' out of 5 or more (it is '+weights[i]+' now), the other option would lead.');break;}}
+      });
+    }
+    if(side(d.money)===0)tips.push('Money is about the same: the higher Denver salary is mostly absorbed by rent and prices. A relocation bonus or lower rent would change that.');
+    tips.push('Prices and the tax share are estimates. Real rent quotes and a payslip estimate would firm up the money line.');
+    $('changes').innerHTML=tips.slice(0,4).map(function(t){return '<li>'+t+'</li>'}).join('');
+  }
+
+  ['salA','salB','rentA','rentB','comA','comB','famA','famB','carA','carB','tax'].forEach(function(id){$(id).addEventListener('input',render);});
+  renderWeights();
+  render();
+})();
+</script>

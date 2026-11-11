@@ -55,6 +55,10 @@ Week October 19–25, 2026 UTC. Financial observation **October 22 22:40:04.919 
 
 [Approved October 22 aggregate Stripe evidence](STRIPE_BASELINE_2026-10-22.json) is preserved unchanged: zero successful payments/paid subscriptions/refunds, $0 receipts/MRR/recorded payment fees; three expired unpaid checkouts (one report, two Pro). Other accounts/off-Stripe/test records outside scope. Founder never confirmed purchases; old attribution is retracted. Identifiers/raw records stay private. Costs and profitability remain unknown, not launch blockers; reconcile actual costs before claiming profit. [Lightweight measurement note](MEASUREMENT_READINESS.md).
 
+### November 10, 2026 — integrated candidate observation
+
+[PR #82](https://github.com/alwat83/ifyoumind/pull/82) gives visitors immediate discovery, a sourced sample, and pricing before sign-in. Live Stripe confirmed both public prices. The live Billing Portal configuration query returned no records, so verify self-service billing before release. This observation covers product and billing configuration only. Visitor, checkout, purchase, revenue and customer feedback metrics retain their previously recorded scope and dates. Highest near-term priorities are a verified release, a short first-use round, then qualified founder introductions when authorized. Track whether visitors reach a finding, open evidence, start a brief and complete an independently funded report purchase.
+
 ## Seven days after authorized deployment
 
 [Ready launch sequence](LAUNCH_PLAN.md) names daily actions, assets and gates. Five evidence-based personalized invitations, four transparent routing requests, demonstration flow and follow-up tracker are prepared in ignored private local storage. Original research PR remains separate; no buyer identities, channels or personalized messages imported into this release. Nothing sent.

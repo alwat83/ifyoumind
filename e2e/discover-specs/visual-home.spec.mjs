@@ -201,10 +201,18 @@ test('keyboard opens the compact menu, Escape restores focus, and text spacing p
   await page.goto('/');
   const menu = page.locator('.mobile-navigation');
   const summary = menu.locator('summary');
-  await summary.focus();
+  const header = page.getByRole('banner');
+  await page.getByRole('link', { name: 'Skip to content', exact: true }).focus();
+  for (const name of ['ifYouMind home', 'Get Started']) {
+    await page.keyboard.press('Tab');
+    await expect(header.getByRole('link', { name, exact: true })).toBeFocused();
+  }
+  await page.keyboard.press('Tab');
+  await expect(summary).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(menu).toHaveAttribute('open', '');
-  await menu.getByRole('link', { name: 'Explore' }).focus();
+  await page.keyboard.press('Tab');
+  await expect(menu.getByRole('link', { name: 'Explore' })).toBeFocused();
   await page.keyboard.press('Escape');
   await expect(menu).not.toHaveAttribute('open');
   await expect(summary).toBeFocused();

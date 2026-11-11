@@ -12,7 +12,8 @@
       <div class="header-actions">
         <a routerLink="/login" class="button button-outline desktop-signin">Sign In</a>
         <a routerLink="/register" class="button button-primary">Get Started</a>
-        <details #mobileNavigation class="mobile-navigation" tabindex="-1" (keydown.escape)="mobileNavigation.open = false; mobileSummary.focus()">
+        <!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus -- The native summary receives focus and Escape bubbles from the menu links. -->
+        <details #mobileNavigation class="mobile-navigation" (keydown.escape)="mobileNavigation.open = false; mobileSummary.focus()">
           <summary #mobileSummary class="button button-outline">Menu <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#menu"/></svg></summary>
           <nav aria-label="Mobile navigation">
             <a href="#explore" (click)="mobileNavigation.open = false">Explore</a>

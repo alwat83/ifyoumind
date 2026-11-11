@@ -8,6 +8,12 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 10, 2026 — Billing Portal release gate
+
+**Committed for draft review. Conditional GO.** OpenAI / Codex continued [PR #82](https://github.com/alwat83/ifyoumind/pull/82) on `codex/integrated-release-20261110` from `a26e56ad8fa90ac25e31d6f7c1078f51bd01b9ad`. The update restricts portal access to active workspace owners and admins, validates Stripe session URLs, keeps billing available after downgrade and processes scheduled and terminal cancellation state. Genuine Stripe sandbox sessions and events verified period-end scheduling and app entitlement transitions. [Billing verification, evidence and live setup](docs/releases/integrated-20261110/BILLING_PORTAL.md)
+
+Read-only live Stripe evidence confirmed the existing $79 one-time and $39 monthly prices and enabled subscription webhook events. The live configuration list returned zero records. An empty sandbox list still allowed Stripe to initialize a default on its first session. Confirm the desired live default and owner access before authorizing release. The live account, customer subscriptions and production deployment were untouched. Production last verified at PR #76. Commercial outcomes remain unmeasured.
+
 ## November 10, 2026 — integrated release candidate
 
 **Committed, in draft review.** OpenAI / Codex integrated #79 → #80 → #81 with independent #78 in [PR #82](https://github.com/alwat83/ifyoumind/pull/82) on `codex/integrated-release-20261110`, based on master `e5d8f15`. The Business sample adds Nashville to the homepage's Austin and Charlotte estimates. The homepage identifies its Census snapshot date and restores the native keyboard tab stop for the mobile Menu. [Release review, visual evidence, QA, performance and rollback](docs/releases/integrated-20261110/REVIEW.md).

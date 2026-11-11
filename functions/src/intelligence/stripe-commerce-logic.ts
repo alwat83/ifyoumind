@@ -49,6 +49,11 @@ export function grantsPro(status:unknown):boolean{
   return status==='active'||status==='trialing';
 }
 
+export function subscriptionCancellationScheduled(subscription:{cancel_at_period_end?:unknown;cancel_at?:unknown}):boolean{
+  const cancelAt=subscription.cancel_at;
+  return subscription.cancel_at_period_end===true||(typeof cancelAt==='number'&&Number.isFinite(cancelAt)&&cancelAt>0);
+}
+
 export function shouldApplySubscriptionEvent(
   incomingCreated:unknown,
   lastAppliedCreated:unknown,
@@ -63,7 +68,7 @@ export function shouldApplySubscriptionEvent(
 /**
  * Whether a subscription event may change the workspace's plan. Events for a different subscription
  * (such as a duplicate being cancelled) must not downgrade a workspace whose current subscription
- * still grants Pro.
+ * still grants Pro. A canceled Stripe subscription cannot be reactivated.
  */
 export function subscriptionEventMayChangePlan(
   current:{stripeSubscriptionId?:unknown;stripeSubscriptionStatus?:unknown},
@@ -71,7 +76,10 @@ export function subscriptionEventMayChangePlan(
   incomingStatus:unknown,
 ):boolean{
   const currentId=typeof current.stripeSubscriptionId==='string'?current.stripeSubscriptionId:'';
-  if(!currentId||currentId===incomingSubscriptionId)return true;
+  if(!currentId)return true;
+  if(currentId===incomingSubscriptionId){
+    return current.stripeSubscriptionStatus!=='canceled'||incomingStatus==='canceled';
+  }
   if(!grantsPro(current.stripeSubscriptionStatus))return true;
   return grantsPro(incomingStatus);
 }

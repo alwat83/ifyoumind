@@ -64,14 +64,14 @@ export class AccountComponent implements OnInit {
   }
 
   async manageBilling():Promise<void>{
-    if(!this.status||this.status.plan!=='pro')return;
+    if(!this.status?.billingPortalAvailable)return;
     this.message=''; this.error='';
     try{
       const workspace=await this.organizations.getMyWorkspace();
       if(!workspace) throw new Error('Workspace not found.');
-      void this.analytics.track(workspace.organizationId,'billing_portal_opened');
       const url=await this.monetization.billingPortal(workspace.organizationId);
       if(!url) throw new Error('Billing portal did not return a URL.');
+      void this.analytics.track(workspace.organizationId,'billing_portal_opened');
       window.location.assign(url);
     }catch(error){this.error=this.messageFor(error);}
   }

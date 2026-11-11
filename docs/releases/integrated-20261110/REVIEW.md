@@ -75,6 +75,8 @@ The hero uses a high-priority WebP with a responsive source set. The 390px test 
 
 ## Release and rollback
 
+The subsequent [Billing Portal verification](BILLING_PORTAL.md) records real sandbox results, app-side fixes and the remaining live setup.
+
 **Conditional GO.** The draft is available for founder review. Before production authorization, confirm the final CI results and resolve the missing live Billing Portal configuration or explicitly accept that gap. Production status remains the previously verified PR #76 release, master `e5d8f15`, Hosting version `f76d7036fa558cf7`. Authorization must name the reviewed SHA and the automatic Firebase deployment from master. Before release, recheck master and PR checks and confirm the retained Hosting version is available. After an authorized merge, verify the deployment revision and smoke the public homepage, all discovery routes, sample, pricing, registration intent and authenticated report access. If rollback is authorized, restore the retained Hosting version for immediate recovery, then revert the integrated release on master and verify the restored paths. Review the configured Firebase workflow before either action.
 
 1. Review the draft and verify the default live Billing Portal and cancellation flow through separately authorized Stripe work.

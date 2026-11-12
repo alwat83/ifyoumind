@@ -53,7 +53,7 @@ test('the guard and sign-in page use the validator, and access control is unchan
 test('every $79 entry point carries the report intent; free and Pro stay plain', () => {
   const home = read('../src/app/intelligence/public-landing.component.html');
   assert.match(home, /<a routerLink="\/register" \[queryParams\]="\{intent:'report'\}" class="offer">/);
-  assert.equal((home.match(/<a routerLink="\/register" class="offer">/g) || []).length, 2, 'Free and Pro links keep plain registration');
+  assert.equal((home.match(/<a routerLink="\/register" class="(?:free-offer|offer)">/g) || []).length, 2, 'Free and Pro links keep plain registration');
   const sample = read('../src/app/intelligence/market-report.component.html');
   assert.equal((sample.match(/routerLink="\/register" \[queryParams\]="\{intent:'report'\}"/g) || []).length, 2);
 });

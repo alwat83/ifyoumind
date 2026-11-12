@@ -68,7 +68,7 @@
 .bar-value { margin-bottom: 7px; font-size: 14px; font-weight: 650; white-space: nowrap; }
 .bar-fill {
   width: min(65%, 88px);
-  height: calc(var(--bar-height) * .78);
+  flex: 0 0 calc(var(--bar-height) * .72);
   border-radius: 3px 3px 0 0;
   background: var(--chart-accent);
   transform-origin: bottom;

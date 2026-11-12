@@ -6,12 +6,12 @@
   --secondary: #495065;
   --border: #e8e5eb;
   --purple: #4c3189;
-  --display: Outfit, Inter, system-ui, sans-serif;
+  --display: Outfit, Inter, Arial, system-ui, sans-serif;
   --soft-purple: #f0ecfa;
   --dark: #1d1d29;
   color: var(--ink);
   background: var(--page);
-  font: 16px/1.5 Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font: 16px/1.5 Inter, Arial, system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; }

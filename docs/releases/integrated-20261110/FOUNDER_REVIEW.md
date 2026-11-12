@@ -1,6 +1,6 @@
 # PR #82 founder release review
 
-November 11, 2026 · OpenAI / Codex · **NO-GO for production. The live default passed readback and the signed-in owner test failed.**
+November 11, 2026 · OpenAI / Codex · **NO-GO for production. The signed-in owner test exposed a stale historical test-mode Stripe link.**
 
 [Draft PR #82](https://github.com/alwat83/ifyoumind/pull/82) is open and mergeable on `codex/integrated-release-20261110` at `6fcef3ab84c793c5b93f559c0d9c6d6d7aefaeba`. GitHub master and the last successful production deployment are at `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e` (PR #76). A fresh public GET showed the production bill-led hero. The release candidate has not advanced since its verified checks. This evidence is on a separate documentation branch so the reviewed SHA stays fixed. [Last production workflow](https://github.com/alwat83/ifyoumind/actions/runs/42143112840)
 
@@ -46,6 +46,10 @@ The fresh candidate walkthrough passed example switching, electricity source-cel
 | Hosted portal and return | Stripe did not issue a usable session during either attempt. The authenticated return from Stripe and live control visibility could not be exercised. The candidate’s owner/admin enforcement and cancellation behavior remain verified by existing emulator and sandbox evidence. | Blocked |
 
 The candidate and deployed callable use the server-side workspace customer and the same fixed return URL, with no explicit configuration ID. Stripe uses the account default when the ID is omitted. The candidate improves authorization, redirect validation and cancellation state. It does not repair a workspace’s Stripe customer link. The signed-in production check exercised PR #76’s deployed path. The two exact-head PR #82 workflows remain green. [Stripe session API](https://docs.stripe.com/api/customer_portal/sessions/create) · [Sandbox and candidate evidence](BILLING_PORTAL.md)
+
+## Issue #83 — verified customer-link root cause
+
+The affected workspace retained a customer and subscription from a completed October 9 test Checkout. The exact provider objects and their workspace metadata match. The deployed credentials resolve to the intended live account, where both IDs return `resource_missing`. No alternate verified live workspace was found for the authorized owner. The old sandbox destination still points at the production webhook. See the [redacted trace, separate code branch, and preconditioned cleanup plan](STRIPE_CUSTOMER_LINK.md).
 
 ## Remaining gate and exact authorization
 

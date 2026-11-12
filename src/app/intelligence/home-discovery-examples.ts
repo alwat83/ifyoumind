@@ -12,7 +12,6 @@ interface HomeExample {
   rows: readonly { label: string; values: readonly string[] }[];
   takeaway: string;
   finding: { value: string; text: string };
-  supporting?: string;
   limit: string;
   proof?: readonly { label: string; steps: readonly string[]; cells: readonly { cell: string; label: string; raw: string }[] }[];
   action: string;
@@ -26,13 +25,12 @@ export const HOME_EXAMPLES: readonly HomeExample[] = [
   {
     id: 'tax',
     title: 'Property taxes',
-    question: 'What changed on this property-tax bill?',
+    question: 'What changed on this tax bill?',
     label: 'Made-up example',
     context: 'Two consecutive tax years for the same property.',
     ...bills.tax,
     finding: { value: bills.tax.share, text: `of the ${taxIncrease} increase came from school charges.` },
     takeaway: `School charges accounted for ${bills.tax.share} of the ${taxIncrease} increase and rose by ${schoolIncrease}.`,
-    supporting: `School charges rose by ${schoolIncrease}.`,
     limit: 'The bills show which charges changed. Check assessed value and tax rates to understand why.',
     action: 'Explore the property-tax example',
   },

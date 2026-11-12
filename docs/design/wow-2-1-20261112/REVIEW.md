@@ -1,4 +1,39 @@
-# Wow 2.1 founder review
+# Wow homepage founder review
+
+## Wow 2.2 — Radical Simplicity
+
+[Draft PR #90](https://github.com/alwat83/ifyoumind/pull/90) · [Issue #89](https://github.com/alwat83/ifyoumind/issues/89) · [Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71)
+
+The hero uses the original headline, a one-sentence explanation of bill and place comparisons, and one prominent action, **Try a Free Example**. The action opens the existing free property-tax example. The subdued skyline, wordmark, and Outfit typography carry the visual identity.
+
+Removed the hero report link, header signup button, preview box and heading, four promotional image tiles, and three-step process list. The only accent in the first screen is the finding. The default example is labeled as made up, and **Show the evidence** opens the same arithmetic, source cells, context, and caveats. Electricity and city selectors stay visible, and the city sample keeps its Census limitations and full report link.
+
+The header’s Decision Reports link leads to one short section with the public sample and the existing guarded report creation route. The $79 report, $39 monthly Pro, free Business brief, and plan disclosures use the same routes and terms. The four guides and discovery destinations remain as text links, and the bill-file privacy statement remains visible. The compact menu retains registration.
+
+### Before and after
+
+The before captures are the verified Wow 2.1 candidate at `9b26904a9b93eb2e595ce9ce980ef169f5a18749`. After captures use the candidate production build in the loopback Firebase Hosting emulator. Both use Chrome at the same viewport dimensions and device scale factor 1.
+
+| Viewport | Wow 2.1 | Wow 2.2 | Finding starts (before → after) |
+| --- | --- | --- | --- |
+| 320 × 568 | [Before](screenshots/after-320.jpg) | [After](screenshots/wow-2-2-320.jpg) | 469 → 408 px |
+| 375 × 812 | [Before](screenshots/after-375.jpg) | [After](screenshots/wow-2-2-375.jpg) | 503 → 408 px |
+| 390 × 844 | [Before](screenshots/after-390.jpg) | [After](screenshots/wow-2-2-390.jpg) | 506 → 410 px |
+| 768 × 1024 | [Before](screenshots/after-768.jpg) | [After](screenshots/wow-2-2-768.jpg) | 485 → 462 px |
+| 1024 × 800 | [Before](screenshots/after-1024.jpg) | [After](screenshots/wow-2-2-1024.jpg) | 504 → 481 px |
+| 1440 × 900 | [Before](screenshots/after-1440.jpg) | [After](screenshots/wow-2-2-1440.jpg) | 560 → 537 px |
+
+[Full mobile before](screenshots/after-390-full.jpg) · [Full mobile after](screenshots/wow-2-2-390-full.jpg) · [Full desktop before](screenshots/after-1440-full.jpg) · [Full desktop after](screenshots/wow-2-2-1440-full.jpg) · [Opened mobile evidence](screenshots/wow-2-2-390-evidence.jpg)
+
+### Verification and release
+
+The first browser pass found that the 320 px selector wrapped and pushed the evidence control below the fold. The tightened selector, shorter question and balanced hero copy put the complete finding and disclosure in the first viewport. The regression now checks the hero action, number, explanatory sentence, and disclosure against all six viewports. It also checks fallback fonts, contrast, no horizontal overflow, evidence reset and announcements, the three example paths, mobile keyboard navigation, reduced motion, forced colors, text spacing, and access to the sample and guarded report routes. The exact-head PR checks record the release results.
+
+Use the five-second review below to test unaided comprehension with permitted participants. Ask what the product does, what 57.1% refers to, and which action they would take. Browser results and capture positions establish visibility, while human comprehension and conversion are still unmeasured. Founder review of this draft and exact-head release approval remain separate.
+
+---
+
+## Wow 2.1 — Property-tax-first founder review
 
 November 12, 2026 · [Issue #89](https://github.com/alwat83/ifyoumind/issues/89) · [Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71)
 

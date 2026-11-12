@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 12, 2026 — Wow 2.2 founder review
+
+**Committed for draft review.** [PR #90](https://github.com/alwat83/ifyoumind/pull/90) and [Issue #89](https://github.com/alwat83/ifyoumind/issues/89) continue from the reviewed Wow 2.1 head `9b26904a9b93eb2e595ce9ce980ef169f5a18749`. One free-example CTA, an unboxed property-tax finding, and a direct Decision Reports section replace competing actions and promotional cards. [Six-width evidence and exact-head QA entry point](../design/wow-2-1-20261112/REVIEW.md). PR #88 remains the deployed baseline. Founder review and explicit release authorization are pending.
+
 ## November 12, 2026 — Wow 2.1 founder review
 
 **Committed for draft review.** [Issue #89](https://github.com/alwat83/ifyoumind/issues/89) on `codex/wow-2-1-property-tax-20261112` follows founder-selected tday with centered editorial type, one framed result, and the default synthetic property-tax finding. [Screenshots, QA and release notes](../design/wow-2-1-20261112/REVIEW.md). GitHub PR checks are the source for exact-head CI. The latest verified baseline is [PR #88](https://github.com/alwat83/ifyoumind/pull/88), master `449f829f733553c4c8afbf6c0748d82566b0048e`, [deployed successfully](https://github.com/alwat83/ifyoumind/actions/runs/43283684085) and publicly captured at six widths. Wow 2.1 awaits founder release authorization.

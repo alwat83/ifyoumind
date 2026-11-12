@@ -30,16 +30,21 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await page.setViewportSize({ width, height });
     await page.goto('/');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(/See the story\.\s*Check the evidence\./);
-    const heroAction = page.getByRole('link', { name: 'Explore a Property Tax Example', exact: true });
+    const heroAction = page.getByRole('link', { name: 'Try a Free Example', exact: true });
     await expect(heroAction).toBeInViewport({ ratio: 1 });
     await expect(heroAction).toHaveAttribute('href', '/discover/?example=tax');
-    await expect(page.getByRole('link', { name: 'Create a Report' })).toHaveAttribute('href', '/app/decide');
+    await expect(page.locator('#try').getByRole('link')).toHaveCount(1);
+    await expect(page.locator('#try')).toContainText('See what changed in a bill or how places compare.');
+    const reports = page.getByRole('region', { name: 'Decision Reports', exact: true });
+    await expect(reports.getByRole('link', { name: 'Create a Report' })).toHaveAttribute('href', '/app/decide');
+    await expect(reports.getByRole('link', { name: 'View a Sample Report' })).toHaveAttribute('href', '/sample-report');
     const feature = page.locator('#business');
     await expect(feature.getByRole('button', { pressed: true })).toHaveText('Property taxes');
     await expect(feature.getByText('Made-up example', { exact: true })).toBeVisible();
     await expect(feature.locator('.finding')).toContainText('57.1% of the $420 increase came from school charges.');
     await expect(feature.getByText('57.1%', { exact: true })).toBeInViewport({ ratio: 1 });
-    await expect(feature.getByText('School charges rose by $240.', { exact: true })).toBeVisible();
+    await expect(feature.getByText('of the $420 increase came from school charges.', { exact: true })).toBeInViewport({ ratio: 1 });
+    await expect(feature.locator('.home-evidence summary')).toBeInViewport({ ratio: 1 });
     await expect(feature.getByRole('table')).toHaveCount(0);
     await expect(feature.locator('.home-evidence')).not.toHaveAttribute('open');
     await expect(feature.getByRole('link', { name: 'Explore the property-tax example' })).toBeHidden();
@@ -48,22 +53,19 @@ test('homepage fits six reference widths with the flagship result and an actiona
       expect(w).toBeGreaterThanOrEqual(44);
       expect(h).toBeGreaterThanOrEqual(44);
     }
-    const images = page.locator('.hero-art img, .use-case img');
-    await expect(images).toHaveCount(5);
+    const image = page.locator('.hero-art img');
+    await expect(image).toHaveCount(1);
     const initial = await feature.locator('.finding').boundingBox();
-    await images.evaluateAll(async nodes => {
+    await image.evaluate(async img => {
       await document.fonts.ready;
-      for (const img of nodes) {
-        img.loading = 'eager';
-        await img.decode();
-      }
+      await img.decode();
     });
     const settled = await feature.locator('.finding').boundingBox();
     expect(Math.abs(settled.y - initial.y)).toBeLessThanOrEqual(8);
     await noOverflow(page);
     await accessible(page);
     const headings = await homepageHeadingContrasts(page);
-    expect(headings).toHaveLength(14);
+    expect(headings).toHaveLength(5);
     for (const heading of headings) {
       expect(heading.minimumRatio, heading.text).toBeGreaterThanOrEqual(heading.fontSize >= 24 ? 3 : 4.5);
     }
@@ -155,9 +157,9 @@ test('the three examples replace the finding, reset evidence and announce the ne
   }
 });
 
-test('primary action opens property-tax findings and the explore card offers both bill examples', async ({ page }) => {
+test('primary action opens property-tax findings and the secondary discovery link offers both bill examples', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'Explore a Property Tax Example', exact: true }).click();
+  await page.getByRole('link', { name: 'Try a Free Example', exact: true }).click();
   await expect(page).toHaveURL(origin + '/discover/?example=tax');
   await expect(page.locator('.finding')).toHaveCount(3);
   await expect(page.getByRole('heading', { name: 'Your total rose by $420.00.', exact: true })).toBeVisible();
@@ -241,16 +243,16 @@ test('keyboard opens the compact menu, Escape restores focus, and text spacing p
   const summary = menu.locator('summary');
   const header = page.getByRole('banner');
   await page.getByRole('link', { name: 'Skip to content', exact: true }).focus();
-  for (const name of ['ifYouMind home', 'Get Started']) {
-    await page.keyboard.press('Tab');
-    await expect(header.getByRole('link', { name, exact: true })).toBeFocused();
-  }
+  await page.keyboard.press('Tab');
+  await expect(header.getByRole('link', { name: 'ifYouMind home', exact: true })).toBeFocused();
   await page.keyboard.press('Tab');
   await expect(summary).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(menu).toHaveAttribute('open', '');
   await page.keyboard.press('Tab');
-  await expect(menu.getByRole('link', { name: 'Explore' })).toBeFocused();
+  await expect(menu.getByRole('link', { name: 'Examples' })).toBeFocused();
+  await expect(menu.getByRole('link', { name: 'Decision Reports' })).toHaveAttribute('href', '#how-it-works');
+  await expect(menu.getByRole('link', { name: 'Get Started' })).toHaveAttribute('href', '/register');
   await page.keyboard.press('Escape');
   await expect(menu).not.toHaveAttribute('open');
   await expect(summary).toBeFocused();
@@ -258,7 +260,7 @@ test('keyboard opens the compact menu, Escape restores focus, and text spacing p
   await page.addStyleTag({ content: '*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}' });
   await page.setViewportSize({ width: 320, height: 568 });
   await noOverflow(page);
-  await expect(page.getByRole('link', { name: 'Explore a Property Tax Example', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Try a Free Example', exact: true })).toBeVisible();
   await page.emulateMedia({ forcedColors: 'active' });
   await summary.focus();
   expect(await summary.evaluate(node => getComputedStyle(node).outlineStyle)).toBe('solid');

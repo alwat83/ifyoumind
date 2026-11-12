@@ -3,7 +3,7 @@ import { test, expect, expectAccessible, expectNoHorizontalScroll } from '../sup
 test('homepage leads with a free working property-tax example', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(/See the story\.\s*Check the evidence\./);
-  const heroAction = page.getByRole('link', { name: 'Explore a Property Tax Example', exact: true });
+  const heroAction = page.getByRole('link', { name: 'Try a Free Example', exact: true });
   await expect(heroAction).toBeInViewport({ ratio: 1 });
   await expect(page.getByRole('button', { pressed: true })).toHaveText('Property taxes');
   await expect(page.locator('#discovery-result')).toContainText('57.1%');
@@ -50,7 +50,8 @@ test('homepage sample, Business prices, paid intent and registration remain usab
 
 test('homepage report creation and full pricing keep their sign-in return paths', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'Create a Report', exact: true }).click();
+  await page.getByRole('region', { name: 'Decision Reports', exact: true })
+    .getByRole('link', { name: 'Create a Report', exact: true }).click();
   await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/app/decide');
   await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
 

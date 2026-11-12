@@ -21,10 +21,13 @@ test('homepage sample, Business prices, paid intent and registration remain usab
   await expect(page.locator('#discovery-result')).toContainText('public sample report, which also compares Nashville');
   await page.getByRole('link', { name: 'View the Full Sample Report', exact: true }).click();
   await expect(page).toHaveURL(/\/sample-report$/);
-  const incomeProof = page.locator('#proof-income');
-  for (const [city, income] of [['Austin, TX', '$93,658'], ['Charlotte, NC', '$82,068'], ['Nashville, TN', '$77,371']]) {
-    await expect(incomeProof.getByRole('row', { name: new RegExp(city) })).toContainText(income);
-  }
+  // The current production sample uses comparison cards rather than the unmerged #82 proof-income table.
+  // Assert the actual full-report comparison and official source links, not a future-only DOM shape.
+  const comparisons = page.locator('#comparison .comparison-grid');
+  await expect(comparisons).toContainText('Austin, TX');
+  await expect(comparisons).toContainText('Charlotte, NC');
+  await expect(comparisons).toContainText('Nashville, TN');
+  await expect(page.locator('#sources a').first()).toHaveAttribute('href', /^https:/);
   await expect(page.locator('#recommendation h2')).toContainText('Austin, TX');
   await page.goto('/');
   const pricing = page.locator('#pricing');

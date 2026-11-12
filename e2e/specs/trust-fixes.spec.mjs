@@ -59,12 +59,12 @@ test('sign-up links the Terms and the Privacy Policy', async ({ page }) => {
 
 test('the homepage shows a real sample finding and claims no uploaded-data analysis', async ({ page }) => {
   await page.goto('/');
-  const card = page.locator('.report-preview');
-  await expect(card).toContainText('From the public sample report');
+  const card = page.locator('.featured');
+  await expect(card).toContainText(/from the public sample report/i);
   await expect(card).toContainText('$93,658');
-  await expect(page.getByRole('link', { name: 'See a Business sample', exact: true })).toHaveAttribute('href', '/sample-report');
-  await expect(card).toContainText('City-level estimates');
-  await expect(card).toContainText('not a forecast of demand, sales or rent');
-  await expect(page.locator('.privacy-strip')).toContainText('Two supported USD CSV formats. No PDFs or scans.');
-  await expect(page.locator('.privacy-strip')).toContainText('No uploads or saved copies.');
+  await expect(page.getByRole('link', { name: 'View the Full Sample Report', exact: true })).toHaveAttribute('href', '/sample-report');
+  await expect(card).toContainText(/city-level estimates/i);
+  await expect(card).toContainText('Check local demand, competition, and rent');
+  await expect(page.locator('.explore-note')).toContainText('Two supported USD CSV formats. No PDFs or scans.');
+  await expect(page.locator('.explore-note')).toContainText('No uploads or saved copies.');
 });

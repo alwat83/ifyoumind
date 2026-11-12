@@ -1,6 +1,6 @@
 # Proposed implementation backlog
 
-**Separate work after founder authorization.** The open PR #82 release decision and live billing gate stay on their own branch and approval path. File references are current module names. The estimates are engineering days for one person, excluding waiting for founder, payment settlement or pilot cohorts.
+**Founder-approved pilot design, implementation pending authorization.** Follow the [ordered implementation handoff](PILOT_PREPARATION.md). The open PR #82 release decision and live billing gate stay on their own branch and approval path. File references are current module names. The estimates are engineering days for one person, excluding waiting for founder, payment settlement or pilot cohorts.
 
 | Phase and task | Purpose and affected modules | Dependencies and acceptance criteria | Required tests | Main risk and effort |
 | --- | --- | --- | --- | --- |

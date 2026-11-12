@@ -2,7 +2,11 @@
 
 November 10, 2026 · OpenAI / Codex · [Draft PR #82](https://github.com/alwat83/ifyoumind/pull/82) · `codex/integrated-release-20261110`
 
-## Root cause and release gate
+## November 11 follow-up
+
+**Live configuration passed. Owner session failed. NO-GO for production.** The account now has the intended active default. Both signed-in Pro Account attempts returned an error. Cloud Logging recorded Stripe’s “No such customer” for the linked reference. The hosted return path is unverified. The [current release review](FOUNDER_REVIEW.md#live-billing-readback-and-signed-in-test) supersedes the earlier setup checklist for current release status.
+
+## Initial root cause and release gate
 
 The live iFyoumind account returned zero Billing Portal configurations on a read-only request. The Firebase callable sends a Stripe customer ID and a fixed HTTPS return URL, with no explicit configuration ID. Stripe uses its account default in that case. An isolated Stripe sandbox also started with zero configurations, and its first session succeeded and materialized an active default. The empty live list leaves the live default and its feature settings unverified. The same list result in the sandbox still allowed a session. The first live session could create live settings. Live verification stopped at read-only account, price and webhook inspection. [Stripe portal session API](https://docs.stripe.com/api/customer_portal/sessions/create)
 

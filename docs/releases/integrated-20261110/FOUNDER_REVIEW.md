@@ -1,6 +1,6 @@
 # PR #82 founder release review
 
-November 11, 2026 · OpenAI / Codex · **NO-GO for production until live billing verification passes.**
+November 11, 2026 · OpenAI / Codex · **NO-GO for production. The live default passed readback and the signed-in owner test failed.**
 
 [Draft PR #82](https://github.com/alwat83/ifyoumind/pull/82) is open and mergeable on `codex/integrated-release-20261110` at `6fcef3ab84c793c5b93f559c0d9c6d6d7aefaeba`. GitHub master and the last successful production deployment are at `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e` (PR #76). A fresh public GET showed the production bill-led hero. The release candidate has not advanced since its verified checks. This evidence is on a separate documentation branch so the reviewed SHA stays fixed. [Last production workflow](https://github.com/alwat83/ifyoumind/actions/runs/42143112840)
 
@@ -34,22 +34,24 @@ The fresh candidate walkthrough passed example switching, electricity source-cel
 
 - The two workflows passed on the exact candidate. CI recorded 306 browser cases, including 69 Hosting and 126 authenticated cases, plus 145 web tests, 72 Functions tests, 7 Firestore rules tests, 5 organization tests and 31 commerce tests. One existing fixture test was skipped. [Launch build](https://github.com/alwat83/ifyoumind/actions/runs/42971126444) · [Authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/42971126409)
 - Reviewed evidence covers mobile from 320px, keyboard Menu and disclosures, desktop, and 40 pages from five PDF variants. The billing sandbox verified scheduled Pro retention, terminal downgrade, preserved unlocked reports and continued billing access. The terminal test used an explicit end of the disposable sandbox subscription. [Billing evidence](BILLING_PORTAL.md)
-- Read-only live Stripe checks returned zero Billing Portal configurations and confirmed the two configured Price objects are active at $79 once and $39 monthly. The five-report Pro allowance remains verified by CI. Zero listed configurations is an unverified live default. The sandbox initialized its default on first session, so a live session could itself write settings.
+- The earlier live read confirmed the active $79 one-time and $39 monthly prices. The five-report Pro allowance remains verified by CI. The original portal configuration gap is now resolved. See the fresh live evidence below.
 
-## Exact approval requested
+## Live billing readback and signed-in test
 
-Authorize saving the active default in the **live iFyoumind Stripe account** with these settings. This approval is for the portal configuration and a read-back only. Owner access must then be verified with a linked authorized workspace owner. [Stripe Billing Portal settings](https://dashboard.stripe.com/settings/billing/portal)
+| Gate | Evidence | Result |
+| --- | --- | --- |
+| Intended live default | Read-only Stripe API retrieval and account configuration list both returned `bpc_1UapiPCigpG2y4hQWObTWhEc` with `livemode`, `active` and `is_default` true. Invoice history and payment-method updates enabled. Subscription cancellation enabled at period end with no proration. Plan switching disabled. Default return URL `https://ifyoumind.com/app/account`. | Pass |
+| Owner access through ifYouMind | Founder signed in for the test. The live Pro Account page exposed **Manage billing**. Two attempts stayed at `https://ifyoumind.com/app/account` with “Billing management could not be opened.” | Fail |
+| Backend diagnosis | Scoped Cloud Logging for `createBillingPortalSession` recorded HTTP 500 at 04:53:05 and 04:53:13 UTC on November 12 (November 11 Pacific). Both corresponding application errors reported Stripe’s **No such customer** for the linked reference. An independent lookup did not establish the reference’s account or mode. Customer identifiers and session tokens are omitted. | Invalid or unresolvable customer link for the deployed Stripe connection |
+| Hosted portal and return | Stripe did not issue a usable session during either attempt. The authenticated return from Stripe and live control visibility could not be exercised. The candidate’s owner/admin enforcement and cancellation behavior remain verified by existing emulator and sandbox evidence. | Blocked |
 
-| Setting | Requested value |
-| --- | --- |
-| Invoice history | Enabled |
-| Payment-method updates | Enabled |
-| Subscription cancellation | Enabled at the end of the current billing period |
-| Cancellation proration | None |
-| Subscription plan switching | Disabled |
-| Default return URL | https://ifyoumind.com/app/account |
+The candidate and deployed callable use the server-side workspace customer and the same fixed return URL, with no explicit configuration ID. Stripe uses the account default when the ID is omitted. The candidate improves authorization, redirect validation and cancellation state. It does not repair a workspace’s Stripe customer link. The signed-in production check exercised PR #76’s deployed path. The two exact-head PR #82 workflows remain green. [Stripe session API](https://docs.stripe.com/api/customer_portal/sessions/create) · [Sandbox and candidate evidence](BILLING_PORTAL.md)
 
-After approval, read back each flag and verify that a linked owner reaches the correct Stripe-hosted portal, can see billing and cancellation controls, and can return to Account. A real subscription change is outside the test. Record the result before requesting separate approval of the exact release commit.
+## Remaining gate and exact authorization
+
+First verify a workspace’s current billing customer reference and the account/mode used by the deployed Firebase function, using redacted operational evidence. If another authorized workspace already has a verified matching live link and Manage billing access, use that workspace for the non-destructive smoke. If the intended owner workspace needs a link repair, or the deployed connection needs repair, obtain founder authorization for the exact verified change. Do not infer ownership from email or create a customer or subscription to satisfy this check.
+
+Repeat **Account → Manage billing → Stripe-hosted portal → Return to ifYouMind**. Verify the correct workspace, invoice and payment controls, cancellation control where a subscription is eligible, and the exact authenticated Account return. Do not change payment methods or subscriptions. Once the live smoke passes, request separate founder approval of the exact candidate and automatic master deployment.
 
 ## Deployment and rollback
 

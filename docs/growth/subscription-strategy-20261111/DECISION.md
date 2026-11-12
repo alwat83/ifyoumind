@@ -1,6 +1,6 @@
 # Founder pricing decision
 
-**November 11, 2026 · OpenAI / Codex · Proposed for review.**
+**November 11, 2026 · OpenAI / Codex · Founder approved the design for pilot preparation.** See the [implementation handoff and remaining approvals](PILOT_PREPARATION.md).
 
 ## Recommendation
 
@@ -18,7 +18,7 @@ Preserve all existing $79 purchases and existing $39 Pro terms. Keep the one-tim
 
 ## Current commercial baseline
 
-Fresh GitHub reads show master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e` and the last successful production deployment at PR #76. PR #82 remains an open draft at `6fcef3ab84c793c5b93f559c0d9c6d6d7aefaeba` with both exact workflows green. Read-only live Stripe returned the active $79 one-time and $39 monthly USD prices and zero Billing Portal configurations. The pending live default and linked-owner smoke remain separate release work. The sandbox success is evidence about the candidate, and live portal access is unverified. [Production deployment](https://github.com/alwat83/ifyoumind/actions/runs/42143112840) · [PR #82](https://github.com/alwat83/ifyoumind/pull/82) · [Founder release review](../../releases/integrated-20261110/FOUNDER_REVIEW.md)
+Fresh GitHub reads show master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e` and the last successful production deployment at PR #76. PR #82 remains an open draft at `6fcef3ab84c793c5b93f559c0d9c6d6d7aefaeba` with both exact workflows green. Earlier read-only live Stripe checks confirmed the active $79 one-time and $39 monthly USD prices. The live default is now configured and verified. The signed-in owner check failed because Stripe could not resolve the linked customer. PR #82 remains on production hold pending a successful owner session and return. [Production deployment](https://github.com/alwat83/ifyoumind/actions/runs/42143112840) · [PR #82](https://github.com/alwat83/ifyoumind/pull/82) · [Founder release review](../../releases/integrated-20261110/FOUNDER_REVIEW.md)
 
 | Status | Capability |
 | --- | --- |
@@ -46,10 +46,11 @@ Start with **independent U.S. small-business location advisers and consultants w
 7. **First segment?** Independent location advisers with recurring U.S. city comparisons.
 8. **Smallest safe experiment?** Observe five relevant first-time users, then run a limited approved $4.99 versus $3.99 Starter offer with fixed $9.99 Plus and identical benefits.
 9. **Prerequisites?** Resolve the independent release gate, measure costs, verify subscription and cancellation lifecycle in test mode, prove legacy retention and reconcile pilot payment and usage data.
-10. **Approve what now?** Approve the two-plan pilot design and one-price comparison for later authorization. Free $0, Starter $4.99/1, Plus $9.99/3, and $3.99/1 only as the experiment variant. No eight-report tier or production activation in this assignment.
+10. **Approve what now?** The founder approved preparation of Free $0, Starter $4.99/1, Plus $9.99/3, and $3.99/1 only as the experiment variant. Sandbox implementation, production activation, and enrollment have separate authorization gates.
 
 ## Evidence and implementation index
 
+- [Founder-approved pilot preparation and decision gates](PILOT_PREPARATION.md)
 - [Unit economics](ECONOMICS.md) and [growth scenario model](MODEL_OUTPUT.md)
 - [Value, free-to-paid conversion, and 30/60/90 retention](FUNNEL_RETENTION.md)
 - [Entitlement and migration specification](ENTITLEMENTS_MIGRATION.md)

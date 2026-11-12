@@ -8,6 +8,12 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 11, 2026 — pilot preparation approved and live billing test
+
+**Design approved for preparation.** Keep Free, $4.99 Starter with one full report, $9.99 Plus with three, and a $3.99 Starter experiment. The [implementation handoff](docs/growth/subscription-strategy-20261111/PILOT_PREPARATION.md) orders sandbox billing, atomic credit usage, legacy compatibility, verified report cost and rollout controls. Keep the $79 product and grandfather existing $39 Pro. Implementation authorization, any live activation and paid enrollment remain separate decisions.
+
+**PR #82 production hold.** Stripe readback passed for the new active live default. The signed-in Pro Account attempts failed because the deployed Stripe connection returned “No such customer” for the workspace’s link. A successful authenticated portal round trip and exact founder release approval are outstanding. [Current release evidence](docs/releases/integrated-20261110/FOUNDER_REVIEW.md#live-billing-readback-and-signed-in-test)
+
 ## November 11, 2026 — subscription-first strategy
 
 **Proposed for founder review.** The [pricing decision and implementation specifications](docs/growth/subscription-strategy-20261111/DECISION.md) recommend retaining free discovery and testing Starter at $4.99 for one full report per paid period versus $3.99, with $9.99 Plus for three reports fixed in both arms. Hold an eight-report tier pending repeat demand and measured delivery costs. Preserve purchased reports and grandfather the existing $39 Pro terms. The commercial path starts with repeat city-comparison work for independent location advisers, a short first-use study, and a capped paid pilot after cost and lifecycle verification and founder approval.

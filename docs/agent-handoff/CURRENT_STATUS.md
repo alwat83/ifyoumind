@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 11, 2026 — pilot preparation approved and live billing test
+
+**NO-GO for production.** [PR #82](https://github.com/alwat83/ifyoumind/pull/82) remains open, draft, unmerged and mergeable at `6fcef3ab84c793c5b93f559c0d9c6d7aefaeba`. Exact [build](https://github.com/alwat83/ifyoumind/actions/runs/42971126444) and [authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/42971126409) passed. Master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e` and last successful [production deploy](https://github.com/alwat83/ifyoumind/actions/runs/42143112840) remain PR #76. No merge or deployment. New live default passed readback. Two signed-in owner attempts failed at Account. Cloud Logging confirmed “No such customer” twice for the linked reference. The return path is blocked. Verify account/mode and a matching owner link, approve any needed repair separately, and repeat the round trip before requesting exact-head release authorization. [Live readback and smoke evidence](../releases/integrated-20261110/FOUNDER_REVIEW.md#live-billing-readback-and-signed-in-test)
+
+**Founder-approved pilot design.** Free stays, Starter $4.99/1, Plus $9.99/3 and Starter variant $3.99/1. The [preparation plan](../growth/subscription-strategy-20261111/PILOT_PREPARATION.md) specifies the sequence, credit and race controls, cost verification, legacy preservation and authorization gates. The $79 product and $39 Pro terms stay in service. Commercial cost and pilot outcomes remain unmeasured. Outbound remains Pending Founder Setup.
+
 ## November 11, 2026 — subscription-first pricing strategy
 
 **Proposed for founder review.** OpenAI / Codex prepared the [decision memo, reproducible model and phased implementation package](../growth/subscription-strategy-20261111/DECISION.md) on the separate `codex/subscription-strategy-20261111` documentation branch. Recommend Free, $4.99 Starter with one full report, and $9.99 Plus with three. Test $3.99 Starter with Plus fixed. Preserve the $79 path during the pilot, purchased report history and existing $39 Pro terms. Modeled full-usage Starter margin at $3.99 is 60.6% with the $0.50 delivery reserve. Actual report costs, qualified acquisition, conversion and retention remain unmeasured.

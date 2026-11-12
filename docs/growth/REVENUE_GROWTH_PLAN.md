@@ -65,6 +65,10 @@ Scope is ifYouMind production source, draft PR #82 and read-only live Stripe pri
 
 Ranked next opportunities: (1) clear the existing billing release gate and watch five qualified visitors reach an evidenced result, with low implementation cost and direct first-sale relevance, (2) verify real report/fee/support costs and run the smallest approved price comparison for repeat location advisers, with payback and repeat demand still unknown, (3) consider further paid tiers or repeat-use features only if actual repeated decisions and credit utilization show demand. Track qualified exposure, verified signup, independent settled payment, first durable report, second decision and renewal. Founder setup and exact outreach approval still govern external recruitment.
 
+### November 11, 2026 — pilot design approved for preparation
+
+The founder approved preparing the $4.99/1 and $9.99/3 pilot with a $3.99 Starter variant. [Preparation and cost verification](subscription-strategy-20261111/PILOT_PREPARATION.md). The newest scope is a live Stripe configuration readback and signed-in portal test, which failed with “No such customer” for the linked workspace. This was a QA action. It provides no customer acquisition, subscription, revenue or conversion evidence. Keep the previous scoreboard scope and prioritization. Resolve the live owner link and observe qualified first use before any authorized paid enrollment.
+
 ## Seven days after authorized deployment
 
 [Ready launch sequence](LAUNCH_PLAN.md) names daily actions, assets and gates. Five evidence-based personalized invitations, four transparent routing requests, demonstration flow and follow-up tracker are prepared in ignored private local storage. Original research PR remains separate; no buyer identities, channels or personalized messages imported into this release. Nothing sent.

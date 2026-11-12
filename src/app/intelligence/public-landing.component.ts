@@ -1,15 +1,29 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { HOME_EXAMPLES } from './home-discovery-examples';
 
 @Component({
   selector: 'app-public-landing',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink],
   templateUrl: './public-landing.component.html',
-  styleUrls: ['./public-landing.component.scss', './public-landing-visual-offers.component.scss', './public-landing-visual-mobile.component.scss'],
+  styleUrls: [
+    './public-landing.component.scss',
+    './public-landing-visual-offers.component.scss',
+    './public-landing-visual-mobile.component.scss',
+    './public-landing-discovery.component.scss',
+  ],
 })
 export class PublicLandingComponent {
-  selectedExample: 'electricity' | 'tax' = 'electricity';
-  get examplePath(): string { return `/discover/?example=${this.selectedExample}`; }
+  readonly examples = HOME_EXAMPLES;
+  example = this.examples[0];
+  discoveryAnnouncement = '';
+  plansExpanded = false;
+
+  chooseExample(example: typeof HOME_EXAMPLES[number], evidence: HTMLDetailsElement): void {
+    if (this.example === example) return;
+    evidence.open = false;
+    this.example = example;
+    this.discoveryAnnouncement = `${example.title}. ${example.takeaway}`;
+  }
 }

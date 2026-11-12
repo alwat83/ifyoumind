@@ -51,7 +51,9 @@ jobs:
           SUBSCRIPTION_STRIPE_ACCOUNT: ${{ vars.SUBSCRIPTION_STRIPE_ACCOUNT }}
           SUBSCRIPTION_STARTER_PRICE: ${{ vars.SUBSCRIPTION_STARTER_PRICE }}
           SUBSCRIPTION_PLUS_PRICE: ${{ vars.SUBSCRIPTION_PLUS_PRICE }}
-          SUBSCRIPTION_ENROLLMENT: ${{ secrets.SUBSCRIPTION_ENROLLMENT }}
+          # Dormant release safety: force enrollment empty even if inherited Actions secrets exist.
+          # A future reviewed release must explicitly authorize re-enabling this input.
+          SUBSCRIPTION_ENROLLMENT: ''
         run: |
           node <<'NODE'
           const { writeFileSync } = require('node:fs');

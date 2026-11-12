@@ -8,6 +8,12 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 11, 2026 — PR #82 founder release review
+
+**Verified candidate, production held.** OpenAI / Codex rechecked draft [PR #82](https://github.com/alwat83/ifyoumind/pull/82) at `6fcef3ab84c793c5b93f559c0d9c6d6d7aefaeba` and master `e5d8f15`. Both exact candidate workflows passed. Latest successful production deployment remains PR #76. Fresh production and candidate homepage captures at 1440px and 390px, prior sample and PDF evidence, and the live Stripe checklist are in the [founder release review](docs/releases/integrated-20261110/FOUNDER_REVIEW.md).
+
+**NO-GO for production** until the founder authorizes live default settings and an authorized linked workspace owner opens the correct portal. Read-only Stripe checks returned zero live configurations and matched the active $79 and $39 prices. Billing sandbox and CI evidence remains valid. No application or production change. This documentation branch preserves the candidate SHA. Next growth milestone is a short observed first-use round after the release decision. Customer outcomes remain unmeasured.
+
 ## November 10, 2026 — Billing Portal release gate
 
 **Committed for draft review. Conditional GO.** OpenAI / Codex continued [PR #82](https://github.com/alwat83/ifyoumind/pull/82) on `codex/integrated-release-20261110` from `a26e56ad8fa90ac25e31d6f7c1078f51bd01b9ad`. The update restricts portal access to active workspace owners and admins, validates Stripe session URLs, keeps billing available after downgrade and processes scheduled and terminal cancellation state. Genuine Stripe sandbox sessions and events verified period-end scheduling and app entitlement transitions. [Billing verification, evidence and live setup](docs/releases/integrated-20261110/BILLING_PORTAL.md)

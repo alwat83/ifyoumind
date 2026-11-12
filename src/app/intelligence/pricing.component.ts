@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IntelligenceOrganization, OrganizationService } from './organization.service';
-import { CommercialStatus, MonetizationService } from './monetization.service';
+import { CheckoutOffer, CommercialStatus, MonetizationService } from './monetization.service';
 import { ProductAnalyticsService } from './product-analytics.service';
 import { MarketIntelligenceService } from './market-intelligence.service';
 
@@ -29,6 +29,10 @@ export class PricingComponent implements OnInit {
   highlightedOffer='';
   reportReady=false;
   error='';
+  readonly subscriptionPlans = [
+    { offer: 'starter' as const, name: 'Starter', price: '4.99', allowance: '1 full Decision Report' },
+    { offer: 'plus' as const, name: 'Plus', price: '9.99', allowance: '3 full Decision Reports' },
+  ];
 
   async ngOnInit():Promise<void>{
     this.projectId=this.route.snapshot.queryParamMap.get('projectId')||'';
@@ -53,7 +57,9 @@ export class PricingComponent implements OnInit {
           const project=await this.market.get(this.workspace.organizationId,this.projectId);
           this.reportReady=project.decisionReportPurchased===true;
           this.message=this.reportReady
-            ? 'Your payment is complete. Your Decision Report is unlocked.'
+            ? project.decisionReportGenerationRequired
+              ? 'Your payment is complete. Open your decision to prepare the full report.'
+              : 'Your payment is complete. Your Decision Report is unlocked.'
             : 'Your checkout returned successfully. Report access is still being confirmed. Refresh this page shortly.';
         }else if(checkout==='success'&&this.highlightedOffer==='pro'){
           this.message=this.status.plan==='pro'
@@ -69,10 +75,10 @@ export class PricingComponent implements OnInit {
     return this.status?.pricing.proIncludedReportsPerMonth??5;
   }
 
-  async request(offer:'pro'|'report'):Promise<void>{
+  async request(offer:CheckoutOffer):Promise<void>{
     if(!this.workspace||this.requesting)return;
 
-    if(offer==='report'&&!this.projectId){
+    if(offer!=='pro'&&!this.projectId){
       this.error='Start or open a decision first, then purchase its Decision Report.';
       return;
     }
@@ -94,6 +100,7 @@ export class PricingComponent implements OnInit {
         return;
       }
 
+      if(offer==='starter'||offer==='plus') throw new Error('Subscription checkout is currently unavailable.');
       this.message=await this.monetization.requestAccess(
         this.workspace.organizationId,
         offer,

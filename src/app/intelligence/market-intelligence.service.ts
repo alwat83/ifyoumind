@@ -48,6 +48,7 @@ export interface MarketProject {
   mode:'demo'|'live';
   brief?:MarketBrief;
   decisionReportPurchased?:boolean;
+  decisionReportGenerationRequired?:boolean;
   decisionReportAccess?:'purchased'|'pro'|'none';
   sample?:boolean;
   /** Places compared only in the full Decision Report (free briefs show one comparison). */

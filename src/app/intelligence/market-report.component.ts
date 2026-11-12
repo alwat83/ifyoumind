@@ -33,6 +33,8 @@ export class MarketReportComponent implements OnInit, OnDestroy {
   loading=true;
   unlocking=false;
   unlockError='';
+  checkingSubscription=false;
+  checkoutReturned=false;
   error='';
   sampleFailure:{title:string;detail:string}|null=null;
   sampleCanRetry=false;
@@ -73,20 +75,51 @@ export class MarketReportComponent implements OnInit, OnDestroy {
 
   get reportPurchased():boolean{
     if(this.sampleMode)return true;
-    return this.project?.decisionReportPurchased===true||this.project?.decisionReportAccess==='pro';
+    return !this.project?.decisionReportGenerationRequired &&
+      (this.project?.decisionReportPurchased===true||this.project?.decisionReportAccess==='pro');
   }
 
   get canUnlockWithPro():boolean{
-    return !this.reportPurchased&&this.status?.plan==='pro'&&(this.status?.remainingIncludedReports??0)>0;
+    return !this.reportPurchased&&!this.canGeneratePaidReport&&this.status?.plan==='pro'&&(this.status?.remainingIncludedReports??0)>0;
   }
 
   /** Only for unpaid decisions: Pro members with allowance left see the existing unlock button instead. */
   get showPurchasePrompt():boolean{
-    return !this.sampleMode&&this.purchaseIntent&&!this.reportPurchased&&!this.canUnlockWithPro;
+    return !this.sampleMode&&this.purchaseIntent&&!this.reportPurchased&&!this.canUnlockWithPro&&!this.canGeneratePaidReport&&!this.status?.subscriptionOffers;
   }
 
   get proAllowanceUsedUp():boolean{
     return !this.reportPurchased&&this.status?.plan==='pro'&&(this.status?.remainingIncludedReports??0)<=0;
+  }
+
+  get canGeneratePaidReport():boolean{
+    if(this.sampleMode||!this.project||this.reportPurchased)return false;
+    return (this.project.decisionReportGenerationRequired === true &&
+      (this.project.decisionReportPurchased === true || this.project.decisionReportAccess === 'pro')) ||
+      (this.status?.subscription?.remaining??0)>0;
+  }
+
+  async refreshSubscription():Promise<void>{
+    if(!this.organizationId||this.checkingSubscription)return;
+    this.checkingSubscription=true;
+    this.unlockError='';
+    try{
+      this.status=await this.monetization.status(this.organizationId);
+    }catch(error){this.unlockError=this.message(error);}
+    finally{this.checkingSubscription=false;}
+  }
+
+  async generatePaidReport():Promise<void>{
+    if(!this.project||!this.organizationId||this.unlocking)return;
+    this.unlocking=true;
+    this.unlockError='';
+    try{
+      await this.monetization.generatePaidReport(this.organizationId,this.project.id);
+      [this.project,this.status]=await Promise.all([
+        this.market.get(this.organizationId,this.project.id),this.monetization.status(this.organizationId),
+      ]);
+    }catch(error){this.unlockError=this.message(error);}
+    finally{this.unlocking=false;}
   }
 
   async unlockWithPro():Promise<void>{
@@ -127,6 +160,7 @@ export class MarketReportComponent implements OnInit, OnDestroy {
       await this.loadSample();
       return;
     }
+    this.checkoutReturned=this.route.snapshot.queryParamMap.get('subscription')==='confirming';
     try{
       const workspace=await this.organizations.getMyWorkspace();
       if(!workspace) throw new Error('Workspace not found.');

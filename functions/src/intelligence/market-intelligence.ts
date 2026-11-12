@@ -4,9 +4,11 @@ import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
 import { decisionReportAccess, decisionView, freeBriefComparisonCount, freeDecisionLimitReached, freeDecisionPeriodStart, FREE_DECISIONS_PER_MONTH, REPORT_COMPARISON_LIMIT } from './report-entitlement-logic';
 import { buildMarketAnalysis, businessPhrase, marketAnalysisText } from './market-analysis';
+import { finishReport, reserveReport, reserveSubscriptionPreview } from './subscriptions';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const censusApiKey = defineSecret('CENSUS_API_KEY');
+const stripeSecretKey = defineSecret('STRIPE_SECRET_KEY');
 const readMembership = async (organizationId: string, uid: string) =>
   (await organizations().doc(organizationId).collection('members').doc(uid).get()).data();
 
@@ -237,7 +239,7 @@ function withPlainText<T extends Parameters<typeof marketAnalysisText>[0]>(secti
   return {...section,plainText:marketAnalysisText(section)};
 }
 
-export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],concept=''){
+export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],concept='',includeReport=true){
   const business=businessPhrase(concept);
   const retrievedAt=new Date().toISOString();
   const metrics=metricsFor(primary);
@@ -286,7 +288,7 @@ export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],con
       {provider:'U.S. Census Bureau',dataset:'2024 ACS 5-year estimates',retrievedAt,url:'https://api.census.gov/data/2024/acs/acs5'},
       {provider:'U.S. Census Bureau',dataset:'2019 ACS 5-year estimates',retrievedAt,url:'https://api.census.gov/data/2019/acs/acs5'},
     ],
-    decisionReport:{
+    ...(includeReport ? { decisionReport:{
       schemaVersion:2,
       marketAnalysis:withPlainText(buildMarketAnalysis({concept,primary,comparisons,retrievedAt})),
       posture,
@@ -321,7 +323,7 @@ export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],con
         'ACS estimates describe demographic context, not concept-level demand.',
         'Commercial rent, foot traffic, competition, and site-specific operating economics are not yet included.',
       ],
-    },
+    } } : {}),
   };
 }
 
@@ -337,22 +339,6 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
     const orgData = (await orgRef.get()).data() || {};
     const plan = orgData.plan === 'pro' ? 'pro' : 'free';
 
-    stage='usage';
-    // Enforced everywhere, including the emulator, so the limit is tested the way customers meet it.
-    if (plan === 'free') {
-      const start = Timestamp.fromDate(freeDecisionPeriodStart());
-      const usage = await orgRef.collection('marketProjects')
-        .where('createdAt', '>=', start)
-        .count()
-        .get();
-      if (freeDecisionLimitReached(plan, usage.data().count)) {
-        throw new HttpsError(
-          'resource-exhausted',
-          `You have used your ${FREE_DECISIONS_PER_MONTH} free decisions this month. They reset on the 1st (UTC). You can still buy the full Decision Report for any decision you have already created.`,
-        );
-      }
-    }
-
     stage='input';
     const location = canonicalLocation(text(request.data?.location, 'Location', 160));
     const concept = text(request.data?.concept, 'Business concept', 160);
@@ -364,23 +350,38 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
       .filter(Boolean)
       .slice(0, REPORT_COMPARISON_LIMIT);
 
+    stage='usage';
+    let deferred = false;
+    if (plan === 'free') {
+      const monthStart = freeDecisionPeriodStart();
+      const usage = await orgRef.collection('marketProjects')
+        .where('createdAt', '>=', Timestamp.fromDate(monthStart)).count().get();
+      const count = usage.data().count;
+      deferred = await reserveSubscriptionPreview(orgRef, count, monthStart.toISOString());
+      if (!deferred && freeDecisionLimitReached(plan, count)) {
+        throw new HttpsError(
+          'resource-exhausted',
+          `You have used your ${FREE_DECISIONS_PER_MONTH} free decisions this month. They reset on the 1st (UTC). You can still buy the full Decision Report for any decision you have already created.`,
+        );
+      }
+    }
+
     stage='market-data';
-    const [primary,...comparisonPlaces]=await Promise.all(
-      [location,...comparisonLocations].map(value=>fetchCensusPlace(value)),
-    );
+    const places = deferred ? comparisonLocations.slice(0,1) : comparisonLocations;
+    const [primary,...comparisonPlaces]=await Promise.all([location,...places].map(fetchCensusPlace));
 
     stage='analysis';
-    const brief=buildLiveBrief(primary,comparisonPlaces,concept);
-    // Free briefs show one comparison; the other places are kept for the full Decision Report.
-    const freeComparisonCount=freeBriefComparisonCount(plan,comparisonPlaces.length);
-    const freeBrief=freeComparisonCount===null
+    const brief = buildLiveBrief(primary,comparisonPlaces,concept,!deferred);
+    const freeComparisonCount = deferred ? places.length : freeBriefComparisonCount(plan,comparisonPlaces.length);
+    const freeBrief = deferred ? brief : freeComparisonCount===null
       ? null
-      : briefForEntitlement(buildLiveBrief(primary,comparisonPlaces.slice(0,freeComparisonCount),concept),false);
+      : buildLiveBrief(primary,comparisonPlaces.slice(0,freeComparisonCount),concept,false);
 
     stage='save';
     const ref = orgRef.collection('marketProjects').doc();
     await ref.set({
       schemaVersion:2,
+      ...(deferred ? { decisionReportGenerationRequired: true } : {}),
       location,
       concept,
       decision,
@@ -417,6 +418,35 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
       `Decision analysis failed during ${stage}. Please try again.`,
     );
   }
+});
+
+export const generatePaidDecisionReport = onCall({ secrets: [censusApiKey, stripeSecretKey], timeoutSeconds: 80 }, async request => {
+  const scope = await authorizeOrganization(request.auth?.uid, request.data?.organizationId, readMembership, ['owner','admin']);
+  const projectId = request.data?.projectId;
+  if (typeof projectId !== 'string' || !/^[A-Za-z0-9_-]{1,128}$/.test(projectId)) {
+    throw new HttpsError('invalid-argument','Invalid decision.');
+  }
+  const org = organizations().doc(scope.organizationId);
+  const job = await reserveReport(org, projectId);
+  if (!job) return { ready: true };
+  let brief;
+  try {
+    if (job.target.decisionReportGenerationRequired) {
+      const { location, comparisonLocations, concept } = job.target;
+      const comparisons = Array.isArray(comparisonLocations) ? comparisonLocations.slice(0, REPORT_COMPARISON_LIMIT) : [];
+      const [primary, ...places] = await Promise.all([location,...comparisons].map(fetchCensusPlace));
+      brief = buildLiveBrief(primary, places, concept);
+    } else {
+      brief = job.target.brief;
+    }
+  } catch {
+    await finishReport(org, scope.uid, job.reservation);
+    throw new HttpsError('unavailable','The report could not be generated. Please try again.');
+  }
+  if (!await finishReport(org, scope.uid, job.reservation, brief)) {
+    throw new HttpsError('failed-precondition','The report was not unlocked. Check your account and try again.');
+  }
+  return { ready: true };
 });
 
 export const getRecentMarketIntelligenceProjects = onCall(async (request) => {
@@ -457,7 +487,8 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
   const data = snapshot.data()!;
   const reportAccess=decisionReportAccess(data);
   const decisionReportPurchased=reportAccess==='purchased';
-  const view=decisionView(data,reportAccess);
+  const needsGeneration = data.decisionReportGenerationRequired === true;
+  const view=decisionView(data,needsGeneration?'none':reportAccess);
   return {
     id:snapshot.id,
     location:(()=>{try{return canonicalLocation(data.location);}catch{return data.location;}})(),
@@ -469,6 +500,7 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
     brief:briefForEntitlement(view.brief,reportAccess!=='none'),
     decisionReportPurchased,
     decisionReportAccess:reportAccess,
+    decisionReportGenerationRequired:needsGeneration,
     dataNotice:data.mode === 'live'
       ? 'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.'
       : 'Synthetic demo enrichment — not real market data.',

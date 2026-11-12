@@ -5,6 +5,7 @@ export type ReportAccess='purchased'|'pro'|'none';
 export function decisionReportAccess(project:Record<string,unknown>|undefined|null):ReportAccess{
   if(project?.decisionReportPurchased===true)return 'purchased';
   if(project?.decisionReportIncludedWithPro===true)return 'pro';
+  if(project?.decisionReportIncludedWithSubscription===true)return 'pro';
   return 'none';
 }
 

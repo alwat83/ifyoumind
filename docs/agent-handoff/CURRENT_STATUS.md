@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 12, 2026 — Wow 3.0 design review
+
+**Committed for draft review.** The founder rejected the visual direction in [PR #90](https://github.com/alwat83/ifyoumind/pull/90). Wow 3.0 is on `codex/wow-3-editorial-homepage` from master `449f829f733553c4c8afbf6c0748d82566b0048e`. [Full desktop and mobile comparison](../design/wow-3-20261112/REVIEW.md). The three-section homepage pairs a photographic hero, an interactive evidence demo and a short Decision Reports section. PR #90 remains the comparison baseline at `6a1f33d35e3547d218e22351ee89e81aaedfdf36`. PR #88 remains the verified production baseline. Founder visual review and a separate release decision are pending.
+
 ## November 12, 2026 — Starter and Plus launch candidate
 
 **Committed for draft review.** [Issue #85](https://github.com/alwat83/ifyoumind/issues/85) and [draft PR #87](https://github.com/alwat83/ifyoumind/pull/87) implement Free → sourced result → Starter $4.99/1 or Plus $9.99/3 → paid invoice → reserved report → saved decision. The feature starts from production master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`. Enrollment is disabled by default and capped at ten workspaces. Existing $79 and $39 paths and previously unlocked reports remain. The $3.99 experiment is deferred. [Evidence, measured workload, and staged approvals](../growth/SUBSCRIPTION_LAUNCH.md)

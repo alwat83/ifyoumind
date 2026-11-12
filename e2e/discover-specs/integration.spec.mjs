@@ -21,5 +21,5 @@ test('public navigation and Business registration presentation remain reachable'
  for(const path of ['/register','/login','/sample-report','/guides/'])expect((await request.get(path)).status()).toBe(200);
  await page.goto('/register');await expect(page.getByRole('heading',{name:'Build your market analysis.'})).toBeVisible();await expect(page.getByRole('textbox',{name:'Email',exact:true})).toBeVisible();
  await page.goto('/privacy-policy');await expect(page.getByRole('heading',{name:'Browser-local bill discovery'})).toBeVisible();await expect(page.locator('body')).toContainText('separately from registered Business');
- await page.goto('/');await expect(page.locator('body')).toContainText('$79');await expect(page.locator('body')).toContainText('$39');
+ await page.goto('/');await expect(page.getByRole('link',{name:'Pricing (sign-in required)',exact:true})).toHaveAttribute('href','/app/pricing');
 });

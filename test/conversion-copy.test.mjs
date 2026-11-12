@@ -62,26 +62,17 @@ test('metric cards hide the unit line when the value already shows it',()=>{
   assert.ok(reportTs.includes("return unit!=='USD'&&unit!=='%';"));
 });
 
-test('the $79 report comes before Pro on both pricing surfaces',()=>{
-  const landingPricing=landingHtml.slice(landingHtml.indexOf('id="pricing"'));
-  const order=(html,labels)=>labels.map(label=>html.indexOf(label));
-  const [lFree,lReport,lPro]=order(landingPricing,['<strong>Business brief</strong>','<strong>Decision Report</strong>','<strong>Business Pro</strong>']);
-  assert.ok(lFree>=0&&lFree<lReport&&lReport<lPro,'homepage: Free, One report, Pro');
-  const [pFree,pReport,pPro]=order(pricingHtml,['<span class="label">Free</span>','<span class="label">One report</span>','<span class="label">Pro</span>']);
-  assert.ok(pFree>=0&&pFree<pReport&&pReport<pPro,'pricing page: Free, One report, Pro');
-  assert.match(landingPricing,/\[queryParams\]="\{intent:'report'\}" class="offer"/,'report retains paid intent');
-  assert.match(pricingHtml,/<article class="featured"[^>]*>\s*<div class="topline"><span class="label">One report<\/span>/,'pricing page emphasises the $79 card');
-  assert.ok(landingPricing.includes('Five full reports each month'));
-  assert.ok(landingPricing.includes('sources, limits, an action plan and print/PDF'));
+test('account pricing keeps free, one report and Pro in order',()=>{
+  const [free, report, pro]=['Free','One report','Pro'].map(label=>pricingHtml.indexOf(`<span class="label">${label}</span>`));
+  assert.ok(free>=0&&free<report&&report<pro);
+  assert.match(pricingHtml,/<article class="featured"[^>]*>\s*<div class="topline"><span class="label">One report<\/span>/);
   assert.ok(pricingHtml.includes('For advisers and anyone planning several locations a month.'));
   assert.ok(pricingHtml.includes('Recommended for one business plan'));
+  assert.ok(pricingHtml.includes('{{ proReportAllowance }} full Decision Reports included each month'));
+  assert.match(landingHtml,/routerLink="\/app\/pricing">Pricing \(sign-in required\)/);
 });
 
-test('price amounts are unchanged',()=>{
-  const landingPricing=landingHtml.slice(landingHtml.indexOf('id="pricing"'),landingHtml.indexOf('<footer'));
-  assert.ok(landingPricing.includes('Free to start'));
-  assert.ok(landingPricing.includes('<b>$79<small> one time</small></b>'));
-  assert.ok(landingPricing.includes('<b>$39<small> / month</small></b>'));
+test('account pricing keeps free and uses the server prices',()=>{
   assert.ok(pricingHtml.includes('<h2>$0</h2>'));
   assert.ok(pricingHtml.includes('<h2>${{ status.pricing.reportOneTimeUsd }}</h2>'));
   assert.ok(pricingHtml.includes('<h2>${{ status.pricing.proMonthlyUsd }}<small>/month</small></h2>'));
@@ -102,7 +93,9 @@ test('consumer homepage preserves the Business entry point and plan-ready offer'
   assert.match(landingHtml,/id="business"/);
   assert.match(landingHtml,/routerLink="\/sample-report"/);
   assert.match(read('src/app/intelligence/home-discovery-examples.ts'),/action: 'View the Full Sample Report'/);
-  assert.match(landingHtml,/sources, limits, an action plan/);
+  assert.match(landingHtml,/Census data, source links, and practical next steps/);
+  assert.match(pricingHtml,/evidence boundaries and source list/);
+  assert.match(pricingHtml,/An action plan: what to do before you commit/);
   assert.ok(landingHtml.indexOf('id="try"')<landingHtml.indexOf('id="business"'),'consumer discovery leads; Business remains available');
 });
 

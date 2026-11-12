@@ -8,6 +8,10 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 12, 2026 — Wow 3.0
+
+Founder rejected the Wow 2.2 visual direction. The new design candidate uses an editorial hero, an interactive demo with source-backed chart values, and a concise Decision Reports path. Detailed pricing, guides and file disclosures remain at their existing destinations. [Full homepage comparison and review](docs/design/wow-3-20261112/REVIEW.md). PR #90 is retained at its exact comparison head.
+
 ## November 12, 2026 — Starter and Plus launch candidate
 
 **Committed for draft review.** [Issue #85](https://github.com/alwat83/ifyoumind/issues/85) and [draft PR #87](https://github.com/alwat83/ifyoumind/pull/87) implement Free → sourced result → Starter $4.99/1 or Plus $9.99/3 → paid invoice → reserved report → saved decision. The feature starts from production master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`. Enrollment is disabled by default and capped at ten workspaces. Existing $79 and $39 paths and previously unlocked reports remain. The $3.99 experiment is deferred. [Evidence, measured workload, and staged approvals](docs/growth/SUBSCRIPTION_LAUNCH.md)

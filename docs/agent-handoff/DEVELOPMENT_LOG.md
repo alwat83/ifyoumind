@@ -505,3 +505,10 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 **F — Next three.** (1) Review exact-head CI, sandbox evidence and the applicable live portal gate. (2) Review the measured cost envelope and obtain approval for the two live Prices, webhook and dormant deployment. (3) After verified deploy and separately approved enrollment, guide one independent qualified customer through purchase, report delivery and portal return before widening.
 
 **G — Business impact.** Lowers entry cost for an eligible location decision and shows evidence before purchase. Define the first independently verified sale as a settled live invoice and delivered report from a real customer, excluding test, founder, duplicates and refunds. This work measured no commercial outcomes. Pending Founder Setup remains.
+
+## 2026-11-12 — Wow 3.0 fundamental public homepage redesign
+
+- OpenAI / Codex. Founder rejected the Wow 2.2 visual direction and authorized a separate design draft. Branch `codex/wow-3-editorial-homepage` starts from master `449f829f733553c4c8afbf6c0748d82566b0048e`. PR #90 remains the comparison at `6a1f33d35e3547d218e22351ee89e81aaedfdf36`.
+- Rebuilt the Angular public landing composition and scoped styles around three sections. Added two responsive generated WebP sizes and local OFL display fonts. Chart presentation reuses the same fixture values and Census sample. Detailed account pricing and local-file disclosures remain on their existing pages. No commerce, auth, entitlement, generation or infrastructure edits.
+- [Full mobile and desktop captures, tested scope and approval boundary](../design/wow-3-20261112/REVIEW.md). Exact-head workflow totals are attached to the draft. Updated the current snapshot, master project record, growth plan and Notion hub.
+- PR #88 remains the production baseline. Next compare the designs, observe first use with permitted participants and obtain explicit exact-head release approval if the founder accepts Wow 3.0. Conversion and revenue remain unknown.

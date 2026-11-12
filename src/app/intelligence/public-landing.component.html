@@ -1,270 +1,180 @@
 <div class="landing">
   <a class="skip-link" href="#try">Skip to content</a>
-  <header class="site-header">
-    <div class="shell header-inner">
-      <a routerLink="/" class="wordmark" aria-label="ifYouMind home">ifyoumind</a>
-      <nav class="desktop-nav" aria-label="Main navigation">
-        <a href="#explore">Explore</a>
-        <a href="#business">Reports</a>
-        <a href="#pricing">Pricing</a>
-        <a href="mailto:support&#64;ifyoumind.com?subject=Organization%20inquiry">For Organizations</a>
+  <header class="site-header shell">
+    <a routerLink="/" class="wordmark" aria-label="ifYouMind home">ifyoumind</a>
+    <nav class="desktop-nav" aria-label="Main navigation">
+      <a href="#business">Examples</a>
+      <a href="#reports">Decision Reports</a>
+      <a routerLink="/login">Sign In</a>
+    </nav>
+    <!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus -- The native summary receives focus and Escape bubbles from the menu links. -->
+    <details #mobileNavigation class="mobile-navigation" (keydown.escape)="mobileNavigation.open = false; mobileSummary.focus()">
+      <summary #mobileSummary>Menu <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#menu"/></svg></summary>
+      <nav aria-label="Mobile navigation">
+        <a href="#business" (click)="mobileNavigation.open = false">Examples</a>
+        <a href="#reports" (click)="mobileNavigation.open = false">Decision Reports</a>
+        <a routerLink="/login">Sign In</a>
+        <a routerLink="/register">Get Started</a>
       </nav>
-      <div class="header-actions">
-        <a routerLink="/login" class="button button-outline desktop-signin">Sign In</a>
-        <a routerLink="/register" class="button button-primary">Get Started</a>
-        <!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus -- The native summary receives focus and Escape bubbles from the menu links. -->
-        <details #mobileNavigation class="mobile-navigation" (keydown.escape)="mobileNavigation.open = false; mobileSummary.focus()">
-          <summary #mobileSummary class="button button-outline">Menu <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#menu"/></svg></summary>
-          <nav aria-label="Mobile navigation">
-            <a href="#explore" (click)="mobileNavigation.open = false">Explore</a>
-            <a href="#business" (click)="mobileNavigation.open = false">Reports</a>
-            <a href="#pricing" (click)="mobileNavigation.open = false">Pricing</a>
-            <a href="mailto:support&#64;ifyoumind.com?subject=Organization%20inquiry" (click)="mobileNavigation.open = false">For Organizations</a>
-            <a routerLink="/login">Sign In</a>
-          </nav>
-        </details>
-      </div>
-    </div>
+    </details>
   </header>
 
   <main>
-    <section id="try" class="hero" aria-labelledby="hero-title">
-      <div class="hero-art" aria-hidden="true">
-        <img src="/images/home/city-sunrise.webp"
-          srcset="/images/home/city-sunrise-small.webp 720w, /images/home/city-sunrise.webp 1440w"
-          sizes="100vw" width="1440" height="606" alt="" fetchpriority="high">
+    <section id="try" class="shell hero" aria-labelledby="hero-title" tabindex="-1">
+      <div class="hero-copy">
+        <h1 id="hero-title">See the story.&ngsp;<em>Check the evidence.</em></h1>
+        <p>See what changed in a bill or how places compare.</p>
+        <a href="#business" class="button primary">Try a Free Example <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
       </div>
-      <div class="shell hero-inner">
-        <p class="eyebrow">Data points to conclusions</p>
-        <h1 id="hero-title">See the story.<br>Check the evidence.</h1>
-        <p class="hero-lede">Turn trusted data into clear comparisons, practical insights, and a next step you can use.</p>
-        <div class="hero-actions">
-          <a href="/discover/?example=electricity" class="button button-primary primary">Try a Free Example <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
-          <a routerLink="/app/decide" class="button button-outline">Create a Report</a>
-        </div>
-        <ul class="trust-list" aria-label="What to expect">
-          <li><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#chart"/></svg>Trusted data sources</li>
-          <li><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#bolt"/></svg>Clear, visual insights</li>
-          <li><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#layers"/></svg>Actionable next steps</li>
-        </ul>
+      <div class="hero-art">
+        <img src="/images/home/neighborhood-at-dusk.webp"
+          srcset="/images/home/neighborhood-at-dusk-small.webp 480w, /images/home/neighborhood-at-dusk.webp 960w"
+          sizes="(max-width: 740px) calc(100vw - 36px), 52vw" width="960" height="1440" alt="" fetchpriority="high">
       </div>
     </section>
 
-    <section id="business" class="shell featured" aria-labelledby="featured-title">
-      <div class="discovery-picker">
-        <div>
-          <p class="eyebrow">Discover something interesting</p>
-          <h2 id="featured-title">The answers are already in the data.</h2>
-          <p class="picker-lede">Explore a question. See what the evidence reveals.</p>
-        </div>
-        <div class="question-options" role="group" aria-label="Choose an example">
-          @for (option of examples; track option.id) {
-            <button type="button" class="question-option" [attr.aria-pressed]="example.id === option.id"
-              aria-controls="discovery-result" (click)="chooseExample(option, evidence)">
-              <svg class="icon" aria-hidden="true"><use [attr.href]="'/images/home/icons.svg#' + option.icon"/></svg>
-              <span><strong>{{ option.title }}</strong><small>{{ option.description }}</small></span>
-            </button>
-          }
-        </div>
-      </div>
-
-      <p class="sr-only" role="status">{{ discoveryAnnouncement }}</p>
-      <section id="discovery-result" class="discovery-result" aria-labelledby="discovery-question">
-        <div class="featured-intro">
-          <p class="example-label">{{ example.label }}</p>
-          <h3 id="discovery-question">{{ example.question }}</h3>
-          <p>{{ example.context }}</p>
-        </div>
-        <aside class="takeaway" aria-labelledby="takeaway-title">
-          <h3 id="takeaway-title"><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#target"/></svg>Key Takeaway</h3>
-          <p>{{ example.takeaway }}</p>
-          <dl class="discovery-highlights">
-            @for (highlight of example.highlights; track highlight.label) {
-              <div>
-                <dt>{{ highlight.label }}</dt>
-                <dd>
-                  {{ highlight.value }}
-                  @if (highlight.width !== undefined) {
-                    <span class="evidence-bar" aria-hidden="true"><i [style.width.%]="highlight.width"></i></span>
-                  }
-                </dd>
-              </div>
+    <section id="business" class="featured" aria-labelledby="examples-title" tabindex="-1">
+      <div class="shell experience">
+        <h2 id="examples-title">Try an example</h2>
+        <div class="demo">
+          <div class="question-options" role="group" aria-label="Choose an example">
+            @for (option of examples; track option.id) {
+              <button type="button" class="question-option" [attr.aria-pressed]="example.id === option.id"
+                aria-controls="discovery-result" (click)="chooseExample(option, evidence)">
+                {{ option.title }}
+              </button>
             }
-          </dl>
-          <p class="takeaway-note">{{ example.limit }}</p>
-        </aside>
-        <div class="comparison">
-          <table aria-describedby="data-sources">
-            <caption class="sr-only">{{ example.id === 'cities' ? 'City estimates from the public Business sample' : example.title + ' comparison' }}</caption>
-            <thead>
-              <tr>
-                <th scope="col"><span class="sr-only">Measure</span></th>
-                @for (column of example.columns; track column; let first = $first) {
-                  <th scope="col"><span class="city-key" [class.austin]="first" [class.charlotte]="!first" aria-hidden="true"></span>{{ column }}</th>
+          </div>
+          <p class="sr-only" role="status">{{ discoveryAnnouncement }}</p>
+
+          <div id="discovery-result" class="discovery-result">
+            <div class="finding">
+              <p class="example-label">{{ example.label }}</p>
+              <h3 id="discovery-question">{{ example.question }}</h3>
+              <p class="conclusion"><strong>{{ example.finding.value }}</strong>&ngsp;<span>{{ example.finding.text }}</span></p>
+            </div>
+            <figure class="plot" aria-labelledby="plot-title">
+              <figcaption id="plot-title">{{ example.chart.title }}</figcaption>
+              <dl class="bars">
+                @for (measure of example.chart.measures; track measure.label) {
+                  <div class="bar" [style.--bar-height]="measure.width + '%'">
+                    <dt>{{ measure.label }}</dt>
+                    <dd>
+                      <span class="bar-value">{{ measure.value }}</span>
+                      <span class="bar-fill" aria-hidden="true"></span>
+                    </dd>
+                  </div>
                 }
-              </tr>
-            </thead>
-            <tbody>
-              @for (row of example.rows; track row.label) {
-                <tr>
-                  <th scope="row">{{ row.label }}</th>
-                  @for (value of row.values; track $index) {
-                    <td [class.is-highlight]="row.highlight === $index">{{ value }}</td>
-                  }
-                </tr>
-              }
-            </tbody>
-          </table>
-          <p id="data-sources" class="source-note">
-            @if (example.id === 'cities') {
-              <a href="https://www.census.gov/data/developers/data-sets/acs-5year.html">U.S. Census ACS</a> city-level estimates, 2020–2024. Population change compares 2015–2019 with 2020–2024. Differences may fall within survey margins of error.
-            } @else {
-              Values come from the public example CSV.
-            }
-          </p>
-        </div>
-      </section>
+              </dl>
+            </figure>
+          </div>
 
-      <div class="discovery-next">
-        <details #evidence class="home-evidence">
-          <summary>Show the evidence <span aria-hidden="true"></span></summary>
-          <div class="evidence-content">
-            @if (example.id === 'cities') {
-              <h3>How these figures compare</h3>
-              <p>This preview uses the October 11, 2026 snapshot of the public sample. Population and median household income use 2020–2024 ACS five-year estimates. Income is in 2024 inflation-adjusted dollars.</p>
-              <ul>
-                <li>Median household income: $93,658 − $82,068 = $11,590.</li>
-                <li>Population change: 5.4% − 3.0% = 2.4 percentage points.</li>
-              </ul>
-              <p>Population change compares two ACS five-year estimates, 2015–2019 and 2020–2024. The displayed differences have not been tested for statistical significance.</p>
-              <div class="evidence-links">
-                <a href="https://api.census.gov/data/2024/acs/acs5/groups/B01003.html">Population table (B01003)</a>
-                <a href="https://api.census.gov/data/2024/acs/acs5/groups/B19013.html">Income table (B19013)</a>
-              </div>
-            } @else {
-              <h3>Calculations and source cells</h3>
-              <p>Cell references and raw values are from the made-up CSV used by the full example.</p>
-              <div class="evidence-groups">
-                @for (group of example.proof; track group.label) {
-                  <div>
-                    <h4>{{ group.label }}</h4>
-                    <ul>
-                      @for (step of group.steps; track step) { <li>{{ step }}</li> }
-                    </ul>
-                    <table>
-                      <caption class="sr-only">{{ group.label }} source cells</caption>
-                      <thead><tr><th scope="col">Cell</th><th scope="col">Field</th><th scope="col">Raw value</th></tr></thead>
-                      <tbody>
-                        @for (cell of group.cells; track cell.cell) {
-                          <tr><th scope="row">{{ cell.cell }}</th><td>{{ cell.label }}</td><td>{{ cell.raw }}</td></tr>
+          <div class="discovery-next">
+            <details #evidence class="home-evidence">
+              <summary>Show the evidence <span aria-hidden="true"></span></summary>
+              <div class="evidence-content">
+                <p class="evidence-context">{{ example.context }}</p>
+                <div class="comparison">
+                  <table aria-describedby="data-sources">
+                    <caption class="sr-only">{{ example.id === 'cities' ? 'City estimates from the public Business sample' : example.title + ' comparison' }}</caption>
+                    <thead>
+                      <tr>
+                        <th scope="col"><span class="sr-only">Measure</span></th>
+                        @for (column of example.columns; track column) {
+                          <th scope="col">{{ column }}</th>
                         }
-                      </tbody>
-                    </table>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for (row of example.rows; track row.label) {
+                        <tr>
+                          <th scope="row">{{ row.label }}</th>
+                          @for (value of row.values; track $index) {
+                            <td>{{ value }}</td>
+                          }
+                        </tr>
+                      }
+                    </tbody>
+                  </table>
+                  <p id="data-sources" class="source-note">
+                    @if (example.id === 'cities') {
+                      <a href="https://www.census.gov/data/developers/data-sets/acs-5year.html">U.S. Census ACS</a> city-level estimates, 2020–2024. Population change compares 2015–2019 with 2020–2024. Differences have not been tested for statistical significance and may fall within survey margins of error.
+                    } @else {
+                      Raw values and source cells come from the made-up example CSV.
+                    }
+                  </p>
+                </div>
+                <p class="evidence-limit">{{ example.limit }}</p>
+                @if (example.id === 'cities') {
+                  <h3>How these figures compare</h3>
+                  <p>Figures from the public sample report use its October 11, 2026 snapshot. Population and median household income use 2020–2024 ACS five-year estimates. Income is in 2024 inflation-adjusted dollars.</p>
+                  <ul>
+                    <li>Median household income: $93,658 − $82,068 = $11,590.</li>
+                    <li>Population change: 5.4% − 3.0% = 2.4 percentage points.</li>
+                  </ul>
+                  <div class="evidence-links">
+                    <a href="https://api.census.gov/data/2024/acs/acs5/groups/B01003.html">Population table (B01003)</a>
+                    <a href="https://api.census.gov/data/2024/acs/acs5/groups/B19013.html">Income table (B19013)</a>
+                  </div>
+                } @else {
+                  <h3>Calculations and source cells</h3>
+                  <div class="evidence-groups">
+                    @for (group of example.proof; track group.label) {
+                      <div>
+                        <h4>{{ group.label }}</h4>
+                        <ul>
+                          @for (step of group.steps; track step) { <li>{{ step }}</li> }
+                        </ul>
+                        <table>
+                          <caption class="sr-only">{{ group.label }} source cells</caption>
+                          <thead><tr><th scope="col">Cell</th><th scope="col">Field</th><th scope="col">Raw value</th></tr></thead>
+                          <tbody>
+                            @for (cell of group.cells; track cell.cell) {
+                              <tr><th scope="row">{{ cell.cell }}</th><td>{{ cell.label }}</td><td>{{ cell.raw }}</td></tr>
+                            }
+                          </tbody>
+                        </table>
+                      </div>
+                    }
                   </div>
                 }
               </div>
+            </details>
+            @if (example.id === 'cities') {
+              <a routerLink="/sample-report" class="text-link example-link">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
+            } @else {
+              <a [href]="'/discover/?example=' + example.id" class="text-link example-link">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
             }
           </div>
-        </details>
-        @if (example.id === 'cities') {
-          <a routerLink="/sample-report" class="button button-tinted">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
-        } @else {
-          <a [href]="'/discover/?example=' + example.id" class="button button-tinted">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
-        }
+        </div>
       </div>
     </section>
 
-    <section id="how-it-works" class="shell process" aria-labelledby="process-title">
-      <h2 id="process-title">How ifYouMind Works</h2>
-      <p>A simple process from question to conclusion.</p>
-      <ol>
-        <li><span class="step-icon"><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#search"/></svg></span><h3>1. Ask a Question</h3><p>Choose a business location or compare the U.S. cities you’re considering.</p></li>
-        <li><span class="step-icon"><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#layers"/></svg></span><h3>2. Analyze the Data</h3><p>See how your options compare using U.S. Census estimates, with sources attached.</p></li>
-        <li><span class="step-icon"><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#chart"/></svg></span><h3>3. Get a Clear Report</h3><p>Read the trade-offs, see the limits, and get a practical list of what to check next.</p></li>
-      </ol>
-    </section>
-
-    <section id="explore" class="shell explore" aria-labelledby="explore-title">
-      <div class="section-heading">
-        <h2 id="explore-title">Explore What You Can Do</h2>
-        <a href="/guides/" class="text-link">View More Examples <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
-      </div>
-      <div class="explore-grid">
-        <a href="/guides/choose-business-location-evidence/" class="use-case">
-          <div class="use-case-copy"><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#store"/></svg><div><h3>Start a Business</h3><p>Build a shortlist of locations and see what to verify before a lease.</p></div></div>
-          <img src="/images/home/coffee-shop.webp" width="500" height="190" alt="" loading="lazy" decoding="async">
-        </a>
-        <a href="/guides/market-analysis-business-plan/" class="use-case">
-          <div class="use-case-copy"><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#people"/></svg><div><h3>Evaluate a Market</h3><p>Use population, income, and change estimates in a business plan.</p></div></div>
-          <img src="/images/home/market-skyline.webp" width="500" height="190" alt="" loading="lazy" decoding="async">
-        </a>
-        <a href="/guides/compare-job-offers-relocation/" class="use-case">
-          <div class="use-case-copy"><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#home"/></svg><div><h3>Compare Places to Live</h3><p>Work through housing and commute trade-offs when an offer means moving.</p></div></div>
-          <img src="/images/home/neighborhood.webp" width="500" height="190" alt="" loading="lazy" decoding="async">
-        </a>
-        <a href="/discover/" class="use-case">
-          <div class="use-case-copy"><svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#trend"/></svg><div><h3>Understand Your Bills</h3><p>See what changed in two electricity or property tax bills.</p></div></div>
-          <img src="/images/home/city-at-dusk.webp" width="500" height="190" alt="" loading="lazy" decoding="async">
-        </a>
-      </div>
-      <p class="explore-note">Bill discovery is free. Bill files stay in your browser tab. No uploads or saved copies. Two supported USD CSV formats. No PDFs or scans.</p>
-    </section>
-
-    <section id="pricing" class="shell pricing" aria-labelledby="pricing-title">
-      <div class="pricing-copy">
-        <h2 id="pricing-title">Reports for every goal.</h2>
-        <p>A single report when you need it, or a Pro plan for ongoing analysis.</p>
-        <a routerLink="/register" class="free-offer"><strong>Business brief</strong> <span>· Free to start</span></a>
-      </div>
-      <a routerLink="/register" [queryParams]="{intent:'report'}" class="offer">
-        <b>$79<small> one time</small></b>
-        <strong>Decision Report</strong>
-        <span>One detailed report</span>
-      </a>
-      <a routerLink="/register" class="offer">
-        <b>$39<small> / month</small></b>
-        <strong>Business Pro</strong>
-        <span>Five full reports each month</span>
-      </a>
-      <div class="pricing-action">
-        <button type="button" class="button button-light" aria-controls="plan-details"
-          [attr.aria-expanded]="plansExpanded" (click)="plansExpanded = !plansExpanded">
-          Compare Plans <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg>
-        </button>
-      </div>
-      <p class="pricing-note">Business account required. No credit card for a free brief. Full reports include sources, limits, an action plan and print/PDF.</p>
-      <section id="plan-details" class="plan-details" aria-labelledby="plan-details-title" [hidden]="!plansExpanded">
-        <h3 id="plan-details-title">What’s included</h3>
-        <p>Both paid options unlock the same full Decision Report.</p>
-        <dl class="plan-summary">
-          <div>
-            <dt>Free Business brief</dt>
-            <dd>Compare your main city with one other and get a brief with sourced Census figures.</dd>
+    <section id="reports" class="reports" aria-labelledby="reports-title" tabindex="-1">
+      <div class="shell reports-inner">
+        <h2 id="reports-title">Decision Reports</h2>
+        <div>
+          <p>Compare business locations with Census data, source links, and practical next steps.</p>
+          <div class="report-links">
+            <a routerLink="/sample-report" class="button">View a Sample Report <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
+            <a routerLink="/app/decide" class="text-link">Create a Report</a>
           </div>
-          <div>
-            <dt>One-time Decision Report</dt>
-            <dd>Get one full report for a single decision without a subscription. Compare your main city with up to three others.</dd>
-          </div>
-          <div>
-            <dt>Business Pro</dt>
-            <dd>Get five full reports each month. Pro renews monthly until cancelled. Any reports you’ve already unlocked stay unlocked.</dd>
-          </div>
-        </dl>
-        <a routerLink="/app/pricing" class="text-link account-pricing">Open account pricing <span>(sign-in required)</span></a>
-      </section>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer class="shell site-footer">
     <a routerLink="/" class="wordmark" aria-label="ifYouMind home">ifyoumind</a>
     <nav aria-label="Footer">
-      <a href="#how-it-works">About</a>
-      <a href="#data-sources">Data Sources</a>
+      <a href="/discover/">Understand Your Bills</a>
       <a href="/guides/">Guides</a>
-      <a routerLink="/terms-of-conduct">Terms</a>
+      <a routerLink="/app/pricing">Pricing (sign-in required)</a>
+      <a href="#data-sources" (click)="evidence.open = true">Data Sources</a>
       <a routerLink="/privacy-policy">Privacy</a>
-      <a href="mailto:support&#64;ifyoumind.com">Contact</a>
+      <a routerLink="/terms-of-conduct">Terms</a>
+      <a href="mailto:support&#64;ifyoumind.com?subject=Organization%20inquiry">For Organizations</a>
+      <a href="mailto:support&#64;ifyoumind.com">support&#64;ifyoumind.com</a>
     </nav>
-    <a href="mailto:support&#64;ifyoumind.com">support&#64;ifyoumind.com</a>
   </footer>
 </div>

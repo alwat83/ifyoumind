@@ -2,6 +2,10 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## November 12 — Wow 3.0 first-use hypothesis
+
+The [new homepage candidate](../design/wow-3-20261112/REVIEW.md) makes the hero action enter the demo before registration. The public sample remains the first paid-report path. Check whether a first-time visitor reaches the demo, understands what the 57.1% measures, and can find the sample report. Conversion and revenue remain unmeasured. Outbound is Pending Founder Setup.
+
 ## November 12 — affordable subscription launch
 
 [Issue #85](https://github.com/alwat83/ifyoumind/issues/85) prioritizes Starter $4.99 for one report and Plus $9.99 for three. [Draft PR #87](https://github.com/alwat83/ifyoumind/pull/87) is the independent implementation. Use one approved eligible workspace with an active location decision to verify the first independent settled payment, saved report and owner portal return before widening to the ten-workspace cap. [Launch evidence and operating plan](SUBSCRIPTION_LAUNCH.md)

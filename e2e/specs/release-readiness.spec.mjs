@@ -18,8 +18,8 @@ test('integrated public pages: pricing, report, guides, accessibility and approv
       await expect(page.getByRole('link', { name: 'Business location evidence checklist' })).toHaveAttribute('href', '/guides/choose-business-location-evidence/');
     }
     if (path === '/') {
-      await expect(page.locator('#pricing')).toContainText('$79');
-      await expect(page.locator('#pricing')).toContainText('$39');
+      await expect(page.getByRole('link', { name: 'Pricing (sign-in required)', exact: true })).toHaveAttribute('href', '/app/pricing');
+      await expect(page.getByRole('link', { name: 'View a Sample Report', exact: true })).toHaveAttribute('href', '/sample-report');
       await expect(page.getByRole('link', { name: 'Guides', exact: true })).toHaveAttribute('href', '/guides/');
       await expect(page.locator('a[href*="/life/quick-compare"]')).toHaveCount(0);
     }

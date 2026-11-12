@@ -59,6 +59,12 @@ Week October 19–25, 2026 UTC. Financial observation **October 22 22:40:04.919 
 
 [PR #82](https://github.com/alwat83/ifyoumind/pull/82) gives visitors immediate discovery, a sourced sample, and pricing before sign-in. Live Stripe confirmed both public prices. The live Billing Portal configuration query returned no records, so verify self-service billing before release. This observation covers product and billing configuration only. Visitor, checkout, purchase, revenue and customer feedback metrics retain their previously recorded scope and dates. Highest near-term priorities are a verified release, a short first-use round, then qualified founder introductions when authorized. Track whether visitors reach a finding, open evidence, start a brief and complete an independently funded report purchase.
 
+### November 11, 2026 — subscription-first strategy observation
+
+Scope is ifYouMind production source, draft PR #82 and read-only live Stripe price/portal settings. No current qualified visitor, completed free decision, checkout conversion, independent paid acquisition, active subscription, net revenue, support or contribution margin figures were established by this review. The October 22 financial snapshot above retains its date and scope. The [strategy model](subscription-strategy-20261111/ECONOMICS.md) uses explicit cost, churn and CAC assumptions.
+
+Ranked next opportunities: (1) clear the existing billing release gate and watch five qualified visitors reach an evidenced result, with low implementation cost and direct first-sale relevance, (2) verify real report/fee/support costs and run the smallest approved price comparison for repeat location advisers, with payback and repeat demand still unknown, (3) consider further paid tiers or repeat-use features only if actual repeated decisions and credit utilization show demand. Track qualified exposure, verified signup, independent settled payment, first durable report, second decision and renewal. Founder setup and exact outreach approval still govern external recruitment.
+
 ## Seven days after authorized deployment
 
 [Ready launch sequence](LAUNCH_PLAN.md) names daily actions, assets and gates. Five evidence-based personalized invitations, four transparent routing requests, demonstration flow and follow-up tracker are prepared in ignored private local storage. Original research PR remains separate; no buyer identities, channels or personalized messages imported into this release. Nothing sent.

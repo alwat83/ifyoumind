@@ -1,12 +1,18 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-10
+**Updated:** 2026-11-11
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
 **Purpose:** Living project context for the founder and all current/future development agents.
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
+
+## November 11, 2026 — subscription-first strategy
+
+**Proposed for founder review.** The [pricing decision and implementation specifications](docs/growth/subscription-strategy-20261111/DECISION.md) recommend retaining free discovery and testing Starter at $4.99 for one full report per paid period versus $3.99, with $9.99 Plus for three reports fixed in both arms. Hold an eight-report tier pending repeat demand and measured delivery costs. Preserve purchased reports and grandfather the existing $39 Pro terms. The commercial path starts with repeat city-comparison work for independent location advisers, a short first-use study, and a capped paid pilot after cost and lifecycle verification and founder approval.
+
+Business reports use deterministic Census analysis. The contribution estimates use stated fee and cost assumptions. Attributable production cost and current acquisition, conversion and retention rates are unmeasured. The separate PR #82 release and billing gate below still govern release readiness.
 
 ## November 11, 2026 — PR #82 founder release review
 

@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 11, 2026 — subscription-first pricing strategy
+
+**Proposed for founder review.** OpenAI / Codex prepared the [decision memo, reproducible model and phased implementation package](../growth/subscription-strategy-20261111/DECISION.md) on the separate `codex/subscription-strategy-20261111` documentation branch. Recommend Free, $4.99 Starter with one full report, and $9.99 Plus with three. Test $3.99 Starter with Plus fixed. Preserve the $79 path during the pilot, purchased report history and existing $39 Pro terms. Modeled full-usage Starter margin at $3.99 is 60.6% with the $0.50 delivery reserve. Actual report costs, qualified acquisition, conversion and retention remain unmeasured.
+
+**PR #82 remains a draft with a production hold.** Master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`. Candidate `6fcef3ab84c793c5b93f559c0d9c6d7aefaeba`, [build](https://github.com/alwat83/ifyoumind/actions/runs/42971126444) and [authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/42971126409) passed at that head. [PR #76](https://github.com/alwat83/ifyoumind/actions/runs/42143112840) remains the last successful production deployment. Live price objects match $79 one-time and $39/month. The live portal configuration list returned zero records. Approved configuration and an authorized linked-owner session remain the billing release gates. No app, live configuration, subscriptions or deployment changed during the strategy assignment. Next research is a five-person first-use round with qualified location advisers after applicable approval. Outbound remains Pending Founder Setup.
+
 ## November 11, 2026 — PR #82 founder release review
 
 **Verified candidate, production held.** OpenAI / Codex rechecked draft [PR #82](https://github.com/alwat83/ifyoumind/pull/82) at `6fcef3ab84c793c5b93f559c0d9c6d6d7aefaeba` and master `e5d8f15`. Both exact candidate workflows passed. Latest successful production deployment remains PR #76. Fresh production and candidate homepage captures at 1440px and 390px, prior sample and PDF evidence, and the live Stripe checklist are in the [founder release review](../releases/integrated-20261110/FOUNDER_REVIEW.md).

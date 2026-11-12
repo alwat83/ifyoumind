@@ -57,9 +57,12 @@ test('sign-up links the Terms and the Privacy Policy', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'Privacy Policy' })).toHaveAttribute('href', '/privacy-policy');
 });
 
-test('the homepage shows a real sample finding and claims no uploaded-data analysis', async ({ page }) => {
+test('the homepage distinguishes the fictional tax finding, Census sample and local bill files', async ({ page }) => {
   await page.goto('/');
   const card = page.locator('.featured');
+  await expect(card.getByText('Made-up example', { exact: true })).toBeVisible();
+  await card.getByRole('button', { name: 'Compare cities', exact: true }).click();
+  await card.locator('.home-evidence summary').click();
   await expect(card).toContainText(/from the public sample report/i);
   await expect(card).toContainText('$93,658');
   await expect(page.getByRole('link', { name: 'View the Full Sample Report', exact: true })).toHaveAttribute('href', '/sample-report');

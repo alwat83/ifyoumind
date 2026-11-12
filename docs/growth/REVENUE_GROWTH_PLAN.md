@@ -2,6 +2,14 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## November 12 — Wow 2.2 first-use hypothesis
+
+The [simplified draft](../design/wow-2-1-20261112/REVIEW.md) puts the first finding 96 px earlier at 390 px and moves report creation to a distinct section. The next commercial check is whether a first-time visitor can explain the offer, finding, and next action after a five-second look. After an authorized release, use only available consented measurement for starts and registration. Conversion and revenue remain unmeasured.
+
+## November 12 — Wow 2.1 acquisition hypothesis
+
+The [homepage candidate](../design/wow-2-1-20261112/REVIEW.md) moves the first useful example above the mobile fold and preserves the existing report and registration paths. First priority is a five-second comprehension check on the draft. Next measure flagship starts and progression to registration using existing consented evidence after an approved release. Conversion and independently verified sales attributable to this candidate are unknown. No new collection or distribution was authorized.
+
 ## November 12 — affordable subscription launch
 
 [Issue #85](https://github.com/alwat83/ifyoumind/issues/85) prioritizes Starter $4.99 for one report and Plus $9.99 for three. [Draft PR #87](https://github.com/alwat83/ifyoumind/pull/87) is the independent implementation. Use one approved eligible workspace with an active location decision to verify the first independent settled payment, saved report and owner portal return before widening to the ten-workspace cap. [Launch evidence and operating plan](SUBSCRIPTION_LAUNCH.md)

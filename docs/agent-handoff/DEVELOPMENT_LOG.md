@@ -505,3 +505,17 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 **F — Next three.** (1) Review exact-head CI, sandbox evidence and the applicable live portal gate. (2) Review the measured cost envelope and obtain approval for the two live Prices, webhook and dormant deployment. (3) After verified deploy and separately approved enrollment, guide one independent qualified customer through purchase, report delivery and portal return before widening.
 
 **G — Business impact.** Lowers entry cost for an eligible location decision and shows evidence before purchase. Define the first independently verified sale as a settled live invoice and delivered report from a real customer, excluding test, founder, duplicates and refunds. This work measured no commercial outcomes. Pending Founder Setup remains.
+
+## 2026-11-12 — Wow 2.1 property-tax-first homepage
+
+- OpenAI / Codex. [Issue #89](https://github.com/alwat83/ifyoumind/issues/89). Branch `codex/wow-2-1-property-tax-20261112` from master `449f829f733553c4c8afbf6c0748d82566b0048e`. Founder selected tday during implementation. Applied its editorial hierarchy with existing ifYouMind artwork and type.
+- Updated the Angular public landing template, scoped SCSS, homepage example presentation and browser coverage. The free tax CTA goes directly to the existing synthetic example, the page leads with the 57.1% finding, and a native disclosure preserves calculations and provenance. Following the founder’s final simplification direction, the default preview places the repeated full-example link after the evidence and removes duplicated source wording. No dependencies or backend source changed.
+- [Screenshot comparisons, commands and QA scope](../design/wow-2-1-20261112/REVIEW.md). GitHub draft PR #90 carries exact-head results. An earlier Linux QA run exposed a fallback-font wrap at 320 px. Narrower local font fallbacks and header spacing preserve the full first finding without changing the viewport assertion. Updated the current snapshot, master record and growth plan. Notion coordination uses the existing Wow 2.1 section.
+- #88 is the verified production baseline. Wow 2.1 awaits the founder's visual and release decision. Next validate comprehension with the supplied script and measure flagship progression only through approved existing reporting.
+
+## 2026-11-12 — Wow 2.2 radical simplicity
+
+- OpenAI / Codex. [Draft PR #90](https://github.com/alwat83/ifyoumind/pull/90), [Issue #89](https://github.com/alwat83/ifyoumind/issues/89), branch `codex/wow-2-1-property-tax-20261112`, reviewed base `9b26904a9b93eb2e595ce9ce980ef169f5a18749`. Founder requested a single hero action and a calmer presentation.
+- Simplified the Angular landing template and scoped styles, moved the report link to a short Decision Reports section, and kept the three examples, evidence, existing guarded links and Business terms. No dependencies, tracking, or backend code added.
+- [Screenshot comparison and regression scope](../design/wow-2-1-20261112/REVIEW.md). An initial narrow-screen check caught a wrapped example selector. The revised layout preserves the full finding and evidence control above the fold. Exact-head results live on the draft. Synchronized the current snapshot, project record, growth plan, issue and existing Notion hub.
+- PR #88 remains the production baseline. Next conduct the short first-use check with permitted participants and seek explicit release authorization for the reviewed draft. User comprehension, conversion and revenue effects remain unknown.

@@ -1,11 +1,9 @@
 @media (max-width: 1100px) {
   .shell { width: calc(100% - 64px); }
-  .featured { padding-inline: 24px; }
-  .comparison th, .comparison td { padding-inline: 6px; }
 }
 
 @media (max-width: 960px) {
-  .desktop-nav, .desktop-signin { display: none; }
+  .desktop-nav { display: none; }
   .mobile-navigation { display: block; position: relative; }
   .mobile-navigation summary { cursor: pointer; list-style: none; }
   .mobile-navigation summary::-webkit-details-marker { display: none; }
@@ -32,7 +30,6 @@
     font-weight: 600;
   }
   .mobile-navigation nav a:hover { background: var(--soft-purple); }
-  .explore-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .pricing { grid-template-columns: minmax(0, 1.35fr) repeat(2, minmax(0, 1fr)); }
   .pricing-action { grid-column: 1 / -1; margin-block: 4px 6px; }
 }
@@ -41,41 +38,16 @@
   .shell { width: calc(100% - 32px); }
   .header-inner { min-height: 62px; gap: 4px 8px; padding: 4px 0; flex-wrap: wrap; }
   .wordmark { font-size: 29px; }
-  .header-actions { gap: 7px; max-width: 100%; flex-wrap: wrap; }
-  .header-actions .button { gap: 4px; padding-inline: 10px; font-size: 12px; }
-  .hero-inner { padding: 24px 0 53px; }
-  .hero-art img { object-position: 67% bottom; }
+  .hero-inner { padding: 22px 0 27px; }
+  .hero-art img { object-position: 66% 64%; }
   .hero-art::after {
     background:
-      linear-gradient(180deg, #fbf6f4 0%, #fbf6f4dd 28%, #fbf6f4a6 65%, var(--page) 100%),
-      linear-gradient(90deg, #fbf7f4a0 0%, transparent 100%);
+      linear-gradient(180deg, #fbf6f4 0%, #fbf6f4f2 25%, #fbf6f4b8 65%, var(--page) 100%);
   }
-  .hero .eyebrow { font-size: 9px; margin-bottom: 12px; }
-  .hero h1 { font-size: clamp(35px, 9.3vw, 53px); }
-  .hero-lede { max-width: 36ch; margin-top: 11px; font-size: 16px; }
-  .hero-actions { gap: 8px; margin-top: 16px; }
-  .hero-actions .button { padding-inline: 12px; font-size: 13px; }
-  .hero-actions .icon { width: 16px; height: 16px; }
-  .trust-list { gap: 5px 13px; margin-top: 13px; }
-  .trust-list li { gap: 5px; font-size: 11px; }
-  .trust-list .icon { width: 15px; height: 15px; }
-  .featured { margin-top: -26px; padding: 19px 15px 15px; border-radius: 17px; }
-  .comparison table { table-layout: fixed; }
-  .comparison thead th { font-size: 11px; white-space: normal; overflow-wrap: anywhere; }
-  .comparison thead th:first-child { width: 43%; }
-  .comparison tbody th { overflow-wrap: anywhere; }
-  .comparison th, .comparison td { padding-inline: 5px; }
-  .comparison tbody .icon { display: none; }
-  .takeaway { padding: 14px; }
-  .process { padding: 24px 0 14px; }
-  .process ol { grid-template-columns: 1fr; gap: 12px; margin-top: 15px; text-align: start; }
-  .process li { display: grid; grid-template-columns: auto 1fr; gap: 1px 13px; padding-inline: 0; }
-  .process li + li::before { content: none; }
-  .process h3, .process li p { margin: 0; max-width: none; }
-  .step-icon { grid-row: span 2; width: 44px; height: 44px; border-radius: 12px; }
-  .step-icon .icon { width: 24px; height: 24px; }
-  .use-case-copy { padding: 14px; }
-  .pricing { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 22px; padding: 17px; }
+  .hero h1 { font-size: clamp(32px, 9.2vw, 55px); }
+  .hero-lede { max-width: 32ch; margin-top: 12px; font-size: 15px; }
+  .hero .primary { min-height: 44px; margin-top: 15px; }
+  .pricing { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 22px; padding-top: 20px; }
   .pricing-copy, .pricing-action { grid-column: 1 / -1; }
   .offer { padding-left: 9px; min-height: 70px; }
   .offer b { font-size: 25px; }
@@ -85,16 +57,15 @@
 }
 
 @media (max-width: 480px) {
-  .explore-grid { grid-template-columns: 1fr; }
   .hero h1 { letter-spacing: -.056em; }
 }
 
 @media (max-width: 350px) {
-  .hero h1 { font-size: 34px; }
-  .hero-actions .button { padding-inline: 9px; }
-  .city-key { display: none; }
+  .hero-inner { padding-block: 17px 20px; }
+  .hero h1 { font-size: 30px; }
+  .hero-lede { margin-top: 10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .button, .use-case { transition: none; }
+  .button { transition: none; }
 }

@@ -8,6 +8,14 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 12, 2026 — Wow 2.2
+
+[Draft PR #90](https://github.com/alwat83/ifyoumind/pull/90) continues the existing homepage branch with one free-example action, a simpler property-tax finding, and direct Decision Reports navigation. Free discovery, source evidence, Business pricing, and existing report behavior retain their original routes. [Design review and six-width captures](docs/design/wow-2-1-20261112/REVIEW.md).
+
+## November 12, 2026 — Wow 2.1
+
+[Issue #89](https://github.com/alwat83/ifyoumind/issues/89) refines the released #88 homepage on a separate master-based branch. The founder selected tday as the visual reference. The draft retains the skyline and leads with a free property-tax example. Evidence stays one action away, and electricity, city comparison and Business journeys remain available. [Founder review and six-width screenshots](docs/design/wow-2-1-20261112/REVIEW.md). Production requires separate founder authorization.
+
 ## November 12, 2026 — Starter and Plus launch candidate
 
 **Committed for draft review.** [Issue #85](https://github.com/alwat83/ifyoumind/issues/85) and [draft PR #87](https://github.com/alwat83/ifyoumind/pull/87) implement Free → sourced result → Starter $4.99/1 or Plus $9.99/3 → paid invoice → reserved report → saved decision. The feature starts from production master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`. Enrollment is disabled by default and capped at ten workspaces. Existing $79 and $39 paths and previously unlocked reports remain. The $3.99 experiment is deferred. [Evidence, measured workload, and staged approvals](docs/growth/SUBSCRIPTION_LAUNCH.md)

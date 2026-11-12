@@ -2,6 +2,19 @@
 
 **November 11, 2026 Pacific · OpenAI / Codex · Verified root cause. PR #82 remains NO-GO.** The founder’s production workspace retained customer and subscription references from an October 9 test Checkout. The current deployed functions use live credentials for the intended ifYouMind account. Neither stored reference exists there. The live portal default passed the prior readback. A valid live owner link and hosted return are still required. [Issue #83](https://github.com/alwat83/ifyoumind/issues/83) · [Prior live smoke](FOUNDER_REVIEW.md#live-billing-readback-and-signed-in-test)
 
+## Authorized cleanup completed
+
+November 11, 2026 Pacific. The [founder authorization](https://github.com/alwat83/ifyoumind/issues/83#issuecomment-6815826302) covered exactly the two steps below. The historical trace and preparation are retained for audit.
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| Historical test webhook | PASS | Reconfirmed account, test mode, unique endpoint URL, enabled state and event settings. Captured a private before-image. Stripe update and independent list/direct readbacks showed only the destination status changed to disabled. The live destination and deployed signing credential binding matched the before-image. |
+| Firestore workspace cleanup | PASS | Re-read the exact test customer and subscription provenance, the active owner and owner index, and the original workspace update time. Scoped live subscription and ledger reads showed no new live state. One atomic update with the original update-time precondition set `plan=free`, set `planUpdatedAt` with a server transform, and removed the five authorized fields. Readback matched the commit and all other workspace fields matched the before-image. |
+| Existing report access | PASS | All existing report documents, purchased and included access markers, owner membership, index, and billing ledger reads matched. The signed-in owner saw Free, opened all four saved decisions and could still print each of the three already-unlocked reports. |
+| Production billing integrity | PASS | Readbacks before and after matched for the live webhook, live Billing Portal configuration, $79 one-time and $39 monthly prices, and deployed commerce and signing bindings. The test destination remained disabled after the Firestore commit. No Stripe customer, subscription, payment or replacement billing record was created. |
+
+Private rollback before-images and write receipts are retained outside version control. No rollback was performed. PR #82 remains draft and **NO-GO**. The production owner portal round trip remains pending an authorized workspace with a verified live Stripe link. The hardening branch and the pricing pilot remain separate. Request separate authorization of the exact merge and automatic deployment after the live smoke passes.
+
 ## Trace and read-only proof
 
 | Step | Verified evidence |

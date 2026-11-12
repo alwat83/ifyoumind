@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 11, 2026 — Issue #83 authorized cleanup completed
+
+**Both corrective actions passed.** The historical test destination pointing at production is disabled. A single Firestore update with the exact prior update-time precondition reset the affected workspace to Free, set the server timestamp and removed five stale Stripe fields. All saved report access, membership, ledgers and unrelated workspace data were preserved. The signed-in owner saw Free and could print all three previously unlocked reports. The live webhook, portal, prices and credential bindings matched their before-images. [Redacted verification](../releases/integrated-20261110/STRIPE_CUSTOMER_LINK.md#authorized-cleanup-completed)
+
+**PR #82 remains NO-GO.** Draft head `6fcef3ab84c793c5b93f559c0d9c6d6d7aefaeba` and master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e` were rechecked. Both exact candidate workflows passed. An authorized existing live-linked workspace must complete the hosted portal round trip before separate merge/deploy authorization. No deployment, rollback, Stripe subscription change, or pricing-pilot change. Outbound remains Pending Founder Setup.
+
 ## November 11, 2026 — Issue #83 verified Stripe customer-link mismatch
 
 **Verified root cause and production hold.** The affected owner workspace retained its October 9 Stripe test Checkout customer and subscription. Direct reads confirmed the provider objects and exact workspace provenance in the historical test account. The three deployed commerce functions bind the intended live account and both references are absent there. No alternative verified live link for the authorized owner was found. The historical test destination still targets the production webhook. [Redacted evidence and exact repair plan](../releases/integrated-20261110/STRIPE_CUSTOMER_LINK.md)

@@ -1,6 +1,6 @@
 # PR #82 founder release review
 
-November 11, 2026 · OpenAI / Codex · **NO-GO for production. The signed-in owner test exposed a stale historical test-mode Stripe link.**
+November 11, 2026 · OpenAI / Codex · **NO-GO for production. The stale test-mode link was cleaned up. The live owner portal round trip remains outstanding.**
 
 [Draft PR #82](https://github.com/alwat83/ifyoumind/pull/82) is open and mergeable on `codex/integrated-release-20261110` at `6fcef3ab84c793c5b93f559c0d9c6d6d7aefaeba`. GitHub master and the last successful production deployment are at `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e` (PR #76). A fresh public GET showed the production bill-led hero. The release candidate has not advanced since its verified checks. This evidence is on a separate documentation branch so the reviewed SHA stays fixed. [Last production workflow](https://github.com/alwat83/ifyoumind/actions/runs/42143112840)
 
@@ -53,9 +53,9 @@ The affected workspace retained a customer and subscription from a completed Oct
 
 ## Remaining gate and exact authorization
 
-First verify a workspace’s current billing customer reference and the account/mode used by the deployed Firebase function, using redacted operational evidence. If another authorized workspace already has a verified matching live link and Manage billing access, use that workspace for the non-destructive smoke. If the intended owner workspace needs a link repair, or the deployed connection needs repair, obtain founder authorization for the exact verified change. Do not infer ownership from email or create a customer or subscription to satisfy this check.
+The historical test destination is disabled, and the approved one-workspace cleanup is complete. The owner reopened previously unlocked reports after the cleanup. Live billing configuration matched its before-image. [Redacted completion and readback](STRIPE_CUSTOMER_LINK.md#authorized-cleanup-completed)
 
-Repeat **Account → Manage billing → Stripe-hosted portal → Return to ifYouMind**. Verify the correct workspace, invoice and payment controls, cancellation control where a subscription is eligible, and the exact authenticated Account return. Do not change payment methods or subscriptions. Once the live smoke passes, request separate founder approval of the exact candidate and automatic master deployment.
+Find an existing, legitimately live-linked workspace whose owner is authorized to run the smoke. Confirm the exact customer mapping. Repeat **Account → Manage billing → Stripe-hosted portal → Return to ifYouMind**. Verify the correct workspace, invoice and payment controls, applicable cancellation control, and authenticated Account return without altering payment methods or subscriptions. If no such workspace is available, the release gate stays open. After the smoke passes, request separate authorization for the exact candidate and automatic master deployment.
 
 ## Deployment and rollback
 

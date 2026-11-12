@@ -591,3 +591,19 @@ The Functions, Account template and browser/commerce regression files changed. T
 **F — Next three.** (1) Approve and isolate the historical test destination from production. (2) Approve and apply the exact one-workspace cleanup with report history preserved. (3) Identify an existing authorized live-linked owner, complete the portal round trip, and seek separate release authorization if it passes.
 
 **G — Business.** Verified an operational defect that blocks self-service billing for the tested workspace. No live payment, conversion or recurring revenue was verified. Focus on a safe owner smoke before release and qualified acquisition work. Pricing pilot remains independent. Outbound remains Pending Founder Setup.
+
+## 2026-11-11 — Issue #83 authorized test-route and workspace cleanup
+
+**A — Executive.** OpenAI / Codex executed the two actions in the [founder approval](https://github.com/alwat83/ifyoumind/issues/83#issuecomment-6815826302) in order. The historical test webhook is disabled. The affected workspace no longer holds the sandbox-derived Pro billing link. The live portal round trip remains a release gate.
+
+**B — Changes.** Disabled only the historical test destination. Applied one Firestore compare-and-set update to the verified workspace with a server timestamp and exactly five field deletions. Published [redacted completion evidence](../releases/integrated-20261110/STRIPE_CUSTOMER_LINK.md#authorized-cleanup-completed). Private rollback records are retained outside Git. No runtime code changed and no rollback occurred.
+
+**C — Verification.** Test-only endpoint readback showed only the status change. Workspace readback confirmed Free, the server timestamp, authorized deletions, and unchanged unrelated fields. Reports, owner membership/index, and billing ledger snapshots matched. The signed-in owner opened four saved decisions and retained Print for three previously unlocked reports. Live webhook, portal, prices and deployed credential bindings matched before and after. [Build](https://github.com/alwat83/ifyoumind/actions/runs/42971126444) and [QA](https://github.com/alwat83/ifyoumind/actions/runs/42971126409) are prior exact-head passes rechecked on GitHub.
+
+**D — GitHub.** Evidence is on `codex/issue-83-release-evidence` based on `2a50db5c4f785d57d895c372a892a66e5daf103b`. PR #82 remains open, draft, and unmerged at `6fcef3ab84c793c5b93f559c0d9c6d6d7aefaeba`. Master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`, hardening and pricing source refs remain unchanged. [Issue #83](https://github.com/alwat83/ifyoumind/issues/83) and the [Notion project hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71) hold the operational status.
+
+**E — Release.** No merge, deployment, rollback or live Stripe changes. PR #76 remains the last successful production deployment. PR #82 stays NO-GO until a verified live owner portal return passes and the founder separately authorizes the exact merge and deployment.
+
+**F — Next three.** (1) Identify an existing legitimately live-linked workspace and authorized owner. (2) Verify Account → Stripe → Account without modifying billing. (3) Review exact release and rollback evidence for founder authorization after the smoke passes.
+
+**G — Business impact.** The founder’s saved report access survived correction of the stale test billing link. No live payment or commercial outcome was established. Keep the pricing pilot separate and outbound Pending Founder Setup.

@@ -64,7 +64,7 @@ export class AccountComponent implements OnInit {
   }
 
   async manageBilling():Promise<void>{
-    if(!this.status||this.status.plan!=='pro')return;
+    if(!this.status||(this.status.plan!=='pro'&&!this.status.subscriptionPortalAvailable))return;
     this.message=''; this.error='';
     try{
       const workspace=await this.organizations.getMyWorkspace();

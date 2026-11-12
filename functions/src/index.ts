@@ -209,10 +209,12 @@ export { seedUniversalDemoData } from './intelligence/demo-data';
 
 export { askUniversalIntelligence } from './intelligence/universal-ask';
 
-export { createMarketIntelligenceProject, getRecentMarketIntelligenceProjects, getMarketIntelligenceProject, getSampleDecisionReport } from './intelligence/market-intelligence';
+export { createMarketIntelligenceProject, getRecentMarketIntelligenceProjects, getMarketIntelligenceProject, getSampleDecisionReport, generatePaidDecisionReport } from './intelligence/market-intelligence';
 
 export { getCommercialStatus, requestCommercialAccess, createCommercialCheckout, createBillingPortalSession, unlockDecisionReportWithPro, stripeCommercialWebhook } from './intelligence/monetization';
 
 export { recordProductEvent } from './intelligence/product-analytics';
 
 export { getProductFunnelMetrics } from './intelligence/growth-metrics';
+
+export { stripeSubscriptionWebhook } from './intelligence/subscriptions';

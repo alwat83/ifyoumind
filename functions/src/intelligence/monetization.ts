@@ -2,6 +2,8 @@ import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
+import { isSubscriptionOffer, subscriptionCatalog, subscriptionEnrollment } from './subscription-plans';
+import { openSubscriptionPortal, readSubscriptionStatus, startLaunchReportCheckout, startSubscriptionCheckout, subscriptionBilling } from './subscriptions';
 import {
   grantsPro,
   shouldApplySubscriptionEvent,
@@ -100,6 +102,8 @@ export const getCommercialStatus = onCall({secrets:[stripeSecretKey]}, async (re
 
   const used = usageSnapshot.data().count;
   const limits = COMMERCIAL_PLANS[plan];
+  const subscription = await readSubscriptionStatus(orgRef);
+  const canManageBilling = scope.role === 'owner' || scope.role === 'admin';
   const includedReportsPerMonth = plan === 'pro' ? COMMERCIAL_PLANS.pro.includedReportsPerMonth : 0;
   const usedIncludedReports = plan === 'pro' ? includedReportsUsed(org, allowancePeriod()) : 0;
 
@@ -114,6 +118,9 @@ export const getCommercialStatus = onCall({secrets:[stripeSecretKey]}, async (re
     usedIncludedReports,
     remainingIncludedReports: Math.max(0, includedReportsPerMonth - usedIncludedReports),
     checkoutEnabled: true,
+    subscriptionOffers: canManageBilling && plan === 'free' && !org.stripeSubscriptionId && Boolean(subscriptionCatalog()) && subscriptionEnrollment(scope.organizationId),
+    subscription,
+    subscriptionPortalAvailable: canManageBilling && subscription?.linked === true,
     paymentsLive: stripeKeyMode(stripeSecretKey.value()) === 'live',
     pricing: {
       proMonthlyUsd: COMMERCIAL_PLANS.pro.monthlyPriceUsd,
@@ -158,6 +165,8 @@ export const requestCommercialAccess = onCall(async (request) => {
 
 export const createBillingPortalSession = onCall({secrets:[stripeSecretKey]}, async (request) => {
   const scope=await authorizeOrganization(request.auth?.uid,request.data?.organizationId,readMembership);
+  const portal = await openSubscriptionPortal(scope.organizationId, scope.role);
+  if (portal) return portal;
   const org=(await organizations().doc(scope.organizationId).get()).data()||{};
   const customerId=typeof org.stripeCustomerId==='string'?org.stripeCustomerId.trim():'';
   if(!customerId){
@@ -180,6 +189,11 @@ export const createBillingPortalSession = onCall({secrets:[stripeSecretKey]}, as
 export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, async (request) => {
   const scope=await authorizeOrganization(request.auth?.uid,request.data?.organizationId,readMembership);
   const offer=request.data?.offer;
+  if (isSubscriptionOffer(offer)) {
+    if (request.auth?.token?.email_verified !== true) throw new HttpsError('failed-precondition','Verify your email before starting checkout.');
+    if (!['owner','admin'].includes(scope.role)) throw new HttpsError('permission-denied', 'Only workspace owners and admins can choose a subscription.');
+    return startSubscriptionCheckout(scope.organizationId, offer, request.data?.projectId);
+  }
   if(offer!=='pro'&&offer!=='report') throw new HttpsError('invalid-argument','Choose a valid offer.');
   const projectId=typeof request.data?.projectId==='string'?request.data.projectId.trim().slice(0,120):'';
   if(offer==='report'){
@@ -190,7 +204,12 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
       throw new HttpsError('failed-precondition','This Decision Report is already unlocked. Open it from your decisions.');
     }
   }else{
-    const org=(await organizations().doc(scope.organizationId).get()).data();
+    const ref=organizations().doc(scope.organizationId);
+    const [workspace, subscription] = await Promise.all([ref.get(), subscriptionBilling(ref).get()]);
+    const org=workspace.data();
+    if (subscriptionEnrollment(scope.organizationId) || subscription.data()?.checkout || subscription.data()?.subscriptionId) {
+      throw new HttpsError('failed-precondition','Open your decision to choose a subscription, or manage your plan in Account.');
+    }
     if(blocksNewProCheckout(org)){
       throw new HttpsError('failed-precondition','This workspace already has a Pro subscription. Use Manage billing on your account page to change it.');
     }
@@ -220,6 +239,11 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
   if(offer==='pro'){
     params.set('subscription_data[metadata][organizationId]',scope.organizationId);
     params.set('subscription_data[metadata][offer]','pro');
+  }
+
+  if (offer === 'report') {
+    const launch = await startLaunchReportCheckout(scope.organizationId, projectId, params);
+    if (launch) return launch;
   }
 
   try{

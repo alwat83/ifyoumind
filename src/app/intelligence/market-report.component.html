@@ -21,7 +21,7 @@
       <button *ngIf="canUnlockWithPro" type="button" class="report-upgrade" (click)="unlockWithPro()" [disabled]="unlocking">
         {{ unlocking ? 'Unlocking…' : 'Unlock full report with Pro' }}
       </button>
-      <a *ngIf="!reportPurchased && !canUnlockWithPro" [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Full report · $79</a>
+      <a *ngIf="!reportPurchased && !canUnlockWithPro && !canGeneratePaidReport && !status?.subscriptionOffers" [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Full report · $79</a>
     </div>
   </nav>
 
@@ -150,9 +150,17 @@
     </section>
 
     <section *ngIf="!reportPurchased" class="report-offer report-adds no-print" aria-labelledby="report-adds-title">
+      <div *ngIf="checkoutReturned && !canGeneratePaidReport" role="status">
+        <p>Your report credit appears after Stripe confirms payment.</p>
+        <button type="button" (click)="refreshSubscription()" [disabled]="checkingSubscription">
+          {{ checkingSubscription ? 'Checking…' : 'Check payment status' }}
+        </button>
+      </div>
       <div>
         <p class="eyebrow">Need something you can share?</p>
-        <h2 id="report-adds-title">What the $79 report adds</h2>
+        <h2 id="report-adds-title">
+          {{ status?.subscriptionOffers || status?.subscription?.linked ? 'What the full Decision Report adds' : 'What the $79 report adds' }}
+        </h2>
         <ul class="adds-list">
           <li>Your main city compared with up to three other cities</li>
           <li>A plan-ready market analysis written for your business, with location rankings and copy-as-text</li>
@@ -165,12 +173,17 @@
         <p *ngIf="project?.reportOnlyLocations?.length"><strong>Your full report also compares {{ project?.reportOnlyLocations?.join(' and ') }}.</strong> The free brief shows one comparison.</p>
         <p *ngIf="canUnlockWithPro">Included with your Pro plan: {{ status?.remainingIncludedReports }} of {{ status?.includedReportsPerMonth }} full reports left this month.</p>
         <p *ngIf="proAllowanceUsedUp">You have used all {{ status?.includedReportsPerMonth }} full reports included with Pro this month. They reset on the 1st, or you can buy this one individually.</p>
-        <p *ngIf="unlockError" class="error">{{ unlockError }}</p>
+        <p *ngIf="unlockError" class="error" role="alert">{{ unlockError }}</p>
       </div>
       <button *ngIf="canUnlockWithPro" type="button" (click)="unlockWithPro()" [disabled]="unlocking">
         {{ unlocking ? 'Unlocking…' : 'Unlock with Pro' }}
       </button>
-      <a *ngIf="!canUnlockWithPro" [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}">Get the $79 report</a>
+      <button *ngIf="canGeneratePaidReport" type="button" (click)="generatePaidReport()" [disabled]="unlocking">
+        {{ unlocking ? 'Preparing your report…' : 'Generate full Decision Report' }}
+      </button>
+      <a *ngIf="!canUnlockWithPro && !canGeneratePaidReport && status?.subscriptionOffers && !status?.subscription?.linked"
+        [routerLink]="['/app/pricing']" [queryParams]="{projectId:project?.id}">Choose a monthly plan</a>
+      <a *ngIf="!canUnlockWithPro && !canGeneratePaidReport" [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}">Get the $79 report</a>
     </section>
 
     <ng-container *ngIf="decisionReport as reportDetail">

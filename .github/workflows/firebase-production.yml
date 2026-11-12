@@ -46,6 +46,33 @@ jobs:
       - name: Build Firebase Functions
         run: npm --prefix functions run build
 
+      - name: Prepare subscription configuration
+        env:
+          SUBSCRIPTION_STRIPE_ACCOUNT: ${{ vars.SUBSCRIPTION_STRIPE_ACCOUNT }}
+          SUBSCRIPTION_STARTER_PRICE: ${{ vars.SUBSCRIPTION_STARTER_PRICE }}
+          SUBSCRIPTION_PLUS_PRICE: ${{ vars.SUBSCRIPTION_PLUS_PRICE }}
+          # Dormant release safety: force enrollment empty even if inherited Actions secrets exist.
+          # A future reviewed release must explicitly authorize re-enabling this input.
+          SUBSCRIPTION_ENROLLMENT: ''
+        run: |
+          node <<'NODE'
+          const { writeFileSync } = require('node:fs');
+          const values = Object.fromEntries([
+            'SUBSCRIPTION_STRIPE_ACCOUNT', 'SUBSCRIPTION_STARTER_PRICE',
+            'SUBSCRIPTION_PLUS_PRICE', 'SUBSCRIPTION_ENROLLMENT',
+          ].map(key => [key, (process.env[key] || '').trim()]));
+          const { SUBSCRIPTION_STRIPE_ACCOUNT: account, SUBSCRIPTION_STARTER_PRICE: starter,
+            SUBSCRIPTION_PLUS_PRICE: plus, SUBSCRIPTION_ENROLLMENT: enrollment } = values;
+          const configured = account || starter || plus || enrollment;
+          if (configured && (!/^acct_[A-Za-z0-9]+$/.test(account) || !/^price_[A-Za-z0-9]+$/.test(starter) ||
+            !/^price_[A-Za-z0-9]+$/.test(plus) || starter === plus ||
+            (enrollment && !/^[A-Za-z0-9_-]{1,128}(,[A-Za-z0-9_-]{1,128}){0,9}$/.test(enrollment)))) {
+            throw new Error('Invalid subscription deployment configuration');
+          }
+          writeFileSync('functions/.env.ifyoumind-473fe',
+            Object.entries(values).map(([key, value]) => key + '=' + value).join('\n') + '\n', { mode: 0o600 });
+          NODE
+
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
@@ -55,5 +82,5 @@ jobs:
         run: |
           npx firebase-tools@13.35.1 deploy \
             --project ifyoumind-473fe \
-            --only "hosting,firestore:rules,firestore:indexes,storage,functions:createIntelligenceOrganization,functions:getIntelligenceOrganization,functions:getMyIntelligenceOrganization,functions:createUniversalDataset,functions:addUniversalObservation,functions:listUniversalDatasets,functions:getUniversalDataset,functions:analyzeUniversalDatasets,functions:importUniversalObservations,functions:reasonAcrossUniversalDatasets,functions:getRecentUniversalAnalysisRuns,functions:seedUniversalDemoData,functions:askUniversalIntelligence,functions:createMarketIntelligenceProject,functions:getRecentMarketIntelligenceProjects,functions:getMarketIntelligenceProject,functions:getSampleDecisionReport,functions:getCommercialStatus,functions:requestCommercialAccess,functions:createCommercialCheckout,functions:createBillingPortalSession,functions:unlockDecisionReportWithPro,functions:recordProductEvent,functions:getProductFunnelMetrics,functions:stripeCommercialWebhook" \
+            --only "hosting,firestore:rules,firestore:indexes,storage,functions:createIntelligenceOrganization,functions:getIntelligenceOrganization,functions:getMyIntelligenceOrganization,functions:createUniversalDataset,functions:addUniversalObservation,functions:listUniversalDatasets,functions:getUniversalDataset,functions:analyzeUniversalDatasets,functions:importUniversalObservations,functions:reasonAcrossUniversalDatasets,functions:getRecentUniversalAnalysisRuns,functions:seedUniversalDemoData,functions:askUniversalIntelligence,functions:createMarketIntelligenceProject,functions:getRecentMarketIntelligenceProjects,functions:getMarketIntelligenceProject,functions:getSampleDecisionReport,functions:getCommercialStatus,functions:requestCommercialAccess,functions:createCommercialCheckout,functions:createBillingPortalSession,functions:unlockDecisionReportWithPro,functions:recordProductEvent,functions:getProductFunnelMetrics,functions:stripeCommercialWebhook,functions:stripeSubscriptionWebhook,functions:generatePaidDecisionReport" \
             --non-interactive

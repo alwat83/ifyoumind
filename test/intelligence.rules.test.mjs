@@ -65,3 +65,17 @@ test('universal usage counters are closed to every client', async () => {
     await assertFails(setDoc(doc(db, 'universalUsage/alice'), { day: '2026-10-14', counts: {} }));
   }
 });
+
+test('subscription billing documents, grants and launch seats are server-only', async () => {
+  const db = env.authenticatedContext('alice', { admin: true }).firestore();
+  for (const path of [
+    'intelligenceOrganizations/org-a/subscriptionBilling/current',
+    'intelligenceOrganizations/org-a/subscriptionBilling/current/periods/example',
+    'subscriptionLaunch/live_example',
+    'subscriptionCustomerLinks/example',
+    'subscriptionChargeLinks/example',
+  ]) {
+    await assertFails(getDoc(doc(db, path)));
+    await assertFails(setDoc(doc(db, path), { used: 0 }));
+  }
+});

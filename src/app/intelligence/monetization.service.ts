@@ -1,6 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 
+export type SubscriptionOffer = 'starter'|'plus';
+export type CheckoutOffer = 'pro'|'report'|SubscriptionOffer;
+
 export interface CommercialStatus {
   plan:'free'|'pro';
   planName:string;
@@ -13,6 +16,17 @@ export interface CommercialStatus {
   remainingIncludedReports:number;
   checkoutEnabled:boolean;
   paymentsLive?:boolean;
+  subscriptionOffers?:boolean;
+  subscriptionPortalAvailable?:boolean;
+  subscription?:{
+    offer:SubscriptionOffer|null;
+    pending:boolean;
+    linked:boolean;
+    state:string|null;
+    paidThrough:number|null;
+    cancelAt:number|null;
+    remaining:number;
+  }|null;
   pricing:{proMonthlyUsd:number;reportOneTimeUsd:number;proIncludedReportsPerMonth?:number};
 }
 
@@ -29,11 +43,11 @@ export class MonetizationService {
 
   async checkout(
     organizationId:string,
-    offer:'pro'|'report',
+    offer:CheckoutOffer,
     projectId='',
   ):Promise<string>{
     const call=httpsCallable<
-      {organizationId:string;offer:'pro'|'report';projectId:string},
+      {organizationId:string;offer:CheckoutOffer;projectId:string},
       {url:string;sessionId:string}
     >(this.functions,'createCommercialCheckout');
     return (await call({organizationId,offer,projectId})).data.url;
@@ -45,6 +59,13 @@ export class MonetizationService {
       {unlocked:boolean;remainingIncludedReports:number}
     >(this.functions,'unlockDecisionReportWithPro');
     return (await call({organizationId,projectId})).data.remainingIncludedReports;
+  }
+
+  async generatePaidReport(organizationId:string,projectId:string):Promise<void>{
+    const call=httpsCallable<{organizationId:string;projectId:string},{ready:boolean}>(
+      this.functions,'generatePaidDecisionReport',{timeout:85_000}
+    );
+    await call({organizationId,projectId});
   }
 
   async billingPortal(organizationId:string):Promise<string>{

@@ -42,7 +42,8 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await expect(feature.getByText('School charges rose by $240.', { exact: true })).toBeVisible();
     await expect(feature.getByRole('table')).toHaveCount(0);
     await expect(feature.locator('.home-evidence')).not.toHaveAttribute('open');
-    const targets = feature.locator('.question-option, summary, .example-link');
+    await expect(feature.getByRole('link', { name: 'Explore the property-tax example' })).toBeHidden();
+    const targets = feature.locator('.question-option, summary');
     for (const { width: w, height: h } of await targets.evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().toJSON()))) {
       expect(w).toBeGreaterThanOrEqual(44);
       expect(h).toBeGreaterThanOrEqual(44);
@@ -93,6 +94,10 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await expect(evidence.getByRole('table', { name: 'Total tax source cells' })).toContainText('4620.00');
     await expect(evidence.getByRole('table', { name: 'How the charges add up source cells' })).toContainText('2640.00');
     await expect(evidence.getByText(/Check assessed value and tax rates/)).toBeVisible();
+    const fullTax = feature.getByRole('link', { name: 'Explore the property-tax example' });
+    await expect(fullTax).toBeVisible();
+    await expect(fullTax).toHaveAttribute('href', '/discover/?example=tax');
+    expect((await fullTax.boundingBox()).height).toBeGreaterThanOrEqual(44);
     await noOverflow(page);
     await accessible(page);
 
@@ -146,7 +151,7 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await expect(feature.getByRole('button', { pressed: true })).toHaveText('Property taxes');
     await expect(evidence).not.toHaveAttribute('open');
     await expect(announcement).toContainText('57.1% of the $420 increase and rose by $240.');
-    await expect(feature.getByRole('link', { name: 'Explore the property-tax example' })).toHaveAttribute('href', '/discover/?example=tax');
+    await expect(fullTax).toBeHidden();
   }
 });
 

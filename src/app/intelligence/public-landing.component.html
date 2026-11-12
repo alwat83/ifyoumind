@@ -99,9 +99,9 @@
               </table>
               <p id="data-sources" class="source-note">
                 @if (example.id === 'cities') {
-                  <a href="https://www.census.gov/data/developers/data-sets/acs-5year.html">U.S. Census ACS</a> city-level estimates, 2020–2024. Population change compares 2015–2019 with 2020–2024. Differences may fall within survey margins of error.
+                  <a href="https://www.census.gov/data/developers/data-sets/acs-5year.html">U.S. Census ACS</a> city-level estimates, 2020–2024. Population change compares 2015–2019 with 2020–2024. Differences have not been tested for statistical significance and may fall within survey margins of error.
                 } @else {
-                  Values come from the public example CSV.
+                  Raw values and source cells come from the made-up example CSV.
                 }
               </p>
             </div>
@@ -113,14 +113,12 @@
                 <li>Median household income: $93,658 − $82,068 = $11,590.</li>
                 <li>Population change: 5.4% − 3.0% = 2.4 percentage points.</li>
               </ul>
-              <p>Population change compares two ACS five-year estimates, 2015–2019 and 2020–2024. The displayed differences have not been tested for statistical significance.</p>
               <div class="evidence-links">
                 <a href="https://api.census.gov/data/2024/acs/acs5/groups/B01003.html">Population table (B01003)</a>
                 <a href="https://api.census.gov/data/2024/acs/acs5/groups/B19013.html">Income table (B19013)</a>
               </div>
             } @else {
               <h3>Calculations and source cells</h3>
-              <p>Cell references and raw values are from the made-up CSV used by the full example.</p>
               <div class="evidence-groups">
                 @for (group of example.proof; track group.label) {
                   <div>
@@ -146,7 +144,7 @@
         @if (example.id === 'cities') {
           <a routerLink="/sample-report" class="text-link example-link">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
         } @else {
-          <a [href]="'/discover/?example=' + example.id" class="text-link example-link">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
+          <a [href]="'/discover/?example=' + example.id" class="text-link example-link" [class.tax-example-link]="example.id === 'tax'">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
         }
       </div>
     </section>

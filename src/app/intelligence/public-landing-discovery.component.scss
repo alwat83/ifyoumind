@@ -93,6 +93,7 @@
 .home-evidence[open] summary span::before { content: '−'; }
 .home-evidence[open] { grid-column: 1 / -1; }
 .home-evidence[open] + .example-link { justify-self: start; }
+.home-evidence:not([open]) + .tax-example-link { display: none; }
 .example-link { text-decoration: underline; text-underline-offset: 4px; }
 .example-link .icon { width: 16px; height: 16px; }
 

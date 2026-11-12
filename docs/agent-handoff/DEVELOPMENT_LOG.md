@@ -505,3 +505,10 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 **F — Next three.** (1) Review exact-head CI, sandbox evidence and the applicable live portal gate. (2) Review the measured cost envelope and obtain approval for the two live Prices, webhook and dormant deployment. (3) After verified deploy and separately approved enrollment, guide one independent qualified customer through purchase, report delivery and portal return before widening.
 
 **G — Business impact.** Lowers entry cost for an eligible location decision and shows evidence before purchase. Define the first independently verified sale as a settled live invoice and delivered report from a real customer, excluding test, founder, duplicates and refunds. This work measured no commercial outcomes. Pending Founder Setup remains.
+
+## 2026-11-12 — Wow 2.1 property-tax-first homepage
+
+- OpenAI / Codex. [Issue #89](https://github.com/alwat83/ifyoumind/issues/89). Branch `codex/wow-2-1-property-tax-20261112` from master `449f829f733553c4c8afbf6c0748d82566b0048e`. Founder selected tday during implementation. Applied its editorial hierarchy with existing ifYouMind artwork and type.
+- Updated the Angular public landing template, scoped SCSS, homepage example presentation and browser coverage. The free tax CTA goes directly to the existing synthetic example, the page leads with the 57.1% finding, and a native disclosure preserves calculations and provenance. No dependencies or backend source changed.
+- [Screenshot comparisons, commands and QA scope](../design/wow-2-1-20261112/REVIEW.md). GitHub draft PR checks carry exact-head results. Updated the current snapshot, master record and growth plan. Notion coordination uses the existing Wow 2.1 section.
+- #88 is the verified production baseline. Wow 2.1 awaits the founder's visual and release decision. Next validate comprehension with the supplied script and measure flagship progression only through approved existing reporting.

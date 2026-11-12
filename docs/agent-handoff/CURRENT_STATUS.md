@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 12, 2026 — Wow 2.1 founder review
+
+**Committed for draft review.** [Issue #89](https://github.com/alwat83/ifyoumind/issues/89) on `codex/wow-2-1-property-tax-20261112` follows founder-selected tday with centered editorial type, one framed result, and the default synthetic property-tax finding. [Screenshots, QA and release notes](../design/wow-2-1-20261112/REVIEW.md). GitHub PR checks are the source for exact-head CI. The latest verified baseline is [PR #88](https://github.com/alwat83/ifyoumind/pull/88), master `449f829f733553c4c8afbf6c0748d82566b0048e`, [deployed successfully](https://github.com/alwat83/ifyoumind/actions/runs/43283684085) and publicly captured at six widths. Wow 2.1 awaits founder release authorization.
+
 ## November 12, 2026 — Starter and Plus launch candidate
 
 **Committed for draft review.** [Issue #85](https://github.com/alwat83/ifyoumind/issues/85) and [draft PR #87](https://github.com/alwat83/ifyoumind/pull/87) implement Free → sourced result → Starter $4.99/1 or Plus $9.99/3 → paid invoice → reserved report → saved decision. The feature starts from production master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`. Enrollment is disabled by default and capped at ten workspaces. Existing $79 and $39 paths and previously unlocked reports remain. The $3.99 experiment is deferred. [Evidence, measured workload, and staged approvals](../growth/SUBSCRIPTION_LAUNCH.md)

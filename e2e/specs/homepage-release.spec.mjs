@@ -1,24 +1,28 @@
 import { test, expect, expectAccessible, expectNoHorizontalScroll } from '../support/test.mjs';
 
-test('homepage leads with a sourced comparison and a free working example', async ({ page }) => {
+test('homepage leads with a free working property-tax example', async ({ page }) => {
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(/See the story\.\s*Check the evidence\./);
-  const heroAction = page.getByRole('link', { name: 'Try a Free Example', exact: true });
+  const heroAction = page.getByRole('link', { name: 'Explore a Property Tax Example', exact: true });
   await expect(heroAction).toBeInViewport({ ratio: 1 });
-  await expect(page.getByRole('table', { name: 'City estimates from the public Business sample' })).toBeVisible();
+  await expect(page.getByRole('button', { pressed: true })).toHaveText('Property taxes');
+  await expect(page.locator('#discovery-result')).toContainText('57.1%');
   await expectNoHorizontalScroll(page);
   await expectAccessible(page);
   await heroAction.click();
-  await expect(page.locator('.finding')).toHaveCount(5);
+  await expect(page).toHaveURL(/\/discover\/\?example=tax$/);
+  await expect(page.locator('.finding')).toHaveCount(3);
 });
 
 test('homepage sample, Business prices, paid intent and registration remain usable', async ({ page }) => {
   await page.goto('/');
+  await page.getByRole('button', { name: 'Compare cities', exact: true }).click();
+  await page.locator('.home-evidence summary').click();
   const cityPreview = page.getByRole('table', { name: 'City estimates from the public Business sample' });
   const incomeRow = cityPreview.getByRole('row', { name: /Median household income/ });
   await expect(incomeRow).toContainText('$93,658');
   await expect(incomeRow).toContainText('$82,068');
-  await expect(page.locator('#discovery-result')).toContainText('public sample report, which also compares Nashville');
+  await expect(page.locator('#discovery-result')).toContainText('The full report compares Austin, Charlotte, and Nashville.');
   await page.getByRole('link', { name: 'View the Full Sample Report', exact: true }).click();
   await expect(page).toHaveURL(/\/sample-report$/);
   // The current production sample uses comparison cards rather than the unmerged #82 proof-income table.

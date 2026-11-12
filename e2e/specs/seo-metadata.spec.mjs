@@ -31,7 +31,9 @@ test('client navigation removes homepage offers and updates robots and canonical
   await expect(page).toHaveTitle('ifYouMind — Find the story in your numbers');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://ifyoumind.com/');
   await expect(page.locator('#page-structured-data')).toHaveCount(1);
-  await page.locator('#pricing').getByRole('link', { name: /Business brief/ }).click();
+  await page.getByRole('link', { name: 'View a Sample Report', exact: true }).click();
+  await expect(page).toHaveURL(/\/sample-report$/);
+  await page.getByRole('link', { name: 'Start free', exact: true }).first().click();
   await expect(page).toHaveURL(/\/register$/);
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex,nofollow');
   await expect(page.locator('link[rel="canonical"], script[type="application/ld+json"]')).toHaveCount(0);

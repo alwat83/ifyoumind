@@ -51,7 +51,7 @@ jobs:
           SUBSCRIPTION_STRIPE_ACCOUNT: ${{ vars.SUBSCRIPTION_STRIPE_ACCOUNT }}
           SUBSCRIPTION_STARTER_PRICE: ${{ vars.SUBSCRIPTION_STARTER_PRICE }}
           SUBSCRIPTION_PLUS_PRICE: ${{ vars.SUBSCRIPTION_PLUS_PRICE }}
-          SUBSCRIPTION_ENROLLMENT: ${{ vars.SUBSCRIPTION_ENROLLMENT }}
+          SUBSCRIPTION_ENROLLMENT: ${{ secrets.SUBSCRIPTION_ENROLLMENT }}
         run: |
           node <<'NODE'
           const { writeFileSync } = require('node:fs');
@@ -68,7 +68,7 @@ jobs:
             throw new Error('Invalid subscription deployment configuration');
           }
           writeFileSync('functions/.env.ifyoumind-473fe',
-            Object.entries(values).map(([key, value]) => key + '=' + value).join('\n') + '\n');
+            Object.entries(values).map(([key, value]) => key + '=' + value).join('\n') + '\n', { mode: 0o600 });
           NODE
 
       - name: Authenticate to Google Cloud

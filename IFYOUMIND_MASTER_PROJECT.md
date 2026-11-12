@@ -1,12 +1,18 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-05
+**Updated:** 2026-11-12
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
 **Purpose:** Living project context for the founder and all current/future development agents.
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
+
+## November 12, 2026 — Starter and Plus launch candidate
+
+**Committed for draft review.** [Issue #85](https://github.com/alwat83/ifyoumind/issues/85) and [draft PR #87](https://github.com/alwat83/ifyoumind/pull/87) implement Free → sourced result → Starter $4.99/1 or Plus $9.99/3 → paid invoice → reserved report → saved decision. The feature starts from production master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`. Enrollment is disabled by default and capped at ten workspaces. Existing $79 and $39 paths and previously unlocked reports remain. The $3.99 experiment is deferred. [Evidence, measured workload, and staged approvals](docs/growth/SUBSCRIPTION_LAUNCH.md)
+
+Both GitHub workflows passed on the implementation SHA. Local builds and the targeted Functions, commerce, rules, web and desktop/mobile suites passed. Stripe sandbox verified hosted Starter and Plus Checkout and return, paid invoice replay, a Test Clock renewal, portal return and scheduled cancellation. Live catalog, deployment and enrollment remain gated by founder approval, cost and permission readback, and the applicable live portal decision. PR #82 and [Issue #84](https://github.com/alwat83/ifyoumind/issues/84) stay separate. No live Stripe change, rollout, merge, deployment or outreach.
 
 **Active roadmap addition — [#56 SEO growth foundation](https://github.com/alwat83/ifyoumind/issues/56):** after #54/#55 verification and combined mobile checks, audit technical SEO, raw/rendered metadata, indexing, sitemap generation, structured data and actual legacy `SeoService` usage; fix verified defects with regressions on a separate feature branch/draft PR. Then prepare cited content for job offers, relocation, business locations and flexible data analysis on a separate branch. Preserve Business conversion paths; unfinished Life functionality stays clearly labelled and experimental calculations stay local-only. No merge or deployment without founder approval. See current snapshot/log for evidence and next steps.
 

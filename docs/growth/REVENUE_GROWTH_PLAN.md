@@ -2,6 +2,12 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## November 12 — affordable subscription launch
+
+[Issue #85](https://github.com/alwat83/ifyoumind/issues/85) prioritizes Starter $4.99 for one report and Plus $9.99 for three. [Draft PR #87](https://github.com/alwat83/ifyoumind/pull/87) is the independent implementation. Use one approved eligible workspace with an active location decision to verify the first independent settled payment, saved report and owner portal return before widening to the ten-workspace cap. [Launch evidence and operating plan](SUBSCRIPTION_LAUNCH.md)
+
+The local and sandbox evidence establishes technical behavior only. Actual customer acquisition, independently verified revenue, renewal, support and contribution margin remain unmeasured. Preserve the scoped historical scoreboard. Outbound remains Pending Founder Setup.
+
 ## November 5 — focused path to first useful sessions
 
 Founder asks to continue and keep focus. [First-use packet](../design/first-seconds/FIRST_USE_VALIDATION.md) is ready: five-second purpose/next-action observation, unassisted full example, finding/evidence/clear, expectation check and private blank notes. Proposed five participants are a qualitative review round, not acquired users or a statistical conversion claim. No sessions conducted, no new outcomes, no financial refresh; prior scoreboard and approved baseline retain their original scope/date. First-screen source/captures show no new confirmed defect; exact76head build41969293482/fullQA41969293743 SUCCESS verified without rerunning.

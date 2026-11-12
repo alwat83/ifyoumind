@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 12, 2026 — Starter and Plus launch candidate
+
+**Committed for draft review.** [Issue #85](https://github.com/alwat83/ifyoumind/issues/85) and [draft PR #87](https://github.com/alwat83/ifyoumind/pull/87) implement Free → sourced result → Starter $4.99/1 or Plus $9.99/3 → paid invoice → reserved report → saved decision. The feature starts from production master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`. Enrollment is disabled by default and capped at ten workspaces. Existing $79 and $39 paths and previously unlocked reports remain. The $3.99 experiment is deferred. [Evidence, measured workload, and staged approvals](../growth/SUBSCRIPTION_LAUNCH.md)
+
+Both GitHub workflows passed on the implementation SHA. Local builds and the targeted Functions, commerce, rules, web and desktop/mobile suites passed. Stripe sandbox verified hosted Starter and Plus Checkout and return, paid invoice replay, a Test Clock renewal, portal return and scheduled cancellation. Live catalog, deployment and enrollment remain gated by founder approval, cost and permission readback, and the applicable live portal decision. PR #82 and [Issue #84](https://github.com/alwat83/ifyoumind/issues/84) stay separate. No live Stripe change, rollout, merge, deployment or outreach.
+
 ## Current — November 5, 2026: keep focus; first-use validation ready
 
 OpenAI / Codex. Founder directs “Let's keep it going and the focus.” Continue the first-screen discovery work and validate actual comprehension before broader changes. **Prepared/source-reviewed, no new interface implementation or human study conducted.** Separate documentation branch `codex/first-use-validation-20261105` from PR76 exact `3eb27893c3be6aad43cb0c07e173d412c8ee8103` preserves its tested head and PR74 campaign. [Ready facilitator script, answer key, decision rules and ranked commercial opportunities](../design/first-seconds/FIRST_USE_VALIDATION.md); [blank private-session template](../design/first-seconds/SESSION_TEMPLATE.md). Candidate screenshots/source reviewed; no new confirmed defect. No app/dependency/backend changes.

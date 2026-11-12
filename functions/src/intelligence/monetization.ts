@@ -25,6 +25,12 @@ const stripeSecretKey = defineSecret('STRIPE_SECRET_KEY');
 const stripeWebhookSecret = defineSecret('STRIPE_WEBHOOK_SECRET');
 const billingRoles: readonly OrganizationRole[] = ['owner', 'admin'];
 
+type StripeRequestError = Error & {
+  stripeType?: string;
+  stripeCode?: string;
+  stripeParam?: string;
+};
+
 async function stripeGet(path:string){
   const response=await fetch(`https://api.stripe.com/v1/${path}`,{
     headers:{Authorization:`Bearer ${stripeSecretKey.value()}`},
@@ -46,12 +52,10 @@ async function stripePost(path:string, body:URLSearchParams){
   const data=await response.json() as Record<string,any>;
   if(!response.ok){
     const stripeError=data.error||{};
-    const error=new Error(String(stripeError.message||'Stripe request failed.')) as Error & {
-      stripeType?:string;
-      stripeCode?:string;
-    };
+    const error=new Error(String(stripeError.message||'Stripe request failed.')) as StripeRequestError;
     error.stripeType=typeof stripeError.type==='string'?stripeError.type:undefined;
     error.stripeCode=typeof stripeError.code==='string'?stripeError.code:undefined;
+    error.stripeParam=typeof stripeError.param==='string'?stripeError.param:undefined;
     throw error;
   }
   return data;
@@ -185,7 +189,13 @@ export const createBillingPortalSession = onCall({secrets:[stripeSecretKey]}, as
       throw new Error('Invalid Stripe portal session URL.');
     }
     return {url:url.href};
-  }catch{
+  }catch(error){
+    const stripeError=error as StripeRequestError|null;
+    if(stripeError?.stripeCode==='resource_missing'&&
+      (stripeError.stripeParam==='customer'||/^No such customer:/i.test(stripeError.message))){
+      console.warn('Stripe billing portal customer unavailable');
+      throw new HttpsError('failed-precondition','This workspace’s billing connection is unavailable. Contact support for help.');
+    }
     console.error('Stripe billing portal session unavailable');
     throw new HttpsError('internal','Billing management could not be opened.');
   }
@@ -240,7 +250,7 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
     const session=await stripePost('checkout/sessions',params);
     return {url:String(session.url||''),sessionId:String(session.id||'')};
   }catch(error){
-    const stripeError=error as Error & {stripeType?:string;stripeCode?:string};
+    const stripeError=error as StripeRequestError;
     console.error('Stripe checkout creation failed',{
       message:stripeError.message,
       type:stripeError.stripeType||null,
@@ -415,6 +425,22 @@ export const stripeCommercialWebhook = onRequest(
       livemode?:boolean;
       data:{object:Record<string,any>};
     };
+
+    const mode=stripeKeyMode(stripeSecretKey.value());
+    if(mode==='unknown'){
+      console.error('Stripe webhook key mode unavailable');
+      res.status(503).send('Webhook processing unavailable');
+      return;
+    }
+    if(typeof event.livemode!=='boolean'){
+      res.status(400).send('Invalid event mode');
+      return;
+    }
+    if(event.livemode!==(mode==='live')){
+      console.warn('Stripe webhook event mode differs from key mode');
+      res.status(503).send('Webhook processing unavailable');
+      return;
+    }
 
     const db=getFirestore();
     const eventRef=db.collection('stripeEvents').doc(event.id);

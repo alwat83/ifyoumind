@@ -259,6 +259,25 @@ test('billing portal fails closed for provider errors and non-session redirects'
   }
 });
 
+test('billing portal reports an unresolvable customer without disclosing or changing its link', async t => {
+  const customer = 'cus_unresolvable_test_fixture';
+  const paid = await newOrg({ plan: 'pro', stripeCustomerId: customer, stripeSubscriptionId: 'sub_test_fixture' });
+  const before = await org(paid);
+  const warning = t.mock.method(console, 'warn', () => {});
+  for (const param of ['customer', undefined]) {
+    portalResponse = { status: 400, body: { error: { code: 'resource_missing', param, message: `No such customer: '${customer}'` } } };
+    await assert.rejects(
+      handlers.createBillingPortalSession.run({ data: { organizationId: paid }, auth: { uid: 'owner-uid' } }),
+      error => error.code === 'failed-precondition' &&
+        error.message === 'This workspace’s billing connection is unavailable. Contact support for help.',
+    );
+  }
+  assert.deepEqual(warning.mock.calls.map(call => call.arguments), Array(2).fill(['Stripe billing portal customer unavailable']));
+  assert.deepEqual(await org(paid), before);
+  portalResponse = { status: 400, body: { error: { code: 'resource_missing', param: 'configuration', message: 'No such configuration' } } };
+  assert.equal((await call('createBillingPortalSession', { organizationId: paid })).error, 'internal');
+});
+
 // ---- Webhook ----
 
 const reportSession = (organizationId, projectId, fields = {}) => ({
@@ -275,6 +294,39 @@ test('webhook rejects requests without a valid Stripe signature', async () => {
   const res = await deliver('checkout.session.completed', reportSession(orgId, id), { secret: 'whsec_wrong' });
   assert.equal(res.statusCode, 400);
   assert.equal((await project(orgId, id)).decisionReportPurchased, undefined);
+});
+
+test('signed events from another Stripe mode do not write billing or report state', async () => {
+  const free = await newOrg({ plan: 'free' });
+  const before = await org(free);
+  const session = reportSession(free, await newProject(free));
+  const subscription = { id: 'sub_other_mode', status: 'active', customer: 'cus_other_mode', metadata: { organizationId: free, offer: 'pro' } };
+  process.env.STRIPE_SECRET_KEY = 'sk_live_integration';
+  const testUpdate = await deliver('customer.subscription.updated', subscription, { id: 'evt_test_into_live' });
+  assert.equal(testUpdate.statusCode, 503);
+  assert.equal(testUpdate.body, 'Webhook processing unavailable');
+  assert.equal((await db().collection('stripeEvents').doc('evt_test_into_live').get()).exists, false);
+  assert.deepEqual(await org(free), before);
+  process.env.STRIPE_SECRET_KEY = 'sk_test_integration';
+  const liveCheckout = await deliver('checkout.session.completed', session, { id: 'evt_live_into_test', livemode: true });
+  assert.equal(liveCheckout.statusCode, 503);
+  assert.equal(liveCheckout.body, 'Webhook processing unavailable');
+  assert.equal((await db().collection('stripeEvents').doc('evt_live_into_test').get()).exists, false);
+  assert.equal((await project(free, session.metadata.projectId)).decisionReportPurchased, undefined);
+  assert.equal(await payment(session.id), undefined);
+});
+
+test('unavailable key mode and missing event mode fail closed before a webhook claim', async () => {
+  const session = reportSession(orgId, await newProject(orgId));
+  process.env.STRIPE_SECRET_KEY = 'unrecognized_integration_key';
+  const unavailable = await deliver('checkout.session.completed', session, { id: 'evt_missing_key_mode' });
+  assert.equal(unavailable.statusCode, 503);
+  assert.equal((await db().collection('stripeEvents').doc('evt_missing_key_mode').get()).exists, false);
+  process.env.STRIPE_SECRET_KEY = 'sk_test_integration';
+  const invalid = await deliver('checkout.session.completed', session, { id: 'evt_missing_event_mode', livemode: null });
+  assert.equal(invalid.statusCode, 400);
+  assert.equal((await db().collection('stripeEvents').doc('evt_missing_event_mode').get()).exists, false);
+  assert.equal((await project(orgId, session.metadata.projectId)).decisionReportPurchased, undefined);
 });
 
 test('a paid report checkout unlocks the report once, even if delivered twice', async () => {
@@ -393,6 +445,7 @@ const payment = async (sessionId) => (await db().collection('stripePayments').do
 test('a paid report is recorded once as a confirmed payment, flagged live or test', async () => {
   const free = await newOrg();
   const liveSession = reportSession(free, await newProject(free));
+  process.env.STRIPE_SECRET_KEY = 'sk_live_integration';
   await deliver('checkout.session.completed', liveSession, { id: 'evt_live_pay', livemode: true });
   await deliver('checkout.session.completed', liveSession, { id: 'evt_live_pay', livemode: true });
   const live = await payment(liveSession.id);
@@ -401,6 +454,7 @@ test('a paid report is recorded once as a confirmed payment, flagged live or tes
   assert.equal(live.amountTotal, 7900);
   assert.equal(live.fulfilment, 'fulfilled');
   const testSession = reportSession(free, await newProject(free));
+  process.env.STRIPE_SECRET_KEY = 'sk_test_integration';
   await deliver('checkout.session.completed', testSession);
   assert.equal((await payment(testSession.id)).livemode, false);
 });
@@ -429,6 +483,7 @@ test('Pro is recorded as a payment only when the subscription grants Pro', async
   await deliver('checkout.session.completed', { id: 'cs_pay_pro_1', subscription: 'sub_pay_incomplete', amount_total: 3900, currency: 'usd', metadata: { organizationId: free, offer: 'pro' } });
   assert.equal(await payment('cs_pay_pro_1'), undefined);
   stripeSubscriptions.sub_pay_active = { id: 'sub_pay_active', status: 'active', customer: 'cus_p' };
+  process.env.STRIPE_SECRET_KEY = 'sk_live_integration';
   await deliver('checkout.session.completed', { id: 'cs_pay_pro_2', subscription: 'sub_pay_active', amount_total: 3900, currency: 'usd', metadata: { organizationId: free, offer: 'pro' } }, { livemode: true });
   const pro = await payment('cs_pay_pro_2');
   assert.equal(pro.offer, 'pro');

@@ -8,6 +8,10 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 12, 2026 — Starter and Plus are the primary subscription offers
+
+Founder confirmed Starter $4.99/month for one report and Plus $9.99/month for three. Free and the $79 one-time report remain available, with $39 Pro retained for existing customers. The [pricing readiness update](docs/growth/PRICING_READINESS.md) extends the approved Wow 3.2 identity, documents the deployed dormant backend, and preserves separate setup, release and enrollment authorization.
+
 ## November 12, 2026 — One visual identity across the product
 
 [Draft PR #92](https://github.com/alwat83/ifyoumind/pull/92) extends the Wow 3.2 candidate into static error recovery and billing return states. The [design system](docs/design/DESIGN_SYSTEM.md) defines the shared roles and reviewed screenshot procedure. The permanent agent instructions and PR template make cross-route visual evidence part of review. [Brand integrity inventory and founder package](docs/design/wow-3-2/BRAND_INTEGRITY.md). Production and commercial permissions remain separate.

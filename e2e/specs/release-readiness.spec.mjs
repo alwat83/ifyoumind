@@ -73,32 +73,31 @@ test('paid-report response contract: full report, copy and print controls remain
   await expect(page.locator('#market-analysis')).toBeVisible();
 });
 
-for (const offer of ['report', 'pro']) {
-  // Both callable responses and the destination are intercepted: this verifies browser wiring,
-  // never opens a real Stripe session and never changes a billing configuration or entitlement.
-  test(`checkout link contract: ${offer} preserves the offer and report identity`, async ({ page, fixtures }, testInfo) => {
-    const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
-    const calls = [];
-    await page.route('**/getCommercialStatus', async route => {
-      const response = await route.fetch();
-      const body = await response.json();
-      await route.fulfill({ json: { ...body, result: { ...body.result, checkoutEnabled: true } } });
-    });
-    await page.route('**/createCommercialCheckout', route => {
-      calls.push(route.request().postDataJSON().data);
-      return route.fulfill({ json: { result: { url: 'https://checkout.stripe.com/c/pay/qa-release-contract' } } });
-    });
-    await page.route('https://checkout.stripe.com/**', route => route.fulfill({ contentType: 'text/html', body: '<h1>Intercepted checkout contract — no payment</h1>' }));
-    const path = `/app/pricing?offer=${offer}&projectId=${user.projectIds[0]}`;
-    await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent(path)}`);
-    await expect(page.locator('.plans')).toContainText('$79');
-    await expect(page.locator('.plans')).toContainText('$39');
-    await expect(page.locator('.billing-note').first()).toContainText('Stripe');
-    await expectNoHorizontalScroll(page);
-    await allWcagChecks(page);
-    await page.screenshot({ path: testInfo.outputPath(`pricing-${offer}.png`), fullPage: true, scale: 'css' });
-    await page.getByRole('button', { name: offer === 'report' ? 'Buy Decision Report' : 'Get Pro access', exact: true }).click();
-    await expect(page).toHaveURL('https://checkout.stripe.com/c/pay/qa-release-contract');
-    expect(calls).toEqual([{ organizationId: user.organizationId, offer, projectId: user.projectIds[0] }]);
+// Both callable responses and the destination are intercepted: this verifies browser wiring,
+// never opens a real Stripe session and never changes a billing configuration or entitlement.
+test('one-time checkout preserves the offer and report identity', async ({ page, fixtures }, testInfo) => {
+  const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
+  const calls = [];
+  await page.route('**/getCommercialStatus', async route => {
+    const response = await route.fetch();
+    const body = await response.json();
+    await route.fulfill({ json: { ...body, result: { ...body.result, checkoutEnabled: true } } });
   });
-}
+  await page.route('**/createCommercialCheckout', route => {
+    calls.push(route.request().postDataJSON().data);
+    return route.fulfill({ json: { result: { url: 'https://checkout.stripe.com/c/pay/qa-release-contract' } } });
+  });
+  await page.route('https://checkout.stripe.com/**', route => route.fulfill({ contentType: 'text/html', body: '<h1>Intercepted checkout contract — no payment</h1>' }));
+  const path = `/app/pricing?offer=report&projectId=${user.projectIds[0]}`;
+  await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent(path)}`);
+  await expect(page.locator('.plans')).toContainText('$79');
+  await expect(page.locator('main')).not.toContainText('$39');
+  await expect(page.getByRole('button', { name: 'Get Pro access' })).toHaveCount(0);
+  await expect(page.locator('.billing-note').first()).toContainText('Stripe');
+  await expectNoHorizontalScroll(page);
+  await allWcagChecks(page);
+  await page.screenshot({ path: testInfo.outputPath('pricing-one-time.png'), fullPage: true, scale: 'css' });
+  await page.getByRole('button', { name: 'Buy Decision Report', exact: true }).click();
+  await expect(page).toHaveURL('https://checkout.stripe.com/c/pay/qa-release-contract');
+  expect(calls).toEqual([{ organizationId: user.organizationId, offer: 'report', projectId: user.projectIds[0] }]);
+});

@@ -544,3 +544,11 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 **Verification:** local production/demo builds, 138 web, 72 Functions, 22 targeted authenticated cases and three actual Hosting 404 cases passed. Both bundle guards passed. Angular Karma still stops before unit execution at 11 known TypeScript diagnostics. The initial CI at `a51ff62c5e8e787813ffdd141db9f645f5f2039f` produced missing-baseline candidates and identified a navigation test setup that used a disallowed login return. Inspected all 22 Linux candidates individually and corrected the test without changing the guard. [Draft checks](https://github.com/alwat83/ifyoumind/pull/92/checks) carry the exact review head and final results. No release, live payment or configuration change.
 
 **Next:** compare the end-to-end mobile and desktop sequences, run a physical Safari/VoiceOver spot check, and make a separate founder release decision. Live portal behavior remains on Issue #84. No customer conversion or revenue outcome was measured.
+
+## 2026-11-12 — Starter and Plus pricing readiness
+
+**Provider/agent:** OpenAI / Codex. **Branch:** `codex/starter-plus-pricing-readiness`, based on [Wow 3.2 PR #92](https://github.com/alwat83/ifyoumind/pull/92) at `900dd2648f95358ef5e1416aa8a2cfd2f5c4be12`. Founder confirmed the primary paid tiers. [Issue #85](https://github.com/alwat83/ifyoumind/issues/85).
+
+**Work:** verified merged and deployed dormant PR #87, forced-empty enrollment, matching active Stripe prices and default portal policy. Reordered and simplified pricing, preserved Free and $79, retired new Pro entry points, retained existing Pro access and added neutral cancellation feedback. [Scope, screenshots, deployment dependencies and rollback](../growth/PRICING_READINESS.md).
+
+**Verification and release:** production/demo builds, bundle guards, 138 web, 72 Functions and 38 emulator commerce tests passed. Browser and exact-head evidence are recorded on the pricing draft. No deployment, live price, account or enrollment changes. Signed live delivery, tax alignment, runtime permissions and the live portal gate remain open. Next prioritize founder review of the candidate and approved verification before authorizing a single independent workspace.

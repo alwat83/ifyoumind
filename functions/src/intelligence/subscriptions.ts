@@ -130,7 +130,7 @@ export async function startSubscriptionCheckout(organizationId: string, offer: S
       mode: 'subscription', client_reference_id: organizationId, 'line_items[0][price]': checkout.priceId,
       'line_items[0][quantity]': '1', expires_at: String(checkout.expiresAt),
       success_url: resultUrl + '?subscription=confirming',
-      cancel_url: base + '/app/pricing?projectId=' + encodeURIComponent(checkout.projectId),
+      cancel_url: base + '/app/pricing?checkout=cancelled&projectId=' + encodeURIComponent(checkout.projectId),
     });
     for (const [key, value] of Object.entries(metadata)) {
       params.set(`metadata[${key}]`, String(value));

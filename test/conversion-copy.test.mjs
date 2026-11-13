@@ -62,20 +62,21 @@ test('metric cards hide the unit line when the value already shows it',()=>{
   assert.ok(reportTs.includes("return unit!=='USD'&&unit!=='%';"));
 });
 
-test('account pricing keeps free, one report and Pro in order',()=>{
-  const [free, report, pro]=['Free','One report','Pro'].map(label=>pricingHtml.indexOf(`<span class="label">${label}</span>`));
-  assert.ok(free>=0&&free<report&&report<pro);
-  assert.match(pricingHtml,/<article class="featured"[^>]*>\s*<div class="topline"><span class="label">One report<\/span>/);
-  assert.ok(pricingHtml.includes('For advisers and anyone planning several locations a month.'));
-  assert.ok(pricingHtml.includes('Recommended for one business plan'));
-  assert.ok(pricingHtml.includes('{{ proReportAllowance }} full Decision Reports included each month'));
+test('pricing leads with eligible monthly plans and keeps Free, one-time and legacy access',()=>{
+  const monthly=pricingHtml.indexOf('id="monthly-title"');
+  const free=pricingHtml.indexOf('<h3>Free</h3>');
+  const oneTime=pricingHtml.indexOf('<h3>One-time Decision Report</h3>');
+  assert.ok(monthly>=0&&monthly<free&&free<oneTime);
+  assert.match(pricingHtml,/\*ngIf="showMonthlyPlans"[^>]*aria-labelledby="monthly-title"/);
+  assert.match(pricingHtml,/Legacy Pro/);
+  assert.doesNotMatch(pricingHtml,/Get Pro access|request\('pro'\)/);
   assert.match(landingHtml,/routerLink="\/app\/pricing">Pricing \(sign-in required\)/);
 });
 
-test('account pricing keeps free and uses the server prices',()=>{
-  assert.ok(pricingHtml.includes('<h2>$0</h2>'));
-  assert.ok(pricingHtml.includes('<h2>${{ status.pricing.reportOneTimeUsd }}</h2>'));
-  assert.ok(pricingHtml.includes('<h2>${{ status.pricing.proMonthlyUsd }}<small>/month</small></h2>'));
+test('account pricing keeps Free and uses the server prices for report and legacy Pro',()=>{
+  assert.ok(pricingHtml.includes('<p class="price">$0</p>'));
+  assert.match(pricingHtml,/status\?\.pricing\?\.reportOneTimeUsd/);
+  assert.match(pricingHtml,/status\?\.pricing\?\.proMonthlyUsd/);
 });
 
 test('population-change wording names the real ACS periods and the margin of error',()=>{
@@ -94,8 +95,8 @@ test('consumer homepage preserves the Business entry point and plan-ready offer'
   assert.match(landingHtml,/routerLink="\/sample-report"/);
   assert.match(read('src/app/intelligence/home-discovery-examples.ts'),/action: 'View the Full Sample Report'/);
   assert.match(landingHtml,/more comparisons, a sourced market analysis, and an action plan/);
-  assert.match(pricingHtml,/evidence boundaries and source list/);
-  assert.match(pricingHtml,/An action plan: what to do before you commit/);
+  assert.match(pricingHtml,/more comparisons, sourced analysis, and an action plan/);
+  assert.match(reportHtml,/evidence boundaries/);
   assert.ok(landingHtml.indexOf('id="try"')<landingHtml.indexOf('id="business"'),'consumer discovery leads; Business remains available');
 });
 

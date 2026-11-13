@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 12, 2026 — Starter and Plus pricing readiness
+
+**Draft candidate** on `codex/starter-plus-pricing-readiness` from Wow 3.2 `900dd2648f95358ef5e1416aa8a2cfd2f5c4be12`. [Pricing readiness, production and Stripe readbacks, and matched visuals](../growth/PRICING_READINESS.md). PR #87 is merged and deployed dormant. Live Starter and Plus prices and the portal configuration were verified read-only. The current workflow forces enrollment empty. Existing Pro and $79 billing are preserved. Separate exact release and enrollment authorization are required. Issue #84 remains open.
+
 ## November 12, 2026 — Wow 3.2 brand integrity follow-up
 
 **[Draft PR #92](https://github.com/alwat83/ifyoumind/pull/92).** Continued the existing candidate from green head `267b622fbee5e9d60e0f03dd7d919e5c59f8e6c8`. The static 404 uses the shared design and retains HTTP 404. Account explains the Stripe transition and shows payment attention and errors in context. Existing Ask and Advanced navigation links stay inside the workspace. [Surface inventory, supplemental captures and nine journey checks](../design/wow-3-2/BRAND_INTEGRITY.md). [Design system and visual baseline procedure](../design/DESIGN_SYSTEM.md). Twenty-two individually reviewed Linux images are committed, with missing or unexplained differences failing CI. [Exact draft head and checks](https://github.com/alwat83/ifyoumind/pull/92/checks). Legacy Angular Karma compilation still has 11 documented diagnostics. Founder review and separate production authorization remain pending. Live portal verification stays on [Issue #84](https://github.com/alwat83/ifyoumind/issues/84).

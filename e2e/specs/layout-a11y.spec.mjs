@@ -49,7 +49,8 @@ test('signed-in pages are accessible, fit the viewport and the app navigation wo
     await pricing.click();
   }
   await expect(page).toHaveURL(/\/app\/pricing$/);
-  await expect(page.getByText('If you cancel Pro, reports you already unlocked with it stay unlocked.')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'One-time Decision Report' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Get Pro access' })).toHaveCount(0);
 });
 
 test('shared app surfaces retain editorial headings, mobile fit and keyboard focus', async ({ page, fixtures }) => {
@@ -61,7 +62,7 @@ test('shared app surfaces retain editorial headings, mobile fit and keyboard foc
   for (const [path, control] of [
     ['/app', 'Start a decision'],
     ['/app/decide?type=business', 'Main location'],
-    ['/app/pricing', 'Buy Decision Report'],
+    ['/app/pricing', 'Choose a decision'],
     ['/app/account', 'Save profile'],
     ['/app/data', 'Choose a CSV'],
     ['/app/ask', 'Question'],

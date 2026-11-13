@@ -3,7 +3,7 @@ import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
 import { isSubscriptionOffer, subscriptionCatalog, subscriptionEnrollment } from './subscription-plans';
-import { openSubscriptionPortal, readSubscriptionStatus, startLaunchReportCheckout, startSubscriptionCheckout, subscriptionBilling } from './subscriptions';
+import { openSubscriptionPortal, readSubscriptionStatus, startLaunchReportCheckout, startSubscriptionCheckout } from './subscriptions';
 import {
   grantsPro,
   shouldApplySubscriptionEvent,
@@ -14,7 +14,6 @@ import {
 } from './stripe-commerce-logic';
 import {
   allowancePeriod,
-  blocksNewProCheckout,
   blocksReportCheckout,
   decisionReportAccess,
   includedReportsUsed,
@@ -135,7 +134,8 @@ export const requestCommercialAccess = onCall(async (request) => {
     request.auth?.uid, request.data?.organizationId, readMembership,
   );
   const offer = request.data?.offer;
-  if (offer !== 'pro' && offer !== 'report') {
+  if (offer === 'pro') throw new HttpsError('failed-precondition', 'Pro is a legacy plan. Manage an existing plan in Account.');
+  if (offer !== 'report') {
     throw new HttpsError('invalid-argument', 'Choose a valid offer.');
   }
 
@@ -156,9 +156,7 @@ export const requestCommercialAccess = onCall(async (request) => {
   return {
     ok: true,
     offer,
-    message: offer === 'pro'
-      ? 'Pro interest recorded. Checkout will activate when billing is connected.'
-      : 'Market Report interest recorded. Checkout will activate when billing is connected.',
+    message: 'Market Report interest recorded. Checkout will activate when billing is connected.',
   };
 });
 
@@ -194,32 +192,21 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
     if (!['owner','admin'].includes(scope.role)) throw new HttpsError('permission-denied', 'Only workspace owners and admins can choose a subscription.');
     return startSubscriptionCheckout(scope.organizationId, offer, request.data?.projectId);
   }
-  if(offer!=='pro'&&offer!=='report') throw new HttpsError('invalid-argument','Choose a valid offer.');
+  if(offer==='pro') throw new HttpsError('failed-precondition','Pro is a legacy plan. Manage an existing plan in Account.');
+  if(offer!=='report') throw new HttpsError('invalid-argument','Choose a valid offer.');
   const projectId=typeof request.data?.projectId==='string'?request.data.projectId.trim().slice(0,120):'';
-  if(offer==='report'){
-    if(!projectId) throw new HttpsError('invalid-argument','Choose the decision this report belongs to.');
-    const project=await organizations().doc(scope.organizationId).collection('marketProjects').doc(projectId).get();
-    if(!project.exists) throw new HttpsError('not-found','Decision project not found.');
-    if(blocksReportCheckout(project.data())){
-      throw new HttpsError('failed-precondition','This Decision Report is already unlocked. Open it from your decisions.');
-    }
-  }else{
-    const ref=organizations().doc(scope.organizationId);
-    const [workspace, subscription] = await Promise.all([ref.get(), subscriptionBilling(ref).get()]);
-    const org=workspace.data();
-    if (subscriptionEnrollment(scope.organizationId) || subscription.data()?.checkout || subscription.data()?.subscriptionId) {
-      throw new HttpsError('failed-precondition','Open your decision to choose a subscription, or manage your plan in Account.');
-    }
-    if(blocksNewProCheckout(org)){
-      throw new HttpsError('failed-precondition','This workspace already has a Pro subscription. Use Manage billing on your account page to change it.');
-    }
+  if(!projectId) throw new HttpsError('invalid-argument','Choose the decision this report belongs to.');
+  const project=await organizations().doc(scope.organizationId).collection('marketProjects').doc(projectId).get();
+  if(!project.exists) throw new HttpsError('not-found','Decision project not found.');
+  if(blocksReportCheckout(project.data())){
+    throw new HttpsError('failed-precondition','This Decision Report is already unlocked. Open it from your decisions.');
   }
 
   const params=new URLSearchParams();
-  params.set('mode',offer==='pro'?'subscription':'payment');
+  params.set('mode','payment');
   // Price IDs belong to one Stripe mode, so checkout picks the set matching the installed secret key.
   const prices=stripePriceIds(stripeKeyMode(stripeSecretKey.value()));
-  params.set('line_items[0][price]',offer==='pro'?prices.pro:prices.report);
+  params.set('line_items[0][price]',prices.report);
   if(stripeKeyMode(stripeSecretKey.value())!=='live'){
     console.warn('Creating a Stripe checkout with a non-live key: real cards will be declined.');
   }
@@ -236,15 +223,8 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
   params.set('metadata[organizationId]',scope.organizationId);
   params.set('metadata[offer]',offer);
   params.set('metadata[projectId]',projectId);
-  if(offer==='pro'){
-    params.set('subscription_data[metadata][organizationId]',scope.organizationId);
-    params.set('subscription_data[metadata][offer]','pro');
-  }
-
-  if (offer === 'report') {
-    const launch = await startLaunchReportCheckout(scope.organizationId, projectId, params);
-    if (launch) return launch;
-  }
+  const launch = await startLaunchReportCheckout(scope.organizationId, projectId, params);
+  if (launch) return launch;
 
   try{
     const session=await stripePost('checkout/sessions',params);

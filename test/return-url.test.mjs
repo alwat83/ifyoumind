@@ -50,7 +50,7 @@ test('the guard and sign-in page use the validator, and access control is unchan
   assert.doesNotMatch(read('../src/app/return-url.ts'), /window|document|localStorage|sessionStorage/, 'pure function, no stored state');
 });
 
-test('every $79 entry point carries the report intent; free and Pro stay plain', () => {
+test('every $79 entry point carries the report intent and legacy Pro has no checkout', () => {
   const home = read('../src/app/intelligence/public-landing.component.html');
   assert.match(home, /routerLink="\/sample-report" class="button">View a Sample Report/);
   const sample = read('../src/app/intelligence/market-report.component.html');
@@ -58,7 +58,7 @@ test('every $79 entry point carries the report intent; free and Pro stay plain',
   assert.match(sample, /<a routerLink="\/register" class="offer-secondary">Start free<\/a>/);
   const pricing = read('../src/app/intelligence/pricing.component.html');
   assert.match(pricing, /\(click\)="request\('report'\)"/);
-  assert.match(pricing, /\(click\)="request\('pro'\)"/);
+  assert.doesNotMatch(pricing, /\(click\)="request\('pro'\)"/);
 });
 
 test('property: any output is an allowlisted in-app path with allowlisted parameters', () => {

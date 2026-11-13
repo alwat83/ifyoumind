@@ -9,28 +9,29 @@
 </header>
 <main *ngIf="!category" id="discovery-entry" class="entry">
   <p class="eyebrow">You bring the data. We’ll find the story.</p>
-  <h1 #entryHeading tabindex="-1">Pick a bill.<br>Find your <em>aha.</em></h1>
-  <p class="lead">One little click. A whole new way to see your numbers.</p>
+  <h1 #entryHeading tabindex="-1"><ng-container *ngIf="publicEntry; else localTitle">Understand your bill.</ng-container><ng-template #localTitle>Pick a bill.<br>Find your <em>aha.</em></ng-template></h1>
+  <p class="lead">{{ publicEntry ? 'Enter a few numbers to see what stands out. No account needed.' : 'One little click. A whole new way to see your numbers.' }}</p>
   <p class="message" role="status" aria-live="polite">{{ message }}</p>
   <div class="choices">
     <article class="choice tax" aria-labelledby="tax-title">
       <div class="bill-art" aria-hidden="true"><div class="bill"><span>2024</span><b>$4,200</b><i></i><i></i></div><div class="bill later"><span>2025</span><b>$4,620</b><i></i><i></i></div><span class="bill-symbol">⌂</span></div><p class="kicker">Year to year · Made-up example</p>
       <h2 id="tax-title">Property tax discovery</h2>
       <p>A bigger bill. See which charges changed.</p>
-      <div class="actions"><button class="primary" type="button" (click)="choose('tax')" aria-label="Try property tax example">Try example <span aria-hidden="true">↗</span></button><button class="quiet" type="button" (click)="choose('tax',false)" aria-label="Use a property tax CSV">Use my CSV</button></div>
-      <p class="format">Two annual statements · USD · one supported CSV format</p>
+      <div class="actions"><button *ngIf="publicEntry" class="primary" type="button" (click)="enterNumbers('tax')" aria-label="Enter property tax numbers">Enter my numbers</button><button [class.primary]="!publicEntry" [class.quiet]="publicEntry" type="button" (click)="choose('tax')" aria-label="Try property tax example">Try example</button><button class="quiet" type="button" (click)="choose('tax',false)" aria-label="Use a property tax CSV">Use my CSV</button></div>
+      <p *ngIf="!publicEntry" class="format">Two annual statements · USD · one supported CSV format</p>
     </article>
     <article class="choice electricity" aria-labelledby="electricity-title">
       <div class="bill-art" aria-hidden="true"><div class="bill"><span>Earlier bill</span><b>$120</b><i></i><i></i></div><div class="bill later"><span>Later bill</span><b>$145.20</b><i></i><i></i></div><span class="bill-symbol">ϟ</span></div><p class="kicker">Use versus cost · Made-up example</p>
       <h2 id="electricity-title">Electricity bill discovery</h2>
       <p>More energy used, or a bigger bill? Look closer.</p>
-      <div class="actions"><button class="primary" type="button" (click)="choose('electricity')" aria-label="Try electricity example">Try example <span aria-hidden="true">↗</span></button><button class="quiet" type="button" (click)="choose('electricity',false)" aria-label="Use an electricity CSV">Use my CSV</button></div>
-      <p class="format">Two compatible bills · kWh / USD · one supported CSV format</p>
+      <div class="actions"><button *ngIf="publicEntry" class="primary" type="button" (click)="enterNumbers('electricity')" aria-label="Enter electricity numbers">Enter my numbers</button><button [class.primary]="!publicEntry" [class.quiet]="publicEntry" type="button" (click)="choose('electricity')" aria-label="Try electricity example">Try example</button><button class="quiet" type="button" (click)="choose('electricity',false)" aria-label="Use an electricity CSV">Use my CSV</button></div>
+      <p *ngIf="!publicEntry" class="format">Two compatible bills · kWh / USD · one supported CSV format</p>
     </article>
   </div>
-  <p class="reassurance">No account. No question to write. Start with made-up example data.</p>
+  <p *ngIf="!publicEntry" class="reassurance">No account. No question to write. Start with made-up example data.</p>
 </main>
 <ng-container *ngIf="category && childInjector"><ng-container *ngComponentOutlet="journeyComponent; injector:childInjector; inputs:journeyInputs"></ng-container></ng-container>
+<app-typed-bill *ngIf="typed && category" [category]="category"></app-typed-bill>
 <footer class="shell-footer">
   <p><strong>Your bills stay in this browser tab.</strong> We don’t upload or store them.</p>
   <p>Two supported CSV formats today. No PDFs, scans or other file types.</p>

@@ -184,24 +184,23 @@ test('checkout uses sandbox prices with a test key and live prices with a live k
   await call('createCommercialCheckout', { organizationId: free, offer: 'report', projectId: id });
   process.env.STRIPE_SECRET_KEY = 'sk_live_integration';
   await call('createCommercialCheckout', { organizationId: free, offer: 'report', projectId: id });
-  await call('createCommercialCheckout', { organizationId: free, offer: 'pro' });
   assert.equal(stripeRequests[0].get('line_items[0][price]'), STRIPE_PRICES.test.report);
   assert.equal(stripeRequests[1].get('line_items[0][price]'), STRIPE_PRICES.live.report);
   assert.equal(stripeRequests[1].get('mode'), 'payment');
   assert.equal(stripeRequests[1].get('metadata[projectId]'), id);
   assert.equal(stripeRequests[1].get('allow_promotion_codes'), 'true');
-  assert.equal(stripeRequests[2].get('line_items[0][price]'), STRIPE_PRICES.live.pro);
-  assert.equal(stripeRequests[2].get('mode'), 'subscription');
-  assert.equal(stripeRequests[2].get('subscription_data[metadata][organizationId]'), free);
 });
 
-test('checkout refuses already unlocked reports and a second Pro subscription', async () => {
+test('checkout refuses already unlocked reports and new Pro sessions', async () => {
   const pro = await newOrg({ plan: 'pro' });
   const bought = await newProject(pro, { decisionReportPurchased: true });
   const included = await newProject(pro, { decisionReportIncludedWithPro: true });
   assert.equal((await call('createCommercialCheckout', { organizationId: pro, offer: 'report', projectId: bought })).error, 'failed-precondition');
   assert.equal((await call('createCommercialCheckout', { organizationId: pro, offer: 'report', projectId: included })).error, 'failed-precondition');
   assert.equal((await call('createCommercialCheckout', { organizationId: pro, offer: 'pro' })).error, 'failed-precondition');
+  const free = await newOrg();
+  assert.equal((await call('createCommercialCheckout', { organizationId: free, offer: 'pro' })).error, 'failed-precondition');
+  assert.equal((await call('requestCommercialAccess', { organizationId: free, offer: 'pro' })).error, 'failed-precondition');
   const pastDue = await newOrg({ plan: 'free', stripeSubscriptionStatus: 'past_due' });
   assert.equal((await call('createCommercialCheckout', { organizationId: pastDue, offer: 'pro' })).error, 'failed-precondition');
   assert.equal(stripeRequests.length, 0);

@@ -8,6 +8,30 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 12, 2026 — Starter and Plus are the primary subscription offers
+
+Founder confirmed Starter $4.99/month for one report and Plus $9.99/month for three. Free and the $79 one-time report remain available, with $39 Pro retained for existing customers. The [pricing readiness update](docs/growth/PRICING_READINESS.md) extends the approved Wow 3.2 identity, documents the deployed dormant backend, and preserves separate setup, release and enrollment authorization.
+
+## November 12, 2026 — One visual identity across the product
+
+[Draft PR #92](https://github.com/alwat83/ifyoumind/pull/92) extends the Wow 3.2 candidate into static error recovery and billing return states. The [design system](docs/design/DESIGN_SYSTEM.md) defines the shared roles and reviewed screenshot procedure. The permanent agent instructions and PR template make cross-route visual evidence part of review. [Brand integrity inventory and founder package](docs/design/wow-3-2/BRAND_INTEGRITY.md). Production and commercial permissions remain separate.
+
+## November 12, 2026 — Wow 3.2 visual consistency
+
+The founder accepted the Wow 3.1 visual direction and gated release on a cohesive journey. The [separate Wow 3.2 review](docs/design/wow-3-2/REVIEW.md) traces the shared visual system across the public and signed-in app while preserving privacy, existing commercial behavior and report evidence. PR #91 remains the approved visual baseline. Design review and release authorization remain separate.
+
+## November 12, 2026 — Permanent cross-surface engineering standard
+
+Every meaningful change gets an impact assessment, complete journey verification and explicit release evidence. [AGENTS.md](AGENTS.md#cross-surface-engineering-standard) defines the rule, and the [GitHub PR template](.github/pull_request_template.md) captures the evidence. The [Wow 3.1 cross-surface review](docs/design/wow-3-20261112/CROSS_SURFACE.md) is its first application.
+
+## November 12, 2026 — Wow 3.1
+
+The founder selected Wow 3.0's editorial composition. [Draft PR #91](https://github.com/alwat83/ifyoumind/pull/91) refines the opening invitation, phone demo, evidence hierarchy and personalized report path on the same branch. [Review and verified scope](docs/design/wow-3-20261112/REVIEW.md).
+
+## November 12, 2026 — Wow 3.0
+
+Founder rejected the Wow 2.2 visual direction. The new design candidate uses an editorial hero, an interactive demo with source-backed chart values, and a concise Decision Reports path. Detailed pricing, guides and file disclosures remain at their existing destinations. [Full homepage comparison and review](docs/design/wow-3-20261112/REVIEW.md). PR #90 is retained at its exact comparison head.
+
 ## November 12, 2026 — Starter and Plus launch candidate
 
 **Committed for draft review.** [Issue #85](https://github.com/alwat83/ifyoumind/issues/85) and [draft PR #87](https://github.com/alwat83/ifyoumind/pull/87) implement Free → sourced result → Starter $4.99/1 or Plus $9.99/3 → paid invoice → reserved report → saved decision. The feature starts from production master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`. Enrollment is disabled by default and capped at ten workspaces. Existing $79 and $39 paths and previously unlocked reports remain. The $3.99 experiment is deferred. [Evidence, measured workload, and staged approvals](docs/growth/SUBSCRIPTION_LAUNCH.md)

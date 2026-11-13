@@ -505,3 +505,50 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 **F — Next three.** (1) Review exact-head CI, sandbox evidence and the applicable live portal gate. (2) Review the measured cost envelope and obtain approval for the two live Prices, webhook and dormant deployment. (3) After verified deploy and separately approved enrollment, guide one independent qualified customer through purchase, report delivery and portal return before widening.
 
 **G — Business impact.** Lowers entry cost for an eligible location decision and shows evidence before purchase. Define the first independently verified sale as a settled live invoice and delivered report from a real customer, excluding test, founder, duplicates and refunds. This work measured no commercial outcomes. Pending Founder Setup remains.
+
+## 2026-11-12 — Wow 3.0 fundamental public homepage redesign
+
+- OpenAI / Codex. Founder rejected the Wow 2.2 visual direction and authorized a separate design draft. Branch `codex/wow-3-editorial-homepage` starts from master `449f829f733553c4c8afbf6c0748d82566b0048e`. PR #90 remains the comparison at `6a1f33d35e3547d218e22351ee89e81aaedfdf36`.
+- Rebuilt the Angular public landing composition and scoped styles around three sections. Added two responsive generated WebP sizes and local OFL display fonts. Chart presentation reuses the same fixture values and Census sample. Detailed account pricing and local-file disclosures remain on their existing pages. No commerce, auth, entitlement, generation or infrastructure edits.
+- [Full mobile and desktop captures, tested scope and approval boundary](../design/wow-3-20261112/REVIEW.md). The narrow-screen chart regression exposed flex compression of the taller bar. A fixed proportional basis keeps both bars on the same scale. Exact-head workflow totals are attached to the draft. Updated the current snapshot, master project record, growth plan and Notion hub.
+- PR #88 remains the production baseline. Next compare the designs, observe first use with permitted participants and obtain explicit exact-head release approval if the founder accepts Wow 3.0. Conversion and revenue remain unknown.
+
+## 2026-11-12 — Wow 3.1 experience, clarity and conversion
+
+- OpenAI / Codex. [PR #91](https://github.com/alwat83/ifyoumind/pull/91) and [Issue #89](https://github.com/alwat83/ifyoumind/issues/89), branch `codex/wow-3-editorial-homepage` from reviewed draft head `69cc8c985b7c7e5d0e9a904530b24a42506647a5`. Founder approved the visual direction and asked for targeted first-use improvements.
+- Tightened the opening invitation and mobile crop, made the phone chart compact, moved the tax formula to the first evidence line, and clarified the free brief and full report destinations. Existing amounts, source cells and authenticated commerce behavior remain. The responsive size hint corrects the 1024 px image request.
+- [Full-page captures, first-use hypotheses, performance sample and conversion checks](../design/wow-3-20261112/REVIEW.md). Local production and demo builds, fast and Functions tests, Hosting and targeted authenticated checks run. Exact-head outcomes are linked in the draft, issue and Notion hub. PR #88 remains the verified production baseline.
+- Next review the before and after, observe first use with permitted participants, and obtain separate authorization before any release. Conversion and field performance are unmeasured.
+
+## 2026-11-12 — Wow 3.1 cross-surface follow-up
+
+- OpenAI / Codex. [Draft PR #91](https://github.com/alwat83/ifyoumind/pull/91) and [Issue #89](https://github.com/alwat83/ifyoumind/issues/89). Continued from green `36b9c1e420fb3fd1c76b3344fcffc1525498bb83` on `codex/wow-3-editorial-homepage`; preserved the original Wow 3.0 comparison at `69cc8c985b7c7e5d0e9a904530b24a42506647a5` and PR #90.
+- Added a pre-implementation impact matrix, permanent root policy, reference from GitHub agent guidance, and PR template. Tightened hero copy and gave the native evidence disclosure a clear open-state label. Extended the discovery journey and returning account-to-saved-report browser coverage.
+- [Matched mobile and desktop evidence, performance, verification commands, and scope](../design/wow-3-20261112/CROSS_SURFACE.md). Exact-head checks are recorded on the PR and synchronized to the issue and Notion. No commercial, security, dependency, or infrastructure changes. PR #88 remains the deployed baseline.
+- Next review the captures, check first-use comprehension with permitted participants, and obtain separate authorization before a release. Live portal behavior, field performance, and conversion remain unmeasured by this work.
+
+## 2026-11-12 — Wow 3.2 cross-surface visual consistency
+
+**Provider/agent:** OpenAI / Codex. **Branch:** `codex/wow-3-2-visual-consistency`, forked at the approved [PR #91](https://github.com/alwat83/ifyoumind/pull/91) head `165b5bbe6f2d9f2c3ceb424ffc289ce7bcf4080c`. See [draft PR #92](https://github.com/alwat83/ifyoumind/pull/92) for the candidate SHA and exact-head CI. The [Issue #89 update](https://github.com/alwat83/ifyoumind/issues/89#issuecomment-6842747221) and the [Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71) link the evidence.
+
+**Work:** audited the rendered app first. Shared the approved editorial type, colors, spacing and interactive styles across Discovery, auth, Business, dashboard and saved reports, account, commerce, My Data, Ask, Advanced and the legal/guide pages. Fixed existing layout overflow in Ask and in the long-email reset state. [Matrix, screenshot pairs and verification](../design/wow-3-2/REVIEW.md).
+
+**Verification:** local production and demo builds, 138 web and 72 Functions tests, 69 integrated Hosting cases, production bundle and Discovery isolation guards, and targeted Angular lint passed. The initial integrated run caught duplicate font-face registration and the capture sweep found the existing narrow recovery overflow. Both were corrected. Local authenticated browser tests passed 118/118. CI then exposed a 0.69 px overshoot of the 320 px first-screen test in both standalone categories. Narrow spacing was tightened and the 12 narrow local cases passed with the original assertion. Existing remote targets, billing, entitlements, authentication rules, report generation and privacy stay in place. No production action. Browser and emulator results establish journey coverage only. Next action is founder comparison of the 390 px and 1440 px journeys, then a separate release decision.
+
+## 2026-11-12 — Wow 3.2 brand integrity and permanent visual regression
+
+**Provider/agent:** OpenAI / Codex. **Branch:** `codex/wow-3-2-visual-consistency`, continued from `267b622fbee5e9d60e0f03dd7d919e5c59f8e6c8` in [draft PR #92](https://github.com/alwat83/ifyoumind/pull/92) and [Issue #89](https://github.com/alwat83/ifyoumind/issues/89). The approved PR #91 remains the design reference.
+
+**Work:** audited the missing rendered states before edits, including actual static 404, eligible pricing, failed renewal, failed portal request, verified admin and print. Applied shared styles to the 404, report advisory and admin warnings. Added Account's accessible Stripe handoff and payment attention, announced sign-in failure and corrected obsolete links on Ask/Advanced. Added Linux visual checks for 11 states in two viewports, mandatory visual review in AGENTS and the PR template, and the shared design-system reference. [Coverage, evidence and limits](../design/wow-3-2/BRAND_INTEGRITY.md).
+
+**Verification:** local production/demo builds, 138 web, 72 Functions, 22 targeted authenticated cases and three actual Hosting 404 cases passed. Both bundle guards passed. Angular Karma still stops before unit execution at 11 known TypeScript diagnostics. The initial CI at `a51ff62c5e8e787813ffdd141db9f645f5f2039f` produced missing-baseline candidates and identified a navigation test setup that used a disallowed login return. Inspected all 22 Linux candidates individually and corrected the test without changing the guard. [Draft checks](https://github.com/alwat83/ifyoumind/pull/92/checks) carry the exact review head and final results. No release, live payment or configuration change.
+
+**Next:** compare the end-to-end mobile and desktop sequences, run a physical Safari/VoiceOver spot check, and make a separate founder release decision. Live portal behavior remains on Issue #84. No customer conversion or revenue outcome was measured.
+
+## 2026-11-12 — Starter and Plus pricing readiness
+
+**Provider/agent:** OpenAI / Codex. **Branch:** `codex/starter-plus-pricing-readiness` in [draft PR #93](https://github.com/alwat83/ifyoumind/pull/93), based on [Wow 3.2 PR #92](https://github.com/alwat83/ifyoumind/pull/92) at `900dd2648f95358ef5e1416aa8a2cfd2f5c4be12`. Founder confirmed the primary paid tiers. [Issue #85](https://github.com/alwat83/ifyoumind/issues/85).
+
+**Work:** verified merged and deployed dormant PR #87, forced-empty enrollment, matching active Stripe prices and default portal policy. Reordered and simplified pricing, preserved Free and $79, retired new Pro entry points, retained existing Pro access and added neutral cancellation feedback. [Scope, screenshots, deployment dependencies and rollback](../growth/PRICING_READINESS.md).
+
+**Verification and release:** production/demo builds, bundle guards, 138 web, 72 Functions, 38 emulator commerce and 32 targeted browser tests passed. [Exact-head checks](https://github.com/alwat83/ifyoumind/pull/93/checks) record the full run. No deployment, live price, account or enrollment changes. Signed live delivery, tax alignment, runtime permissions and the live portal gate remain open. Next prioritize founder review of the candidate and approved verification before authorizing a single independent workspace.

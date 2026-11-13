@@ -1,0 +1,2 @@
+/* The Firebase banner only exists in emulator builds. */
+.firebase-emulator-warning { display: none !important; }

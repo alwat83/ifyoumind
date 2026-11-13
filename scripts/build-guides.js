@@ -1,12 +1,13 @@
 const fs = require("fs");
 const path = require("path");
 const { marked } = require("marked");
+const { compile } = require("sass");
 const { loadGuides } = require("./guides");
 
 const SITE_URL = "https://ifyoumind.com";
 const ROOT = path.join(__dirname, "..");
 const OUT_DIR = path.join(ROOT, "public", "guides");
-const STYLES = path.join(ROOT, "src", "guides", "guide.css");
+const STYLES = path.join(ROOT, "src", "guides", "guide.scss");
 
 const escapeHtml = (value) => String(value)
   .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
@@ -149,7 +150,7 @@ function buildGuides() {
   const guides = loadGuides();
   fs.rmSync(OUT_DIR, { recursive: true, force: true });
   fs.mkdirSync(OUT_DIR, { recursive: true });
-  fs.copyFileSync(STYLES, path.join(OUT_DIR, "guide.css"));
+  fs.writeFileSync(path.join(OUT_DIR, "guide.css"), compile(STYLES, { style: "compressed" }).css);
   if (guides.length) fs.writeFileSync(path.join(OUT_DIR, "index.html"), indexPage(guides));
   for (const guide of guides) {
     const dir = path.join(OUT_DIR, guide.slug);

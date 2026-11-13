@@ -74,6 +74,18 @@ Notion remains a synchronized coordination record. If unavailable, record the bl
 - Do not silently rewrite unrelated code or mix Dose Ninja assets into this repository.
 - Never expose secrets or API keys in code, commits, logs or documentation. Keep API secrets server-side.
 
+## Cross-surface engineering standard
+
+For every meaningful change, assess the full impact before implementation. Use the [PR template](.github/pull_request_template.md) to record an impact matrix with **Change Required**, **Verify Only**, or **Not Affected**. Give a rationale for each row and add evidence as work progresses. Cover relevant public, authenticated, commercial, responsive, application-state, and operational surfaces. Include intentionally unchanged areas and explain their status.
+
+Inspect the shared design and interaction patterns before introducing new ones. Reuse suitable components, tokens, and accessible semantics. Treat a broader redesign as a separate scoped change when the existing surface serves a different task. Preserve security, authentication, pricing, entitlements, and data boundaries unless the founder has authorized a specific change.
+
+Verify complete affected journeys, including relevant keyboard, touch, viewport, reduced-motion, loading, error, retry, and authorization states. Record exact commands, commit and CI results, visuals when relevant, and any skipped, untested, or pre-existing failures. Keep the PR, repository handoff, and Notion hub aligned with the evidence. Founder authorization is required for merge and production deployment under the release and safety rules below.
+
+Use one visual identity across every customer and administrative journey. Start with the [design system](docs/design/DESIGN_SYSTEM.md) and inspect the actual rendered routes, return paths and feedback states before proposing a new pattern. Apply the same typography roles, palette, controls, navigation conventions and interaction states where the task permits. Record intentional differences, provider-owned exceptions and material discontinuities in the PR. Include before-and-after mobile and desktop evidence, responsive and accessibility checks, and review the sequence of screens as a journey.
+
+Run affected visual comparisons against reviewed, committed baselines. Missing baselines and material unexplained differences block release. Do not regenerate baselines in CI or accept them in bulk. Document the intended change, inspect the actual and diff images, and update only the reviewed images using the [baseline procedure](docs/design/DESIGN_SYSTEM.md#visual-regression-baselines). A green run and a baseline update do not authorize a release.
+
 ## Development and release
 - Use the repository's actual package scripts and lockfiles; inspect before running commands. The historical stack includes Angular, TypeScript, Firebase/Firestore/Functions and Stripe.
 - Prefer targeted tests plus build and regression checks. Verify tenant isolation, authentication, billing entitlement boundaries, data source attribution, rate limits and graceful API failure handling.

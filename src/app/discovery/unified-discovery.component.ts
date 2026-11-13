@@ -3,7 +3,7 @@ import {Component,ElementRef,HostListener,Injector,OnInit,ViewChild,inject} from
 import {TaxDiscoveryComponent} from './tax-discovery.component';
 import {ELECTRICITY_MODE,PUBLIC_DISCOVERY} from './discovery-mode';
 
-@Component({selector:'app-unified-discovery',standalone:true,imports:[CommonModule,NgComponentOutlet],templateUrl:'./unified-discovery.component.html',styleUrls:['./unified-discovery.component.scss']})
+@Component({selector:'app-unified-discovery',standalone:true,imports:[CommonModule,NgComponentOutlet],templateUrl:'./unified-discovery.component.html',host:{'[class.public-discovery]':'publicEntry'},styleUrls:['./unified-discovery.component.scss']})
 export class UnifiedDiscoveryComponent implements OnInit {
  readonly publicEntry=inject(PUBLIC_DISCOVERY);
  readonly journeyComponent=TaxDiscoveryComponent;

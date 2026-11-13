@@ -1,14 +1,11 @@
 <main class="canvas-shell">
-  <nav class="app-nav">
-    <a routerLink="/app" class="brand">ifYouMind <span>2.0</span></a>
+  <nav class="app-nav" aria-label="Workspace">
+    <a routerLink="/app" class="brand">ifYouMind</a>
     <div>
-      <a routerLink="/app">Overview</a>
-      <a routerLink="/app/market">Market</a>
-      <a routerLink="/app/canvas" class="active">Canvas</a>
-      <a routerLink="/app/import">Import</a>
-      <a routerLink="/app/insights">Insights</a>
+      <a routerLink="/app">Your decisions</a>
+      <a routerLink="/app/data">My data</a>
       <a routerLink="/app/ask">Ask</a>
-      <a routerLink="/app/connections">Connections</a>
+      <a routerLink="/app/advanced" class="active" aria-current="page">Advanced</a>
     </div>
   </nav>
 
@@ -29,7 +26,7 @@
     <p>This is where your datasets, questions, and analysis history live.</p>
     <form (ngSubmit)="createWorkspace()">
       <input
-        name="workspaceName"
+        name="workspaceName" aria-label="Workspace name"
         [(ngModel)]="workspaceName"
         maxlength="120"
         placeholder="My ifYouMind Workspace"
@@ -57,7 +54,7 @@
         <p class="eyebrow">Have existing data?</p>
         <strong>Import a CSV and map it into universal observations.</strong>
       </div>
-      <a routerLink="/app/import">Import data →</a>
+      <a routerLink="/app/data">Import data →</a>
     </section>
 
     <section class="builder-grid">
@@ -65,13 +62,13 @@
         <p class="eyebrow">1 · Create dataset</p>
         <h2>What are we measuring?</h2>
         <form (ngSubmit)="createDataset()" class="form-grid">
-          <input name="name" [(ngModel)]="datasetForm.name" placeholder="Median home price" />
-          <input name="metric" [(ngModel)]="datasetForm.metric" placeholder="median_home_price" />
-          <select name="unit" [(ngModel)]="datasetForm.unit">
+          <input name="name" aria-label="Dataset name" [(ngModel)]="datasetForm.name" placeholder="Median home price" />
+          <input name="metric" aria-label="Metric" [(ngModel)]="datasetForm.metric" placeholder="median_home_price" />
+          <select name="unit" aria-label="Unit" [(ngModel)]="datasetForm.unit">
             <option *ngFor="let unit of units" [value]="unit">{{ unit }}</option>
           </select>
-          <input name="sourceLabel" [(ngModel)]="datasetForm.sourceLabel" placeholder="Source" />
-          <textarea name="description" [(ngModel)]="datasetForm.description" rows="2" placeholder="Optional description"></textarea>
+          <input name="sourceLabel" aria-label="Source label" [(ngModel)]="datasetForm.sourceLabel" placeholder="Source" />
+          <textarea name="description" aria-label="Description" [(ngModel)]="datasetForm.description" rows="2" placeholder="Optional description"></textarea>
           <button type="submit" [disabled]="saving">Create dataset</button>
         </form>
       </article>
@@ -80,15 +77,15 @@
         <p class="eyebrow">2 · Add observation</p>
         <h2>Add a data point.</h2>
         <form (ngSubmit)="addObservation()" class="form-grid">
-          <select name="datasetId" [(ngModel)]="observationForm.datasetId">
+          <select name="datasetId" aria-label="Dataset" [(ngModel)]="observationForm.datasetId">
             <option value="">Choose dataset</option>
             <option *ngFor="let dataset of datasets" [value]="dataset.id">{{ dataset.name }}</option>
           </select>
-          <input name="value" [(ngModel)]="observationForm.value" inputmode="decimal" placeholder="Value" />
-          <input name="period" [(ngModel)]="observationForm.period" placeholder="Period, e.g. 2026-09" />
-          <input name="geography" [(ngModel)]="observationForm.geography" placeholder="Geography, e.g. 35242" />
-          <input name="entity" [(ngModel)]="observationForm.entity" placeholder="Entity, e.g. Hoover" />
-          <input name="note" [(ngModel)]="observationForm.note" placeholder="Optional note" />
+          <input name="value" aria-label="Value" [(ngModel)]="observationForm.value" inputmode="decimal" placeholder="Value" />
+          <input name="period" aria-label="Period" [(ngModel)]="observationForm.period" placeholder="Period, e.g. 2026-09" />
+          <input name="geography" aria-label="Geography" [(ngModel)]="observationForm.geography" placeholder="Geography, e.g. 35242" />
+          <input name="entity" aria-label="Item or entity" [(ngModel)]="observationForm.entity" placeholder="Entity, e.g. Hoover" />
+          <input name="note" aria-label="Note" [(ngModel)]="observationForm.note" placeholder="Optional note" />
           <button type="submit" [disabled]="saving">Add observation</button>
         </form>
       </article>

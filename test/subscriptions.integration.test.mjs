@@ -66,6 +66,10 @@ globalThis.fetch = async (url, init) => {
     assert.equal(init.body.get('mode'),'subscription');
     assert.equal(init.body.get('line_items[0][quantity]'),'1');
     assert.equal(init.body.get('line_items[0][price]'),catalog[init.body.get('metadata[offer]')]);
+    const cancel = new URL(init.body.get('cancel_url'));
+    assert.equal(cancel.pathname, '/app/pricing');
+    assert.equal(cancel.searchParams.get('checkout'), 'cancelled');
+    assert.ok(cancel.searchParams.get('projectId'));
     attempt = init.body.get('metadata[attempt]');
     return Response.json({ ...session, livemode: mode });
   }
@@ -161,6 +165,16 @@ test('only a canonical settled invoice creates a grant, including invoice-first 
   assert.equal((await db.collection('stripePayments').doc(invoice.id).get()).data().amountTotal,499);
   assert.equal((await call('createBillingPortalSession',{})).url,'https://billing.stripe.com/p/session/test');
   await assert.rejects(call('createBillingPortalSession',{},'viewer'),{code:'permission-denied'});
+});
+
+test('closed enrollment hides offers and blocks both plans before contacting Stripe', async () => {
+  await seedProject();
+  process.env.SUBSCRIPTION_ENROLLMENT = '';
+  assert.equal((await call('getCommercialStatus', {})).subscriptionOffers, false);
+  for (const offer of ['starter', 'plus']) {
+    await assert.rejects(call('createCommercialCheckout', { offer, projectId: project }), { code: 'failed-precondition' });
+  }
+  assert.equal(checkoutCalls, 0);
 });
 
 test('pending Checkout prevents a second plan and does not convert a legacy Pro workspace',async()=>{

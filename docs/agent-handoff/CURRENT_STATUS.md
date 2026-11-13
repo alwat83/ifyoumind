@@ -1,5 +1,29 @@
 # ifYouMind — Current development status
 
+## November 12, 2026 — Starter and Plus pricing readiness
+
+**Draft candidate** [PR #93 and exact-head checks](https://github.com/alwat83/ifyoumind/pull/93/checks) on `codex/starter-plus-pricing-readiness` from Wow 3.2 `900dd2648f95358ef5e1416aa8a2cfd2f5c4be12`. [Pricing readiness, production and Stripe readbacks, and matched visuals](../growth/PRICING_READINESS.md). PR #87 is merged and deployed dormant. Live Starter and Plus prices and the portal configuration were verified read-only. The current workflow forces enrollment empty. Existing Pro and $79 billing are preserved. Separate exact release and enrollment authorization are required. Issue #84 remains open.
+
+## November 12, 2026 — Wow 3.2 brand integrity follow-up
+
+**[Draft PR #92](https://github.com/alwat83/ifyoumind/pull/92).** Continued the existing candidate from green head `267b622fbee5e9d60e0f03dd7d919e5c59f8e6c8`. The static 404 uses the shared design and retains HTTP 404. Account explains the Stripe transition and shows payment attention and errors in context. Existing Ask and Advanced navigation links stay inside the workspace. [Surface inventory, supplemental captures and nine journey checks](../design/wow-3-2/BRAND_INTEGRITY.md). [Design system and visual baseline procedure](../design/DESIGN_SYSTEM.md). Twenty-two individually reviewed Linux images are committed, with missing or unexplained differences failing CI. [Exact draft head and checks](https://github.com/alwat83/ifyoumind/pull/92/checks). Legacy Angular Karma compilation still has 11 documented diagnostics. Founder review and separate production authorization remain pending. Live portal verification stays on [Issue #84](https://github.com/alwat83/ifyoumind/issues/84).
+
+## November 12, 2026 — Wow 3.2 visual consistency
+
+**[Draft PR #92](https://github.com/alwat83/ifyoumind/pull/92).** `codex/wow-3-2-visual-consistency` starts at founder-approved [PR #91](https://github.com/alwat83/ifyoumind/pull/91) head `165b5bbe6f2d9f2c3ceb424ffc289ce7bcf4080c`. [Visual matrix, matched screenshots and verification](../design/wow-3-2/REVIEW.md). The shared presentation spans Discovery, auth, dashboard and history, Business reports, checkout, account, data and legal pages. Ask and narrow password recovery no longer overflow in the tested fixtures. The [draft checks](https://github.com/alwat83/ifyoumind/pull/92/checks) record CI at the candidate head. [Issue #89](https://github.com/alwat83/ifyoumind/issues/89#issuecomment-6842747221) and the [Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71) carry the linked handoff. PR #88 remains the production baseline. Founder review and separate release authorization remain pending.
+
+## November 12, 2026 — Wow 3.1 cross-surface review
+
+**Committed for draft review.** [PR #91](https://github.com/alwat83/ifyoumind/pull/91) extends the already tested Wow 3.1 head `36b9c1e420fb3fd1c76b3344fcffc1525498bb83` with a clearer hero line, explicit evidence toggle, journey coverage, and the durable cross-surface standard. [Impact matrix, full-page evidence and four journeys](../design/wow-3-20261112/CROSS_SURFACE.md). The draft records exact-head checks. PR #90 stays the comparison and PR #88 remains the deployed baseline. Founder authorization is required for release.
+
+## November 12, 2026 — Wow 3.1
+
+**Committed for draft review.** The founder approved Wow 3.0 as the preferred visual direction. [Draft PR #91](https://github.com/alwat83/ifyoumind/pull/91) continues from `69cc8c985b7c7e5d0e9a904530b24a42506647a5` with targeted first-use and conversion improvements. [Before and after, conversion path and verification](../design/wow-3-20261112/REVIEW.md). PR #90 remains the Wow 2.2 comparison, and #88 remains the verified production baseline. Separate release authorization is pending.
+
+## November 12, 2026 — Wow 3.0 design review
+
+**Committed for draft review.** The founder rejected the visual direction in [PR #90](https://github.com/alwat83/ifyoumind/pull/90). Wow 3.0 is on `codex/wow-3-editorial-homepage` from master `449f829f733553c4c8afbf6c0748d82566b0048e`. [Full desktop and mobile comparison](../design/wow-3-20261112/REVIEW.md). The three-section homepage pairs a photographic hero, an interactive evidence demo and a short Decision Reports section. PR #90 remains the comparison baseline at `6a1f33d35e3547d218e22351ee89e81aaedfdf36`. PR #88 remains the verified production baseline. Founder visual review and a separate release decision are pending.
+
 ## November 12, 2026 — Starter and Plus launch candidate
 
 **Committed for draft review.** [Issue #85](https://github.com/alwat83/ifyoumind/issues/85) and [draft PR #87](https://github.com/alwat83/ifyoumind/pull/87) implement Free → sourced result → Starter $4.99/1 or Plus $9.99/3 → paid invoice → reserved report → saved decision. The feature starts from production master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`. Enrollment is disabled by default and capped at ten workspaces. Existing $79 and $39 paths and previously unlocked reports remain. The $3.99 experiment is deferred. [Evidence, measured workload, and staged approvals](../growth/SUBSCRIPTION_LAUNCH.md)

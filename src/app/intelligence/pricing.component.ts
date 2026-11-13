@@ -42,7 +42,7 @@ export class PricingComponent implements OnInit {
     if(checkout==='success'){
       this.message='Checkout returned successfully. Checking your access…';
     }
-    if(checkout==='cancelled') this.message='Checkout was cancelled. Nothing was charged.';
+    if(checkout==='cancelled') this.message='Checkout was cancelled. You can return to your decision or try again.';
 
     try{
       this.workspace=await this.organizations.getMyWorkspace();
@@ -71,14 +71,14 @@ export class PricingComponent implements OnInit {
     finally{this.loading=false;}
   }
 
-  get proReportAllowance():number{
-    return this.status?.pricing.proIncludedReportsPerMonth??5;
+  get showMonthlyPlans():boolean{
+    return this.status?.subscriptionOffers === true && !this.status.subscription?.linked && this.status.plan !== 'pro';
   }
 
-  async request(offer:CheckoutOffer):Promise<void>{
+  async request(offer:Exclude<CheckoutOffer,'pro'>):Promise<void>{
     if(!this.workspace||this.requesting)return;
 
-    if(offer!=='pro'&&!this.projectId){
+    if(!this.projectId){
       this.error='Start or open a decision first, then purchase its Decision Report.';
       return;
     }
@@ -104,9 +104,7 @@ export class PricingComponent implements OnInit {
       this.message=await this.monetization.requestAccess(
         this.workspace.organizationId,
         offer,
-        offer==='pro'
-          ? 'Pricing page Pro interest'
-          : 'Decision report interest for project '+this.projectId,
+        'Decision report interest for project '+this.projectId,
       );
     }catch(error){
       this.error=this.messageFor(error);

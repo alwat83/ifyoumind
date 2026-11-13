@@ -38,8 +38,8 @@ test('sample marks every paid-only section with the "Included in the $79 report"
   }
   assert.match(reportHtml,/<app-market-analysis[^>]*\[includedInReport\]="sampleMode"/);
   assert.ok(analysisHtml.includes(`<span *ngIf="includedInReport" class="paid-pill">${PILL}</span>`));
-  // #3730a3 on #eef2ff is about 9:1, well above WCAG AA 4.5:1.
-  assert.match(reportScss,/\.paid-pill\{[^}]*background:#eef2ff;color:#3730a3/);
+  // The public-report browser checks verify contrast on the rendered pill.
+  assert.match(reportScss,/\.paid-pill\{[^}]*background:var\(--iy-clay\);color:var\(--iy-accent\)/);
 });
 
 test('unpaid brief shows what the $79 report adds, with the existing pricing CTA',()=>{
@@ -62,29 +62,23 @@ test('metric cards hide the unit line when the value already shows it',()=>{
   assert.ok(reportTs.includes("return unit!=='USD'&&unit!=='%';"));
 });
 
-test('the $79 report comes before Pro on both pricing surfaces',()=>{
-  const landingPricing=landingHtml.slice(landingHtml.indexOf('id="pricing"'));
-  const order=(html,labels)=>labels.map(label=>html.indexOf(label));
-  const [lFree,lReport,lPro]=order(landingPricing,['<strong>Business brief</strong>','<strong>Decision Report</strong>','<strong>Business Pro</strong>']);
-  assert.ok(lFree>=0&&lFree<lReport&&lReport<lPro,'homepage: Free, One report, Pro');
-  const [pFree,pReport,pPro]=order(pricingHtml,['<span class="label">Free</span>','<span class="label">One report</span>','<span class="label">Pro</span>']);
-  assert.ok(pFree>=0&&pFree<pReport&&pReport<pPro,'pricing page: Free, One report, Pro');
-  assert.match(landingPricing,/\[queryParams\]="\{intent:'report'\}" class="offer"/,'report retains paid intent');
-  assert.match(pricingHtml,/<article class="featured"[^>]*>\s*<div class="topline"><span class="label">One report<\/span>/,'pricing page emphasises the $79 card');
-  assert.ok(landingPricing.includes('Five full reports each month'));
-  assert.ok(landingPricing.includes('sources, limits, an action plan and print/PDF'));
-  assert.ok(pricingHtml.includes('For advisers and anyone planning several locations a month.'));
-  assert.ok(pricingHtml.includes('Recommended for one business plan'));
+test('pricing leads with eligible monthly plans and keeps Free, one-time and legacy access',()=>{
+  const monthly=pricingHtml.indexOf('id="monthly-title"');
+  const free=pricingHtml.indexOf('<h3>Free</h3>');
+  const oneTime=pricingHtml.indexOf('<h3>One-time Decision Report</h3>');
+  assert.ok(monthly>=0&&monthly<free&&free<oneTime);
+  assert.match(pricingHtml,/\*ngIf="showMonthlyPlans"[^>]*aria-labelledby="monthly-title"/);
+  assert.match(pricingHtml,/Legacy Pro/);
+  assert.doesNotMatch(pricingHtml,/Get Pro access|request\('pro'\)/);
+  assert.match(landingHtml,/routerLink="\/app\/pricing">Pricing \(sign-in required\)/);
+  const marketHtml=read('src/app/intelligence/market-intelligence.component.html');
+  assert.match(marketHtml,/routerLink="\/app\/pricing" \[queryParams\]="\{projectId:project\?\.id\}">View report pricing/);
 });
 
-test('price amounts are unchanged',()=>{
-  const landingPricing=landingHtml.slice(landingHtml.indexOf('id="pricing"'),landingHtml.indexOf('<footer'));
-  assert.ok(landingPricing.includes('Free to start'));
-  assert.ok(landingPricing.includes('<b>$79<small> one time</small></b>'));
-  assert.ok(landingPricing.includes('<b>$39<small> / month</small></b>'));
-  assert.ok(pricingHtml.includes('<h2>$0</h2>'));
-  assert.ok(pricingHtml.includes('<h2>${{ status.pricing.reportOneTimeUsd }}</h2>'));
-  assert.ok(pricingHtml.includes('<h2>${{ status.pricing.proMonthlyUsd }}<small>/month</small></h2>'));
+test('account pricing keeps Free and uses the server prices for report and legacy Pro',()=>{
+  assert.ok(pricingHtml.includes('<p class="price">$0</p>'));
+  assert.match(pricingHtml,/status\?\.pricing\?\.reportOneTimeUsd/);
+  assert.match(pricingHtml,/status\?\.pricing\?\.proMonthlyUsd/);
 });
 
 test('population-change wording names the real ACS periods and the margin of error',()=>{
@@ -102,7 +96,9 @@ test('consumer homepage preserves the Business entry point and plan-ready offer'
   assert.match(landingHtml,/id="business"/);
   assert.match(landingHtml,/routerLink="\/sample-report"/);
   assert.match(read('src/app/intelligence/home-discovery-examples.ts'),/action: 'View the Full Sample Report'/);
-  assert.match(landingHtml,/sources, limits, an action plan/);
+  assert.match(landingHtml,/more comparisons, a sourced market analysis, and an action plan/);
+  assert.match(pricingHtml,/more comparisons, sourced analysis, and an action plan/);
+  assert.match(reportHtml,/evidence boundaries/);
   assert.ok(landingHtml.indexOf('id="try"')<landingHtml.indexOf('id="business"'),'consumer discovery leads; Business remains available');
 });
 

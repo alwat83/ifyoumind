@@ -21,5 +21,45 @@ test('public navigation and Business registration presentation remain reachable'
  for(const path of ['/register','/login','/sample-report','/guides/'])expect((await request.get(path)).status()).toBe(200);
  await page.goto('/register');await expect(page.getByRole('heading',{name:'Build your market analysis.'})).toBeVisible();await expect(page.getByRole('textbox',{name:'Email',exact:true})).toBeVisible();
  await page.goto('/privacy-policy');await expect(page.getByRole('heading',{name:'Browser-local bill discovery'})).toBeVisible();await expect(page.locator('body')).toContainText('separately from registered Business');
- await page.goto('/');await expect(page.locator('body')).toContainText('$79');await expect(page.locator('body')).toContainText('$39');
+ await page.goto('/');await expect(page.getByRole('link',{name:'Pricing (sign-in required)',exact:true})).toHaveAttribute('href','/app/pricing');
+});
+
+test('discovery uses the shared local display font and preserves keyboard focus in reduced motion', async ({ page }) => {
+ await page.emulateMedia({ reducedMotion: 'reduce' });
+ await page.goto('/discover/');
+ await expect(page.getByRole('heading', { level: 1 })).toHaveCSS('font-family', /Instrument Serif/);
+ expect(await page.evaluate(async () => {
+   const faces = await document.fonts.load('44px "Instrument Serif"');
+   return faces.some(face => face.status === 'loaded');
+ })).toBe(true);
+ await page.keyboard.press('Tab');
+ await expect(page.getByRole('link', { name: 'Skip to discovery' })).toBeFocused();
+ const example = page.getByRole('button', { name: 'Try property tax example' });
+ await example.focus();
+ await expect(example).toHaveCSS('outline-style', 'solid');
+ await page.keyboard.press('Enter');
+ const evidence = page.locator('.finding summary').first();
+ await expect(evidence).toBeVisible();
+ await evidence.focus();
+ await page.keyboard.press('Enter');
+ await expect(page.getByRole('table').first()).toBeVisible();
+});
+
+test('the static 404 keeps its status and offers accessible recovery on Hosting', async ({ page }) => {
+ const response = await page.goto('/missing-visual-fixture');
+ expect(response.status()).toBe(404);
+ await expect(page.getByRole('heading', { name: 'Page not found' })).toHaveCSS('font-family', /Instrument Serif/);
+ await expect(page.locator('meta[name=robots]')).toHaveAttribute('content', 'noindex,nofollow');
+ await expect(page.locator('script')).toHaveCount(0);
+ expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBe(0);
+ const scan = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
+ expect(scan.violations).toEqual([]);
+ await page.keyboard.press('Tab');
+ await expect(page.getByRole('link', { name: 'ifYouMind home' })).toBeFocused();
+ await page.keyboard.press('Tab');
+ const home = page.getByRole('link', { name: 'Home', exact: true });
+ await expect(home).toBeFocused();
+ await expect(home).toHaveCSS('outline-style', 'solid');
+ await page.keyboard.press('Enter');
+ await expect(page).toHaveURL(origin + '/');
 });

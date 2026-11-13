@@ -15,6 +15,7 @@ export default defineConfig({
   workers: process.env.CI ? 2 : 3,
   retries: 0,
   forbidOnly: !!process.env.CI,
+  updateSnapshots: 'none',
   reporter: process.env.CI
     ? [['list'], ['html', { open: 'never', outputFolder: '../playwright-report' }], ['junit', { outputFile: '../test-results/e2e-junit.xml' }]]
     : [['list']],

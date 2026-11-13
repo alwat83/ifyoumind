@@ -19,7 +19,9 @@ test('homepage navigation reaches sign-in and registration', async ({ page }) =>
   await page.getByRole('link', { name: 'Sign In', exact: true }).click();
   await expect(page).toHaveURL(/\/login$/);
   await page.goto('/');
-  await page.locator('#pricing').getByRole('link', { name: /Business brief/ }).click();
+  await page.getByRole('link', { name: 'View a Sample Report', exact: true }).click();
+  await expect(page).toHaveURL(/\/sample-report$/);
+  await page.getByRole('link', { name: 'Start free', exact: true }).first().click();
   await expect(page).toHaveURL(/\/register$/);
 });
 
@@ -47,5 +49,66 @@ test('signed-in pages are accessible, fit the viewport and the app navigation wo
     await pricing.click();
   }
   await expect(page).toHaveURL(/\/app\/pricing$/);
-  await expect(page.getByText('If you cancel Pro, reports you already unlocked with it stay unlocked.')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'One-time Decision Report' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Get Pro access' })).toHaveCount(0);
+});
+
+test('shared app surfaces retain editorial headings, mobile fit and keyboard focus', async ({ page, fixtures }) => {
+  const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await signInThroughUi(page, user);
+  await expect(page.getByRole('heading', { name: 'Your decisions' })).toBeVisible();
+
+  for (const [path, control] of [
+    ['/app', 'Start a decision'],
+    ['/app/decide?type=business', 'Main location'],
+    ['/app/pricing', 'Choose a decision'],
+    ['/app/account', 'Save profile'],
+    ['/app/data', 'Choose a CSV'],
+    ['/app/ask', 'Question'],
+    ['/app/advanced', 'Dataset name'],
+  ]) {
+    await page.goto(path);
+    await expect(page.locator('h1')).toHaveCSS('font-family', /Instrument Serif/);
+    await expect(page.getByLabel(control, { exact: false }).or(page.getByRole('link', { name: control, exact: true }))
+      .or(page.getByRole('button', { name: control, exact: true })).first()).toBeAttached();
+    for (const width of [320, 390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await expectNoHorizontalScroll(page);
+    }
+    await page.keyboard.press('Tab');
+    const focus = page.locator(':focus-visible').first();
+    await expect(focus).toBeVisible();
+    await expect(focus).toHaveCSS('outline-style', 'solid');
+    await expect(focus).toHaveCSS('transition-duration', '0s');
+    await expectAccessible(page);
+  }
+
+  await page.goto('/app/data');
+  await page.getByLabel('Choose a CSV').focus();
+  await expect(page.locator('.dropzone')).toHaveCSS('outline-style', 'solid');
+});
+
+test('password recovery fits 320px with a long account address', async ({ page, fixtures }) => {
+  const user = await fixtures('T32-long-password-recovery-address', { workspace: false });
+  await page.setViewportSize({ width: 320, height: 568 });
+  await page.goto('/login');
+  await page.getByLabel('Email', { exact: true }).fill(user.email);
+  await page.getByRole('button', { name: /forgot password/i }).click();
+  await expect(page.getByRole('status')).toContainText('If an account exists for');
+  await expectNoHorizontalScroll(page);
+});
+
+test('the Workspace navigation keeps Ask and Advanced on valid app routes', async ({ page, fixtures }) => {
+  const user = await fixtures(FIXTURES.VERIFIED);
+  await signInThroughUi(page, user);
+  await expect(page).toHaveURL(/\/app$/);
+  await page.goto('/app/ask');
+  const nav = page.getByRole('navigation', { name: 'Workspace' });
+  await expect(nav.getByRole('link', { name: 'Ask' })).toHaveAttribute('aria-current', 'page');
+  await nav.getByRole('link', { name: 'Advanced' }).click();
+  await expect(page).toHaveURL(/\/app\/advanced$/);
+  await expect(nav.getByRole('link', { name: 'Advanced' })).toHaveAttribute('aria-current', 'page');
+  await nav.getByRole('link', { name: 'My data' }).click();
+  await expect(page).toHaveURL(/\/app\/data$/);
 });

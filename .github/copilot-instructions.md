@@ -1,5 +1,7 @@
 # Copilot Instructions
 
+Follow the repository-wide [agent instructions](../AGENTS.md#cross-surface-engineering-standard), including the pre-implementation impact matrix and verification requirements. Use the [PR template](pull_request_template.md) for review evidence.
+
 This document provides guidance for AI coding agents to effectively contribute to the Ifyoumind project.
 
 ## Project Overview

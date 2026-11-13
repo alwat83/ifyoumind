@@ -1,6 +1,7 @@
 // Emit route-specific initial metadata after Angular builds. This is head generation, not SSR.
 const fs = require('node:fs');
 const path = require('node:path');
+const { compile } = require('sass');
 const pages = require('../src/public-pages.json');
 const homeSchema = require('../src/site-structured-data.json');
 const SITE = 'https://ifyoumind.com';
@@ -38,7 +39,11 @@ function buildSeo(dir) {
     fs.writeFileSync(path.join(dir, filename), metadataHtml(shell, page));
   }
   fs.writeFileSync(path.join(dir, 'app-shell.html'), metadataHtml(shell, null));
-  fs.writeFileSync(path.join(dir, '404.html'), '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Page not found | ifYouMind</title></head><body><main><h1>Page not found</h1><p>This address does not match a public ifYouMind page.</p><p><a href="/">Home</a> · <a href="/guides/">Decision guides</a> · <a href="/sample-report">Business sample report</a></p></main></body></html>\n');
+  const notFound = path.join(__dirname, '../src/app/pages/not-found');
+  const { css } = compile(`${notFound}.scss`, { style: 'compressed' });
+  const html = fs.readFileSync(`${notFound}.html`, 'utf8');
+  fs.writeFileSync(path.join(dir, '404.html'), html.replace('</head>', `  <style>${css}</style>
+</head>`));
   console.log(`Built initial metadata for ${pages.length} public routes, a private app shell and a 404 page.`);
 }
 

@@ -2,6 +2,8 @@
 
 **November 12, 2026 Pacific · OpenAI / Codex · Issue #85.** Standalone candidate from production master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`. [Issue #85](https://github.com/alwat83/ifyoumind/issues/85) · [Pilot specification](https://github.com/alwat83/ifyoumind/blob/7b59d21412e746949852ee35afe977f20434e09e/docs/growth/subscription-strategy-20261111/PILOT_PREPARATION.md)
 
+The launch backend was subsequently merged and deployed dormant. See [pricing readiness](PRICING_READINESS.md) for the founder’s primary-offer decision, actual production and Stripe readbacks, and the workflow’s forced-empty enrollment gate. The original implementation and sandbox evidence below remain historical.
+
 ## Customer and billing contract
 
 Free discovery and the public sample remain open. An eligible signed-in owner first sees a one-comparison sourced brief. From that result, they can choose a subscription or a $79 one-time purchase for the same full report. Starter includes one report for $4.99 per paid month. Plus includes three for $9.99. Both renew monthly, expire unused credits at the period end, allow cancellation before renewal from Account, and retain unlocked reports. The $3.99 experiment is deferred. Public and outside-cohort pricing retain existing offers. Legacy $39 Pro keeps its existing five-report UTC-month behavior and existing reports.

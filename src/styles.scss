@@ -1,3 +1,11 @@
+@use './app/product-design' as product;
+
+:root { @include product.tokens; --iy-editorial-font: 'Instrument Serif', Georgia, serif; }
+app-root {
+  @include product.focus;
+  @include product.quiet-motion;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -144,12 +152,12 @@
 
 
 /* Light public landing overrides legacy dark heading token. */
-.landing .hero h1,.landing .demo-card h3{color:#111827}
+.landing .hero h1,.landing .demo-card h3{color:var(--iy-ink)}
 
 /* Mobile Decision Report polish kept global to stay under Angular component-style budget. */
 @media(max-width:520px){
   .report-shell{width:min(100% - 20px,980px)}
-  .report{padding:20px 16px;border-radius:18px}
+  .report{padding:20px 16px;border-radius:var(--iy-panel-radius)}
   .answer-header h1{font-size:36px}
   .report-nav>div{width:100%}
   .report-nav>div>a,.report-nav>div>button,.report-upgrade{width:100%;box-sizing:border-box;justify-content:center;text-align:center}

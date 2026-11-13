@@ -35,9 +35,11 @@ test('marketing copy makes no uploaded-data claim the reports do not support', (
   assert.doesNotMatch(landing,/about the same/i, 'small gaps are flagged as uncertain, never declared equal');
   assert.match(landing,/city-level estimates/i);
   assert.match(landing,/Check local demand, competition, and rent/);
-  assert.match(landing,/Two supported USD CSV formats\. No PDFs or scans/);
-  assert.match(landing,/Bill discovery is free\./);
-  assert.match(landing,/Bill files stay in your browser tab\. No uploads or saved copies/);
+  assert.match(landing,/href="\/discover\/">Understand Your Bills/);
+  const discovery=read('../src/app/discovery/unified-discovery.component.html');
+  assert.match(discovery,/Two supported CSV formats today\. No PDFs, scans or other file types/);
+  assert.match(discovery,/Your bills stay in this browser tab/);
+  assert.match(discovery,/We don’t upload or store them/);
   const home=read('../src/app/intelligence/consumer-home.component.html');
   assert.match(home,/isn’t used in Decision Reports yet/);
 });

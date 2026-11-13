@@ -94,9 +94,11 @@
 }
 .home-evidence summary::-webkit-details-marker { display: none; }
 .home-evidence summary:hover { text-decoration: underline; text-underline-offset: 4px; }
-.home-evidence summary span { color: var(--chart-accent); font-size: 18px; }
-.home-evidence summary span::before { content: '+'; }
-.home-evidence[open] summary span::before { content: '−'; }
+.home-evidence .evidence-mark { color: var(--chart-accent); font-size: 18px; }
+.home-evidence .evidence-mark::before { content: '+'; }
+.home-evidence[open] .evidence-mark::before { content: '−'; }
+.home-evidence:not([open]) .evidence-hide,
+.home-evidence[open] .evidence-show { display: none; }
 .home-evidence[open] { grid-column: 1 / -1; }
 .home-evidence[open] + .example-link { justify-self: start; }
 

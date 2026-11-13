@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 12, 2026 — Wow 3.1 cross-surface review
+
+**Committed for draft review.** [PR #91](https://github.com/alwat83/ifyoumind/pull/91) extends the already tested Wow 3.1 head `36b9c1e420fb3fd1c76b3344fcffc1525498bb83` with a clearer hero line, explicit evidence toggle, journey coverage, and the durable cross-surface standard. [Impact matrix, full-page evidence and four journeys](../design/wow-3-20261112/CROSS_SURFACE.md). The draft records exact-head checks. PR #90 stays the comparison and PR #88 remains the deployed baseline. Founder authorization is required for release.
+
 ## November 12, 2026 — Wow 3.1
 
 **Committed for draft review.** The founder approved Wow 3.0 as the preferred visual direction. [Draft PR #91](https://github.com/alwat83/ifyoumind/pull/91) continues from `69cc8c985b7c7e5d0e9a904530b24a42506647a5` with targeted first-use and conversion improvements. [Before and after, conversion path and verification](../design/wow-3-20261112/REVIEW.md). PR #90 remains the Wow 2.2 comparison, and #88 remains the verified production baseline. Separate release authorization is pending.

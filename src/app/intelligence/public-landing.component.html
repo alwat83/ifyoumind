@@ -23,7 +23,7 @@
     <section id="try" class="shell hero" aria-labelledby="hero-title" tabindex="-1">
       <div class="hero-copy">
         <h1 id="hero-title">See the story.&ngsp;<em>Check the evidence.</em></h1>
-        <p>Find what changed in a bill or what sets two places apart.</p>
+        <p>Find what added to a bill increase or how two places compare.</p>
         <a href="#business" class="button primary">Try a Free Example <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
       </div>
       <div class="hero-art">
@@ -71,7 +71,11 @@
 
           <div class="discovery-next">
             <details #evidence class="home-evidence">
-              <summary>Show the evidence <span aria-hidden="true"></span></summary>
+              <summary>
+                <span class="evidence-show">Show the evidence</span>
+                <span class="evidence-hide">Hide the evidence</span>
+                <span class="evidence-mark" aria-hidden="true"></span>
+              </summary>
               <div class="evidence-content">
                 @if (example.evidenceLead) {
                   <p class="evidence-lead">{{ example.evidenceLead }}</p>

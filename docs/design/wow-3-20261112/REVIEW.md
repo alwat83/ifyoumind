@@ -4,6 +4,8 @@
 
 The founder approved Wow 3.0 as the preferred visual direction. This iteration continues [draft PR #91](https://github.com/alwat83/ifyoumind/pull/91) from `69cc8c985b7c7e5d0e9a904530b24a42506647a5`. The editorial composition, serif, neighborhood image, palette and three sections remain.
 
+The follow-up [cross-surface review](CROSS_SURFACE.md) carries the final impact matrix, journeys, and matched five-width captures.
+
 ### Five-second audit
 
 The original CTA was clear, but the supporting line named categories more readily than it invited a discovery. The revised line asks visitors to find what changed in a bill or what sets two places apart. The free CTA still opens the demo on the same page. A shallower image crop and tighter spacing bring the demo 25 px earlier at 320 px and 29 px earlier at 390 px. Desktop composition and first-screen section positions are preserved.

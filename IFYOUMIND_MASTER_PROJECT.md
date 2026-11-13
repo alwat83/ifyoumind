@@ -8,6 +8,10 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 12, 2026 — Permanent cross-surface engineering standard
+
+Every meaningful change gets an impact assessment, complete journey verification and explicit release evidence. [AGENTS.md](AGENTS.md#cross-surface-engineering-standard) defines the rule, and the [GitHub PR template](.github/pull_request_template.md) captures the evidence. The [Wow 3.1 cross-surface review](docs/design/wow-3-20261112/CROSS_SURFACE.md) is its first application.
+
 ## November 12, 2026 — Wow 3.1
 
 The founder selected Wow 3.0's editorial composition. [Draft PR #91](https://github.com/alwat83/ifyoumind/pull/91) refines the opening invitation, phone demo, evidence hierarchy and personalized report path on the same branch. [Review and verified scope](docs/design/wow-3-20261112/REVIEW.md).

@@ -48,7 +48,7 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await expect(page).toHaveURL(origin + '/#business');
     await expect(page.locator('#business')).toBeFocused();
     await expect(page.locator('#try').getByRole('link')).toHaveCount(1);
-    await expect(page.locator('#try')).toContainText('Find what changed in a bill or what sets two places apart.');
+    await expect(page.locator('#try')).toContainText('Find what added to a bill increase or how two places compare.');
     const reports = page.getByRole('region', { name: 'Decision Reports', exact: true });
     await expect(reports.getByRole('link', { name: 'Start a Free Brief' })).toHaveAttribute('href', '/app/decide?type=business');
     await expect(reports).toContainText('A full Decision Report adds more comparisons, a sourced market analysis, and an action plan.');
@@ -59,7 +59,9 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await expect(feature.locator('.finding')).toContainText('57.1% of the $420 increase came from school charges.');
     await expect(feature.getByText('57.1%', { exact: true })).toBeInViewport({ ratio: 1 });
     await expect(feature.getByText('of the $420 increase came from school charges.', { exact: true })).toBeVisible();
-    await expect(feature.locator('.home-evidence summary')).toBeInViewport({ ratio: 1 });
+    const summary = feature.locator('.home-evidence summary');
+    await expect(summary).toHaveText('Show the evidence', { useInnerText: true });
+    await expect(summary).toBeInViewport({ ratio: 1 });
     const chart = feature.getByRole('figure', { name: 'What went up' });
     await expect(chart).toContainText('+$420.00');
     await expect(chart).toContainText('+$240.00');
@@ -107,6 +109,13 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await page.keyboard.press('Enter');
     await expect(summary).toBeFocused();
     await expect(evidence).toHaveAttribute('open', '');
+    await expect(summary).toHaveText('Hide the evidence', { useInnerText: true });
+    await page.keyboard.press('Space');
+    await expect(summary).toBeFocused();
+    await expect(evidence).not.toHaveAttribute('open');
+    await expect(summary).toHaveText('Show the evidence', { useInnerText: true });
+    await page.keyboard.press('Space');
+    await expect(evidence).toHaveAttribute('open', '');
     await expect(evidence).toContainText('School: $2,640.00 − $2,400.00 = +$240.00');
     await expect(evidence.locator('.evidence-content > p').first()).toHaveText('($240.00 ÷ $420.00) × 100 = 57.1%');
     await expect(evidence.getByText('($240.00 ÷ $420.00) × 100 = 57.1%', { exact: true })).toHaveCount(1);
@@ -127,6 +136,7 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await expect(feature.getByRole('button', { pressed: true })).toHaveText('Electricity bills');
     await expect(tax).toHaveAttribute('aria-pressed', 'false');
     await expect(evidence).not.toHaveAttribute('open');
+    await expect(summary).toHaveText('Show the evidence', { useInnerText: true });
     await expect(announcement).toContainText('The bill rose 21% and electricity use rose 10%.');
     await expect(feature.getByText('Made-up example', { exact: true })).toBeVisible();
     await expect(feature.locator('.finding')).toContainText('+21% in total billed, compared with +10% in electricity use.');

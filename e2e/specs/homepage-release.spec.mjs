@@ -11,9 +11,13 @@ test('homepage opens the interactive demo and the complete free example', async 
   await expectAccessible(page);
   await heroAction.click();
   await expect(page).toHaveURL(/\/#business$/);
+  const proof = page.locator('.home-evidence');
+  await proof.locator('summary').click();
+  await expect(proof.locator('.evidence-lead')).toHaveText('($240.00 ÷ $420.00) × 100 = 57.1%');
   await page.getByRole('link', { name: 'Explore the property-tax example' }).click();
   await expect(page).toHaveURL(/\/discover\/\?example=tax$/);
   await expect(page.locator('.finding')).toHaveCount(3);
+  await expect(page.getByRole('heading', { name: 'Your total rose by $420.00.', exact: true })).toBeVisible();
 });
 
 test('homepage comparison, sample report, paid intent and free registration remain usable', async ({ page }) => {

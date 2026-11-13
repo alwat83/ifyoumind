@@ -24,9 +24,14 @@ test('a verified free user creates a decision through the app and sees the free 
   await expect(page.getByText(/What the \$79 report adds/)).toBeVisible();
 });
 
-test('a returning user finds the saved decision and reopens its report', async ({ page, fixtures }) => {
+test('a returning user can open account and reopen a saved decision', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.RETURNING_WITH_REPORT, { decisions: 1 });
   await signInThroughUi(page, user);
+  await expect(page.getByRole('heading', { name: 'Your decisions' })).toBeVisible();
+  await page.locator('nav.topbar').getByRole('link', { name: 'Account', exact: true }).click();
+  await expect(page).toHaveURL(/\/app\/account$/);
+  await expect(page.getByRole('heading', { name: 'Account details' })).toBeVisible();
+  await page.getByRole('link', { name: 'Back to your decisions', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Your decisions' })).toBeVisible();
   await page.locator(`a[href="/app/result/${user.projectIds[0]}"]`).click();
   await expect(page.getByRole('heading', { level: 1, name: /QA fixture decision 1/ })).toBeVisible();

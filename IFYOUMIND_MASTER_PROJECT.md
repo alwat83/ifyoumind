@@ -1,6 +1,6 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-12
+**Updated:** 2026-11-13
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
@@ -8,9 +8,13 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 13, 2026 — Privacy-first Bill Discovery
+
+Founder selected property tax and electricity as the first acquisition categories, with the first meaningful result available before optional registration. [Phase 1 audit and staged MVP](docs/product/BILL_DISCOVERY_MVP.md) proposes one browser-local text-PDF layout per category, typed fallback and traceable calculations in the existing Wow 3.2 Discovery island. [Existing Notion roadmap](https://app.notion.com/p/41702474659c81f2aff8e762331a06bc). Real PDF parsing is planned. The audited production experience remains browser-local CSV and labeled examples. Household analysis and Decision Report entitlements remain separate.
+
 ## November 12, 2026 — Starter and Plus are the primary subscription offers
 
-Founder confirmed Starter $4.99/month for one report and Plus $9.99/month for three. Free and the $79 one-time report remain available, with $39 Pro retained for existing customers. The [pricing readiness update](docs/growth/PRICING_READINESS.md) extends the approved Wow 3.2 identity, documents the deployed dormant backend, and preserves separate setup, release and enrollment authorization.
+Founder confirmed Starter $4.99/month for one report and Plus $9.99/month for three. Free and the $79 one-time report remain available, with $39 Pro retained for existing customers. The [pricing readiness update](docs/growth/PRICING_READINESS.md) extends the approved Wow 3.2 identity. [PR #93 deployed](https://github.com/alwat83/ifyoumind/actions/runs/43392378321) at `59a4b80a8e427a13e0d8bee0f753f8954ea8611f`. Active deployed functions confirmed enrollment is empty. Enrollment and live portal verification remain separate.
 
 ## November 12, 2026 — One visual identity across the product
 

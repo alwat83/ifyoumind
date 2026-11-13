@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 13, 2026 — Bill Discovery Phase 1
+
+**Audit complete. MVP planned.** [Source audit, proposed local-only PDF scope, acceptance criteria and rollout](../product/BILL_DISCOVERY_MVP.md) on `codex/bill-discovery-audit`, from production `59a4b80a8e427a13e0d8bee0f753f8954ea8611f`. Public Discovery remains CSV-only. Read-only Chrome smoke passed at 390 and 1280 px using synthetic data offline. No parser, product code or dependency changed. Choose one issuer layout per category and qualify a private specimen set before building. [Existing Notion roadmap](https://app.notion.com/p/41702474659c81f2aff8e762331a06bc).
+
+**Production verified.** [PR #93](https://github.com/alwat83/ifyoumind/pull/93) merged and [deployed](https://github.com/alwat83/ifyoumind/actions/runs/43392378321) at that exact merge. Its tree matches candidate `561721d2fe3e209055d42f36dd795246a3e94a81`, with [build](https://github.com/alwat83/ifyoumind/actions/runs/43390268275) and [QA](https://github.com/alwat83/ifyoumind/actions/runs/43390268244) green. Five active deployed billing/report functions returned empty enrollment. The live portal and enrollment gates remain on [#84](https://github.com/alwat83/ifyoumind/issues/84) and [#85](https://github.com/alwat83/ifyoumind/issues/85). Below entries retain their historical snapshots.
+
 ## November 12, 2026 — Starter and Plus pricing readiness
 
 **Draft candidate** [PR #93 and exact-head checks](https://github.com/alwat83/ifyoumind/pull/93/checks) on `codex/starter-plus-pricing-readiness` from Wow 3.2 `900dd2648f95358ef5e1416aa8a2cfd2f5c4be12`. [Pricing readiness, production and Stripe readbacks, and matched visuals](../growth/PRICING_READINESS.md). PR #87 is merged and deployed dormant. Live Starter and Plus prices and the portal configuration were verified read-only. The current workflow forces enrollment empty. Existing Pro and $79 billing are preserved. Separate exact release and enrollment authorization are required. Issue #84 remains open.

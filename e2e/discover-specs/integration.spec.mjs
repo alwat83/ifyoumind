@@ -44,3 +44,22 @@ test('discovery uses the shared local display font and preserves keyboard focus 
  await page.keyboard.press('Enter');
  await expect(page.getByRole('table').first()).toBeVisible();
 });
+
+test('the static 404 keeps its status and offers accessible recovery on Hosting', async ({ page }) => {
+ const response = await page.goto('/missing-visual-fixture');
+ expect(response.status()).toBe(404);
+ await expect(page.getByRole('heading', { name: 'Page not found' })).toHaveCSS('font-family', /Instrument Serif/);
+ await expect(page.locator('meta[name=robots]')).toHaveAttribute('content', 'noindex,nofollow');
+ await expect(page.locator('script')).toHaveCount(0);
+ expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBe(0);
+ const scan = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
+ expect(scan.violations).toEqual([]);
+ await page.keyboard.press('Tab');
+ await expect(page.getByRole('link', { name: 'ifYouMind home' })).toBeFocused();
+ await page.keyboard.press('Tab');
+ const home = page.getByRole('link', { name: 'Home', exact: true });
+ await expect(home).toBeFocused();
+ await expect(home).toHaveCSS('outline-style', 'solid');
+ await page.keyboard.press('Enter');
+ await expect(page).toHaveURL(origin + '/');
+});

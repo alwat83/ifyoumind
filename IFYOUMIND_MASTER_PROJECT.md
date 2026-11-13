@@ -8,6 +8,10 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 12, 2026 — One visual identity across the product
+
+[Draft PR #92](https://github.com/alwat83/ifyoumind/pull/92) extends the Wow 3.2 candidate into static error recovery and billing return states. The [design system](docs/design/DESIGN_SYSTEM.md) defines the shared roles and reviewed screenshot procedure. The permanent agent instructions and PR template make cross-route visual evidence part of review. [Brand integrity inventory and founder package](docs/design/wow-3-2/BRAND_INTEGRITY.md). Production and commercial permissions remain separate.
+
 ## November 12, 2026 — Wow 3.2 visual consistency
 
 The founder accepted the Wow 3.1 visual direction and gated release on a cohesive journey. The [separate Wow 3.2 review](docs/design/wow-3-2/REVIEW.md) traces the shared visual system across the public and signed-in app while preserving privacy, existing commercial behavior and report evidence. PR #91 remains the approved visual baseline. Design review and release authorization remain separate.

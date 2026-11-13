@@ -106,8 +106,11 @@ test('Account explains the Stripe handoff and recovers from an unavailable porta
   await billing.click();
   await expect(page.getByRole('alert')).toHaveText('Billing is temporarily unavailable.');
   const handoff = page.waitForRequest('https://billing.stripe.com/p/session/qa-return-contract');
+  const accountReturn = page.waitForResponse(response =>
+    response.request().isNavigationRequest() && new URL(response.url()).pathname === '/app/account');
   await billing.click();
   await handoff;
+  expect((await accountReturn).status()).toBe(200);
   await expect(page).toHaveURL(/\/app\/account$/);
   await expect(billing).toBeVisible();
   expect(attempts).toBe(2);

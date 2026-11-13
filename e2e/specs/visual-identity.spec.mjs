@@ -5,6 +5,8 @@ import { FIXTURES } from '../support/fixtures.mjs';
 
 const captureStyle = fileURLToPath(new URL('../support/visual-identity.css', import.meta.url));
 
+test.skip(process.platform !== 'linux', 'Reviewed pixel baselines use the Linux Playwright renderer.');
+
 test.use({ colorScheme: 'light', reducedMotion: 'reduce', deviceScaleFactor: 1, locale: 'en-US', timezoneId: 'UTC' });
 
 test.beforeEach(async ({ page }) => {
@@ -52,12 +54,19 @@ test('registration and static recovery keep the public design', async ({ page, c
 });
 
 test('sample, loading and retry use the report design', async ({ page, consoleErrors }) => {
+  const sampleEndpoint = '**/getSampleDecisionReport';
+  await page.route(sampleEndpoint, async route => {
+    const response = await route.fetch();
+    const body = await response.json();
+    await route.fulfill({ json: { result: { ...body.result, createdAt: '2026-11-13T12:00:00Z' } } });
+  });
   await page.goto('/sample-report');
   await compare(page, 'report', page.locator('#recommendation'));
+  await page.unroute(sampleEndpoint);
   consoleErrors.allow.push(/Public sample report failed|status of 503/);
   let release;
   const gate = new Promise(resolve => { release = resolve; });
-  await page.route('**/getSampleDecisionReport', async route => {
+  await page.route(sampleEndpoint, async route => {
     await gate;
     await route.fulfill({ status: 503, json: { error: { status: 'UNAVAILABLE', message: 'Local visual fixture' } } });
   });

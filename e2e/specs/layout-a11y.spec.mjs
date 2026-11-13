@@ -100,7 +100,9 @@ test('password recovery fits 320px with a long account address', async ({ page, 
 
 test('the Workspace navigation keeps Ask and Advanced on valid app routes', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.VERIFIED);
-  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fask');
+  await signInThroughUi(page, user);
+  await expect(page).toHaveURL(/\/app$/);
+  await page.goto('/app/ask');
   const nav = page.getByRole('navigation', { name: 'Workspace' });
   await expect(nav.getByRole('link', { name: 'Ask' })).toHaveAttribute('aria-current', 'page');
   await nav.getByRole('link', { name: 'Advanced' }).click();

@@ -2,6 +2,8 @@
 
 The founder approved the editorial homepage in [draft PR #91](https://github.com/alwat83/ifyoumind/pull/91) at `165b5bbe6f2d9f2c3ceb424ffc289ce7bcf4080c`. Wow 3.2 starts at that commit. The design review covers the existing journey from a public example to a saved decision and the account used to manage it. Production release remains subject to founder approval.
 
+[Brand integrity follow-up and permanent visual regression coverage](BRAND_INTEGRITY.md).
+
 ## Rendered baseline and impact assessment
 
 Baseline screenshots were captured from the approved build with the local Firebase demo emulators. The report and account data belong to synthetic QA fixtures. Hosted Stripe pages are outside the app's visual control. Checkout evidence covers the ifYouMind entry and return screens, and browser regression tests intercept the hosted redirect.

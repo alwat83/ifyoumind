@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 13, 2026 — Bill Discovery Phase 2A
+
+**Committed for draft review.** [PR #95](https://github.com/alwat83/ifyoumind/pull/95) brings account-free, browser-local typed property tax and electricity results to the existing Discovery route. [Local preview, screenshots, impact and performance evidence](../product/BILL_DISCOVERY_PHASE_2A.md). [Exact-head checks](https://github.com/alwat83/ifyoumind/pull/95/checks). Phase 1 [PR #94](https://github.com/alwat83/ifyoumind/pull/94) is preserved. Production remains verified at [merge 59a4b80a](https://github.com/alwat83/ifyoumind/actions/runs/43392378321) with closed subscription enrollment. No release or billing action in this assignment.
+
 ## November 12, 2026 — Starter and Plus pricing readiness
 
 **Draft candidate** [PR #93 and exact-head checks](https://github.com/alwat83/ifyoumind/pull/93/checks) on `codex/starter-plus-pricing-readiness` from Wow 3.2 `900dd2648f95358ef5e1416aa8a2cfd2f5c4be12`. [Pricing readiness, production and Stripe readbacks, and matched visuals](../growth/PRICING_READINESS.md). PR #87 is merged and deployed dormant. Live Starter and Plus prices and the portal configuration were verified read-only. The current workflow forces enrollment empty. Existing Pro and $79 billing are preserved. Separate exact release and enrollment authorization are required. Issue #84 remains open.

@@ -17,7 +17,7 @@
     <p class="eyebrow">Step 1</p>
     <h2>Choose a CSV.</h2>
     <label class="dropzone">
-      <input type="file" accept=".csv,text/csv" (change)="chooseFile($event)" />
+      <input type="file" aria-label="Choose a CSV" accept=".csv,text/csv" (change)="chooseFile($event)" />
       <span class="plus">＋</span>
       <strong>{{ fileName || 'Drop in a CSV or choose a file' }}</strong>
       <small>Up to 400 rows / 2 MB for now</small>
@@ -37,19 +37,19 @@
     <div class="mapping">
       <div>
         <span>Which column is the number?</span>
-        <select [(ngModel)]="valueColumn"><option value="">Choose column</option><option *ngFor="let header of table.headers" [value]="header">{{ header }}</option></select>
+        <select aria-label="Number column" [(ngModel)]="valueColumn"><option value="">Choose column</option><option *ngFor="let header of table.headers" [value]="header">{{ header }}</option></select>
       </div>
       <div>
         <span>Which column is the date or period?</span>
-        <select [(ngModel)]="periodColumn"><option value="">Choose column</option><option *ngFor="let header of table.headers" [value]="header">{{ header }}</option></select>
+        <select aria-label="Date or period column" [(ngModel)]="periodColumn"><option value="">Choose column</option><option *ngFor="let header of table.headers" [value]="header">{{ header }}</option></select>
       </div>
       <div>
         <span>Location column <em>optional</em></span>
-        <select [(ngModel)]="geographyColumn"><option value="">None</option><option *ngFor="let header of table.headers" [value]="header">{{ header }}</option></select>
+        <select aria-label="Location column" [(ngModel)]="geographyColumn"><option value="">None</option><option *ngFor="let header of table.headers" [value]="header">{{ header }}</option></select>
       </div>
       <div>
         <span>Item / entity column <em>optional</em></span>
-        <select [(ngModel)]="entityColumn"><option value="">None</option><option *ngFor="let header of table.headers" [value]="header">{{ header }}</option></select>
+        <select aria-label="Item or entity column" [(ngModel)]="entityColumn"><option value="">None</option><option *ngFor="let header of table.headers" [value]="header">{{ header }}</option></select>
       </div>
     </div>
 

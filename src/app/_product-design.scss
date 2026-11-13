@@ -1,0 +1,141 @@
+// The public homepage is the visual reference. Data-heavy views use the
+// same surfaces and controls while keeping body copy, tables and labels sans-serif.
+@mixin fonts {
+  @font-face {
+    font-family: 'Instrument Serif';
+    src: url('/fonts/instrument-serif/regular.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Instrument Serif';
+    src: url('/fonts/instrument-serif/italic.woff2') format('woff2');
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+  }
+}
+
+@mixin tokens {
+  --iy-display: var(--iy-editorial-font, Georgia, serif);
+  --iy-body: Inter, Arial, sans-serif;
+
+  --iy-page: #f7f3eb;
+  --iy-paper: #fffdf8;
+  --iy-panel: #f1ece2;
+  --iy-ink: #222521;
+  --iy-muted: #51554d;
+  --iy-line: #d6d0c6;
+  --iy-control: #827c70;
+  --iy-accent: #88422c;
+  --iy-focus: var(--iy-accent);
+  --iy-clay: #efded0;
+  --iy-olive: #e6e9d5;
+  --iy-hover: #41473b;
+
+  --iy-studio: #232820;
+  --iy-studio-panel: #2c3228;
+  --iy-studio-line: #50564a;
+  --iy-studio-text: #f9f3e5;
+  --iy-studio-muted: #ddd9ca;
+  --iy-studio-accent: #f6bc93;
+  --iy-studio-chart: #c7d2a3;
+  --iy-studio-control: #a7ac9a;
+
+  --iy-good: #2f6247;
+  --iy-good-bg: #e6eedf;
+  --iy-warn: #7a491c;
+  --iy-warn-bg: #f6e7d1;
+  --iy-error: #963b30;
+  --iy-error-bg: #f6e5df;
+  --iy-studio-error: #ffc2b7;
+  --iy-chart: #687c50;
+
+  --iy-space-1: 8px;
+  --iy-space-2: 12px;
+  --iy-space-3: 16px;
+  --iy-space-4: 24px;
+  --iy-space-5: 32px;
+  --iy-gutter: clamp(12px, 2.5vw, 24px);
+  --iy-reading: 900px;
+  --iy-content: 980px;
+  --iy-wide: 1180px;
+  --iy-touch: 44px;
+  --iy-radius: 5px;
+  --iy-panel-radius: 8px;
+}
+
+@mixin editorial {
+  font-family: var(--iy-display);
+  font-weight: 400;
+  letter-spacing: -.025em;
+}
+
+@mixin wordmark {
+  font-size: 26px;
+  font-weight: 650;
+  letter-spacing: -.09em;
+  line-height: 1;
+}
+
+@mixin button {
+  min-height: var(--iy-touch);
+  border-radius: var(--iy-radius);
+  font-weight: 650;
+}
+
+@mixin primary {
+  @include button;
+  border: 1px solid transparent;
+  background: var(--iy-ink);
+  color: var(--iy-paper);
+
+  &:hover:not(:disabled, [aria-disabled='true']) {
+    background: var(--iy-hover);
+  }
+}
+
+@mixin secondary {
+  @include button;
+  border: 1px solid var(--iy-control);
+  background: var(--iy-paper);
+  color: var(--iy-ink);
+
+  &:hover:not(:disabled, [aria-disabled='true']) {
+    background: var(--iy-panel);
+  }
+}
+
+@mixin field {
+  width: 100%;
+  min-height: var(--iy-touch);
+  box-sizing: border-box;
+  border: 1px solid var(--iy-control);
+  border-radius: var(--iy-radius);
+  background: var(--iy-paper);
+  color: var(--iy-ink);
+  font: inherit;
+}
+
+@mixin focus {
+  :where(a, button, input, select, textarea, summary, [tabindex='0']):focus-visible {
+    outline: 2px solid var(--iy-focus);
+    outline-offset: 3px;
+  }
+
+  @media (forced-colors: active) {
+    :where(a, button, input, select, textarea, summary, [tabindex='0']):focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}
+
+@mixin quiet-motion {
+  @media (prefers-reduced-motion: reduce) {
+    :where(a, button, input, select, textarea, summary) {
+      transition: none;
+    }
+  }
+}

@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 12, 2026 — Wow 3.2 visual consistency
+
+**Draft review candidate.** `codex/wow-3-2-visual-consistency` starts at founder-approved [PR #91](https://github.com/alwat83/ifyoumind/pull/91) head `165b5bbe6f2d9f2c3ceb424ffc289ce7bcf4080c`. [Visual matrix, matched screenshots and verification](../design/wow-3-2/REVIEW.md). The shared presentation spans Discovery, auth, dashboard and history, Business reports, checkout, account, data and legal pages. Ask and narrow password recovery no longer overflow in the tested fixtures. The draft records exact-head checks. PR #88 remains the production baseline. Founder review and separate release authorization remain pending.
+
 ## November 12, 2026 — Wow 3.1 cross-surface review
 
 **Committed for draft review.** [PR #91](https://github.com/alwat83/ifyoumind/pull/91) extends the already tested Wow 3.1 head `36b9c1e420fb3fd1c76b3344fcffc1525498bb83` with a clearer hero line, explicit evidence toggle, journey coverage, and the durable cross-surface standard. [Impact matrix, full-page evidence and four journeys](../design/wow-3-20261112/CROSS_SURFACE.md). The draft records exact-head checks. PR #90 stays the comparison and PR #88 remains the deployed baseline. Founder authorization is required for release.

@@ -51,3 +51,49 @@ test('signed-in pages are accessible, fit the viewport and the app navigation wo
   await expect(page).toHaveURL(/\/app\/pricing$/);
   await expect(page.getByText('If you cancel Pro, reports you already unlocked with it stay unlocked.')).toBeVisible();
 });
+
+test('shared app surfaces retain editorial headings, mobile fit and keyboard focus', async ({ page, fixtures }) => {
+  const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await signInThroughUi(page, user);
+  await expect(page.getByRole('heading', { name: 'Your decisions' })).toBeVisible();
+
+  for (const [path, control] of [
+    ['/app', 'Start a decision'],
+    ['/app/decide?type=business', 'Main location'],
+    ['/app/pricing', 'Buy Decision Report'],
+    ['/app/account', 'Save profile'],
+    ['/app/data', 'Choose a CSV'],
+    ['/app/ask', 'Question'],
+    ['/app/advanced', 'Dataset name'],
+  ]) {
+    await page.goto(path);
+    await expect(page.locator('h1')).toHaveCSS('font-family', /Instrument Serif/);
+    await expect(page.getByLabel(control, { exact: false }).or(page.getByRole('link', { name: control, exact: true }))
+      .or(page.getByRole('button', { name: control, exact: true })).first()).toBeAttached();
+    for (const width of [320, 390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await expectNoHorizontalScroll(page);
+    }
+    await page.keyboard.press('Tab');
+    const focus = page.locator(':focus-visible').first();
+    await expect(focus).toBeVisible();
+    await expect(focus).toHaveCSS('outline-style', 'solid');
+    await expect(focus).toHaveCSS('transition-duration', '0s');
+    await expectAccessible(page);
+  }
+
+  await page.goto('/app/data');
+  await page.getByLabel('Choose a CSV').focus();
+  await expect(page.locator('.dropzone')).toHaveCSS('outline-style', 'solid');
+});
+
+test('password recovery fits 320px with a long account address', async ({ page, fixtures }) => {
+  const user = await fixtures('T32-long-password-recovery-address', { workspace: false });
+  await page.setViewportSize({ width: 320, height: 568 });
+  await page.goto('/login');
+  await page.getByLabel('Email', { exact: true }).fill(user.email);
+  await page.getByRole('button', { name: /forgot password/i }).click();
+  await expect(page.getByRole('status')).toContainText('If an account exists for');
+  await expectNoHorizontalScroll(page);
+});

@@ -12,7 +12,7 @@
   <section *ngIf="error" class="panel error">{{ error }}</section>
   <section *ngIf="!loading && workspace" class="ask-panel">
     <form (ngSubmit)="submit()">
-      <textarea name="question" [(ngModel)]="question" maxlength="500" rows="3" placeholder="What seems to be driving home prices?"></textarea>
+      <textarea aria-label="Question" name="question" [(ngModel)]="question" maxlength="500" rows="3" placeholder="What seems to be driving home prices?"></textarea>
       <button type="submit" [disabled]="asking || !question.trim()">{{ asking ? 'Looking across your data…' : 'Ask ifYouMind' }}</button>
     </form>
     <div class="prompt-row"><button *ngFor="let prompt of prompts" type="button" (click)="usePrompt(prompt)">{{ prompt }}</button></div>

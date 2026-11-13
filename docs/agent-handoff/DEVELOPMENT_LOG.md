@@ -526,3 +526,11 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 - Added a pre-implementation impact matrix, permanent root policy, reference from GitHub agent guidance, and PR template. Tightened hero copy and gave the native evidence disclosure a clear open-state label. Extended the discovery journey and returning account-to-saved-report browser coverage.
 - [Matched mobile and desktop evidence, performance, verification commands, and scope](../design/wow-3-20261112/CROSS_SURFACE.md). Exact-head checks are recorded on the PR and synchronized to the issue and Notion. No commercial, security, dependency, or infrastructure changes. PR #88 remains the deployed baseline.
 - Next review the captures, check first-use comprehension with permitted participants, and obtain separate authorization before a release. Live portal behavior, field performance, and conversion remain unmeasured by this work.
+
+## 2026-11-12 — Wow 3.2 cross-surface visual consistency
+
+**Provider/agent:** OpenAI / Codex. **Branch:** `codex/wow-3-2-visual-consistency`, forked at the approved [PR #91](https://github.com/alwat83/ifyoumind/pull/91) head `165b5bbe6f2d9f2c3ceb424ffc289ce7bcf4080c`. See the draft for the candidate SHA, exact-head CI and Issue #89/Notion coordination.
+
+**Work:** audited the rendered app first. Shared the approved editorial type, colors, spacing and interactive styles across Discovery, auth, Business, dashboard and saved reports, account, commerce, My Data, Ask, Advanced and the legal/guide pages. Fixed existing layout overflow in Ask and in the long-email reset state. [Matrix, screenshot pairs and verification](../design/wow-3-2/REVIEW.md).
+
+**Verification:** local production and demo builds, 138 web and 72 Functions tests, 69 integrated Hosting cases, production bundle and Discovery isolation guards, and targeted Angular lint passed. The initial integrated run caught duplicate font-face registration and the capture sweep found the existing narrow recovery overflow. Both were corrected. Existing remote targets, billing, entitlements, authentication rules, report generation and privacy stay in place. No production action. Browser and emulator results establish journey coverage only. Next action is founder comparison of the 390 px and 1440 px journeys, then a separate release decision.

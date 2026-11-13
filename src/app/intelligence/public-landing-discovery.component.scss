@@ -1,11 +1,11 @@
 .featured {
-  --studio: #232820;
-  --surface: #2c3228;
-  --rule: #50564a;
-  --studio-text: #f9f3e5;
-  --studio-muted: #ddd9ca;
-  --chart-accent: #f6bc93;
-  --chart-contrast: #c7d2a3;
+  --studio: var(--iy-studio);
+  --surface: var(--iy-studio-panel);
+  --rule: var(--iy-studio-line);
+  --studio-text: var(--iy-studio-text);
+  --studio-muted: var(--iy-studio-muted);
+  --chart-accent: var(--iy-studio-accent);
+  --chart-contrast: var(--iy-studio-chart);
   background: var(--studio);
   color: var(--studio-text);
   padding-block: clamp(40px, 5.6vw, 82px);

@@ -38,8 +38,8 @@ test('sample marks every paid-only section with the "Included in the $79 report"
   }
   assert.match(reportHtml,/<app-market-analysis[^>]*\[includedInReport\]="sampleMode"/);
   assert.ok(analysisHtml.includes(`<span *ngIf="includedInReport" class="paid-pill">${PILL}</span>`));
-  // #3730a3 on #eef2ff is about 9:1, well above WCAG AA 4.5:1.
-  assert.match(reportScss,/\.paid-pill\{[^}]*background:#eef2ff;color:#3730a3/);
+  // The public-report browser checks verify contrast on the rendered pill.
+  assert.match(reportScss,/\.paid-pill\{[^}]*background:var\(--iy-clay\);color:var\(--iy-accent\)/);
 });
 
 test('unpaid brief shows what the $79 report adds, with the existing pricing CTA',()=>{

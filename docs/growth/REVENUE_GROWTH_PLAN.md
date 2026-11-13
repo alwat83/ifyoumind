@@ -2,6 +2,10 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## November 12 — Wow 3.2 customer journey
+
+The [visual consistency candidate](../design/wow-3-2/REVIEW.md) carries the public brand into sign-up, returning decisions, pricing and Account. QA confirms usable local journeys. Whether first-time visitors continue to a personalized report and understand the paid offer is still a hypothesis. Existing scoreboard values and Pending Founder Setup remain current.
+
 ## November 12 — Wow 3.1 cross-surface follow-up
 
 The [cross-surface review](../design/wow-3-20261112/CROSS_SURFACE.md) traces discovery, sample and signup, payment and entitlement, and returning report access. The next evidence to collect is whether permitted first-time visitors can explain the free example and find a personalized report. Browser and emulator outcomes do not measure visitor conversion or independent sales. Outbound remains Pending Founder Setup.

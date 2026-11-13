@@ -23,3 +23,24 @@ test('public navigation and Business registration presentation remain reachable'
  await page.goto('/privacy-policy');await expect(page.getByRole('heading',{name:'Browser-local bill discovery'})).toBeVisible();await expect(page.locator('body')).toContainText('separately from registered Business');
  await page.goto('/');await expect(page.getByRole('link',{name:'Pricing (sign-in required)',exact:true})).toHaveAttribute('href','/app/pricing');
 });
+
+test('discovery uses the shared local display font and preserves keyboard focus in reduced motion', async ({ page }) => {
+ await page.emulateMedia({ reducedMotion: 'reduce' });
+ await page.goto('/discover/');
+ await expect(page.getByRole('heading', { level: 1 })).toHaveCSS('font-family', /Instrument Serif/);
+ expect(await page.evaluate(async () => {
+   const faces = await document.fonts.load('44px "Instrument Serif"');
+   return faces.some(face => face.status === 'loaded');
+ })).toBe(true);
+ await page.keyboard.press('Tab');
+ await expect(page.getByRole('link', { name: 'Skip to discovery' })).toBeFocused();
+ const example = page.getByRole('button', { name: 'Try property tax example' });
+ await example.focus();
+ await expect(example).toHaveCSS('outline-style', 'solid');
+ await page.keyboard.press('Enter');
+ const evidence = page.locator('.finding summary').first();
+ await expect(evidence).toBeVisible();
+ await evidence.focus();
+ await page.keyboard.press('Enter');
+ await expect(page.getByRole('table').first()).toBeVisible();
+});

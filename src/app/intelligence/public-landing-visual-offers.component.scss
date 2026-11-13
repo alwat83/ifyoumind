@@ -1,4 +1,4 @@
-.reports { background: #efded0; }
+.reports { background: var(--iy-clay); }
 .reports-inner {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, .8fr);

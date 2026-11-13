@@ -2,7 +2,7 @@
 
 ## November 13, 2026 — OpenAI explanation readiness
 
-**Internal prototype, committed for draft review.** [Audit, synthetic demo, budget and founder checklist](../product/OPENAI_ACTIVATION_READINESS.md). Production base is [merge 59a4b80a](https://github.com/alwat83/ifyoumind/actions/runs/43392378321). Metadata confirmed no named OpenAI secret or deployed binding. Paid reports remain deterministic. The synthetic callable is excluded from production deployment and defaults off. API billing, project access and real staging inference remain unverified. Bill Discovery [PR #95](https://github.com/alwat83/ifyoumind/pull/95) is separate and preserved.
+**Internal prototype, committed for review in [draft PR #96](https://github.com/alwat83/ifyoumind/pull/96).** [Exact-head checks](https://github.com/alwat83/ifyoumind/pull/96/checks). The interrupted QA retry passed on implementation commit `8931eae166df4a0863d762c817b027ceace95a98`. [Retry](https://github.com/alwat83/ifyoumind/actions/runs/43461963589/attempts/2). [Audit, synthetic demo, budget and founder checklist](../product/OPENAI_ACTIVATION_READINESS.md). Production base is [merge 59a4b80a](https://github.com/alwat83/ifyoumind/actions/runs/43392378321). The November 13 metadata recheck again found no named OpenAI secret or deployed binding across 33 live functions. Paid reports remain deterministic. The synthetic callable is excluded from production deployment and defaults off. API billing, project access and real staging inference remain unverified. Bill Discovery [PR #95](https://github.com/alwat83/ifyoumind/pull/95) is separate and preserved.
 
 ## November 12, 2026 — Starter and Plus pricing readiness
 

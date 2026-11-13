@@ -40,13 +40,15 @@ With the mock selecting `income`, the response leads with Market A median househ
 
 | Scenario | Assumption | Estimated OpenAI generation cost |
 | --- | --- | ---: |
-| Representative request | 250 input, 16 output tokens at standard rates | $0.000033 |
-| Maximum modeled request | 768 input at the $0.125/M cache-write price as a conservative input rate, 128 output at $0.50/M | $0.000160 |
-| 50 attempts/month | Maximum modeled request each time | $0.008 |
-| 200 attempts/month | Maximum configured monthly attempts | $0.032 |
-| 1,000 attempts/month | Future sizing only, above the enforced cap | $0.160 |
+| Representative request | 250 input and 16 output tokens for the two facts and a single enum response | $0.000033 |
+| Maximum modeled request | 768 input at $0.10/M and 128 output at $0.50/M | $0.0001408 |
+| 50 attempts/month | Maximum modeled request each time | $0.00704 |
+| 200 attempts/month | Maximum configured monthly attempts | $0.02816 |
+| 1,000 attempts/month | Future sizing only, above the enforced cap | $0.1408 |
 
-This estimate uses the published model rates and excludes Firebase invocations, Firestore, networking and any applicable tax. Confirm the count endpoint's billing treatment, delivered service tier, token usage and actual latency in the authorized synthetic staging run. Prices can change. Application quota bounds request volume even when the provider times out. Configure the provider project’s hard spend limit and alerts as a separate control. [Model rates](https://developers.openai.com/api/docs/models/gpt-6-luna) · [OpenAI spend limits](https://developers.openai.com/api/docs/guides/spend-limits)
+The representative token counts are estimates. The mock returns fixture counts. The generation estimate uses Standard rates and assumes uncached input because the 768-token cap is below Luna's documented 1,024-token minimum cacheable prefix. It excludes Firebase, Firestore, network transfer and tax. Confirm actual usage, the count endpoint's billing treatment, delivered service tier and latency in the authorized synthetic staging run. [Model rates](https://developers.openai.com/api/docs/models/gpt-6-luna) · [Prompt caching](https://developers.openai.com/api/docs/guides/prompt-caching)
+
+OpenAI lists 5,000 requests and 2,000,000 tokens per minute at Luna's Build tier. The Free tier is unsupported. Actual staging limits and model access depend on project settings and remain unverified. The prototype caps attempts at 3 per reviewer per UTC day, 20 global per UTC day and 200 global per UTC month. An attempt can make up to two provider requests, count and generation. The Firestore cap applies even when a request times out. The approved provider hard spend limit and alerts protect the separate staging project. [OpenAI rate limits](https://developers.openai.com/api/docs/guides/rate-limits) · [OpenAI spend limits](https://developers.openai.com/api/docs/guides/spend-limits)
 
 ## Product recommendation
 
@@ -62,8 +64,12 @@ This estimate uses the published model rates and excludes Firebase invocations, 
 
 ## Founder activation checklist
 
-1. Confirm the correct OpenAI organization and non-production project, funded API billing, the model allowlist, service-account key permissions for Responses and token count, and data-sharing settings. Confirm a project hard cap with spend alerts. Review the effective Firebase identity and bind only the approved staging key to the prototype. Do not copy or expose credentials.
+1. Confirm funded API billing, the model allowlist, effective key permissions and retention in the approved staging project. Follow the [secure setup steps](../../AI_SYNTHESIS_SETUP.md#founder-setup-for-an-authorized-staging-test) after authorization.
 2. Separately authorize the exact staging deployment and one bounded synthetic request. Verify strict response compatibility, real token counts, actual usage/cost, latency, audit metadata without payloads, and flag-off fallback. Disable the flag when the trial ends. Production is outside this gate.
 3. Review the minimum Decision Report data projection, authorization/entitlement gates, provider retention and user-facing disclosure before a small approved pilot. Verify that the original report is usable when the feature is off. Approve any later production deployment and activation separately. Keep Stripe and report entitlement mechanics independent.
 
-Verification and exact-head status are recorded on the draft PR.
+## Verification handoff
+
+The November 13 metadata recheck again found no `OPENAI_API_KEY` or enabled version in `ifyoumind-473fe`, zero bindings across 33 deployed functions and no deployed prototype. Existing paid reports still bind Census and Stripe only. No credential value was requested.
+
+The interrupted QA retry completed successfully on the original implementation commit `8931eae166df4a0863d762c817b027ceace95a98`. It followed a single existing desktop Ask/Advanced navigation failure involving a local emulator `403` from `listUniversalDatasets`. The unchanged retry passed 132 authenticated browser cases, 183 Discovery browser cases, 138 web, 80 Functions, 38 commerce, nine Firestore rules, five organization and 26 fixture cases. One existing fixture was skipped. The final documentation head and its fresh exact-head checks are tracked in [draft PR #96](https://github.com/alwat83/ifyoumind/pull/96/checks). [Original launch build](https://github.com/alwat83/ifyoumind/actions/runs/43461963488) · [Passing original QA retry](https://github.com/alwat83/ifyoumind/actions/runs/43461963589/attempts/2)

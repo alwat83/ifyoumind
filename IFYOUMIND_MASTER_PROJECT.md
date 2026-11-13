@@ -10,7 +10,7 @@
 
 ## November 13, 2026 — OpenAI explanation readiness
 
-[Internal prototype and activation review](docs/product/OPENAI_ACTIVATION_READINESS.md) uses Responses to select a lead from synthetic evidence. Deterministic calculations, source facts and caveats remain authoritative. Recommend an optional Decision Report explanation as the first product pilot after staging validation. Household Bill Discovery retains its browser-local boundary. Provider configuration, staging and release require separate approvals.
+[Internal prototype and activation review](docs/product/OPENAI_ACTIVATION_READINESS.md) uses Responses to select a lead from synthetic evidence. Deterministic calculations, source facts and caveats remain authoritative. Recommend an optional Decision Report explanation as the first product pilot after staging validation. Household Bill Discovery retains its browser-local boundary. The [secure staging setup](AI_SYNTHESIS_SETUP.md) is documented. Provider configuration, staging and release require separate approvals.
 
 ## November 12, 2026 — Starter and Plus are the primary subscription offers
 

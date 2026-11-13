@@ -2,7 +2,7 @@
 
 ## November 12, 2026 — Wow 3.2 visual consistency
 
-**Draft review candidate.** `codex/wow-3-2-visual-consistency` starts at founder-approved [PR #91](https://github.com/alwat83/ifyoumind/pull/91) head `165b5bbe6f2d9f2c3ceb424ffc289ce7bcf4080c`. [Visual matrix, matched screenshots and verification](../design/wow-3-2/REVIEW.md). The shared presentation spans Discovery, auth, dashboard and history, Business reports, checkout, account, data and legal pages. Ask and narrow password recovery no longer overflow in the tested fixtures. The draft records exact-head checks. PR #88 remains the production baseline. Founder review and separate release authorization remain pending.
+**[Draft PR #92](https://github.com/alwat83/ifyoumind/pull/92).** `codex/wow-3-2-visual-consistency` starts at founder-approved [PR #91](https://github.com/alwat83/ifyoumind/pull/91) head `165b5bbe6f2d9f2c3ceb424ffc289ce7bcf4080c`. [Visual matrix, matched screenshots and verification](../design/wow-3-2/REVIEW.md). The shared presentation spans Discovery, auth, dashboard and history, Business reports, checkout, account, data and legal pages. Ask and narrow password recovery no longer overflow in the tested fixtures. The [draft checks](https://github.com/alwat83/ifyoumind/pull/92/checks) record CI at the candidate head. [Issue #89](https://github.com/alwat83/ifyoumind/issues/89#issuecomment-6842747221) and the [Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71) carry the linked handoff. PR #88 remains the production baseline. Founder review and separate release authorization remain pending.
 
 ## November 12, 2026 — Wow 3.1 cross-surface review
 

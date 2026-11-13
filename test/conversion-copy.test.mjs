@@ -93,7 +93,7 @@ test('consumer homepage preserves the Business entry point and plan-ready offer'
   assert.match(landingHtml,/id="business"/);
   assert.match(landingHtml,/routerLink="\/sample-report"/);
   assert.match(read('src/app/intelligence/home-discovery-examples.ts'),/action: 'View the Full Sample Report'/);
-  assert.match(landingHtml,/Census data, source links, and practical next steps/);
+  assert.match(landingHtml,/more comparisons, a sourced market analysis, and an action plan/);
   assert.match(pricingHtml,/evidence boundaries and source list/);
   assert.match(pricingHtml,/An action plan: what to do before you commit/);
   assert.ok(landingHtml.indexOf('id="try"')<landingHtml.indexOf('id="business"'),'consumer discovery leads; Business remains available');

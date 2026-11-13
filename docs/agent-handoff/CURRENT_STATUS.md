@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 12, 2026 — Wow 3.1
+
+**Committed for draft review.** The founder approved Wow 3.0 as the preferred visual direction. [Draft PR #91](https://github.com/alwat83/ifyoumind/pull/91) continues from `69cc8c985b7c7e5d0e9a904530b24a42506647a5` with targeted first-use and conversion improvements. [Before and after, conversion path and verification](../design/wow-3-20261112/REVIEW.md). PR #90 remains the Wow 2.2 comparison, and #88 remains the verified production baseline. Separate release authorization is pending.
+
 ## November 12, 2026 — Wow 3.0 design review
 
 **Committed for draft review.** The founder rejected the visual direction in [PR #90](https://github.com/alwat83/ifyoumind/pull/90). Wow 3.0 is on `codex/wow-3-editorial-homepage` from master `449f829f733553c4c8afbf6c0748d82566b0048e`. [Full desktop and mobile comparison](../design/wow-3-20261112/REVIEW.md). The three-section homepage pairs a photographic hero, an interactive evidence demo and a short Decision Reports section. PR #90 remains the comparison baseline at `6a1f33d35e3547d218e22351ee89e81aaedfdf36`. PR #88 remains the verified production baseline. Founder visual review and a separate release decision are pending.

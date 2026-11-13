@@ -23,19 +23,19 @@
     <section id="try" class="shell hero" aria-labelledby="hero-title" tabindex="-1">
       <div class="hero-copy">
         <h1 id="hero-title">See the story.&ngsp;<em>Check the evidence.</em></h1>
-        <p>See what changed in a bill or how places compare.</p>
+        <p>Find what changed in a bill or what sets two places apart.</p>
         <a href="#business" class="button primary">Try a Free Example <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
       </div>
       <div class="hero-art">
         <img src="/images/home/neighborhood-at-dusk.webp"
           srcset="/images/home/neighborhood-at-dusk-small.webp 480w, /images/home/neighborhood-at-dusk.webp 960w"
-          sizes="(max-width: 740px) calc(100vw - 36px), 52vw" width="960" height="1440" alt="" fetchpriority="high">
+          sizes="(max-width: 740px) calc(100vw - 36px), (max-width: 1080px) calc(49.64vw - 33px), (max-width: 1392px) calc(49.64vw - 58px), 632px" width="960" height="1440" alt="" fetchpriority="high">
       </div>
     </section>
 
     <section id="business" class="featured" aria-labelledby="examples-title" tabindex="-1">
       <div class="shell experience">
-        <h2 id="examples-title">Try an example</h2>
+        <h2 id="examples-title">See the numbers</h2>
         <div class="demo">
           <div class="question-options" role="group" aria-label="Choose an example">
             @for (option of examples; track option.id) {
@@ -73,6 +73,9 @@
             <details #evidence class="home-evidence">
               <summary>Show the evidence <span aria-hidden="true"></span></summary>
               <div class="evidence-content">
+                @if (example.evidenceLead) {
+                  <p class="evidence-lead">{{ example.evidenceLead }}</p>
+                }
                 <p class="evidence-context">{{ example.context }}</p>
                 <div class="comparison">
                   <table aria-describedby="data-sources">
@@ -154,10 +157,10 @@
       <div class="shell reports-inner">
         <h2 id="reports-title">Decision Reports</h2>
         <div>
-          <p>Compare business locations with Census data, source links, and practical next steps.</p>
+          <p>Start with a free brief for your business and cities. A full Decision Report adds more comparisons, a sourced market analysis, and an action plan.</p>
           <div class="report-links">
             <a routerLink="/sample-report" class="button">View a Sample Report <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
-            <a routerLink="/app/decide" class="text-link">Create a Report</a>
+            <a routerLink="/app/decide" [queryParams]="{ type: 'business' }" class="text-link">Start a Free Brief</a>
           </div>
         </div>
       </div>

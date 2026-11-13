@@ -42,14 +42,29 @@
     text-decoration: none;
   }
   .mobile-navigation nav a:hover { text-decoration: underline; }
-  .hero { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-block: 23px 28px; }
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 20px; padding-block: 21px 24px; }
   .hero-copy h1 { font-size: clamp(48px, 11.8vw, 82px); }
   .hero-copy p { margin-block: 13px 14px; }
-  .hero-art { aspect-ratio: 1.85; }
-  .experience > h2 { margin-bottom: 16px; }
+  .hero-art { aspect-ratio: 2.05; }
+  .featured { padding-block: 31px; }
+  .experience > h2 { font-size: clamp(39px, 9vw, 46px); margin-bottom: 14px; }
   .question-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding-inline: 13px; gap: 4px 9px; }
   .question-option { font-size: 12px; text-align: center; overflow-wrap: anywhere; }
   .discovery-result { grid-template-columns: minmax(0, 1fr); gap: 22px; padding: 18px; }
+  .bars { grid-template-columns: minmax(0, 1fr); gap: 11px; }
+  .bar { grid-template-areas: 'label' 'value'; }
+  .bar dt { padding: 0; text-align: start; }
+  .bar dd {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 70px;
+    align-items: center;
+    gap: 10px;
+    height: auto;
+    border: 0;
+    background: transparent;
+  }
+  .bar-value { grid-column: 2; grid-row: 1; margin: 0; text-align: end; }
+  .bar-fill { grid-column: 1; grid-row: 1; width: var(--bar-height); height: 9px; border-radius: 2px; }
   .conclusion { margin-top: 11px; }
   .conclusion > span { margin-top: 8px; }
   .discovery-next, .evidence-groups { grid-template-columns: minmax(0, 1fr); }
@@ -68,5 +83,4 @@
 
 @media (prefers-reduced-motion: reduce) {
   .button { transition: none; }
-  .bar-fill { animation: none; }
 }

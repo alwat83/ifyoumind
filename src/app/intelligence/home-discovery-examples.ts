@@ -14,12 +14,14 @@ interface HomeExample {
   finding: { value: string; text: string };
   chart: { title: string; measures: readonly { label: string; value: string; width: number }[] };
   limit: string;
+  evidenceLead?: string;
   proof?: readonly { label: string; steps: readonly string[]; cells: readonly { cell: string; label: string; raw: string }[] }[];
   action: string;
 }
 
 const taxIncrease = bills.tax.highlights[0].value.replace(/^\+|\.00$/g, '');
 const schoolIncrease = bills.tax.highlights[1].value.replace(/^\+|\.00$/g, '');
+const [taxTotalProof, taxChargeProof] = bills.tax.proof;
 const [billIncrease, useIncrease] = bills.electricity.highlights;
 const [austinIncome, charlotteIncome] = [93_658, 82_068];
 const incomeValues = [austinIncome, charlotteIncome].map(income => '$' + income.toLocaleString('en-US'));
@@ -28,12 +30,20 @@ export const HOME_EXAMPLES: readonly HomeExample[] = [
   {
     id: 'tax',
     title: 'Property taxes',
-    question: 'What changed on this tax bill?',
+    question: 'What added the most to this tax bill?',
     label: 'Made-up example',
     context: 'Two consecutive tax years for the same property.',
     ...bills.tax,
     finding: { value: bills.tax.share, text: `of the ${taxIncrease} increase came from school charges.` },
-    chart: { title: 'Change in charges', measures: bills.tax.highlights },
+    chart: {
+      title: 'What went up',
+      measures: [
+        { ...bills.tax.highlights[0], label: 'Total tax increase' },
+        { ...bills.tax.highlights[1], label: 'School charge increase' },
+      ],
+    },
+    evidenceLead: taxChargeProof.steps.at(-1),
+    proof: [taxTotalProof, { ...taxChargeProof, steps: taxChargeProof.steps.slice(0, -1) }],
     takeaway: `School charges accounted for ${bills.tax.share} of the ${taxIncrease} increase and rose by ${schoolIncrease}.`,
     limit: 'The bills show which charges changed. Check assessed value and tax rates to understand why.',
     action: 'Explore the property-tax example',

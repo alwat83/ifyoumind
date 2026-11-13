@@ -1,4 +1,43 @@
-# Wow 3.0 founder review
+# Wow homepage founder review
+
+## Wow 3.1 — Experience, clarity and conversion
+
+The founder approved Wow 3.0 as the preferred visual direction. This iteration continues [draft PR #91](https://github.com/alwat83/ifyoumind/pull/91) from `69cc8c985b7c7e5d0e9a904530b24a42506647a5`. The editorial composition, serif, neighborhood image, palette and three sections remain.
+
+### Five-second audit
+
+The original CTA was clear, but the supporting line named categories more readily than it invited a discovery. The revised line asks visitors to find what changed in a bill or what sets two places apart. The free CTA still opens the demo on the same page. A shallower image crop and tighter spacing bring the demo 25 px earlier at 320 px and 29 px earlier at 390 px. Desktop composition and first-screen section positions are preserved.
+
+### Thirty-second experience and report path
+
+- The synthetic tax question now asks what added the most to the bill. Both chart bars say what increased. Phones use horizontal bars with the same proportional data, so the takeaway, chart and evidence control fit after the CTA jump at 320 × 568. The previous bar entrance animation was removed.
+- **Show the evidence** opens on `($240.00 ÷ $420.00) × 100 = 57.1%`. The rest of the disclosure retains the original raw cells, component arithmetic and limitations. Electricity and city comparisons retain their numbers and evidence.
+- The Decision Reports copy distinguishes the personalized free brief from the full report, which adds more comparisons, a sourced market analysis and an action plan. **Start a Free Brief** leads through the existing sign-in guard to Business location entry. The sample stays public and keeps its existing free signup and $79 report registration paths. Signed-in pricing and checkout behavior remain in their existing surfaces.
+
+### Before and after
+
+The before captures come from the reviewed Wow 3.0 exact head. The after captures use the production Angular build served locally with the same Chrome viewport dimensions.
+
+| Viewport | First screen before | First screen after | Full page before | Full page after |
+| --- | --- | --- | --- | --- |
+| 390 × 844 | [Before](screenshots/390.jpg) | [After](screenshots/wow-3-1/390.jpg) | [Before](screenshots/390-full.jpg) | [After](screenshots/wow-3-1/390-full.jpg) |
+| 1440 × 900 | [Before](screenshots/1440.jpg) | [After](screenshots/wow-3-1/1440.jpg) | [Before](screenshots/1440-full.jpg) | [After](screenshots/wow-3-1/1440-full.jpg) |
+
+[320 px](screenshots/wow-3-1/320.jpg) · [768 px](screenshots/wow-3-1/768.jpg) · [1024 px](screenshots/wow-3-1/1024.jpg) · [Mobile demo](screenshots/wow-3-1/390-demo.jpg) · [Mobile evidence](screenshots/wow-3-1/390-evidence.jpg) · [Desktop demo](screenshots/wow-3-1/1440-demo.jpg)
+
+### Responsive and performance checks
+
+Three fresh loopback Chrome contexts per viewport, device scale 1, remote requests blocked, reduced motion. At 320 px, the evidence control bottom moves from y=632 to y=556 after the CTA jump. At 390 px it moves from y=611 to y=535. The 1024 px viewport selects the 77,842-byte image instead of the 251,544-byte image with the corrected responsive size hint. The served mobile and desktop images are otherwise identical. Encoded JavaScript grows by 355 bytes in the sampled load. Maximum measured initial layout shift stays about 0.052. Loopback LCP varied from 96 to 188 ms by median on the final capture and ran slower at several widths. These small local samples do not establish a field performance trend.
+
+### Verification and founder review
+
+Browser regressions cover the first viewport, focus after the CTA, responsive chart proportions, the formula and original cells, all three examples, keyboard navigation, forced colors, reduced motion, text spacing and no overflow. Authenticated checks cover paid-intent and free registration from the public sample, guarded pricing and the free brief's return to Business location entry after sign-in. GitHub holds the exact-head test totals. Baseline build-budget warnings and the existing fixture skip are separate from homepage regressions.
+
+Hypothesis to test with first-time visitors: after five seconds, they can say what ifYouMind helps them find and identify the free action. After thirty seconds, they can explain the 57.1%, open its proof, and tell a free brief from the full report. Visual review, native screen-reader behavior, real user comprehension, field performance and live conversion remain unmeasured. Use already permitted participants. Founder visual preference does not authorize merge or deployment.
+
+---
+
+## Wow 3.0 founder review
 
 [Wow 2.2 comparison draft](https://github.com/alwat83/ifyoumind/pull/90) · [ifYouMind Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71)
 

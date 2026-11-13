@@ -8,6 +8,10 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 12, 2026 — Wow 3.1
+
+The founder selected Wow 3.0's editorial composition. [Draft PR #91](https://github.com/alwat83/ifyoumind/pull/91) refines the opening invitation, phone demo, evidence hierarchy and personalized report path on the same branch. [Review and verified scope](docs/design/wow-3-20261112/REVIEW.md).
+
 ## November 12, 2026 — Wow 3.0
 
 Founder rejected the Wow 2.2 visual direction. The new design candidate uses an editorial hero, an interactive demo with source-backed chart values, and a concise Decision Reports path. Detailed pricing, guides and file disclosures remain at their existing destinations. [Full homepage comparison and review](docs/design/wow-3-20261112/REVIEW.md). PR #90 is retained at its exact comparison head.

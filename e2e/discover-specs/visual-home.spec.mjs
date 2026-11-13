@@ -48,9 +48,10 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await expect(page).toHaveURL(origin + '/#business');
     await expect(page.locator('#business')).toBeFocused();
     await expect(page.locator('#try').getByRole('link')).toHaveCount(1);
-    await expect(page.locator('#try')).toContainText('See what changed in a bill or how places compare.');
+    await expect(page.locator('#try')).toContainText('Find what changed in a bill or what sets two places apart.');
     const reports = page.getByRole('region', { name: 'Decision Reports', exact: true });
-    await expect(reports.getByRole('link', { name: 'Create a Report' })).toHaveAttribute('href', '/app/decide');
+    await expect(reports.getByRole('link', { name: 'Start a Free Brief' })).toHaveAttribute('href', '/app/decide?type=business');
+    await expect(reports).toContainText('A full Decision Report adds more comparisons, a sourced market analysis, and an action plan.');
     await expect(reports.getByRole('link', { name: 'View a Sample Report' })).toHaveAttribute('href', '/sample-report');
     const feature = page.locator('#business');
     await expect(feature.getByRole('button', { pressed: true })).toHaveText('Property taxes');
@@ -58,12 +59,15 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await expect(feature.locator('.finding')).toContainText('57.1% of the $420 increase came from school charges.');
     await expect(feature.getByText('57.1%', { exact: true })).toBeInViewport({ ratio: 1 });
     await expect(feature.getByText('of the $420 increase came from school charges.', { exact: true })).toBeVisible();
-    await expect(feature.locator('.home-evidence summary')).toBeVisible();
-    const chart = feature.getByRole('figure', { name: 'Change in charges' });
+    await expect(feature.locator('.home-evidence summary')).toBeInViewport({ ratio: 1 });
+    const chart = feature.getByRole('figure', { name: 'What went up' });
     await expect(chart).toContainText('+$420.00');
     await expect(chart).toContainText('+$240.00');
-    const [total, school] = await chart.locator('.bar-fill').evaluateAll(bars =>
-      bars.map(bar => bar.getBoundingClientRect().height));
+    await expect(chart).toContainText('Total tax increase');
+    await expect(chart).toContainText('School charge increase');
+    const axis = width <= 740 ? 'width' : 'height';
+    const [total, school] = await chart.locator('.bar-fill').evaluateAll((bars, axis) =>
+      bars.map(bar => bar.getBoundingClientRect()[axis]), axis);
     expect(total).toBeGreaterThan(0);
     expect(school / total).toBeCloseTo(240 / 420, 3);
     await expect(feature.getByRole('table')).toHaveCount(0);
@@ -104,7 +108,8 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await expect(summary).toBeFocused();
     await expect(evidence).toHaveAttribute('open', '');
     await expect(evidence).toContainText('School: $2,640.00 − $2,400.00 = +$240.00');
-    await expect(evidence).toContainText('($240.00 ÷ $420.00) × 100 = 57.1%');
+    await expect(evidence.locator('.evidence-content > p').first()).toHaveText('($240.00 ÷ $420.00) × 100 = 57.1%');
+    await expect(evidence.getByText('($240.00 ÷ $420.00) × 100 = 57.1%', { exact: true })).toHaveCount(1);
     await expect(evidence.getByRole('table', { name: 'Total tax source cells' })).toContainText('4200.00');
     await expect(evidence.getByRole('table', { name: 'Total tax source cells' })).toContainText('4620.00');
     await expect(evidence.getByRole('table', { name: 'How the charges add up source cells' })).toContainText('2640.00');
@@ -173,7 +178,7 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await expect(evidence).not.toHaveAttribute('open');
     await expect(announcement).toContainText('57.1% of the $420 increase and rose by $240.');
     await expect(fullTax).toBeVisible();
-    await expect(feature.getByRole('figure', { name: 'Change in charges' })).toBeVisible();
+    await expect(feature.getByRole('figure', { name: 'What went up' })).toBeVisible();
   }
 });
 

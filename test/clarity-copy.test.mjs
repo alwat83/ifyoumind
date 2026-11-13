@@ -19,7 +19,7 @@ test('Q5: pricing buttons say what happens, and the prices are unchanged', () =>
   const home = read('../src/app/intelligence/public-landing.component.html');
   assert.match(home, /routerLink="\/app\/pricing">Pricing \(sign-in required\)/);
   assert.match(home, /routerLink="\/sample-report"/);
-  assert.match(home, /routerLink="\/app\/decide"[^>]*>Create a Report/);
+  assert.match(home, /routerLink="\/app\/decide"[^>]*>Start a Free Brief/);
   const pricing = read('../src/app/intelligence/pricing.component.html');
   assert.match(pricing, /One full Decision Report\. A single charge with no renewal\./);
   assert.match(pricing, /<a routerLink="\/app\/decide" class="secondary">Start a decision/);

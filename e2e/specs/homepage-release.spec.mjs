@@ -1,4 +1,5 @@
-import { test, expect, expectAccessible, expectNoHorizontalScroll } from '../support/test.mjs';
+import { test, expect, expectAccessible, expectNoHorizontalScroll, signInThroughUi } from '../support/test.mjs';
+import { FIXTURES } from '../support/fixtures.mjs';
 
 test('homepage opens the interactive demo and the complete free example', async ({ page }) => {
   await page.goto('/');
@@ -43,14 +44,19 @@ test('homepage comparison, sample report, paid intent and free registration rema
   await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
 });
 
-test('homepage report creation and full pricing keep their sign-in return paths', async ({ page }) => {
+test('homepage free brief and pricing keep their sign-in return paths', async ({ page, fixtures }) => {
+  const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
   await page.goto('/');
-  await page.getByRole('link', { name: 'Create a Report', exact: true }).click();
-  await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/app/decide');
+  await page.getByRole('link', { name: 'Start a Free Brief', exact: true }).click();
+  await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/app/decide?type=business');
   await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
-
+  const briefSignIn = page.url();
   await page.goto('/');
   await page.getByRole('link', { name: 'Pricing (sign-in required)', exact: true }).click();
   await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/app/pricing');
   await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
+
+  await signInThroughUi(page, user, briefSignIn);
+  await expect(page).toHaveURL(/\/app\/decide\?type=business$/);
+  await expect(page.getByRole('heading', { name: 'Where are you looking?' })).toBeVisible();
 });

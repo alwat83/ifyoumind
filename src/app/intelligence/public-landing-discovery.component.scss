@@ -71,11 +71,8 @@
   flex: 0 0 calc(var(--bar-height) * .72);
   border-radius: 3px 3px 0 0;
   background: var(--chart-accent);
-  transform-origin: bottom;
-  animation: settle-bar .34s ease-out;
 }
 .bar:last-child .bar-fill { background: var(--chart-contrast); }
-@keyframes settle-bar { from { transform: scaleY(.86); } }
 
 .discovery-next {
   display: grid;
@@ -112,6 +109,7 @@
 .comparison :is(th, td):not(:first-child) { text-align: end; }
 .source-note { margin-top: 8px; font-size: 13px; }
 .source-note a { display: inline-block; padding-block: 6px; }
+.evidence-lead { color: var(--studio-text); font-weight: 650; margin-bottom: 10px; }
 .evidence-context { margin-bottom: 8px; }
 .evidence-limit { margin-block: 12px 22px; max-width: 65ch; }
 .evidence-links { display: flex; flex-wrap: wrap; gap: 0 18px; }

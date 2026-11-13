@@ -51,6 +51,29 @@ Founder explicitly requests a modern, clean, simple, imagery-led and playful des
 
 Founder loves the deployed visual direction and requests another modern-design iteration that maintains engagement: earn attention in the first few seconds. Continue focused feature-branch homepage work, emphasizing immediate useful output, small interactions and evidence. [Working iteration](docs/design/first-seconds/REVIEW.md). Preserve current capability/privacy/Business boundaries. This does not authorize a new release or claim measured engagement improvement; validate with real first-use observations separately.
 
+## Founder operating directive — agent-led execution (November 12, 2026)
+
+**Decision:** ifYouMind should operate **agent-first and founder-light**. Agents are expected to take the reins wherever practical: identify the next valuable work, investigate, plan just enough, execute within authorization, verify, document, coordinate and hand off without repeatedly asking the founder to manage routine steps. This is an operating preference and standing delegation for safe internal work, **not blanket authorization for external or production mutations**.
+
+### Default behavior
+- **Own outcomes, not just tasks.** Optimize for independently verified customers, revenue, a useful reliable product and time saved for the founder. Recommend and perform the highest-value authorized next action; avoid endless plans, busywork, duplicate reports and artificial activity.
+- **Proceed autonomously within the guardrails.** Read-only investigation, market/product research, code and test work in isolated branches, draft PRs, internal issue triage, documentation, Notion/Linear coordination, draft launch materials and evidence-based recommendations do not need repeated founder permission. Respect existing task scopes and provider permissions.
+- **Coordinate across agents.** Before editing, inspect GitHub PRs/issues/branches, current agent handoffs and active work. Assign clear ownership, preserve other agents' work, avoid competing source-of-truth records and duplicate tickets. Agents may act as engineering, QA, product, growth and operations specialists, but those are responsibilities, not a claim that autonomous workers are running when none are.
+- **Finish the loop.** For every significant assignment, implement → test → review evidence → update `AGENTS.md`/handoff and master documentation as appropriate → synchronize the established ifYouMind Notion hub → report results, remaining blockers and the next actionable step. State exactly what was committed, merged, deployed, production-verified, or still proposed.
+- **Escalate only real decisions.** Ask the founder for business-model/offer decisions, conflicting priorities that materially affect strategy, material risks, missing permissions and the specific approval required for a gated action. Bundle decisions with a recommendation and consequences. Do not repeatedly request an approval already granted for the same scope; do not assume approval extends to new scope.
+- **Never fabricate progress.** Do not infer purchases from checkout flows, confuse sandbox with live Stripe, claim a background agent ran when no execution was verified, or mark untested behavior as passed. Unknown is unknown. Keep sensitive data private.
+
+### Hard approval boundaries
+**Separate explicit founder authorization is required** before merging to a production-deploying branch, deploying production, changing live Stripe prices/configuration/subscriptions or customer billing, modifying production customer records, making purchases/spending money, sending external communications or publishing consequential new product claims. Treat live price launch preparation as authorized engineering work, **not** authorization to activate prices. Never bypass safety checks, credentials, consent or third-party permissions to achieve a goal. For risky changes, provide exact scope, verified test evidence, rollback plan and the smallest decision needed.
+
+### Current application
+- **Revenue priority:** prepare the $4.99/month Starter (one full report) and $9.99/month Plus (three) for an early real-customer launch; preserve Free and existing entitlements. Implementation and sandbox validation are authorized; live activation/merge/deploy require separate explicit approval. [Issue #85](https://github.com/alwat83/ifyoumind/issues/85).
+- **Release safety:** [PR #82](https://github.com/alwat83/ifyoumind/pull/82) remains draft/NO-GO; [Issue #84](https://github.com/alwat83/ifyoumind/issues/84) tracks the legitimate live Billing Portal round trip. [Issue #83](https://github.com/alwat83/ifyoumind/issues/83) cleanup is complete; do not repeat it.
+- **Acquisition:** [Issue #61](https://github.com/alwat83/ifyoumind/issues/61) tracks first independent buyers. Agents may prepare messaging, landing pages and prospect research; sending invitations or other outreach requires specific authorization.
+- **Founder experience:** give a short executive update emphasizing work completed, evidence, revenue impact, blockers and only the decisions requiring the founder. Keep enough durable documentation for another agent to continue without the founder repeating context.
+
+This directive supersedes older **workflow preferences** requiring founder involvement in routine internal work, but **does not supersede** any production, financial, privacy, external-communications or release approval gate.
+
 ## Source of truth — mandatory order
 **Founder correction, 2026-10-22: GitHub and repository documentation are the source of truth for development.** The accessible Notion coordination hub, confirmed by the founder, is:
 https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71

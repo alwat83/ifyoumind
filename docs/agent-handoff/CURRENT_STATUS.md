@@ -2,7 +2,7 @@
 
 ## November 12, 2026 — Starter and Plus pricing readiness
 
-**Draft candidate** on `codex/starter-plus-pricing-readiness` from Wow 3.2 `900dd2648f95358ef5e1416aa8a2cfd2f5c4be12`. [Pricing readiness, production and Stripe readbacks, and matched visuals](../growth/PRICING_READINESS.md). PR #87 is merged and deployed dormant. Live Starter and Plus prices and the portal configuration were verified read-only. The current workflow forces enrollment empty. Existing Pro and $79 billing are preserved. Separate exact release and enrollment authorization are required. Issue #84 remains open.
+**Draft candidate** [PR #93 and exact-head checks](https://github.com/alwat83/ifyoumind/pull/93/checks) on `codex/starter-plus-pricing-readiness` from Wow 3.2 `900dd2648f95358ef5e1416aa8a2cfd2f5c4be12`. [Pricing readiness, production and Stripe readbacks, and matched visuals](../growth/PRICING_READINESS.md). PR #87 is merged and deployed dormant. Live Starter and Plus prices and the portal configuration were verified read-only. The current workflow forces enrollment empty. Existing Pro and $79 billing are preserved. Separate exact release and enrollment authorization are required. Issue #84 remains open.
 
 ## November 12, 2026 — Wow 3.2 brand integrity follow-up
 

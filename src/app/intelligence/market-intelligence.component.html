@@ -118,7 +118,7 @@
 
       <div class="report-actions" *ngIf="project?.id">
         <a [routerLink]="['/app/market', project?.id, 'report']">Open printable report →</a>
-        <a routerLink="/app/pricing">Report & Pro pricing →</a>
+        <a routerLink="/app/pricing" [queryParams]="{projectId:project?.id}">View report pricing →</a>
       </div>
       <p class="data-notice">{{ project?.dataNotice }}</p>
     </section>

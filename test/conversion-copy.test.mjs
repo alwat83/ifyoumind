@@ -71,6 +71,8 @@ test('pricing leads with eligible monthly plans and keeps Free, one-time and leg
   assert.match(pricingHtml,/Legacy Pro/);
   assert.doesNotMatch(pricingHtml,/Get Pro access|request\('pro'\)/);
   assert.match(landingHtml,/routerLink="\/app\/pricing">Pricing \(sign-in required\)/);
+  const marketHtml=read('src/app/intelligence/market-intelligence.component.html');
+  assert.match(marketHtml,/routerLink="\/app\/pricing" \[queryParams\]="\{projectId:project\?\.id\}">View report pricing/);
 });
 
 test('account pricing keeps Free and uses the server prices for report and legacy Pro',()=>{

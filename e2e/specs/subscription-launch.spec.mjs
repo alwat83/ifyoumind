@@ -59,7 +59,6 @@ for (const [offer, plan, allowance] of [['starter', 'Starter', 1], ['plus', 'Plu
     await expect(page.getByRole('button',{name:'Get Pro access'})).toHaveCount(0);
     await page.setViewportSize({width:320,height:568});
     await expectNoHorizontalScroll(page);
-    await expectNoHorizontalScroll(page);
     const axe = await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();
     expect(axe.violations.map(v=>v.id)).toEqual([]);
 
@@ -68,7 +67,7 @@ for (const [offer, plan, allowance] of [['starter', 'Starter', 1], ['plus', 'Plu
     expect(checkoutRequests).toEqual([{organizationId:user.organizationId,offer,projectId}]);
 
     await page.goto('/app/pricing?checkout=cancelled&projectId='+projectId);
-    await expect(page.getByRole('status')).toContainText('Checkout was cancelled');
+    await expect(page.getByRole('status').filter({hasText:'Checkout was cancelled'})).toBeVisible();
     await expect(page.getByRole('link',{name:'Back to your decision'})).toHaveAttribute('href',resultPath);
     expect(generationRequests).toEqual([]);
     await page.goto(resultPath+'?subscription=confirming');

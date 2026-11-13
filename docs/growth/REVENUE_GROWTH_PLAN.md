@@ -2,6 +2,10 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## November 13 — Bill Discovery first-use candidate
+
+[Phase 2A](../product/BILL_DISCOVERY_PHASE_2A.md) puts a free useful result before registration for two common bill types. Next measure unassisted useful findings and time to evidence on devices with permitted users, then consider an approved small rollout and measure supported-input friction. No analytics or outbound outreach were introduced. Tests use synthetic values. Real visitor, conversion, paid and support outcomes remain unmeasured. The scoped financial baseline below is unchanged.
+
 ## November 12 — Primary Starter and Plus offers
 
 The [pricing readiness update](PRICING_READINESS.md) prioritizes Starter and Plus for eligible customers. The first measurable milestone is an independent settled invoice and a saved report from one authorized workspace. Catalog availability, sandbox purchases and test passes do not change the commercial scoreboard. Outbound remains Pending Founder Setup.

@@ -1,12 +1,16 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-12
+**Updated:** 2026-11-13
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
 **Purpose:** Living project context for the founder and all current/future development agents.
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
+
+## November 13, 2026 — Privacy-first Bill Discovery
+
+The founder selected property tax and electricity for first-use acquisition. [Phase 1 audit](docs/product/BILL_DISCOVERY_MVP.md) defines the privacy and evidence boundary. [Phase 2A draft](https://github.com/alwat83/ifyoumind/pull/95) delivers one useful result from typed figures, with optional comparison and registration, in the isolated Wow 3.2 Discovery experience. [Evidence and local preview](docs/product/BILL_DISCOVERY_PHASE_2A.md). Production still supports CSV and examples. [Existing Notion roadmap](https://app.notion.com/p/41702474659c81f2aff8e762331a06bc).
 
 ## November 12, 2026 — Starter and Plus are the primary subscription offers
 

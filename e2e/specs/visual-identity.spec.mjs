@@ -42,6 +42,12 @@ test('homepage, Discovery and evidence keep the editorial visual identity', asyn
   await tax.click();
   await page.locator('.finding summary').first().click();
   await compare(page, 'discovery-evidence', page.getByRole('table').first());
+  await page.getByRole('button', { name: 'Clear & choose another' }).click();
+  await page.getByRole('button', { name: 'Enter property tax numbers' }).click();
+  await page.getByLabel('Tax year').fill('2026');
+  await page.getByLabel('Annual property tax (USD)').fill('4620');
+  await page.getByRole('button', { name: 'Show my result' }).click();
+  await compare(page, 'discovery-typed-result', page.getByRole('heading', { name: '$4,620.00 in 2026 property tax.' }), { fullPage: true });
 });
 
 test('registration and static recovery keep the public design', async ({ page, consoleErrors }) => {

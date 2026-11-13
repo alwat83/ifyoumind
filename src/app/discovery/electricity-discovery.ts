@@ -13,7 +13,7 @@ export function consumptionUnits(raw:string):number|null {
  const [whole,fraction='']=s.split('.');return Number(whole)*1000+Number(fraction.padEnd(3,'0'));
 }
 export const kwh=(units:number):string=>`${new Intl.NumberFormat('en-US',{maximumFractionDigits:3}).format(units/1000)} kWh`;
-function dateValue(raw:string):number|null {
+export function dateValue(raw:string):number|null {
  const s=raw.trim();if(!/^(?:19|20|21)\d{2}-\d{2}-\d{2}$/.test(s))return null;
  const n=Date.parse(s+'T00:00:00Z');return Number.isFinite(n)&&new Date(n).toISOString().slice(0,10)===s?n:null;
 }

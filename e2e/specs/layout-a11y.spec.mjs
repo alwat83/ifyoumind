@@ -97,3 +97,15 @@ test('password recovery fits 320px with a long account address', async ({ page, 
   await expect(page.getByRole('status')).toContainText('If an account exists for');
   await expectNoHorizontalScroll(page);
 });
+
+test('the Workspace navigation keeps Ask and Advanced on valid app routes', async ({ page, fixtures }) => {
+  const user = await fixtures(FIXTURES.VERIFIED);
+  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fask');
+  const nav = page.getByRole('navigation', { name: 'Workspace' });
+  await expect(nav.getByRole('link', { name: 'Ask' })).toHaveAttribute('aria-current', 'page');
+  await nav.getByRole('link', { name: 'Advanced' }).click();
+  await expect(page).toHaveURL(/\/app\/advanced$/);
+  await expect(nav.getByRole('link', { name: 'Advanced' })).toHaveAttribute('aria-current', 'page');
+  await nav.getByRole('link', { name: 'My data' }).click();
+  await expect(page).toHaveURL(/\/app\/data$/);
+});

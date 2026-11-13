@@ -82,6 +82,10 @@ Inspect the shared design and interaction patterns before introducing new ones. 
 
 Verify complete affected journeys, including relevant keyboard, touch, viewport, reduced-motion, loading, error, retry, and authorization states. Record exact commands, commit and CI results, visuals when relevant, and any skipped, untested, or pre-existing failures. Keep the PR, repository handoff, and Notion hub aligned with the evidence. Founder authorization is required for merge and production deployment under the release and safety rules below.
 
+Use one visual identity across every customer and administrative journey. Start with the [design system](docs/design/DESIGN_SYSTEM.md) and inspect the actual rendered routes, return paths and feedback states before proposing a new pattern. Apply the same typography roles, palette, controls, navigation conventions and interaction states where the task permits. Record intentional differences, provider-owned exceptions and material discontinuities in the PR. Include before-and-after mobile and desktop evidence, responsive and accessibility checks, and review the sequence of screens as a journey.
+
+Run affected visual comparisons against reviewed, committed baselines. Missing baselines and material unexplained differences block release. Do not regenerate baselines in CI or accept them in bulk. Document the intended change, inspect the actual and diff images, and update only the reviewed images using the [baseline procedure](docs/design/DESIGN_SYSTEM.md#visual-regression-baselines). A green run and a baseline update do not authorize a release.
+
 ## Development and release
 - Use the repository's actual package scripts and lockfiles; inspect before running commands. The historical stack includes Angular, TypeScript, Firebase/Firestore/Functions and Stripe.
 - Prefer targeted tests plus build and regression checks. Verify tenant isolation, authentication, billing entitlement boundaries, data source attribution, rate limits and graceful API failure handling.

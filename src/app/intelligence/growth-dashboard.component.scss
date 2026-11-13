@@ -4,3 +4,5 @@
 :host { font-family: var(--iy-body); }
 nav .brand { @include product.wordmark; color: var(--iy-ink) !important; font-size: 26px !important; }
 header h1 { @include product.editorial; }
+
+.qa-exclusion.error { background: var(--iy-warn-bg); color: var(--iy-warn); }

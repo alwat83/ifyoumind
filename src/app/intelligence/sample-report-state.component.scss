@@ -15,3 +15,5 @@
 @media(max-width:560px){.sample-state{padding:16px;margin:16px auto}.sample-alternatives{flex-direction:column;align-items:flex-start}}
 .sample-retry { @include product.primary; }
 .sample-retry[aria-disabled='true'] { background: var(--iy-muted); }
+
+.sample-intro { margin-bottom: 14px; border: 1px solid var(--iy-line); background: var(--iy-warn-bg); color: var(--iy-warn); }

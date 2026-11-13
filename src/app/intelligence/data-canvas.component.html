@@ -1,14 +1,11 @@
 <main class="canvas-shell">
-  <nav class="app-nav">
-    <a routerLink="/app" class="brand">ifYouMind <span>2.0</span></a>
+  <nav class="app-nav" aria-label="Workspace">
+    <a routerLink="/app" class="brand">ifYouMind</a>
     <div>
-      <a routerLink="/app">Overview</a>
-      <a routerLink="/app/market">Market</a>
-      <a routerLink="/app/canvas" class="active">Canvas</a>
-      <a routerLink="/app/import">Import</a>
-      <a routerLink="/app/insights">Insights</a>
+      <a routerLink="/app">Your decisions</a>
+      <a routerLink="/app/data">My data</a>
       <a routerLink="/app/ask">Ask</a>
-      <a routerLink="/app/connections">Connections</a>
+      <a routerLink="/app/advanced" class="active" aria-current="page">Advanced</a>
     </div>
   </nav>
 
@@ -57,7 +54,7 @@
         <p class="eyebrow">Have existing data?</p>
         <strong>Import a CSV and map it into universal observations.</strong>
       </div>
-      <a routerLink="/app/import">Import data →</a>
+      <a routerLink="/app/data">Import data →</a>
     </section>
 
     <section class="builder-grid">

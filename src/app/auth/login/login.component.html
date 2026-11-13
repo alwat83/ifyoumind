@@ -13,7 +13,7 @@
     <p *ngIf="resetMessage" class="notice" role="status">{{ resetMessage }}</p>
     <div class="divider"><span>or</span></div>
     <button class="google" type="button" (click)="googleLogin()">Continue with Google</button>
-    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+    <p *ngIf="errorMessage" class="error" role="alert">{{ errorMessage }}</p>
     <p class="switch">New here? <a routerLink="/register">Create a free account</a></p>
   </section>
 </main>

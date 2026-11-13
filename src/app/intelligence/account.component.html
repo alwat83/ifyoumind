@@ -10,9 +10,9 @@
     <p>Manage the basics, see your current plan, and keep control of your account.</p>
   </header>
 
-  <section *ngIf="loading" class="notice">Loading your account…</section>
-  <section *ngIf="error" class="notice error">{{ error }}</section>
-  <section *ngIf="message" class="notice success">{{ message }}</section>
+  <section *ngIf="loading" class="notice" role="status">Loading your account…</section>
+  <section *ngIf="error" class="notice error" role="alert">{{ error }}</section>
+  <section *ngIf="message" class="notice success" role="status">{{ message }}</section>
 
   <div *ngIf="!loading" class="account-grid">
     <section class="card">
@@ -46,11 +46,14 @@
           <p>{{ subscription.offer === 'starter' ? '$4.99' : '$9.99' }} per month. {{ subscription.remaining }} full report credits available.</p>
           <p *ngIf="subscription.cancelAt">Cancellation scheduled for {{ subscription.cancelAt * 1000 | date:'mediumDate' }}.</p>
           <p *ngIf="subscription.paidThrough">{{ subscription.state === 'canceled' ? 'Last paid period ended' : 'Paid through' }} {{ subscription.paidThrough * 1000 | date:'mediumDate' }}. Unused credits expire then.</p>
-          <p *ngIf="subscription.state==='past_due' || subscription.state==='unpaid'">Payment needs attention. Credits reset after a successful renewal payment.</p>
+          <p *ngIf="subscription.state==='past_due' || subscription.state==='unpaid'" class="payment-warning">Payment needs attention. Credits reset after a successful renewal payment.</p>
           <p *ngIf="subscription.state==='canceled'">Subscription ended. Your unlocked reports are still saved.</p>
         </ng-container>
       </ng-container>
-      <button *ngIf="status.plan==='pro' || status.subscriptionPortalAvailable" type="button" (click)="manageBilling()">Manage billing</button>
+      <ng-container *ngIf="status.plan==='pro' || status.subscriptionPortalAvailable">
+        <p id="billing-provider">Billing opens in Stripe. You can return to this account from the portal.</p>
+        <button type="button" aria-describedby="billing-provider" (click)="manageBilling()">Manage billing</button>
+      </ng-container>
     </section>
 
     <section class="card">

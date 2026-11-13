@@ -6,7 +6,7 @@
       <a routerLink="/register" [queryParams]="{intent:'report'}" class="report-upgrade">Get this report for your cities · $79</a>
     </div>
   </nav>
-  <aside *ngIf="sampleMode" class="state no-print" style="margin-bottom:14px;border:1px solid #fcd34d;background:#fffbeb">
+  <aside *ngIf="sampleMode" class="state no-print sample-intro">
     <ng-container *ngIf="project; else sampleIntroduction">
       <strong>This is a sample report.</strong> The question is an example, but every figure is real U.S. Census Bureau data with its source linked. Your own report uses your decision, business type and locations. This sample is the full $79 Decision Report; a free brief covers your main city and one comparison.
     </ng-container>

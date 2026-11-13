@@ -54,3 +54,5 @@ header > p:last-child { font-size: 18px; line-height: 1.6; color: var(--iy-muted
 .links a { display: inline-flex; align-items: center; min-height: var(--iy-touch); color: var(--iy-accent); font-size: 13px; font-weight: 650; text-underline-offset: 3px; }
 
 @media (max-width: 760px) { .account-grid { grid-template-columns: 1fr; } }
+
+.plan-card .payment-warning { padding: var(--iy-space-2); border-left: 3px solid var(--iy-warn); background: var(--iy-warn-bg); color: var(--iy-warn); }

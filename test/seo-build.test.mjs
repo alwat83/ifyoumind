@@ -38,6 +38,9 @@ test('build emits every public clean URL plus app shell and a non-SPA 404', () =
     assert.match(fs.readFileSync(path.join(dir, 'app-shell.html'), 'utf8'), /noindex,nofollow/);
     const error = fs.readFileSync(path.join(dir, '404.html'), 'utf8');
     assert.match(error, /<h1>Page not found<\/h1>/);
+    assert.match(error, /name="robots" content="noindex,nofollow"/);
+    assert.match(error, /Instrument Serif/);
+    assert.match(error, /href="\/guides\/"/);
     assert.doesNotMatch(error, /app-root|<script/);
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });

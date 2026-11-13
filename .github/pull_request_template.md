@@ -34,9 +34,14 @@ Record the affected end-to-end journeys, their outcomes, and any gaps.
 
 Include the exact commit, commands, results, and CI links. Record skips and pre-existing failures separately.
 
-### Visual Evidence
+### Visual Consistency (required)
 
-Link before-and-after mobile and desktop captures when the change affects the interface.
+- **Affected surfaces and shared tokens or components** — identify the rendered routes and any intentionally unchanged design.
+- **Before and after** — link mobile and desktop screenshots and the reason for each visual baseline change.
+- **Cross-route checks** — record transitions, state feedback, provider handoffs and returns.
+- **Responsive and accessibility evidence** — record tested widths, keyboard, touch, focus, contrast and reduced motion as applicable.
+- **Known visual exceptions** — explain provider-owned surfaces and remaining discontinuities. Give a reason if the PR has no visual impact.
+- **Visual regression and release readiness** — link exact-head results and record baseline review. Material unexplained differences or missing baselines block release.
 
 ### Commercial and Security Invariants
 

@@ -78,3 +78,37 @@ test('subscription launch shows terms, keeps the one-time route, and verifies pa
   await expect(page.getByRole('button',{name:'Manage billing'})).toBeVisible();
   await expectNoHorizontalScroll(page);
 });
+
+test('Account explains the Stripe handoff and recovers from an unavailable portal', async ({ page, fixtures, consoleErrors }) => {
+  consoleErrors.allow.push(/status of 503/);
+  const user = await fixtures(FIXTURES.VERIFIED);
+  let attempts = 0;
+  await page.route('**/getCommercialStatus', async route => {
+    const body = await (await route.fetch()).json();
+    await route.fulfill({ json: { result: { ...body.result, subscriptionPortalAvailable: true,
+      subscription: { offer: 'plus', linked: true, state: 'past_due', remaining: 0, paidThrough: 1796083200 } } } });
+  });
+  await page.route('**/createBillingPortalSession', async route => {
+    expect(route.request().postDataJSON().data).toEqual({ organizationId: user.organizationId });
+    if (++attempts === 1) {
+      await route.fulfill({ status: 503, json: { error: { status: 'UNAVAILABLE', message: 'Billing is temporarily unavailable.' } } });
+      return;
+    }
+    await route.fulfill({ json: { result: { url: 'https://billing.stripe.com/p/session/qa-return-contract' } } });
+  });
+  await page.route('https://billing.stripe.com/**', route => route.fulfill({
+    status: 303, headers: { location: new URL('/app/account', page.url()).href },
+  }));
+  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Faccount');
+  const billing = page.getByRole('button', { name: 'Manage billing' });
+  await expect(billing).toHaveAccessibleDescription(/Billing opens in Stripe/);
+  await expect(page.getByText(/Payment needs attention/)).toBeVisible();
+  await billing.click();
+  await expect(page.getByRole('alert')).toHaveText('Billing is temporarily unavailable.');
+  const handoff = page.waitForRequest('https://billing.stripe.com/p/session/qa-return-contract');
+  await billing.click();
+  await handoff;
+  await expect(page).toHaveURL(/\/app\/account$/);
+  await expect(billing).toBeVisible();
+  expect(attempts).toBe(2);
+});

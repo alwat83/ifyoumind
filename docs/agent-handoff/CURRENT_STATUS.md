@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 13, 2026 — OpenAI explanation readiness
+
+**Internal prototype, committed for draft review.** [Audit, synthetic demo, budget and founder checklist](../product/OPENAI_ACTIVATION_READINESS.md). Production base is [merge 59a4b80a](https://github.com/alwat83/ifyoumind/actions/runs/43392378321). Metadata confirmed no named OpenAI secret or deployed binding. Paid reports remain deterministic. The synthetic callable is excluded from production deployment and defaults off. API billing, project access and real staging inference remain unverified. Bill Discovery [PR #95](https://github.com/alwat83/ifyoumind/pull/95) is separate and preserved.
+
 ## November 12, 2026 — Starter and Plus pricing readiness
 
 **Draft candidate** [PR #93 and exact-head checks](https://github.com/alwat83/ifyoumind/pull/93/checks) on `codex/starter-plus-pricing-readiness` from Wow 3.2 `900dd2648f95358ef5e1416aa8a2cfd2f5c4be12`. [Pricing readiness, production and Stripe readbacks, and matched visuals](../growth/PRICING_READINESS.md). PR #87 is merged and deployed dormant. Live Starter and Plus prices and the portal configuration were verified read-only. The current workflow forces enrollment empty. Existing Pro and $79 billing are preserved. Separate exact release and enrollment authorization are required. Issue #84 remains open.

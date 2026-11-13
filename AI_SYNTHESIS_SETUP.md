@@ -1,35 +1,7 @@
-# AI synthesis setup
+# OpenAI explanation setup
 
-ifYouMind keeps statistics and evidence generation separate from generative synthesis.
+The existing Market and Universal synthesis source files are historical prototypes. Their callables are outside the deployed index and production allowlist. The existing paid Decision Report uses deterministic Census evidence and report rules.
 
-## Runtime
+The internal synthetic market explanation uses a separate callable, with a disabled-by-default runtime flag and a fixed synthetic input. The production deployment allowlist excludes it. Production and demo project IDs also fail closed at runtime. Firebase project `ifyoumind-473fe` returned no `OPENAI_API_KEY` secret or function binding in the November 13 audit.
 
-The synthesis function uses the OpenAI Responses API and receives only a compact saved analysis packet. It does not receive Firebase credentials, provider tokens, raw workspace secrets, or unrestricted database access.
-
-## Required Firebase secret
-
-- `OPENAI_API_KEY`
-
-## Optional parameter
-
-- `AI_SYNTHESIS_MODEL` defaults to `gpt-6-luna`.
-
-The model can be changed without changing the evidence/reasoning contract.
-
-## Guardrails implemented in code
-
-Before model invocation:
-- analysis must already exist;
-- dataset alignment/statistics are deterministic;
-- evidence signals have stable IDs;
-- the model receives only saved evidence.
-
-After model invocation:
-- JSON shape is validated;
-- evidence signal IDs must exist in the supplied packet;
-- output lengths are bounded;
-- numeric claims are rejected unless the number was present in the evidence packet;
-- synthesis is stored alongside the immutable analysis run;
-- causal claims are forbidden by the prompt contract and deterministic reasoning policy.
-
-The generative layer explains evidence. It does not calculate or overwrite the statistical evidence.
+Start with the [activation review and founder checklist](docs/product/OPENAI_ACTIVATION_READINESS.md). The demonstration uses a mocked Responses transport and the Firebase emulator. A live synthetic request requires separate founder approval, a funded non-production OpenAI project with model access, and the scoped Secret Manager binding in an authorized staging Firebase project.

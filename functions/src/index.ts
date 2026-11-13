@@ -218,3 +218,6 @@ export { recordProductEvent } from './intelligence/product-analytics';
 export { getProductFunnelMetrics } from './intelligence/growth-metrics';
 
 export { stripeSubscriptionWebhook } from './intelligence/subscriptions';
+
+// Internal synthetic prototype. The production deploy allowlist excludes it.
+export { explainSyntheticMarket } from './intelligence/explain-synthetic-market';

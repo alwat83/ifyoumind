@@ -552,3 +552,13 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 **Work:** verified merged and deployed dormant PR #87, forced-empty enrollment, matching active Stripe prices and default portal policy. Reordered and simplified pricing, preserved Free and $79, retired new Pro entry points, retained existing Pro access and added neutral cancellation feedback. [Scope, screenshots, deployment dependencies and rollback](../growth/PRICING_READINESS.md).
 
 **Verification and release:** production/demo builds, bundle guards, 138 web, 72 Functions, 38 emulator commerce and 32 targeted browser tests passed. [Exact-head checks](https://github.com/alwat83/ifyoumind/pull/93/checks) record the full run. No deployment, live price, account or enrollment changes. Signed live delivery, tax alignment, runtime permissions and the live portal gate remain open. Next prioritize founder review of the candidate and approved verification before authorizing a single independent workspace.
+
+## 2026-11-13 — OpenAI explanation audit and synthetic prototype
+
+**Provider/agent:** OpenAI / Codex. **Branch:** `codex/openai-explanation-prototype` from deployed master `59a4b80a8e427a13e0d8bee0f753f8954ea8611f`. Bill Discovery PR #95 at `73b893c067ae54b4b55100dbe168191386e7b00e` is preserved. [Audit, cost model, synthetic example and activation checklist](../product/OPENAI_ACTIVATION_READINESS.md).
+
+**Work:** Production Secret Manager metadata returned 404 for the named key. Live Functions metadata showed zero bindings. Added a default-off internal callable with synthetic-only structured selection, deterministic facts/caveat, verified admin and tenant access, bounded provider transport, and atomic user/global quota. No frontend, dependency, privacy-boundary, entitlement, billing or deployment workflow changes.
+
+**Verification:** Local production-target build, bundle and Discovery guards, 138 web and 80 Functions tests passed. Firebase emulators exercised the disabled callable, authorization, quota transaction contention and server-only quota rules. Exact-head workflow results and any retry history are recorded in the draft PR. No real provider request, secret value access, or live system changes occurred.
+
+**Next:** verify project billing and least-privilege access, then seek separate approval for a synthetic staging call. Use a Decision Report pilot to test comprehension and cost before a production proposal. No measured commercial outcomes.

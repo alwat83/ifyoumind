@@ -21,7 +21,7 @@ test('smoke records verified generation usage and full request latency from one 
     assert.equal(url, 'https://us-central1-fixture-staging.cloudfunctions.net/explainSyntheticMarket');
     assert.equal(options.method, 'POST');
     assert.equal(options.redirect, 'error');
-    assert.deepEqual(JSON.parse(options.body), { data: { organizationId: args.organizationId } });
+    assert.deepEqual(JSON.parse(options.body), { data: { organizationId: args.organizationId, useProvider: true } });
     assert.equal(options.headers.authorization, `Bearer ${args.token}`);
     return Response.json({ result: enabled });
   });
@@ -34,10 +34,14 @@ test('smoke records verified generation usage and full request latency from one 
 test('both flag-off phases confirm the deterministic explanation without exposing response material', async () => {
   const { runStagingSmoke } = await smokeModule;
   for (const phase of ['disabled-before', 'disabled-after']) {
-    const { latencyMs, ...observations } = await runStagingSmoke({ ...args, phase }, reply(disabled));
+    const { latencyMs, ...observations } = await runStagingSmoke({ ...args, phase }, async (_url, options) => {
+      assert.deepEqual(JSON.parse(options.body), { data: { organizationId: args.organizationId } });
+      return Response.json({ result: disabled });
+    });
     assert.ok(latencyMs >= 0);
     assert.deepEqual(observations, { phase, source: 'deterministic', valid: true });
     await assert.rejects(runStagingSmoke({ ...args, phase }, reply(enabled)), /disabled fallback/);
+    await assert.rejects(runStagingSmoke({ ...args, phase }, reply({ ...disabled, reason: 'not-requested' })), /disabled fallback/);
   }
 });
 

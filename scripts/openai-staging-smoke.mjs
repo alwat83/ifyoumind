@@ -33,13 +33,14 @@ export async function runStagingSmoke({ project, organizationId, phase, approved
   if (!matchingToken(token, project)) throw new Error('A Firebase ID token issued for the staging project is required.');
 
   // Firebase still verifies the token signature, reviewer claim and workspace role.
+  const data = phase === 'enabled' ? { organizationId, useProvider: true } : { organizationId };
   const start = performance.now();
   const response = await send(`https://us-central1-${project}.cloudfunctions.net/explainSyntheticMarket`, {
     method: 'POST',
     redirect: 'error',
     signal: AbortSignal.timeout(20_000),
     headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' },
-    body: JSON.stringify({ data: { organizationId } }),
+    body: JSON.stringify({ data }),
   });
   if (!response.ok) throw new Error('The staging callable rejected the smoke request.');
   const { result } = await response.json();

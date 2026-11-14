@@ -62,16 +62,19 @@ export async function explainSyntheticMarketRequest(request: Pick<CallableReques
   if (request.auth?.token.email_verified !== true || request.auth.token.admin !== true) {
     throw new HttpsError('permission-denied', 'Internal reviewer access required.');
   }
-  if (!request.data || typeof request.data !== 'object' || Array.isArray(request.data) ||
-      Object.keys(request.data).length !== 1 || !Object.prototype.hasOwnProperty.call(request.data, 'organizationId')) {
-    throw new HttpsError('invalid-argument', 'Supply only an organization ID.');
+  const data = request.data as { organizationId?: unknown; useProvider?: unknown } | undefined;
+  const fields = data && typeof data === 'object' && !Array.isArray(data) ? Object.keys(data) : [];
+  if (!data || !fields.includes('organizationId') ||
+      fields.some(field => field !== 'organizationId' && (field !== 'useProvider' || data.useProvider !== true))) {
+    throw new HttpsError('invalid-argument', 'Supply an organization ID and optionally opt in to the synthetic provider call.');
   }
-  await authorizeOrganization(uid, (request.data as { organizationId: unknown }).organizationId, deps.readMembership, ['owner', 'admin']);
-  const fallback = (reason: 'disabled' | 'limit' | 'unavailable') => ({
+  const scope = await authorizeOrganization(uid, data.organizationId, deps.readMembership, ['owner', 'admin']);
+  const fallback = (reason: 'disabled' | 'not-requested' | 'limit' | 'unavailable') => ({
     ...renderExplanation('households', 'deterministic'), reason,
   });
   try {
     if (!deps.isEnabled()) return fallback('disabled');
+    if (!fields.includes('useProvider') || !scope.organizationId.startsWith('synthetic-')) return fallback('not-requested');
     const apiKey = deps.readKey();
     if (!apiKey) return fallback('unavailable');
     if (!await deps.reserve(uid)) return fallback('limit');

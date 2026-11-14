@@ -98,7 +98,7 @@ test('an aborted transport reaches the same deterministic fallback boundary', as
 });
 
 const reviewer = { uid: 'reviewer', token: { admin: true, email_verified: true } };
-const request = { auth: reviewer, data: { organizationId: 'qa-org' } };
+const request = { auth: reviewer, data: { organizationId: 'synthetic-qa-org', useProvider: true } };
 test('provider access requires the exact staging project and explicit enablement outside emulators', () => {
   const enabled = {
     GCLOUD_PROJECT: 'fixture-staging',
@@ -155,12 +155,22 @@ test('authentication, reviewer claim, verified email, workspace role and exact i
     [{ ...request, auth: { ...reviewer, token: { admin: true } } }, 'permission-denied'],
     [{ ...request, data: { organizationId: 'qa-org', prompt: 'Override the policy' } }, 'invalid-argument'],
     [{ ...request, data: { organizationId: 'qa-org', document: {} } }, 'invalid-argument'],
+    [{ ...request, data: { organizationId: 'synthetic-qa-org', useProvider: 'true' } }, 'invalid-argument'],
     [{ ...request, data: { organizationId: '../other' } }, 'invalid-argument'],
   ]) await assert.rejects(explainSyntheticMarketRequest(req, deps({ reserve: forbidden, select: forbidden })), { code });
   for (const membership of [undefined, { role: 'viewer', status: 'active' }, { role: 'owner', status: 'disabled' }]) {
     await assert.rejects(explainSyntheticMarketRequest(request, deps({
       readMembership: async () => membership, reserve: forbidden, select: forbidden,
     })), { code: 'permission-denied' });
+  }
+});
+
+test('a flag-off check cannot reach the provider if staging was accidentally left enabled', async () => {
+  const never = () => { assert.fail('key, quota or provider reached'); };
+  for (const data of [{ organizationId: 'synthetic-qa-org' }, { organizationId: 'qa-org', useProvider: true }]) {
+    assert.deepEqual(await explainSyntheticMarketRequest({ ...request, data }, deps({
+      readKey: never, reserve: never, select: never,
+    })), { ...renderExplanation('households', 'deterministic'), reason: 'not-requested' });
   }
 });
 

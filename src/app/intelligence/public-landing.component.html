@@ -22,9 +22,9 @@
   <main>
     <section id="try" class="shell hero" aria-labelledby="hero-title" tabindex="-1">
       <div class="hero-copy">
-        <h1 id="hero-title">See the story.&ngsp;<em>Check the evidence.</em></h1>
-        <p>Find what added to a bill increase or how two places compare.</p>
-        <a href="#business" class="button primary">Try a Free Example <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
+        <h1 id="hero-title">Are my property taxes <em>higher than they should be?</em></h1>
+        <p>See which charges changed and what to check on your own bill. Start with a free example, no signup needed.</p>
+        <a href="#business" class="button primary" (click)="chooseExample(taxExample, evidence)">Try the tax example <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
       </div>
       <div class="hero-art">
         <img src="/images/home/neighborhood-at-dusk.webp"
@@ -35,16 +35,8 @@
 
     <section id="business" class="featured" aria-labelledby="examples-title" tabindex="-1">
       <div class="shell experience">
-        <h2 id="examples-title">See the numbers</h2>
+        <h2 id="examples-title" class="sr-only">Free examples</h2>
         <div class="demo">
-          <div class="question-options" role="group" aria-label="Choose an example">
-            @for (option of examples; track option.id) {
-              <button type="button" class="question-option" [attr.aria-pressed]="example.id === option.id"
-                aria-controls="discovery-result" (click)="chooseExample(option, evidence)">
-                {{ option.title }}
-              </button>
-            }
-          </div>
           <p class="sr-only" role="status">{{ discoveryAnnouncement }}</p>
 
           <div id="discovery-result" class="discovery-result">
@@ -52,6 +44,9 @@
               <p class="example-label">{{ example.label }}</p>
               <h3 id="discovery-question">{{ example.question }}</h3>
               <p class="conclusion"><strong>{{ example.finding.value }}</strong>&ngsp;<span>{{ example.finding.text }}</span></p>
+              @if (example.id === 'tax') {
+                <p class="finding-note">{{ example.takeaway }} {{ example.limit }}</p>
+              }
             </div>
             <figure class="plot" aria-labelledby="plot-title">
               <figcaption id="plot-title">{{ example.chart.title }}</figcaption>
@@ -111,7 +106,9 @@
                     }
                   </p>
                 </div>
-                <p class="evidence-limit">{{ example.limit }}</p>
+                @if (example.id !== 'tax') {
+                  <p class="evidence-limit">{{ example.limit }}</p>
+                }
                 @if (example.id === 'cities') {
                   <h3>How these figures compare</h3>
                   <p>Figures from the public sample report use its October 11, 2026 snapshot. Population and median household income use 2020–2024 ACS five-year estimates. Income is in 2024 inflation-adjusted dollars.</p>
@@ -151,6 +148,14 @@
               <a routerLink="/sample-report" class="text-link example-link">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
             } @else {
               <a [href]="'/discover/?example=' + example.id" class="text-link example-link">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
+            }
+          </div>
+          <div class="question-options" role="group" aria-label="Choose an example">
+            @for (option of examples; track option.id) {
+              <button type="button" class="question-option" [attr.aria-pressed]="example.id === option.id"
+                aria-controls="discovery-result" (click)="chooseExample(option, evidence)">
+                {{ option.title }}
+              </button>
             }
           </div>
         </div>

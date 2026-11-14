@@ -1,5 +1,12 @@
 # ifYouMind — Current development status
 
+## November 13 Pacific / November 14 UTC — Property-tax-first homepage
+
+**Draft for founder visual review.** Branch `codex/property-tax-first` from master `59a4b80a8e427a13e0d8bee0f753f8954ea8611f`. The homeowner question leads into a free made-up $420 comparison, with the assessment/rates check before the optional evidence. Public Discovery, electricity, city comparisons and Business destinations remain available. The existing [typed Bill Discovery draft #95](https://github.com/alwat83/ifyoumind/pull/95) stays separate. [Plan and screenshots](../product/PROPERTY_TAX_FIRST.md)
+
+**AI milestone closed separately.** [Draft #96](https://github.com/alwat83/ifyoumind/pull/96) passed [Launch build](https://github.com/alwat83/ifyoumind/actions/runs/43570792541) and [Authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/43570792605) on final head `f36dcf1de386cc0d91c4dfed6d9957178a20fc14`. Read-only staging metadata confirmed `explainsyntheticmarket-00004-lor` at 100% and flag off. The provider authorization is exhausted. The exact billed charge remains unverified. Any proposed production pilot needs a narrowly scoped deployment package, production identity and secret review, data minimization, consent and retention review for real data, and separately approved operating and spend controls. [Staging evidence](https://github.com/alwat83/ifyoumind/blob/f36dcf1de386cc0d91c4dfed6d9957178a20fc14/docs/product/OPENAI_ACTIVATION_READINESS.md#one-authorized-openai-generation)
+
+
 ## November 12, 2026 — Starter and Plus pricing readiness
 
 **Draft candidate** [PR #93 and exact-head checks](https://github.com/alwat83/ifyoumind/pull/93/checks) on `codex/starter-plus-pricing-readiness` from Wow 3.2 `900dd2648f95358ef5e1416aa8a2cfd2f5c4be12`. [Pricing readiness, production and Stripe readbacks, and matched visuals](../growth/PRICING_READINESS.md). PR #87 is merged and deployed dormant. Live Starter and Plus prices and the portal configuration were verified read-only. The current workflow forces enrollment empty. Existing Pro and $79 billing are preserved. Separate exact release and enrollment authorization are required. Issue #84 remains open.

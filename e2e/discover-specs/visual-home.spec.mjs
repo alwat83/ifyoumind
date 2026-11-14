@@ -30,8 +30,8 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await page.setViewportSize({ width, height });
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText(/See the story\.\s*Check the evidence\./);
-    const heroAction = page.getByRole('link', { name: 'Try a Free Example', exact: true });
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Are my property taxes higher than they should be?');
+    const heroAction = page.getByRole('link', { name: 'Try the tax example', exact: true });
     await expect(heroAction).toBeInViewport({ ratio: 1 });
     await expect(heroAction).toHaveAttribute('href', '#business');
     const image = page.locator('.hero-art img');
@@ -48,7 +48,7 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await expect(page).toHaveURL(origin + '/#business');
     await expect(page.locator('#business')).toBeFocused();
     await expect(page.locator('#try').getByRole('link')).toHaveCount(1);
-    await expect(page.locator('#try')).toContainText('Find what added to a bill increase or how two places compare.');
+    await expect(page.locator('#try')).toContainText('Start with a free example, no signup needed.');
     const reports = page.getByRole('region', { name: 'Decision Reports', exact: true });
     await expect(reports.getByRole('link', { name: 'Start a Free Brief' })).toHaveAttribute('href', '/app/decide?type=business');
     await expect(reports).toContainText('A full Decision Report adds more comparisons, a sourced market analysis, and an action plan.');
@@ -56,9 +56,11 @@ test('homepage fits six reference widths with the flagship result and an actiona
     const feature = page.locator('#business');
     await expect(feature.getByRole('button', { pressed: true })).toHaveText('Property taxes');
     await expect(feature.getByText('Made-up example', { exact: true })).toBeVisible();
-    await expect(feature.locator('.finding')).toContainText('57.1% of the $420 increase came from school charges.');
-    await expect(feature.getByText('57.1%', { exact: true })).toBeInViewport({ ratio: 1 });
-    await expect(feature.getByText('of the $420 increase came from school charges.', { exact: true })).toBeVisible();
+    await expect(feature.locator('.finding')).toContainText('$420 more than the year before.');
+    await expect(feature.locator('.finding-note')).toContainText('Two bills show what changed.');
+    await expect(feature.locator('.finding-note')).toContainText('look up your assessed value and local tax rates');
+    await expect(feature.getByText('$420', { exact: true })).toBeInViewport({ ratio: 1 });
+    await expect(feature.getByText('more than the year before.', { exact: true })).toBeVisible();
     const summary = feature.locator('.home-evidence summary');
     await expect(summary).toHaveText('Show the evidence', { useInnerText: true });
     await expect(summary).toBeInViewport({ ratio: 1 });
@@ -74,7 +76,7 @@ test('homepage fits six reference widths with the flagship result and an actiona
     expect(school / total).toBeCloseTo(240 / 420, 3);
     await expect(feature.getByRole('table')).toHaveCount(0);
     await expect(feature.locator('.home-evidence')).not.toHaveAttribute('open');
-    await expect(feature.getByRole('link', { name: 'Explore the property-tax example' })).toHaveAttribute('href', '/discover/?example=tax');
+    await expect(feature.getByRole('link', { name: 'Open the full tax example' })).toHaveAttribute('href', '/discover/?example=tax');
     const targets = feature.locator('.question-option, summary');
     for (const { width: w, height: h } of await targets.evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().toJSON()))) {
       expect(w).toBeGreaterThanOrEqual(44);
@@ -83,7 +85,7 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await noOverflow(page);
     await accessible(page);
     const headings = await homepageHeadingContrasts(page);
-    expect(headings).toHaveLength(6);
+    expect(headings).toHaveLength(5);
     for (const heading of headings) {
       expect(heading.minimumRatio, heading.text).toBeGreaterThanOrEqual(heading.fontSize >= 24 ? 3 : 4.5);
     }
@@ -122,8 +124,8 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await expect(evidence.getByRole('table', { name: 'Total tax source cells' })).toContainText('4200.00');
     await expect(evidence.getByRole('table', { name: 'Total tax source cells' })).toContainText('4620.00');
     await expect(evidence.getByRole('table', { name: 'How the charges add up source cells' })).toContainText('2640.00');
-    await expect(evidence.getByText(/Check assessed value and tax rates/)).toBeVisible();
-    const fullTax = feature.getByRole('link', { name: 'Explore the property-tax example' });
+    await expect(feature.locator('.finding-note')).toContainText('look up your assessed value and local tax rates');
+    const fullTax = feature.getByRole('link', { name: 'Open the full tax example' });
     await expect(fullTax).toBeVisible();
     await expect(fullTax).toHaveAttribute('href', '/discover/?example=tax');
     expect((await fullTax.boundingBox()).height).toBeGreaterThanOrEqual(44);
@@ -186,7 +188,7 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await tax.click();
     await expect(feature.getByRole('button', { pressed: true })).toHaveText('Property taxes');
     await expect(evidence).not.toHaveAttribute('open');
-    await expect(announcement).toContainText('57.1% of the $420 increase and rose by $240.');
+    await expect(announcement).toContainText('School taxes rose by $240 and accounted for most of the increase.');
     await expect(fullTax).toBeVisible();
     await expect(feature.getByRole('figure', { name: 'What went up' })).toBeVisible();
   }
@@ -194,9 +196,11 @@ test('the three examples replace the finding, reset evidence and announce the ne
 
 test('primary action opens property-tax findings and the secondary discovery link offers both bill examples', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('link', { name: 'Try a Free Example', exact: true }).click();
+  await page.getByRole('button', { name: 'Electricity bills', exact: true }).click();
+  await page.getByRole('link', { name: 'Try the tax example', exact: true }).click();
   await expect(page).toHaveURL(origin + '/#business');
-  await page.getByRole('link', { name: 'Explore the property-tax example' }).click();
+  await expect(page.getByRole('button', { name: 'Property taxes', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await page.getByRole('link', { name: 'Open the full tax example' }).click();
   await expect(page).toHaveURL(origin + '/discover/?example=tax');
   await expect(page.locator('.finding')).toHaveCount(3);
   await expect(page.getByRole('heading', { name: 'Your total rose by $420.00.', exact: true })).toBeVisible();
@@ -269,7 +273,7 @@ test('keyboard opens the compact menu, Escape restores focus, and text spacing p
   await page.addStyleTag({ content: '*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}' });
   await page.setViewportSize({ width: 320, height: 568 });
   await noOverflow(page);
-  await expect(page.getByRole('link', { name: 'Try a Free Example', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Try the tax example', exact: true })).toBeVisible();
   await page.emulateMedia({ forcedColors: 'active' });
   await summary.focus();
   expect(await summary.evaluate(node => getComputedStyle(node).outlineStyle)).toBe('solid');

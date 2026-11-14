@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 14, 2026 — PR #97 final release review
+
+**GO for separate release authorization.** [Draft #97](https://github.com/alwat83/ifyoumind/pull/97) at `53de0c7797c3a071043606dd4ff2978cf27e9ad3` is clean against `master` `59a4b80a8e427a13e0d8bee0f753f8954ea8611f`. [Launch build](https://github.com/alwat83/ifyoumind/actions/runs/43573014040) and [Authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/43573014026) passed at this head, including 132 authenticated browser tests across desktop and mobile. No pricing, entitlement, auth or backend changes. Drafts #95 and #96 are excluded. Production remains on the master baseline with empty enrollment; retained rollback target `489bafdb7548f7fd`. [Final review, screenshots and rollback](../product/PROPERTY_TAX_FIRST.md#november-14-2026--final-release-review). No merge, deployment or customer outcome. Keep review-only documentation off the candidate head.
+
 ## November 13 Pacific / November 14 UTC — Property-tax-first homepage
 
 **Draft for founder visual review.** Branch `codex/property-tax-first` from master `59a4b80a8e427a13e0d8bee0f753f8954ea8611f`. The homeowner question leads into a free made-up $420 comparison, with the assessment/rates check before the optional evidence. Public Discovery, electricity, city comparisons and Business destinations remain available. The existing [typed Bill Discovery draft #95](https://github.com/alwat83/ifyoumind/pull/95) stays separate. [Plan and screenshots](../product/PROPERTY_TAX_FIRST.md)

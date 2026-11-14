@@ -1,6 +1,6 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-12
+**Updated:** 2026-11-14
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
@@ -11,6 +11,8 @@
 ## November 13, 2026 — Property-tax-first consumer experience
 
 [Property-tax-first review](docs/product/PROPERTY_TAX_FIRST.md) uses the public tax example to introduce a useful, private comparison before signup. Electricity, city evidence and the Business funnel remain available. PR #95 tracks a separate typed-input expansion. The internal AI staging milestone is closed with the flag off. Production and any further provider use are separately gated. [AI milestone evidence](https://github.com/alwat83/ifyoumind/pull/96)
+
+November 14: [PR #97 final release review](docs/product/PROPERTY_TAX_FIRST.md#november-14-2026--final-release-review) records successful exact-head CI, desktop/mobile evidence, the current production fallback and the founder release gate. Draft #97 remains unreleased.
 
 ## November 12, 2026 — Starter and Plus are the primary subscription offers
 

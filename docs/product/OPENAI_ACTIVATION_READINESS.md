@@ -4,7 +4,7 @@
 
 ## Controlled staging readiness
 
-**November 13, 2026 · GREEN — Flag-OFF Staging Validated.** Cloud Billing is enabled. The corrected staging revision passed the authenticated smoke and left quota empty. Live provider activation requires separate founder authorization.
+**November 13, 2026 Pacific / November 14 UTC · GREEN — Synthetic staging validated and back OFF.** The single approved OpenAI generation returned valid evidence within token limits. The flag was restored to off and the disabled revision serves all staging traffic.
 
 | Area | Readback |
 | --- | --- |
@@ -14,11 +14,29 @@
 | Runtime identity | `synthetic-openai@ifyoumind-staging.iam.gserviceaccount.com` is enabled with zero user-managed keys. Its only direct project binding is the custom role `syntheticOpenAiFirestore`, conditioned on the staging default database, with `datastore.databases.get` and `datastore.entities.get/create/update`. Secret Manager accessor is attached only to the staged `OPENAI_API_KEY` secret. The operator already has `iam.serviceAccounts.actAs` on the runtime. No impersonation grant was added. |
 | Secret and deployment | Secret Manager metadata confirms enabled version 1. The source manifest declares `OPENAI_API_KEY` and the named runtime. Cloud Functions and Cloud Run bind version 1 on the deployed staging revision. The feature flag is off. |
 | OpenAI controls | Verified Luna-only allowlist, 10,000 TPM, 1 RPM, 10,000 IPM and $1 threshold with $0.50 and $1 alerts. The threshold does not stop requests. The founder confirmed prepaid funding and auto-reload disabled. |
-| OpenAI credential and throughput | The founder saved the scope. Dashboard readback confirmed Restricted → Model capabilities → Responses → Write with the other endpoint rows at None. Live endpoint authorization remains untested. The candidate sends only one generation request and retains the 1 RPM setting. |
+| OpenAI credential and throughput | The founder saved the scope. Dashboard readback confirmed Restricted → Model capabilities → Responses → Write with the other endpoint rows at None. The authorized single-generation smoke verified live Responses access. The callable sends only one generation request and retains the 1 RPM setting. |
 
 The callable requires an explicit Firebase staging project match, and staging source discovery selects the dedicated runtime service account derived from that project ID. The authorized reviewer gets only verified fixture evidence and, on provider success, validated generation token counts and the observed Standard service tier. The runner checks the full synthetic fixture, measures request-to-response latency, and checks deterministic flag-off behavior before and after the one allowed staging invocation. Its automated tests substitute both transports. [Founder setup, operator commands and rollback](../../AI_SYNTHESIS_SETUP.md).
 
 Revalidated implementation `8be99ea62574680c157efef50eaf5aaf2fdee081` with 87 local Functions tests and 11 local Firebase integration and rules tests. Inspecting the compiled Functions manifest with the exact staging project and flag set to `false` confirmed the Gen 2 callable in `us-central1` binds only `OPENAI_API_KEY`, uses the dedicated runtime, and caps execution at 15 seconds, two instances and concurrency one. Secret version `1` is cloud metadata and will be verified in the deployed binding after authorization. [Implementation Launch build](https://github.com/alwat83/ifyoumind/actions/runs/43541205780) · [Implementation Authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/43541205755).
+
+## One authorized OpenAI generation
+
+**Result: GREEN.** No runtime source, package dependency or deployment workflow changed. The isolated staging artifact used callable source `662420d000a152d3847e73d0e05157a0643bb076` and the bootstrap from passing draft head `a40a708133bfd525ed3ba3cdd5c0694b48ed6c22`. Rebuilt under Node 22.23.2 with matching bootstrap and compiled callable/provider hashes. Only the staging flag changed between the enabled and disabled deployments.
+
+| Phase | Verified result |
+| --- | --- |
+| Baseline | `explainsyntheticmarket-00002-zax` ACTIVE and Ready with 100% traffic, flag off and secret version 1. Verified Firebase reviewer has an active synthetic owner membership, verified email and the admin claim. Quota collection empty. The OpenAI dashboard showed an active Restricted key with only Responses Write, Luna allowlisted at 1 RPM, $5.00 prepaid credit, auto-reload off, no recorded key use and $0.00 displayed staging spend. No settings changed. |
+| Enabled revision | `explainsyntheticmarket-00003-det`, Ready and ACTIVE at 100% traffic, flag true and binding unchanged. The smoke was initiated at `2026-11-14T07:19:05.950Z`. Exactly one authenticated callable request with provider opt-in. No retry or separate token-count request. |
+| Provider result | HTTP 200, valid fixed synthetic facts, sources and caveat. Provider-reported 161 input and 16 output tokens (177 total), Standard tier (`default`). Both token counts are within limits. Observed end-to-end callable latency 3,737 ms. |
+| Rollback | Flag restoration began immediately after the attempt. Cloud Functions and Cloud Run independently verified `explainsyntheticmarket-00004-lor` ACTIVE and Ready with 100% traffic, flag `false`, staging guard, dedicated runtime identity, enabled secret version 1 and limits of 15 seconds, two instances and concurrency one. Function update recorded at `2026-11-14T07:19:57.410965916Z`. |
+| `disabled-after` | HTTP 200, valid deterministic evidence, `reason: disabled`, 1,324 ms. No provider opt-in. The disabled branch exits before key access, quota reservation or transport. |
+| Quota | Zero documents before generation. One reservation wrote two documents. Reviewer day 1, global day 1, global month 1, using UTC. Post-attempt and post-rollback reads matched after `disabled-after`. |
+| Cost | $0.0000241 estimated from the observed tokens and current Luna Standard pricing, assuming uncached input. Project-filtered usage reporting had no request row during the initial reconciliation. An attributable billed amount and independent dashboard request count remain pending. No second request was used to verify billing. |
+
+[Published GPT-6 Luna rates](https://developers.openai.com/api/docs/models/gpt-6-luna) · [Candidate Launch build](https://github.com/alwat83/ifyoumind/actions/runs/43567987312) · [Candidate Authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/43567987310)
+
+Staging is off and the one-request authorization is exhausted. Production release and any future provider calls remain separate decisions.
 
 ## Flag-off deployment verification
 
@@ -28,7 +46,7 @@ Revalidated implementation `8be99ea62574680c157efef50eaf5aaf2fdee081` with 87 lo
 
 **Live acceptance.** Anonymous returned HTTP 401 `UNAUTHENTICATED`. The authenticated foreign-workspace probe returned HTTP 403 `PERMISSION_DENIED`. Authenticated `disabled-before` returned `{"phase":"disabled-before","source":"deterministic","valid":true,"latencyMs":273}`. The runner asserted `reason: disabled`, the two fixture facts and sources, the caveat, evidence order and absence of provider usage. The quota collection held zero documents before and after. The request omitted provider opt-in and returned from the disabled branch before key access, quota reservation or transport. Zero OpenAI requests were made by this validation.
 
-**Next decision.** GO for separately authorizing exactly one synthetic generation with the reviewed artifact and flag restored to off afterward. Live provider credential acceptance, measured usage and cost remain untested.
+**Historical gate.** This verified flag-off revision was the baseline for the subsequent authorized live smoke above.
 
 ### Superseded revision and diagnosis
 

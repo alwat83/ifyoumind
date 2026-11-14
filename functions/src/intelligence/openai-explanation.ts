@@ -1,6 +1,7 @@
 export const EXPLANATION_MODEL = 'gpt-6-luna';
 export const MAX_INPUT_TOKENS = 768;
 export const MAX_OUTPUT_TOKENS = 128;
+const MAX_REQUEST_BYTES = 1_024;
 const MAX_RESPONSE_BYTES = 16_384;
 const PROVIDER_TIMEOUT_MS = 5_000;
 const RESPONSES_URL = 'https://api.openai.com/v1/responses';
@@ -86,6 +87,10 @@ const requestInput = {
   },
 };
 
+const requestBody = JSON.stringify({
+  ...requestInput, max_output_tokens: MAX_OUTPUT_TOKENS, store: false, service_tier: 'default', truncation: 'disabled',
+});
+
 async function readBoundedJson(response: Response): Promise<unknown> {
   if (!response.ok) {
     await response.body?.cancel();
@@ -112,20 +117,16 @@ async function readBoundedJson(response: Response): Promise<unknown> {
 }
 
 export async function selectExplanationLead(apiKey: string, send: typeof fetch = fetch) {
+  // Guard the fixed payload before spending a request. Provider framing is checked via reported usage below.
+  if (Buffer.byteLength(requestBody, 'utf8') > MAX_REQUEST_BYTES) return null;
   try {
     const signal = AbortSignal.timeout(PROVIDER_TIMEOUT_MS);
-    const post = async (suffix: string, body: object) => readBoundedJson(await send(RESPONSES_URL + suffix, {
+    const response = await readBoundedJson(await send(RESPONSES_URL, {
       method: 'POST', redirect: 'error', signal,
       headers: { authorization: `Bearer ${apiKey}`, 'content-type': 'application/json' },
-      body: JSON.stringify(body),
+      body: requestBody,
     }));
-    const counted = object(await post('/input_tokens', requestInput));
-    if (counted?.object !== 'response.input_tokens' || !tokenCount(counted.input_tokens, MAX_INPUT_TOKENS) ||
-        signal.aborted) return null;
-    const response = await post('', {
-      ...requestInput, max_output_tokens: MAX_OUTPUT_TOKENS, store: false, service_tier: 'default', truncation: 'disabled',
-    });
-    return validateExplanationResponse(response);
+    return signal.aborted ? null : validateExplanationResponse(response);
   } catch {
     // Provider responses and exception messages can include content. Return no raw details.
     return null;

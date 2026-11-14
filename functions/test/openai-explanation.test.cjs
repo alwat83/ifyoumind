@@ -11,26 +11,26 @@ const completed = (text = '{"lead":"income"}') => ({
   usage: { input_tokens: 250, output_tokens: 8 },
   output: [{ type: 'message', role: 'assistant', status: 'completed', content: [{ type: 'output_text', text }] }],
 });
-const count = (input_tokens = 250) => ({ object: 'response.input_tokens', input_tokens });
 const json = data => Response.json(data);
 
-test('requests the official model and strict Responses schema using the same counted synthetic packet', async () => {
+test('sends exactly one bounded Responses request with the fixed synthetic facts', async () => {
   const calls = [];
   const send = async (url, options) => {
-    calls.push({ url, options, body: JSON.parse(options.body) });
-    return json(calls.length === 1 ? count() : completed());
+    calls.push({ url, options });
+    return json(completed());
   };
   assert.deepEqual(await selectExplanationLead('fixture-only', send), {
     lead: 'income', usage: { inputTokens: 250, outputTokens: 8, serviceTier: 'default' },
   });
-  const [preflight, generate] = calls;
-  assert.equal(preflight.url, 'https://api.openai.com/v1/responses/input_tokens');
+  assert.equal(calls.length, 1);
+  const [generate] = calls;
   assert.equal(generate.url, 'https://api.openai.com/v1/responses');
-  assert.equal(generate.options.signal, preflight.options.signal);
+  assert.equal(generate.options.method, 'POST');
+  assert.ok(generate.options.signal instanceof AbortSignal);
   assert.equal(generate.options.redirect, 'error');
   assert.equal(generate.options.headers.authorization, 'Bearer fixture-only');
-  const { store, max_output_tokens, truncation, service_tier, ...prompt } = generate.body;
-  assert.deepEqual(prompt, preflight.body);
+  assert.ok(Buffer.byteLength(generate.options.body, 'utf8') <= 1_024);
+  const { store, max_output_tokens, truncation, service_tier, ...prompt } = JSON.parse(generate.options.body);
   assert.equal(prompt.model, 'gpt-6-luna');
   assert.equal(prompt.reasoning.effort, 'none');
   assert.equal(prompt.text.format.type, 'json_schema');
@@ -71,19 +71,16 @@ test('rejects malformed, incomplete, refusal, tool, or over-budget responses', (
   ]) assert.equal(validateExplanationResponse(value), null);
 });
 
-test('input budget is enforced before generation and provider failures do not retry or expose payloads', async () => {
-  for (const bad of [count(MAX_INPUT_TOKENS + 1), count('250'), count(0), {}]) {
-    let calls = 0;
-    assert.equal(await selectExplanationLead('fixture', async () => { calls++; return json(bad); }), null);
-    assert.equal(calls, 1);
-  }
+test('rate limits, permission errors, invalid usage and malformed responses fall back without retries', async () => {
   for (const reply of [() => new Response('private provider error', { status: 429 }),
+    () => new Response('private permission details', { status: 403 }),
+    () => json({ ...completed(), usage: { input_tokens: MAX_INPUT_TOKENS + 1, output_tokens: 8 } }),
     () => new Response('bad JSON'), () => new Response('x'.repeat(20_000)),
     () => { throw new Error('private provider error'); },
   ]) {
     let calls = 0;
-    assert.equal(await selectExplanationLead('fixture', async () => ++calls === 1 ? json(count()) : reply()), null);
-    assert.equal(calls, 2);
+    assert.equal(await selectExplanationLead('fixture', async () => { calls++; return reply(); }), null);
+    assert.equal(calls, 1);
   }
 });
 
@@ -91,10 +88,10 @@ test('an aborted transport reaches the same deterministic fallback boundary', as
   let calls = 0;
   assert.equal(await selectExplanationLead('fixture', async (_url, options) => {
     assert.ok(options.signal instanceof AbortSignal);
-    if (++calls === 1) return json(count());
+    calls++;
     throw new DOMException('Request aborted', 'AbortError');
   }), null);
-  assert.equal(calls, 2);
+  assert.equal(calls, 1);
 });
 
 const reviewer = { uid: 'reviewer', token: { admin: true, email_verified: true } };
@@ -191,7 +188,7 @@ test('default-off, budget exhaustion, missing key and provider failure produce v
 
 test('the synthetic demo lets the model choose the lead and renders only verified facts', async t => {
   const result = await explainSyntheticMarketRequest(request, deps({
-    select: apiKey => selectExplanationLead(apiKey, async url => json(url.endsWith('/input_tokens') ? count() : completed())),
+    select: apiKey => selectExplanationLead(apiKey, async () => json(completed())),
   }));
   assert.equal(result.source, 'openai');
   assert.equal(result.synthetic, true);

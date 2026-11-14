@@ -8,6 +8,10 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 13, 2026 — Property-tax-first consumer experience
+
+[Property-tax-first review](docs/product/PROPERTY_TAX_FIRST.md) uses the public tax example to introduce a useful, private comparison before signup. Electricity, city evidence and the Business funnel remain available. PR #95 tracks a separate typed-input expansion. The internal AI staging milestone is closed with the flag off. Production and any further provider use are separately gated. [AI milestone evidence](https://github.com/alwat83/ifyoumind/pull/96)
+
 ## November 12, 2026 — Starter and Plus are the primary subscription offers
 
 Founder confirmed Starter $4.99/month for one report and Plus $9.99/month for three. Free and the $79 one-time report remain available, with $39 Pro retained for existing customers. The [pricing readiness update](docs/growth/PRICING_READINESS.md) extends the approved Wow 3.2 identity, documents the deployed dormant backend, and preserves separate setup, release and enrollment authorization.

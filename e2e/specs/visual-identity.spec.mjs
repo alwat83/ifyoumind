@@ -34,7 +34,7 @@ async function compare(page, name, ready, options = {}) {
 
 test('homepage, Discovery and evidence keep the editorial visual identity', async ({ page }) => {
   await page.goto('/');
-  const heroAction = page.getByRole('link', { name: 'Try a Free Example', exact: true });
+  const heroAction = page.getByRole('link', { name: 'Try the tax example', exact: true });
   await compare(page, 'homepage', heroAction, { fullPage: true });
   await page.goto('/discover/');
   const tax = page.getByRole('button', { name: 'Try property tax example' });

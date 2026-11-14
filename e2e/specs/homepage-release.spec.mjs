@@ -3,10 +3,10 @@ import { FIXTURES } from '../support/fixtures.mjs';
 
 test('homepage opens the interactive demo and the complete free example', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText(/See the story\.\s*Check the evidence\./);
-  const heroAction = page.getByRole('link', { name: 'Try a Free Example', exact: true });
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Are my property taxes higher than they should be?');
+  const heroAction = page.getByRole('link', { name: 'Try the tax example', exact: true });
   await expect(heroAction).toBeInViewport({ ratio: 1 });
-  await expect(page.locator('#discovery-result')).toContainText('57.1%');
+  await expect(page.locator('#discovery-result')).toContainText('$420 more than the year before.');
   await expectNoHorizontalScroll(page);
   await expectAccessible(page);
   await heroAction.click();
@@ -14,7 +14,7 @@ test('homepage opens the interactive demo and the complete free example', async 
   const proof = page.locator('.home-evidence');
   await proof.locator('summary').click();
   await expect(proof.locator('.evidence-lead')).toHaveText('($240.00 ÷ $420.00) × 100 = 57.1%');
-  await page.getByRole('link', { name: 'Explore the property-tax example' }).click();
+  await page.getByRole('link', { name: 'Open the full tax example' }).click();
   await expect(page).toHaveURL(/\/discover\/\?example=tax$/);
   await expect(page.locator('.finding')).toHaveCount(3);
   await expect(page.getByRole('heading', { name: 'Your total rose by $420.00.', exact: true })).toBeVisible();

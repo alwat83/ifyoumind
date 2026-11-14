@@ -16,7 +16,8 @@ import { HOME_EXAMPLES } from './home-discovery-examples';
 })
 export class PublicLandingComponent {
   readonly examples = HOME_EXAMPLES;
-  example = this.examples[0];
+  readonly taxExample = this.examples[0];
+  example = this.taxExample;
   discoveryAnnouncement = '';
 
   chooseExample(example: typeof HOME_EXAMPLES[number], evidence: HTMLDetailsElement): void {

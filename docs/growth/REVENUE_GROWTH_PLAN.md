@@ -2,6 +2,10 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## November 14 — Verified relevance release; first-use measurement is next
+
+[Production smoke and pilot readiness](../releases/relevance-20261114/LIVE_VERIFICATION.md) confirms that local tax, personal bill and parcel questions take distinct paths. The supervised typed-bill pilot can test whether a useful, private result makes sense without coaching; no participants have run it yet. Rank the local first-use session first, then observe where relevant questions still lack evidence, then verify the existing paid handoff for compatible city decisions. These steps need no new spend or tracking. No new visitor, purchase, revenue or cost measurement; the scoreboard is unchanged.
+
 ## November 14 — Blueprint: evidence before the offer
 
 [Founder roadmap proposal](../product/PRODUCT_EXPERIENCE_BLUEPRINT.md) ranks question relevance, a private first bill result, and observed report handoff friction ahead of new categories or provider calls. Run a small permissioned walkthrough before adding tracking or changing the offer. In the compatible city funnel, reconcile independent payment to report delivery and return before reporting revenue progress. No new customer, revenue, cost or margin observation; historical scoreboard unchanged.

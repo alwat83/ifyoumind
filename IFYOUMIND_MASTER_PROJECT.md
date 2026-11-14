@@ -8,6 +8,10 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 14, 2026 — Question relevance in production; private first-use pilot prepared
+
+[PR #99 live verification](docs/releases/relevance-20261114/LIVE_VERIFICATION.md) records the released separation of local tax information, personal bill changes and parcel-specific tax questions. The optional example remains explicitly made up. The [blueprint](docs/product/PRODUCT_EXPERIENCE_BLUEPRINT.md) is approved; its next step is a supervised, browser-local pilot on the independently approved #95 head. Measure whether people can explain a finding and its limits before expanding the capability. Staging AI remains off and production enrollment stays closed.
+
 ## November 14, 2026 — Master product experience directive
 
 [Audit, unified blueprint and staged roadmap](docs/product/PRODUCT_EXPERIENCE_BLUEPRINT.md) are proposed for founder review. The permanent standard is to answer the visitor’s actual question with checkable evidence. Reuse PR #99 for relevance, preserve #95 and #96 as independent gates, and observe first use before changing the homepage or the commercial path.

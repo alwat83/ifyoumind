@@ -1,5 +1,13 @@
 # ifYouMind — Current development status
 
+## November 14, 2026 — Relevance release verified; typed-bill pilot prepared
+
+**Production verified:** [PR #99](https://github.com/alwat83/ifyoumind/pull/99) merged to `master` at `b22cb7582bbeb615b17b7fee34b7f6a3ec216560` after [build](https://github.com/alwat83/ifyoumind/actions/runs/43637067128) and [QA](https://github.com/alwat83/ifyoumind/actions/runs/43637067205) passed on the authorized head `6cabbf705c125c4c763dd4dfc2dd411a3cca8dd8`. [Production workflow](https://github.com/alwat83/ifyoumind/actions/runs/43640676326) succeeded; active Hosting `51e354bfe0e900e2`, rollback available at `1beeaa395c606d55`. Birmingham, personal bill and parcel smoke checks passed; the labeled made-up example required an explicit click. [Release and rollback evidence](../releases/relevance-20261114/LIVE_VERIFICATION.md).
+
+**Pilot prepared, zero participants:** [Draft #95](https://github.com/alwat83/ifyoumind/pull/95) at `b249ee122b19f3ee5500cec8873a17c97975c986` remains unmerged and authorized for up to four consenting participants on loopback. [Build](https://github.com/alwat83/ifyoumind/actions/runs/43637297222), [QA](https://github.com/alwat83/ifyoumind/actions/runs/43637297175) and fresh local browser isolation checks passed. Safari Simulator date selection and clearing worked; date fields overflowed at the right edge. Start supervised sessions on the verified desktop build. Physical devices and spoken assistive technology remain unverified. No participant or commercial outcome recorded.
+
+**Boundaries:** Production subscription enrollment remains closed. [Draft #96](https://github.com/alwat83/ifyoumind/pull/96) remains separate; staging `explainsyntheticmarket-00004-lor` is off. [Notion coordination hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71). This evidence is on `codex/relevance-release-pilot-handoff`; it does not change the released tree or pilot head.
+
 ## November 14, 2026 — Product blueprint review
 
 **Approved:** [Product audit and blueprint](../product/PRODUCT_EXPERIENCE_BLUEPRINT.md). Preserve the current experience; review #99 first, then evaluate the separate typed-input #95 and real first-use friction. Founder authorized preparation of #99 and #95. Both still require separate authorization to release or run a pilot.

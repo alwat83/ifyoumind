@@ -594,3 +594,13 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 ## 2026-11-14 — Relevance release preparation
 
 **Provider/agent:** OpenAI / Codex. Reconciled draft [#99](https://github.com/alwat83/ifyoumind/pull/99) with the approved blueprint on master `0d980502b60589a757b04bf258fb9b6b3a45f6c7`. Resolved four project-record conflicts. The application, browser tests and reviewed visual references match the previous relevance head. [Current verification](https://github.com/alwat83/ifyoumind/pull/99/checks). This is release preparation and the customer impact remains unmeasured.
+
+## 2026-11-14 — Relevance released; exact typed-bill pilot verified locally
+
+**Provider/agent:** OpenAI / Codex. **Documentation branch:** `codex/relevance-release-pilot-handoff`. Refreshed the repository snapshot, master record and launch plan. [Release evidence, rollback instructions and pilot observations](../releases/relevance-20261114/LIVE_VERIFICATION.md) · [Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).
+
+**Released:** Reverified [#99](https://github.com/alwat83/ifyoumind/pull/99) exact head `6cabbf705c125c4c763dd4dfc2dd411a3cca8dd8` with both CI workflows green and rollback `1beeaa395c606d55` available. Used the exact-head merge gate; deployment of merge `b22cb7582bbeb615b17b7fee34b7f6a3ec216560` succeeded on Hosting `51e354bfe0e900e2`. Signed-in production smoke passed Birmingham, personal bill and parcel-specific prompts and the explicit made-up example. No production billing changes or AI activity; subscriptions remain closed. No additional app changes in the handoff.
+
+**Pilot:** [#95](https://github.com/alwat83/ifyoumind/pull/95) `b249ee122b19f3ee5500cec8873a17c97975c986`, separate, unmerged and undeployed. Fresh local build, isolation guard, mobile WebKit offline smoke and native Safari Simulator date selection/clearing passed; simulator date fields extended past the right edge. Physical phone and spoken screen-reader coverage remain open. No participant sessions or sensitive bill records.
+
+**Next and business impact:** Run the first synthetic, supervised desktop loopback session when a consenting participant is present; check the date field and spoken flow on hardware; use anonymized evidence to choose the next change. The live relevance fix can reduce mismatched answers. No visitor, comprehension, sales or margin impact was measured.

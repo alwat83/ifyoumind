@@ -1,10 +1,12 @@
 # ifYouMind — Current development status
 
-## November 14, 2026 — Question-to-answer relevance
+## November 14, 2026 — Product blueprint review
 
-**Draft:** [PR #99](https://github.com/alwat83/ifyoumind/pull/99) on `codex/question-answer-relevance`. Separates local property tax and parcel checks from personal bill changes. Unsupported tax/rate questions clearly state what evidence is missing and offer a made-up example only as a separate choice. Personal bill changes point to the existing private CSV path. No API, price, entitlement or deployment changes. [Audit, source references and verification](../product/QUESTION_ANSWER_RELEVANCE.md) · [Exact-head checks](https://github.com/alwat83/ifyoumind/pull/99/checks).
+**Approved:** [Product audit and blueprint](../product/PRODUCT_EXPERIENCE_BLUEPRINT.md). Preserve the current experience; review #99 first, then evaluate the separate typed-input #95 and real first-use friction. Founder authorized preparation of #99 and #95. Both still require separate authorization to release or run a pilot.
 
-**Production:** [PR #98](https://github.com/alwat83/ifyoumind/pull/98) merged as `dbc872a977f062f94752578ca88fd56398e0c3c5`; [Firebase deployment](https://github.com/alwat83/ifyoumind/actions/runs/43623896871) succeeded. Founder reports verifying the existing property-tax example visually. The relevance patch is undeployed, and [typed Bill Discovery #95](https://github.com/alwat83/ifyoumind/pull/95) and [OpenAI #96](https://github.com/alwat83/ifyoumind/pull/96) remain separate.
+**Production:** [PR #98](https://github.com/alwat83/ifyoumind/pull/98) merged at `dbc872a977f062f94752578ca88fd56398e0c3c5`; [deployment](https://github.com/alwat83/ifyoumind/actions/runs/43623896871) succeeded. Verified active Hosting version `8dea909c53f33887`, closed enrollment and anonymous mobile tax, cited sample and sign-in handoff. Production protected and commercial actions were not exercised.
+
+**Separate drafts:** [#99](https://github.com/alwat83/ifyoumind/pull/99) at `6f61d2ca1cc841ecfeba44c6dc186701b5181b2c` passed [build](https://github.com/alwat83/ifyoumind/actions/runs/43632056972) and [authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/43632056925) with 144 browser cases. [#95](https://github.com/alwat83/ifyoumind/pull/95) typed Bill Discovery and [#96](https://github.com/alwat83/ifyoumind/pull/96) remain separate; staging AI revision `explainsyntheticmarket-00004-lor` is flag-off. [Portal #84](https://github.com/alwat83/ifyoumind/issues/84) and [enrollment #85](https://github.com/alwat83/ifyoumind/issues/85) remain open.
 
 ## November 13 Pacific / November 14 UTC — Property-tax-first homepage
 

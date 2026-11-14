@@ -9,6 +9,10 @@ This file applies ONLY to the **ifYouMind** repository `alwat83/ifyoumind` and w
 ## Product direction
 Build a consumer-friendly, general-purpose, evidence-backed AI data intelligence platform. Users should be able to explore public and, later, permissioned private datasets, compare locations and other entities, generate clear Decision Reports, and understand data sources, limitations, and freshness. Business intelligence is one vertical, not the whole product. Prioritize mobile UX, trustworthy outputs, reliable production releases, monetization, and acquisition. Avoid geographically narrow demo examples.
 
+## Founder product standard — November 14, 2026
+
+**AI for everyone. AI made for you.** Turn real data into clear, personalized, evidence-backed conclusions. Preserve one coherent journey: Ask → Understand → Analyze → Explain → Decide. Start with the visitor’s question, ask only for evidence that changes the answer, distinguish examples from personal findings, and keep calculations, sources and uncertainty inspectable. Use AI selectively and only within separately authorized data, cost and release boundaries. The [product experience blueprint](docs/product/PRODUCT_EXPERIENCE_BLUEPRINT.md) is a founder-review proposal; its roadmap does not authorize implementation, merging, deployment, paid AI, billing changes or expanded data access.
+
 ## Founder product vision — automatic discovery, October23,2026
 
 **Mission:** make AI-driven data discovery accessible to everyday people, including people who have no AI or prompting experience. **Core promise: “You bring the data. We’ll find the story.”** The defining future experience is user-provided information followed by automatic, useful, evidence-backed findings before the user knows what to ask. This is product direction, not a claim of live arbitrary uploads or AI analysis.

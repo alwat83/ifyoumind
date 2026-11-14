@@ -14,6 +14,8 @@
 
 [Internal prototype and activation review](docs/product/OPENAI_ACTIVATION_READINESS.md) uses Responses to select a lead from synthetic evidence. Deterministic calculations, source facts and caveats remain authoritative. Recommend an optional Decision Report explanation as the first product pilot after staging validation. Household Bill Discovery retains its browser-local boundary. The [secure staging setup](AI_SYNTHESIS_SETUP.md) is documented. Provider configuration, staging and release require separate approvals.
 
+The founder configured funded OpenAI billing and a staging key. Metadata verifies `ifyoumind-staging`, Google Cloud billing, and enabled Secret Manager version 1. Hosting the smoke test requires the missing staging services and runtime identity. The [staging runbook](AI_SYNTHESIS_SETUP.md) records the prerequisite, deployment and rollback gates.
+
 ## November 12, 2026 — Starter and Plus are the primary subscription offers
 
 Founder confirmed Starter $4.99/month for one report and Plus $9.99/month for three. Free and the $79 one-time report remain available, with $39 Pro retained for existing customers. The [pricing readiness update](docs/growth/PRICING_READINESS.md) extends the approved Wow 3.2 identity, documents the deployed dormant backend, and preserves separate setup, release and enrollment authorization.

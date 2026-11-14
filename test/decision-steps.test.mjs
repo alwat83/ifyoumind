@@ -5,14 +5,29 @@ import ts from 'typescript';
 
 const source = fs.readFileSync(new URL('../src/app/intelligence/decision-steps.ts', import.meta.url), 'utf8');
 const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 } }).outputText;
-const { billExample, decisionType, formattedCity, placeKey, sampleCityMatches } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
+const { billIntent, decisionType, formattedCity, placeKey, sampleCityMatches } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
 
-test('bill questions route deterministically and unrelated questions do not', () => {
-  assert.equal(billExample('Why did my property taxes go up?'), 'tax');
-  assert.equal(billExample('What changed on the electric bill?'), 'electricity');
-  assert.equal(billExample('Property tax versus my electricity bill'), 'both');
-  assert.equal(billExample('Which city has higher property taxes?'), 'tax');
-  assert.equal(billExample('Where do I open a coffee shop?'), null);
+test('a local tax question is not routed as a personal bill finding', () => {
+  for (const question of [
+    'What are the property taxes in Birmingham?',
+    'What is the property tax rate in Birmingham, Alabama?',
+    'Which city has higher property taxes?',
+    'What is the millage in my county?',
+    'How did property taxes change in Birmingham?',
+    'Compare the property tax rates in Birmingham and Huntsville',
+  ]) assert.equal(billIntent(question), 'local-tax', question);
+});
+
+test('statement changes, property-specific checks and utility tariffs require different evidence', () => {
+  assert.equal(billIntent('Why did my property taxes go up?'), 'tax-bill');
+  assert.equal(billIntent('What changed on my electric bill?'), 'electricity-bill');
+  assert.equal(billIntent('Compare our electricity bills'), 'electricity-bill');
+  assert.equal(billIntent('Property tax versus my electricity bill'), 'mixed');
+  assert.equal(billIntent('What are the electricity rates in Birmingham?'), 'local-electricity');
+  assert.equal(billIntent('Am I overpaying my property taxes?'), 'tax-check');
+  assert.equal(billIntent('Are my property taxes higher than they should be?'), 'tax-check');
+  assert.equal(billIntent('What are the property taxes for this house?'), 'tax-check');
+  assert.equal(billIntent('Where do I open a coffee shop?'), null);
   assert.equal(decisionType('compare'), 'compare');
   assert.equal(decisionType('arbitrary'), 'custom');
 });

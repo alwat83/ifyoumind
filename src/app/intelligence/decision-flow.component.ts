@@ -6,7 +6,7 @@ import { intentParams, parseIntent, readIntent, rememberIntent } from '../purcha
 import { OrganizationService } from './organization.service';
 import { MarketIntelligenceService } from './market-intelligence.service';
 import { ProductAnalyticsService } from './product-analytics.service';
-import { billExample, decisionPrompts, decisionType, DecisionType, formattedCity, placeKey, sampleCityMatches } from './decision-steps';
+import { billIntent, decisionPrompts, decisionType, DecisionType, formattedCity, placeKey, sampleCityMatches } from './decision-steps';
 
 interface Comparison { id: number; value: string }
 
@@ -49,11 +49,10 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void { this.destroyed = true; }
 
-  get bill() { return billExample(this.question); }
+  get bill() { return billIntent(this.question); }
 
-  get billPath(): string {
-    return this.bill === 'electricity' ? '/discover/?example=electricity' : '/discover/?example=tax';
-  }
+  get personalBill(): boolean { return this.bill === 'tax-bill' || this.bill === 'electricity-bill'; }
+  get electricityBill(): boolean { return this.bill === 'electricity-bill' || this.bill === 'local-electricity'; }
 
   continueToPlace(): void {
     if (!this.question.trim() || this.question.trim().length > 240) {

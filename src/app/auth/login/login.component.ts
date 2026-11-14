@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { DEFAULT_RETURN_URL, safeReturnUrl } from '../../return-url';
+import { DEFAULT_RETURN_URL, decisionReturnUrl, safeReturnUrl } from '../../return-url';
 import {
   Auth,
   signInWithEmailAndPassword,
@@ -29,6 +29,7 @@ export class LoginComponent {
   private auth:Auth=inject(Auth);
   private router:Router=inject(Router);
   private route=inject(ActivatedRoute);
+  readonly registrationReturn = decisionReturnUrl(this.route.snapshot.queryParamMap.get('returnUrl'));
 
   /** Where to go after signing in: a validated in-app return path, else the app home. */
   private destination():string{

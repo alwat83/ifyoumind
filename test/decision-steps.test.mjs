@@ -3,40 +3,30 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import ts from 'typescript';
 
-const read=file=>fs.readFileSync(new URL(file,import.meta.url),'utf8');
-const compiled=ts.transpileModule(read('../src/app/intelligence/decision-steps.ts'),{compilerOptions:{module:ts.ModuleKind.ES2022,target:ts.ScriptTarget.ES2022}}).outputText;
-const {parseComparisons,requiresComparison,stepProgress}=await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
+const source = fs.readFileSync(new URL('../src/app/intelligence/decision-steps.ts', import.meta.url), 'utf8');
+const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 } }).outputText;
+const { billExample, decisionType, formattedCity, placeKey, sampleCityMatches } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
 
-test('comparison places are split on semicolons, trimmed and capped at three',()=>{
-  assert.deepEqual(parseComparisons(' Austin, TX ; ;Raleigh, NC'),['Austin, TX','Raleigh, NC']);
-  assert.deepEqual(parseComparisons('a;b;c;d'),['a','b','c']);
-  assert.deepEqual(parseComparisons(''),[]);
+test('bill questions route deterministically; ambiguous or unrelated questions do not', () => {
+  assert.equal(billExample('Why did my property taxes go up?'), 'tax');
+  assert.equal(billExample('What changed on the electric bill?'), 'electricity');
+  assert.equal(billExample('Property tax versus my electricity bill'), null);
+  assert.equal(billExample('Where do I open a coffee shop?'), null);
+  assert.equal(decisionType('compare'), 'compare');
+  assert.equal(decisionType('arbitrary'), 'custom');
 });
 
-test('business and comparison decisions need at least one comparison; growth and custom do not',()=>{
-  assert.equal(requiresComparison('business'),true);
-  assert.equal(requiresComparison('compare'),true);
-  assert.equal(requiresComparison('growth'),false);
-  assert.equal(requiresComparison('custom'),false);
+test('U.S. city formatting accepts other places and state names, and catches duplicate casing', () => {
+  assert.equal(formattedCity('  Spokane, washington '), 'Spokane, WA');
+  assert.equal(formattedCity('Washington, District of Columbia'), 'Washington, DC');
+  assert.equal(formattedCity('Denver, co'), 'Denver, CO');
+  assert.equal(placeKey(formattedCity('St. Louis, Missouri')), placeKey(formattedCity('St Louis, MO')));
+  for (const bad of ['', 'Denver', 'Denver, ZZ', 'Denver, CO, US', '12345, CO']) assert.equal(formattedCity(bad), null);
 });
 
-test('a visitor arriving from the homepage sees two steps, not four',()=>{
-  assert.deepEqual(stepProgress(2,2),{current:1,total:2});
-  assert.deepEqual(stepProgress(3,2),{current:2,total:2});
-  assert.deepEqual(stepProgress(1,1),{current:1,total:3});
-  assert.deepEqual(stepProgress(3,1),{current:3,total:3});
-});
-
-test('the separate confirmation step is gone and the build button sits on the context step',()=>{
-  const html=read('../src/app/intelligence/decision-flow.component.html');
-  assert.doesNotMatch(html,/step===4/);
-  assert.match(html,/step===3[\s\S]*analyze\(\)/);
-});
-
-test('new accounts start the market-analysis flow; verification keeps its gate',()=>{
-  const register=read('../src/app/auth/register/register.component.ts');
-  assert.match(register,/FIRST_DECISION_ROUTE=\['\/app\/decide'\]/);
-  assert.match(register,/navigate\(\['\/verify-email'\]\)/);
-  const guard=read('../src/app/auth.guard.ts');
-  assert.match(guard,/user\.emailVerified/);
+test('suggestions are local prefix matches and never masquerade as a verified search', () => {
+  assert.deepEqual(sampleCityMatches(' chA'), ['Charlotte, NC']);
+  assert.deepEqual(sampleCityMatches('Denver, CO'), []);
+  assert.deepEqual(sampleCityMatches('Spokane'), []);
+  assert.deepEqual(sampleCityMatches('a'), []);
 });

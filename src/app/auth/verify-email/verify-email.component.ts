@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { intentParams, readIntent } from '../../purchase-intent';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { decisionReturnUrl } from '../../return-url';
 import { Auth, sendEmailVerification, signOut } from '@angular/fire/auth';
 
 @Component({
@@ -18,6 +19,7 @@ export class VerifyEmailComponent {
 
   private auth: Auth = inject(Auth);
   private router: Router = inject(Router);
+  private readonly returnUrl = decisionReturnUrl(inject(ActivatedRoute).snapshot.queryParamMap.get('returnUrl'));
 
   get email(): string {
     return this.auth.currentUser?.email || 'your email address';
@@ -36,7 +38,8 @@ export class VerifyEmailComponent {
       await user.reload();
       if (this.auth.currentUser?.emailVerified) {
         await this.auth.currentUser.getIdToken(true);
-        await this.router.navigate(['/app/decide'], { queryParams: intentParams({ type: 'business' }, readIntent()) });
+        if (this.returnUrl) await this.router.navigateByUrl(this.returnUrl);
+        else await this.router.navigate(['/app/decide'], { queryParams: intentParams({ type: 'business' }, readIntent()) });
         return;
       }
       this.message = { type: 'error', text: 'Not verified yet. Open the link in the email we sent, then try again.' };
@@ -53,7 +56,8 @@ export class VerifyEmailComponent {
     const user = this.auth.currentUser;
     if (user) {
       try {
-        await sendEmailVerification(user);
+        if (this.returnUrl) await sendEmailVerification(user, { url: window.location.origin + this.returnUrl });
+        else await sendEmailVerification(user);
         this.message = { type: 'success', text: `A new verification email has been sent to ${this.email}.` };
       } catch {
         this.message = { type: 'error', text: 'We could not send the email. Wait a minute and try again.' };
@@ -66,6 +70,6 @@ export class VerifyEmailComponent {
 
   async useDifferentEmail() {
     await signOut(this.auth);
-    await this.router.navigate(['/register']);
+    await this.router.navigate(['/register'], { queryParams: this.returnUrl ? { returnUrl: this.returnUrl } : {} });
   }
 }

@@ -3,8 +3,8 @@
   <section class="auth-card">
     <p class="eyebrow">Start free</p>
     <h1>Build your market analysis.</h1>
-    <p class="sub">Create a free account. Your free brief compares your city with one other, with every figure cited to the U.S. Census.</p>
-    <p class="next-steps">Next: verify your email, then two quick steps to your free brief. Google sign-ups skip the email check.</p>
+    <p class="sub">Create a free account to see Census evidence about a city. Add a second city if you want to compare.</p>
+    <p class="next-steps">Next: verify your email, then start your free brief. Google sign-ups skip the email check.</p>
     <p *ngIf="intent" class="next-steps intent-note">You'll see your free brief first, then you can get the full $79 Decision Report for that decision.</p>
     <form (ngSubmit)="submit(registerForm)" #registerForm="ngForm" novalidate>
       <label><span>Name</span><input name="displayName" type="text" required [(ngModel)]="displayName" #nameField="ngModel"

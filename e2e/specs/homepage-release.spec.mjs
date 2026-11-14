@@ -62,5 +62,5 @@ test('homepage free brief and pricing keep their sign-in return paths', async ({
 
   await signInThroughUi(page, user, briefSignIn);
   await expect(page).toHaveURL(/\/app\/decide\?type=business$/);
-  await expect(page.getByRole('heading', { name: 'Where are you looking?' })).toBeVisible();
+  await expect(page.getByLabel('Your question')).toHaveValue('Should I open this business here?');
 });

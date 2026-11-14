@@ -14,6 +14,6 @@
     <div class="divider"><span>or</span></div>
     <button class="google" type="button" (click)="googleLogin()">Continue with Google</button>
     <p *ngIf="errorMessage" class="error" role="alert">{{ errorMessage }}</p>
-    <p class="switch">New here? <a routerLink="/register">Create a free account</a></p>
+    <p class="switch">New here? <a routerLink="/register" [queryParams]="registrationReturn ? { returnUrl: registrationReturn } : {}">Create a free account</a></p>
   </section>
 </main>

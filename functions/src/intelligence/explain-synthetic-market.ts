@@ -11,6 +11,18 @@ const key = defineSecret('OPENAI_API_KEY');
 
 export const EXPLANATION_LIMITS = { perUserPerDay: 3, globalPerDay: 20, globalPerMonth: 200 } as const;
 
+function stagingServiceAccount(env: NodeJS.ProcessEnv): string | undefined {
+  const project = env.GCLOUD_PROJECT;
+  if (!project || project !== env.SYNTHETIC_OPENAI_STAGING_PROJECT ||
+      project === 'ifyoumind-473fe' || project.startsWith('demo-')) return undefined;
+  return `synthetic-openai@${project}.iam.gserviceaccount.com`;
+}
+
+export function isSyntheticOpenAIEnabled(env: NodeJS.ProcessEnv = process.env): boolean {
+  return env.ENABLE_SYNTHETIC_OPENAI_EXPLANATION === 'true' && Boolean(stagingServiceAccount(env)) &&
+    env.FUNCTIONS_EMULATOR !== 'true';
+}
+
 // Server-only collection. Each attempt reserves its full allowance before either provider call.
 // Fixed document IDs bound storage. Replacing the counters never records report content.
 export async function reserveExplanation(uid: string, now = new Date()): Promise<boolean> {
@@ -63,24 +75,19 @@ export async function explainSyntheticMarketRequest(request: Pick<CallableReques
     const apiKey = deps.readKey();
     if (!apiKey) return fallback('unavailable');
     if (!await deps.reserve(uid)) return fallback('limit');
-    const lead = await deps.select(apiKey);
-    return lead ? renderExplanation(lead, 'openai') : fallback('unavailable');
+    const selection = await deps.select(apiKey);
+    return selection ? { ...renderExplanation(selection.lead, 'openai'), usage: selection.usage } : fallback('unavailable');
   } catch {
     return fallback('unavailable');
   }
 }
 
 export const explainSyntheticMarket = onCall(
-  { secrets: [key], timeoutSeconds: 15, maxInstances: 2, concurrency: 1 },
+  { secrets: [key], timeoutSeconds: 15, maxInstances: 2, concurrency: 1, serviceAccount: stagingServiceAccount(process.env) },
   request => explainSyntheticMarketRequest(request, {
     readMembership: async (organizationId, uid) => (await getFirestore().collection('intelligenceOrganizations')
       .doc(organizationId).collection('members').doc(uid).get()).data(),
-    // The production project cannot enable this internal prototype even if deployed accidentally.
-    isEnabled: () => {
-      const project = process.env.GCLOUD_PROJECT;
-      return Boolean(project && project !== 'ifyoumind-473fe' && !project.startsWith('demo-') &&
-        process.env.ENABLE_SYNTHETIC_OPENAI_EXPLANATION === 'true');
-    },
+    isEnabled: isSyntheticOpenAIEnabled,
     readKey: () => key.value().trim(),
     reserve: reserveExplanation,
     select: selectExplanationLead,

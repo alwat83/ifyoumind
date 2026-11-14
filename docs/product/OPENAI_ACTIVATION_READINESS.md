@@ -2,14 +2,20 @@
 
 **November 13, 2026 · OpenAI / Codex · Internal synthetic-data review.** Separate from Bill Discovery [draft PR #95](https://github.com/alwat83/ifyoumind/pull/95) at `73b893c067ae54b4b55100dbe168191386e7b00e`. Base is production master `59a4b80a8e427a13e0d8bee0f753f8954ea8611f`. [Existing Firebase release](https://github.com/alwat83/ifyoumind/actions/runs/43392378321).
 
+## Controlled staging readiness
+
+**Prepared for review.** Staging project selection, setup, deployment and live provider validation are pending. The Firebase CLI listed nine projects visible to the current identity. Only production `ifyoumind-473fe` matched ifYouMind by project ID or display name. GitHub exposes only its `production` environment and has no verified staging mapping. The signed-in OpenAI settings exposed only a separate business organization, with no ifYouMind organization to select. A staging project in a different account or under an unrelated name remains possible. The ifYouMind API organization's billing, key permissions and limits could not be verified.
+
+The callable requires an explicit Firebase staging project match, and staging source discovery selects the dedicated runtime service account derived from that project ID. The authorized reviewer gets only verified fixture evidence and, on provider success, validated generation token counts and the observed Standard service tier. The runner checks the full synthetic fixture, measures request-to-response latency, and checks deterministic flag-off behavior before and after the one allowed staging invocation. Its automated tests substitute both transports. [Founder setup, operator commands and rollback](../../AI_SYNTHESIS_SETUP.md).
+
 ## Cross-surface impact
 
 | Surface | Status | Verification |
 | --- | --- | --- |
-| Internal explanation callable and provider boundary | Change Required | Fixed synthetic packet, verified internal admin with active workspace owner/admin membership, strict output, quota and fallback. Exercise with Firebase emulators and a mocked Responses endpoint. |
+| Internal explanation callable and provider boundary | Change Required | Fixed synthetic packet, verified internal admin with active workspace owner/admin membership, strict output, quota and fallback. Explicit staging project and runtime identity, verified usage counters and a mock-tested staging runner. |
 | Public homepage, Discovery, reports, registration, Dashboard and Account | Not Affected | No frontend entry or data bridge. Existing deterministic reports, layouts and browser-local Discovery stay in place. |
 | Pricing, Checkout, subscriptions and entitlements | Not Affected | No billing interface or commercial calls. The prototype accepts no report ID and never reads or grants report access. |
-| Privacy, Firestore and operations | Verify Only | No production deployment entry. Inspect current secret metadata and bindings without touching values. Verify client access to quota records is denied by existing rules. |
+| Privacy, Firestore and production | Verify Only | Inspect the production deployment allowlist and project metadata. Verify client access to quota records is denied by existing rules. Keep identifiers, credentials and payloads out of smoke evidence. |
 | Responsive, accessibility and visual identity | Not Affected | No user interface changes. Existing browser and visual suites cover regression. |
 | Handoff | Change Required | Record audit, supported model, costs, demonstration, tests and exact activation gates. |
 
@@ -22,7 +28,7 @@
 | Paid reports | `generatePaidDecisionReport` authorizes owner/admin, reserves existing entitlement, uses deterministic Census data and report rules, then saves the result and consumes the credit atomically. Runtime bindings are Census and Stripe. No OpenAI involvement. |
 | Gaps | The old endpoints accept unrestricted workspace-derived text, default to viewer-inclusive membership, use prompt-only JSON and causal constraints, validate numbers against a pooled allowlist, and persist prose. An allowed number can still be attributed to the wrong city. Unsupported causal language can contain no numbers at all. Both lack a per-request transport deadline, an atomic provider spending cap and a fail-soft result. Validation exceptions can carry model-derived text. Old setup instructions described implementation fragments as operational. |
 | Model | The [official GPT-6 Luna catalog](https://developers.openai.com/api/docs/models/gpt-6-luna) independently confirms the historical slug `gpt-6-luna`, support for Responses, Structured Outputs and reasoning effort `none`, and standard rates of $0.10 per million input and $0.50 per million output tokens. The prototype explicitly allowlists this model. Model availability for the founder’s project requires separate verification. |
-| Provider billing | Account funding, project access, model enablement and effective spending limits are unverified. The authenticated billing console could not be verified through available access. The founder can confirm the selected organization and project in the [OpenAI billing console](https://platform.openai.com/settings/organization/billing/overview), then verify the project’s model and workload permissions and a separately approved synthetic request. No provider request, charge, or configuration change was made. |
+| Provider billing | Account funding, project access, model enablement and effective spending limits for ifYouMind are unverified. The current OpenAI session did not expose the ifYouMind organization. The founder can confirm the selected organization and project in the [OpenAI billing console](https://platform.openai.com/settings/organization/billing/overview) and verify project settings before a separately approved synthetic request. |
 
 ## Internal prototype
 
@@ -32,7 +38,7 @@ The model selects one of two evidence IDs as the lead. The server renders both f
 
 The count endpoint checks the same instructions, input, model and schema before generation. Generation permits at most 768 input and 128 output tokens. The two requests share a five-second abort deadline, accept at most 16 KiB per response, disallow redirects and make no automatic retries. Failed and uncertain attempts count toward the budget. A Firestore transaction reserves one attempt against 3 per verified user per UTC day, 20 globally per day and 200 globally per month. There is no refund after failure. Firebase limits the function to two instances with concurrency one and a 15-second invocation timeout. Quota documents contain a hashed UID in the user document ID and rolling counters. Clients cannot read or write them. Staging operators should clear the collection when closing the pilot. Raw prompts, raw results and provider errors are neither logged by the application nor persisted. The authorized caller receives a deterministic explanation if the flag, key, budget or provider is unavailable.
 
-The flag is enabled only by the exact string `true`. It also requires a known non-production, non-demo Firebase project. The production workflow excludes this function. The separate legacy synthesis functions remain outside the deployment path. `store:false` disables Responses application-state storage. OpenAI's standard abuse monitoring may still retain content, generally up to 30 days, subject to stated exceptions. Account-specific data sharing and any modified retention controls remain to be confirmed before a future real-data pilot. [Token counting](https://developers.openai.com/api/docs/guides/token-counting) · [OpenAI data controls](https://developers.openai.com/api/docs/guides/your-data)
+The flag is enabled only by the exact string `true`. The runtime project must match `SYNTHETIC_OPENAI_STAGING_PROJECT`, and production, demo projects and the Functions emulator fail closed. The production workflow excludes this function. The separate legacy synthesis functions remain outside the deployment path. `store:false` disables Responses application-state storage. OpenAI's standard abuse monitoring may still retain content, generally up to 30 days, subject to stated exceptions. Account-specific data sharing and any modified retention controls remain to be confirmed before a future real-data pilot. [Token counting](https://developers.openai.com/api/docs/guides/token-counting) · [OpenAI data controls](https://developers.openai.com/api/docs/guides/your-data)
 
 ## Synthetic demonstration and cost
 
@@ -65,7 +71,7 @@ OpenAI lists 5,000 requests and 2,000,000 tokens per minute at Luna's Build tier
 ## Founder activation checklist
 
 1. Confirm funded API billing, the model allowlist, effective key permissions and retention in the approved staging project. Follow the [secure setup steps](../../AI_SYNTHESIS_SETUP.md#founder-setup-for-an-authorized-staging-test) after authorization.
-2. Separately authorize the exact staging deployment and one bounded synthetic request. Verify strict response compatibility, real token counts, actual usage/cost, latency, audit metadata without payloads, and flag-off fallback. Disable the flag when the trial ends. Production is outside this gate.
+2. Separately authorize the exact staging deployment and one bounded synthetic invocation, with at most one count and one generation request. Verify strict response compatibility, real token counts, actual usage and cost, latency, redacted evidence and the flag-off fallback before and after the provider call.
 3. Review the minimum Decision Report data projection, authorization/entitlement gates, provider retention and user-facing disclosure before a small approved pilot. Verify that the original report is usable when the feature is off. Approve any later production deployment and activation separately. Keep Stripe and report entitlement mechanics independent.
 
 ## Verification handoff

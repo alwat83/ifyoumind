@@ -54,6 +54,8 @@ cors.json
 # Nested dependencies and generated Functions output
 **/node_modules/
 /functions/lib/
+/functions/.env.*
+/functions/.secret.local
 *-debug.log
 .firebase/
 /public/guides

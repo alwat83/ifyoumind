@@ -38,16 +38,16 @@ function object(value: unknown): Record<string, unknown> | undefined {
     ? value as Record<string, unknown> : undefined;
 }
 
-function tokenCount(value: unknown, max: number): boolean {
-  return typeof value === 'number' && Number.isSafeInteger(value) && value >= 0 && value <= max;
+function tokenCount(value: unknown, max: number): value is number {
+  return typeof value === 'number' && Number.isSafeInteger(value) && value > 0 && value <= max;
 }
 
-export function validateExplanationResponse(value: unknown): EvidenceId | null {
+export function validateExplanationResponse(value: unknown) {
   const response = object(value);
-  if (response?.status !== 'completed' || response.error != null || response.incomplete_details != null) return null;
+  if (response?.status !== 'completed' || response.error != null || response.incomplete_details != null ||
+      response.service_tier !== 'default') return null;
   const usage = object(response.usage);
-  if (!tokenCount(usage?.input_tokens, MAX_INPUT_TOKENS) || !tokenCount(usage?.output_tokens, MAX_OUTPUT_TOKENS) ||
-      usage?.input_tokens === 0 || usage?.output_tokens === 0) return null;
+  if (!tokenCount(usage?.input_tokens, MAX_INPUT_TOKENS) || !tokenCount(usage?.output_tokens, MAX_OUTPUT_TOKENS)) return null;
   // With reasoning off and no tools the only expected item is a completed assistant message.
   if (!Array.isArray(response.output) || response.output.length !== 1) return null;
   const message = object(response.output[0]);
@@ -57,7 +57,10 @@ export function validateExplanationResponse(value: unknown): EvidenceId | null {
   if (part?.type !== 'output_text' || typeof part.text !== 'string' || part.text.length > 128) return null;
   // Canonical single-field JSON. Reject duplicate keys and any generated prose, even with a valid citation.
   const selection = /^\{\s*"lead"\s*:\s*"(households|income)"\s*\}$/.exec(part.text.trim());
-  return selection ? selection[1] as EvidenceId : null;
+  return selection ? {
+    lead: selection[1] as EvidenceId,
+    usage: { inputTokens: usage.input_tokens, outputTokens: usage.output_tokens, serviceTier: response.service_tier },
+  } : null;
 }
 
 const requestInput = {
@@ -108,7 +111,7 @@ async function readBoundedJson(response: Response): Promise<unknown> {
   }
 }
 
-export async function selectExplanationLead(apiKey: string, send: typeof fetch = fetch): Promise<EvidenceId | null> {
+export async function selectExplanationLead(apiKey: string, send: typeof fetch = fetch) {
   try {
     const signal = AbortSignal.timeout(PROVIDER_TIMEOUT_MS);
     const post = async (suffix: string, body: object) => readBoundedJson(await send(RESPONSES_URL + suffix, {
@@ -118,7 +121,7 @@ export async function selectExplanationLead(apiKey: string, send: typeof fetch =
     }));
     const counted = object(await post('/input_tokens', requestInput));
     if (counted?.object !== 'response.input_tokens' || !tokenCount(counted.input_tokens, MAX_INPUT_TOKENS) ||
-        counted.input_tokens === 0 || signal.aborted) return null;
+        signal.aborted) return null;
     const response = await post('', {
       ...requestInput, max_output_tokens: MAX_OUTPUT_TOKENS, store: false, service_tier: 'default', truncation: 'disabled',
     });

@@ -7,6 +7,8 @@ This file applies ONLY to the **ifYouMind** repository `alwat83/ifyoumind` and w
 **Authoritative historical attribution (founder confirmation, 2026-10-10): ALL ifYouMind development to date has used OpenAI tools and agents (ChatGPT/Codex). Claude, Gemini and other providers have made NO contributions to ifYouMind to date.** Do not invent or infer past contributions from other providers. Future agent contributions must be recorded when they actually occur. A GitHub account or branch name does not prove a specific OpenAI model authored a commit.
 
 ## Product direction
+**AI for everyone. AI made for you.** The user should never have to understand AI to benefit from AI. Start with the person's goal and make the finding, supporting evidence and uncertainty clear in plain language.
+
 Build a consumer-friendly, general-purpose, evidence-backed AI data intelligence platform. Users should be able to explore public and, later, permissioned private datasets, compare locations and other entities, generate clear Decision Reports, and understand data sources, limitations, and freshness. Business intelligence is one vertical, not the whole product. Prioritize mobile UX, trustworthy outputs, reliable production releases, monetization, and acquisition. Avoid geographically narrow demo examples.
 
 ## Founder product vision — automatic discovery, October23,2026

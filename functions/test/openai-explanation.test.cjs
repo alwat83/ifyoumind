@@ -4,10 +4,10 @@ const {
   selectExplanationLead, validateExplanationResponse, renderExplanation,
   MAX_INPUT_TOKENS, MAX_OUTPUT_TOKENS,
 } = require('../lib/intelligence/openai-explanation');
-const { explainSyntheticMarketRequest } = require('../lib/intelligence/explain-synthetic-market');
+const { explainSyntheticMarketRequest, isSyntheticOpenAIEnabled } = require('../lib/intelligence/explain-synthetic-market');
 
 const completed = (text = '{"lead":"income"}') => ({
-  status: 'completed', error: null, incomplete_details: null,
+  status: 'completed', error: null, incomplete_details: null, service_tier: 'default',
   usage: { input_tokens: 250, output_tokens: 8 },
   output: [{ type: 'message', role: 'assistant', status: 'completed', content: [{ type: 'output_text', text }] }],
 });
@@ -20,7 +20,9 @@ test('requests the official model and strict Responses schema using the same cou
     calls.push({ url, options, body: JSON.parse(options.body) });
     return json(calls.length === 1 ? count() : completed());
   };
-  assert.equal(await selectExplanationLead('fixture-only', send), 'income');
+  assert.deepEqual(await selectExplanationLead('fixture-only', send), {
+    lead: 'income', usage: { inputTokens: 250, outputTokens: 8, serviceTier: 'default' },
+  });
   const [preflight, generate] = calls;
   assert.equal(preflight.url, 'https://api.openai.com/v1/responses/input_tokens');
   assert.equal(generate.url, 'https://api.openai.com/v1/responses');
@@ -59,7 +61,8 @@ test('rejects fabricated amounts, unsupported causation, swapped facts, extra pr
 test('rejects malformed, incomplete, refusal, tool, or over-budget responses', () => {
   const valid = completed();
   for (const value of [null, [], {}, { ...valid, status: 'incomplete' },
-    { ...valid, error: { message: 'provider content' } },
+    { ...valid, error: { message: 'provider content' } }, { ...valid, service_tier: 'priority' },
+    { ...valid, usage: { input_tokens: 0, output_tokens: 1 } },
     { ...valid, usage: { input_tokens: MAX_INPUT_TOKENS + 1, output_tokens: 1 } },
     { ...valid, usage: { input_tokens: 250, output_tokens: MAX_OUTPUT_TOKENS + 1 } },
     { ...valid, usage: { input_tokens: 250, output_tokens: -1 } },
@@ -96,13 +99,50 @@ test('an aborted transport reaches the same deterministic fallback boundary', as
 
 const reviewer = { uid: 'reviewer', token: { admin: true, email_verified: true } };
 const request = { auth: reviewer, data: { organizationId: 'qa-org' } };
+test('provider access requires the exact staging project and explicit enablement outside emulators', () => {
+  const enabled = {
+    GCLOUD_PROJECT: 'fixture-staging',
+    SYNTHETIC_OPENAI_STAGING_PROJECT: 'fixture-staging',
+    ENABLE_SYNTHETIC_OPENAI_EXPLANATION: 'true',
+  };
+  assert.equal(isSyntheticOpenAIEnabled(enabled), true);
+  for (const overrides of [
+    { ENABLE_SYNTHETIC_OPENAI_EXPLANATION: 'false' },
+    { ENABLE_SYNTHETIC_OPENAI_EXPLANATION: undefined },
+    { SYNTHETIC_OPENAI_STAGING_PROJECT: undefined },
+    { GCLOUD_PROJECT: 'other-staging' },
+    { GCLOUD_PROJECT: 'ifyoumind-473fe', SYNTHETIC_OPENAI_STAGING_PROJECT: 'ifyoumind-473fe' },
+    { GCLOUD_PROJECT: 'demo-ifyoumind', SYNTHETIC_OPENAI_STAGING_PROJECT: 'demo-ifyoumind' },
+    { FUNCTIONS_EMULATOR: 'true' },
+  ]) assert.equal(isSyntheticOpenAIEnabled({ ...enabled, ...overrides }), false);
+});
+
+test('the disabled staging manifest binds the dedicated runtime, one secret and fixed limits', () => {
+  const { execFileSync } = require('node:child_process');
+  const manifest = JSON.parse(execFileSync(process.execPath, ['-e', `
+    const { explainSyntheticMarket } = require('./lib/intelligence/explain-synthetic-market');
+    console.log(JSON.stringify(explainSyntheticMarket.__endpoint));
+  `], {
+    cwd: require('node:path').join(__dirname, '..'),
+    env: {
+      ...process.env, GCLOUD_PROJECT: 'fixture-staging',
+      SYNTHETIC_OPENAI_STAGING_PROJECT: 'fixture-staging', ENABLE_SYNTHETIC_OPENAI_EXPLANATION: 'false',
+    },
+  }));
+  assert.equal(manifest.serviceAccountEmail, 'synthetic-openai@fixture-staging.iam.gserviceaccount.com');
+  assert.deepEqual(manifest.secretEnvironmentVariables, [{ key: 'OPENAI_API_KEY' }]);
+  assert.equal(manifest.timeoutSeconds, 15);
+  assert.equal(manifest.concurrency, 1);
+  assert.equal(manifest.maxInstances, 2);
+});
+
 function deps(overrides = {}) {
   return {
     readMembership: async () => ({ role: 'owner', status: 'active' }),
     isEnabled: () => true,
     readKey: () => 'fixture',
     reserve: async () => true,
-    select: async () => 'income',
+    select: async () => ({ lead: 'income', usage: { inputTokens: 250, outputTokens: 8, serviceTier: 'default' } }),
     ...overrides,
   };
 }
@@ -149,5 +189,6 @@ test('the synthetic demo lets the model choose the lead and renders only verifie
   assert.match(result.evidence[0].statement, /\$62,000.*\$68,000.*\$6,000/);
   assert.match(result.evidence[1].statement, /12,000.*9,000.*3,000/);
   assert.match(result.caveat, /do not establish customer demand/);
+  assert.deepEqual(result.usage, { inputTokens: 250, outputTokens: 8, serviceTier: 'default' });
   t.diagnostic(JSON.stringify(result));
 });

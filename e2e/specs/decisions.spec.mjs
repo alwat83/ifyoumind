@@ -155,23 +155,63 @@ test('comparison validates two distinct places and keeps entries through a retry
   await expect(page.getByText('Madison, WI', { exact: true }).first()).toBeVisible();
 });
 
-test('a bill question opens private Discovery without a location or transmitting the question', async ({ page, fixtures }) => {
+test('local property tax questions preserve the question and do not pretend a sample is an answer', async ({ page, fixtures }) => {
+  const user = await fixtures(FIXTURES.FREE_NO_REPORTS);
+  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fdecide');
+  const question = page.getByLabel('Your question');
+  const asked = 'What are the property taxes in Birmingham?';
+  const marketCalls = [];
+  page.on('request', request => {
+    if (/createMarketIntelligenceProject|createIntelligenceOrganization/.test(request.url())) marketCalls.push(request.url());
+  });
+  for (const width of [320, 390, 768, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await question.fill(asked);
+    await expect(question).toHaveValue(asked);
+    await expect(question).toBeFocused();
+    await expect(page.getByRole('heading', { name: /don’t have verified property tax rates/ })).toBeVisible();
+    await expect(page.getByText(/Confirm the state and county/)).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Continue with city data' })).toHaveCount(0);
+    await expect(page.getByLabel('City and state')).toHaveCount(0);
+    await expect(page.getByText(/\$420/)).toHaveCount(0);
+    await expectNoHorizontalScroll(page);
+  }
+  await expectAccessible(page);
+  await question.press('Tab');
+  const sample = page.getByRole('link', { name: 'See a made-up property tax example' });
+  await expect(sample).toBeFocused();
+  expect(marketCalls).toEqual([]);
+  await sample.press('Enter');
+  await expect(page).toHaveURL(/\/discover\/\?example=tax$/);
+  await expect(page.getByRole('heading', { name: 'Your total rose by $420.00.', exact: true })).toBeVisible();
+});
+
+test('bill analysis leads to private Discovery; property checks and tariffs show their limits', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.FREE_NO_REPORTS);
   await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fdecide');
   const question = page.getByLabel('Your question');
   await question.fill('Compare property taxes and electricity bills');
-  await expect(page.getByRole('link', { name: 'Property taxes', exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Electricity bills', exact: true })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Continue with city data' })).toHaveCount(0);
+  await expect(page.getByRole('group', { name: 'Optional made-up examples' }).getByRole('link')).toHaveCount(2);
+  await question.fill('Am I overpaying my property taxes?');
+  await expect(page.getByRole('heading', { name: /can’t verify what a property should owe/ })).toBeVisible();
+  await expect(page.getByText(/exemptions for the tax year/)).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Open private Bill Discovery' })).toHaveCount(0);
+  await question.fill('What are electricity rates in Birmingham?');
+  await expect(page.getByRole('heading', { name: /don’t have verified electricity rates/ })).toBeVisible();
   await question.fill('Why did my property taxes increase?');
   await expect(page.getByLabel('City and state')).toHaveCount(0);
-  await expect(page.getByText('A city isn’t needed.', { exact: false })).toBeVisible();
-  await page.getByRole('link', { name: 'Try the property tax example' }).click();
-  await expect(page).toHaveURL(/\/discover\/\?example=tax$/);
-  await expect(page.getByRole('heading', { name: 'Your total rose by $420.00.', exact: true })).toBeVisible();
+  await expect(page.getByText(/two property tax statements for the same property/)).toBeVisible();
+  await expectAccessible(page);
+  await page.getByRole('link', { name: 'Open private Bill Discovery' }).click();
+  await expect(page).toHaveURL(/\/discover\/$/);
+  await expect(page.getByRole('button', { name: 'Use a property tax CSV' })).toBeVisible();
+  await expect(page.locator('.finding')).toHaveCount(0);
+  await page.getByRole('button', { name: 'Use a property tax CSV' }).click();
+  await expect(page.getByText(/remove names/i).first()).toBeVisible();
   await page.goto('/app/decide');
   await question.fill('What changed on my electric bill?');
-  await page.getByRole('link', { name: 'Try the electricity example' }).click();
+  await expect(page.getByText(/two comparable electricity statements/)).toBeVisible();
+  await page.getByRole('link', { name: 'See a made-up electricity example' }).click();
   await expect(page).toHaveURL(/\/discover\/\?example=electricity$/);
   await expect(page.locator('.finding').first()).toBeVisible();
 });

@@ -18,20 +18,47 @@
         @if (questionError) {
           <p id="question-error" class="field-error">{{ questionError }}</p>
         }
-        @if (bill === 'both') {
-          <p class="field-help">Each bill has its own free example. Choose one to see what changed.</p>
-        } @else if (bill) {
-          <p class="field-help">See what changed in a made-up bill. A city isn’t needed.</p>
-          <a class="primary" [href]="billPath">{{ bill === 'tax' ? 'Try the property tax example' : 'Try the electricity example' }}</a>
-        } @else {
+        @if (!bill) {
           <button type="submit" class="primary">{{ type === 'custom' ? 'Continue with city data' : 'Continue' }}</button>
         }
       </form>
-      @if (bill === 'both' || (!bill && type === 'custom')) {
+      <div aria-live="polite" aria-atomic="true">
+        @switch (bill) {
+          @case ('local-tax') {
+            <h2 class="answer-title">We don’t have verified property tax rates for that place.</h2>
+            <p class="answer-note">Confirm the state and county, then check the local tax office’s rates for the tax year and taxing district. A city name alone can’t establish what a property owes.</p>
+          }
+          @case ('tax-check') {
+            <h2 class="answer-title">We can’t verify what a property should owe.</h2>
+            <p class="answer-note">Use the county tax office to check the parcel’s assessment, applicable rates, and exemptions for the tax year. Comparing bills can show what changed, but can’t establish an error or grounds for an appeal.</p>
+          }
+          @case ('local-electricity') {
+            <h2 class="answer-title">We don’t have verified electricity rates for that question.</h2>
+            <p class="answer-note">Check the utility’s published rates for the provider, plan, and billing period. A sample bill can’t tell you what a utility charges.</p>
+          }
+          @case ('mixed') {
+            <h2 class="answer-title">Property taxes and electricity need different evidence.</h2>
+            <p class="answer-note">We can’t verify local rates here. Each example shows how to compare charges between two bills.</p>
+          }
+        }
+        @if (personalBill) {
+          <h2 class="answer-title">Compare your own bills.</h2>
+          <p class="answer-note">Use two {{ electricityBill ? 'comparable electricity statements' : 'property tax statements for the same property' }} in a supported, redacted CSV. It stays in this browser. We can show which charges changed, but the statements alone may not say why.</p>
+        }
+      </div>
+      @if (personalBill) {
+        <a class="primary" href="/discover/">Open private Bill Discovery</a>
+      }
+      @if (bill) {
+        <div class="example-links" role="group" aria-label="Optional made-up examples">
+          @if (!electricityBill) { <a href="/discover/?example=tax">See a made-up property tax example</a> }
+          @if (electricityBill || bill === 'mixed') { <a href="/discover/?example=electricity">See a made-up electricity example</a> }
+        </div>
+      } @else if (type === 'custom') {
         <div class="bill-links" aria-label="Other ways to start" role="group">
-          <a href="/discover/?example=tax">Property taxes</a>
-          <a href="/discover/?example=electricity">Electricity bills</a>
-          @if (!bill) { <a routerLink="/app/data">Explore my own data</a> }
+          <a href="/discover/?example=tax">Property tax example</a>
+          <a href="/discover/?example=electricity">Electricity example</a>
+          <a routerLink="/app/data">Explore my own data</a>
         </div>
       }
     </section>

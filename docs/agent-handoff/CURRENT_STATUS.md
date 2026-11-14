@@ -2,7 +2,7 @@
 
 ## November 14, 2026 — Product blueprint review
 
-**Proposed:** [Product audit and blueprint](../product/PRODUCT_EXPERIENCE_BLUEPRINT.md). Preserve the current experience; review #99 first, then evaluate the separate typed-input #95 and real first-use friction. No implementation, merge, billing change or AI activation is authorized by the roadmap.
+**Approved:** [Product audit and blueprint](../product/PRODUCT_EXPERIENCE_BLUEPRINT.md). Preserve the current experience; review #99 first, then evaluate the separate typed-input #95 and real first-use friction. Founder authorized preparation of #99 and #95. Both still require separate authorization to release or run a pilot.
 
 **Production:** [PR #98](https://github.com/alwat83/ifyoumind/pull/98) merged at `dbc872a977f062f94752578ca88fd56398e0c3c5`; [deployment](https://github.com/alwat83/ifyoumind/actions/runs/43623896871) succeeded. Verified active Hosting version `8dea909c53f33887`, closed enrollment and anonymous mobile tax, cited sample and sign-in handoff. Production protected and commercial actions were not exercised.
 

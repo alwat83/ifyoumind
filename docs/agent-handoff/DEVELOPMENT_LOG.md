@@ -571,6 +571,16 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 
 **Business impact and next:** The draft removes the second-city barrier to a first brief and improves continuity to the existing report offer. First-user comprehension, completions, conversion and revenue are unmeasured. Review the smallest mobile journey, verify exact-head CI and approval before any production release, then observe actual first use.
 
+## 2026-11-14 — Question-to-answer relevance audit
+
+**Provider/agent:** OpenAI / Codex. [Draft PR #99](https://github.com/alwat83/ifyoumind/pull/99), branch `codex/question-answer-relevance`, from deployed master `dbc872a977f062f94752578ca88fd56398e0c3c5` ([PR #98 deployment](https://github.com/alwat83/ifyoumind/actions/runs/43623896871)). No release, merge or production changes for #99.
+
+**Work:** Traced the tax keyword collision to the new-decision form. Added a deterministic intent split and an explicit text response for local, parcel, tariff and mixed questions; personal statement questions lead to the existing redacted CSV path. Made-up examples require separate clicks. Reviewed official sources without introducing local tax rates, data requests, address capture, AI, analytics or checkout changes. [Audit, impact and evidence](../product/QUESTION_ANSWER_RELEVANCE.md) · [Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).
+
+**Verification:** Production and local builds, isolation guards, 138 fast tests, and the successful 24-case Chromium rerun plus four final retests. Initial desktop timeouts were isolated to the first run; no production lookup or customer evidence.
+
+**Business impact and next:** Fewer mismatched answers is a trust hypothesis. Review the Birmingham and own-bill journeys, confirm CI and separately authorize any release, then observe which questions permitted visitors cannot answer before considering specific source integrations. No visitor or revenue change has been measured.
+
 ## 2026-11-14 — Master product experience assessment and roadmap
 
 **Provider/agent:** OpenAI / Codex. **Branch:** `codex/product-experience-blueprint`, documentation only, from verified master `dbc872a977f062f94752578ca88fd56398e0c3c5`.
@@ -580,3 +590,7 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 **Verification:** Read-only browser spot checks confirmed the mobile homepage example/evidence, labeled tax finding, cited public sample and anonymous sign-in return; nine route responses were HTTP 200. Read-only Firebase metadata confirmed finalized Hosting version `8dea909c53f33887`, closed enrollment and staging AI flag off. Prior exact-head tests remain tied to their PRs. No authenticated production or commerce action, new app test suite, provider request, outreach, merge or deployment. [Notion coordination hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).
 
 **Business effect and next:** The proposed sequence preserves the existing optional paid report for compatible city decisions and prioritizes evidence of usefulness over speculation. No new traffic, sales or cost result. Review the roadmap and #99; then review a narrow #95 pilot; observe authorized first use before opening another implementation PR.
+
+## 2026-11-14 — Relevance release preparation
+
+**Provider/agent:** OpenAI / Codex. Reconciled draft [#99](https://github.com/alwat83/ifyoumind/pull/99) with the approved blueprint on master `0d980502b60589a757b04bf258fb9b6b3a45f6c7`. Resolved four project-record conflicts. The application, browser tests and reviewed visual references match the previous relevance head. [Current verification](https://github.com/alwat83/ifyoumind/pull/99/checks). This is release preparation and the customer impact remains unmeasured.

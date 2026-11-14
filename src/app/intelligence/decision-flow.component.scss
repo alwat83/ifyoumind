@@ -17,13 +17,13 @@ nav {
   border-bottom: 1px solid var(--iy-line);
 }
 .brand { @include product.wordmark; text-decoration: none; color: inherit; }
-.return, .quiet, .bill-links a {
+.return, .quiet, .bill-links a, .example-links a {
   color: var(--iy-accent);
   text-underline-offset: 3px;
   font-size: .9rem;
   font-weight: 650;
 }
-.return, .bill-links a { display: inline-flex; align-items: center; min-height: var(--iy-touch); }
+.return, .bill-links a, .example-links a { display: inline-flex; align-items: center; min-height: var(--iy-touch); }
 .scene { max-width: 39rem; margin-inline: auto; padding: clamp(38px, 8vh, 88px) 0 54px; }
 h1 {
   @include product.editorial;
@@ -62,6 +62,9 @@ input[aria-invalid='true'], textarea[aria-invalid='true'] { border-color: var(--
 .primary:disabled, fieldset:disabled .quiet { opacity: .67; cursor: default; }
 .options, .bill-links, .actions { display: flex; gap: 0 20px; flex-wrap: wrap; align-items: baseline; }
 .bill-links { margin-top: 21px; }
+.answer-title { margin: 23px 0 7px; color: var(--iy-ink); font-size: 1.125rem; line-height: 1.4; }
+.answer-note { margin: 0; color: var(--iy-muted); line-height: 1.55; }
+.example-links { display: flex; flex-wrap: wrap; gap: 0 20px; margin-top: 5px; }
 .field-help, .error, .field-error { margin: 8px 0 0; font-size: .9rem; line-height: 1.5; }
 .field-error, .error { color: var(--iy-error); }
 .error { margin-top: 15px; }

@@ -106,3 +106,12 @@ test('decision question and place share the editorial identity', async ({ page, 
   await page.getByRole('heading', { name: 'Which city are you looking at?' }).blur();
   await compare(page, 'decision-place', city, { fullPage: true });
 });
+
+test('a local tax question shows its evidence limit before an optional example', async ({ page, fixtures }) => {
+  const user = await fixtures(FIXTURES.FREE_NO_REPORTS, { workspace: false });
+  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fdecide');
+  const question = page.getByLabel('Your question');
+  await question.fill('What are the property taxes in Birmingham?');
+  await question.blur();
+  await compare(page, 'decision-local-tax', page.getByRole('heading', { name: /verified property tax rates/ }), { fullPage: true });
+});

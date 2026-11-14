@@ -1,5 +1,5 @@
 export type DecisionType = 'business' | 'compare' | 'growth' | 'custom';
-export type BillExample = 'tax' | 'electricity' | 'both';
+export type BillIntent = 'local-tax' | 'tax-check' | 'tax-bill' | 'local-electricity' | 'electricity-bill' | 'mixed';
 
 export const decisionPrompts: Record<DecisionType, string> = {
   business: 'Should I open this business here?',
@@ -12,11 +12,26 @@ export function decisionType(value: unknown): DecisionType {
   return value === 'business' || value === 'compare' || value === 'growth' ? value : 'custom';
 }
 
-/** Only recognize clearly named bill topics. This is routing, never an interpretation of the question. */
-export function billExample(question: string): BillExample | null {
-  const tax = /\bproperty[ -]+tax(?:es)?\b/i.test(question);
-  const electricity = /\b(?:electricity|electric|energy|power)\s+(?:bill|statement)s?\b/i.test(question);
-  return tax ? (electricity ? 'both' : 'tax') : electricity ? 'electricity' : null;
+/** Route supported topics conservatively. Never infer a jurisdiction, amount or cause. */
+export function billIntent(question: string): BillIntent | null {
+  const tax = /\b(?:(?:property|real estate)[ -]+tax(?:es)?|millage)\b/i.test(question);
+  const electricity = /\b(?:electricity|electric|energy|power)[ -]+(?:bill|statement|rate|tariff|price)s?\b/i.test(question);
+  if (tax && electricity) return 'mixed';
+
+  const personalTax = /\b(?:my|our) (?:(?:property|real estate)[ -]+tax(?:es)?|tax (?:bill|statement)s?)\b/i.test(question);
+  const personalElectricity = /\b(?:my|our) (?:electricity|electric|energy|power)[ -]+(?:bill|statement)s?\b/i.test(question);
+  const change = /\b(?:chang(?:e[ds]?|ing)|increas(?:e[ds]?|ing)|decreas(?:e[ds]?|ing)|rose|fell|went (?:up|down)|go(?:ne|ing)? (?:up|down)|higher than last|lower than last|compare (?:my|our))\b/i.test(question);
+  if (tax) {
+    if (/\b(?:appeal\w*|contest|dispute|overpa\w+|assessment (?:error|correct|wrong)|wrong|incorrect|should (?:be|pay)|fair|exemptions?|(?:owe|pay)|parcel|(?:this|my|our|a) (?:house|home)|this property)\b/i.test(question)) return 'tax-check';
+    if (/\b(?:rates?|millage|average|median|which (?:city|county|state)|(?:in|across) (?:my|our|this|the) (?:city|county|state|area))\b/i.test(question)) return 'local-tax';
+    if (personalTax && change) return 'tax-bill';
+    return personalTax ? 'tax-check' : 'local-tax';
+  }
+  if (electricity) {
+    if (/\b(?:rates?|tariffs?|prices?|overpay\w*|wrong|should (?:be|pay)|fair)\b/i.test(question)) return 'local-electricity';
+    return personalElectricity && change ? 'electricity-bill' : 'local-electricity';
+  }
+  return null;
 }
 
 /** Suggestions are illustrative shortcuts, not a city directory or proof of a Census match. */

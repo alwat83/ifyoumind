@@ -12,9 +12,13 @@
 
 [Audit, unified blueprint and staged roadmap](docs/product/PRODUCT_EXPERIENCE_BLUEPRINT.md) are proposed for founder review. The permanent standard is to answer the visitor’s actual question with checkable evidence. Reuse PR #99 for relevance, preserve #95 and #96 as independent gates, and observe first use before changing the homepage or the commercial path.
 
+## November 14, 2026 — Evidence must answer the question asked
+
+[Question relevance audit](docs/product/QUESTION_ANSWER_RELEVANCE.md) separates actual local and parcel-tax needs from personal statement arithmetic. Draft #99 adds an honest next step before offering an optional made-up example. A jurisdiction-specific product requires authoritative source coverage and year, class and district selection.
+
 ## November 14, 2026 — Question-first decisions
 
-[Decision creation review](docs/product/DECISION_CREATION_JOURNEY.md) traces the public examples, auth, market brief and existing report purchase. Draft #98 uses a short question → city → brief path and preserves browser-local bill examples as a separate route. It adds no provider use or paid capability.
+[Decision creation review](docs/product/DECISION_CREATION_JOURNEY.md) traces the public examples, auth, market brief and existing report purchase. Deployed PR #98 uses a short question → city → brief path and preserves browser-local bill examples as a separate route. It adds no provider use or paid capability.
 
 ## November 13, 2026 — Property-tax-first consumer experience
 

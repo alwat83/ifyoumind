@@ -61,7 +61,7 @@ test('shared app surfaces retain editorial headings, mobile fit and keyboard foc
 
   for (const [path, control] of [
     ['/app', 'Start a decision'],
-    ['/app/decide?type=business', 'Main location'],
+    ['/app/decide?type=business', 'Your question'],
     ['/app/pricing', 'Choose a decision'],
     ['/app/account', 'Save profile'],
     ['/app/data', 'Choose a CSV'],

@@ -162,10 +162,10 @@
           {{ status?.subscriptionOffers || status?.subscription?.linked ? 'What the full Decision Report adds' : 'What the $79 report adds' }}
         </h2>
         <ul class="adds-list">
-          <li>Your main city compared with up to three other cities</li>
+          <li *ngIf="project?.brief?.comparisons?.length || project?.reportOnlyLocations?.length">Your main city compared with up to three other cities</li>
           <li>A plan-ready market analysis written for your business, with location rankings and copy-as-text</li>
           <li>An action plan: what to do before you commit</li>
-          <li>Comparison takeaways: where your main city leads and where it trails</li>
+          <li *ngIf="project?.brief?.comparisons?.length || project?.reportOnlyLocations?.length">Comparison takeaways: where your main city leads and where it trails</li>
           <li>What could change the call, plus the evidence boundaries</li>
           <li>Print or save the full report as a PDF</li>
         </ul>

@@ -109,7 +109,7 @@ test('support email is visible text, plus the privacy link, in the homepage foot
 });
 
 test('register page says what happens next for email and Google sign-ups',()=>{
-  assert.ok(registerHtml.includes('Next: verify your email, then two quick steps to your free brief.'));
+  assert.ok(registerHtml.includes('Next: verify your email, then start your free brief.'));
   assert.ok(registerHtml.includes('Google sign-ups skip the email check.'));
 });
 

@@ -1,60 +1,111 @@
 <main class="flow">
-  <nav>
+  <nav aria-label="Decision navigation">
     <a routerLink="/app" class="brand">ifYouMind</a>
-    <span>Step {{ progress.current }} of {{ progress.total }} · takes about a minute</span>
+    <a routerLink="/app" class="return">Your decisions</a>
   </nav>
 
-  <section class="progress" role="progressbar" aria-label="Decision setup progress" aria-valuemin="1" [attr.aria-valuemax]="progress.total" [attr.aria-valuenow]="progress.current"><i [style.width.%]="progress.current / progress.total * 100"></i></section>
+  @if (screen === 'question') {
+    <section class="scene" aria-labelledby="decision-question-heading">
+      <h1 id="decision-question-heading" tabindex="-1">What are you trying to decide?</h1>
+      <p class="intro">Explore a bill or ask about a U.S. city. Start with what you want to know.</p>
+      <form (ngSubmit)="continueToPlace()" novalidate>
+        <label for="decision-question">Your question</label>
+        <textarea id="decision-question" name="question" rows="2" maxlength="240" required
+          [(ngModel)]="question" (ngModelChange)="questionError = ''"
+          placeholder="Should I open a bakery here?"
+          [attr.aria-invalid]="!!questionError"
+          [attr.aria-describedby]="questionError ? 'question-error' : null"></textarea>
+        @if (questionError) {
+          <p id="question-error" class="field-error">{{ questionError }}</p>
+        }
+        @if (bill) {
+          <p class="field-help">See what changed in a made-up bill. A city isn’t needed.</p>
+          <a class="primary" [href]="billPath">{{ bill === 'tax' ? 'Try the property tax example' : 'Try the electricity example' }}</a>
+        } @else {
+          <button type="submit" class="primary">{{ type === 'custom' ? 'Continue with city data' : 'Continue' }}</button>
+        }
+      </form>
+      @if (!bill && type === 'custom') {
+        <div class="bill-links" aria-label="Other ways to start" role="group">
+          <a href="/discover/?example=tax">Property taxes</a>
+          <a href="/discover/?example=electricity">Electricity bills</a>
+          <a routerLink="/app/data">Explore my own data</a>
+        </div>
+      }
+    </section>
+  } @else {
+    <section class="scene" aria-labelledby="place-heading">
+      <p class="original-question">{{ question.trim() }}</p>
+      <h1 id="place-heading" tabindex="-1">{{ type === 'compare' ? 'Which cities are you comparing?' : 'Which city are you looking at?' }}</h1>
+      <p class="intro" id="city-purpose">We use the city to find U.S. Census data on population, income and housing.</p>
+      <form (ngSubmit)="analyze()" novalidate [attr.aria-busy]="working">
+        <fieldset [disabled]="working">
+          <ng-container *ngTemplateOutlet="cityField; context: { $implicit: 'main-location', label: type === 'compare' ? 'First city' : 'City and state' }"></ng-container>
 
-  <section class="card">
-    <ng-container *ngIf="step===1">
-      <p class="eyebrow">Start with the question</p>
-      <h1>What are you trying to decide?</h1>
-      <div class="choice-grid">
-        <button type="button" (click)="chooseType('business')">
-          <span>⌂</span><strong>Should I open here?</strong><small>Business or location decision</small>
-        </button>
-        <button type="button" (click)="chooseType('compare')">
-          <span>↔</span><strong>Which place is better?</strong><small>Compare markets side by side</small>
-        </button>
-        <button type="button" (click)="chooseType('growth')">
-          <span>↗</span><strong>Is this area growing?</strong><small>Look at population and household trends</small>
-        </button>
-        <button type="button" (click)="chooseType('custom')">
-          <span>✦</span><strong>Something else</strong><small>Ask a custom market question</small>
-        </button>
-      </div>
-    </ng-container>
+          @for (comparison of comparisons; track comparison.id; let i = $index) {
+            <div class="comparison-row">
+              <ng-container *ngTemplateOutlet="cityField; context: { $implicit: 'comparison-' + comparison.id, label: type === 'compare' && i === 0 ? 'Second city' : 'Comparison city ' + (type === 'compare' ? i : i + 1), row: comparison }"></ng-container>
+              @if (type !== 'compare' || i > 0) {
+                <button class="quiet" type="button" (click)="removeComparison(comparison)" [attr.aria-label]="'Remove comparison city ' + (i + 1)">Remove</button>
+              }
+            </div>
+          }
 
-    <ng-container *ngIf="step===2">
-      <p class="eyebrow">{{ type === 'business' ? 'Your market analysis · place' : 'Place' }}</p>
-      <h1>Where are you looking?</h1>
-      <label class="big-input">
-        <span>Main location <em>City and state</em></span>
-        <input [(ngModel)]="location" placeholder="Denver, CO" autocomplete="address-level2" aria-describedby="location-help" /><small id="location-help" class="field-help">Use a U.S. city and state so we can match reliable public data.</small>
-      </label>
-      <label class="big-input">
-        <span>Compare with other places <em>{{ needsComparison ? 'at least one' : 'optional' }}</em></span>
-        <input [(ngModel)]="comparisonInput" placeholder="Austin, TX; Raleigh, NC" aria-describedby="comparison-help" />
-        <small id="comparison-help" class="field-help"><ng-container *ngIf="needsComparison">The comparison is what shows a lender why this place. </ng-container>Separate places with semicolons; add up to three. The free brief compares the first one; the full Decision Report compares all three.</small>
-      </label>
-      <div class="actions"><button class="ghost" type="button" (click)="back()">Back</button><button class="primary" type="button" (click)="next()" [disabled]="!canContinueFromPlace">Continue</button></div>
-    </ng-container>
-
-    <ng-container *ngIf="step===3">
-      <p class="eyebrow">{{ type === 'business' ? 'Your market analysis · business' : 'Context' }}</p>
-      <h1>What are you considering?</h1>
-      <label class="big-input">
-        <span>{{ type === 'business' ? 'Your business' : 'Business, idea, or situation' }} <em>recommended</em></span>
-        <input [(ngModel)]="concept" [placeholder]="type === 'business' ? 'Coffee shop, dental practice, gym…' : 'Coffee shop, apartment purchase, expansion…'" />
-      </label>
-      <label class="big-input">
-        <span>The question you want answered</span>
-        <textarea [(ngModel)]="decision" rows="3" placeholder="Should I open this here?"></textarea>
-      </label>
-      <p class="explain">ifYouMind compares {{ location || 'your city' }}<ng-container *ngIf="comparisonCount"> with {{ comparisonCount === 1 ? 'one other place' : comparisonCount + ' other places' }}</ng-container> using U.S. Census data, explains what supports the idea, flags what still needs checking, and cites every important number.</p>
-      <p *ngIf="error" class="error">{{ error }}</p>
-      <div class="actions"><button class="ghost" type="button" (click)="back()">Back</button><button class="primary final" type="button" (click)="analyze()" [disabled]="working || !canContinueFromPlace">{{ working ? 'Putting it together…' : 'Show me what the data says' }}</button></div>
-    </ng-container>
-  </section>
+          <div class="options">
+            @if (comparisons.length < 3) {
+              <button id="add-comparison" class="quiet" type="button" (click)="addComparison()">{{ comparisons.length ? 'Add another city' : 'Add a comparison city' }}</button>
+            }
+            @if (type === 'business' || type === 'custom') {
+              <button class="quiet" type="button" (click)="toggleConcept()" [attr.aria-expanded]="showConcept">{{ showConcept ? 'Hide business details' : 'Add business details' }}</button>
+            }
+          </div>
+          @if (comparisons.length) {
+            <p class="field-help comparison-help">The free brief includes the first comparison. The full report can include up to three.</p>
+          }
+          @if (showConcept) {
+            <label for="business-concept">Business or idea <span>(optional)</span></label>
+            <input id="business-concept" name="concept" maxlength="160" [(ngModel)]="concept" placeholder="Neighborhood bakery" />
+          }
+          <div class="actions">
+            <button type="submit" class="primary">{{ working ? 'Building your brief…' : 'Show my free brief' }}</button>
+            <button type="button" class="quiet" (click)="backToQuestion()">Edit question</button>
+          </div>
+        </fieldset>
+      </form>
+      @if (working) {
+        <p class="field-help" role="status">Looking up public data and saving your brief.</p>
+      }
+      @if (error) {
+        <p id="brief-error" class="error" role="alert" tabindex="-1">{{ error }}</p>
+        @if (limited) {
+          <a routerLink="/app" class="return">Open your saved decisions</a>
+        }
+      }
+    </section>
+  }
 </main>
+
+<ng-template #cityField let-key let-label="label" let-row="row">
+  <div class="city-field">
+    <label [for]="key">{{ label }}</label>
+    <input [id]="key" [name]="key" autocomplete="off" placeholder="e.g. Denver, CO" maxlength="160"
+      [required]="!row || (type === 'compare' && row === comparisons[0])"
+      [ngModel]="row ? row.value : location"
+      (ngModelChange)="changePlace(key, $event, row)"
+      (focus)="suggestionField = key" (keydown.escape)="suggestionField = ''"
+      [attr.aria-invalid]="!!placeErrors[key]"
+      [attr.aria-describedby]="placeErrors[key] ? key + '-error' : (!row ? 'city-purpose' : null)" />
+    @if (placeErrors[key]) {
+      <p [id]="key + '-error'" class="field-error">{{ placeErrors[key] }}</p>
+    }
+    @if (suggestions(key, row ? row.value : location); as matches) {
+      @if (matches.length) {
+        <div class="suggestions" role="group" aria-label="Example city suggestions" (keydown.escape)="chooseNoSuggestion(key)">
+          @for (city of matches; track city) {
+            <button type="button" class="quiet" (click)="chooseSuggestion(city, row)">{{ city }}</button>
+          }
+        </div>
+      }
+    }
+  </div>
+</ng-template>

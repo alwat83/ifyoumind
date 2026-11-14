@@ -6,9 +6,9 @@ for (const path of ['/app', '/app/decide?type=business', '/app/pricing', '/app/a
   test(`unverified account is sent to /verify-email from ${path}`, async ({ page, fixtures }) => {
     const user = await fixtures(FIXTURES.UNVERIFIED, { verified: false, workspace: false });
     await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent(path)}`);
-    await expect(page).toHaveURL(/\/verify-email$/);
+    await expect(page).toHaveURL(/\/verify-email(?:\?|$)/);
     await page.goto(path);
-    await expect(page).toHaveURL(/\/verify-email$/);
+    await expect(page).toHaveURL(/\/verify-email(?:\?|$)/);
     await expect(page.getByRole('heading', { name: 'Check your email to continue.' })).toBeVisible();
   });
 }

@@ -42,5 +42,5 @@ test('Q6: the register button is always active and shows what to fix', () => {
   }
   const ts = read('../src/app/auth/register/register.component.ts');
   assert.match(ts, /if\(form\.invalid\)\{\s*this\.showErrors=true;/);
-  assert.match(ts, /await this\.router\.navigate\(\['\/verify-email'\]\)/, 'email sign-ups still verify first');
+  assert.match(ts, /await this\.router\.navigate\(\['\/verify-email'\],/, 'email sign-ups still verify first');
 });

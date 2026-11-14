@@ -42,3 +42,17 @@ export function loginParams(currentUrl:string):Record<string,string>{
   const back=safeReturnUrl(currentUrl);
   return back&&back!==DEFAULT_RETURN_URL?{returnUrl:back}:{};
 }
+
+
+/** Only known decision context survives account creation and verification. */
+export function decisionReturnUrl(value: unknown): string | null {
+  const safe = safeReturnUrl(value);
+  if (!safe) return null;
+  const url = new URL(safe, BASE);
+  if (url.pathname !== '/app/decide') return null;
+  const params = new URLSearchParams();
+  const type = url.searchParams.get('type');
+  if (type === 'business' || type === 'compare' || type === 'growth') params.set('type', type);
+  if (url.searchParams.get('intent') === 'report') params.set('intent', 'report');
+  return url.pathname + (params.size ? '?' + params : '');
+}

@@ -31,14 +31,14 @@ test('sign-up verifies by email; the link opened in another browser keeps the $7
   await page.getByLabel('Email').fill(email);
   await page.getByLabel('Password').fill(FIXTURE_PASSWORD);
   await page.getByRole('button', { name: 'Create free account' }).click();
-  await expect(page).toHaveURL(/\/verify-email$/);
+  await expect(page).toHaveURL(/\/verify-email(?:\?|$)/);
   const account = { email, password: FIXTURE_PASSWORD };
 
   // Before verifying, "I've verified" refuses and protected pages stay closed.
   await page.getByRole('button', { name: "I've verified, continue" }).click();
   await expect(page.getByRole('status')).toHaveText(/Not verified yet/);
   await page.goto('/app/decide?type=business');
-  await expect(page).toHaveURL(/\/verify-email$/);
+  await expect(page).toHaveURL(/\/verify-email(?:\?|$)/);
 
   // The verification email: exactly one, carrying the market-analysis continue URL with the intent.
   const link = await latestVerificationLink(email);
@@ -63,4 +63,25 @@ test('sign-up verifies by email; the link opened in another browser keeps the $7
   await page.goto('/verify-email');
   await page.getByRole('button', { name: "I've verified, continue" }).click();
   await expect.poll(() => pathOf(page)).toBe('/app/decide?type=business&intent=report');
+});
+
+test('signing up from a city comparison keeps context through email verification', async ({ page, fixtures }) => {
+  await page.goto('/app/decide?type=compare&question=private');
+  await expect(page).toHaveURL(/\/login\?/);
+  await page.getByRole('link', { name: 'Create a free account' }).click();
+  expect(new URL(page.url()).searchParams.get('returnUrl')).toBe('/app/decide?type=compare');
+
+  const email = fixtureEmail('T02-email-signup', newRunId());
+  fixtures.trackEmail(email);
+  await page.getByLabel('Name').fill('QA comparison');
+  await page.getByLabel('Email').fill(email);
+  await page.getByLabel('Password').fill(FIXTURE_PASSWORD);
+  await page.getByRole('button', { name: 'Create free account' }).click();
+  await expect(page).toHaveURL(/\/verify-email\?/);
+  expect(new URL(page.url()).searchParams.get('returnUrl')).toBe('/app/decide?type=compare');
+  const link = await latestVerificationLink(email);
+  expect(new URL(new URL(link.oobLink).searchParams.get('continueUrl')).search).toBe('?type=compare');
+  expect((await page.request.get(link.oobLink, { maxRedirects: 0 })).status()).toBeLessThan(400);
+  await page.getByRole('button', { name: "I've verified, continue" }).click();
+  await expect(page.getByLabel('Your question')).toHaveValue('How do these cities compare?');
 });

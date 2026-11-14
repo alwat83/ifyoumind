@@ -35,8 +35,9 @@ test('the journey keeps verification and payment in place', () => {
   const ts = read('../src/app/intelligence/market-report.component.ts');
   assert.match(ts, /!this\.sampleMode&&this\.purchaseIntent&&!this\.reportPurchased&&!this\.canUnlockWithPro/);
   const register = read('../src/app/auth/register/register.component.ts');
-  assert.match(register, /await this\.router\.navigate\(\['\/verify-email'\]\)/, 'email sign-ups still verify first');
-  assert.match(register, /app\/decide\?type=business\$\{this\.intent\?`&intent=\$\{this\.intent\}`:''\}/);
+  assert.match(register, /await this\.router\.navigate\(\['\/verify-email'\],/, 'email sign-ups still verify first');
+  assert.match(register, /window\.location\.origin \+ this\.decisionDestination\(\)/);
+  assert.match(register, /params\.set\('intent', this\.intent\)/);
   const guard = read('../src/app/auth.guard.ts');
   assert.match(guard, /verify-email/, 'the route guard still sends unverified accounts to verify');
   assert.equal(read('../src/app/purchase-intent.ts').includes('checkout'), true, 'documented as not touching checkout');

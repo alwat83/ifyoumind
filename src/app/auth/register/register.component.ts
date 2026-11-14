@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PurchaseIntent, intentParams, parseIntent, readIntent, rememberIntent } from '../../purchase-intent';
+import { decisionReturnUrl } from '../../return-url';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -35,6 +36,7 @@ export class RegisterComponent {
   private auth:Auth=inject(Auth);
   private router:Router=inject(Router);
   private route=inject(ActivatedRoute);
+  readonly returnUrl=decisionReturnUrl(this.route.snapshot.queryParamMap.get('returnUrl'));
   /** Visitor arrived from the sample's "$79" button; their free brief comes first, then the offer. */
   readonly intent:PurchaseIntent|null=parseIntent(this.route.snapshot.queryParamMap.get('intent'))??readIntent();
 
@@ -58,14 +60,14 @@ export class RegisterComponent {
       await updateProfile(credential.user,{displayName:this.displayName.trim()});
       // Always verify first. Locally the Auth emulator captures the email instead of sending it.
       await this.sendVerification(credential.user);
-      await this.router.navigate(['/verify-email']);
+      await this.router.navigate(['/verify-email'], {queryParams: this.returnUrl ? {returnUrl: this.decisionDestination()} : {}});
     }catch(error:any){this.errorMessage=error.message;}
   }
 
   /** The verification email's "Continue" link returns to the market-analysis flow when allowed. */
   private async sendVerification(user:Parameters<typeof sendEmailVerification>[0]):Promise<void>{
     try{
-      await sendEmailVerification(user,{url:`${window.location.origin}/app/decide?type=business${this.intent?`&intent=${this.intent}`:''}`});
+      await sendEmailVerification(user,{url:window.location.origin + this.decisionDestination()});
     }catch(error:any){
       if(String(error?.code||'').includes('continue-uri')) await sendEmailVerification(user);
       else throw error;
@@ -77,8 +79,15 @@ export class RegisterComponent {
       const result=await signInWithPopup(this.auth,new GoogleAuthProvider());
       // Returning Google users go to their decisions; brand-new ones start the market analysis.
       const isNew=result.user.metadata.creationTime===result.user.metadata.lastSignInTime;
-      if(isNew) await this.router.navigate(FIRST_DECISION_ROUTE,{queryParams:intentParams(FIRST_DECISION_QUERY,this.intent)});
+      if(this.returnUrl) await this.router.navigateByUrl(this.decisionDestination());
+      else if(isNew) await this.router.navigate(FIRST_DECISION_ROUTE,{queryParams:intentParams(FIRST_DECISION_QUERY,this.intent)});
       else await this.router.navigate(['/app']);
     }catch(error:any){this.errorMessage=error.message;}
+  }
+  private decisionDestination(): string {
+    const [path, query] = (this.returnUrl ?? '/app/decide?type=business').split('?');
+    const params = new URLSearchParams(query);
+    if (this.intent) params.set('intent', this.intent);
+    return path + (params.size ? '?' + params : '');
   }
 }

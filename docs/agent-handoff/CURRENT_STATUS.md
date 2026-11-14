@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 14, 2026 — Decision creation journey
+
+**Draft implementation:** [PR #98](https://github.com/alwat83/ifyoumind/pull/98) on `codex/decision-creation-journey`. Question first, one city when appropriate, optional comparison and business details, and private sample routes for property tax and electricity. The allowlisted decision type and $79 report intent survive sign-up and verification; freeform questions are not put in URLs. No backend, pricing, commerce, typed entry or AI changes. [Audit, screenshots and verification](../product/DECISION_CREATION_JOURNEY.md) · [Exact-head checks](https://github.com/alwat83/ifyoumind/pull/98/checks). Founder journey review and separate release approval remain pending.
+
+**Latest production deployment:** [PR #97](https://github.com/alwat83/ifyoumind/pull/97) merged as `e0519bb4c5bea801af3c0d8dc72ad5ca328a0697`; [production workflow](https://github.com/alwat83/ifyoumind/actions/runs/43609037082) succeeded. PR #98 branches from that release and remains undeployed. [Typed Bill Discovery #95](https://github.com/alwat83/ifyoumind/pull/95) and [OpenAI #96](https://github.com/alwat83/ifyoumind/pull/96) remain separate.
+
 ## November 13 Pacific / November 14 UTC — Property-tax-first homepage
 
 **Draft for founder visual review.** Branch `codex/property-tax-first` from master `59a4b80a8e427a13e0d8bee0f753f8954ea8611f`. The homeowner question leads into a free made-up $420 comparison, with the assessment/rates check before the optional evidence. Public Discovery, electricity, city comparisons and Business destinations remain available. The existing [typed Bill Discovery draft #95](https://github.com/alwat83/ifyoumind/pull/95) stays separate. [Plan and screenshots](../product/PROPERTY_TAX_FIRST.md)

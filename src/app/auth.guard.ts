@@ -3,7 +3,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { user } from '@angular/fire/auth';
 import { Auth } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
-import { loginParams } from './return-url';
+import { decisionReturnUrl, loginParams } from './return-url';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const auth = inject(Auth);
@@ -16,7 +16,8 @@ export const authGuard: CanActivateFn = (route, state) => {
         if (user.emailVerified || state.url === '/profile') {
           return true;
         } else {
-          router.navigate(['/verify-email']);
+          const returnUrl = decisionReturnUrl(state.url);
+          router.navigate(['/verify-email'], { queryParams: returnUrl ? { returnUrl } : {} });
           return false;
         }
       } else {

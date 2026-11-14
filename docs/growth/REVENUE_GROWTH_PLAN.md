@@ -2,6 +2,18 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## November 14 — Blueprint: evidence before the offer
+
+[Founder roadmap proposal](../product/PRODUCT_EXPERIENCE_BLUEPRINT.md) ranks question relevance, a private first bill result, and observed report handoff friction ahead of new categories or provider calls. Run a small permissioned walkthrough before adding tracking or changing the offer. In the compatible city funnel, reconcile independent payment to report delivery and return before reporting revenue progress. No new customer, revenue, cost or margin observation; historical scoreboard unchanged.
+
+## November 14 — Fewer fields before a free brief
+
+[Draft #98](https://github.com/alwat83/ifyoumind/pull/98) removes mandatory extra cities for a market brief and preserves context into the existing report offer. Candidate metric: eligible first-time visitors who finish a brief and understand what a paid report would add. Use permitted first-use observation before changing billing or introducing new tracking. No new visitor, checkout, revenue or margin outcome was measured.
+
+## November 13 — An account-free property-tax example
+
+[Property-tax-first](../product/PROPERTY_TAX_FIRST.md) makes the year-over-year tax result useful before signup. Observe whether permitted first-time visitors can state what changed, explain what the example cannot establish and choose a next action. The existing Business report remains the paid path. No new visitor, purchase or revenue evidence.
+
 ## November 13 — Bill Discovery first-use candidate
 
 [Phase 2A](../product/BILL_DISCOVERY_PHASE_2A.md) puts a free useful result before registration for two common bill types. Next measure unassisted useful findings and time to evidence on devices with permitted users, then consider an approved small rollout and measure supported-input friction. No analytics or outbound outreach were introduced. Tests use synthetic values. Real visitor, conversion, paid and support outcomes remain unmeasured. The scoped financial baseline below is unchanged.

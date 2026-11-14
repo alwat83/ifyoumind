@@ -560,3 +560,35 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 **Work and verification:** Added typed local tax and electricity forms, meaningful one-bill results, comparison and evidence, correction, clearing and an optional payload-free registration path. Reused the Discovery island and shared calculation and style roles. No runtime dependencies, provider calls or commerce changes. Added two unqualified PDF mappings in test-only helpers. Local build/guards, 146 web and 81 Hosting cases passed. The forced-colors test caught a contrast regression that was fixed. Exact-head results and screenshot baseline review are on the draft. No merge, deployment or enrollment action.
 
 **Next:** review the mobile/desktop sequence and physical-device controls, measure useful first sessions with permitted users, then seek separate typed-entry release approval. Continue PDF specimen qualification independently. The typed flow can reduce friction for first useful use. No observed lift or commercial outcome yet.
+
+## 2026-11-13 Pacific / 2026-11-14 UTC — AI milestone close and property-tax-first homepage
+
+**Provider/agent:** OpenAI / Codex. [AI draft #96](https://github.com/alwat83/ifyoumind/pull/96) closed for staging validation without changing its draft head `f36dcf1de386cc0d91c4dfed6d9957178a20fc14`. Both exact-head workflows passed. Staging readback verified `explainsyntheticmarket-00004-lor` at 100% and flag off. Deployment and cost evidence remain in the AI draft. Production readiness gates are in the current snapshot. The provider authorization is exhausted.
+
+**Product changes:** `codex/property-tax-first` from production master `59a4b80a8e427a13e0d8bee0f753f8954ea8611f`. The homepage leads with property taxes, makes the $420 conclusion plain and offers assessment and rate checks without claiming error or eligibility. It reuses the existing synthetic fixture, local Discovery, Business and commerce paths. Tests cover the public handoff and changing back to the tax example. Preserve [typed Bill Discovery PR #95](https://github.com/alwat83/ifyoumind/pull/95) separately.
+
+**Verification and handoff:** [Plan, captures, verification and review gates](../product/PROPERTY_TAX_FIRST.md), [Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71) and draft PR track review. The candidate is local/draft only. No production deployment, provider request or measurement of customer impact. Next highest-value work is founder visual review and an authorized first-use check, followed by a separate release decision.
+
+## 2026-11-14 — Question-first decision creation
+
+**Provider/agent:** OpenAI / Codex. [Draft PR #98](https://github.com/alwat83/ifyoumind/pull/98), branch `codex/decision-creation-journey`, from master `e0519bb4c5bea801af3c0d8dc72ad5ca328a0697`. The base was deployed in [run 43609037082](https://github.com/alwat83/ifyoumind/actions/runs/43609037082). Draft #95 and #96 are not included. No merge, deployment, provider use, billing mutation or outreach for this change.
+
+**Verification:** Production and demo builds, browser-local isolation guard, 137 web tests, 72 Functions unit tests, 94 focused Chrome cases and six final affected-route retests passed. GitHub CI and permanent visual evidence are linked from the draft.
+
+**Work:** Audited the required inputs, ACS place matching, account and tenant authorization, public sample and existing checkout. Replaced the progress bar, taxonomy cards and concatenated city entry with editable question and contextual place screens. One city is enough except when comparing; bill links reuse separate local Discovery. Registration/verification preserve only allowlisted intent. Saved evidence and paid commerce use existing services. The brief offer omits comparisons for a decision without them. [Audit, captures and checks](../product/DECISION_CREATION_JOURNEY.md), [Notion project hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).
+
+**Business impact and next:** The draft removes the second-city barrier to a first brief and improves continuity to the existing report offer. First-user comprehension, completions, conversion and revenue are unmeasured. Review the smallest mobile journey, verify exact-head CI and approval before any production release, then observe actual first use.
+
+## 2026-11-14 — Master product experience assessment and roadmap
+
+**Provider/agent:** OpenAI / Codex. **Branch:** `codex/product-experience-blueprint`, documentation only, from verified master `dbc872a977f062f94752578ca88fd56398e0c3c5`.
+
+**Work:** Audited the existing homepage, browser-local Discovery, decision setup and verified sign-in, free and paid report path, Account, Firebase, commercial enrollment, separate drafts #95/#96/#99 and the ifYouMind hub. Wrote the [audit, blueprint, prioritized roadmap, proposed PR sequence and founder brief](../product/PRODUCT_EXPERIENCE_BLUEPRINT.md) and linked the durable product principles, master record and growth plan.
+
+**Verification:** Read-only browser spot checks confirmed the mobile homepage example/evidence, labeled tax finding, cited public sample and anonymous sign-in return; nine route responses were HTTP 200. Read-only Firebase metadata confirmed finalized Hosting version `8dea909c53f33887`, closed enrollment and staging AI flag off. Prior exact-head tests remain tied to their PRs. No authenticated production or commerce action, new app test suite, provider request, outreach, merge or deployment. [Notion coordination hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).
+
+**Business effect and next:** The proposed sequence preserves the existing optional paid report for compatible city decisions and prioritizes evidence of usefulness over speculation. No new traffic, sales or cost result. Review the roadmap and #99; then review a narrow #95 pilot; observe authorized first use before opening another implementation PR.
+
+## 2026-11-14 — Typed Bill Discovery pilot preparation
+
+**Provider/agent:** OpenAI / Codex. Reconciled draft [#95](https://github.com/alwat83/ifyoumind/pull/95) with approved blueprint master `0d980502b60589a757b04bf258fb9b6b3a45f6c7`. Resolved four project-record conflicts and retained the existing typed implementation, master visuals, and separate #99 and #96 drafts. [Pilot entry, fixtures, privacy, feedback and rollback](../product/BILL_DISCOVERY_PHASE_2A.md#limited-pilot-runbook). [Current verification](https://github.com/alwat83/ifyoumind/pull/95/checks). Customer value and conversion remain unmeasured.

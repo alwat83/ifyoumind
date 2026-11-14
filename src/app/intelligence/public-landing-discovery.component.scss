@@ -12,9 +12,8 @@
 }
 
 .experience { max-width: 1120px; }
-.experience > h2 { color: inherit; font: 400 clamp(46px, 5vw, 72px)/.95 var(--display); margin-bottom: 22px; }
 .demo { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; }
-.question-options { display: flex; flex-wrap: wrap; gap: 0 26px; padding-inline: 26px; border-bottom: 1px solid var(--rule); }
+.question-options { display: flex; flex-wrap: wrap; gap: 0 26px; padding-inline: 26px; border-top: 1px solid var(--rule); }
 .question-option {
   min-width: 44px;
   min-height: 50px;
@@ -49,6 +48,7 @@
   letter-spacing: -.035em;
 }
 .conclusion > span { display: block; max-width: 34ch; margin-top: 12px; font-size: clamp(16px, 1.75vw, 21px); line-height: 1.4; }
+.finding-note { max-width: 44ch; margin-top: 12px; color: var(--studio-muted); font-size: 14px; }
 
 .plot { min-width: 0; }
 .plot figcaption { color: var(--studio-muted); font-size: 13px; font-weight: 650; }

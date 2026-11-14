@@ -1,12 +1,24 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-13
+**Updated:** 2026-11-14
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
 **Purpose:** Living project context for the founder and all current/future development agents.
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
+
+## November 14, 2026 — Master product experience directive
+
+[Audit, unified blueprint and staged roadmap](docs/product/PRODUCT_EXPERIENCE_BLUEPRINT.md) are proposed for founder review. The permanent standard is to answer the visitor’s actual question with checkable evidence. Reuse PR #99 for relevance, preserve #95 and #96 as independent gates, and observe first use before changing the homepage or the commercial path.
+
+## November 14, 2026 — Question-first decisions
+
+[Decision creation review](docs/product/DECISION_CREATION_JOURNEY.md) traces the public examples, auth, market brief and existing report purchase. Draft #98 uses a short question → city → brief path and preserves browser-local bill examples as a separate route. It adds no provider use or paid capability.
+
+## November 13, 2026 — Property-tax-first consumer experience
+
+[Property-tax-first review](docs/product/PROPERTY_TAX_FIRST.md) uses the public tax example to introduce a useful, private comparison before signup. Electricity, city evidence and the Business funnel remain available. PR #95 tracks a separate typed-input expansion. The internal AI staging milestone is closed with the flag off. Production and any further provider use are separately gated. [AI milestone evidence](https://github.com/alwat83/ifyoumind/pull/96)
 
 ## November 13, 2026 — Privacy-first Bill Discovery
 

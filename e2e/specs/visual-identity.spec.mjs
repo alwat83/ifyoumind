@@ -34,7 +34,7 @@ async function compare(page, name, ready, options = {}) {
 
 test('homepage, Discovery and evidence keep the editorial visual identity', async ({ page }) => {
   await page.goto('/');
-  const heroAction = page.getByRole('link', { name: 'Try a Free Example', exact: true });
+  const heroAction = page.getByRole('link', { name: 'Try the tax example', exact: true });
   await compare(page, 'homepage', heroAction, { fullPage: true });
   await page.goto('/discover/');
   const tax = page.getByRole('button', { name: 'Try property tax example' });
@@ -98,4 +98,17 @@ test('workspace, eligible pricing and Account feel connected', async ({ page, fi
   await compare(page, 'pricing', page.getByRole('region', { name: 'Monthly subscriptions' }), { fullPage: true });
   await page.goto('/app/account');
   await compare(page, 'account', page.getByRole('heading', { name: 'Account details' }), { fullPage: true });
+});
+
+test('decision question and place share the editorial identity', async ({ page, fixtures }) => {
+  const user = await fixtures(FIXTURES.FREE_NO_REPORTS, { workspace: false });
+  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fdecide%3Ftype%3Dbusiness');
+  const question = page.getByLabel('Your question');
+  await expect(question).toHaveValue('Should I open this business here?');
+  await compare(page, 'decision-question', question, { fullPage: true });
+  await page.getByRole('button', { name: 'Continue' }).click();
+  const city = page.getByLabel('City and state');
+  await expect(city).toBeVisible();
+  await page.getByRole('heading', { name: 'Which city are you looking at?' }).blur();
+  await compare(page, 'decision-place', city, { fullPage: true });
 });

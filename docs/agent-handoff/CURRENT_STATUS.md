@@ -1,8 +1,18 @@
 # ifYouMind — Current development status
 
-## November 13, 2026 — Bill Discovery Phase 2A
+## November 14, 2026 — Product blueprint review
 
-**Committed for draft review.** [PR #95](https://github.com/alwat83/ifyoumind/pull/95) brings account-free, browser-local typed property tax and electricity results to the existing Discovery route. [Local preview, screenshots, impact and performance evidence](../product/BILL_DISCOVERY_PHASE_2A.md). [Exact-head checks](https://github.com/alwat83/ifyoumind/pull/95/checks). Phase 1 [PR #94](https://github.com/alwat83/ifyoumind/pull/94) is preserved. Production remains verified at [merge 59a4b80a](https://github.com/alwat83/ifyoumind/actions/runs/43392378321) with closed subscription enrollment. No release or billing action in this assignment.
+**Approved:** [Product audit and blueprint](../product/PRODUCT_EXPERIENCE_BLUEPRINT.md). Preserve the current experience; review #99 first, then evaluate the separate typed-input #95 and real first-use friction. Founder authorized preparation of #99 and #95. Both still require separate authorization to release or run a pilot.
+
+**Production:** [PR #98](https://github.com/alwat83/ifyoumind/pull/98) merged at `dbc872a977f062f94752578ca88fd56398e0c3c5`; [deployment](https://github.com/alwat83/ifyoumind/actions/runs/43623896871) succeeded. Verified active Hosting version `8dea909c53f33887`, closed enrollment and anonymous mobile tax, cited sample and sign-in handoff. Production protected and commercial actions were not exercised.
+
+**Separate drafts:** [#99](https://github.com/alwat83/ifyoumind/pull/99) at `6f61d2ca1cc841ecfeba44c6dc186701b5181b2c` passed [build](https://github.com/alwat83/ifyoumind/actions/runs/43632056972) and [authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/43632056925) with 144 browser cases. [#95](https://github.com/alwat83/ifyoumind/pull/95) typed Bill Discovery and [#96](https://github.com/alwat83/ifyoumind/pull/96) remain separate; staging AI revision `explainsyntheticmarket-00004-lor` is flag-off. [Portal #84](https://github.com/alwat83/ifyoumind/issues/84) and [enrollment #85](https://github.com/alwat83/ifyoumind/issues/85) remain open.
+
+## November 13 Pacific / November 14 UTC — Property-tax-first homepage
+
+**Draft for founder visual review.** Branch `codex/property-tax-first` from master `59a4b80a8e427a13e0d8bee0f753f8954ea8611f`. The homeowner question leads into a free made-up $420 comparison, with the assessment/rates check before the optional evidence. Public Discovery, electricity, city comparisons and Business destinations remain available. The existing [typed Bill Discovery draft #95](https://github.com/alwat83/ifyoumind/pull/95) stays separate. [Plan and screenshots](../product/PROPERTY_TAX_FIRST.md)
+
+**AI milestone closed separately.** [Draft #96](https://github.com/alwat83/ifyoumind/pull/96) passed [Launch build](https://github.com/alwat83/ifyoumind/actions/runs/43570792541) and [Authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/43570792605) on final head `f36dcf1de386cc0d91c4dfed6d9957178a20fc14`. Read-only staging metadata confirmed `explainsyntheticmarket-00004-lor` at 100% and flag off. The provider authorization is exhausted. The exact billed charge remains unverified. Any proposed production pilot needs a narrowly scoped deployment package, production identity and secret review, data minimization, consent and retention review for real data, and separately approved operating and spend controls. [Staging evidence](https://github.com/alwat83/ifyoumind/blob/f36dcf1de386cc0d91c4dfed6d9957178a20fc14/docs/product/OPENAI_ACTIVATION_READINESS.md#one-authorized-openai-generation)
 
 ## November 12, 2026 — Starter and Plus pricing readiness
 

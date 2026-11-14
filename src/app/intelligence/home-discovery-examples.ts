@@ -30,11 +30,11 @@ export const HOME_EXAMPLES: readonly HomeExample[] = [
   {
     id: 'tax',
     title: 'Property taxes',
-    question: 'What added the most to this tax bill?',
+    question: 'What changed on this tax bill?',
     label: 'Made-up example',
     context: 'Two consecutive tax years for the same property.',
     ...bills.tax,
-    finding: { value: bills.tax.share, text: `of the ${taxIncrease} increase came from school charges.` },
+    finding: { value: taxIncrease, text: 'more than the year before.' },
     chart: {
       title: 'What went up',
       measures: [
@@ -44,9 +44,9 @@ export const HOME_EXAMPLES: readonly HomeExample[] = [
     },
     evidenceLead: taxChargeProof.steps.at(-1),
     proof: [taxTotalProof, { ...taxChargeProof, steps: taxChargeProof.steps.slice(0, -1) }],
-    takeaway: `School charges accounted for ${bills.tax.share} of the ${taxIncrease} increase and rose by ${schoolIncrease}.`,
-    limit: 'The bills show which charges changed. Check assessed value and tax rates to understand why.',
-    action: 'Explore the property-tax example',
+    takeaway: `School taxes rose by ${schoolIncrease} and accounted for most of the increase.`,
+    limit: 'Two bills show what changed. To check whether the total is right, look up your assessed value and local tax rates.',
+    action: 'Open the full tax example',
   },
   {
     id: 'electricity',

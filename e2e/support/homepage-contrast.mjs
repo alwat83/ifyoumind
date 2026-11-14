@@ -1,7 +1,7 @@
 // Direct heading regression complements axe and catches inherited global-theme text colors.
 // This page uses opaque solid backgrounds; read the actual nearest painted ancestor.
 export async function homepageHeadingContrasts(page) {
-  return page.locator('.hero h1,.hero h1 em,.experience > h2,.finding h3,.conclusion strong,.reports h2').evaluateAll(headings => {
+  return page.locator('.hero h1,.hero h1 em,.finding h3,.conclusion strong,.reports h2').evaluateAll(headings => {
     const luminance = rgb => rgb.map(value => {
       const channel = value / 255;
       return channel <= 0.04045 ? channel / 12.92 : ((channel + 0.055) / 1.055) ** 2.4;

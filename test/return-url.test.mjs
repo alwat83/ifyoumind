@@ -5,7 +5,7 @@ import ts from 'typescript';
 
 const read = (p) => fs.readFileSync(new URL(p, import.meta.url), 'utf8');
 const compiled = ts.transpileModule(read('../src/app/return-url.ts'), { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 } }).outputText;
-const { safeReturnUrl, loginParams, DEFAULT_RETURN_URL } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
+const { safeReturnUrl, loginParams, decisionReturnUrl, DEFAULT_RETURN_URL } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
 
 test('in-app paths come back rebuilt, keeping only allowed parameters', () => {
   assert.equal(safeReturnUrl('/app'), '/app');
@@ -41,7 +41,7 @@ test('the sign-in page only gets a return path when it is safe and not the defau
 test('the guard and sign-in page use the validator, and access control is unchanged', () => {
   const guard = read('../src/app/auth.guard.ts');
   assert.match(guard, /router\.navigate\(\['\/login'\],\{queryParams:loginParams\(state\.url\)\}\)/, 'signed-out visitors keep their place');
-  assert.match(guard, /router\.navigate\(\['\/verify-email'\]\)/, 'unverified accounts still go to verify first');
+  assert.match(guard, /router\.navigate\(\['\/verify-email'\],/, 'unverified accounts still go to verify first');
   assert.match(guard, /user\.emailVerified/, 'the verified-email check is still there');
   const login = read('../src/app/auth/login/login.component.ts');
   assert.match(login, /safeReturnUrl\(this\.route\.snapshot\.queryParamMap\.get\('returnUrl'\)\)\?\?DEFAULT_RETURN_URL/);
@@ -91,4 +91,11 @@ test('property: any output is an allowlisted in-app path with allowlisted parame
   assert.ok(kept > 1000, 'allowlisted parameters are kept');
   // Deliberately conservative: an encoded slash or backslash anywhere refuses the whole value.
   assert.equal(safeReturnUrl('/app/decide?type=business&next=https%3A%2F%2Fevil'), null);
+});
+
+test('decision auth handoffs keep only a known type and commercial intent', () => {
+  assert.equal(decisionReturnUrl('/app/decide?type=compare&intent=report&location=private&question=mine'), '/app/decide?type=compare&intent=report');
+  assert.equal(decisionReturnUrl('/app/decide?type=private&offer=pro'), '/app/decide');
+  assert.equal(decisionReturnUrl('/app/pricing?intent=report'), null);
+  assert.equal(decisionReturnUrl('//outside.example/app/decide'), null);
 });

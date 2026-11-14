@@ -69,5 +69,5 @@ test('no emulator exception weakens the verification gate', () => {
   assert.doesNotMatch(guard, /useLocalEmulators/);
   const register = readFileSync('src/app/auth/register/register.component.ts', 'utf8');
   assert.doesNotMatch(register, /useLocalEmulators/);
-  assert.match(register, /await this\.sendVerification\(credential\.user\);\s*await this\.router\.navigate\(\['\/verify-email'\]\)/);
+  assert.match(register, /await this\.sendVerification\(credential\.user\);\s*await this\.router\.navigate\(\['\/verify-email'\],/);
 });

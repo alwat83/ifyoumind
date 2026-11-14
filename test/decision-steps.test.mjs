@@ -7,10 +7,11 @@ const source = fs.readFileSync(new URL('../src/app/intelligence/decision-steps.t
 const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 } }).outputText;
 const { billExample, decisionType, formattedCity, placeKey, sampleCityMatches } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
 
-test('bill questions route deterministically; ambiguous or unrelated questions do not', () => {
+test('bill questions route deterministically and unrelated questions do not', () => {
   assert.equal(billExample('Why did my property taxes go up?'), 'tax');
   assert.equal(billExample('What changed on the electric bill?'), 'electricity');
-  assert.equal(billExample('Property tax versus my electricity bill'), null);
+  assert.equal(billExample('Property tax versus my electricity bill'), 'both');
+  assert.equal(billExample('Which city has higher property taxes?'), 'tax');
   assert.equal(billExample('Where do I open a coffee shop?'), null);
   assert.equal(decisionType('compare'), 'compare');
   assert.equal(decisionType('arbitrary'), 'custom');

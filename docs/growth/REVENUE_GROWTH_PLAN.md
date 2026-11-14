@@ -2,6 +2,10 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## November 14 — Fewer fields before a free brief
+
+[Draft #98](https://github.com/alwat83/ifyoumind/pull/98) removes mandatory extra cities for a market brief and preserves context into the existing report offer. Candidate metric: eligible first-time visitors who finish a brief and understand what a paid report would add. Use permitted first-use observation before changing billing or introducing new tracking. No new visitor, checkout, revenue or margin outcome was measured.
+
 ## November 13 — An account-free property-tax example
 
 [Property-tax-first](../product/PROPERTY_TAX_FIRST.md) makes the year-over-year tax result useful before signup. Observe whether permitted first-time visitors can state what changed, explain what the example cannot establish and choose a next action. The existing Business report remains the paid path. No new visitor, purchase or revenue evidence.

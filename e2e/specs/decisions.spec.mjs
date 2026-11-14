@@ -159,6 +159,10 @@ test('a bill question opens private Discovery without a location or transmitting
   const user = await fixtures(FIXTURES.FREE_NO_REPORTS);
   await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fdecide');
   const question = page.getByLabel('Your question');
+  await question.fill('Compare property taxes and electricity bills');
+  await expect(page.getByRole('link', { name: 'Property taxes', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Electricity bills', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Continue with city data' })).toHaveCount(0);
   await question.fill('Why did my property taxes increase?');
   await expect(page.getByLabel('City and state')).toHaveCount(0);
   await expect(page.getByText('A city isn’t needed.', { exact: false })).toBeVisible();

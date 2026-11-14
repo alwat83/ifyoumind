@@ -18,18 +18,20 @@
         @if (questionError) {
           <p id="question-error" class="field-error">{{ questionError }}</p>
         }
-        @if (bill) {
+        @if (bill === 'both') {
+          <p class="field-help">Each bill has its own free example. Choose one to see what changed.</p>
+        } @else if (bill) {
           <p class="field-help">See what changed in a made-up bill. A city isn’t needed.</p>
           <a class="primary" [href]="billPath">{{ bill === 'tax' ? 'Try the property tax example' : 'Try the electricity example' }}</a>
         } @else {
           <button type="submit" class="primary">{{ type === 'custom' ? 'Continue with city data' : 'Continue' }}</button>
         }
       </form>
-      @if (!bill && type === 'custom') {
+      @if (bill === 'both' || (!bill && type === 'custom')) {
         <div class="bill-links" aria-label="Other ways to start" role="group">
           <a href="/discover/?example=tax">Property taxes</a>
           <a href="/discover/?example=electricity">Electricity bills</a>
-          <a routerLink="/app/data">Explore my own data</a>
+          @if (!bill) { <a routerLink="/app/data">Explore my own data</a> }
         </div>
       }
     </section>

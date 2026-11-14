@@ -1,5 +1,5 @@
 export type DecisionType = 'business' | 'compare' | 'growth' | 'custom';
-export type BillExample = 'tax' | 'electricity';
+export type BillExample = 'tax' | 'electricity' | 'both';
 
 export const decisionPrompts: Record<DecisionType, string> = {
   business: 'Should I open this business here?',
@@ -14,9 +14,9 @@ export function decisionType(value: unknown): DecisionType {
 
 /** Only recognize clearly named bill topics. This is routing, never an interpretation of the question. */
 export function billExample(question: string): BillExample | null {
-  const tax = /\bproperty[ -]+tax(?:es)?\b/i.test(question) && /\b(?:my|our|bill|statement)\b/i.test(question);
+  const tax = /\bproperty[ -]+tax(?:es)?\b/i.test(question);
   const electricity = /\b(?:electricity|electric|energy|power)\s+(?:bill|statement)s?\b/i.test(question);
-  return tax === electricity ? null : tax ? 'tax' : 'electricity';
+  return tax ? (electricity ? 'both' : 'tax') : electricity ? 'electricity' : null;
 }
 
 /** Suggestions are illustrative shortcuts, not a city directory or proof of a Census match. */

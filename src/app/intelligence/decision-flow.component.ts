@@ -52,7 +52,7 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
   get bill() { return billExample(this.question); }
 
   get billPath(): string {
-    return '/discover/?example=' + this.bill;
+    return this.bill === 'electricity' ? '/discover/?example=electricity' : '/discover/?example=tax';
   }
 
   continueToPlace(): void {

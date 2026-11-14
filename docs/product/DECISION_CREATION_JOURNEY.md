@@ -26,3 +26,29 @@
 | Mobile, keyboard, accessibility and application states | Change Required | Shared tokens, responsive focus, error/loading and deterministic suggestions. |
 | Analytics and SEO | Not Affected | No new events, free text in telemetry, public page metadata or dependencies. |
 | Handoff | Change Required | Record verification, captures, rollout gate and limitations. |
+
+## Founder walkthrough
+
+| Moment | Desktop (1280 px) | Mobile (390 px) |
+| --- | --- | --- |
+| Old location step | [Before](decision-creation/before-desktop.webp) | [Before](decision-creation/before-mobile.webp) |
+| Start with the question | [Question](decision-creation/question-desktop.webp) | [Question](decision-creation/question-mobile.webp) |
+| Continue to the city | [City](decision-creation/place-desktop.webp) | [City](decision-creation/place-mobile.webp) |
+| Free brief and existing offer | [Brief](decision-creation/brief-desktop.webp) | [Brief](decision-creation/brief-mobile.webp) |
+| A bill needs no city | [Property tax handoff](decision-creation/bill-desktop.webp) | [Property tax handoff](decision-creation/bill-mobile.webp) |
+
+The captures use the same local Chrome and synthetic Firebase Auth fixture, with the emulator warning hidden in both builds. In the city step the original question remains visible. Start from the homepage's free brief or the public sample, verify an account, edit the starter question, and create a brief for Springfield, IL. Compare cities by opening a second field; no special punctuation is required. Switch to a bill question from the generic route and the primary action changes to the made-up bill example immediately.
+
+The question is saved with a completed market brief. The deterministic report uses the city and optional business context; it does not interpret arbitrary questions. Questions stay in memory until submitted; leaving or reloading before submission discards them. A local suggestion is not a verified place. No new autocomplete service, climate/parcel/rate data, tracking, uploads, external AI or checkout behavior was introduced. If the backend doesn't match a place or data is temporarily unavailable, the screen explains how to retry and retains entries. A one-city offer omits comparison claims.
+
+**Review decisions:** Is the two-screen market flow clear, and is the explicit bill-example exit distinct enough? Confirm that authenticated personalized market briefs and existing anonymous bill examples are the appropriate release boundary. Anonymous personalized market lookup or the real typed bill draft would need separate scope review. No change in customer acquisition or revenue has been measured.
+
+**Release and rollback:** Draft only. Before an authorized production release, verify the actual master/artifact and all exact-head checks. Do not ship missing or unexplained visual baselines. Reuse the normal release path and retain the preceding Hosting version. Restore that Hosting version for a user-facing regression if authorized; prepare a reviewed source revert. No Functions, rules, provider or commerce changes are needed for the candidate.
+
+## Verification
+
+- `npm run test:seo`: 137 passed. `npm --prefix functions test`: 72 passed.
+- Local production and demo builds completed. `npm run check:production-bundle` and `node scripts/check-discovery-isolation.mjs --production` passed. Existing bundle warnings remain. Local production build on this design measured the initial application at 681.46 kB raw and 182.90 kB estimated transfer, and the unchanged Discovery bundle at 235.41 kB raw and 66.27 kB estimated transfer.
+- Targeted local Chrome covered 47 desktop and 47 mobile QA cases using synthetic Census fixtures, including one-city creation, distinct comparisons, keyboard suggestions, axe, verification links between browsers, protected routes, saved results, tenant isolation, a simulated upstream outage and retry, and simulated checkout, credit and legacy Pro behavior (94 passed). The final bill routing and auth handoff also passed six focused desktop/mobile retests. The visual comparisons use Linux CI; see the [exact-head checks](https://github.com/alwat83/ifyoumind/pull/98/checks).
+- Verification used emulators and synthetic data. No live payments, production provider calls, field latency, real-device screen reader, Google OAuth popup or independent customer outcomes were tested.
+- [Linux visual review run](https://github.com/alwat83/ifyoumind/actions/runs/43619934157) passed 136 authenticated browser cases and reported four intentional visual failures: two decision cases lacked the four new question/place snapshots, and two registration cases differed after the copy correction. Reviewed each new candidate and both registration expected/actual/diff sets. Registration changed only the explanation and its vertical reflow. Accepted these six images; unrelated baselines were left alone. The final exact-head run checks the committed references.

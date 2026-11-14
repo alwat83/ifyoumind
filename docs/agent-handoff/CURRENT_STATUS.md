@@ -1,10 +1,10 @@
 # ifYouMind — Current development status
 
-## November 14, 2026 — Decision creation journey
+## November 14, 2026 — Question-to-answer relevance
 
-**Draft implementation:** [PR #98](https://github.com/alwat83/ifyoumind/pull/98) on `codex/decision-creation-journey`. Question first, one city when appropriate, optional comparison and business details, and private sample routes for property tax and electricity. The allowlisted decision type and $79 report intent survive sign-up and verification; freeform questions are not put in URLs. No backend, pricing, commerce, typed entry or AI changes. [Audit, screenshots and verification](../product/DECISION_CREATION_JOURNEY.md) · [Exact-head checks](https://github.com/alwat83/ifyoumind/pull/98/checks). Founder journey review and separate release approval remain pending.
+**Draft:** [PR #99](https://github.com/alwat83/ifyoumind/pull/99) on `codex/question-answer-relevance`. Separates local property tax and parcel checks from personal bill changes. Unsupported tax/rate questions clearly state what evidence is missing and offer a made-up example only as a separate choice. Personal bill changes point to the existing private CSV path. No API, price, entitlement or deployment changes. [Audit, source references and verification](../product/QUESTION_ANSWER_RELEVANCE.md) · [Exact-head checks](https://github.com/alwat83/ifyoumind/pull/99/checks).
 
-**Latest production deployment:** [PR #97](https://github.com/alwat83/ifyoumind/pull/97) merged as `e0519bb4c5bea801af3c0d8dc72ad5ca328a0697`; [production workflow](https://github.com/alwat83/ifyoumind/actions/runs/43609037082) succeeded. PR #98 branches from that release and remains undeployed. [Typed Bill Discovery #95](https://github.com/alwat83/ifyoumind/pull/95) and [OpenAI #96](https://github.com/alwat83/ifyoumind/pull/96) remain separate.
+**Production:** [PR #98](https://github.com/alwat83/ifyoumind/pull/98) merged as `dbc872a977f062f94752578ca88fd56398e0c3c5`; [Firebase deployment](https://github.com/alwat83/ifyoumind/actions/runs/43623896871) succeeded. Founder reports verifying the existing property-tax example visually. The relevance patch is undeployed, and [typed Bill Discovery #95](https://github.com/alwat83/ifyoumind/pull/95) and [OpenAI #96](https://github.com/alwat83/ifyoumind/pull/96) remain separate.
 
 ## November 13 Pacific / November 14 UTC — Property-tax-first homepage
 

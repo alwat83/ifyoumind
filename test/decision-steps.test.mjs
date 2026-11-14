@@ -26,6 +26,8 @@ test('statement changes, property-specific checks and utility tariffs require di
   assert.equal(billIntent('What are the electricity rates in Birmingham?'), 'local-electricity');
   assert.equal(billIntent('Am I overpaying my property taxes?'), 'tax-check');
   assert.equal(billIntent('Are my property taxes higher than they should be?'), 'tax-check');
+  assert.equal(billIntent('How much are my property taxes?'), 'tax-check');
+  assert.equal(billIntent('Why did the property taxes in my city go up?'), 'local-tax');
   assert.equal(billIntent('What are the property taxes for this house?'), 'tax-check');
   assert.equal(billIntent('Where do I open a coffee shop?'), null);
   assert.equal(decisionType('compare'), 'compare');

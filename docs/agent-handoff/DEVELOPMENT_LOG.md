@@ -570,3 +570,13 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 **Work:** Audited the required inputs, ACS place matching, account and tenant authorization, public sample and existing checkout. Replaced the progress bar, taxonomy cards and concatenated city entry with editable question and contextual place screens. One city is enough except when comparing; bill links reuse separate local Discovery. Registration/verification preserve only allowlisted intent. Saved evidence and paid commerce use existing services. The brief offer omits comparisons for a decision without them. [Audit, captures and checks](../product/DECISION_CREATION_JOURNEY.md), [Notion project hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).
 
 **Business impact and next:** The draft removes the second-city barrier to a first brief and improves continuity to the existing report offer. First-user comprehension, completions, conversion and revenue are unmeasured. Review the smallest mobile journey, verify exact-head CI and approval before any production release, then observe actual first use.
+
+## 2026-11-14 — Question-to-answer relevance audit
+
+**Provider/agent:** OpenAI / Codex. [Draft PR #99](https://github.com/alwat83/ifyoumind/pull/99), branch `codex/question-answer-relevance`, from deployed master `dbc872a977f062f94752578ca88fd56398e0c3c5` ([PR #98 deployment](https://github.com/alwat83/ifyoumind/actions/runs/43623896871)). No release, merge or production changes for #99.
+
+**Work:** Traced the tax keyword collision to the new-decision form. Added a deterministic intent split and an explicit text response for local, parcel, tariff and mixed questions; personal statement questions lead to the existing redacted CSV path. Made-up examples require separate clicks. Reviewed official sources without introducing local tax rates, data requests, address capture, AI, analytics or checkout changes. [Audit, impact and evidence](../product/QUESTION_ANSWER_RELEVANCE.md) · [Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).
+
+**Verification:** Production and local builds, isolation guards, 138 fast tests, and the successful 24-case Chromium rerun plus four final retests. Initial desktop timeouts were isolated to the first run; no production lookup or customer evidence.
+
+**Business impact and next:** Fewer mismatched answers is a trust hypothesis. Review the Birmingham and own-bill journeys, confirm CI and separately authorize any release, then observe which questions permitted visitors cannot answer before considering specific source integrations. No visitor or revenue change has been measured.

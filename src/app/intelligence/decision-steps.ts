@@ -18,16 +18,18 @@ export function billIntent(question: string): BillIntent | null {
   const electricity = /\b(?:electricity|electric|energy|power)[ -]+(?:bill|statement|rate|tariff|price)s?\b/i.test(question);
   if (tax && electricity) return 'mixed';
 
-  const individual = /\b(?:my|our)\b/i.test(question);
+  const personalTax = /\b(?:my|our) (?:(?:property|real estate)[ -]+tax(?:es)?|tax (?:bill|statement)s?)\b/i.test(question);
+  const personalElectricity = /\b(?:my|our) (?:electricity|electric|energy|power)[ -]+(?:bill|statement)s?\b/i.test(question);
   const change = /\b(?:chang(?:e[ds]?|ing)|increas(?:e[ds]?|ing)|decreas(?:e[ds]?|ing)|rose|fell|went (?:up|down)|go(?:ne|ing)? (?:up|down)|higher than last|lower than last|compare (?:my|our))\b/i.test(question);
   if (tax) {
     if (/\b(?:appeal\w*|contest|dispute|overpa\w+|assessment (?:error|correct|wrong)|wrong|incorrect|should (?:be|pay)|fair|exemptions?|(?:owe|pay)|parcel|(?:this|my|our|a) (?:house|home)|this property)\b/i.test(question)) return 'tax-check';
-    if (/\b(?:rates?|millage|average|median|which (?:city|county|state))\b/i.test(question)) return 'local-tax';
-    return individual && change ? 'tax-bill' : 'local-tax';
+    if (/\b(?:rates?|millage|average|median|which (?:city|county|state)|(?:in|across) (?:my|our|this|the) (?:city|county|state|area))\b/i.test(question)) return 'local-tax';
+    if (personalTax && change) return 'tax-bill';
+    return personalTax ? 'tax-check' : 'local-tax';
   }
   if (electricity) {
     if (/\b(?:rates?|tariffs?|prices?|overpay\w*|wrong|should (?:be|pay)|fair)\b/i.test(question)) return 'local-electricity';
-    return individual && change ? 'electricity-bill' : 'local-electricity';
+    return personalElectricity && change ? 'electricity-bill' : 'local-electricity';
   }
   return null;
 }

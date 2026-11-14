@@ -8,9 +8,13 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 14, 2026 — Evidence must answer the question asked
+
+[Question relevance audit](docs/product/QUESTION_ANSWER_RELEVANCE.md) separates actual local and parcel-tax needs from personal statement arithmetic. Draft #99 adds an honest next step before offering an optional made-up example. A jurisdiction-specific product requires authoritative source coverage and year, class and district selection.
+
 ## November 14, 2026 — Question-first decisions
 
-[Decision creation review](docs/product/DECISION_CREATION_JOURNEY.md) traces the public examples, auth, market brief and existing report purchase. Draft #98 uses a short question → city → brief path and preserves browser-local bill examples as a separate route. It adds no provider use or paid capability.
+[Decision creation review](docs/product/DECISION_CREATION_JOURNEY.md) traces the public examples, auth, market brief and existing report purchase. Deployed PR #98 uses a short question → city → brief path and preserves browser-local bill examples as a separate route. It adds no provider use or paid capability.
 
 ## November 13, 2026 — Property-tax-first consumer experience
 

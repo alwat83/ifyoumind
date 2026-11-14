@@ -14,7 +14,7 @@
 
 [Internal prototype and activation review](docs/product/OPENAI_ACTIVATION_READINESS.md) uses Responses to select a lead from synthetic evidence. Deterministic calculations, source facts and caveats remain authoritative. Recommend an optional Decision Report explanation as the first product pilot after staging validation. Household Bill Discovery retains its browser-local boundary. The [secure staging setup](AI_SYNTHESIS_SETUP.md) is documented. Provider configuration, staging and release require separate approvals.
 
-The founder configured funded OpenAI billing and a staging key. Metadata verifies `ifyoumind-staging`, Google Cloud billing, and enabled Secret Manager version 1. Hosting the smoke test requires the missing staging services and runtime identity. The [staging runbook](AI_SYNTHESIS_SETUP.md) records the prerequisite, deployment and rollback gates.
+The founder configured funded OpenAI billing and a staging key. Metadata verifies `ifyoumind-staging`, Google Cloud billing, and enabled Secret Manager version 1. The staged APIs, database, authentication, rules and scoped runtime have been provisioned and verified. The OpenAI credential scopes and the interaction between token counting and the one-request-per-minute limit remain gates for an authorized smoke test. The [staging runbook](AI_SYNTHESIS_SETUP.md) records the deployment and rollback steps.
 
 ## November 12, 2026 — Starter and Plus are the primary subscription offers
 

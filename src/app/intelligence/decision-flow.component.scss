@@ -27,6 +27,7 @@ nav {
 .scene { max-width: 39rem; margin-inline: auto; padding: clamp(38px, 8vh, 88px) 0 54px; }
 h1 {
   @include product.editorial;
+  color: var(--iy-ink);
   font-size: clamp(2.65rem, 7vw, 4.75rem);
   line-height: .98;
   margin: 0;
@@ -38,6 +39,7 @@ fieldset { border: 0; padding: 0; min-inline-size: 0; }
 label { display: block; font-weight: 650; font-size: .92rem; margin-bottom: 7px; }
 label span, .field-help { color: var(--iy-muted); font-weight: 400; }
 input, textarea { @include product.field; padding: 12px 14px; }
+input::placeholder, textarea::placeholder { color: var(--iy-muted); opacity: 1; }
 textarea { display: block; resize: vertical; min-height: 85px; }
 input[aria-invalid='true'], textarea[aria-invalid='true'] { border-color: var(--iy-error); }
 .primary {

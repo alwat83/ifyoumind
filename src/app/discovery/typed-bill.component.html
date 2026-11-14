@@ -1,0 +1,73 @@
+<main id="main" class="typed-shell">
+  <p class="eyebrow">{{ isTax ? 'Property tax' : 'Electricity' }}</p>
+  <ng-container *ngIf="analysis?.finding as finding; else entry">
+    <h1 #resultHeading tabindex="-1">{{ finding.title }}</h1>
+    <p class="result">{{ finding.detail }}</p>
+    <p class="provenance">Calculated from the numbers you entered.</p>
+
+    <details class="evidence">
+      <summary>Show the evidence</summary>
+      <ol><li *ngFor="let step of finding.steps">{{ step }}</li></ol>
+      <table>
+        <caption>Figures you entered</caption>
+        <thead><tr><th scope="col">Bill and field</th><th scope="col">Value used</th></tr></thead>
+        <tbody>
+          <tr *ngFor="let item of finding.cells">
+            <th scope="row">{{ item.label }}<small>{{ item.cell }}</small></th>
+            <td>{{ item.used }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </details>
+
+    <div class="actions">
+      <button *ngIf="!comparing" type="button" class="primary" (click)="compare()">Compare with an earlier bill</button>
+      <button type="button" class="secondary" (click)="edit()">Edit numbers</button>
+    </div>
+
+    <p class="next">Want to explore other decisions? <a href="/register" referrerpolicy="no-referrer" (click)="clear(false)">Create a free account</a>. Your bill details stay behind.</p>
+  </ng-container>
+
+  <ng-template #entry>
+    <h1 #heading tabindex="-1">Enter your bill numbers.</h1>
+    <p class="privacy" id="typed-privacy">Your numbers stay in this tab. We don’t send or save them. Enter only the figures below, without names or account details.</p>
+    <p class="status" role="status">{{ message }}</p>
+    <form #form autocomplete="off" novalidate aria-describedby="typed-privacy" (submit)="calculate($event)">
+      <p *ngIf="analysis?.issues?.length" #errors class="errors" role="alert" tabindex="-1">Check the highlighted details and try again.</p>
+      <fieldset *ngFor="let side of sides">
+        <legend>{{ side === 'current' ? 'Current bill' : 'Earlier bill' }}</legend>
+        <p class="hint" [id]="side + '-bill-hint'">{{ isTax
+          ? 'Use the full annual tax for that year. Leave out installments, payments, past balances and late fees.'
+          : 'Use this period’s electric charges, including its fees and taxes. Leave out gas, payments and previous balances. Use the two meter-read dates, rather than the due date.' }}</p>
+        <div class="fields">
+          <div *ngFor="let field of fields" class="field">
+            <label [for]="side + '-' + field.id">{{ field.label }}</label>
+            <input [id]="side + '-' + field.id" [type]="field.inputMode ? 'text' : 'date'"
+              [attr.inputmode]="field.inputMode ?? null" [attr.placeholder]="field.example ?? null"
+              [attr.maxlength]="field.id === 'year' ? 4 : field.inputMode ? 20 : null"
+              [value]="drafts[side][field.id] ?? ''" (input)="update(side, field.id, $event)"
+              autocomplete="off" spellcheck="false" required
+              [attr.aria-invalid]="fieldError(side, field.id) ? 'true' : null"
+              [attr.aria-describedby]="(fieldError(side, field.id) ? side + '-' + field.id + '-error ' : '') + side + '-bill-hint'">
+            <small *ngIf="fieldError(side, field.id) as error" [id]="side + '-' + field.id + '-error'" class="field-error">{{ error }}</small>
+          </div>
+        </div>
+      </fieldset>
+
+      <ng-container *ngIf="comparing">
+        <label class="match">
+          <input type="checkbox" [checked]="sameBill" (change)="checkMatch($event)"
+            [attr.aria-invalid]="comparisonError ? 'true' : null"
+            [attr.aria-describedby]="comparisonError ? 'typed-match-error' : null">
+          Both bills cover the same {{ isTax ? 'property' : 'electric service' }}.
+        </label>
+        <p *ngIf="comparisonError" id="typed-match-error" class="field-error">{{ comparisonError }}</p>
+      </ng-container>
+
+      <div class="actions">
+        <button type="submit" class="primary">{{ comparing ? 'Compare bills' : 'Show my result' }}</button>
+        <button *ngIf="comparing" type="button" class="secondary" (click)="removeEarlier()">Remove earlier bill</button>
+      </div>
+    </form>
+  </ng-template>
+</main>

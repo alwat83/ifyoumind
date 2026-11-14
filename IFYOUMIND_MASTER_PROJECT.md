@@ -20,6 +20,10 @@
 
 [Property-tax-first review](docs/product/PROPERTY_TAX_FIRST.md) uses the public tax example to introduce a useful, private comparison before signup. Electricity, city evidence and the Business funnel remain available. PR #95 tracks a separate typed-input expansion. The internal AI staging milestone is closed with the flag off. Production and any further provider use are separately gated. [AI milestone evidence](https://github.com/alwat83/ifyoumind/pull/96)
 
+## November 13, 2026 — Privacy-first Bill Discovery
+
+The founder selected property tax and electricity for first-use acquisition. [Phase 1 audit](docs/product/BILL_DISCOVERY_MVP.md) defines the privacy and evidence boundary. [Phase 2A draft](https://github.com/alwat83/ifyoumind/pull/95) delivers one useful result from typed figures, with optional comparison and registration, in the isolated Wow 3.2 Discovery experience. [Evidence and local preview](docs/product/BILL_DISCOVERY_PHASE_2A.md). Production still supports CSV and examples. [Existing Notion roadmap](https://app.notion.com/p/41702474659c81f2aff8e762331a06bc).
+
 ## November 12, 2026 — Starter and Plus are the primary subscription offers
 
 Founder confirmed Starter $4.99/month for one report and Plus $9.99/month for three. Free and the $79 one-time report remain available, with $39 Pro retained for existing customers. The [pricing readiness update](docs/growth/PRICING_READINESS.md) extends the approved Wow 3.2 identity, documents the deployed dormant backend, and preserves separate setup, release and enrollment authorization.

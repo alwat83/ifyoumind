@@ -14,6 +14,10 @@ Founder-directed strategic reset, October 22, 2026. Repository/GitHub are author
 
 [Property-tax-first](../product/PROPERTY_TAX_FIRST.md) makes the year-over-year tax result useful before signup. Observe whether permitted first-time visitors can state what changed, explain what the example cannot establish and choose a next action. The existing Business report remains the paid path. No new visitor, purchase or revenue evidence.
 
+## November 13 — Bill Discovery first-use candidate
+
+[Phase 2A](../product/BILL_DISCOVERY_PHASE_2A.md) puts a free useful result before registration for two common bill types. Next measure unassisted useful findings and time to evidence on devices with permitted users, then consider an approved small rollout and measure supported-input friction. No analytics or outbound outreach were introduced. Tests use synthetic values. Real visitor, conversion, paid and support outcomes remain unmeasured. The scoped financial baseline below is unchanged.
+
 ## November 12 — Primary Starter and Plus offers
 
 The [pricing readiness update](PRICING_READINESS.md) prioritizes Starter and Plus for eligible customers. The first measurable milestone is an independent settled invoice and a saved report from one authorized workspace. Catalog availability, sandbox purchases and test passes do not change the commercial scoreboard. Outbound remains Pending Founder Setup.

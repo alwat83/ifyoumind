@@ -8,7 +8,7 @@ const preview=args.has('--preview')||args.has('--electricity')||args.has('--unif
 if(production){
  const root=resolve('dist/ifyoumind-deploy/browser');
  const files=(await readdir(root)).filter(name=>name.endsWith('.js'));
- for(const file of files){const content=await readFile(resolve(root,file),'utf8');if(/app-tax-discovery|app-unified-discovery|Rerun discovery|county_usd|consumption_kwh/.test(content))throw new Error(`Local discovery code in production: ${file}`);}
+ for(const file of files){const content=await readFile(resolve(root,file),'utf8');if(/app-tax-discovery|app-unified-discovery|app-typed-bill|Rerun discovery|county_usd|consumption_kwh/.test(content))throw new Error(`Local discovery code in production: ${file}`);}
  console.log(`PASS: ${files.length} production JS files exclude the discovery experience`);
  const island=resolve(root,'discover');
  const assets=await readdir(island);

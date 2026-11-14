@@ -1,35 +1,48 @@
-# AI synthesis setup
+# OpenAI explanation setup
 
-ifYouMind keeps statistics and evidence generation separate from generative synthesis.
+The internal `explainSyntheticMarket` callable sends only a fixed synthetic packet to OpenAI. It defaults off, requires an exact staging project match and blocks the production project and emulators. The production deployment allowlist excludes it. Paid Decision Reports keep their existing deterministic workflow. [Prototype review and audit](docs/product/OPENAI_ACTIVATION_READINESS.md)
 
-## Runtime
+## Founder setup for an authorized staging test
 
-The synthesis function uses the OpenAI Responses API and receives only a compact saved analysis packet. It does not receive Firebase credentials, provider tokens, raw workspace secrets, or unrestricted database access.
+**Target: `ifyoumind-staging`.** Staging infrastructure was provisioned and verified on November 13, 2026. [Inventory and remaining blockers](docs/product/OPENAI_ACTIVATION_READINESS.md#controlled-staging-readiness)
 
-## Required Firebase secret
+- Cloud Functions, Cloud Run, Cloud Build, Artifact Registry, Eventarc and Firestore APIs are enabled. The standard Native-mode `(default)` Firestore database is in `us-central1`. Firebase Auth allows email/password, with anonymous Auth and client self-signup disabled.
+- The released Firestore rules match the reviewed source. A signed-in synthetic admin and active workspace owner successfully read their membership. Staging returned HTTP 403 for anonymous quota reads and for reviewer quota reads, listing and writes. The probe left no quota record.
+- The keyless `synthetic-openai@ifyoumind-staging.iam.gserviceaccount.com` runtime has a database-conditioned custom role for Firestore transactions and document get/create/update. Secret Manager accessor is granted on only `OPENAI_API_KEY`. Version 1 is enabled and bound to the serving staging revision.
+- The OpenAI dashboard confirms the Luna allowlist, 10,000 TPM, 1 RPM, 10,000 IPM, and the $1 reporting threshold with alerts at $0.50 and $1. Requests continue after the threshold. The active staging key was read back as Restricted with Responses set to Write and all other endpoint rows set to None. This verifies configuration. The authorized one-request staging smoke subsequently verified Responses endpoint acceptance. [OpenAI key scopes](https://developers.openai.com/api/docs/guides/api-keys)
+### Restrict the existing staging key
 
-- `OPENAI_API_KEY`
+1. In the OpenAI Platform, select **ifYouMind Staging**, open **API keys**, and choose **Edit** on `ifyoumind-staging-firebase`.
+2. Choose **Restricted**, expand **Model capabilities**, and set the **Responses /v1/responses** row to **Write**. Keep the other endpoint rows at **None** and keep the existing expiration. The editor may count the model permission and Responses permission separately. There is no separate input-token-count row.
+3. Save, allow time for propagation, and reopen the editor to verify the saved scope. The key's owner also needs model request and Responses write permissions in the staging project. An in-place scope edit keeps the existing key, so it requires no Secret Manager rotation. If the owner cannot save the scope or independent key ownership is preferred, have the project owner provision a project service account with equivalent narrow permissions and replace the staged secret version using the approved private provisioning process. Never reveal the key.
 
-## Optional parameter
+The editor shows the documented minimum for **Responses creation**. OpenAI's public documentation does not map `POST /v1/responses/input_tokens` to a separate scope or independently prove it accepts this restricted key. Keep the permissions narrow and validate token counting separately only if it is needed later. [OpenAI project permissions](https://developers.openai.com/api/docs/guides/rbac) · [API keys and service accounts](https://developers.openai.com/api/docs/guides/api-keys) · [Token count API](https://developers.openai.com/api/reference/resources/responses/subresources/input_tokens/methods/count)
 
-- `AI_SYNTHESIS_MODEL` defaults to `gpt-6-luna`.
+The callable now sends only one `POST /v1/responses` per authorized attempt. The public rate-limit docs do not establish whether token counting shares the generation RPM bucket. Removing the count from this fixed-fixture path keeps the approved 1 RPM setting and five-second deadline. The local guard caps the serialized body at 1,024 UTF-8 bytes. Actual input tokens are checked after the request, so the byte cap is not an exact preflight token count. [OpenAI rate limits](https://developers.openai.com/api/docs/guides/rate-limits)
 
-The model can be changed without changing the evidence/reasoning contract.
+**GREEN — Synthetic staging validated and back OFF.** One valid Responses generation used 161 input and 16 output tokens. Revision `explainsyntheticmarket-00004-lor` serves all staging traffic with the flag off. The one quota reservation was unchanged by `disabled-after`. Any future live test requires its own authorization. [Staging evidence](docs/product/OPENAI_ACTIVATION_READINESS.md#flag-off-deployment-verification)
 
-## Guardrails implemented in code
+### Reproduce the isolated staging artifact
 
-Before model invocation:
-- analysis must already exist;
-- dataset alignment/statistics are deterministic;
-- evidence signals have stable IDs;
-- the model receives only saved evidence.
+The standard package main is `lib/index.js`. It initializes Firebase Admin and discovers the full Functions package, including unrelated Stripe bindings. The staging artifact reuses the reviewed function source and lockfile, replaces the package main in a disposable copy, and uses the [isolated entry](scripts/openai-staging-entry.cjs) to initialize the default Admin app and expose just the smoke callable.
 
-After model invocation:
-- JSON shape is validated;
-- evidence signal IDs must exist in the supplied packet;
-- output lengths are bounded;
-- numeric claims are rejected unless the number was present in the evidence packet;
-- synthesis is stored alongside the immutable analysis run;
-- causal claims are forbidden by the prompt contract and deterministic reasoning policy.
+1. Use Node 22. From the repository root, extract the reviewed source into a new disposable directory with `git archive 662420d000a152d3847e73d0e05157a0643bb076 functions | tar -x -C "$stage_dir"`. Use an empty `stage_dir` and copy the reviewed isolated entry into that directory.
+2. In the disposable copy, run `npm --prefix functions ci` and `npm --prefix functions run build`. Copy the isolated entry to `functions/lib/staging-entry.js` and set only the disposable `functions/package.json` main to `lib/staging-entry.js`.
+3. Set `functions/.env.ifyoumind-staging` to `SYNTHETIC_OPENAI_STAGING_PROJECT=ifyoumind-staging` and `ENABLE_SYNTHETIC_OPENAI_EXPLANATION=false` for flag-off verification. Do not copy any developer dotenv or secret files. Use a staging-only `firebase.json` with source `functions`, codebase `default`, and ignores for `node_modules`, `test`, and Firebase debug logs. The artifact is built before deploying. Confirm the compiled package exports only `explainSyntheticMarket`, has a default Admin app, and declares the expected runtime and one secret binding.
+4. With separate deployment approval, target only `firebase deploy --config firebase.json --only functions:explainSyntheticMarket --project ifyoumind-staging --non-interactive`. Confirm the ready revision receives 100% of traffic, binds version 1, and matches the approved flag. For flag-off, require anonymous 401, other-workspace 403, authenticated `disabled-before` success and unchanged quota. [Firebase Admin initialization](https://firebase.google.com/docs/admin/setup#initialize_the_sdk)
 
-The generative layer explains evidence. It does not calculate or overwrite the statistical evidence.
+## Staging validation after separate authorization
+
+Use the reviewed PR #96 head and the explicit target `ifyoumind-staging`. Verify the staging Firebase app/Auth issuer, synthetic workspace, dedicated runtime account and key metadata. The currently serving flag-off revision has passed the staging checks. A live synthetic invocation and the rollback deploy require separate founder authorization. Handle any key retirement separately. Stop if the project, identity, binding, flags, rules, membership or quotas differ from the approved plan.
+
+1. **Verify the serving flag-off revision.** In the ignored `functions/.env.ifyoumind-staging` file, set `SYNTHETIC_OPENAI_STAGING_PROJECT=ifyoumind-staging` and `ENABLE_SYNTHETIC_OPENAI_EXPLANATION=false`. Check that no shared dotenv file overrides the plan. Read back the existing reviewed Firestore rules release. Use the existing verified revision unless a specifically authorized replacement is required. Review Cloud Functions and Cloud Run metadata privately. Confirm the exact runtime identity, secret project and approved version binding (currently `1`) to this callable, disabled flag, US Central region, 15-second timeout, two maximum instances and concurrency one. Verify that an anonymous request is rejected, and that the authorized `disabled-before` smoke returns the deterministic fixture with no quota use.
+2. **After separate authorization, enable briefly and run once.** Record UTC start time and the staging quota counters. Use just the one authorized reviewer and change the staging flag to `true` for a targeted redeploy. Read back project, service account, bound secret version, flag and serving revision. Run one `enabled` smoke and check the result and one reservation. One invocation can send at most one Responses generation request, with a five-second provider deadline and no retry. Stop on any failed or ambiguous result and count the attempt. Reconcile generation tokens, actual tier and attributable cost with the dedicated project's usage dashboard. A single latency observation is a smoke result.
+3. **Restore disabled state.** Set the staging flag to `false`, redeploy the callable and confirm the disabled revision serves all traffic. Run `disabled-after` and confirm no new quota reservation or provider traffic from that call. If the disable deploy cannot be confirmed, revoke the dedicated staging key to stop new provider use and restore the known disabled configuration before another test. Retire the key only under separate authorization or if the incident condition above is met. Keep quota evidence in restricted staging records. Record only redacted results and usage counts in project handoff.
+
+For each phase, pipe a fresh **Firebase ID token** from a trusted local staging Auth sign-in using the dedicated reviewer's credentials. Use the same approved staging Firebase project (the runner checks token audience and issuer and the server verifies its signature and authorization). The token source should write only the token on stdout and should never print it to a terminal, shell history or shared logs. The command below uses a placeholder for that local token source. A service account OAuth access token, custom token or OpenAI API key is unsuitable. [Firebase Auth REST sign-in](https://firebase.google.com/docs/reference/rest/auth#section-sign-in-email-password)
+
+```sh
+STAGING_TOKEN_SOURCE | node scripts/openai-staging-smoke.mjs --approved-staging-smoke PHASE ifyoumind-staging synthetic-WORKSPACE
+```
+
+Replace `PHASE` with `disabled-before`, `enabled` or `disabled-after` and use the existing `synthetic-market-review` workspace ID. Only the enabled phase opts in to a provider call. The other phases fail safely if the deployed flag is unexpectedly on. The runner checks the exact synthetic facts, source, caveat and fallback order. It reports latency and, on success in the enabled phase, actual generation input/output tokens and observed Standard service tier. CI runs it with mock transport. The first real staging result and a later production release each require their own approval.

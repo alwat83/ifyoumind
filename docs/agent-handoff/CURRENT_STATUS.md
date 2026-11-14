@@ -1,5 +1,13 @@
 # ifYouMind — Current development status
 
+## November 13, 2026 — OpenAI explanation readiness
+
+**GREEN — Synthetic staging validated and back OFF on [draft PR #96](https://github.com/alwat83/ifyoumind/pull/96).** One authorized generation from revision `explainsyntheticmarket-00003-det` returned valid evidence in 3,737 ms with 161 input tokens, 16 output tokens and Standard tier. The [synthetic smoke evidence](../product/OPENAI_ACTIVATION_READINESS.md#one-authorized-openai-generation) records the independently verified final revision `explainsyntheticmarket-00004-lor` at 100% traffic, flag off and secret version 1. `disabled-after` passed without incrementing the single reviewer/day/global-day/global-month reservation. Estimated generation cost $0.0000241. Project dashboard and billed amount have yet to reconcile.
+
+**Verified candidate CI:** Both [Launch build](https://github.com/alwat83/ifyoumind/actions/runs/43567987312) and [Authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/43567987310) passed on `a40a708133bfd525ed3ba3cdd5c0694b48ed6c22`. The test used callable source `662420d000a152d3847e73d0e05157a0643bb076` and the isolated bootstrap from that passing PR head. Production release and any further provider requests require separate authorization.
+
+**Production verification.** The deployed base is [merge 59a4b80a](https://github.com/alwat83/ifyoumind/actions/runs/43392378321). A current Cloud Functions metadata lookup returned 404 for the synthetic callable in production. The callable defaults off and is excluded from the production workflow. Paid reports remain deterministic and Bill Discovery [PR #95](https://github.com/alwat83/ifyoumind/pull/95) is separate. [Audit, synthetic demo and budgets](../product/OPENAI_ACTIVATION_READINESS.md)
+
 ## November 12, 2026 — Starter and Plus pricing readiness
 
 **Draft candidate** [PR #93 and exact-head checks](https://github.com/alwat83/ifyoumind/pull/93/checks) on `codex/starter-plus-pricing-readiness` from Wow 3.2 `900dd2648f95358ef5e1416aa8a2cfd2f5c4be12`. [Pricing readiness, production and Stripe readbacks, and matched visuals](../growth/PRICING_READINESS.md). PR #87 is merged and deployed dormant. Live Starter and Plus prices and the portal configuration were verified read-only. The current workflow forces enrollment empty. Existing Pro and $79 billing are preserved. Separate exact release and enrollment authorization are required. Issue #84 remains open.

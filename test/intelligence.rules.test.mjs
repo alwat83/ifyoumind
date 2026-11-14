@@ -66,6 +66,14 @@ test('universal usage counters are closed to every client', async () => {
   }
 });
 
+test('internal OpenAI quota records are closed even to workspace owners and site admins', async () => {
+  for (const context of [env.unauthenticatedContext(), env.authenticatedContext('alice'), env.authenticatedContext('staff', { admin: true })]) {
+    const quota = doc(context.firestore(), 'internalExplanationQuota/global');
+    await assertFails(getDoc(quota));
+    await assertFails(setDoc(quota, { dayCount: 0, monthCount: 0 }));
+  }
+});
+
 test('subscription billing documents, grants and launch seats are server-only', async () => {
   const db = env.authenticatedContext('alice', { admin: true }).firestore();
   for (const path of [

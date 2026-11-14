@@ -1,0 +1,130 @@
+# OpenAI explanation prototype and activation readiness
+
+**November 13, 2026 · OpenAI / Codex · Internal synthetic-data review.** Separate from Bill Discovery [draft PR #95](https://github.com/alwat83/ifyoumind/pull/95) at `73b893c067ae54b4b55100dbe168191386e7b00e`. Base is production master `59a4b80a8e427a13e0d8bee0f753f8954ea8611f`. [Existing Firebase release](https://github.com/alwat83/ifyoumind/actions/runs/43392378321).
+
+## Controlled staging readiness
+
+**November 13, 2026 Pacific / November 14 UTC · GREEN — Synthetic staging validated and back OFF.** The single approved OpenAI generation returned valid evidence within token limits. The flag was restored to off and the disabled revision serves all staging traffic.
+
+| Area | Readback |
+| --- | --- |
+| Cloud APIs | Enabled Cloud Functions, Cloud Run, Cloud Build, Artifact Registry, Firestore and Eventarc. Firebase, Identity Toolkit, Firebase Rules and Secret Manager were already enabled. |
+| Firestore and Auth | Standard Native-mode `(default)` Firestore in `us-central1`. Email/password Auth initialized. Client signup and anonymous sign-in are disabled. One synthetic reviewer has a verified email, the `admin` claim and active owner membership in `synthetic-market-review`. A staging ID token verified the issuer, audience and claim and could read its own membership. |
+| Released rules | `cloud.firestore` references ruleset `01cd2a31-5c04-4bcc-a2cc-b51a32bb1536`. Readback matched reviewed `firestore.rules` byte for byte. SHA-256 `fb04551dd2fb45d3f6a58615bd38441a5db58b7451d4081f6cb2d7c726a77009`. The live staging probe returned 403 for anonymous quota read and signed-in reviewer quota read, list and write. No quota document was created. Firebase reported an existing rule warning on optional usernames at line 138. |
+| Runtime identity | `synthetic-openai@ifyoumind-staging.iam.gserviceaccount.com` is enabled with zero user-managed keys. Its only direct project binding is the custom role `syntheticOpenAiFirestore`, conditioned on the staging default database, with `datastore.databases.get` and `datastore.entities.get/create/update`. Secret Manager accessor is attached only to the staged `OPENAI_API_KEY` secret. The operator already has `iam.serviceAccounts.actAs` on the runtime. No impersonation grant was added. |
+| Secret and deployment | Secret Manager metadata confirms enabled version 1. The source manifest declares `OPENAI_API_KEY` and the named runtime. Cloud Functions and Cloud Run bind version 1 on the deployed staging revision. The feature flag is off. |
+| OpenAI controls | Verified Luna-only allowlist, 10,000 TPM, 1 RPM, 10,000 IPM and $1 threshold with $0.50 and $1 alerts. The threshold does not stop requests. The founder confirmed prepaid funding and auto-reload disabled. |
+| OpenAI credential and throughput | The founder saved the scope. Dashboard readback confirmed Restricted → Model capabilities → Responses → Write with the other endpoint rows at None. The authorized single-generation smoke verified live Responses access. The callable sends only one generation request and retains the 1 RPM setting. |
+
+The callable requires an explicit Firebase staging project match, and staging source discovery selects the dedicated runtime service account derived from that project ID. The authorized reviewer gets only verified fixture evidence and, on provider success, validated generation token counts and the observed Standard service tier. The runner checks the full synthetic fixture, measures request-to-response latency, and checks deterministic flag-off behavior before and after the one allowed staging invocation. Its automated tests substitute both transports. [Founder setup, operator commands and rollback](../../AI_SYNTHESIS_SETUP.md).
+
+Revalidated implementation `8be99ea62574680c157efef50eaf5aaf2fdee081` with 87 local Functions tests and 11 local Firebase integration and rules tests. Inspecting the compiled Functions manifest with the exact staging project and flag set to `false` confirmed the Gen 2 callable in `us-central1` binds only `OPENAI_API_KEY`, uses the dedicated runtime, and caps execution at 15 seconds, two instances and concurrency one. Secret version `1` is cloud metadata and will be verified in the deployed binding after authorization. [Implementation Launch build](https://github.com/alwat83/ifyoumind/actions/runs/43541205780) · [Implementation Authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/43541205755).
+
+## One authorized OpenAI generation
+
+**Result: GREEN.** No runtime source, package dependency or deployment workflow changed. The isolated staging artifact used callable source `662420d000a152d3847e73d0e05157a0643bb076` and the bootstrap from passing draft head `a40a708133bfd525ed3ba3cdd5c0694b48ed6c22`. Rebuilt under Node 22.23.2 with matching bootstrap and compiled callable/provider hashes. Only the staging flag changed between the enabled and disabled deployments.
+
+| Phase | Verified result |
+| --- | --- |
+| Baseline | `explainsyntheticmarket-00002-zax` ACTIVE and Ready with 100% traffic, flag off and secret version 1. Verified Firebase reviewer has an active synthetic owner membership, verified email and the admin claim. Quota collection empty. The OpenAI dashboard showed an active Restricted key with only Responses Write, Luna allowlisted at 1 RPM, $5.00 prepaid credit, auto-reload off, no recorded key use and $0.00 displayed staging spend. No settings changed. |
+| Enabled revision | `explainsyntheticmarket-00003-det`, Ready and ACTIVE at 100% traffic, flag true and binding unchanged. The smoke was initiated at `2026-11-14T07:19:05.950Z`. Exactly one authenticated callable request with provider opt-in. No retry or separate token-count request. |
+| Provider result | HTTP 200, valid fixed synthetic facts, sources and caveat. Provider-reported 161 input and 16 output tokens (177 total), Standard tier (`default`). Both token counts are within limits. Observed end-to-end callable latency 3,737 ms. |
+| Rollback | Flag restoration began immediately after the attempt. Cloud Functions and Cloud Run independently verified `explainsyntheticmarket-00004-lor` ACTIVE and Ready with 100% traffic, flag `false`, staging guard, dedicated runtime identity, enabled secret version 1 and limits of 15 seconds, two instances and concurrency one. Function update recorded at `2026-11-14T07:19:57.410965916Z`. |
+| `disabled-after` | HTTP 200, valid deterministic evidence, `reason: disabled`, 1,324 ms. No provider opt-in. The disabled branch exits before key access, quota reservation or transport. |
+| Quota | Zero documents before generation. One reservation wrote two documents. Reviewer day 1, global day 1, global month 1, using UTC. Post-attempt and post-rollback reads matched after `disabled-after`. |
+| Cost | $0.0000241 estimated from the observed tokens and current Luna Standard pricing, assuming uncached input. Project-filtered usage reporting had no request row during the initial reconciliation. An attributable billed amount and independent dashboard request count remain pending. No second request was used to verify billing. |
+
+[Published GPT-6 Luna rates](https://developers.openai.com/api/docs/models/gpt-6-luna) · [Candidate Launch build](https://github.com/alwat83/ifyoumind/actions/runs/43567987312) · [Candidate Authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/43567987310)
+
+Staging is off and the one-request authorization is exhausted. Production release and any future provider calls remain separate decisions.
+
+## Flag-off deployment verification
+
+**Replacement verified, November 13 Pacific / November 14 UTC.** Cloud Functions and Cloud Run independently confirm revision `explainsyntheticmarket-00002-zax` is ACTIVE, Ready and receives 100% of traffic in `ifyoumind-staging`, `us-central1`. Gen 2 Node.js 22 runs as `synthetic-openai@ifyoumind-staging.iam.gserviceaccount.com`. Both metadata views show the staging project gate and flag `false`, version 1 of `OPENAI_API_KEY`, and the existing timeout/max-instances/concurrency of 15 seconds/2/1 in function metadata. Function updated at `2026-11-14T06:44:28.877030586Z`. The reviewed Firestore rules and staging Auth posture were also verified.
+
+**Artifact.** Built from clean Functions source and lockfile at `662420d000a152d3847e73d0e05157a0643bb076` with Node 22.23.2 and npm 10.9.8. The [reproducible procedure](../../AI_SYNTHESIS_SETUP.md#reproduce-the-isolated-staging-artifact) uses just the staged package main override, isolated bootstrap, flag-off dotenv and Functions-only deployment config. No Stripe secret is needed. Bootstrap SHA-256 `b687ddf21dce7a34537fafc8b26be0e2d7864f8801670659f0defdc302c1de8f`. Compiled callable SHA-256 `f355432fb7ab0b46da2ed0f7bf47b0c98b9f69807a15da0ef3041e026ada0930`. The callable and provider code were taken unmodified from the approved source. Local Functions suite passed 88 tests, the isolated package readback confirmed the expected export and runtime metadata, and Firebase dry run and targeted replacement succeeded.
+
+**Live acceptance.** Anonymous returned HTTP 401 `UNAUTHENTICATED`. The authenticated foreign-workspace probe returned HTTP 403 `PERMISSION_DENIED`. Authenticated `disabled-before` returned `{"phase":"disabled-before","source":"deterministic","valid":true,"latencyMs":273}`. The runner asserted `reason: disabled`, the two fixture facts and sources, the caveat, evidence order and absence of provider usage. The quota collection held zero documents before and after. The request omitted provider opt-in and returned from the disabled branch before key access, quota reservation or transport. Zero OpenAI requests were made by this validation.
+
+**Historical gate.** This verified flag-off revision was the baseline for the subsequent authorized live smoke above.
+
+### Superseded revision and diagnosis
+
+- **Deployment.** Read-only Cloud Functions and Cloud Run metadata verified `explainsyntheticmarket-00001-yis` receives 100% of staging traffic, is Ready and ACTIVE, and uses Gen 2 Node.js 22 in `us-central1`. Runtime `synthetic-openai@ifyoumind-staging.iam.gserviceaccount.com`, secret `OPENAI_API_KEY` version `1`, flag `false`, timeout 15 seconds, two max instances and concurrency one. Function metadata last updated at `2026-11-14T06:05:21.151764771Z`. Released Firestore rules still match the reviewed source.
+- **Artifact provenance.** Founder deployed from reviewed commit `662420d000a152d3847e73d0e05157a0643bb076` with a temporary single-export `functions/lib/staging-entry.js` and temporary package main override to avoid the unrelated Stripe exports. This was an isolated artifact. Cloud metadata verifies the serving configuration. The founder supplied the source attribution and local restoration details.
+- **Reviewer and probes.** A staging Web app provided the Firebase configuration. Password sign-in produced an ID token with the expected staging issuer, verified email, admin claim, and active owner membership in `synthetic-market-review`. The credential and token stayed private. Anonymous access returned HTTP 401 `UNAUTHENTICATED`. The authenticated foreign-workspace probe returned HTTP 500 `INTERNAL` instead of HTTP 403. The authenticated `disabled-before` runner exited 1 with `Staging smoke failed`. No deterministic payload was returned.
+- **Quota and provider boundary.** The quota collection had zero documents before and after the smoke. Global and reviewer reservations remained absent. The runner omitted provider opt-in, the serving revision was flag-off and Cloud Run logs placed both authenticated failures at the membership lookup, before any provider access or quota reservation.
+- **Root cause and repair.** The isolated entry bypassed `admin.initializeApp()` in the normal Functions index. Logs show the default Firebase app was missing at `getFirestore`. A local Node 22 comparison reproduced the missing app in the standalone import and verified default Admin initialization restores Firestore while preserving callable metadata. [Corrected isolated entry and recheck procedure](../../AI_SYNTHESIS_SETUP.md#reproduce-the-isolated-staging-artifact)
+- **Historical decision.** The first revision was blocked. The separately approved replacement passed the flag-off checks documented above.
+
+## Cross-surface impact
+
+| Surface | Status | Verification |
+| --- | --- | --- |
+| Internal explanation callable and provider boundary | Change Required | Fixed synthetic packet, verified internal admin with active workspace owner/admin membership, strict output, quota and fallback. Explicit staging project and runtime identity, verified usage counters and a mock-tested staging runner. |
+| Public homepage, Discovery, reports, registration, Dashboard and Account | Not Affected | No frontend entry or data bridge. Existing deterministic reports, layouts and browser-local Discovery stay in place. |
+| Pricing, Checkout, subscriptions and entitlements | Not Affected | No billing interface or commercial calls. The prototype accepts no report ID and never reads or grants report access. |
+| Privacy, Firestore and production | Verify Only | Inspect the production deployment allowlist and project metadata. Verify client access to quota records is denied by existing rules. Keep identifiers, credentials and payloads out of smoke evidence. |
+| Responsive, accessibility and visual identity | Not Affected | No user interface changes. Existing browser and visual suites cover regression. |
+| Handoff | Change Required | Record audit, supported model, costs, demonstration, tests and exact activation gates. |
+
+## Verified current integration
+
+| Area | Finding |
+| --- | --- |
+| Production Firebase | The historical production Secret Manager metadata check returned HTTP 404 for the named secret. The historical inventory returned 33 functions, with no OpenAI secret binding or same-name plain environment variable. The latest direct Cloud Functions metadata lookup still returns 404 for `explainSyntheticMarket`. |
+| Existing implementations | [Market AI](../../functions/src/intelligence/market-ai.ts) and [universal synthesis](../../functions/src/intelligence/ai-synthesis.ts) already target Responses and use server-side Bearer auth, `store:false`, evidence packets and organization membership. Neither is exported by [Functions index](../../functions/src/index.ts) or listed in the live inventory or deployment allowlist. The Angular Universal Data service still defines a callable reference. A frontend reference does not establish availability. |
+| Paid reports | `generatePaidDecisionReport` authorizes owner/admin, reserves existing entitlement, uses deterministic Census data and report rules, then saves the result and consumes the credit atomically. Runtime bindings are Census and Stripe. No OpenAI involvement. |
+| Gaps | The old endpoints accept unrestricted workspace-derived text, default to viewer-inclusive membership, use prompt-only JSON and causal constraints, validate numbers against a pooled allowlist, and persist prose. An allowed number can still be attributed to the wrong city. Unsupported causal language can contain no numbers at all. Both lack a per-request transport deadline, an atomic provider spending cap and a fail-soft result. Validation exceptions can carry model-derived text. Old setup instructions described implementation fragments as operational. |
+| Model | The [official GPT-6 Luna catalog](https://developers.openai.com/api/docs/models/gpt-6-luna) independently confirms the historical slug `gpt-6-luna`, support for Responses, Structured Outputs and reasoning effort `none`, and standard rates of $0.10 per million input and $0.50 per million output tokens. The prototype explicitly allowlists this model. Model availability for the founder’s project requires separate verification. |
+| Provider billing | The founder reports funded API billing and auto-reload disabled. OpenAI project-level model access, credential permissions and spend settings have not been independently verified. The [OpenAI API settings](https://platform.openai.com/settings/organization/projects) can confirm these without a provider inference request. |
+
+## Internal prototype
+
+The Firebase callable `explainSyntheticMarket` accepts an organization ID and an optional literal `useProvider: true`. It requires Firebase Auth, verified email, the server-issued site admin claim, and active owner/admin membership in that workspace. Provider access additionally requires a synthetic workspace and explicit request opt-in. Flag-off smoke phases omit that opt-in, so they fail safely if the staging flag is unexpectedly on. The organization ID and user identity are used only for local authorization and quota. The provider sees a fixed synthetic packet with two verified facts, no names, account/organization IDs, report IDs, custom prompts, raw reports, files or bill data.
+
+The model selects one of two evidence IDs as the lead. The server renders both facts, computes differences from the same fixture, and always displays the caveat. The provider cannot write prose, omit the second fact, or supply amounts, causes or confidence claims. The Responses request uses strict `text.format` JSON Schema, a fixed model and Standard service tier, reasoning disabled, no tools or conversation state and `store:false`. The server accepts only a completed assistant message with exactly one canonical selection, valid usage, and no extra keys or duplicate keys. Refusals, tool calls, partial responses, extra prose and unknown IDs fail closed. This tests whether ordering verified facts is useful before adding a richer explanation. [Responses migration](https://developers.openai.com/api/docs/guides/migrate-to-responses) · [Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs)
+
+The fixed packet and strict schema are serialized once. The exact body is 927 bytes and the local guard rejects any body above 1,024 UTF-8 bytes before transport. This is a byte bound. The server rejects results outside the accepted envelope of 768 reported input tokens and 128 output tokens after the call, and caps generation at 128 output tokens in the request. One Responses request has a five-second abort deadline, accepts at most 16 KiB of response, disallows redirects and never retries. Failures including 403 or 429 yield deterministic fallback. The Firestore transaction still reserves one attempt against 3 per reviewer per UTC day, 20 globally per day and 200 globally per month. Failed attempts are not refunded. Firebase applies a 15-second invocation timeout, two maximum instances and concurrency one. No raw payload is logged or persisted.
+
+The flag is enabled only by the exact string `true`. The runtime project must match `SYNTHETIC_OPENAI_STAGING_PROJECT`, and production, demo projects and the Functions emulator fail closed. The production workflow excludes this function. The separate legacy synthesis functions remain outside the deployment path. `store:false` disables Responses application-state storage. OpenAI's standard abuse monitoring may still retain content, generally up to 30 days, subject to stated exceptions. Account-specific data sharing and any modified retention controls remain to be confirmed before a future real-data pilot. [Token counting](https://developers.openai.com/api/docs/guides/token-counting) · [OpenAI data controls](https://developers.openai.com/api/docs/guides/your-data)
+
+## Synthetic demonstration and cost
+
+With the mock selecting `income`, the response leads with Market A median household income **$62,000** and Market B **$68,000**, a **$6,000** difference. The second fact reports **12,000** versus **9,000** households. The caveat says these figures establish neither demand, profitability, nor causation. The deterministic path leads with households and presents both facts. Run `npm --prefix functions run build && node --test functions/test/openai-explanation.test.cjs` to reproduce the demonstration. Firebase emulator tests cover the actual disabled callable and transactional quota. No real provider inference or production data was used.
+
+| Scenario | Assumption | Estimated OpenAI generation cost |
+| --- | --- | ---: |
+| Representative request | 250 input and 16 output tokens for the two facts and a single enum response | $0.000033 |
+| Maximum modeled request | 768 input at $0.10/M and 128 output at $0.50/M | $0.0001408 |
+| 50 attempts/month | Maximum modeled request each time | $0.00704 |
+| 200 attempts/month | Maximum configured monthly attempts | $0.02816 |
+| 1,000 attempts/month | Future sizing only, above the enforced cap | $0.1408 |
+
+The representative token counts are estimates. The mock returns fixture counts. The generation estimate uses Standard rates and assumes uncached input. It excludes Firebase, Firestore, network transfer and tax. The 768 input token figure is an acceptance ceiling. The fixed 927-byte payload is checked before transport, while provider framing and actual token counts are verified after transport. A rejected response may still incur charges. Confirm actual usage, billed cost, delivered tier and latency in the authorized synthetic smoke. [Model rates](https://developers.openai.com/api/docs/models/gpt-6-luna)
+
+The staging model limit is 1 RPM and the callable sends at most one provider request per reserved attempt. This removes the dependency on whether the token-count route shares the generation bucket. Independently submitted concurrent attempts remain subject to project-wide rate limiting and fall back on 429. The staging spend threshold remains unenforced. The Firestore attempt caps still apply even when a request times out. [OpenAI rate limits](https://developers.openai.com/api/docs/guides/rate-limits) · [OpenAI spend limits](https://developers.openai.com/api/docs/guides/spend-limits)
+
+## Product recommendation
+
+| Dimension | Decision Report explanation | Optional Bill Discovery explanation |
+| --- | --- | --- |
+| Usefulness | Helps a buyer understand a verified tradeoff, evidence quality and what to check before acting. | Local arithmetic already answers what changed. Extra explanation needs a measured comprehension gap. |
+| Privacy | Start with public Census facts from an already authorized report, after a separately reviewed minimum fact projection. Exclude user-supplied concepts, private context and identifiers. | Even derived amounts can reveal household circumstances. Requires a separate affirmative choice and exact transfer disclosure, with local analysis still fully available. |
+| Effort | Existing tenant checks, saved report, source metadata and rendering are reusable. Add an opt-in read-only view after entitlement, separate from generation. | Requires a deliberate bridge out of the current no-network island, a consent and redaction journey, retention review, and anonymous abuse controls if account-free. |
+| Latency and cost | Optional asynchronous explanation, with deterministic report ready immediately. Low modeled inference cost and reuse opportunities. | Similar inference cost per call, but free anonymous usage increases operational exposure. Privacy and round-trip friction fall inside the first-use journey. |
+| Revenue | Directly tied to a paid report's utility and buyer trust. Measure it against an unchanged deterministic report before expanding. | Acquisition benefit is unproven. First measure the account-free local result. |
+
+**Recommendation:** Ship the Decision Report explanation first, after a synthetic staging validation and a small authorized usefulness trial. Keep deterministic evidence, availability and paid access independent of the optional explanation. Measure time to a correct takeaway, evidence use, fallback rate, p95 latency and observed cost. The prototype does not justify a revenue claim. Keep Bill Discovery local by default and revisit a consented optional feature only after demonstrated need.
+
+## Founder activation checklist
+
+1. Recheck the confirmed billing, model allowlist, restrictive key settings and retention before an approved live attempt. Follow the [secure setup steps](../../AI_SYNTHESIS_SETUP.md#founder-setup-for-an-authorized-staging-test) after authorization.
+2. Separately authorize one bounded synthetic invocation, with at most one generation request, and the staging flag reset. Verify strict response compatibility, real token counts, actual usage and cost, latency, redacted evidence and the flag-off fallback before and after the provider call.
+3. Review the minimum Decision Report data projection, authorization/entitlement gates, provider retention and user-facing disclosure before a small approved pilot. Verify that the original report is usable when the feature is off. Approve any later production deployment and activation separately. Keep Stripe and report entitlement mechanics independent.
+
+## Verification handoff
+
+The November 13 historical production metadata recheck found no `OPENAI_API_KEY` or enabled version in `ifyoumind-473fe`, zero bindings across 33 deployed functions and no deployed prototype. Existing paid reports still bind Census and Stripe only. No credential value was requested.
+
+The interrupted QA retry completed successfully on the original implementation commit `8931eae166df4a0863d762c817b027ceace95a98`. It followed a single existing desktop Ask/Advanced navigation failure involving a local emulator `403` from `listUniversalDatasets`. The unchanged retry passed 132 authenticated browser cases, 183 Discovery browser cases, 138 web, 80 Functions, 38 commerce, nine Firestore rules, five organization and 26 fixture cases. One existing fixture was skipped. The final documentation head and its fresh exact-head checks are tracked in [draft PR #96](https://github.com/alwat83/ifyoumind/pull/96/checks). [Original launch build](https://github.com/alwat83/ifyoumind/actions/runs/43461963488) · [Passing original QA retry](https://github.com/alwat83/ifyoumind/actions/runs/43461963589/attempts/2)

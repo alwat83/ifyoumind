@@ -1,10 +1,12 @@
 # ifYouMind — Current development status
 
-## November 14, 2026 — Decision creation journey
+## November 14, 2026 — Product blueprint review
 
-**Draft implementation:** [PR #98](https://github.com/alwat83/ifyoumind/pull/98) on `codex/decision-creation-journey`. Question first, one city when appropriate, optional comparison and business details, and private sample routes for property tax and electricity. The allowlisted decision type and $79 report intent survive sign-up and verification; freeform questions are not put in URLs. No backend, pricing, commerce, typed entry or AI changes. [Audit, screenshots and verification](../product/DECISION_CREATION_JOURNEY.md) · [Exact-head checks](https://github.com/alwat83/ifyoumind/pull/98/checks). Founder journey review and separate release approval remain pending.
+**Proposed:** [Product audit and blueprint](../product/PRODUCT_EXPERIENCE_BLUEPRINT.md). Preserve the current experience; review #99 first, then evaluate the separate typed-input #95 and real first-use friction. No implementation, merge, billing change or AI activation is authorized by the roadmap.
 
-**Latest production deployment:** [PR #97](https://github.com/alwat83/ifyoumind/pull/97) merged as `e0519bb4c5bea801af3c0d8dc72ad5ca328a0697`; [production workflow](https://github.com/alwat83/ifyoumind/actions/runs/43609037082) succeeded. PR #98 branches from that release and remains undeployed. [Typed Bill Discovery #95](https://github.com/alwat83/ifyoumind/pull/95) and [OpenAI #96](https://github.com/alwat83/ifyoumind/pull/96) remain separate.
+**Production:** [PR #98](https://github.com/alwat83/ifyoumind/pull/98) merged at `dbc872a977f062f94752578ca88fd56398e0c3c5`; [deployment](https://github.com/alwat83/ifyoumind/actions/runs/43623896871) succeeded. Verified active Hosting version `8dea909c53f33887`, closed enrollment and anonymous mobile tax, cited sample and sign-in handoff. Production protected and commercial actions were not exercised.
+
+**Separate drafts:** [#99](https://github.com/alwat83/ifyoumind/pull/99) at `6f61d2ca1cc841ecfeba44c6dc186701b5181b2c` passed [build](https://github.com/alwat83/ifyoumind/actions/runs/43632056972) and [authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/43632056925) with 144 browser cases. [#95](https://github.com/alwat83/ifyoumind/pull/95) typed Bill Discovery and [#96](https://github.com/alwat83/ifyoumind/pull/96) remain separate; staging AI revision `explainsyntheticmarket-00004-lor` is flag-off. [Portal #84](https://github.com/alwat83/ifyoumind/issues/84) and [enrollment #85](https://github.com/alwat83/ifyoumind/issues/85) remain open.
 
 ## November 13 Pacific / November 14 UTC — Property-tax-first homepage
 

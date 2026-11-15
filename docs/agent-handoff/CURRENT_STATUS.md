@@ -1,5 +1,13 @@
 # ifYouMind — Current development status
 
+## November 15, 2026 — Revenue readiness and public sample handoff
+
+**Production verified:** [#99](https://github.com/alwat83/ifyoumind/pull/99) merge `b22cb7582bbeb615b17b7fee34b7f6a3ec216560`, [successful deployment](https://github.com/alwat83/ifyoumind/actions/runs/43640676326), live Hosting `51e354bfe0e900e2`, previous finalized version `1beeaa395c606d55`. Birmingham, personal bill and parcel relevance still worked. Runtime subscription enrollment is empty and [#96](https://github.com/alwat83/ifyoumind/pull/96) staging revision `explainsyntheticmarket-00004-lor` was freshly verified OFF.
+
+**Revenue candidate:** The signed-in public sample detoured through registration. `codex/revenue-readiness-report-handoff` routes established sessions to the Business brief with report intent. [Founder brief and evidence](../growth/REVENUE_READINESS_20261115.md). The current production $79 one-time offer and Stripe metadata were verified read-only. First independent settled purchase, fulfillment and saved report reopening remain unverified. [Portal #84](https://github.com/alwat83/ifyoumind/issues/84) and [enrollment #85](https://github.com/alwat83/ifyoumind/issues/85) remain open and distinct from the one-time sale.
+
+**Local pilots:** [#95](https://github.com/alwat83/ifyoumind/pull/95) and [#101](https://github.com/alwat83/ifyoumind/pull/101) are still separate drafts with approved local protocols. No participant observations are available. [#101 facilitator guide and score sheet](https://github.com/alwat83/ifyoumind/blob/06727a28d21d032cc409b28ccc2f4d853aa3a831/docs/product/BILL_EXPLANATION_REVIEW.md#supervised-participant-protocol) start at P01. Physical iPhone and spoken VoiceOver remain unverified. [Notion coordination hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).
+
 ## November 14, 2026 — Product blueprint review
 
 **Approved:** [Product audit and blueprint](../product/PRODUCT_EXPERIENCE_BLUEPRINT.md). Preserve the current experience; review #99 first, then evaluate the separate typed-input #95 and real first-use friction. Founder authorized preparation of #99 and #95. Both still require separate authorization to release or run a pilot.

@@ -1,5 +1,23 @@
 # ifYouMind — Current development status
 
+## November 15, 2026 — Explanation pilot facilitator handoff
+
+[Draft #101](https://github.com/alwat83/ifyoumind/pull/101) on `codex/bill-explanation-review` has a [session guide](../product/BILL_EXPLANATION_REVIEW.md#supervised-participant-protocol) and [anonymized scoring sheet](../product/BILL_EXPLANATION_OBSERVATION_TEMPLATE.md). The reviewer code at `6f7027bfdc26daae22c3ceffe7f8308bf1cd87e8` passed all 11 checks again. A separate live loopback check confirmed 12 assigned and two optional links, matching evidence and a balanced three-sequence core. The fourth sequence is supplemental. Physical iPhone and spoken VoiceOver are unverified.
+
+**Pilot ready, analysis pending.** No completed sheets were available. The founder can start with P01 once a consenting participant is present and return only coded results. [#95](https://github.com/alwat83/ifyoumind/pull/95) and [#96](https://github.com/alwat83/ifyoumind/pull/96) were read back as separate open drafts. The last verified #96 staging state is OFF. Keep the provider experiment on hold until observed B/C results show whether selection improves understanding or action. [Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).
+
+## November 15, 2026 — Explanation value comparison ready for local sessions
+
+[Draft PR #101](https://github.com/alwat83/ifyoumind/pull/101) on `codex/bill-explanation-review` now compares the original result, fixed local explanation and simulated structured selection using the same five synthetic cases. [Review, evidence and facilitator protocol](../product/BILL_EXPLANATION_REVIEW.md) and [blank anonymized observation sheet](../product/BILL_EXPLANATION_OBSERVATION_TEMPLATE.md) are ready. All 15 combinations passed in each of five browser configurations. Six contract tests, strict TypeScript and the Discovery isolation guard passed. The draft targets #95 so the `master` PR workflows do not apply. Physical hardware, spoken VoiceOver and participant comprehension remain unmeasured.
+
+**Provider experiment: NO-GO pending participant evidence.** [#95](https://github.com/alwat83/ifyoumind/pull/95) remains at approved pilot head `b249ee122b19f3ee5500cec8873a17c97975c986`. [#96](https://github.com/alwat83/ifyoumind/pull/96) staging was last verified off. The evaluation uses the review server on `127.0.0.1:4318`, zero provider requests and supplied synthetic facts only. The [separate #99 release record](https://github.com/alwat83/ifyoumind/blob/453658f95ec342f9624a0b673ed32755998b0aad/docs/releases/relevance-20261114/LIVE_VERIFICATION.md) remains the latest production evidence. [Notion coordination hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).
+
+## November 15, 2026 — Offline bill explanation founder review
+
+**Committed review scope:** [Bill explanation demo and evaluation](../product/BILL_EXPLANATION_REVIEW.md), branch `codex/bill-explanation-review`, stacked against [typed Bill Discovery #95](https://github.com/alwat83/ifyoumind/pull/95) at its unchanged `b249ee122b19f3ee5500cec8873a17c97975c986`. The mock adds no deployed code or second provider integration. Six contract and five browser tests passed; strict type check, temporary Discovery build and isolation guard passed. No remote calls; physical iPhone and participant usefulness remain unverified. Standard PR checks target `master`, not this stacked draft.
+
+**Last verified deployment:** [PR #99 live evidence](https://github.com/alwat83/ifyoumind/blob/453658f95ec342f9624a0b673ed32755998b0aad/docs/releases/relevance-20261114/LIVE_VERIFICATION.md) records production merge `b22cb7582bbeb615b17b7fee34b7f6a3ec216560` and Hosting `51e354bfe0e900e2`. PR #95 remains local-only; no new participant result is recorded here. [PR #96](https://github.com/alwat83/ifyoumind/pull/96) remains separately gated, last read back as staging OFF. [Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71). Review the fixed local explanation before considering one separately authorized synthetic staging call.
+
 ## November 14, 2026 — Product blueprint review
 
 **Approved:** [Product audit and blueprint](../product/PRODUCT_EXPERIENCE_BLUEPRINT.md). Preserve the current experience; review #99 first, then evaluate the separate typed-input #95 and real first-use friction. Founder authorized preparation of #99 and #95. Both still require separate authorization to release or run a pilot.

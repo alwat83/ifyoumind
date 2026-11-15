@@ -1,9 +1,9 @@
 <main class="report-shell">
   <nav *ngIf="sampleMode" class="report-nav no-print">
     <a routerLink="/">← ifYouMind</a>
-    <div>
-      <a routerLink="/register">Start free</a>
-      <a routerLink="/register" [queryParams]="{intent:'report'}" class="report-upgrade">Get this report for your cities · $79</a>
+    <div *ngIf="sampleEntry() as entry">
+      <a [routerLink]="entry.path" [queryParams]="entry.free">Start free</a>
+      <a [routerLink]="entry.path" [queryParams]="entry.report" class="report-upgrade">Get this report for your cities · $79</a>
     </div>
   </nav>
   <aside *ngIf="sampleMode" class="state no-print sample-intro">
@@ -143,8 +143,10 @@
         <p>Start with a free Decision Brief: your city compared with one other. Upgrade to the $79 Decision Report for up to three comparisons, the plan-ready write-up and the action plan.</p>
       </div>
       <div class="offer-actions">
-        <a routerLink="/register" [queryParams]="{intent:'report'}" class="offer-primary">Get this report for your cities · $79</a>
-        <a routerLink="/register" class="offer-secondary">Start free</a>
+        <ng-container *ngIf="sampleEntry() as entry">
+          <a [routerLink]="entry.path" [queryParams]="entry.report" class="offer-primary">Get this report for your cities · $79</a>
+          <a [routerLink]="entry.path" [queryParams]="entry.free" class="offer-secondary">Start free</a>
+        </ng-container>
         <button type="button" class="offer-secondary" (click)="printReport()">Print / save this sample</button>
       </div>
     </section>

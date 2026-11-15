@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Auth, user } from '@angular/fire/auth';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrganizationService } from './organization.service';
 import { DecisionReportPayload, MarketIntelligenceService, MarketProject } from './market-intelligence.service';
@@ -26,6 +28,14 @@ export class MarketReportComponent implements OnInit, OnDestroy {
 
   /** Public sample at /sample-report: full report, no account, no purchase UI. */
   readonly sampleMode=this.route.snapshot.data['sample']===true;
+  private readonly sampleUser=this.sampleMode?toSignal(user(inject(Auth))):undefined;
+  readonly sampleEntry=computed(()=>{
+    const account=this.sampleUser?.();
+    if(account===undefined)return null;
+    return account
+      ? { path:'/app/decide', free:{type:'business'}, report:{type:'business',intent:'report'} }
+      : { path:'/register', free:null, report:{intent:'report'} };
+  });
 
   project:MarketProject|null=null;
   status:CommercialStatus|null=null;

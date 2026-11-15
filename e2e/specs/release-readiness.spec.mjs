@@ -101,3 +101,32 @@ test('one-time checkout preserves the offer and report identity', async ({ page,
   await expect(page).toHaveURL('https://checkout.stripe.com/c/pay/qa-release-contract');
   expect(calls).toEqual([{ organizationId: user.organizationId, offer: 'report', projectId: user.projectIds[0] }]);
 });
+
+test('one-time checkout return waits for report access before opening the saved decision', async ({ page, fixtures }) => {
+  const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
+  const projectId = user.projectIds[0];
+  const { result: sample } = await callable('getSampleDecisionReport', {});
+  let reportPaid = false;
+  await page.route('**/getMarketIntelligenceProject', route => {
+    if (!reportPaid) return route.continue();
+    return route.fulfill({ json: {
+      result: { ...sample, id: projectId, sample: false, decisionReportPurchased: true, decisionReportAccess: 'purchased' },
+    } });
+  });
+
+  await signInThroughUi(page, user);
+  await expect(page).toHaveURL(/\/app$/);
+  await page.goto(`/app/pricing?checkout=success&offer=report&projectId=${projectId}`);
+  await expect(page.getByRole('status').filter({ hasText: 'Report access is still being confirmed' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Open your Decision Report' })).toHaveCount(0);
+
+  // Simulate the API read after Stripe's webhook has confirmed access.
+  reportPaid = true;
+  await page.reload();
+  await expect(page.getByRole('status').filter({ hasText: 'Your payment is complete' })).toBeVisible();
+  await page.getByRole('link', { name: 'Open your Decision Report' }).click();
+  await expect(page).toHaveURL(new RegExp(`/app/result/${projectId}$`));
+  await expect(page.getByText('Full report unlocked', { exact: true })).toBeVisible();
+  await page.reload();
+  await expect(page.getByText('Full report unlocked', { exact: true })).toBeVisible();
+});

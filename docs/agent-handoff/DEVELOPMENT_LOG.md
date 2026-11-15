@@ -594,3 +594,13 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 ## 2026-11-14 — Relevance release preparation
 
 **Provider/agent:** OpenAI / Codex. Reconciled draft [#99](https://github.com/alwat83/ifyoumind/pull/99) with the approved blueprint on master `0d980502b60589a757b04bf258fb9b6b3a45f6c7`. Resolved four project-record conflicts. The application, browser tests and reviewed visual references match the previous relevance head. [Current verification](https://github.com/alwat83/ifyoumind/pull/99/checks). This is release preparation and the customer impact remains unmeasured.
+
+## 2026-11-15 — Revenue readiness and sample handoff
+
+**Provider/agent:** OpenAI / Codex. **Branch:** `codex/revenue-readiness-report-handoff` from production merge `b22cb7582bbeb615b17b7fee34b7f6a3ec216560`. The sample's free and $79 links now select the existing Business brief for authenticated sessions and the existing register route for anonymous visitors. Added browser coverage for those destinations, verification return and one-time pending-to-unlocked behavior. [Founder decision brief](../growth/REVENUE_READINESS_20261115.md) and [Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).
+
+**Read-only verification:** GitHub confirmed merged #99 and [deployment](https://github.com/alwat83/ifyoumind/actions/runs/43640676326). Hosting readback confirmed `51e354bfe0e900e2` live and `1beeaa395c606d55` available. Browser verified the three tax routes, local sample, sources, available pricing and repeat registration detour. Stripe confirmed live prices, portal and enabled endpoints. Production enrollment is empty and #96 staging is OFF. The staging Hosting site has no live commercial release. No production or provider change.
+
+**Draft tests:** Local build, 138 fast web tests, 38 commerce integration cases and 22 focused Chrome browser cases passed. Fixtures run under `demo-ifyoumind` and intercept the Stripe handoff and paid status where appropriate. Tests cover both sample destinations, email verification, one-time payment pending and confirmed messaging, saved report reload, and subscription and legacy Account contracts. CI status is tracked on the draft.
+
+**Business impact and next:** Remove the verified repeat registration step, then observe the first independent settlement, decision unlock and saved return. Keep #84 and #85 separate. #95 and #101 remain ready for approved supervised local sessions with no outcomes available. The assignment produced no new measured commercial result.

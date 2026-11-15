@@ -50,12 +50,12 @@ test('the guard and sign-in page use the validator, and access control is unchan
   assert.doesNotMatch(read('../src/app/return-url.ts'), /window|document|localStorage|sessionStorage/, 'pure function, no stored state');
 });
 
-test('every $79 entry point carries the report intent and legacy Pro has no checkout', () => {
+test('the sample entry and $79 checkout preserve the report path and legacy Pro stays managed in Account', () => {
   const home = read('../src/app/intelligence/public-landing.component.html');
   assert.match(home, /routerLink="\/sample-report" class="button">View a Sample Report/);
-  const sample = read('../src/app/intelligence/market-report.component.html');
-  assert.equal((sample.match(/routerLink="\/register" \[queryParams\]="\{intent:'report'\}"/g) || []).length, 2);
-  assert.match(sample, /<a routerLink="\/register" class="offer-secondary">Start free<\/a>/);
+  const reportEntry = '/app/decide?type=business&intent=report';
+  assert.deepEqual(loginParams(reportEntry), { returnUrl: reportEntry });
+  assert.equal(decisionReturnUrl(reportEntry), reportEntry);
   const pricing = read('../src/app/intelligence/pricing.component.html');
   assert.match(pricing, /\(click\)="request\('report'\)"/);
   assert.doesNotMatch(pricing, /\(click\)="request\('pro'\)"/);

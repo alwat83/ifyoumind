@@ -27,9 +27,21 @@ All 15 mode and scenario combinations passed in each of five browser configurati
 
 ## Supervised participant protocol
 
-Use the [existing local pilot boundaries](BILL_DISCOVERY_PHASE_2A.md#limited-pilot-runbook) with up to four consenting participants and supplied synthetic figures only. Use a fresh browser profile on a supervised device, one viewport and input method per participant, and keep the facilitator's score sheet out of view. Ask for consent before starting. Use anonymous sequence codes P01–P04 without linked identities. Do not collect personal information, recordings, actual bill details or verbatim responses. Keep the completed [observation sheet](BILL_EXPLANATION_OBSERVATION_TEMPLATE.md) private and report only aggregate results.
+The founder authorized up to four consenting participants under the [existing local pilot boundaries](BILL_DISCOVERY_PHASE_2A.md#limited-pilot-runbook). Use supplied synthetic figures and the existing assigned sequence for each participant.
 
-Open each assigned link in a fresh tab at the top of the page. For the first three participants, each mode and fixture occurs once in each position and each mode sees each fixture once. The fourth row reverses the first row and is a supplemental check.
+### Before the first session
+
+1. From the [draft checkout](https://github.com/alwat83/ifyoumind/pull/101) with dependencies installed, run `node prototypes/bill-explanation/serve.mjs`. Start it on the supervised computer and use `http://127.0.0.1:4318/` in a fresh browser profile. If a reviewer is already listening on port 4318, confirm it is the intended version before using it. Keep the server on loopback.
+2. Check the two-year tax links in the table. A should show a $420.37 increase and an evidence disclosure. B should add a budgeting takeaway and C should add an itemization takeaway. All three should show the same figures and arithmetic. The participant links should hide both review menus. Close the check tabs before handoff.
+3. Prepare a timer and a private copy of the [blank observation sheet](BILL_EXPLANATION_OBSERVATION_TEMPLATE.md). Choose the next unused sequence code. Keep one viewport and input method per participant. Desktop Chrome is verified on this setup. Physical iPhone Safari, touch ergonomics on a real device, and spoken VoiceOver remain unverified. The emulated WebKit and keyboard checks are separate evidence.
+
+### Consent and session setup
+
+Read this before opening the first assigned page:
+
+> We’re testing how clearly these pages explain made-up bills. This is voluntary, and you can skip a question or end the session at any time. Please use only the examples on the screen and keep any real bills or personal details private. I’ll record only anonymous scores, time, and whether you needed help. There’s no audio or video recording, and the pages run on this computer. Are you willing to take part?
+
+Begin after an affirmative answer. Mark only “yes” on the sheet with the assigned sequence code, without a name or other linked identifier. Keep the scoring sheet and presentation key out of the participant's view. Open each assigned link in a fresh tab at the top of the page, and close it before opening the next. For the first three participants, each mode and fixture occurs once in each position, and each mode sees each fixture once. The fourth row reverses the first and is supplemental.
 
 | Sequence | First | Second | Third |
 | --- | --- | --- | --- |
@@ -47,6 +59,8 @@ Say “This is a made-up bill. Review it however you like and tell me when you�
 
 Use “Take another look if you’d like” for a request for help and record the request. Score independent answers before giving any assistance. Treat time-to-ready as a measure of understanding only when the answer is correct, and keep timeouts distinct. After the three trials ask “Which of the three presentations would you use again, if any?” Record the slot before translating it to A/B/C. Preference can reflect the bill topic, so treat it as supporting evidence. If time allows, open the [missing-usage](http://127.0.0.1:4318/?bill=missing-usage&view=2) and [incompatible-period](http://127.0.0.1:4318/?bill=incompatible-years&view=3) views, with no further prompting. Use the same first three questions and score recovery separately.
 
+### Score the answer, then record it
+
 | Fixture | Correct takeaway | Valid limitation | Appropriate action |
 | --- | --- | --- | --- |
 | One tax bill | It shows the annual tax or a monthly amount for budgeting. | One year can't show a change or establish installment amounts. | Check payment terms or get last year's bill for comparison. |
@@ -55,7 +69,15 @@ Use “Take another look if you’d like” for a request for help and record th
 | Missing usage | There is insufficient information to calculate the finding. | The billed usage is unknown. | Find the kWh figure. |
 | Incompatible periods | The requested comparison cannot be calculated. | The supplied years aren't adjacent. | Find the immediately preceding statement. |
 
-Accept equivalent wording and any next step that is relevant and supported. Mark unsupported conclusions separately, including claims about a tax error, a known cause or an official utility rate. Record whether a claim came from the page or the participant's interpretation. A materially unsupported statement in the page stops the evaluation. No participant sessions or outcomes are recorded as of this update.
+Accept equivalent wording and any next step that is relevant and supported. For each scored question, mark `correct` for an independent answer that meets the rubric, `incorrect` for an independent answer that misses it, `assisted` if someone supplied substantive help before the answer, or `no answer` for a skipped or unanswered question. Record every help request. The scripted neutral prompt alone does not supply an answer. Mark unsupported conclusions separately, including claims about a tax error, a known cause, or an official utility rate. Record whether the claim came from the page or the participant's interpretation. Keep only coded observations in private local notes. Report aggregate results without quotes, recordings, actual bill details, or personal information.
+
+### Stop conditions and analysis
+
+- End the session if the participant withdraws or reveals real bill or personal information. Close the tab, remove any accidentally recorded details, and keep only a non-identifying reason such as `withdrawal` or `privacy stop`. Treat a skipped question as `no answer`.
+- Stop the evaluation if a page displays the wrong fixture or mode, makes an unsupported assertion, has unexpected network activity, or fails in a way that changes the assigned presentation. Mark any affected trial `void` with a generic reason. Resolve the issue before resuming. At 120 seconds, stop the timed review, record `120+`, and keep unanswered fields separate from completed scores.
+- Close the session tabs and retain only the completed coded sheet in private local notes. Use the [aggregate table](BILL_EXPLANATION_OBSERVATION_TEMPLATE.md#aggregate-results) to report each outcome as a raw count and denominator. Report time for correct unassisted takeaways with its own sample size and tally timeouts separately. Count page errors and participant inferences separately. Report the first three sequences as the balanced comparison, and label the fourth sequence and recovery checks separately. Compare B and C within each fixture before looking at totals. This small pilot provides directional observations.
+
+November 15 readiness check verified the running server, all 12 assigned links and both optional links. P01–P03 balance fixture and presentation in every position. No completed observation sheet was available for analysis. Takeaways, limitations, next steps, help requests, unsupported conclusions, time and preference remain unobserved.
 
 ## One integration and a separate consent boundary
 

@@ -10,7 +10,7 @@
 
 ## November 15, 2026 — Bill explanation founder review
 
-[Explanation evaluation](docs/product/BILL_EXPLANATION_REVIEW.md) and [draft PR #101](https://github.com/alwat83/ifyoumind/pull/101) compare the original result, fixed local wording and simulated selection across five made-up bills. The next milestone is unassisted participant comprehension and an appropriate next step under the existing local supervision boundaries. Synthetic staging through PR #96 is gated on observed incremental value and separate founder authorization.
+[Explanation evaluation](docs/product/BILL_EXPLANATION_REVIEW.md) and [draft PR #101](https://github.com/alwat83/ifyoumind/pull/101) compare the original result, fixed local wording and simulated selection across five made-up bills. The [facilitator guide](docs/product/BILL_EXPLANATION_REVIEW.md#supervised-participant-protocol) and [anonymized sheet](docs/product/BILL_EXPLANATION_OBSERVATION_TEMPLATE.md) are ready for supervised sessions. The next milestone is an observed, unassisted takeaway and appropriate next step. Synthetic staging through PR #96 is gated on observed incremental value and separate founder authorization.
 
 ## November 14, 2026 — Master product experience directive
 

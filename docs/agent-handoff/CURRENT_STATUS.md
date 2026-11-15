@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 15, 2026 — Explanation pilot facilitator handoff
+
+[Draft #101](https://github.com/alwat83/ifyoumind/pull/101) on `codex/bill-explanation-review` has a [session guide](../product/BILL_EXPLANATION_REVIEW.md#supervised-participant-protocol) and [anonymized scoring sheet](../product/BILL_EXPLANATION_OBSERVATION_TEMPLATE.md). The reviewer code at `6f7027bfdc26daae22c3ceffe7f8308bf1cd87e8` passed all 11 checks again. A separate live loopback check confirmed 12 assigned and two optional links, matching evidence and a balanced three-sequence core. The fourth sequence is supplemental. Physical iPhone and spoken VoiceOver are unverified.
+
+**Pilot ready, analysis pending.** No completed sheets were available. The founder can start with P01 once a consenting participant is present and return only coded results. [#95](https://github.com/alwat83/ifyoumind/pull/95) and [#96](https://github.com/alwat83/ifyoumind/pull/96) were read back as separate open drafts. The last verified #96 staging state is OFF. Keep the provider experiment on hold until observed B/C results show whether selection improves understanding or action. [Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).
+
 ## November 15, 2026 — Explanation value comparison ready for local sessions
 
 [Draft PR #101](https://github.com/alwat83/ifyoumind/pull/101) on `codex/bill-explanation-review` now compares the original result, fixed local explanation and simulated structured selection using the same five synthetic cases. [Review, evidence and facilitator protocol](../product/BILL_EXPLANATION_REVIEW.md) and [blank anonymized observation sheet](../product/BILL_EXPLANATION_OBSERVATION_TEMPLATE.md) are ready. All 15 combinations passed in each of five browser configurations. Six contract tests, strict TypeScript and the Discovery isolation guard passed. The draft targets #95 so the `master` PR workflows do not apply. Physical hardware, spoken VoiceOver and participant comprehension remain unmeasured.

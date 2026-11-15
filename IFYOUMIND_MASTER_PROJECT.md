@@ -10,7 +10,7 @@
 
 ## November 15, 2026 — Bill explanation founder review
 
-[Offline explanation review](docs/product/BILL_EXPLANATION_REVIEW.md) tests whether a concise takeaway, evidence and next action help beyond the deterministic result. PR #95 remains intact. Any later staging provider test would extend PR #96's existing integration and use only a fixed synthetic fixture, with separate authorization. Do a fixed-copy usefulness comparison first; no real-data transfer or release is authorized.
+[Explanation evaluation](docs/product/BILL_EXPLANATION_REVIEW.md) and [draft PR #101](https://github.com/alwat83/ifyoumind/pull/101) compare the original result, fixed local wording and simulated selection across five made-up bills. The next milestone is unassisted participant comprehension and an appropriate next step under the existing local supervision boundaries. Synthetic staging through PR #96 is gated on observed incremental value and separate founder authorization.
 
 ## November 14, 2026 — Master product experience directive
 

@@ -13,15 +13,25 @@
 <body>
   <header><span class="wordmark">ifYouMind<span>.</span></span><span class="subtle">Local review</span></header>
   <main>
-    <div class="fixture">
-      <label for="fixture">Made-up bill</label>
-      <select id="fixture">
-        <option value="tax-single">Property tax · one year</option>
-        <option value="tax-pair">Property tax · two years</option>
-        <option value="electricity">Electricity · one bill</option>
-        <option value="missing-usage">Electricity · missing usage</option>
-        <option value="incompatible-years">Property tax · incompatible years</option>
-      </select>
+    <div id="review-controls" class="review-controls" hidden>
+      <div>
+        <label for="fixture">Made-up bill</label>
+        <select id="fixture">
+          <option value="tax-single">Property tax · one year</option>
+          <option value="tax-pair">Property tax · two years</option>
+          <option value="electricity">Electricity · one bill</option>
+          <option value="missing-usage">Electricity · missing usage</option>
+          <option value="incompatible-years">Property tax · incompatible years</option>
+        </select>
+      </div>
+      <div>
+        <label for="mode">Presentation</label>
+        <select id="mode">
+          <option value="1">A · Original finding</option>
+          <option value="2">B · Fixed local explanation</option>
+          <option value="3">C · Structured selection</option>
+        </select>
+      </div>
     </div>
 
     <p class="eyebrow">Bill discovery · made-up figures</p>
@@ -35,26 +45,12 @@
       <dl id="figures"></dl>
     </details>
 
-    <button id="explain" class="secondary" type="button" aria-controls="consent" hidden>Explain my findings</button>
-
-    <section id="consent" aria-labelledby="consent-title" hidden>
-      <h2 id="consent-title" tabindex="-1">Try the explanation preview</h2>
-      <p>This is a simulation using made-up bills. Nothing leaves this tab.</p>
-      <p>A future optional OpenAI explanation would send only the bill type and which checked findings are available. Bill amounts, dates, addresses, identifiers and files would stay in this tab.</p>
-      <div class="actions">
-        <button id="agree" type="button" class="primary">Try the mock explanation</button>
-        <button id="cancel" type="button" class="secondary">Keep the local result</button>
-      </div>
-    </section>
-
     <section id="explanation" aria-labelledby="explanation-title" hidden>
-      <p class="eyebrow">Mock explanation</p>
-      <h2 id="explanation-title" tabindex="-1">What stands out</h2>
+      <h2 id="explanation-title">What stands out</h2>
       <div id="takeaway" class="lede"></div>
       <ul id="observations"></ul>
       <p id="limit"></p>
       <p id="next"></p>
-      <button id="hide-explanation" class="secondary" type="button">Hide explanation</button>
     </section>
     <p id="status" class="subtle" role="status"></p>
   </main>

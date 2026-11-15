@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 15, 2026 — Explanation value comparison ready for local sessions
+
+[Draft PR #101](https://github.com/alwat83/ifyoumind/pull/101) on `codex/bill-explanation-review` now compares the original result, fixed local explanation and simulated structured selection using the same five synthetic cases. [Review, evidence and facilitator protocol](../product/BILL_EXPLANATION_REVIEW.md) and [blank anonymized observation sheet](../product/BILL_EXPLANATION_OBSERVATION_TEMPLATE.md) are ready. All 15 combinations passed in each of five browser configurations. Six contract tests, strict TypeScript and the Discovery isolation guard passed. The draft targets #95 so the `master` PR workflows do not apply. Physical hardware, spoken VoiceOver and participant comprehension remain unmeasured.
+
+**Provider experiment: NO-GO pending participant evidence.** [#95](https://github.com/alwat83/ifyoumind/pull/95) remains at approved pilot head `b249ee122b19f3ee5500cec8873a17c97975c986`. [#96](https://github.com/alwat83/ifyoumind/pull/96) staging was last verified off. The evaluation uses the review server on `127.0.0.1:4318`, zero provider requests and supplied synthetic facts only. The [separate #99 release record](https://github.com/alwat83/ifyoumind/blob/453658f95ec342f9624a0b673ed32755998b0aad/docs/releases/relevance-20261114/LIVE_VERIFICATION.md) remains the latest production evidence. [Notion coordination hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).
+
 ## November 15, 2026 — Offline bill explanation founder review
 
 **Committed review scope:** [Bill explanation demo and evaluation](../product/BILL_EXPLANATION_REVIEW.md), branch `codex/bill-explanation-review`, stacked against [typed Bill Discovery #95](https://github.com/alwat83/ifyoumind/pull/95) at its unchanged `b249ee122b19f3ee5500cec8873a17c97975c986`. The mock adds no deployed code or second provider integration. Six contract and five browser tests passed; strict type check, temporary Discovery build and isolation guard passed. No remote calls; physical iPhone and participant usefulness remain unverified. Standard PR checks target `master`, not this stacked draft.

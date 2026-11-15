@@ -1,4 +1,4 @@
-import { explainFixture, reviewFixture } from './experience';
+import { explainFixture, fixedExplanation, isFixture, reviewFixture } from './experience';
 
 function control<T extends HTMLElement = HTMLElement>(id: string): T {
   const element = document.getElementById(id);
@@ -6,10 +6,8 @@ function control<T extends HTMLElement = HTMLElement>(id: string): T {
   return element as T;
 }
 const fixture = control<HTMLSelectElement>('fixture');
+const mode = control<HTMLSelectElement>('mode');
 const evidence = control<HTMLDetailsElement>('evidence');
-const explain = control<HTMLButtonElement>('explain');
-const consent = control('consent');
-const agree = control<HTMLButtonElement>('agree');
 const explanation = control('explanation');
 const status = control('status');
 let sequence = 0;
@@ -21,21 +19,40 @@ function appendText(parent: HTMLElement, tag: string, text: string) {
   parent.append(element);
 }
 
-function closeExplanation() {
-  sequence++;
-  agree.disabled = false;
-  explain.hidden = !review.editorial;
-  consent.hidden = true;
+async function showExplanation() {
+  const active = ++sequence;
   explanation.hidden = true;
   control('takeaway').textContent = '';
   control('observations').replaceChildren();
   control('limit').textContent = '';
   control('next').textContent = '';
   status.textContent = '';
+  if (mode.value === '1' || !review.editorial) return;
+
+  let content = null;
+  if (mode.value === '2') {
+    content = fixedExplanation(review);
+  } else {
+    const result = await explainFixture(review);
+    if (active !== sequence) return;
+    if (result.kind === 'mock') content = result.explanation;
+    else status.textContent = 'The original finding and evidence are above.';
+  }
+  if (!content) return;
+
+  control('takeaway').textContent = content.takeaway;
+  const observations = control('observations');
+  for (const item of content.observations) {
+    const li = document.createElement('li');
+    addPoint(li, item);
+    observations.append(li);
+  }
+  control('limit').textContent = content.limit;
+  control('next').textContent = `Next: ${content.nextStep}`;
+  explanation.hidden = false;
 }
 
 function showFixture() {
-  closeExplanation();
   review = reviewFixture(fixture.value);
   const { finding, issues } = review;
   control('finding').textContent = finding?.title ?? 'A finding needs more evidence.';
@@ -54,7 +71,7 @@ function showFixture() {
     appendText(figures, 'dt', `${cell.cell}: ${cell.label}`);
     appendText(figures, 'dd', cell.used);
   });
-  explain.hidden = !review.editorial;
+  void showExplanation();
 }
 
 function addPoint(parent: HTMLElement, item: { text: string; evidence: string }) {
@@ -70,40 +87,15 @@ function addPoint(parent: HTMLElement, item: { text: string; evidence: string })
   parent.append(reference);
 }
 
-fixture.addEventListener('change', showFixture);
-explain.addEventListener('click', () => {
-  explain.hidden = true;
-  consent.hidden = false;
-  control('consent-title').focus();
-});
-for (const name of ['cancel', 'hide-explanation']) {
-  control(name).addEventListener('click', () => {
-    closeExplanation();
-    explain.focus();
-  });
+const trial = new URLSearchParams(location.search);
+const trialFixture = trial.get('bill') ?? '';
+const trialView = trial.get('view') ?? '';
+if (isFixture(trialFixture) && ['1', '2', '3'].includes(trialView)) {
+  fixture.value = trialFixture;
+  mode.value = trialView;
+} else {
+  control('review-controls').hidden = false;
 }
-agree.addEventListener('click', async () => {
-  agree.disabled = true;
-  const active = ++sequence;
-  const result = await explainFixture(review, true);
-  if (active !== sequence) return;
-  closeExplanation();
-  if (result.kind !== 'mock') {
-    status.textContent = 'No explanation was added. Your local finding and evidence are still above.';
-    explain.focus();
-    return;
-  }
-  explain.hidden = true;
-  control('takeaway').textContent = result.takeaway;
-  const observations = control('observations');
-  for (const item of result.observations) {
-    const li = document.createElement('li');
-    addPoint(li, item);
-    observations.append(li);
-  }
-  control('limit').textContent = result.limit;
-  control('next').textContent = `Next: ${result.nextStep}`;
-  explanation.hidden = false;
-  control('explanation-title').focus();
-});
+fixture.addEventListener('change', showFixture);
+mode.addEventListener('change', showExplanation);
 showFixture();

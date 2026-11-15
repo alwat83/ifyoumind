@@ -2,6 +2,8 @@ import { analyzeTypedBill, type BillCategory, type BillDraft } from '../../src/a
 import type { DiscoveryFinding } from '../../src/app/discovery/discovery-core';
 
 type Point = { text: string; evidence: string };
+type Plan = { takeaway: string; firstObservation: string; secondObservation: string; nextStep: string };
+type Explanation = { takeaway: string; observations: Point[]; limit: string; nextStep: string };
 type Demo = {
   category: BillCategory;
   current: BillDraft;
@@ -13,6 +15,7 @@ type Editorial = {
   observations: Record<string, Point>;
   nextSteps: Record<string, string>;
   limit: string;
+  fixed: Plan;
 };
 const point = (text: string, evidence: string): Point => ({ text, evidence });
 function figure(finding: DiscoveryFinding, field: string, cell = 'Current bill'): string {
@@ -34,12 +37,16 @@ const fixtures = {
         previous_year: 'Find the prior annual bill for the same property if you want to see what changed.',
       },
       limit: 'One bill cannot show a year-over-year change. The monthly average does not set your payment schedule.',
+      fixed: { takeaway: 'budget', firstObservation: 'monthly_average', secondObservation: 'annual_scope', nextStep: 'due_dates' },
     }),
   },
   'tax-pair': {
     category: 'tax', current: { year: '2026', total: '4620.37' }, earlier: { year: '2025', total: '4200.00' },
     explain: finding => ({
-      takeaways: { higher_total: 'Use the higher annual figure for budgeting. Check the itemized bills to understand the increase.' },
+      takeaways: {
+        higher_total: 'Use the higher annual figure for budgeting.',
+        itemized_bills: 'Check the itemized bills to understand the increase.',
+      },
       observations: {
         size_of_change: point(`The full-year tax was ${figure(finding, 'total', 'Earlier bill')} before and ${figure(finding, 'total')} after.`, 'Annual property tax'),
         comparable_years: point(`This compares ${figure(finding, 'year', 'Earlier bill')} and ${figure(finding, 'year')} for the same property in this example.`, 'Tax years'),
@@ -49,6 +56,7 @@ const fixtures = {
         locate_itemization: 'If either bill only shows a total, look for the itemized statement before trying to explain the difference.',
       },
       limit: 'Two totals cannot establish why the bill rose, whether it is correct, or whether there are grounds for an appeal.',
+      fixed: { takeaway: 'higher_total', firstObservation: 'size_of_change', secondObservation: 'comparable_years', nextStep: 'compare_lines' },
     }),
   },
   'electricity': {
@@ -64,6 +72,7 @@ const fixtures = {
         prior_usage: 'For a comparison, find an earlier bill for the same service and use the meter-read dates from each bill.',
       },
       limit: 'An all-in average is not a tariff. One period cannot show what caused charges or usage to change.',
+      fixed: { takeaway: 'separate_usage_and_rate', firstObservation: 'whole_bill_average', secondObservation: 'measured_usage', nextStep: 'itemize_charges' },
     }),
   },
   'missing-usage': {
@@ -75,13 +84,30 @@ const fixtures = {
 } satisfies Record<string, Demo>;
 
 type FixtureId = keyof typeof fixtures;
+export function isFixture(id: string): id is FixtureId {
+  return Object.hasOwn(fixtures, id);
+}
+
 export function reviewFixture(id: string) {
-  if (!Object.hasOwn(fixtures, id)) throw new Error('Choose a built-in fixture.');
-  const fixture: Demo = fixtures[id as FixtureId];
+  if (!isFixture(id)) throw new Error('Choose a built-in fixture.');
+  const fixture: Demo = fixtures[id];
   const result = analyzeTypedBill(fixture.category, fixture.current, fixture.earlier, Boolean(fixture.earlier));
   return { ...result, editorial: result.finding && fixture.explain ? fixture.explain(result.finding) : null };
 }
 export type Review = ReturnType<typeof reviewFixture>;
+
+function renderPlan(editorial: Editorial, plan: Plan): Explanation {
+  return {
+    takeaway: editorial.takeaways[plan.takeaway],
+    observations: [editorial.observations[plan.firstObservation], editorial.observations[plan.secondObservation]],
+    limit: editorial.limit,
+    nextStep: editorial.nextSteps[plan.nextStep],
+  };
+}
+
+export function fixedExplanation(review: Review): Explanation | null {
+  return review.editorial ? renderPlan(review.editorial, review.editorial.fixed) : null;
+}
 
 export function planSchema(editorial: Editorial) {
   const enumeration = (options: object) => ({ type: 'string', enum: Object.keys(options) });
@@ -98,14 +124,14 @@ type Schema = ReturnType<typeof planSchema>;
 type Transport = (schema: Schema) => Promise<{ status: string; text?: unknown }>;
 const mockTransport: Transport = async ({ properties: options }) => ({
   status: 'completed', text: JSON.stringify({
-    takeaway: options.takeaway.enum[0], firstObservation: options.firstObservation.enum[1],
-    secondObservation: options.secondObservation.enum[0], nextStep: options.nextStep.enum[0],
+    takeaway: options.takeaway.enum.at(-1), firstObservation: options.firstObservation.enum[1],
+    secondObservation: options.secondObservation.enum[0], nextStep: options.nextStep.enum[1],
   }),
 });
 
-export async function explainFixture(review: Review, agreed: boolean, transport = mockTransport) {
+export async function explainFixture(review: Review, transport = mockTransport) {
   const editorial = review.editorial;
-  if (!agreed || !editorial) return { kind: 'unavailable' } as const;
+  if (!editorial) return { kind: 'unavailable' } as const;
   const schema = planSchema(editorial);
   try {
     const response = await transport(schema);
@@ -125,9 +151,9 @@ export async function explainFixture(review: Review, agreed: boolean, transport 
     const second = field('secondObservation');
     if (first === second) throw Error();
     return {
-      kind: 'mock', takeaway: editorial.takeaways[field('takeaway')],
-      observations: [editorial.observations[first], editorial.observations[second]],
-      limit: editorial.limit, nextStep: editorial.nextSteps[field('nextStep')],
+      kind: 'mock', explanation: renderPlan(editorial, {
+        takeaway: field('takeaway'), firstObservation: first, secondObservation: second, nextStep: field('nextStep'),
+      }),
     } as const;
   } catch {
     return { kind: 'fallback' } as const;

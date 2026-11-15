@@ -4,7 +4,7 @@ Founder-directed strategic reset, October 22, 2026. Repository/GitHub are author
 
 ## November 15 — Does an explanation help someone act?
 
-[Synthetic explanation review](../product/BILL_EXPLANATION_REVIEW.md) proposes measuring whether a first-time visitor can identify a next step and the evidence limit. First priority remains the approved browser-local pilot; next compare fixed local wording with structured selection. Consider a separately approved staging generation only if it can answer a verified usefulness question. No new visitor, purchase, revenue, provider spend or margin observation; the scoreboard is unchanged.
+[Synthetic explanation review](../product/BILL_EXPLANATION_REVIEW.md) now provides the offline comparison and scoring protocol for a first-time visitor's takeaway, limitation and next action. First priority is the approved local pilot. Compare fixed wording and the structured selection and consider a separately authorized staging request only if the latter improves understanding or action. Participant outcomes and commercial impact remain unmeasured.
 
 ## November 14 — Blueprint: evidence before the offer
 

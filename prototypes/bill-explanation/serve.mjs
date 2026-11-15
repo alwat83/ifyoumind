@@ -20,7 +20,8 @@ export async function startReview(port = 0) {
     ['/fonts/instrument-serif/italic.woff2', ['font/woff2', await readFile(here('../../public/fonts/instrument-serif/italic.woff2'))]],
   ]);
   const server = createServer((request, response) => {
-    const asset = assets.get(request.url);
+    const path = request.url?.split('?', 1)[0];
+    const asset = assets.get(path);
     response.setHeader('Cache-Control', 'no-store');
     response.setHeader('X-Robots-Tag', 'noindex, nofollow');
     response.setHeader('X-Content-Type-Options', 'nosniff');

@@ -16,7 +16,15 @@ const sizes = [
   ['desktop', chromium, { viewport: { width: 1280, height: 900 } }],
 ];
 
-for (const [name, engine, options] of sizes) test(`${name}: consent, evidence, keyboard, no overflow and offline mock`, async () => {
+const cases = [
+  ['tax-single', /\$4,620\.37.*2026/, /\$385\.03 per month/],
+  ['tax-pair', /\$420\.37/, /\$4,200\.00/],
+  ['electricity', /\$145\.20/, /\$0\.2200 per kWh/],
+  ['missing-usage', /needs more evidence/, /Enter billed kWh/],
+  ['incompatible-years', /needs more evidence/, /immediately before/],
+];
+
+for (const [name, engine, options] of sizes) test(`${name}: five scenarios x three modes, common evidence, keyboard and offline`, async () => {
   const { server, url } = await startReview();
   try {
     const browser = await engine.launch(engine === chromium && chromiumChannel ? { channel: chromiumChannel } : {});
@@ -31,10 +39,9 @@ for (const [name, engine, options] of sizes) test(`${name}: consent, evidence, k
       assert.match(response.headers()['content-security-policy'], /connect-src 'none'/);
       await page.evaluate(() => document.fonts.ready);
       const fixture = page.getByLabel('Made-up bill');
+      const mode = page.getByLabel('Presentation');
       const finding = page.getByRole('heading', { level: 1 });
-      const explain = page.getByRole('button', { name: 'Explain my findings' });
-      const heading = page.getByRole('heading', { name: 'What stands out' });
-      const consent = page.getByRole('heading', { name: 'Try the explanation preview' });
+      const explanation = page.getByRole('region', { name: 'What stands out' });
       const withinViewport = async () => assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth), true);
       const axe = async () => {
         const result = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
@@ -46,53 +53,61 @@ for (const [name, engine, options] of sizes) test(`${name}: consent, evidence, k
         await page.screenshot({ path: join(captures, `${name}-${phase}.png`), fullPage: true, animations: 'disabled' });
       };
 
-      await fixture.selectOption('tax-pair');
-      assert.match(await finding.innerText(), /\$420\.37/);
-      const baseline = await finding.innerText();
-      await withinViewport();
-      await capture('local');
-      await explain.focus();
-      await page.keyboard.press('Enter');
-      await consent.waitFor();
-      assert.equal(await page.evaluate(() => document.activeElement.id), 'consent-title');
-      if (name === 'desktop') await axe();
-      await page.getByRole('button', { name: 'Keep the local result' }).click();
-      assert.equal(await heading.count(), 0);
-      assert.equal(await finding.innerText(), baseline);
       const postLoad = requests.length;
       assert.ok(requests.every(request => request.startsWith(url)));
       await context.setOffline(true);
-      await explain.click();
-      await page.getByRole('button', { name: 'Try the mock explanation' }).click();
-      await heading.waitFor();
-      assert.equal(await page.evaluate(() => document.activeElement.id), 'explanation-title');
-      assert.equal(await finding.innerText(), baseline);
-      assert.match(await page.locator('#limit').innerText(), /cannot establish why/);
-      assert.match(await page.locator('#next').innerText(), /itemized statements/);
-      await withinViewport();
-      await capture('explained');
-      if (name === 'desktop') await axe();
-      await page.getByRole('button', { name: 'Evidence: Annual property tax' }).click();
+
+      for (const [scenario, title, supportingText] of cases) {
+        const invalid = scenario === 'missing-usage' || scenario === 'incompatible-years';
+        await fixture.selectOption(scenario);
+        await mode.selectOption('1');
+        const original = () => page.locator('#finding, #detail, #validation, #arithmetic, #figures').allTextContents();
+        const common = await original();
+        assert.match(await finding.innerText(), title);
+        assert.match(common.join(' '), supportingText);
+
+        for (const presentation of ['1', '2', '3']) {
+          await mode.selectOption(presentation);
+          if (invalid || presentation === '1') {
+            assert.equal(await explanation.count(), 0);
+            assert.equal(await page.locator('#observations li').count(), 0);
+          } else {
+            await explanation.waitFor();
+            assert.equal(await explanation.getByRole('listitem').count(), 2);
+            assert.match(await explanation.innerText(), /Next:/);
+          }
+          assert.deepEqual(await original(), common);
+          await withinViewport();
+          if (name === 'desktop' && scenario === 'tax-pair') await axe();
+        }
+      }
+
+      await fixture.selectOption('tax-pair');
+      const evidenceButton = page.getByRole('button', { name: 'Evidence: Annual property tax' });
+      await evidenceButton.focus();
+      await page.keyboard.press('Enter');
       assert.equal(await page.evaluate(() => document.activeElement.id), 'evidence-toggle');
       await page.getByText('$4,620.37', { exact: true }).waitFor();
-      await fixture.selectOption('electricity');
-      assert.equal(await heading.count(), 0);
-      assert.match(await finding.innerText(), /\$145\.20/);
-      await explain.click();
-      await page.getByRole('button', { name: 'Try the mock explanation' }).click();
-      assert.match(await page.locator('#limit').innerText(), /not a tariff/);
-      await page.getByRole('button', { name: 'Hide explanation' }).click();
-      assert.equal(await heading.count(), 0);
-      await fixture.selectOption('missing-usage');
-      assert.match(await page.locator('#validation').innerText(), /Enter billed kWh/);
-      assert.equal(await explain.count(), 0);
-      await fixture.selectOption('incompatible-years');
-      assert.match(await page.locator('#validation').innerText(), /immediately before/);
-      assert.equal(await explain.count(), 0);
-      await withinViewport();
       assert.deepEqual(requests.slice(postLoad), []);
-      assert.deepEqual(errors, []);
       assert.deepEqual(await page.evaluate(() => [localStorage.length, sessionStorage.length, document.cookie]), [0, 0, '']);
+
+      await context.setOffline(false);
+      for (const [view, letter] of [['1', 'a'], ['2', 'b'], ['3', 'c']]) {
+        await page.goto(`${url}?bill=tax-pair&view=${view}`);
+        await page.evaluate(() => document.fonts.ready);
+        assert.equal(await mode.isVisible(), false);
+        assert.equal(await fixture.isVisible(), false);
+        assert.equal(await page.getByRole('combobox').count(), 0);
+        assert.match(await finding.innerText(), /\$420\.37/);
+        if (view === '1') assert.equal(await explanation.count(), 0);
+        else {
+          await explanation.waitFor();
+          assert.match(await page.locator('#takeaway').innerText(), view === '2' ? /budgeting/ : /itemized bills/);
+        }
+        await withinViewport();
+        await capture(letter);
+      }
+      assert.deepEqual(errors, []);
     } finally {
       await browser.close();
     }

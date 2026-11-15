@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 15, 2026 — Public sample handoff live
+
+**Production verified:** [PR #102](https://github.com/alwat83/ifyoumind/pull/102) merged authorized head `699d0472465c240716b23625736185241716bc04` as `89f481712d7e66f2e63b0861eb004e439d3480e1`. Both required checks and [production deployment](https://github.com/alwat83/ifyoumind/actions/runs/43776389795) passed. Live Hosting `de4cfa6b28163962`, release `1794786392489000`. Previous `51e354bfe0e900e2` and requested rollback `1beeaa395c606d55` remain retained. [Release and browser evidence](../releases/report-handoff-20261115/LIVE_VERIFICATION.md).
+
+Both signed-in sample links now arrive at the Business decision. The $79 link retains report intent. Production billing inputs match across the inspected old and new revisions. Enrollment is empty and staging AI is off. Independent paid fulfillment and return remain unverified. [Notion coordination hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).
+
 ## November 15, 2026 — Revenue readiness and public sample handoff
 
 **Production verified:** [#99](https://github.com/alwat83/ifyoumind/pull/99) merge `b22cb7582bbeb615b17b7fee34b7f6a3ec216560`, [successful deployment](https://github.com/alwat83/ifyoumind/actions/runs/43640676326), live Hosting `51e354bfe0e900e2`, previous finalized version `1beeaa395c606d55`. Birmingham, personal bill and parcel relevance still worked. Runtime subscription enrollment is empty and [#96](https://github.com/alwat83/ifyoumind/pull/96) staging revision `explainsyntheticmarket-00004-lor` was freshly verified OFF.

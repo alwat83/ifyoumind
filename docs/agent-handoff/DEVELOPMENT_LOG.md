@@ -592,3 +592,11 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 ## 2026-11-14 — Typed Bill Discovery pilot preparation
 
 **Provider/agent:** OpenAI / Codex. Reconciled draft [#95](https://github.com/alwat83/ifyoumind/pull/95) with approved blueprint master `0d980502b60589a757b04bf258fb9b6b3a45f6c7`. Resolved four project-record conflicts and retained the existing typed implementation, master visuals, and separate #99 and #96 drafts. [Pilot entry, fixtures, privacy, feedback and rollback](../product/BILL_DISCOVERY_PHASE_2A.md#limited-pilot-runbook). [Current verification](https://github.com/alwat83/ifyoumind/pull/95/checks). Customer value and conversion remain unmeasured.
+
+## 2026-11-15 — Explanations after a browser-local bill finding
+
+**Provider/agent:** OpenAI / Codex. **Branch:** `codex/bill-explanation-review` from approved #95 head `b249ee122b19f3ee5500cec8873a17c97975c986`. Added a synthetic loopback reviewer, structured selection and fallback, contract/browser tests and matched captures. Reuses the existing calculator and shared visual tokens. [Founder review and architecture](../product/BILL_EXPLANATION_REVIEW.md) · [Notion coordination hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71).
+
+**Verification:** All 11 targeted tests passed: six Node tests and five browser configurations (Chrome and iPhone-sized WebKit). Strict TypeScript, temporary Discovery build and bundle exclusion, and existing production isolation checks passed. Two unchanged Sass budgets warned; missing pinned Chromium was worked around with installed Chrome. Mac WebKit does not substitute for physical iPhone or spoken VoiceOver. The stacked review does not target master CI. No source, provider configuration, deployment, pricing, privacy boundary or pilot branch changed.
+
+**Business impact and next:** An optional next step may help people make a decision after the numbers. Establish unassisted usefulness against fixed local wording before requesting a single separately approved, synthetic staging call reusing #96. No cost beyond local tooling, new traffic or conversion evidence; no acquisition outreach. [Last verified production release](https://github.com/alwat83/ifyoumind/blob/453658f95ec342f9624a0b673ed32755998b0aad/docs/releases/relevance-20261114/LIVE_VERIFICATION.md) remains #99.

@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 15, 2026 — Offline bill explanation founder review
+
+**Committed review scope:** [Bill explanation demo and evaluation](../product/BILL_EXPLANATION_REVIEW.md), branch `codex/bill-explanation-review`, stacked against [typed Bill Discovery #95](https://github.com/alwat83/ifyoumind/pull/95) at its unchanged `b249ee122b19f3ee5500cec8873a17c97975c986`. The mock adds no deployed code or second provider integration. Six contract and five browser tests passed; strict type check, temporary Discovery build and isolation guard passed. No remote calls; physical iPhone and participant usefulness remain unverified. Standard PR checks target `master`, not this stacked draft.
+
+**Last verified deployment:** [PR #99 live evidence](https://github.com/alwat83/ifyoumind/blob/453658f95ec342f9624a0b673ed32755998b0aad/docs/releases/relevance-20261114/LIVE_VERIFICATION.md) records production merge `b22cb7582bbeb615b17b7fee34b7f6a3ec216560` and Hosting `51e354bfe0e900e2`. PR #95 remains local-only; no new participant result is recorded here. [PR #96](https://github.com/alwat83/ifyoumind/pull/96) remains separately gated, last read back as staging OFF. [Notion hub](https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71). Review the fixed local explanation before considering one separately authorized synthetic staging call.
+
 ## November 14, 2026 — Product blueprint review
 
 **Approved:** [Product audit and blueprint](../product/PRODUCT_EXPERIENCE_BLUEPRINT.md). Preserve the current experience; review #99 first, then evaluate the separate typed-input #95 and real first-use friction. Founder authorized preparation of #99 and #95. Both still require separate authorization to release or run a pilot.

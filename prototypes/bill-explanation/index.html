@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; font-src 'self'; connect-src 'none'; form-action 'none'; base-uri 'none'">
+  <title>Bill explanation review · ifYouMind</title>
+  <link rel="stylesheet" href="/review.css">
+  <script type="module" src="/review.js"></script>
+</head>
+<body>
+  <header><span class="wordmark">ifYouMind<span>.</span></span><span class="subtle">Local review</span></header>
+  <main>
+    <div class="fixture">
+      <label for="fixture">Made-up bill</label>
+      <select id="fixture">
+        <option value="tax-single">Property tax · one year</option>
+        <option value="tax-pair">Property tax · two years</option>
+        <option value="electricity">Electricity · one bill</option>
+        <option value="missing-usage">Electricity · missing usage</option>
+        <option value="incompatible-years">Property tax · incompatible years</option>
+      </select>
+    </div>
+
+    <p class="eyebrow">Bill discovery · made-up figures</p>
+    <h1 id="finding">Bill discovery</h1>
+    <p id="detail" class="lede"></p>
+    <p id="validation" class="validation" role="status" hidden></p>
+
+    <details id="evidence" hidden>
+      <summary id="evidence-toggle">Show the evidence</summary>
+      <ol id="arithmetic"></ol>
+      <dl id="figures"></dl>
+    </details>
+
+    <button id="explain" class="secondary" type="button" aria-controls="consent" hidden>Explain my findings</button>
+
+    <section id="consent" aria-labelledby="consent-title" hidden>
+      <h2 id="consent-title" tabindex="-1">Try the explanation preview</h2>
+      <p>This is a simulation using made-up bills. Nothing leaves this tab.</p>
+      <p>A future optional OpenAI explanation would send only the bill type and which checked findings are available. Bill amounts, dates, addresses, identifiers and files would stay in this tab.</p>
+      <div class="actions">
+        <button id="agree" type="button" class="primary">Try the mock explanation</button>
+        <button id="cancel" type="button" class="secondary">Keep the local result</button>
+      </div>
+    </section>
+
+    <section id="explanation" aria-labelledby="explanation-title" hidden>
+      <p class="eyebrow">Mock explanation</p>
+      <h2 id="explanation-title" tabindex="-1">What stands out</h2>
+      <div id="takeaway" class="lede"></div>
+      <ul id="observations"></ul>
+      <p id="limit"></p>
+      <p id="next"></p>
+      <button id="hide-explanation" class="secondary" type="button">Hide explanation</button>
+    </section>
+    <p id="status" class="subtle" role="status"></p>
+  </main>
+</body>
+</html>

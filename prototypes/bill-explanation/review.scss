@@ -1,0 +1,36 @@
+@use '../../src/app/product-design' as product;
+
+@include product.fonts;
+@include product.focus;
+@include product.quiet-motion;
+:root { @include product.tokens; --iy-editorial-font: 'Instrument Serif'; }
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--iy-page); color: var(--iy-ink); font: 16px/1.55 var(--iy-body); }
+header { display: flex; align-items: center; justify-content: space-between; gap: var(--iy-space-2); padding: 20px var(--iy-gutter); border-bottom: 1px solid var(--iy-line); }
+.wordmark { @include product.wordmark; }
+.wordmark span { color: var(--iy-accent); }
+.subtle { color: var(--iy-muted); font-size: 14px; }
+main { width: min(640px, 100% - 2 * var(--iy-gutter)); margin-inline: auto; padding: clamp(24px, 5vw, 54px) 0 48px; }
+.fixture { display: grid; gap: 4px; margin-bottom: var(--iy-space-5); justify-items: start; }
+label { font-size: 14px; font-weight: 650; }
+select { @include product.field; width: min(100%, 320px); padding: 8px; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; color: var(--iy-accent); }
+h1 { @include product.editorial; font-size: clamp(42px, 7vw, 68px); line-height: .98; margin: 0 0 16px; overflow-wrap: anywhere; }
+h2 { margin: 0; font-size: 22px; line-height: 1.3; }
+p { margin: 0 0 var(--iy-space-2); }
+.lede { font-size: 18px; }
+details { margin: var(--iy-space-4) 0 var(--iy-space-3); border-block: 1px solid var(--iy-line); }
+summary { min-height: var(--iy-touch); padding-block: 10px; cursor: pointer; font-weight: 650; }
+dl { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 6px 12px; }
+dt, dd { overflow-wrap: anywhere; }
+dd { margin: 0; font-variant-numeric: tabular-nums; }
+button { font: inherit; cursor: pointer; }
+.primary { @include product.primary; padding: 8px 14px; }
+.secondary { @include product.secondary; padding: 8px 14px; }
+.actions { display: flex; flex-wrap: wrap; gap: var(--iy-space-2); }
+section { margin-top: var(--iy-space-4); border-top: 1px solid var(--iy-line); padding-top: var(--iy-space-3); }
+section h2, #takeaway { margin-bottom: var(--iy-space-2); }
+#observations { margin-block: 8px 16px; padding-inline-start: 20px; }
+.reference { color: var(--iy-accent); text-decoration: underline; text-underline-offset: 3px; background: none; border: 0; padding: 0; min-height: var(--iy-touch); font-size: 14px; text-align: start; }
+.validation { color: var(--iy-error); }
+#status:empty { display: none; }

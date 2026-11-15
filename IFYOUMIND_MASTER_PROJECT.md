@@ -1,12 +1,16 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-14
+**Updated:** 2026-11-15
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
 **Purpose:** Living project context for the founder and all current/future development agents.
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
+
+## November 15, 2026 — Bill explanation founder review
+
+[Offline explanation review](docs/product/BILL_EXPLANATION_REVIEW.md) tests whether a concise takeaway, evidence and next action help beyond the deterministic result. PR #95 remains intact. Any later staging provider test would extend PR #96's existing integration and use only a fixed synthetic fixture, with separate authorization. Do a fixed-copy usefulness comparison first; no real-data transfer or release is authorized.
 
 ## November 14, 2026 — Master product experience directive
 

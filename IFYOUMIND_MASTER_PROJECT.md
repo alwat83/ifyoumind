@@ -16,6 +16,8 @@
 
 [PR #103 Stripe preflight](docs/growth/CHECKOUT_RELIABILITY_GATE.md#stripe-preflight-and-release-plan) records the hosted URL issue found in test mode, deployed credential readback, and the safe release and purchase sequence.
 
+[PR #103 production verification](docs/growth/CHECKOUT_RELIABILITY_GATE.md#production-verification-for-pr-103) confirms the live checkout guard, retained rollback targets and completed navigation smoke. The next commercial proof is an authorized unpaid live retry test followed by an independently verified report purchase and reopening.
+
 ## November 14, 2026 — Master product experience directive
 
 [Audit, unified blueprint and staged roadmap](docs/product/PRODUCT_EXPERIENCE_BLUEPRINT.md) are proposed for founder review. The permanent standard is to answer the visitor’s actual question with checkable evidence. Reuse PR #99 for relevance, preserve #95 and #96 as independent gates, and observe first use before changing the homepage or the commercial path.

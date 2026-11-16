@@ -22,27 +22,30 @@
   --iy-display: var(--iy-editorial-font, Georgia, serif);
   --iy-body: Inter, Arial, sans-serif;
 
-  --iy-page: #f7f3eb;
-  --iy-paper: #fffdf8;
-  --iy-panel: #f1ece2;
-  --iy-ink: #222521;
-  --iy-muted: #51554d;
-  --iy-line: #d6d0c6;
-  --iy-control: #827c70;
-  --iy-accent: #88422c;
-  --iy-focus: var(--iy-accent);
-  --iy-clay: #efded0;
-  --iy-olive: #e6e9d5;
-  --iy-hover: #41473b;
+  --iy-page: #fafafc;
+  --iy-panel: #eceef5;
+  --iy-accent: #4355e8;
+  --iy-ink: #171923;
+  --iy-periwinkle: #b9c4ff;
 
-  --iy-studio: #232820;
-  --iy-studio-panel: #2c3228;
-  --iy-studio-line: #50564a;
-  --iy-studio-text: #f9f3e5;
-  --iy-studio-muted: #ddd9ca;
-  --iy-studio-accent: #f6bc93;
-  --iy-studio-chart: #c7d2a3;
-  --iy-studio-control: #a7ac9a;
+  --iy-paper: #fff;
+  --iy-muted: #51586c;
+  --iy-line: #cdd1e1;
+  --iy-control: #767d94;
+  --iy-focus: var(--iy-accent);
+  --iy-clay: var(--iy-panel);
+  --iy-olive: #e6eaff;
+  --iy-hover: #3444c8;
+
+  --iy-studio: var(--iy-ink);
+  --iy-studio-panel: #202435;
+  --iy-studio-line: #525975;
+  --iy-studio-text: var(--iy-page);
+  --iy-studio-muted: #d3d9f2;
+  --iy-studio-accent: var(--iy-periwinkle);
+  --iy-studio-chart: var(--iy-periwinkle);
+  --iy-studio-control: #a0a9cd;
+  --iy-studio-hover: #5263f0;
 
   --iy-good: #2f6247;
   --iy-good-bg: #e6eedf;
@@ -51,7 +54,7 @@
   --iy-error: #963b30;
   --iy-error-bg: #f6e5df;
   --iy-studio-error: #ffc2b7;
-  --iy-chart: #687c50;
+  --iy-chart: var(--iy-accent);
 
   --iy-space-1: 8px;
   --iy-space-2: 12px;
@@ -89,7 +92,7 @@
 @mixin primary {
   @include button;
   border: 1px solid transparent;
-  background: var(--iy-ink);
+  background: var(--iy-accent);
   color: var(--iy-paper);
 
   &:hover:not(:disabled, [aria-disabled='true']) {

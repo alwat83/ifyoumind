@@ -24,7 +24,7 @@
   text-align: left;
   cursor: pointer;
 }
-.question-option[aria-pressed='true'] { color: var(--studio-text); border-bottom-color: var(--finding-accent); }
+.question-option[aria-pressed='true'] { color: var(--studio-text); border-bottom-color: var(--iy-accent); }
 .question-option:hover { text-decoration: underline; text-underline-offset: 4px; }
 .question-option:focus-visible { outline-offset: -3px; }
 
@@ -49,8 +49,8 @@
   align-items: start;
   padding: 8px clamp(18px, 3vw, 40px) 18px;
 }
-.demo .example-link { min-height: 44px; background: var(--studio-text); color: var(--ink); }
-.demo .example-link:hover { background: var(--finding-accent); }
+.demo .example-link { min-height: 44px; background: var(--iy-accent); color: var(--iy-paper); }
+.demo .example-link:hover { background: var(--iy-studio-hover); }
 .demo .example-link:focus-visible { outline-color: var(--studio-text); }
 .home-evidence { min-width: 0; }
 .home-evidence summary {

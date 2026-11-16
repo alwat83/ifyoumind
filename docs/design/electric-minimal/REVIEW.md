@@ -20,14 +20,15 @@ The palette applies to the production Wow 3.3 layout at `20665a3f21a1c01f669395a
 | Tinted surface | `#E6EAFF` is the existing pale emphasis surface. The legacy Sass names for clay and olive now resolve to Cool Mist and this periwinkle tint. |
 | Dark-surface shades | `#202435` dark panel, `#525975` decorative divider, `#D3D9F2` muted evidence text, `#A0A9CD` interactive boundary. |
 
-The shared tokens and primary button mixin reach the homepage, Discovery, public sample and authenticated Decision Reports, pricing, sign-in, registration, Account and saved decisions. Existing outlined secondary pricing actions preserve their role. Guides and static recovery inherit the same tokens. Existing success, warning, error, and data-signal colors retain their semantic roles. Browser forced colors continue to supply system colors. Photo, shadows, layout, typography, labels, and behavior are unchanged.
+The shared tokens and primary button mixin reach the homepage, Discovery, public sample and authenticated Decision Reports, pricing, sign-in, registration, Account and saved decisions. Existing outlined secondary pricing actions preserve their role. Guides and static recovery inherit the same tokens. Earlier and negative Discovery bars use the muted neutral; recent and positive bars use cobalt. The centered change axis uses Midnight Ink. Existing success, warning, and error colors retain their semantic roles. Browser forced colors continue to supply system colors. Photo, shadows, layout, typography, labels, and behavior are unchanged.
 
 Runtime files changed
 
 - `_product-design.scss` defines the palette, derivatives and shared primary fill.
 - `public-landing.component.scss` applies cobalt to the existing headline accent and primary button.
 - `public-landing-discovery.component.scss` sets the example action, dark hover and selected underline colors.
-- `tax-discovery.component.scss` colors the expanded follow-up button.
+- `tax-discovery.component.scss` colors the expanded follow-up button and legacy teaser label.
+- `discovery-findings.component.scss` colors the existing neutral comparison bars and axis.
 - `market-report.component.scss` applies cobalt to the existing full-report action.
 
 ## Before and after

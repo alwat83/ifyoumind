@@ -14,6 +14,8 @@
 
 [Checkout reliability gate](docs/growth/CHECKOUT_RELIABILITY_GATE.md) addresses the duplicate-attempt risk identified in the one-purchase audit. The supervised live run depends on verified deployment of the guard and reconciliation of any preceding attempt for the selected decision.
 
+[PR #103 Stripe preflight](docs/growth/CHECKOUT_RELIABILITY_GATE.md#stripe-preflight-and-release-plan) records the hosted URL issue found in test mode, deployed credential readback, and the safe release and purchase sequence.
+
 ## November 14, 2026 — Master product experience directive
 
 [Audit, unified blueprint and staged roadmap](docs/product/PRODUCT_EXPERIENCE_BLUEPRINT.md) are proposed for founder review. The permanent standard is to answer the visitor’s actual question with checkable evidence. Reuse PR #99 for relevance, preserve #95 and #96 as independent gates, and observe first use before changing the homepage or the commercial path.

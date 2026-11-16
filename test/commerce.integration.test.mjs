@@ -241,6 +241,25 @@ test('repeat, refresh and cancel return reuse the same still-open checkout', asy
   assert.equal((await project(orgId, data.projectId)).decisionReportPurchased, undefined);
 });
 
+test('one-time checkout accepts the observed Stripe hosted path only for the same session', async () => {
+  const data = reportCheckoutData(orgId, await newProject(orgId));
+  const { sessionId } = (await checkoutReport(data)).result;
+  const session = stripeSessions.get(sessionId);
+  const hosted = `https://checkout.stripe.com/g/pay/${sessionId}#stripe-fragment`;
+  session.url = hosted;
+  assert.deepEqual(await checkoutReport(data), { result: { url: hosted, sessionId } });
+
+  for (const invalid of [
+    `https://checkout.stripe.com/g/pay/cs_other`,
+    `https://checkout.stripe.com/g/pay/${sessionId}/extra`,
+    `https://checkout.stripe.com.example/g/pay/${sessionId}`,
+  ]) {
+    session.url = invalid;
+    assert.equal((await checkoutReport(data)).error, 'unavailable');
+  }
+  assert.equal(stripeRequests.length, 1);
+});
+
 test('concurrent requests share one Stripe idempotency key and one effective session', async () => {
   const data = reportCheckoutData(orgId, await newProject(orgId));
   const requests = await Promise.all(Array.from({ length: 5 }, () => checkoutReport(data)));

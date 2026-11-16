@@ -50,9 +50,12 @@ function checkoutOrigin() {
     process.env.SUBSCRIPTION_LOCAL_RETURN === 'true' ? 'http://localhost:4200' : 'https://ifyoumind.com';
 }
 
-function checkoutUrl(value: unknown): string {
+function checkoutUrl(value: unknown, reportSessionId?: string): string {
   const url = new URL(typeof value === 'string' ? value : '');
-  requireRecord(url.origin === 'https://checkout.stripe.com' && !url.username && !url.password && url.pathname.startsWith('/c/pay/'));
+  const expectedPath = reportSessionId === undefined
+    ? url.pathname.startsWith('/c/pay/')
+    : [`/c/pay/${reportSessionId}`, `/g/pay/${reportSessionId}`].includes(url.pathname);
+  requireRecord(url.origin === 'https://checkout.stripe.com' && !url.username && !url.password && expectedPath);
   return url.href;
 }
 
@@ -535,7 +538,7 @@ export async function startReportCheckout(organizationId: string, projectId: str
       const latest = (await project.get()).data();
       if (!latest || decisionReportAccess(latest) !== 'none' || latest.reportCheckout?.attempt !== checkout.attempt ||
         latest.reportCheckout?.id !== checkout.id) throw pending();
-      return { url: checkoutUrl(session.url), sessionId: session.id };
+      return { url: checkoutUrl(session.url, session.id), sessionId: session.id };
     }
     throw pending();
   } catch (error) {

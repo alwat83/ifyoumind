@@ -3,14 +3,11 @@ import { FIXTURES } from '../support/fixtures.mjs';
 
 test('homepage opens the interactive demo and the complete free example', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Are my property taxes higher than they should be?');
-  const heroAction = page.getByRole('link', { name: 'Try the tax example', exact: true });
-  await expect(heroAction).toBeInViewport({ ratio: 1 });
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('The answer is in your numbers.');
+  await expect(page.getByRole('heading', { name: 'Why did my property taxes go up?' })).toBeInViewport({ ratio: 1 });
   await expect(page.locator('#discovery-result')).toContainText('$420 more than the year before.');
   await expectNoHorizontalScroll(page);
   await expectAccessible(page);
-  await heroAction.click();
-  await expect(page).toHaveURL(/\/#business$/);
   const proof = page.locator('.home-evidence');
   await proof.locator('summary').click();
   await expect(proof.locator('.evidence-lead')).toHaveText('($240.00 ÷ $420.00) × 100 = 57.1%');

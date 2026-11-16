@@ -618,3 +618,7 @@ OpenAI / Codex. Genuine test Checkout reproduced an official hosted URL rejected
 ## 2026-11-16 — Wow 3.3 homepage hero draft
 
 OpenAI / Codex. The isolated `codex/wow-3-3-hero` branch starts from production master `c580337a29d1ab51e80e7586989e73478df364b0`. [Draft PR #104](https://github.com/alwat83/ifyoumind/pull/104) changes only the homepage hero and its tests. The old jump CTA and repeated chart are gone, with the deterministic examples and evidence still in place. [Paired screenshots, scope and founder review](../design/wow-3-3/REVIEW.md). CI evidence is tracked on the exact draft head. No deployment, dependency, provider, paid-pilot or revenue change.
+
+## 2026-11-16 — Electric Minimal palette review
+
+OpenAI / Codex. [Draft PR #105](https://github.com/alwat83/ifyoumind/pull/105) is based on deployed Wow 3.3, `20665a3f21a1c01f669395a9d29224c346a63935`. The shared palette and existing primary and selected colors changed in five Sass files. Production-equivalent build, 138 web tests, geometry and wrapping comparison, and direct contrast and accessibility checks passed. [Paired screenshots and cross-surface verification](../design/electric-minimal/REVIEW.md). CI is tracked on the exact draft head. No deployment or measured product outcome.

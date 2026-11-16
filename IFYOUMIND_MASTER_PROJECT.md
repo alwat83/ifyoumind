@@ -20,6 +20,8 @@
 
 [November 16 unpaid production verification](docs/growth/CHECKOUT_RELIABILITY_GATE.md#authorized-unpaid-production-checkout-verification) confirmed four calls returned one live Checkout Session, with safe cancellation and expiration and no paid entitlement. The remaining commercial milestone is one separately authorized independent purchase, delivery, and fresh-session reopening.
 
+[First paid pilot preflight](docs/growth/CHECKOUT_RELIABILITY_GATE.md#first-independent-paid-pilot-preflight) records founder authorization for one independent purchase, a fresh $79 production configuration check, and the remaining buyer consent and context gate. No receipt or paid delivery has been verified for this pilot.
+
 ## November 14, 2026 — Master product experience directive
 
 [Audit, unified blueprint and staged roadmap](docs/product/PRODUCT_EXPERIENCE_BLUEPRINT.md) are proposed for founder review. The permanent standard is to answer the visitor’s actual question with checkable evidence. Reuse PR #99 for relevance, preserve #95 and #96 as independent gates, and observe first use before changing the homepage or the commercial path.

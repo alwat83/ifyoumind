@@ -622,3 +622,7 @@ OpenAI / Codex. Exact head `9442b34358936ba16a55de87f274007572803318` passed bot
 ## 2026-11-16 — Authorized unpaid live Checkout gate passed
 
 OpenAI / Codex. Reverified Firebase and the live Stripe account. Used the signed-in deployed app and genuine Stripe APIs with one new synthetic Business decision. All four calls reused a single live Checkout, including two concurrent retries. Stripe cancel left the report locked. Stripe returned unpaid, no PaymentIntent and a confirmed expiration. The expired readback and Firestore check showed no paid access or ledger entry, and the application's reservation was preserved. Private evidence was recorded locally. No code, merge, deployment, configuration, payment, refund, or outreach. [Redacted results](../growth/CHECKOUT_RELIABILITY_GATE.md#authorized-unpaid-production-checkout-verification). One actual independent purchase and successful delivery still require separate approval and observation.
+
+## 2026-11-16 — Founder-authorized independent paid pilot preflight
+
+OpenAI / Codex. Confirmed production merge and Hosting, relevant active Functions and rollback targets, the live $79 Stripe Price, required enabled webhook events, and enabled signing and Census secret bindings. Awaiting confirmation of the independent buyer's consent, approved question and city. No Checkout, charge, production change or customer contact. No pilot revenue or delivery evidence. [Readiness and buyer gate](../growth/CHECKOUT_RELIABILITY_GATE.md#first-independent-paid-pilot-preflight).

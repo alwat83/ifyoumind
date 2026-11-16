@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 16, 2026 — First paid pilot preflight passed
+
+**Founder-authorized pilot, awaiting buyer confirmation.** Live PR #103, active $79 one-time Stripe price, required webhook events and signing secret, active report generation, and rollback targets passed fresh read-only preflight. The independent participant's consent and buyer-approved city and question are still needed. No pilot Checkout or payment was initiated. The internal unpaid smoke remains separate from verified revenue. [Pilot readiness and stop conditions](../growth/CHECKOUT_RELIABILITY_GATE.md#first-independent-paid-pilot-preflight).
+
 ## November 16, 2026 — Unpaid production Checkout smoke passed
 
 **Production verified:** One internal synthetic decision produced exactly one live Checkout Session across the initial call, a serial retry and two concurrent retries. All four returned the same Session. The Stripe cancel route returned with locked access. Direct reconciliation showed unpaid, no PaymentIntent and one safe expiration. There are now zero active sessions for the decision, with no paid access or paid ledger entry. Its audit reservation remains intact. Hosting `0855625f92deb226` and Checkout `createcommercialcheckout-00065-pez` at 100% matched the deployed [PR #103](https://github.com/alwat83/ifyoumind/pull/103) baseline. The supervised $79 purchase requires separate founder authorization. [Redacted verification](../growth/CHECKOUT_RELIABILITY_GATE.md#authorized-unpaid-production-checkout-verification).

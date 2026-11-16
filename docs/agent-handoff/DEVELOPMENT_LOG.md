@@ -614,3 +614,7 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 ## 2026-11-15 — Real Stripe preflight for draft PR #103
 
 OpenAI / Codex. Genuine test Checkout reproduced an official hosted URL rejected by original head `5b17b1076d8cca20e6b28d8adbe70a00ac429854`. Corrected the one-time redirect validator and added a regression for the observed path and untrusted alternatives. Verified production Hosting, rollback history and deployed Stripe read capability. Live Stripe returned no PaymentIntent fixture for a populated expansion. No production change or live purchase occurred. Track exact-head test evidence in [draft PR #103](https://github.com/alwat83/ifyoumind/pull/103) and the [preflight runbook](../growth/CHECKOUT_RELIABILITY_GATE.md#stripe-preflight-and-release-plan).
+
+## 2026-11-16 — Wow 3.3 homepage hero draft
+
+OpenAI / Codex. The isolated `codex/wow-3-3-hero` branch starts from production master `c580337a29d1ab51e80e7586989e73478df364b0`. [Draft PR #104](https://github.com/alwat83/ifyoumind/pull/104) changes only the homepage hero and its tests. The old jump CTA and repeated chart are gone, with the deterministic examples and evidence still in place. [Paired screenshots, scope and founder review](../design/wow-3-3/REVIEW.md). CI evidence is tracked on the exact draft head. No deployment, dependency, provider, paid-pilot or revenue change.

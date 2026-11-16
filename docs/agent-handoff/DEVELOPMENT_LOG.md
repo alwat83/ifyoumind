@@ -618,3 +618,7 @@ OpenAI / Codex. Genuine test Checkout reproduced an official hosted URL rejected
 ## 2026-11-16 — Wow 3.3 homepage hero draft
 
 OpenAI / Codex. The isolated `codex/wow-3-3-hero` branch starts from production master `c580337a29d1ab51e80e7586989e73478df364b0`. [Draft PR #104](https://github.com/alwat83/ifyoumind/pull/104) changes only the homepage hero and its tests. The old jump CTA and repeated chart are gone, with the deterministic examples and evidence still in place. [Paired screenshots, scope and founder review](../design/wow-3-3/REVIEW.md). CI evidence is tracked on the exact draft head. No deployment, dependency, provider, paid-pilot or revenue change.
+
+## 2026-11-16 — Wow 3.3 production verified
+
+OpenAI / Codex. Founder authorized the existing PR #104 merge `20665a3f21a1c01f669395a9d29224c346a63935`. Master and the reviewed tree matched. The automatic deployment had already passed. Firebase independently confirmed the live finalized release `1794855290043000`, Hosting version `60325c7c14d6bd62`, and retained PR #103 rollback `0855625f92deb226`. Anonymous Chrome smoke passed at 1440, 390 and 320 px, including the three examples, evidence, Discovery and Decision Report navigation, and protected return destinations. No second deployment, checkout or payment. [Release evidence and links](../design/wow-3-3/REVIEW.md#production-release-verification).

@@ -20,6 +20,8 @@
 
 [Draft PR #104](https://github.com/alwat83/ifyoumind/pull/104) brings the existing deterministic property-tax finding into the homepage hero. [Paired screenshots and review scope](docs/design/wow-3-3/REVIEW.md) show the existing design system and the lighter evidence entry. The separate [PR #103 production and paid-pilot record](https://github.com/alwat83/ifyoumind/blob/d2c836449961ecbb57034ba0ba41408e90ef3e93/docs/growth/CHECKOUT_RELIABILITY_GATE.md) remains the source for customer-pilot status.
 
+Wow 3.3 is now [verified live](docs/design/wow-3-3/REVIEW.md#production-release-verification) on Hosting `60325c7c14d6bd62` from approved merge `20665a3f21a1c01f669395a9d29224c346a63935`. The existing examples, evidence, and conversion routes passed production navigation checks. First-visit comprehension and conversion remain unmeasured.
+
 ## November 14, 2026 — Master product experience directive
 
 [Audit, unified blueprint and staged roadmap](docs/product/PRODUCT_EXPERIENCE_BLUEPRINT.md) are proposed for founder review. The permanent standard is to answer the visitor’s actual question with checkable evidence. Reuse PR #99 for relevance, preserve #95 and #96 as independent gates, and observe first use before changing the homepage or the commercial path.

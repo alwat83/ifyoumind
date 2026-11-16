@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 16, 2026 — Wow 3.3 production verified
+
+The approved [PR #104](https://github.com/alwat83/ifyoumind/pull/104) merge `20665a3f21a1c01f669395a9d29224c346a63935` is live. [Deployment](https://github.com/alwat83/ifyoumind/actions/runs/43933175834) passed and Firebase confirmed Hosting release `1794855290043000`, version `60325c7c14d6bd62`. Live desktop, mobile and 320 px checks passed. Rollback `0855625f92deb226` remains finalized and retained. [Production evidence and narrow viewport note](../design/wow-3-3/REVIEW.md#production-release-verification). The independent paid pilot remains a separate [handoff](https://github.com/alwat83/ifyoumind/blob/d2c836449961ecbb57034ba0ba41408e90ef3e93/docs/growth/CHECKOUT_RELIABILITY_GATE.md#first-independent-paid-pilot-preflight).
+
 ## November 16, 2026 — Wow 3.3 homepage hero draft
 
 [Draft PR #104](https://github.com/alwat83/ifyoumind/pull/104) moves the worked property-tax question, its $420 finding, and optional evidence into the hero. It replaces the jump link and repeated chart. Existing Discovery and Business routes remain accessible. [Paired screenshots and review](../design/wow-3-3/REVIEW.md). The design candidate is local and draft-only. [PR #103 production and paid-pilot evidence](https://github.com/alwat83/ifyoumind/blob/d2c836449961ecbb57034ba0ba41408e90ef3e93/docs/growth/CHECKOUT_RELIABILITY_GATE.md) remains on the separate release record.

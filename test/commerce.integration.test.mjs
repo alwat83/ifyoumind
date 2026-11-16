@@ -21,15 +21,46 @@ let orgId;
 let projectCounter = 0;
 let stripeRequests = [];
 let stripeSubscriptions = {};
+let stripeSessions = new Map();
+let stripeAttemptKeys = new Map();
+let dropCheckoutResponse = false;
+let failSessionRead = false;
+let stripeAccount = 'acct_commerce_fixture';
 
 // Stand-in for the Stripe REST API: records checkout requests and serves subscriptions.
 globalThis.fetch = async (url, init = {}) => {
   const path = String(url).replace('https://api.stripe.com/v1/', '');
   const json = (status, body) => ({ ok: status < 400, status, json: async () => body });
+  if (path === 'account') return json(200, { id: stripeAccount });
   if (path === 'checkout/sessions' && init.method === 'POST') {
-    stripeRequests.push(new URLSearchParams(String(init.body)));
-    return json(200, { id: `cs_${stripeRequests.length}`, url: 'https://checkout.stripe.com/c/pay/x' });
+    const body = new URLSearchParams(String(init.body));
+    stripeRequests.push(body);
+    const key = init.headers['Idempotency-Key'];
+    assert.match(key, /^ifyoumind-report-[a-f0-9-]+$/);
+    const prior = stripeAttemptKeys.get(key);
+    if (prior) {
+      assert.equal(body.toString(), prior.body);
+      return json(200, prior.created);
+    }
+    const id = `cs_report_${stripeSessions.size + 1}`;
+    const created = {
+      id, url: `https://checkout.stripe.com/c/pay/${id}`,
+      livemode: init.headers.Authorization.includes('sk_live_'), mode: 'payment',
+      status: 'open', payment_status: 'unpaid', payment_intent: null,
+      metadata: Object.fromEntries(['offer', 'projectId', 'organizationId', 'reportAttempt'].map(name => [name, body.get(`metadata[${name}]`)])),
+    };
+    stripeSessions.set(id, { ...created });
+    stripeAttemptKeys.set(key, { body: body.toString(), created });
+    if (dropCheckoutResponse) {
+      dropCheckoutResponse = false;
+      throw new Error('Simulated connection lost after Stripe accepted the request');
+    }
+    return json(200, created);
   }
+  const checkoutRead = path.match(/^checkout\/sessions\/([^?]+)\?expand\[\]=payment_intent$/);
+  if (checkoutRead) return failSessionRead || !stripeSessions.has(checkoutRead[1])
+    ? json(503, { error: { message: 'Fixture lookup unavailable' } })
+    : json(200, stripeSessions.get(checkoutRead[1]));
   if (path === 'billing_portal/sessions' && init.method === 'POST') {
     return json(200, { url: 'https://billing.stripe.com/p/session/x' });
   }
@@ -85,7 +116,11 @@ async function deliver(type, object, { id = `evt_${++eventCounter}`, created = M
 }
 
 before(async () => { orgId = await newOrg(); });
-beforeEach(() => { stripeRequests = []; stripeSubscriptions = {}; process.env.STRIPE_SECRET_KEY = 'sk_test_integration'; });
+beforeEach(() => {
+  stripeRequests = []; stripeSubscriptions = {}; stripeSessions = new Map(); stripeAttemptKeys = new Map();
+  dropCheckoutResponse = false; failSessionRead = false; stripeAccount = 'acct_commerce_fixture';
+  process.env.STRIPE_SECRET_KEY = 'sk_test_integration';
+});
 
 // ---- Report access ----
 
@@ -183,12 +218,131 @@ test('checkout uses sandbox prices with a test key and live prices with a live k
   const id = await newProject(free);
   await call('createCommercialCheckout', { organizationId: free, offer: 'report', projectId: id });
   process.env.STRIPE_SECRET_KEY = 'sk_live_integration';
-  await call('createCommercialCheckout', { organizationId: free, offer: 'report', projectId: id });
+  const otherId = await newProject(free);
+  assert.equal((await call('createCommercialCheckout', { organizationId: free, offer: 'report', projectId: id })).error, 'failed-precondition');
+  await call('createCommercialCheckout', { organizationId: free, offer: 'report', projectId: otherId });
   assert.equal(stripeRequests[0].get('line_items[0][price]'), STRIPE_PRICES.test.report);
   assert.equal(stripeRequests[1].get('line_items[0][price]'), STRIPE_PRICES.live.report);
   assert.equal(stripeRequests[1].get('mode'), 'payment');
-  assert.equal(stripeRequests[1].get('metadata[projectId]'), id);
+  assert.equal(stripeRequests[1].get('metadata[projectId]'), otherId);
   assert.equal(stripeRequests[1].get('allow_promotion_codes'), 'true');
+});
+
+const reportCheckoutData = (organizationId, projectId) => ({ organizationId, projectId, offer: 'report' });
+const checkoutReport = (data, buyer) => call('createCommercialCheckout', data, buyer);
+
+test('repeat, refresh and cancel return reuse the same still-open checkout', async () => {
+  const data = reportCheckoutData(orgId, await newProject(orgId));
+  const first = await checkoutReport(data);
+  assert.ok(first.result?.sessionId);
+  assert.deepEqual(await checkoutReport(data), first);
+  assert.deepEqual(await checkoutReport(data), first);
+  assert.equal(stripeRequests.length, 1);
+  assert.equal((await project(orgId, data.projectId)).decisionReportPurchased, undefined);
+});
+
+test('one-time checkout accepts the observed Stripe hosted path only for the same session', async () => {
+  const data = reportCheckoutData(orgId, await newProject(orgId));
+  const { sessionId } = (await checkoutReport(data)).result;
+  const session = stripeSessions.get(sessionId);
+  const hosted = `https://checkout.stripe.com/g/pay/${sessionId}#stripe-fragment`;
+  session.url = hosted;
+  assert.deepEqual(await checkoutReport(data), { result: { url: hosted, sessionId } });
+
+  for (const invalid of [
+    `https://checkout.stripe.com/g/pay/cs_other`,
+    `https://checkout.stripe.com/g/pay/${sessionId}/extra`,
+    `https://checkout.stripe.com.example/g/pay/${sessionId}`,
+  ]) {
+    session.url = invalid;
+    assert.equal((await checkoutReport(data)).error, 'unavailable');
+  }
+  assert.equal(stripeRequests.length, 1);
+});
+
+test('concurrent requests share one Stripe idempotency key and one effective session', async () => {
+  const data = reportCheckoutData(orgId, await newProject(orgId));
+  const requests = await Promise.all(Array.from({ length: 5 }, () => checkoutReport(data)));
+  assert.ok(requests.every(r => r.result?.sessionId === requests[0].result?.sessionId));
+  assert.equal(stripeSessions.size, 1);
+  assert.equal(stripeAttemptKeys.size, 1);
+});
+
+test('only Stripe-confirmed expired or terminal canceled unpaid sessions can be replaced', async () => {
+  const data = reportCheckoutData(orgId, await newProject(orgId));
+  const first = (await checkoutReport(data)).result.sessionId;
+  Object.assign(stripeSessions.get(first), { status: 'expired', url: null });
+  const second = (await checkoutReport(data)).result.sessionId;
+  assert.notEqual(second, first);
+  Object.assign(stripeSessions.get(second), { status: 'complete', payment_intent: { status: 'canceled' } });
+  const third = (await checkoutReport(data)).result.sessionId;
+  assert.notEqual(third, second);
+  assert.equal((await project(orgId, data.projectId)).decisionReportPurchased, undefined);
+});
+
+test('provider-paid session blocks retries even while webhook delivery is pending', async () => {
+  const data = reportCheckoutData(orgId, await newProject(orgId));
+  const id = (await checkoutReport(data)).result.sessionId;
+  const session = stripeSessions.get(id);
+  Object.assign(session, { status: 'complete', payment_status: 'paid', payment_intent: { status: 'succeeded' } });
+  assert.equal((await checkoutReport(data)).error, 'failed-precondition');
+  assert.equal((await project(orgId, data.projectId)).decisionReportPurchased, undefined);
+  const event = await deliver('checkout.session.completed', session);
+  assert.equal(event.statusCode, 200);
+  assert.equal((await project(orgId, data.projectId)).decisionReportPurchased, true);
+  assert.equal((await checkoutReport(data)).error, 'failed-precondition');
+  assert.equal(stripeRequests.length, 1);
+});
+
+test('lost response, failed session retrieval and unresolved payments never create a different attempt', async () => {
+  const data = reportCheckoutData(orgId, await newProject(orgId));
+  dropCheckoutResponse = true;
+  assert.equal((await checkoutReport(data)).error, 'unavailable');
+  assert.equal((await project(orgId, data.projectId)).reportCheckout.id, undefined);
+  stripeAccount = 'acct_different_fixture';
+  assert.equal((await checkoutReport(data)).error, 'failed-precondition');
+  stripeAccount = 'acct_commerce_fixture';
+  const id = (await checkoutReport(data)).result.sessionId;
+  assert.equal(stripeAttemptKeys.size, 1);
+  failSessionRead = true;
+  assert.equal((await checkoutReport(data)).error, 'unavailable');
+  failSessionRead = false;
+  const session = stripeSessions.get(id);
+  for (const [status, paymentStatus, intent] of [
+    ['complete', 'unpaid', 'processing'], ['complete', 'unpaid', 'requires_payment_method'],
+    ['expired', 'unpaid', 'processing'], ['open', 'unpaid', 'requires_capture'],
+    ['complete', 'no_payment_required', 'succeeded'],
+  ]) {
+    Object.assign(session, { status, payment_status: paymentStatus, payment_intent: { status: intent } });
+    assert.equal((await checkoutReport(data)).error, 'failed-precondition');
+  }
+  Object.assign(session, { status: 'open', payment_status: 'unpaid', payment_intent: { status: 'requires_payment_method' } });
+  assert.equal((await checkoutReport(data)).result.sessionId, id);
+  assert.equal(stripeRequests.length, 2);
+  assert.equal(stripeSessions.size, 1);
+});
+
+test('unresolved attempts outside the retry window stay locked for reconciliation', async () => {
+  const data = reportCheckoutData(orgId, await newProject(orgId));
+  dropCheckoutResponse = true;
+  assert.equal((await checkoutReport(data)).error, 'unavailable');
+  await orgs().doc(orgId).collection('marketProjects').doc(data.projectId).update({ 'reportCheckout.expiresAt': 1 });
+  assert.equal((await checkoutReport(data)).error, 'failed-precondition');
+  assert.equal(stripeRequests.length, 1);
+});
+
+test('separate decisions and workspaces get separate sessions without sharing a buyer link', async () => {
+  const other = await newOrg();
+  const data = reportCheckoutData(orgId, await newProject(orgId));
+  const workspaceDecision = await newProject(other);
+  await orgs().doc(other).collection('marketProjects').doc(data.projectId).set({ concept: 'Same ID, different workspace' });
+  const first = (await checkoutReport(data)).result.sessionId;
+  assert.equal((await checkoutReport(data, 'viewer-uid')).error, 'failed-precondition');
+  const second = (await checkoutReport(reportCheckoutData(orgId, await newProject(orgId)), 'viewer-uid')).result.sessionId;
+  const third = (await checkoutReport(reportCheckoutData(other, data.projectId))).result.sessionId;
+  const fourth = (await checkoutReport(reportCheckoutData(other, workspaceDecision))).result.sessionId;
+  assert.equal(new Set([first, second, third, fourth]).size, 4);
+  assert.equal(stripeRequests.length, 4);
 });
 
 test('checkout refuses already unlocked reports and new Pro sessions', async () => {

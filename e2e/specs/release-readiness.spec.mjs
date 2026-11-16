@@ -119,6 +119,7 @@ test('one-time checkout return waits for report access before opening the saved 
   await page.goto(`/app/pricing?checkout=success&offer=report&projectId=${projectId}`);
   await expect(page.getByRole('status').filter({ hasText: 'Report access is still being confirmed' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Open your Decision Report' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Buy Decision Report', exact: true })).toHaveCount(0);
 
   // Simulate the API read after Stripe's webhook has confirmed access.
   reportPaid = true;

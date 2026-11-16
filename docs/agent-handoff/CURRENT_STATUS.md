@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 15, 2026 — One-time Checkout reliability draft
+
+`codex/one-time-checkout-reliability` from production merge `89f481712d7e66f2e63b0861eb004e439d3480e1`. The draft gives all $79 one-time requests a persisted decision-scoped Checkout attempt, Stripe idempotency and provider-state reconciliation. [Reliability gate and release considerations](../growth/CHECKOUT_RELIABILITY_GATE.md). The candidate requires Stripe sandbox verification, production key capability readback and separate release approval before a supervised live purchase. Production remains on the #102 release. [Release evidence](https://github.com/alwat83/ifyoumind/blob/50d867a8ddc5f423ce584db85360f84dc1497c66/docs/releases/report-handoff-20261115/LIVE_VERIFICATION.md).
+
+Real Stripe preflight found a hosted URL rejected by the original draft. The focused correction is on [draft PR #103](https://github.com/alwat83/ifyoumind/pull/103). Authenticated Firebase readback confirmed Hosting `de4cfa6b28163962` and retained rollback versions. The deployed Stripe key matched the intended live account and the required read endpoints responded successfully. Live expansion had no existing PaymentIntent fixture. [Preflight, rollback and purchase gates](../growth/CHECKOUT_RELIABILITY_GATE.md#stripe-preflight-and-release-plan).
+
 ## November 15, 2026 — Revenue readiness and public sample handoff
 
 **Production verified:** [#99](https://github.com/alwat83/ifyoumind/pull/99) merge `b22cb7582bbeb615b17b7fee34b7f6a3ec216560`, [successful deployment](https://github.com/alwat83/ifyoumind/actions/runs/43640676326), live Hosting `51e354bfe0e900e2`, previous finalized version `1beeaa395c606d55`. Birmingham, personal bill and parcel relevance still worked. Runtime subscription enrollment is empty and [#96](https://github.com/alwat83/ifyoumind/pull/96) staging revision `explainsyntheticmarket-00004-lor` was freshly verified OFF.

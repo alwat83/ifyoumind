@@ -42,7 +42,9 @@ export class PricingComponent implements OnInit {
     if(checkout==='success'){
       this.message='Checkout returned successfully. Checking your access…';
     }
-    if(checkout==='cancelled') this.message='Checkout was cancelled. You can return to your decision or try again.';
+    if(checkout==='cancelled') this.message=this.highlightedOffer==='report'
+      ? 'Checkout was cancelled. You can return to your decision or check the existing Checkout attempt again.'
+      : 'Checkout was cancelled. You can return to your decision or try again.';
 
     try{
       this.workspace=await this.organizations.getMyWorkspace();
@@ -60,7 +62,7 @@ export class PricingComponent implements OnInit {
             ? project.decisionReportGenerationRequired
               ? 'Your payment is complete. Open your decision to prepare the full report.'
               : 'Your payment is complete. Your Decision Report is unlocked.'
-            : 'Your checkout returned successfully. Report access is still being confirmed. Refresh this page shortly.';
+            : 'Report access is still being confirmed. Refresh this page to check access before trying again.';
         }else if(checkout==='success'&&this.highlightedOffer==='pro'){
           this.message=this.status.plan==='pro'
             ? 'Pro is active. Your access has been updated.'
@@ -69,6 +71,10 @@ export class PricingComponent implements OnInit {
       }
     }catch(error){this.error=this.messageFor(error);}
     finally{this.loading=false;}
+  }
+
+  get checkingReportReturn():boolean{
+    return this.highlightedOffer==='report'&&this.route.snapshot.queryParamMap.get('checkout')==='success';
   }
 
   get showMonthlyPlans():boolean{

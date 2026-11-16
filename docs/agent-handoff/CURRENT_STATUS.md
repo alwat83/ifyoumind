@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 16, 2026 — Unpaid production Checkout smoke passed
+
+**Production verified:** One internal synthetic decision produced exactly one live Checkout Session across the initial call, a serial retry and two concurrent retries. All four returned the same Session. The Stripe cancel route returned with locked access. Direct reconciliation showed unpaid, no PaymentIntent and one safe expiration. There are now zero active sessions for the decision, with no paid access or paid ledger entry. Its audit reservation remains intact. Hosting `0855625f92deb226` and Checkout `createcommercialcheckout-00065-pez` at 100% matched the deployed [PR #103](https://github.com/alwat83/ifyoumind/pull/103) baseline. The supervised $79 purchase requires separate founder authorization. [Redacted verification](../growth/CHECKOUT_RELIABILITY_GATE.md#authorized-unpaid-production-checkout-verification).
+
 ## November 15, 2026 — PR #103 production verification
 
 **Deployed and navigation verified:** [PR #103](https://github.com/alwat83/ifyoumind/pull/103) merged as `c580337a29d1ab51e80e7586989e73478df364b0` from exact head `9442b34358936ba16a55de87f274007572803318`. [Deployment](https://github.com/alwat83/ifyoumind/actions/runs/43821604737) passed, Hosting `0855625f92deb226` is live, and Checkout serves `createcommercialcheckout-00065-pez` at 100% traffic. The immediate rollback is Hosting `de4cfa6b28163962` and Checkout `createcommercialcheckout-00064-lig`. The production smoke passed on desktop and mobile through the $79 entry and pricing sign-in guard. Paid behavior was sandbox-tested. A separately approved unpaid live retry test and independent purchase remain open. [Production and rollback evidence](../growth/CHECKOUT_RELIABILITY_GATE.md#production-verification-for-pr-103).

@@ -604,3 +604,9 @@ Exact final commit/PR and independently executed CI status recorded in GitHub/co
 **Draft tests:** Local build, 138 fast web tests, 38 commerce integration cases and 22 focused Chrome browser cases passed. Fixtures run under `demo-ifyoumind` and intercept the Stripe handoff and paid status where appropriate. Tests cover both sample destinations, email verification, one-time payment pending and confirmed messaging, saved report reload, and subscription and legacy Account contracts. CI status is tracked on the draft.
 
 **Business impact and next:** Remove the verified repeat registration step, then observe the first independent settlement, decision unlock and saved return. Keep #84 and #85 separate. #95 and #101 remain ready for approved supervised local sessions with no outcomes available. The assignment produced no new measured commercial result.
+
+## 2026-11-15 — One-time Checkout reliability candidate
+
+**Provider/agent:** OpenAI / Codex. `codex/one-time-checkout-reliability`. Production code at `89f481712d7e66f2e63b0861eb004e439d3480e1` bypassed the shared Checkout guard for ordinary non-enrolled workspaces. The draft reserves every one-time attempt in Firestore, scopes Stripe idempotency to the recorded account and buyer, checks provider state before reuse or replacement, and retains signed webhook fulfillment. The pending return hides the repeat-payment button. [Scope, recovery and rollout considerations](../growth/CHECKOUT_RELIABILITY_GATE.md).
+
+**Business impact and next:** A reused session should reduce duplicate-charge and support risk. The draft is not deployed, and no hosted charge or refund was created. Verify the Stripe sandbox and key capabilities, reconcile previous untracked sessions and seek release approval before a supervised live purchase. No measured sales result.

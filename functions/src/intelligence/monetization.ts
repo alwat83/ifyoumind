@@ -3,7 +3,7 @@ import { onCall, onRequest, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
 import { isSubscriptionOffer, subscriptionCatalog, subscriptionEnrollment } from './subscription-plans';
-import { openSubscriptionPortal, readSubscriptionStatus, startLaunchReportCheckout, startSubscriptionCheckout } from './subscriptions';
+import { openSubscriptionPortal, readSubscriptionStatus, startReportCheckout, startSubscriptionCheckout } from './subscriptions';
 import {
   grantsPro,
   shouldApplySubscriptionEvent,
@@ -195,7 +195,7 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
   if(offer==='pro') throw new HttpsError('failed-precondition','Pro is a legacy plan. Manage an existing plan in Account.');
   if(offer!=='report') throw new HttpsError('invalid-argument','Choose a valid offer.');
   const projectId=typeof request.data?.projectId==='string'?request.data.projectId.trim().slice(0,120):'';
-  if(!projectId) throw new HttpsError('invalid-argument','Choose the decision this report belongs to.');
+  if(!/^[A-Za-z0-9_-]{1,120}$/.test(projectId)) throw new HttpsError('invalid-argument','Choose the decision this report belongs to.');
   const project=await organizations().doc(scope.organizationId).collection('marketProjects').doc(projectId).get();
   if(!project.exists) throw new HttpsError('not-found','Decision project not found.');
   if(blocksReportCheckout(project.data())){
@@ -223,28 +223,7 @@ export const createCommercialCheckout = onCall({secrets:[stripeSecretKey]}, asyn
   params.set('metadata[organizationId]',scope.organizationId);
   params.set('metadata[offer]',offer);
   params.set('metadata[projectId]',projectId);
-  const launch = await startLaunchReportCheckout(scope.organizationId, projectId, params);
-  if (launch) return launch;
-
-  try{
-    const session=await stripePost('checkout/sessions',params);
-    return {url:String(session.url||''),sessionId:String(session.id||'')};
-  }catch(error){
-    const stripeError=error as Error & {stripeType?:string;stripeCode?:string};
-    console.error('Stripe checkout creation failed',{
-      message:stripeError.message,
-      type:stripeError.stripeType||null,
-      code:stripeError.stripeCode||null,
-    });
-    const detail=[stripeError.stripeType,stripeError.stripeCode].filter(Boolean).join('/');
-    const safeMessage=String(stripeError.message||'')
-      .replace(/sk_(?:test|live)_[^\s)]+/g,'[redacted]')
-      .slice(0,180);
-    throw new HttpsError(
-      'internal',
-      `Checkout could not be started (Stripe: ${detail||'request_error'}${safeMessage?'; '+safeMessage:''}).`,
-    );
-  }
+  return startReportCheckout(scope.organizationId, projectId, scope.uid, params);
 });
 
 async function recordBillingReview(organizationId:string,kind:string,details:Record<string,unknown>){

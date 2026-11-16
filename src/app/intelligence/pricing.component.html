@@ -57,10 +57,12 @@
         <h3>One-time Decision Report</h3>
         <p class="price">${{ status?.pricing?.reportOneTimeUsd ?? 79 }}<small>one time</small></p>
         <p>One full Decision Report. A single charge with no renewal.</p>
-        <button *ngIf="projectId && status; else chooseDecision" type="button" class="action" (click)="request('report')" [disabled]="requesting">
-          {{ requesting === 'report' ? 'Opening Stripe Checkout…' : 'Buy Decision Report' }}
-        </button>
-        <ng-template #chooseDecision><a routerLink="/app" class="action">Choose a decision</a></ng-template>
+        <ng-container *ngIf="!checkingReportReturn">
+          <button *ngIf="projectId && status; else chooseDecision" type="button" class="action" (click)="request('report')" [disabled]="requesting">
+            {{ requesting === 'report' ? 'Opening Stripe Checkout…' : 'Buy Decision Report' }}
+          </button>
+          <ng-template #chooseDecision><a routerLink="/app" class="action">Choose a decision</a></ng-template>
+        </ng-container>
       </article>
     </div>
   </section>

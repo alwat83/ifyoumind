@@ -452,50 +452,95 @@ export async function openSubscriptionPortal(organizationId: string, role: strin
   }
 }
 
-// Only launch workspaces use this lease. Existing one-time customers and their Checkout remain unchanged.
-export async function startLaunchReportCheckout(organizationId: string, projectId: string, params: URLSearchParams) {
+async function readReportCheckoutSession(project: DocumentReference, checkout: DocumentData, mode: string) {
+  requireRecord(providerId(checkout.id, 'cs_') && typeof checkout.attempt === 'string');
+  const session = await stripe('checkout/sessions/' + checkout.id + '?expand[]=payment_intent');
+  requireRecord(session.id === checkout.id && session.livemode === (mode === 'live') && session.mode === 'payment' &&
+    session.metadata?.offer === 'report' && session.metadata.projectId === project.id &&
+    session.metadata.organizationId === project.parent.parent?.id && session.metadata.reportAttempt === checkout.attempt);
+  return session;
+}
+
+function terminalUnpaidReportCheckout(session: DocumentData): boolean {
+  if (session.payment_status !== 'unpaid') return false;
+  if (session.status === 'expired' && session.payment_intent === null) return true;
+  return (session.status === 'expired' || session.status === 'complete') && session.payment_intent?.status === 'canceled';
+}
+
+async function removeReportCheckout(project: DocumentReference, checkout: DocumentData) {
+  await getFirestore().runTransaction(async tx => {
+    const current = (await tx.get(project)).data();
+    if (current?.reportCheckout?.id === checkout.id && current?.reportCheckout?.attempt === checkout.attempt &&
+      decisionReportAccess(current) === 'none') {
+      tx.update(project, { reportCheckout: null });
+    }
+  });
+}
+
+// One persisted attempt per decision serializes all one-time Checkout requests.
+export async function startReportCheckout(organizationId: string, projectId: string, buyerUid: string, params: URLSearchParams) {
   const org = organizations().doc(organizationId);
   const billing = subscriptionBilling(org);
   const project = org.collection('marketProjects').doc(projectId);
-  if (!subscriptionEnrollment(organizationId) && !(await billing.get()).data()?.subscriptionId &&
-    !(await project.get()).data()?.reportCheckout) return null;
+  const pending = () => new HttpsError('failed-precondition', 'A previous payment is still being checked. Refresh your decision to check access or contact support before trying again.');
   try {
-    await clearExpiredReportCheckout(project);
-    const attempt = randomUUID();
-    const checkout = await getFirestore().runTransaction(async tx => {
-      const [b, p] = await tx.getAll(billing, project);
-      const target = p.data();
-      if (!target || decisionReportAccess(target) !== 'none') throw new HttpsError('failed-precondition', 'This report is already unlocked.');
-      const data = b.data();
-      if ((data?.reportReservation?.projectId === projectId && data.reportReservation.expiresAt > Date.now()) ||
-        (data?.checkout?.projectId === projectId && !data.subscriptionId)) {
-        throw new HttpsError('failed-precondition', 'A report or subscription checkout is already in progress.');
+    const mode = stripeKeyMode(stripeKey.value());
+    const { id: account } = await stripe('account');
+    requireRecord(providerId(account, 'acct_'));
+    for (let round = 0; round < 2; round++) {
+      const next = { attempt: randomUUID(), account, mode, buyerUid, expiresAt: seconds() + checkoutLifetime };
+      const checkout: DocumentData = await getFirestore().runTransaction(async tx => {
+        const [b, p] = await tx.getAll(billing, project);
+        const target = p.data();
+        if (!target) throw new HttpsError('not-found', 'Decision project not found.');
+        if (decisionReportAccess(target) !== 'none') {
+          throw new HttpsError('failed-precondition', 'This Decision Report is already unlocked. Open it from your decisions.');
+        }
+        const data = b.data();
+        if ((data?.reportReservation?.projectId === projectId && data.reportReservation.expiresAt > Date.now()) ||
+          (data?.checkout?.projectId === projectId && !data.subscriptionId)) throw pending();
+        if (target.reportCheckout) return target.reportCheckout;
+        tx.update(project, { reportCheckout: next });
+        return next;
+      });
+
+      if (checkout.account && (checkout.account !== account || checkout.mode !== mode)) throw pending();
+      if (!checkout.id) {
+        // Stripe can prune idempotency keys after 24 hours. Keep this unresolved attempt
+        // locked once its original request can no longer be retried with the same expiry.
+        const remaining = checkout.expiresAt - seconds();
+        if (checkout.buyerUid !== buyerUid || checkout.account !== account || checkout.mode !== mode ||
+          typeof checkout.attempt !== 'string' || !safeId.test(checkout.attempt) ||
+          !Number.isInteger(checkout.expiresAt) || remaining < 31 * 60 || remaining > checkoutLifetime) throw pending();
+        params.set('expires_at', String(checkout.expiresAt));
+        params.set('metadata[reportAttempt]', checkout.attempt);
+        const created = await stripe('checkout/sessions', params, 'ifyoumind-report-' + checkout.attempt);
+        requireRecord(providerId(created.id, 'cs_') && created.livemode === (mode === 'live'));
+        await getFirestore().runTransaction(async tx => {
+          const data = (await tx.get(project)).data();
+          requireRecord(data?.reportCheckout?.attempt === checkout.attempt && (!data?.reportCheckout?.id || data.reportCheckout.id === created.id));
+          tx.update(project, { 'reportCheckout.id': created.id });
+        });
+        checkout.id = created.id;
       }
-      if (target.reportCheckout) return target.reportCheckout;
-      const next = { attempt, expiresAt: seconds() + checkoutLifetime };
-      tx.update(project, { reportCheckout: next });
-      return next;
-    });
-    if (checkout.id) {
-      const session = await stripe('checkout/sessions/' + checkout.id);
-      requireRecord(session.metadata?.reportAttempt === checkout.attempt && session.status === 'open');
+
+      const session = await readReportCheckoutSession(project, checkout, mode);
+      if (terminalUnpaidReportCheckout(session)) {
+        await removeReportCheckout(project, checkout);
+        continue;
+      }
+      // A cancel URL only navigates away from Stripe. It does not close the session.
+      if (session.status !== 'open' || session.payment_status !== 'unpaid' || checkout.buyerUid !== buyerUid ||
+        !(session.payment_intent === null || session.payment_intent?.status === 'requires_payment_method')) throw pending();
+      const latest = (await project.get()).data();
+      if (!latest || decisionReportAccess(latest) !== 'none' || latest.reportCheckout?.attempt !== checkout.attempt ||
+        latest.reportCheckout?.id !== checkout.id) throw pending();
       return { url: checkoutUrl(session.url), sessionId: session.id };
     }
-    if (checkout.expiresAt - seconds() < 31 * 60) throw new HttpsError('failed-precondition', 'A previous checkout needs billing review.');
-    params.set('expires_at', String(checkout.expiresAt));
-    params.set('metadata[reportAttempt]', checkout.attempt);
-    const session = await stripe('checkout/sessions', params, 'ifyoumind-report-' + checkout.attempt);
-    requireRecord(providerId(session.id, 'cs_') && session.livemode === (stripeKeyMode(stripeKey.value()) === 'live'));
-    const url = checkoutUrl(session.url);
-    await getFirestore().runTransaction(async tx => {
-      const data = (await tx.get(project)).data();
-      requireRecord(data?.reportCheckout?.attempt === checkout.attempt && (!data?.reportCheckout?.id || data.reportCheckout.id === session.id));
-      tx.update(project, { 'reportCheckout.id': session.id });
-    });
-    return { url, sessionId: session.id };
+    throw pending();
   } catch (error) {
     if (error instanceof HttpsError) throw error;
-    throw new HttpsError('unavailable', 'One-time checkout could not be opened. Please try again.');
+    throw new HttpsError('unavailable', 'Checkout status could not be verified. Try again from this decision to check the same attempt, or contact support.');
   }
 }
 
@@ -503,12 +548,9 @@ async function clearExpiredReportCheckout(project: DocumentReference) {
   const data = (await project.get()).data();
   const checkout = data?.reportCheckout;
   if (!checkout?.id || checkout.expiresAt > seconds() || decisionReportAccess(data) !== 'none') return;
-  const session = await stripe('checkout/sessions/' + checkout.id);
-  if (session.status !== 'expired' || session.metadata?.reportAttempt !== checkout.attempt) return;
-  await getFirestore().runTransaction(async tx => {
-    const current = (await tx.get(project)).data();
-    if (current?.reportCheckout?.id === checkout.id && current?.reportCheckout?.attempt === checkout.attempt) {
-      tx.update(project, { reportCheckout: null });
-    }
-  });
+  const mode = stripeKeyMode(stripeKey.value());
+  if (checkout.account) await verifyAccount(checkout.account);
+  if (checkout.mode && checkout.mode !== mode) return;
+  const session = await readReportCheckoutSession(project, checkout, mode);
+  if (terminalUnpaidReportCheckout(session)) await removeReportCheckout(project, checkout);
 }

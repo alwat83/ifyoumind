@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 15, 2026 — Revenue Validation 1.0
+
+[Purchase audit and approval runbook](../growth/REVENUE_VALIDATION_1.md) verified the live $79 purchase boundary on an existing free decision and reopening of an already unlocked report in the signed-in workspace. Firebase confirms the [#102 deployment](https://github.com/alwat83/ifyoumind/actions/runs/43776389795) at `89f481712d7e66f2e63b0861eb004e439d3480e1`, Hosting `de4cfa6b28163962`. Subscription enrollment is empty and staged AI remains off. The audit branch is documentation only.
+
+**Awaiting a live buyer:** B01, proposed question, maximum total and tax need founder approval and the buyer’s consent. A newly paid live report and fresh-session reopening remain unverified. All 38 commerce and six focused browser cases passed locally. A separate local probe reproduced two possible open checkouts for one unpaid decision. Keep the controlled run to one attempt. The return event cannot establish payment. #95 and #101 retain separate pilot scope.
+
 ## November 15, 2026 — Public sample handoff live
 
 **Production verified:** [PR #102](https://github.com/alwat83/ifyoumind/pull/102) merged authorized head `699d0472465c240716b23625736185241716bc04` as `89f481712d7e66f2e63b0861eb004e439d3480e1`. Both required checks and [production deployment](https://github.com/alwat83/ifyoumind/actions/runs/43776389795) passed. Live Hosting `de4cfa6b28163962`, release `1794786392489000`. Previous `51e354bfe0e900e2` and requested rollback `1beeaa395c606d55` remain retained. [Release and browser evidence](../releases/report-handoff-20261115/LIVE_VERIFICATION.md).

@@ -14,6 +14,8 @@
 
 [PR #102 production verification](docs/releases/report-handoff-20261115/LIVE_VERIFICATION.md) records the shipped signed-in sample handoff and retained Hosting rollback versions. Both actions reached the Business decision screen in production, including report intent for the $79 link.
 
+[Revenue Validation 1.0](docs/growth/REVENUE_VALIDATION_1.md) verifies the purchase boundary and provides a one-purchase protocol with separate payment, saved-report and buyer evidence. The next commercial milestone remains a newly paid report that an independent buyer can reopen after signing in again.
+
 ## November 14, 2026 — Master product experience directive
 
 [Audit, unified blueprint and staged roadmap](docs/product/PRODUCT_EXPERIENCE_BLUEPRINT.md) are proposed for founder review. The permanent standard is to answer the visitor’s actual question with checkable evidence. Reuse PR #99 for relevance, preserve #95 and #96 as independent gates, and observe first use before changing the homepage or the commercial path.

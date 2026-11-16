@@ -14,7 +14,6 @@
         <a href="#business" (click)="mobileNavigation.open = false">Examples</a>
         <a href="#reports" (click)="mobileNavigation.open = false">Decision Reports</a>
         <a routerLink="/login">Sign In</a>
-        <a routerLink="/register">Get Started</a>
       </nav>
     </details>
   </header>
@@ -22,143 +21,120 @@
   <main>
     <section id="try" class="shell hero" aria-labelledby="hero-title" tabindex="-1">
       <div class="hero-copy">
-        <h1 id="hero-title">Are my property taxes <em>higher than they should be?</em></h1>
-        <p>See which charges changed and what to check on your own bill. Start with a free example, no signup needed.</p>
-        <a href="#business" class="button primary" (click)="chooseExample(taxExample, evidence)">Try the tax example <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
+        <h1 id="hero-title">The answer is in <em>your numbers.</em></h1>
+        <p>AI finds what matters, explains the evidence, and helps you decide what comes next.</p>
       </div>
+
+      <section id="business" class="demo" aria-labelledby="discovery-question" tabindex="-1">
+        <p class="sr-only" role="status">{{ discoveryAnnouncement }}</p>
+
+        <div id="discovery-result" class="finding">
+          <p class="example-label">{{ example.label }} · Fixed calculations</p>
+          <h2 id="discovery-question">{{ example.question }}</h2>
+          <p class="conclusion"><strong>{{ example.finding.value }}</strong>&ngsp;<span>{{ example.finding.text }}</span></p>
+          @if (example.id === 'tax') {
+            <p class="finding-note">{{ example.takeaway }}</p>
+          }
+        </div>
+
+        <div class="discovery-next">
+          <details #evidence class="home-evidence">
+            <summary>
+              <span class="evidence-show">Show the evidence</span>
+              <span class="evidence-hide">Hide the evidence</span>
+              <span class="evidence-mark" aria-hidden="true"></span>
+            </summary>
+            <div class="evidence-content">
+              @if (example.evidenceLead) {
+                <p class="evidence-lead">{{ example.evidenceLead }}</p>
+              }
+              <p class="evidence-context">{{ example.context }}</p>
+              <div class="comparison">
+                <table aria-describedby="data-sources">
+                  <caption class="sr-only">{{ example.id === 'cities' ? 'City estimates from the public Business sample' : example.title + ' comparison' }}</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col"><span class="sr-only">Measure</span></th>
+                      @for (column of example.columns; track column) {
+                        <th scope="col">{{ column }}</th>
+                      }
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (row of example.rows; track row.label) {
+                      <tr>
+                        <th scope="row">{{ row.label }}</th>
+                        @for (value of row.values; track $index) {
+                          <td>{{ value }}</td>
+                        }
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+                <p id="data-sources" class="source-note">
+                  @if (example.id === 'cities') {
+                    <a href="https://www.census.gov/data/developers/data-sets/acs-5year.html">U.S. Census ACS</a> city-level estimates, 2020–2024. Population change compares 2015–2019 with 2020–2024. Differences have not been tested for statistical significance and may fall within survey margins of error.
+                  } @else {
+                    Raw values and source cells come from the made-up example CSV.
+                  }
+                </p>
+              </div>
+              <p class="evidence-limit">{{ example.limit }}</p>
+              @if (example.id === 'cities') {
+                <h3>How these figures compare</h3>
+                <p>Figures from the public sample report use its October 11, 2026 snapshot. Population and median household income use 2020–2024 ACS five-year estimates. Income is in 2024 inflation-adjusted dollars.</p>
+                <ul>
+                  <li>Median household income: $93,658 − $82,068 = $11,590.</li>
+                  <li>Population change: 5.4% − 3.0% = 2.4 percentage points.</li>
+                </ul>
+                <div class="evidence-links">
+                  <a href="https://api.census.gov/data/2024/acs/acs5/groups/B01003.html">Population table (B01003)</a>
+                  <a href="https://api.census.gov/data/2024/acs/acs5/groups/B19013.html">Income table (B19013)</a>
+                </div>
+              } @else {
+                <h3>Calculations and source cells</h3>
+                <div class="evidence-groups">
+                  @for (group of example.proof; track group.label) {
+                    <div>
+                      <h4>{{ group.label }}</h4>
+                      <ul>
+                        @for (step of group.steps; track step) { <li>{{ step }}</li> }
+                      </ul>
+                      <table>
+                        <caption class="sr-only">{{ group.label }} source cells</caption>
+                        <thead><tr><th scope="col">Cell</th><th scope="col">Field</th><th scope="col">Raw value</th></tr></thead>
+                        <tbody>
+                          @for (cell of group.cells; track cell.cell) {
+                            <tr><th scope="row">{{ cell.cell }}</th><td>{{ cell.label }}</td><td>{{ cell.raw }}</td></tr>
+                          }
+                        </tbody>
+                      </table>
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </details>
+          @if (example.id === 'cities') {
+            <a routerLink="/sample-report" class="button example-link">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
+          } @else {
+            <a [href]="'/discover/?example=' + example.id" class="button example-link">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
+          }
+        </div>
+        <div class="question-options" role="group" aria-label="Choose an example">
+          @for (option of examples; track option.id) {
+            <button type="button" class="question-option" [attr.aria-pressed]="example.id === option.id"
+              aria-controls="discovery-result" (click)="chooseExample(option, evidence)">
+              {{ option.title }}
+            </button>
+          }
+        </div>
+      </section>
+
       <div class="hero-art">
         <img src="/images/home/neighborhood-at-dusk.webp"
           srcset="/images/home/neighborhood-at-dusk-small.webp 480w, /images/home/neighborhood-at-dusk.webp 960w"
-          sizes="(max-width: 740px) calc(100vw - 36px), (max-width: 1080px) calc(49.64vw - 33px), (max-width: 1392px) calc(49.64vw - 58px), 632px" width="960" height="1440" alt="" fetchpriority="high">
-      </div>
-    </section>
-
-    <section id="business" class="featured" aria-labelledby="examples-title" tabindex="-1">
-      <div class="shell experience">
-        <h2 id="examples-title" class="sr-only">Free examples</h2>
-        <div class="demo">
-          <p class="sr-only" role="status">{{ discoveryAnnouncement }}</p>
-
-          <div id="discovery-result" class="discovery-result">
-            <div class="finding">
-              <p class="example-label">{{ example.label }}</p>
-              <h3 id="discovery-question">{{ example.question }}</h3>
-              <p class="conclusion"><strong>{{ example.finding.value }}</strong>&ngsp;<span>{{ example.finding.text }}</span></p>
-              @if (example.id === 'tax') {
-                <p class="finding-note">{{ example.takeaway }} {{ example.limit }}</p>
-              }
-            </div>
-            <figure class="plot" aria-labelledby="plot-title">
-              <figcaption id="plot-title">{{ example.chart.title }}</figcaption>
-              <dl class="bars">
-                @for (measure of example.chart.measures; track measure.label) {
-                  <div class="bar" [style.--bar-height]="measure.width + '%'">
-                    <dt>{{ measure.label }}</dt>
-                    <dd>
-                      <span class="bar-value">{{ measure.value }}</span>
-                      <span class="bar-fill" aria-hidden="true"></span>
-                    </dd>
-                  </div>
-                }
-              </dl>
-            </figure>
-          </div>
-
-          <div class="discovery-next">
-            <details #evidence class="home-evidence">
-              <summary>
-                <span class="evidence-show">Show the evidence</span>
-                <span class="evidence-hide">Hide the evidence</span>
-                <span class="evidence-mark" aria-hidden="true"></span>
-              </summary>
-              <div class="evidence-content">
-                @if (example.evidenceLead) {
-                  <p class="evidence-lead">{{ example.evidenceLead }}</p>
-                }
-                <p class="evidence-context">{{ example.context }}</p>
-                <div class="comparison">
-                  <table aria-describedby="data-sources">
-                    <caption class="sr-only">{{ example.id === 'cities' ? 'City estimates from the public Business sample' : example.title + ' comparison' }}</caption>
-                    <thead>
-                      <tr>
-                        <th scope="col"><span class="sr-only">Measure</span></th>
-                        @for (column of example.columns; track column) {
-                          <th scope="col">{{ column }}</th>
-                        }
-                      </tr>
-                    </thead>
-                    <tbody>
-                      @for (row of example.rows; track row.label) {
-                        <tr>
-                          <th scope="row">{{ row.label }}</th>
-                          @for (value of row.values; track $index) {
-                            <td>{{ value }}</td>
-                          }
-                        </tr>
-                      }
-                    </tbody>
-                  </table>
-                  <p id="data-sources" class="source-note">
-                    @if (example.id === 'cities') {
-                      <a href="https://www.census.gov/data/developers/data-sets/acs-5year.html">U.S. Census ACS</a> city-level estimates, 2020–2024. Population change compares 2015–2019 with 2020–2024. Differences have not been tested for statistical significance and may fall within survey margins of error.
-                    } @else {
-                      Raw values and source cells come from the made-up example CSV.
-                    }
-                  </p>
-                </div>
-                @if (example.id !== 'tax') {
-                  <p class="evidence-limit">{{ example.limit }}</p>
-                }
-                @if (example.id === 'cities') {
-                  <h3>How these figures compare</h3>
-                  <p>Figures from the public sample report use its October 11, 2026 snapshot. Population and median household income use 2020–2024 ACS five-year estimates. Income is in 2024 inflation-adjusted dollars.</p>
-                  <ul>
-                    <li>Median household income: $93,658 − $82,068 = $11,590.</li>
-                    <li>Population change: 5.4% − 3.0% = 2.4 percentage points.</li>
-                  </ul>
-                  <div class="evidence-links">
-                    <a href="https://api.census.gov/data/2024/acs/acs5/groups/B01003.html">Population table (B01003)</a>
-                    <a href="https://api.census.gov/data/2024/acs/acs5/groups/B19013.html">Income table (B19013)</a>
-                  </div>
-                } @else {
-                  <h3>Calculations and source cells</h3>
-                  <div class="evidence-groups">
-                    @for (group of example.proof; track group.label) {
-                      <div>
-                        <h4>{{ group.label }}</h4>
-                        <ul>
-                          @for (step of group.steps; track step) { <li>{{ step }}</li> }
-                        </ul>
-                        <table>
-                          <caption class="sr-only">{{ group.label }} source cells</caption>
-                          <thead><tr><th scope="col">Cell</th><th scope="col">Field</th><th scope="col">Raw value</th></tr></thead>
-                          <tbody>
-                            @for (cell of group.cells; track cell.cell) {
-                              <tr><th scope="row">{{ cell.cell }}</th><td>{{ cell.label }}</td><td>{{ cell.raw }}</td></tr>
-                            }
-                          </tbody>
-                        </table>
-                      </div>
-                    }
-                  </div>
-                }
-              </div>
-            </details>
-            @if (example.id === 'cities') {
-              <a routerLink="/sample-report" class="text-link example-link">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
-            } @else {
-              <a [href]="'/discover/?example=' + example.id" class="text-link example-link">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
-            }
-          </div>
-          <div class="question-options" role="group" aria-label="Choose an example">
-            @for (option of examples; track option.id) {
-              <button type="button" class="question-option" [attr.aria-pressed]="example.id === option.id"
-                aria-controls="discovery-result" (click)="chooseExample(option, evidence)">
-                {{ option.title }}
-              </button>
-            }
-          </div>
-        </div>
+          sizes="(max-width: 740px) calc(100vw - 36px), (max-width: 1080px) 42vw, 535px" width="960" height="1440" alt="" fetchpriority="high">
       </div>
     </section>
 

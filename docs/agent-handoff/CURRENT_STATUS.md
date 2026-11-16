@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 16, 2026 — Wow 3.3 homepage hero draft
+
+[Draft PR #104](https://github.com/alwat83/ifyoumind/pull/104) moves the worked property-tax question, its $420 finding, and optional evidence into the hero. It replaces the jump link and repeated chart. Existing Discovery and Business routes remain accessible. [Paired screenshots and review](../design/wow-3-3/REVIEW.md). The design candidate is local and draft-only. [PR #103 production and paid-pilot evidence](https://github.com/alwat83/ifyoumind/blob/d2c836449961ecbb57034ba0ba41408e90ef3e93/docs/growth/CHECKOUT_RELIABILITY_GATE.md) remains on the separate release record.
+
 ## November 15, 2026 — One-time Checkout reliability draft
 
 `codex/one-time-checkout-reliability` from production merge `89f481712d7e66f2e63b0861eb004e439d3480e1`. The draft gives all $79 one-time requests a persisted decision-scoped Checkout attempt, Stripe idempotency and provider-state reconciliation. [Reliability gate and release considerations](../growth/CHECKOUT_RELIABILITY_GATE.md). The candidate requires Stripe sandbox verification, production key capability readback and separate release approval before a supervised live purchase. Production remains on the #102 release. [Release evidence](https://github.com/alwat83/ifyoumind/blob/50d867a8ddc5f423ce584db85360f84dc1497c66/docs/releases/report-handoff-20261115/LIVE_VERIFICATION.md).

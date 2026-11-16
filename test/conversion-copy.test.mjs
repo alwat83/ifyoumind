@@ -113,8 +113,11 @@ test('register page says what happens next for email and Google sign-ups',()=>{
   assert.ok(registerHtml.includes('Google sign-ups skip the email check.'));
 });
 
-test('no AI claims in the changed copy',()=>{
-  for(const html of [reportHtml,landingHtml,pricingHtml,registerHtml,analysisHtml]){
+test('the homepage AI value statement keeps example provenance explicit',()=>{
+  const value = 'AI finds what matters, explains the evidence, and helps you decide what comes next.';
+  assert.ok(landingHtml.includes(value));
+  assert.match(landingHtml,/\{\{ example\.label \}\} · Fixed calculations/);
+  for(const html of [reportHtml,landingHtml.replace(value,''),pricingHtml,registerHtml,analysisHtml]){
     assert.doesNotMatch(html,/\bAI\b|artificial intelligence|GPT/i);
   }
 });

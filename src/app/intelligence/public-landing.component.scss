@@ -99,12 +99,15 @@ a { color: inherit; }
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, .93fr) minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(28px, 4.2vw, 66px);
-  padding-block: 30px clamp(44px, 5.2vw, 80px);
+  grid-template-columns: minmax(0, .88fr) minmax(0, 1fr);
+  grid-template-rows: min-content 1fr;
+  grid-template-areas: 'copy example' 'image example';
+  align-items: start;
+  gap: clamp(20px, 3vw, 44px) clamp(24px, 4.2vw, 66px);
+  padding-block: clamp(30px, 4.1vw, 62px);
 }
 
+.hero-copy { grid-area: copy; }
 .hero-copy h1 {
   color: var(--ink);
   font: 400 clamp(52px, 6.2vw, 92px)/.94 var(--display);
@@ -113,11 +116,11 @@ a { color: inherit; }
 
 .hero-copy h1 em { display: block; color: var(--warm); font-weight: 400; }
 .hero-copy p {
-  max-width: 32ch;
-  margin-block: 24px 21px;
+  max-width: 35ch;
+  margin-top: 20px;
   color: var(--muted);
   font-size: clamp(16px, 1.6vw, 20px);
 }
 
-.hero-art { min-width: 0; aspect-ratio: 1.23; overflow: hidden; background: #9b6248; }
-.hero-art img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 44%; }
+.hero-art { grid-area: image; min-width: 0; aspect-ratio: 2.55; overflow: hidden; background: #9b6248; }
+.hero-art img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 47%; }

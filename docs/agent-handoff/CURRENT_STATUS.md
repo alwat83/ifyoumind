@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 16, 2026 — City Decision Brief evidence
+
+**Candidate for founder review.** `codex/city-decision-evidence` from approved architecture merge `5015e3d43b9c3822d456dbc01c5c9d0b391fe44f`. The authorized free city brief now offers direct Census sources and reproducible differences. [Issue #108](https://github.com/alwat83/ifyoumind/issues/108) · [Demo and verification evidence](../product/CITY_DECISION_EVIDENCE.md). No write, quota, payment, provider or subscription change. Latest approved architecture [deployment workflow](https://github.com/alwat83/ifyoumind/actions/runs/44008073712) passed; live verification is separate from this draft.
+
 ## November 16, 2026 — Universal Decision Intelligence 4.0 architecture
 
 **Proposed, documentation only.** The separate `codex/universal-decision-architecture` branch is based on master `4765a5cd0ee7eff598f02e74f5a50de94a7d3772`. The [ADR, contracts, controls and evaluation plan](../architecture/decision-intelligence/README.md) reuse the existing city path and keep tax and electricity in browser memory. [PR #106](https://github.com/alwat83/ifyoumind/pull/106) merged independently at `4765a5cd0ee7eff598f02e74f5a50de94a7d3772`; its [build](https://github.com/alwat83/ifyoumind/actions/runs/44003472896) and [authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/44003472991) passed. Preserving #106 behavior and a shared city save and quota mechanism are prerequisites for any rollout that changes creation. [Draft PR #96](https://github.com/alwat83/ifyoumind/pull/96) is optional and outside deterministic delivery.

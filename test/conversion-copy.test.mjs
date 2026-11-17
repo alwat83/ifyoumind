@@ -113,10 +113,10 @@ test('register page says what happens next for email and Google sign-ups',()=>{
   assert.ok(registerHtml.includes('Google sign-ups skip the email check.'));
 });
 
-test('the homepage AI value statement keeps example provenance explicit',()=>{
-  const value = 'AI finds what matters, explains the evidence, and helps you decide what comes next.';
+test('the homepage states its free example promise and keeps provenance explicit',()=>{
+  const value = 'Compare bills or cities. Try a free example.';
   assert.ok(landingHtml.includes(value));
-  assert.match(landingHtml,/\{\{ example\.label \}\} · Fixed calculations/);
+  assert.match(landingHtml,/\{\{ example\.label \}\}/);
   for(const html of [reportHtml,landingHtml.replace(value,''),pricingHtml,registerHtml,analysisHtml]){
     assert.doesNotMatch(html,/\bAI\b|artificial intelligence|GPT/i);
   }

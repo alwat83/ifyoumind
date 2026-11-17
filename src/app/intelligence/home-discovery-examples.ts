@@ -11,6 +11,7 @@ interface HomeExample {
   columns: readonly string[];
   rows: readonly { label: string; values: readonly string[] }[];
   takeaway: string;
+  guidance: string;
   finding: { value: string; text: string };
   limit: string;
   evidenceLead?: string;
@@ -37,7 +38,8 @@ export const HOME_EXAMPLES: readonly HomeExample[] = [
     evidenceLead: taxChargeProof.steps.at(-1),
     proof: [taxTotalProof, { ...taxChargeProof, steps: taxChargeProof.steps.slice(0, -1) }],
     takeaway: `School taxes rose by ${schoolIncrease} and accounted for most of the increase.`,
-    limit: 'Two bills show what changed. To check whether the total is right, look up your assessed value and local tax rates.',
+    guidance: `School taxes rose by ${schoolIncrease}. Two bills alone can’t tell you whether you paid too much.`,
+    limit: 'Check your county’s assessment notice and exemptions. To check how the total was calculated, look up your assessed value and local tax rates.',
     action: 'Open the full tax example',
   },
   {
@@ -49,13 +51,14 @@ export const HOME_EXAMPLES: readonly HomeExample[] = [
     ...bills.electricity,
     finding: { value: billIncrease.value, text: `in total billed, compared with ${useIncrease.value} in electricity use.` },
     takeaway: `The bill rose ${billIncrease.value.slice(1)} and electricity use rose ${useIncrease.value.slice(1)}.`,
+    guidance: 'Check the individual charges to see what else changed.',
     limit: 'Check itemized charges to investigate why the bill rose faster than energy use.',
     action: 'Explore the electricity example',
   },
   {
     id: 'cities',
     title: 'Compare cities',
-    question: 'Where would a coffee shop do better?',
+    question: 'How do Austin and Charlotte compare?',
     label: 'Public Census sample',
     context: 'The full report compares Austin, Charlotte, and Nashville.',
     columns: ['Austin, TX', 'Charlotte, NC'],
@@ -66,6 +69,7 @@ export const HOME_EXAMPLES: readonly HomeExample[] = [
     ],
     finding: { value: '$11,590', text: 'higher median household income in Austin’s estimate. Charlotte’s population estimate grew more.' },
     takeaway: 'Austin’s median household income estimate is $11,590 higher. Charlotte’s population estimate grew more.',
+    guidance: 'These estimates give you a starting point for checking local demand, competition, and rent.',
     limit: 'Check local demand, competition, and rent before choosing a site.',
     action: 'View the Full Sample Report',
   },

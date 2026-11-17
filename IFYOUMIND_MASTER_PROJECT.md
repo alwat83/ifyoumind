@@ -10,11 +10,11 @@
 
 ## November 17, 2026 — First useful consumer answer
 
-[Issue #113](https://github.com/alwat83/ifyoumind/issues/113) moves the labeled, deterministic property-tax takeaway before the first click on the public Discovery chooser. Evidence remains inspectable in the existing browser-local journey and electricity remains available. See the [current handoff](docs/agent-handoff/CURRENT_STATUS.md) for verification and the independent #111 release gate.
+[Issue #113](https://github.com/alwat83/ifyoumind/issues/113) moves the labeled, deterministic property-tax takeaway before the first click on the public Discovery chooser. Evidence remains inspectable in the existing browser-local journey and electricity remains available. [Draft #115](https://github.com/alwat83/ifyoumind/pull/115) is integrated with the deployed #111 source. See the [current handoff](docs/agent-handoff/CURRENT_STATUS.md) for verification and the remaining live save-retry gate.
 
 ## November 16, 2026 — City Decision Brief evidence
 
-[Issue #108 vertical slice](docs/product/CITY_DECISION_EVIDENCE.md) connects the existing city question to a read-only, validated evidence disclosure. It reuses the authorized free brief and makes partial answers explicit. Retrying a completed save whose response was lost remains separate from evidence delivery.
+[Issue #108 vertical slice](docs/product/CITY_DECISION_EVIDENCE.md) connects the existing city question to a read-only, validated evidence disclosure. It reuses the authorized free brief and makes partial answers explicit. This evidence slice shipped in [PR #109](https://github.com/alwat83/ifyoumind/pull/109). [PR #111](https://github.com/alwat83/ifyoumind/pull/111) integrates the separate transactional city save and replay safeguards, including the monthly boundary. See the current handoff for rollout and validation.
 
 ## November 16, 2026 — Universal Decision Intelligence 4.0
 

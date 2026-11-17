@@ -6,6 +6,10 @@ Describe what changed and why.
 
 Explain the expected benefit and distinguish it from any measured result.
 
+### Consumer acceptance — Grandmother Test
+
+For significant consumer-facing changes, record what a first-time visitor can do. Cover five-second purpose, asking without instructions, understanding the main answer in plain language, finding evidence, choosing a next step, recovering from errors, and confidence to return. Show where the visitor gets a meaningful free answer. Include realistic mobile and narrow-screen journeys and relevant accessibility checks. Distinguish observed user feedback from checks performed by the team, and record gaps to simplify before expanding.
+
 ### Cross-Surface Impact Matrix
 
 | Surface | Status | Action / Verification | Evidence |

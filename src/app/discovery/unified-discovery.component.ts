@@ -2,11 +2,17 @@ import {CommonModule,DOCUMENT,NgComponentOutlet} from '@angular/common';
 import {Component,ElementRef,HostListener,Injector,OnInit,ViewChild,inject} from '@angular/core';
 import {TaxDiscoveryComponent} from './tax-discovery.component';
 import {ELECTRICITY_MODE,PUBLIC_DISCOVERY} from './discovery-mode';
+import {EXAMPLE_CSV,LABELS,analyzeTax,parseTaxCsv,usd} from './tax-discovery';
+
+const taxExampleInput=parseTaxCsv(EXAMPLE_CSV);
 
 @Component({selector:'app-unified-discovery',standalone:true,imports:[CommonModule,NgComponentOutlet],templateUrl:'./unified-discovery.component.html',host:{'[class.public-discovery]':'publicEntry'},styleUrls:['./unified-discovery.component.scss']})
 export class UnifiedDiscoveryComponent implements OnInit {
  readonly publicEntry=inject(PUBLIC_DISCOVERY);
  readonly journeyComponent=TaxDiscoveryComponent;
+ readonly taxExample=analyzeTax(taxExampleInput.rows,taxExampleInput.columns);
+ readonly schoolTaxChange=this.taxExample.changes.find(charge=>charge.label===LABELS.school_usd)?.delta ?? 0;
+ readonly usd=usd;
  private readonly parentInjector=inject(Injector);
  private readonly document=inject(DOCUMENT);
  category:'tax'|'electricity'|null=null;

@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 17, 2026 — First useful Discovery answer
+
+[Issue #113](https://github.com/alwat83/ifyoumind/issues/113#issuecomment-6952790432) is authorized for a separate draft against deployed master. The public layout now leads with the visitor’s property-tax question and a useful answer from the labeled synthetic example. It links to the existing source cells, calculations and correction tools. Electricity remains available as a secondary choice. [PR #111](https://github.com/alwat83/ifyoumind/pull/111) remains a separate release track. Ship only after its verified release gate and separate founder approval.
+
 ## November 16, 2026 — City Decision Brief evidence
 
 **Candidate for founder review.** `codex/city-decision-evidence` from approved architecture merge `5015e3d43b9c3822d456dbc01c5c9d0b391fe44f`. The authorized free city brief now offers direct Census sources and reproducible differences. [Issue #108](https://github.com/alwat83/ifyoumind/issues/108) · [Demo and verification evidence](../product/CITY_DECISION_EVIDENCE.md). No write, quota, payment, provider or subscription change. Latest approved architecture [deployment workflow](https://github.com/alwat83/ifyoumind/actions/runs/44008073712) passed; live verification is separate from this draft.

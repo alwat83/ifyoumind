@@ -8,6 +8,10 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 17, 2026 — First useful consumer answer
+
+[Issue #113](https://github.com/alwat83/ifyoumind/issues/113) moves the labeled, deterministic property-tax takeaway before the first click on the public Discovery chooser. Evidence remains inspectable in the existing browser-local journey and electricity remains available. See the [current handoff](docs/agent-handoff/CURRENT_STATUS.md) for verification and the independent #111 release gate.
+
 ## November 16, 2026 — City Decision Brief evidence
 
 [Issue #108 vertical slice](docs/product/CITY_DECISION_EVIDENCE.md) connects the existing city question to a read-only, validated evidence disclosure. It reuses the authorized free brief and makes partial answers explicit. Retrying a completed save whose response was lost remains separate from evidence delivery.

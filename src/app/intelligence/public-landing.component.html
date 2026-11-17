@@ -21,20 +21,18 @@
   <main>
     <section id="try" class="shell hero" aria-labelledby="hero-title" tabindex="-1">
       <div class="hero-copy">
-        <h1 id="hero-title">The answer is in <em>your numbers.</em></h1>
-        <p>AI finds what matters, explains the evidence, and helps you decide what comes next.</p>
+        <h1 id="hero-title">Make sense of <em>your numbers.</em></h1>
+        <p>Compare bills or cities. Try a free example.</p>
       </div>
 
       <section id="business" class="demo" aria-labelledby="discovery-question" tabindex="-1">
         <p class="sr-only" role="status">{{ discoveryAnnouncement }}</p>
 
         <div id="discovery-result" class="finding">
-          <p class="example-label">{{ example.label }} · Fixed calculations</p>
+          <p class="example-label">{{ example.label }}</p>
           <h2 id="discovery-question">{{ example.question }}</h2>
           <p class="conclusion"><strong>{{ example.finding.value }}</strong>&ngsp;<span>{{ example.finding.text }}</span></p>
-          @if (example.id === 'tax') {
-            <p class="finding-note">{{ example.takeaway }}</p>
-          }
+          <p class="finding-note">{{ example.guidance }}</p>
         </div>
 
         <div class="discovery-next">

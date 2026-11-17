@@ -23,6 +23,9 @@ export class UnifiedDiscoveryComponent implements OnInit {
  @ViewChild('entryHeading') entryHeading?:ElementRef<HTMLElement>;
  get current():TaxDiscoveryComponent|null{return this.outlet?.componentInstance||null;}
  get hasData():boolean{return !!this.current&&(this.current.source!=='none'||this.current.reading||!!this.current.fileError);}
+ get examplesHref(): string {
+  return this.category ? '/?example=' + this.category + '#business' : '/#business';
+ }
  ngOnInit():void {
   // Public links may open only these synthetic examples. No file data in URLs.
   if(!this.publicEntry)return;

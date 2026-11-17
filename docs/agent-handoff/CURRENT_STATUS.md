@@ -1,10 +1,16 @@
 # ifYouMind — Current development status
 
+## November 17, 2026 — One public question-to-answer journey
+
+The consumer draft on `codex/consumer-question-entry` builds on [#115](https://github.com/alwat83/ifyoumind/pull/115) at `1e19500b21f6076060c9f9ab5cea24d7665017d4`. The homepage describes bills and city comparisons in plain language, surfaces the example tax limitation beside the finding, and uses a supported Census question instead of implying a winner. Discovery uses questions as section headings. Its existing footer returns visitors to the same public example by passing only its category. See the [review captures](../design/consumer-question-entry/) and [development log](DEVELOPMENT_LOG.md). Production retains the deployed #111 versions below. Release awaits the #111 live check and separate founder approval.
+
 ## November 17, 2026 — First useful Discovery answer
 
 [Draft #115](https://github.com/alwat83/ifyoumind/pull/115) is integrated with deployed master `6dcffca4eb186c6e0da7431523d7137652e14990` per the [founder’s continuation directive](https://github.com/alwat83/ifyoumind/pull/115#issuecomment-6954547713). The change still leads with a labeled property-tax example and keeps evidence, correction and electricity available. The merge resolved only the append-only development log; the public Discovery change and its [review captures](../design/discovery-first-answer/) are unchanged. Follow the [exact-head checks](https://github.com/alwat83/ifyoumind/pull/115/checks) and PR body for the integrated results. No #115 release is authorized.
 
-[PR #111](https://github.com/alwat83/ifyoumind/pull/111) was merged and [deployed](https://github.com/alwat83/ifyoumind/actions/runs/44126748079). Firebase readback shows Hosting `39dc573f3826dca6` (release `1794933315802000`) and ACTIVE city writer `createmarketintelligenceproject-00087-nub` at 100%. Previous Hosting `cd0b78221355e0f4` remains finalized. Signed-in decision creation navigation and the saved list loaded. The production lost-response save and exactly-once allowance check still need a controlled write to an approved QA workspace; the navigation check did not write a decision. Keep #115 on hold for release until that live gate and separate approval.
+[PR #111](https://github.com/alwat83/ifyoumind/pull/111) was merged and [deployed](https://github.com/alwat83/ifyoumind/actions/runs/44126748079). Fresh Firebase readback verified Hosting `39dc573f3826dca6` (release `1794933315802000`) and ACTIVE city writer `createmarketintelligenceproject-00087-nub` at 100%. Rollback Hosting `cd0b78221355e0f4` remains finalized, and compatible writer `createmarketintelligenceproject-00086-ned` remains Ready.
+
+The [founder authorized one synthetic save and same-attempt retry](https://github.com/alwat83/ifyoumind/pull/111#issuecomment-6955510854) in an existing internal QA workspace. Production preflight stopped before the write. The earlier smoke workspace has one verified active owner, seven saved decisions, one confirmed synthetic decision and zero free slots remaining this UTC month. Its QA designation and synthetic-only contents could not be established. No eligible workspace was identified. No attempt ID or live project was created. [Draft #115 at `1e19500b21f6076060c9f9ab5cea24d7665017d4`](https://github.com/alwat83/ifyoumind/pull/115) remains mergeable with both workflows green. Identify an existing designated QA workspace with a free slot to complete the live gate before seeking separate release approval.
 
 ## November 16, 2026 — City Decision Brief evidence
 

@@ -10,7 +10,9 @@
 
 ## November 17, 2026 — First useful consumer answer
 
-[Issue #113](https://github.com/alwat83/ifyoumind/issues/113) moves the labeled, deterministic property-tax takeaway before the first click on the public Discovery chooser. Evidence remains inspectable in the existing browser-local journey and electricity remains available. [Draft #115](https://github.com/alwat83/ifyoumind/pull/115) is integrated with the deployed #111 source. See the [current handoff](docs/agent-handoff/CURRENT_STATUS.md) for verification and the remaining live save-retry gate.
+A follow-on consumer draft makes the homepage examples and the browser-local Discovery handoff one journey. It leads with the question and finding, exposes the tax limitation before opening the evidence, and lets a visitor return to the chosen public example. See [the current snapshot](docs/agent-handoff/CURRENT_STATUS.md) for build and release evidence.
+
+[Issue #113](https://github.com/alwat83/ifyoumind/issues/113) moves the labeled, deterministic property-tax takeaway before the first click on the public Discovery chooser. Evidence remains inspectable in the existing browser-local journey and electricity remains available. [Draft #115](https://github.com/alwat83/ifyoumind/pull/115) is integrated with the deployed #111 source. The founder authorized the live save and retry, and the preflight stopped before a write because no eligible existing QA workspace could be verified. See the [current handoff](docs/agent-handoff/CURRENT_STATUS.md) for verification and the remaining gate.
 
 ## November 16, 2026 — City Decision Brief evidence
 

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HOME_EXAMPLES } from './home-discovery-examples';
 
 @Component({
@@ -16,7 +16,8 @@ import { HOME_EXAMPLES } from './home-discovery-examples';
 })
 export class PublicLandingComponent {
   readonly examples = HOME_EXAMPLES;
-  example = this.examples[0];
+  private readonly route = inject(ActivatedRoute);
+  example = this.examples.find(option => option.id === this.route.snapshot.queryParamMap.get('example')) ?? this.examples[0];
   discoveryAnnouncement = '';
 
   chooseExample(example: typeof HOME_EXAMPLES[number], evidence: HTMLDetailsElement): void {

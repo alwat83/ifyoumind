@@ -4,7 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { IntelligenceOrganization, OrganizationService } from './organization.service';
 import { CheckoutOffer, CommercialStatus, MonetizationService } from './monetization.service';
 import { ProductAnalyticsService } from './product-analytics.service';
-import { MarketIntelligenceService } from './market-intelligence.service';
+import { MarketIntelligenceService, MarketProject } from './market-intelligence.service';
 
 @Component({
   selector:'app-pricing',
@@ -27,7 +27,7 @@ export class PricingComponent implements OnInit {
   message='';
   projectId='';
   highlightedOffer='';
-  reportReady=false;
+  selectedDecision:MarketProject|null=null;
   error='';
   readonly subscriptionPlans = [
     { offer: 'starter' as const, name: 'Starter', price: '4.99', allowance: '1 full Decision Report' },
@@ -54,12 +54,20 @@ export class PricingComponent implements OnInit {
         });
         if(checkout==='success') void this.analytics.track(this.workspace.organizationId,'checkout_success',{offer:this.highlightedOffer||'unknown'});
         if(checkout==='cancelled') void this.analytics.track(this.workspace.organizationId,'checkout_cancelled',{offer:this.highlightedOffer||'unknown'});
-        this.status=await this.monetization.status(this.workspace.organizationId);
-        if(checkout==='success'&&this.highlightedOffer==='report'&&this.projectId){
-          const project=await this.market.get(this.workspace.organizationId,this.projectId);
-          this.reportReady=project.decisionReportPurchased===true;
-          this.message=this.reportReady
-            ? project.decisionReportGenerationRequired
+        const [status, decision] = await Promise.all([
+          this.monetization.status(this.workspace.organizationId),
+          this.projectId
+            ? this.market.get(this.workspace.organizationId, this.projectId).catch(() => null)
+            : Promise.resolve(null),
+        ]);
+        this.status = status;
+        this.selectedDecision = decision;
+        if (this.projectId && !decision) {
+          this.message = '';
+          this.error = 'We couldn’t verify this decision. Open one of your saved decisions to continue.';
+        }else if(this.checkingReportReturn && decision){
+          this.message=decision.decisionReportPurchased===true
+            ? decision.decisionReportGenerationRequired
               ? 'Your payment is complete. Open your decision to prepare the full report.'
               : 'Your payment is complete. Your Decision Report is unlocked.'
             : 'Report access is still being confirmed. Refresh this page to check access before trying again.';
@@ -77,6 +85,12 @@ export class PricingComponent implements OnInit {
     return this.highlightedOffer==='report'&&this.route.snapshot.queryParamMap.get('checkout')==='success';
   }
 
+  get hasReportAccess():boolean{
+    const decision = this.selectedDecision;
+    return decision?.decisionReportPurchased === true ||
+      decision?.decisionReportAccess === 'purchased' || decision?.decisionReportAccess === 'pro';
+  }
+
   get showMonthlyPlans():boolean{
     return this.status?.subscriptionOffers === true && !this.status.subscription?.linked && this.status.plan !== 'pro';
   }
@@ -84,7 +98,7 @@ export class PricingComponent implements OnInit {
   async request(offer:Exclude<CheckoutOffer,'pro'>):Promise<void>{
     if(!this.workspace||this.requesting)return;
 
-    if(!this.projectId){
+    if(!this.selectedDecision || this.hasReportAccess || this.checkingReportReturn){
       this.error='Start or open a decision first, then purchase its Decision Report.';
       return;
     }
@@ -99,7 +113,7 @@ export class PricingComponent implements OnInit {
         const url=await this.monetization.checkout(
           this.workspace.organizationId,
           offer,
-          this.projectId,
+          this.selectedDecision.id,
         );
         if(!url) throw new Error('Checkout did not return a payment URL.');
         window.location.assign(url);
@@ -110,7 +124,7 @@ export class PricingComponent implements OnInit {
       this.message=await this.monetization.requestAccess(
         this.workspace.organizationId,
         offer,
-        'Decision report interest for project '+this.projectId,
+        'Decision report interest for project '+this.selectedDecision.id,
       );
     }catch(error){
       this.error=this.messageFor(error);

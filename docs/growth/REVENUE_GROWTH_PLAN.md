@@ -2,6 +2,16 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## November 16 — Keep the saved decision visible at the $79 offer
+
+The [draft handoff](../agent-handoff/CURRENT_STATUS.md#november-16-2026--city-and-commercial-draft-review) tests the same question from free brief through checkout and makes saved delivery explicit before purchase. The product scope and price stay the same. Rank the remaining opportunities by evidence and proximity to a settled purchase:
+
+1. Supervise one approved independent buyer with a genuine market question. Verify settled payment, report usefulness and reopening in a fresh session. Highest revenue learning, low engineering effort and direct operational oversight.
+2. Review the contextual offer with a prospective buyer. Confirm they can explain what they receive and where it stays saved before sending anyone to Checkout. Low cost. Conversion impact remains unmeasured.
+3. Review city evidence and reliable save candidates before any separately approved release. Both protect trust in the free result. Neither is evidence of adoption or revenue.
+
+No new independent customers, payments, costs or conversion outcomes were established by the synthetic runs. The dated scoreboard below stays scoped to its source.
+
 ## November 15 — Verify delivery for the first independent buyer
 
 [Revenue readiness brief](REVENUE_READINESS_20261115.md) verifies the live $79 offer and reports the new sample handoff candidate. Rank the repeated registration fix first, independent one-time fulfillment and return second, and supervised local learning third. Checkout and entitlement tests are engineering evidence. There is no newly verified independent purchase, delivery, conversion rate, or contribution margin. The existing scoreboard remains dated and scoped. Founder-channel outreach is pending founder setup.

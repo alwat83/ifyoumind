@@ -21,6 +21,8 @@ header { max-width: 700px; padding: clamp(42px, 7vw, 78px) 0 var(--iy-space-5); 
 h1 { @include product.editorial; margin: 10px 0 16px; color: var(--iy-ink); font-size: clamp(44px, 7vw, 78px); line-height: .98; }
 .lede { max-width: 54ch; color: var(--iy-muted); font-size: 17px; line-height: 1.55; }
 
+.decision-question { color: var(--iy-ink); overflow-wrap: anywhere; }
+
 .notice { margin-bottom: var(--iy-space-2); padding: 14px 16px; border: 1px solid var(--iy-line); border-radius: var(--iy-panel-radius); background: var(--iy-paper); color: var(--iy-ink); }
 .notice p { margin: 6px 0; }
 .notice a { color: var(--iy-accent); text-decoration: underline; text-underline-offset: 3px; }

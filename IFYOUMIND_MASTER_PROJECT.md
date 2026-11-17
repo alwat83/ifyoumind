@@ -12,6 +12,8 @@
 
 [Proposed architecture](docs/architecture/decision-intelligence/README.md): use versioned evidence cases and a bounded typed registry on the existing city and browser-only bill paths. [Delivery milestones](docs/architecture/decision-intelligence/DELIVERY.md) rely on the final #106 contract for the city migration. The first implementation slice is fixtures and contracts. Report entitlements and dormant subscriptions remain independently owned by the current commercial path. Any later OpenAI experiment uses its separate staging authorization.
 
+[City save reliability](https://github.com/alwat83/ifyoumind/pull/111) uses a browser attempt ID and a single workspace transaction for authorized creation and free usage. The Decision Report upgrade preserves the verified saved question and directs a report owner to the existing report. See the [current handoff](docs/agent-handoff/CURRENT_STATUS.md#november-16-2026--city-and-commercial-draft-review) for draft and CI evidence.
+
 ## November 15, 2026 — Revenue readiness
 
 [Founder brief and priorities](docs/growth/REVENUE_READINESS_20261115.md) verifies the #99 release and traces the household discovery and paid Decision Report paths. The sample destination fix removes repeat account creation for established sessions. The first independent one-time report purchase, delivery and return are the next commercial proof. Subscription enrollment and provider experiments remain under their separate gates.

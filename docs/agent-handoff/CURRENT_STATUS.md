@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 16, 2026 — Question-to-Answer Intelligence, Phase 1
+
+**Draft candidate.** `codex/question-to-answer-phase-1` from Electric Minimal merge `921d55b65800722e001c1df35993241b0d88deac`. The app sends recognized city questions straight to the existing free brief. Housing estimates and sources lead the answer; the user-supplied salary stays separate from Census household income. Manual place fields, private bill routes, free limits and report purchase remain available. [Journey evidence and release notes](../product/QUESTION_TO_ANSWER_PHASE_1.md). [Electric Minimal production workflow](https://github.com/alwat83/ifyoumind/actions/runs/43990589012) completed successfully; this candidate is separate.
+
 ## November 16, 2026 — Electric Minimal palette review
 
 [Draft PR #105](https://github.com/alwat83/ifyoumind/pull/105) refines the existing Wow 3.3 surfaces through shared color tokens. Geometry, wrapping, content and controls match the live baseline in four paired preview captures. [Palette, screenshot and verification evidence](../design/electric-minimal/REVIEW.md). The approved [Wow 3.3 production release](https://github.com/alwat83/ifyoumind/blob/a29668c7f530579a185e9aa0023ded28dabed2c0/docs/design/wow-3-3/REVIEW.md#production-release-verification) remains the live baseline.

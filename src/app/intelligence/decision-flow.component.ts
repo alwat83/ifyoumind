@@ -1,14 +1,25 @@
-import { NgTemplateOutlet } from '@angular/common';
+import { Location, NgTemplateOutlet } from '@angular/common';
 import { Component, ElementRef, OnDestroy, OnInit, inject } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { intentParams, parseIntent, readIntent, rememberIntent } from '../purchase-intent';
 import { OrganizationService } from './organization.service';
 import { MarketIntelligenceService } from './market-intelligence.service';
 import { ProductAnalyticsService } from './product-analytics.service';
-import { billIntent, decisionPrompts, decisionType, DecisionType, formattedCity, placeKey, sampleCityMatches } from './decision-steps';
+import { billIntent, decisionPrompts, decisionType, DecisionType, formattedCity, placeKey, sampleCityMatches, understandCityQuestion } from './decision-steps';
 
 interface Comparison { id: number; value: string }
+interface DecisionDraft {
+  uid: string;
+  question: string;
+  location: string;
+  comparisons: string[];
+  concept: string;
+  showConcept: boolean;
+  type: DecisionType;
+  result?: { signature: string; id: string };
+}
 
 @Component({
   selector: 'app-decision-flow',
@@ -20,12 +31,17 @@ interface Comparison { id: number; value: string }
 export class DecisionFlowComponent implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly history = inject(Location);
+  private readonly auth = inject(Auth);
   private readonly element = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly organizations = inject(OrganizationService);
   private readonly market = inject(MarketIntelligenceService);
   private readonly analytics = inject(ProductAnalyticsService);
   private destroyed = false;
   private nextComparisonId = 1;
+  private initialType: DecisionType = 'custom';
+  private acceptedQuestion = '';
+  private savedResult?: DecisionDraft['result'];
 
   screen: 'question' | 'place' = 'question';
   type: DecisionType = 'custom';
@@ -43,8 +59,19 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     rememberIntent(parseIntent(this.route.snapshot.queryParamMap.get('intent')));
-    this.type = decisionType(this.route.snapshot.queryParamMap.get('type'));
+    this.initialType = this.type = decisionType(this.route.snapshot.queryParamMap.get('type'));
     this.question = decisionPrompts[this.type];
+    // Navigation restores editable context for this history entry. It never submits on load.
+    const draft = (this.history.getState() as { decisionDraft?: DecisionDraft } | null)?.decisionDraft;
+    if (draft && draft.uid === this.auth.currentUser?.uid) {
+      this.question = this.acceptedQuestion = draft.question;
+      this.location = draft.location;
+      this.comparisons = draft.comparisons.map(value => ({ id: this.nextComparisonId++, value }));
+      this.concept = draft.concept;
+      this.showConcept = draft.showConcept;
+      this.type = draft.type;
+      this.savedResult = draft.result;
+    }
   }
 
   ngOnDestroy(): void { this.destroyed = true; }
@@ -54,7 +81,19 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
   get personalBill(): boolean { return this.bill === 'tax-bill' || this.bill === 'electricity-bill'; }
   get electricityBill(): boolean { return this.bill === 'electricity-bill' || this.bill === 'local-electricity'; }
 
+  get questionAction(): string {
+    if (this.working) return 'Building your brief…';
+    const parsed = understandCityQuestion(this.question);
+    if (this.readyToAnalyze(parsed)) return 'Show my free brief';
+    return this.initialType === 'custom' ? 'Continue with city data' : 'Continue';
+  }
+
+  private readyToAnalyze(parsed: ReturnType<typeof understandCityQuestion>): boolean {
+    return !!parsed.location && (!(parsed.needsComparison || this.initialType === 'compare') || !!parsed.comparison);
+  }
+
   continueToPlace(): void {
+    if (this.working) return;
     if (!this.question.trim() || this.question.trim().length > 240) {
       this.questionError = 'Enter a question of up to 240 characters.';
       this.focus('decision-question');
@@ -62,6 +101,25 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
     }
     if (this.bill) return;
     this.questionError = '';
+    const parsed = understandCityQuestion(this.question);
+    if (parsed.intent === 'unclear' && this.initialType === 'custom') {
+      this.questionError = 'What would you like to compare or find out? Include a city and state if your question is about a place.';
+      this.focus('decision-question');
+      return;
+    }
+    if (this.acceptedQuestion !== this.question.trim()) {
+      this.acceptedQuestion = this.question.trim();
+      this.type = parsed.needsComparison ? 'compare' : this.initialType;
+      this.location = parsed.location ?? '';
+      this.comparisons = parsed.comparison ? [{ id: this.nextComparisonId++, value: parsed.comparison }] : [];
+      this.savedResult = undefined;
+      this.placeErrors = {};
+    }
+    this.rememberDraft();
+    if (this.readyToAnalyze(parsed) || this.savedResult) {
+      void this.analyze();
+      return;
+    }
     this.screen = 'place';
     if (this.type === 'compare' && !this.comparisons.length) this.appendComparison();
     this.focus('place-heading');
@@ -70,6 +128,7 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
   backToQuestion(): void {
     this.screen = 'question';
     this.error = '';
+    this.limited = false;
     this.suggestionField = '';
     this.focus('decision-question-heading');
   }
@@ -148,12 +207,21 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
     }
     const firstError = Object.keys(this.placeErrors)[0];
     if (firstError || !location) {
+      this.screen = 'place';
       if (firstError) this.focus(firstError);
       return;
     }
 
+    const concept = this.concept.trim() || (
+      this.type === 'compare' ? 'Location comparison' : this.type === 'growth' ? 'Market growth' : 'Location decision');
+    const signature = JSON.stringify([location, comparisons, concept, this.question.trim()]);
+    this.rememberDraft();
     this.working = true;
     try {
+      if (this.savedResult?.signature === signature) {
+        await this.openResult(this.savedResult.id);
+        return;
+      }
       let workspace = await this.organizations.getMyWorkspace();
       if (this.destroyed) return;
       if (!workspace) {
@@ -162,15 +230,15 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
       }
       if (this.destroyed) return;
       if (!workspace) throw new Error('Missing workspace');
-      const concept = this.concept.trim() || (
-        this.type === 'compare' ? 'Location comparison' : this.type === 'growth' ? 'Market growth' : 'Location decision');
       const project = await this.market.create(workspace.organizationId, location, concept, this.question.trim(), comparisons);
       if (this.destroyed) return;
+      this.savedResult = { signature, id: project.id };
+      this.rememberDraft();
       void this.analytics.track(workspace.organizationId, 'decision_created', {
         type: this.type,
         comparisons: String(comparisons.length),
       });
-      await this.router.navigate(['/app/result', project.id], { queryParams: intentParams({}, readIntent()) });
+      await this.openResult(project.id);
     } catch (error) {
       if (this.destroyed) return;
       const code = String((error as { code?: unknown } | null)?.code ?? '').replace('functions/', '');
@@ -178,6 +246,7 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
         this.limited = true;
         this.error = 'You have used your 3 free decisions this month. They reset on the 1st (UTC). You can still open your saved decisions.';
       } else if (code === 'not-found' || code === 'invalid-argument') {
+        this.screen = 'place';
         this.error = 'We couldn’t match one of those places. Check the spelling and state, or remove an optional comparison.';
       } else if (code === 'permission-denied' || code === 'unauthenticated') {
         this.error = 'We couldn’t create a brief in this workspace. Check your account access and try again.';
@@ -188,6 +257,20 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
     } finally {
       this.working = false;
     }
+  }
+
+  private rememberDraft(): void {
+    const uid = this.auth.currentUser?.uid;
+    if (!uid) return;
+    const decisionDraft: DecisionDraft = {
+      uid, question: this.acceptedQuestion, location: this.location, comparisons: this.comparisons.map(row => row.value),
+      concept: this.concept, showConcept: this.showConcept, type: this.type, result: this.savedResult,
+    };
+    this.history.replaceState(this.router.url, '', { ...(this.history.getState() as object), decisionDraft });
+  }
+
+  private openResult(id: string): Promise<boolean> {
+    return this.router.navigate(['/app/result', id], { queryParams: intentParams({}, readIntent()), state: { focusDecisionTitle: true } });
   }
 
   private focus(id: string, waitForRender = true): void {

@@ -2,6 +2,104 @@
 import { test, expect, expectAccessible, expectNoHorizontalScroll, signInThroughUi } from '../support/test.mjs';
 import { FIXTURES, grantAdminClaim } from '../support/fixtures.mjs';
 
+const livingQuestion = 'What is the difference in cost of living between Los Angeles and Birmingham, Alabama, if someone makes $90,000?';
+
+test('a cost-of-living question goes straight to a sourced answer and reopens without creating a duplicate', async ({ page, fixtures }) => {
+  await signInThroughUi(page, await fixtures(FIXTURES.FREE_NO_REPORTS), '/login?returnUrl=%2Fapp%2Fdecide');
+  const creates = [];
+  const unexpected = [];
+  page.on('request', request => {
+    const url = request.url();
+    if (url.endsWith('/createMarketIntelligenceProject') && request.method() === 'POST') creates.push(request.postDataJSON().data);
+    if (/openai|createCommercialCheckout|generatePaidDecisionReport/.test(url)) unexpected.push(url);
+  });
+  const question = page.getByLabel('Your question');
+  await question.fill(livingQuestion);
+  const submit = page.getByRole('button', { name: 'Show my free brief' });
+  const cityScreen = page.getByRole('heading', { name: 'Which cities are you comparing?' });
+  await expect(cityScreen).toHaveCount(0);
+  await question.press('Tab');
+  await expect(submit).toBeFocused();
+  await submit.press('Enter');
+  await expect(cityScreen).toHaveCount(0);
+  await expect(page).toHaveURL(/\/app\/result\/[A-Za-z0-9]+$/);
+  const resultUrl = page.url();
+  const title = page.getByRole('heading', { name: livingQuestion, exact: true });
+  await expect(title).toBeFocused();
+  await expect(page.locator('#recommendation')).toContainText('median home value at $810,000 in Los Angeles, CA and $145,000 in Birmingham, AL');
+  await expect(page.locator('#recommendation')).toContainText('you’d need actual housing, taxes, transportation, and other recurring expenses');
+  await expect(page.getByText('$90,000 annual salary (your input)', { exact: false })).toBeVisible();
+  await expect(page.locator('#sources').getByRole('link', { name: 'Open source' }).first()).toHaveAttribute('href', /api\.census\.gov/);
+  await expect(page.locator('.next')).toContainText('comparable housing');
+  expect(creates).toHaveLength(1);
+  expect(creates[0]).toMatchObject({ location: 'Los Angeles, CA', comparisonLocations: ['Birmingham, AL'], decision: livingQuestion });
+
+  for (const width of [320, 390, 768, 1280]) {
+    await page.setViewportSize({ width, height: 844 });
+    await expectNoHorizontalScroll(page);
+  }
+  await expectAccessible(page);
+  await page.reload();
+  await expect(title).toBeVisible();
+  await page.goBack();
+  await expect(question).toHaveValue(livingQuestion);
+  await page.reload();
+  await expect(question).toHaveValue(livingQuestion);
+  expect(creates).toHaveLength(1);
+  await submit.click();
+  await expect(page).toHaveURL(resultUrl);
+  await expect(title).toBeVisible();
+  expect(creates).toHaveLength(1);
+  expect(unexpected).toEqual([]);
+});
+
+test('comparison without salary and a single-city housing question keep their own evidence', async ({ page, fixtures }) => {
+  await signInThroughUi(page, await fixtures(FIXTURES.FREE_NO_REPORTS), '/login?returnUrl=%2Fapp%2Fdecide');
+  await page.getByLabel('Your question').fill('Compare living costs in Los Angeles vs Birmingham, AL');
+  await page.getByRole('button', { name: 'Show my free brief' }).click();
+  await expect(page.locator('#recommendation')).toContainText('$145,000 in Birmingham, AL');
+  await expect(page.getByText(/annual salary \(your input\)/)).toHaveCount(0);
+  await page.getByRole('link', { name: 'Ask another question' }).click();
+  await page.getByLabel('Your question').fill('How much does housing cost in Birmingham, Alabama?');
+  await page.getByRole('button', { name: 'Show my free brief' }).click();
+  await expect(page.locator('#recommendation')).toContainText('median home value at $145,000 in Birmingham, AL');
+  await expect(page.locator('#recommendation')).toContainText('check current rent or sale listings');
+  await expect(page.locator('#comparison')).toHaveCount(0);
+});
+
+test('a vague question stays editable and an ambiguous comparison keeps the recognized city', async ({ page, fixtures }) => {
+  await signInThroughUi(page, await fixtures(FIXTURES.FREE_NO_REPORTS), '/login?returnUrl=%2Fapp%2Fdecide');
+  const question = page.getByLabel('Your question');
+  await question.fill('Can you help me decide?');
+  await page.getByRole('button', { name: 'Continue with city data' }).click();
+  await expect(question).toBeFocused();
+  await expect(page.getByText(/What would you like to compare or find out/)).toBeVisible();
+  await expect(page.getByLabel('City and state')).toHaveCount(0);
+  await question.fill('Compare Springfield and Birmingham, Alabama');
+  await page.getByRole('button', { name: 'Continue with city data' }).click();
+  await expect(page.getByLabel('First city')).toHaveValue('');
+  await expect(page.getByLabel('Second city')).toHaveValue('Birmingham, AL');
+  await page.getByLabel('First city').fill('Springfield, Illinois');
+  await page.getByRole('button', { name: 'Show my free brief' }).click();
+  await expect(page.locator('#comparison')).toContainText('Springfield, IL');
+  await expect(page.locator('#comparison')).toContainText('Birmingham, AL');
+});
+
+test('a rejected extracted city opens the existing editor with both candidates', async ({ page, fixtures, consoleErrors }) => {
+  consoleErrors.allow.push(/status of 404/i);
+  await signInThroughUi(page, await fixtures(FIXTURES.FREE_NO_REPORTS), '/login?returnUrl=%2Fapp%2Fdecide');
+  const endpoint = '**/createMarketIntelligenceProject';
+  await page.route(endpoint, route => route.fulfill({ status: 404, json: { error: { status: 'NOT_FOUND', message: 'Synthetic Census mismatch' } } }), { times: 1 });
+  await page.getByLabel('Your question').fill('Compare Birmingham, Alabama with Madison, WI');
+  await page.getByRole('button', { name: 'Show my free brief' }).click();
+  await expect(page.getByRole('alert')).toBeFocused();
+  await expect(page.getByRole('alert')).toContainText('We couldn’t match one of those places');
+  await expect(page.getByLabel('First city')).toHaveValue('Birmingham, AL');
+  await expect(page.getByLabel('Second city')).toHaveValue('Madison, WI');
+  await page.getByRole('button', { name: 'Show my free brief' }).click();
+  await expect(page).toHaveURL(/\/app\/result\//);
+});
+
 test('a verified free user creates a decision through the app and sees the free brief', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.FREE_NO_REPORTS, { workspace: false });
   await signInThroughUi(page, user);

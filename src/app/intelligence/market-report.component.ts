@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Auth, user } from '@angular/fire/auth';
@@ -9,8 +9,9 @@ import { ProductAnalyticsService } from './product-analytics.service';
 import { CommercialStatus, MonetizationService } from './monetization.service';
 import { MarketAnalysisComponent } from './market-analysis.component';
 import { clearIntent, parseIntent, readIntent } from '../purchase-intent';
-import { EvidenceSummary, summarizeEvidence } from './evidence-summary';
+import { EvidenceSummary, housingTakeaway, summarizeEvidence } from './evidence-summary';
 import { loadSampleBeforeDeadline, SampleLoadFailure, sampleFailureCopy } from './sample-report-loading';
+import { understandCityQuestion } from './decision-steps';
 
 @Component({
   selector:'app-market-report',
@@ -52,9 +53,10 @@ export class MarketReportComponent implements OnInit, OnDestroy {
   private sampleController:AbortController|null=null;
   private destroyed=false;
   private focusRecoveredReport=false;
+  readonly focusDecisionTitle=(inject(Location).getState() as { focusDecisionTitle?: boolean } | null)?.focusDecisionTitle === true;
 
   @ViewChild('reportTitle') set reportTitle(title:ElementRef<HTMLElement>|undefined){
-    if(title&&this.focusRecoveredReport){
+    if(title&&(this.focusRecoveredReport||this.focusDecisionTitle)){
       this.focusRecoveredReport=false;
       title.nativeElement.focus();
     }
@@ -153,7 +155,37 @@ export class MarketReportComponent implements OnInit, OnDestroy {
   get summary():EvidenceSummary|null{
     const brief=this.project?.brief;
     if(!brief||!this.project)return null;
-    return summarizeEvidence({location:this.project.location,metrics:brief.metrics||[]},brief.comparisons||[]);
+    const primary={location:this.project.location,metrics:brief.metrics||[]};
+    const summary=summarizeEvidence(primary,brief.comparisons||[]);
+    const context=this.householdQuestion;
+    return context ? {
+      ...summary,
+      headline:housingTakeaway(primary,brief.comparisons?.[0]),
+      limits:context.intent==='cost-of-living'
+        ? 'These Census estimates describe each city’s population, household income, and home values. To compare your cost of living or calculate a salary equivalent, you’d need actual housing, taxes, transportation, and other recurring expenses.'
+        : 'Median home value describes what owner-occupied homes are worth. To estimate what you would pay, check current rent or sale listings, financing, utilities, and fees for comparable homes.',
+    } : summary;
+  }
+
+  get householdQuestion() {
+    if (this.sampleMode || this.project?.mode !== 'live' || typeof this.project.decision !== 'string') return null;
+    const parsed = understandCityQuestion(this.project.decision);
+    return parsed.intent === 'cost-of-living' || parsed.intent === 'housing' ? parsed : null;
+  }
+
+  get reportedSalary(): string {
+    const amount=this.householdQuestion?.annualSalary;
+    return amount ? new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:0,maximumFractionDigits:2}).format(amount) : '';
+  }
+
+  get nextQuestions(): string[] {
+    const intent=this.householdQuestion?.intent;
+    if(intent==='cost-of-living') return [
+      'What would comparable housing cost you in each place, including utilities and fees?',
+      'What would you pay for taxes, transportation, and your other recurring expenses in each place?',
+    ];
+    if(intent==='housing') return ['What are comparable homes listing for in the neighborhoods you would consider?'];
+    return this.project?.brief?.questions ?? [];
   }
 
   /** How many key figures cite their source. This counts citations; it is not a confidence score. */

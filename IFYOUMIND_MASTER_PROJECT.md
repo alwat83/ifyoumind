@@ -1,6 +1,6 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-15
+**Updated:** 2026-11-16
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
@@ -20,7 +20,11 @@
 
 [Draft PR #104](https://github.com/alwat83/ifyoumind/pull/104) brings the existing deterministic property-tax finding into the homepage hero. [Paired screenshots and review scope](docs/design/wow-3-3/REVIEW.md) show the existing design system and the lighter evidence entry. The separate [PR #103 production and paid-pilot record](https://github.com/alwat83/ifyoumind/blob/d2c836449961ecbb57034ba0ba41408e90ef3e93/docs/growth/CHECKOUT_RELIABILITY_GATE.md) remains the source for customer-pilot status.
 
-[Electric Minimal color refinement](docs/design/electric-minimal/REVIEW.md) is in draft PR #105 for founder visual review. The deployed Wow 3.3 release remains the comparison and rollback baseline.
+[Electric Minimal color refinement](docs/design/electric-minimal/REVIEW.md) merged in [PR #105](https://github.com/alwat83/ifyoumind/pull/105) at `921d55b65800722e001c1df35993241b0d88deac`. [Production workflow](https://github.com/alwat83/ifyoumind/actions/runs/43990589012) passed.
+
+## November 16, 2026 — Question-to-Answer Intelligence, Phase 1
+
+[Question-to-answer Phase 1](docs/product/QUESTION_TO_ANSWER_PHASE_1.md) reuses the Electric Minimal decision entry and saved brief. The browser extracts clear city and optional salary inputs, the existing Census callable verifies the cities, and the brief explains which household cost questions the figures can answer. The separate staging-only AI draft is not a dependency.
 
 ## November 14, 2026 — Master product experience directive
 

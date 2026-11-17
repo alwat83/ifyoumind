@@ -54,6 +54,7 @@ export interface MarketProject {
   /** Places compared only in the full Decision Report (free briefs show one comparison). */
   reportOnlyLocations?:string[];
   dataNotice?:string;
+  comparisonLocations?:string[];
   createdAt?:string|null;
 }
 

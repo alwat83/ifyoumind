@@ -13,21 +13,25 @@ test('a free result opens with what the figures show, then the evidence, then th
   await expect(summary).toContainText('cannot recommend a location');
   await expect(page.getByText('Executive recommendation')).toHaveCount(0);
   await expect(page.getByText('What supports it')).toHaveCount(0);
-  await expect(page.locator('.findings li').first()).toBeVisible();
-  await expect(page.locator('.findings .method')).toContainText('None of these differences has been tested for statistical significance');
   await expect(summary.locator('h2')).not.toHaveText(/about the same|no clear difference|equivalent/i);
 
   // The summary headline is on the first screen; the $79 prompt comes after the comparison.
   const viewport = page.viewportSize();
   const headlineTop = (await summary.locator('h2').boundingBox()).y;
   expect(headlineTop).toBeLessThan(viewport.height);
+  const evidence = page.getByRole('region', { name: 'City comparison evidence' });
+  await expect(evidence.locator('details')).not.toHaveAttribute('open');
+  await evidence.getByText('Show the evidence', { exact: true }).click();
+  await expect(evidence.getByText('How the differences were calculated')).toBeVisible();
+  await expect(evidence).toContainText('The brief does not show margins of error or test statistical significance');
   const prompt = page.locator('.intent-prompt');
   await expect(prompt).toBeVisible();
   const order = await page.evaluate(() => {
     const at = selector => [...document.querySelectorAll('article.report *')].indexOf(document.querySelector(selector));
-    return { summary: at('#recommendation'), comparison: at('#comparison'), prompt: at('.intent-prompt') };
+    return { summary: at('#recommendation'), evidence: at('.city-evidence'), comparison: at('#comparison'), prompt: at('.intent-prompt') };
   });
-  expect(order.summary).toBeLessThan(order.comparison);
+  expect(order.summary).toBeLessThan(order.evidence);
+  expect(order.evidence).toBeLessThan(order.comparison);
   expect(order.comparison).toBeLessThan(order.prompt);
 });
 

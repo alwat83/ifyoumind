@@ -42,7 +42,7 @@
   <section *ngIf="!sampleMode && loading" class="state">Putting your answer together…</section>
   <section *ngIf="!sampleMode && error" class="state error">{{ error }}</section>
 
-  <article *ngIf="project?.brief as brief" class="report">
+  <article *ngIf="visibleBrief as brief" class="report">
     <header class="answer-header">
       <div>
         <p class="brand">ifYouMind</p>
@@ -51,7 +51,7 @@
         <p class="context">{{ project?.concept }} · {{ project?.location }}<ng-container *ngIf="reportedSalary as salary"> · {{ salary }} annual salary (your input)</ng-container></p>
       </div>
       <div class="meta">
-        <span>{{ sampleMode ? 'Sample · live data' : project?.mode === 'demo' ? 'Demo data' : 'Live data' }}</span>
+        <span>{{ sampleMode ? 'Sample · live data' : project?.mode === 'demo' ? 'Demo data' : cityEvidence && !cityEvidence.primary ? 'Main-city evidence unavailable' : 'Live data' }}</span>
         <small>{{ project?.createdAt ? (project?.createdAt | date:'longDate') : '' }}</small>
       </div>
     </header>
@@ -71,18 +71,53 @@
 
     <section id="recommendation" class="executive-summary" *ngIf="summary as s">
       <div class="recommendation">
-        <p class="eyebrow">What the figures show</p>
+        <p class="eyebrow">What the figures show<ng-container *ngIf="cityEvidence?.coverage === 'partial'"> · Partial answer</ng-container></p>
         <h2>{{ s.headline }}</h2>
         <p>{{ s.limits }}</p>
       </div>
       <aside class="confidence">
         <span>Sources cited</span>
         <strong>{{ sourcesCited }}</strong>
-        <small>Each links to its official table. This counts citations; it is not a measure of how certain the findings are.</small>
+        <small *ngIf="cityEvidence as evidence; else standardCitationNote">{{ evidence.primary ? 'The evidence below links directly to each verified estimate.' : 'No main-city estimate could be verified.' }}</small>
+        <ng-template #standardCitationNote><small>Each links to its official table. This counts citations; it is not a measure of how certain the findings are.</small></ng-template>
       </aside>
     </section>
 
-    <section *ngIf="summary?.findings?.length" class="findings" aria-label="Measure by measure">
+    <section *ngIf="cityEvidence as evidence" class="city-evidence" aria-label="City comparison evidence">
+      <details>
+        <summary>Show the evidence</summary>
+        <p *ngIf="evidence.coverage === 'partial'">Partial answer. {{ evidence.intent === 'personal-living-cost' ? 'These estimates cannot establish your personal expenses or a salary equivalent.' : 'Some estimates could not be verified from this decision.' }}</p>
+        <p *ngIf="evidence.coverage === 'unavailable'">The saved decision has no verified place estimates to show here.</p>
+        <p *ngIf="!evidence.calculations.length && evidence.places.length">The estimates below describe individual cities. No difference could be verified.</p>
+        <ng-container *ngIf="evidence.places.length">
+          <p>U.S. Census Bureau · {{ evidence.vintage }} ACS 5-year estimates (2020–2024). These are city estimates. The brief does not show margins of error or test statistical significance.</p>
+          <div *ngFor="let place of evidence.places">
+            <h3>{{ place.location }}</h3>
+            <p>State FIPS {{ place.stateFips }} · Place FIPS {{ place.placeFips }}</p>
+            <ul>
+              <li *ngFor="let metric of place.metrics">
+                <a [href]="metric.sourceUrl" [attr.aria-label]="metric.label + ' (' + metric.variable + ') for ' + place.location"
+                  target="_blank" rel="noopener noreferrer">{{ metric.label }} ({{ metric.variable }})</a>
+                · {{ formatMetric(metric.value, metric.unit) }}<ng-container *ngIf="metric.unit === 'people'"> people</ng-container>
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="evidence.calculations.length">
+            <h3>How the differences were calculated</h3>
+            <p>Main city minus comparison city. Dollar amounts and population differences use whole units.</p>
+            <ul>
+              <li *ngFor="let calculation of evidence.calculations">{{ calculation.label }} compared with {{ calculation.comparison }}:
+                {{ formatMetric(calculation.primary.value, calculation.primary.unit) }} −
+                {{ formatMetric(calculation.other.value, calculation.other.unit) }} =
+                {{ formatMetric(calculation.value, calculation.primary.unit) }}</li>
+            </ul>
+          </div>
+          <p>Population change needs estimates from two vintages. This evidence view uses the 2024 observations.</p>
+        </ng-container>
+      </details>
+    </section>
+
+    <section *ngIf="!cityEvidence && summary?.findings?.length" class="findings" aria-label="Measure by measure">
       <ul>
         <li *ngFor="let finding of summary?.findings" [attr.data-position]="finding.position">
           <strong>{{ finding.label }}</strong>
@@ -92,7 +127,7 @@
       <p class="method">{{ summary?.method }}</p>
     </section>
 
-    <section id="signals">
+    <section id="signals" *ngIf="brief.metrics.length">
       <p class="eyebrow">The signals underneath</p>
       <div class="metrics">
         <article *ngFor="let metric of brief.metrics">
@@ -107,7 +142,7 @@
     <section id="comparison" *ngIf="brief.comparisons.length">
       <p class="eyebrow">How the other places compare</p>
       <div class="comparison-grid">
-        <article>
+        <article *ngIf="brief.metrics.length">
           <h3>{{ project?.location }}</h3>
           <span>Your main location</span>
           <dl>
@@ -245,7 +280,7 @@
     </section>
 
     <p *ngIf="sampleMode" class="no-print"><a href="/guides/choose-business-location-evidence/">Business location evidence checklist</a> · <a href="/guides/">All decision guides</a></p>
-    <section id="sources" *ngIf="brief.sources?.length" class="sources">
+    <section id="sources" *ngIf="brief.sources?.length && (!cityEvidence || cityEvidence.primary)" class="sources">
       <p class="eyebrow">Sources</p>
       <ul>
         <li *ngFor="let source of brief.sources">
@@ -256,7 +291,7 @@
     </section>
 
     <footer>
-      <p>{{ project?.dataNotice }}</p>
+      <p *ngIf="!cityEvidence || cityEvidence.primary">{{ project?.dataNotice }}</p>
       <p>ifYouMind helps organize evidence around a decision. It does not guarantee an outcome. Validate material facts before committing time or money.</p>
       <span>Generated by ifYouMind</span>
     </footer>

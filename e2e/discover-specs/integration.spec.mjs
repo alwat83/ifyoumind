@@ -77,6 +77,22 @@ test('a returning visitor can go back to the same public example after inspectin
  await expect(page.locator('#business .finding')).toContainText('+21%');
  await page.reload();
  await expect(examples.getByRole('button', { name: 'Electricity bills', pressed: true })).toBeVisible();
+
+ await page.goto('/discover/');
+ await page.getByRole('button', { name: 'Use a property tax CSV' }).click();
+ await page.getByLabel('Choose a redacted CSV').setInputFiles({
+   name: 'private-test-marker.csv',
+   mimeType: 'text/csv',
+   buffer: Buffer.from('tax_year,county_usd,school_usd,municipal_usd,total_usd\n2024,900.37,2400,900,4200.37\n2025,990,2640,990,4620\n'),
+ });
+ await expect(page.getByRole('heading', { name: 'Your total rose by $419.63.' })).toBeVisible();
+ await page.getByRole('link', { name: 'Back to examples' }).click();
+ await expect(page).toHaveURL(origin + '/?example=tax#business');
+ await expect(examples.getByRole('button', { name: 'Property taxes', pressed: true })).toBeVisible();
+ await page.goBack();
+ await expect(page.locator('.finding')).toHaveCount(0);
+ await expect(page.getByRole('heading', { name: 'What changed in the example?' })).toBeVisible();
+
  await page.goto('/?example=private-input-not-an-example#business');
  await expect(examples.getByRole('button', { name: 'Property taxes', pressed: true })).toBeVisible();
 });

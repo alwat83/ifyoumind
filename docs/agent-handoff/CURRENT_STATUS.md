@@ -2,11 +2,17 @@
 
 ## November 16, 2026 — City Decision Brief evidence
 
-**Candidate for founder review.** `codex/city-decision-evidence` from approved architecture merge `5015e3d43b9c3822d456dbc01c5c9d0b391fe44f`. The authorized free city brief now offers direct Census sources and reproducible differences. [Issue #108](https://github.com/alwat83/ifyoumind/issues/108) · [Demo and verification evidence](../product/CITY_DECISION_EVIDENCE.md). No write, quota, payment, provider or subscription change. Latest approved architecture [deployment workflow](https://github.com/alwat83/ifyoumind/actions/runs/44008073712) passed; live verification is separate from this draft.
+**Merged and deployed.** [PR #109](https://github.com/alwat83/ifyoumind/pull/109) merged at `1c4399d0165a06c285227d7e9631f0a7a63935ba`. The [production workflow](https://github.com/alwat83/ifyoumind/actions/runs/44032196558) passed. The authorized brief shows traceable Census comparisons and withholds numerical comparisons without verified primary evidence. [Issue #108](https://github.com/alwat83/ifyoumind/issues/108) · [Demo and verification evidence](../product/CITY_DECISION_EVIDENCE.md).
 
 ## November 16, 2026 — Universal Decision Intelligence 4.0 architecture
 
 **Proposed, documentation only.** The separate `codex/universal-decision-architecture` branch is based on master `4765a5cd0ee7eff598f02e74f5a50de94a7d3772`. The [ADR, contracts, controls and evaluation plan](../architecture/decision-intelligence/README.md) reuse the existing city path and keep tax and electricity in browser memory. [PR #106](https://github.com/alwat83/ifyoumind/pull/106) merged independently at `4765a5cd0ee7eff598f02e74f5a50de94a7d3772`; its [build](https://github.com/alwat83/ifyoumind/actions/runs/44003472896) and [authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/44003472991) passed. Preserving #106 behavior and a shared city save and quota mechanism are prerequisites for any rollout that changes creation. [Draft PR #96](https://github.com/alwat83/ifyoumind/pull/96) is optional and outside deterministic delivery.
+
+## November 16, 2026 — City and commercial draft review
+
+[Draft #111](https://github.com/alwat83/ifyoumind/pull/111) integrates [Issue #110](https://github.com/alwat83/ifyoumind/issues/110) onto deployed master. The writer commits one project and one free slot together, preserves the original result across lost replies and accounts for the UTC month boundary. [Exact CI and Functions-first rollout](https://github.com/alwat83/ifyoumind/pull/111).
+
+[Draft #112](https://github.com/alwat83/ifyoumind/pull/112) integrates the #109 base on `codex/decision-report-purchase-context`. The signed-in flow carries the actual saved question and project ID from the evidenced free brief into the $79 offer and intercepted Checkout. Existing access opens the report. An unauthorized or missing decision directs the visitor to saved decisions. [Exact-head checks](https://github.com/alwat83/ifyoumind/pull/112/checks) · [Mobile before](../growth/report-purchase-context/before-mobile.png) and [after](../growth/report-purchase-context/after-mobile.png). As directed in the review, repeat final integration and CI once #111 is on master. The first independent payment and fulfillment remain unverified.
 
 ## November 16, 2026 — Question-to-Answer Intelligence, Phase 1
 

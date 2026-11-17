@@ -2,7 +2,7 @@
 
 ## November 16, 2026 — Question-to-Answer Intelligence, Phase 1
 
-**Draft candidate.** `codex/question-to-answer-phase-1` from Electric Minimal merge `921d55b65800722e001c1df35993241b0d88deac`. The app sends recognized city questions straight to the existing free brief. Housing estimates and sources lead the answer; the user-supplied salary stays separate from Census household income. Manual place fields, private bill routes, free limits and report purchase remain available. [Journey evidence and release notes](../product/QUESTION_TO_ANSWER_PHASE_1.md). [Electric Minimal production workflow](https://github.com/alwat83/ifyoumind/actions/runs/43990589012) completed successfully; this candidate is separate.
+**Draft candidate.** [PR #106](https://github.com/alwat83/ifyoumind/pull/106) from Electric Minimal merge `921d55b65800722e001c1df35993241b0d88deac`. The app sends recognized city questions straight to the existing free brief. Housing estimates and sources lead the answer. The user-supplied salary stays separate from Census household income. Manual place fields, private bill routes, free limits and report purchase remain available. [Journey evidence and release notes](../product/QUESTION_TO_ANSWER_PHASE_1.md) · [CI](https://github.com/alwat83/ifyoumind/pull/106/checks) · [Electric Minimal production workflow](https://github.com/alwat83/ifyoumind/actions/runs/43990589012).
 
 ## November 16, 2026 — Electric Minimal palette review
 

@@ -80,7 +80,7 @@ test('ambiguous places and salary amounts stay unresolved', () => {
   assert.equal(understandCityQuestion('Compare Springfield and Birmingham').intent, 'city-comparison');
   assert.equal(billIntent('What does electricity cost in Birmingham?'), 'local-electricity');
   assert.equal(billIntent('What is the cost of electricity in Birmingham?'), 'local-electricity');
-  for (const amount of ['on $7,500 per month', 'on $80k to $95k', 'on −$90k', 'on €90,000', 'on $100,000 CAD', 'on $0', 'on $900,00', 'on $90,000 and earning $20k extra', 'on $90k+', 'about $90k a year']) {
+  for (const amount of ['on $7,500 per month', 'on $80k to $95k', 'on $80k or $95k', 'on −$90k', 'on €90,000', 'on $100,000 CAD', 'on $0', 'on $900,00', 'on $90,000 and earning $20k extra', 'on $90k+', 'about $90k a year', 'with 2024 Census data']) {
     assert.equal(understandCityQuestion('Compare LA and Birmingham, AL for cost of living ' + amount).annualSalary, null, amount);
   }
 });

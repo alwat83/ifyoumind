@@ -87,7 +87,9 @@ function annualSalary(question: string): number | null {
     const start = match.index!;
     const before = question.slice(0, start);
     const after = question.slice(start + match[0].length);
-    return /\b(?:(?:salary|income|earnings)(?:\s+(?:of|is))?|mak(?:e[sd]?|ing)|earn(?:s|ed|ing)?|on|with)\s+(?:an?\s+)?\$?\s*$/i.test(before) ||
+    const money = /\$\s*$/.test(before) || /k$/i.test(match[0]);
+    return /\b(?:(?:salary|income|earnings)(?:\s+(?:of|is))?|mak(?:e[sd]?|ing)|earn(?:s|ed|ing)?)\s+(?:an?\s+)?\$?\s*$/i.test(before) ||
+      (money && /\b(?:on|with)\s+(?:an?\s+)?\$?\s*$/i.test(before)) ||
       /^\s*(?:a year|per year|annually|annual(?:ly)?\b|(?:annual\s+)?salary\b|(?:annual\s+)?income\b|\/\s*(?:yr|year)\b)/i.test(after);
   });
   if (amounts.length !== 1) return null;
@@ -96,7 +98,7 @@ function annualSalary(question: string): number | null {
   const end = start + match[0].length;
   // Reject partial numbers, ranges, negatives and amounts explicitly using another currency.
   if (/(?:[\d.,+−€£-]|\b(?:CAD|EUR|GBP|AUD|about|around|roughly|over|under|at least|up to))\s*\$?\s*$/i.test(question.slice(0, start))) return null;
-  if (/^\s*(?:[\d.,]\d|[+−–—-]|to\s+\$?\d|(?:CAD|EUR|GBP|AUD|euros?|pounds?)\b)/i.test(question.slice(end))) return null;
+  if (/^\s*(?:[\d.,]\d|[+−–—-]|(?:to|or|plus)\s+\$?\d|(?:CAD|EUR|GBP|AUD|euros?|pounds?)\b)/i.test(question.slice(end))) return null;
   const amount = match[0].trim();
   const value = Number(amount.replace(/[,k]/gi, '').trim()) * (/k$/i.test(amount) ? 1000 : 1);
   return value > 0 && value <= 100_000_000 ? value : null;

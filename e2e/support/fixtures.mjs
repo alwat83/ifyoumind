@@ -42,6 +42,8 @@ export const FIXTURE_PLACES = Object.freeze([
   { city: 'Springfield', state: 'IL', stateFips: '17', placeFips: '72000', population: 114000, income: 61000, homeValue: 152000, populationFiveYearsAgo: 116500 },
   { city: 'Madison', state: 'WI', stateFips: '55', placeFips: '48000', population: 270000, income: 77000, homeValue: 345000, populationFiveYearsAgo: 252000 },
   { city: 'Columbus', state: 'OH', stateFips: '39', placeFips: '18000', population: 906000, income: 65000, homeValue: 220000, populationFiveYearsAgo: 879000 },
+  { city: 'Los Angeles', state: 'CA', stateFips: '06', placeFips: '44000', population: 3800000, income: 81000, homeValue: 810000, populationFiveYearsAgo: 3900000 },
+  { city: 'Birmingham', state: 'AL', stateFips: '01', placeFips: '07000', population: 195000, income: 43000, homeValue: 145000, populationFiveYearsAgo: 208000 },
 ]);
 
 const hosts = () => ({

@@ -71,6 +71,22 @@ export function describeGap(primary:number,other:number,unit:string):string{
   return `${amount} (${rounded}%)`;
 }
 
+type HousingMetric = SummaryMetric & { sourceLabel?: string; sourceUrl?: string };
+type HousingPlace = { location: string; metrics: HousingMetric[] };
+
+export function housingTakeaway(primary: HousingPlace, comparison?: HousingPlace): string {
+  const homeValue = (place?: HousingPlace) => place?.metrics.find(metric => metric.key === 'homeValue' &&
+    metric.unit === 'USD' && Number.isFinite(metric.value) && metric.value > 0 && metric.sourceLabel && metric.sourceUrl)?.value;
+  const main = homeValue(primary);
+  const other = homeValue(comparison);
+  if (main && other && comparison) {
+    return `Census estimates the median home value at ${format(main, 'USD')} in ${primary.location} and ${format(other, 'USD')} in ${comparison.location}.`;
+  }
+  if (main) return `Census estimates the median home value at ${format(main, 'USD')} in ${primary.location}.`;
+  if (other && comparison) return `Census estimates the median home value at ${format(other, 'USD')} in ${comparison.location}.`;
+  return 'The available city figures give context. A verified median home value is unavailable here.';
+}
+
 function listPlaces(names:string[]):string{
   if(names.length<=1)return names.join('');
   return `${names.slice(0,-1).join(', ')} and ${names.at(-1)}`;

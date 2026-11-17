@@ -622,3 +622,9 @@ OpenAI / Codex. The isolated `codex/wow-3-3-hero` branch starts from production 
 ## 2026-11-16 — Electric Minimal palette review
 
 OpenAI / Codex. [Draft PR #105](https://github.com/alwat83/ifyoumind/pull/105) is based on deployed Wow 3.3, `20665a3f21a1c01f669395a9d29224c346a63935`. The shared palette and existing primary and selected colors changed in six Sass files, including distinct Discovery comparison colors. Production-equivalent build, 138 web tests, geometry and wrapping comparison, and direct contrast and accessibility checks passed. [Paired screenshots and cross-surface verification](../design/electric-minimal/REVIEW.md). CI is tracked on the exact draft head. No deployment or measured product outcome.
+
+## 2026-11-16 — Question-to-Answer Intelligence, Phase 1
+
+OpenAI / Codex. `codex/question-to-answer-phase-1` reuses the existing decision form, ACS callable, saved brief and evidence presentation from Electric Minimal merge `921d55b65800722e001c1df35993241b0d88deac`. It recognizes common city and annual salary phrasing and leads with supported housing evidence. The Los Angeles–Birmingham flow drops from five actions to one after question entry. [Journey captures, validation and retry limitations](../product/QUESTION_TO_ANSWER_PHASE_1.md). Local build, fast web checks, and the affected demo-emulator browser cases verify the candidate. CI is tracked on the draft. No new customer outcome measured. Next is founder review, followed by observed brief completion and understanding in a separately authorized session.
+
+[Draft PR #106](https://github.com/alwat83/ifyoumind/pull/106) includes a final salary validation check for Census years and alternative amounts. All 140 fast web tests passed. [Full CI](https://github.com/alwat83/ifyoumind/pull/106/checks).

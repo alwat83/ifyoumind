@@ -47,8 +47,8 @@
       <div>
         <p class="brand">ifYouMind</p>
         <p class="eyebrow">{{ reportLabel }}</p>
-        <h1 #reportTitle [attr.tabindex]="sampleMode ? -1 : null">{{ project?.decision }}</h1>
-        <p class="context">{{ project?.concept }} · {{ project?.location }}</p>
+        <h1 #reportTitle [attr.tabindex]="sampleMode || focusDecisionTitle ? -1 : null">{{ project?.decision }}</h1>
+        <p class="context">{{ project?.concept }} · {{ project?.location }}<ng-container *ngIf="reportedSalary as salary"> · {{ salary }} annual salary (your input)</ng-container></p>
       </div>
       <div class="meta">
         <span>{{ sampleMode ? 'Sample · live data' : project?.mode === 'demo' ? 'Demo data' : 'Live data' }}</span>
@@ -241,7 +241,7 @@
     <section class="next">
       <p class="eyebrow">What to check next</p>
       <h2>These are the questions worth answering before you act.</h2>
-      <ol><li *ngFor="let question of brief.questions">{{ question }}</li></ol>
+      <ol><li *ngFor="let question of nextQuestions">{{ question }}</li></ol>
     </section>
 
     <p *ngIf="sampleMode" class="no-print"><a href="/guides/choose-business-location-evidence/">Business location evidence checklist</a> · <a href="/guides/">All decision guides</a></p>

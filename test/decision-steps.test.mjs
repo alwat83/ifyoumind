@@ -5,7 +5,7 @@ import ts from 'typescript';
 
 const source = fs.readFileSync(new URL('../src/app/intelligence/decision-steps.ts', import.meta.url), 'utf8');
 const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 } }).outputText;
-const { billIntent, decisionType, formattedCity, placeKey, sampleCityMatches } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
+const { billIntent, decisionType, formattedCity, placeKey, sampleCityMatches, understandCityQuestion } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
 
 test('a local tax question is not routed as a personal bill finding', () => {
   for (const question of [
@@ -47,4 +47,40 @@ test('suggestions are local prefix matches and never masquerade as a verified se
   assert.deepEqual(sampleCityMatches('Denver, CO'), []);
   assert.deepEqual(sampleCityMatches('Spokane'), []);
   assert.deepEqual(sampleCityMatches('a'), []);
+});
+
+test('cost-of-living wording supplies both cities and an optional annual salary', () => {
+  for (const question of [
+    'What is the difference in cost of living between Los Angeles and Birmingham, Alabama, if someone makes $90,000?',
+    'If I earn $90,000 a year, how does the cost of living in LA compare to Birmingham, AL?',
+    'Cost of living in Los Angeles, Calif. vs Birmingham AL on $90k a year?',
+    'Compare LA and Birmingham (Alabama) for cost of living with an annual salary of $90,000.',
+    'Los Angeles vs Birmingham, Ala. cost of living with a $90k salary',
+    'Cost of living: Los Angeles or Birmingham, Alabama on $90k?',
+  ]) assert.deepEqual(understandCityQuestion(question), {
+    intent: 'cost-of-living', location: 'Los Angeles, CA', comparison: 'Birmingham, AL',
+    needsComparison: true, annualSalary: 90000,
+  }, question);
+
+  assert.deepEqual(understandCityQuestion('Compare Springfield, Illinois with Madison, WI'), {
+    intent: 'city-comparison', location: 'Springfield, IL', comparison: 'Madison, WI',
+    needsComparison: true, annualSalary: null,
+  });
+  assert.deepEqual(understandCityQuestion('How much does housing cost in Birmingham, Alabama?'), {
+    intent: 'housing', location: 'Birmingham, AL', comparison: null, needsComparison: false, annualSalary: null,
+  });
+});
+
+test('ambiguous places and salary amounts stay unresolved', () => {
+  assert.equal(understandCityQuestion('Compare Springfield and Birmingham, Alabama').location, null);
+  assert.equal(understandCityQuestion('Compare Springfield and Birmingham, Alabama').comparison, 'Birmingham, AL');
+  assert.equal(understandCityQuestion('Compare Springfield, IL to Springfield, Illinois').comparison, null);
+  assert.equal(understandCityQuestion('Can you help me decide?').intent, 'unclear');
+  assert.equal(understandCityQuestion('Compare apples and oranges').intent, 'unclear');
+  assert.equal(understandCityQuestion('Compare Springfield and Birmingham').intent, 'city-comparison');
+  assert.equal(billIntent('What does electricity cost in Birmingham?'), 'local-electricity');
+  assert.equal(billIntent('What is the cost of electricity in Birmingham?'), 'local-electricity');
+  for (const amount of ['on $7,500 per month', 'on $80k to $95k', 'on $80k or $95k', 'on −$90k', 'on €90,000', 'on $100,000 CAD', 'on $0', 'on $900,00', 'on $90,000 and earning $20k extra', 'on $90k+', 'about $90k a year', 'with 2024 Census data']) {
+    assert.equal(understandCityQuestion('Compare LA and Birmingham, AL for cost of living ' + amount).annualSalary, null, amount);
+  }
 });

@@ -8,10 +8,11 @@
     <section class="scene" aria-labelledby="decision-question-heading">
       <h1 id="decision-question-heading" tabindex="-1">What are you trying to decide?</h1>
       <p class="intro">Explore a bill or ask about a U.S. city. Start with what you want to know.</p>
-      <form (ngSubmit)="continueToPlace()" novalidate>
+      <form (ngSubmit)="continueToPlace()" novalidate [attr.aria-busy]="working">
         <label for="decision-question">Your question</label>
         <textarea id="decision-question" name="question" rows="2" maxlength="240" required
           [(ngModel)]="question" (ngModelChange)="questionError = ''"
+          [readOnly]="working"
           placeholder="Should I open a bakery here?"
           [attr.aria-invalid]="!!questionError"
           [attr.aria-describedby]="questionError ? 'question-error' : null"></textarea>
@@ -19,9 +20,10 @@
           <p id="question-error" class="field-error">{{ questionError }}</p>
         }
         @if (!bill) {
-          <button type="submit" class="primary">{{ type === 'custom' ? 'Continue with city data' : 'Continue' }}</button>
+          <button type="submit" class="primary" [disabled]="working">{{ questionAction }}</button>
         }
       </form>
+      <ng-container *ngTemplateOutlet="briefFeedback"></ng-container>
       <div aria-live="polite" aria-atomic="true">
         @switch (bill) {
           @case ('local-tax') {
@@ -54,7 +56,7 @@
           @if (!electricityBill) { <a href="/discover/?example=tax">See a made-up property tax example</a> }
           @if (electricityBill || bill === 'mixed') { <a href="/discover/?example=electricity">See a made-up electricity example</a> }
         </div>
-      } @else if (type === 'custom') {
+      } @else if (type === 'custom' && !working) {
         <div class="bill-links" aria-label="Other ways to start" role="group">
           <a href="/discover/?example=tax">Property tax example</a>
           <a href="/discover/?example=electricity">Electricity example</a>
@@ -101,18 +103,22 @@
           </div>
         </fieldset>
       </form>
-      @if (working) {
-        <p class="field-help" role="status">Looking up public data and saving your brief.</p>
-      }
-      @if (error) {
-        <p id="brief-error" class="error" role="alert" tabindex="-1">{{ error }}</p>
-        @if (limited) {
-          <a routerLink="/app" class="return">Open your saved decisions</a>
-        }
-      }
+      <ng-container *ngTemplateOutlet="briefFeedback"></ng-container>
     </section>
   }
 </main>
+
+<ng-template #briefFeedback>
+  @if (working) {
+    <p class="field-help" role="status">Looking up public data and saving your brief.</p>
+  }
+  @if (error) {
+    <p id="brief-error" class="error" role="alert" tabindex="-1">{{ error }}</p>
+    @if (limited) {
+      <a routerLink="/app" class="return">Open your saved decisions</a>
+    }
+  }
+</ng-template>
 
 <ng-template #cityField let-key let-label="label" let-row="row">
   <div class="city-field">

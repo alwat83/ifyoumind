@@ -2,7 +2,7 @@
 
 ## November 17, 2026 — First useful Discovery answer
 
-[Issue #113](https://github.com/alwat83/ifyoumind/issues/113#issuecomment-6952790432) is authorized for a separate draft against deployed master. The public layout now leads with the visitor’s property-tax question and a useful answer from the labeled synthetic example. It links to the existing source cells, calculations and correction tools. Electricity remains available as a secondary choice. [PR #111](https://github.com/alwat83/ifyoumind/pull/111) remains a separate release track. Ship only after its verified release gate and separate founder approval.
+[Issue #113](https://github.com/alwat83/ifyoumind/issues/113#issuecomment-6952790432) is authorized for a separate draft against deployed master. [Draft #115](https://github.com/alwat83/ifyoumind/pull/115) leads with the visitor’s property-tax question and a useful answer from the labeled synthetic example. It links to the existing source cells, calculations and correction tools. Electricity remains available as a secondary choice. The production build, 75 Hosting browser checks, 144 fast checks, and isolation guards passed locally. [Exact-head workflows](https://github.com/alwat83/ifyoumind/pull/115/checks) track the reviewed Linux baselines. [PR #111](https://github.com/alwat83/ifyoumind/pull/111) remains a separate release track. Ship only after its verified release gate and separate founder approval.
 
 ## November 16, 2026 — City Decision Brief evidence
 

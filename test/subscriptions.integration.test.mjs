@@ -206,6 +206,39 @@ test('city saves charge enrolled preview usage only on commit and preserve legac
   assert.equal((await billing.get()).get('previewUsage.used'), 12);
 });
 
+test('replaying a city save across the UTC month boundary leaves the new allowance intact', async () => {
+  const create = requestId => call('createMarketIntelligenceProject', {
+    ...(requestId ? { requestId } : {}),
+    location: 'Denver, CO', concept: 'Bookshop', decision: 'Compare candidate markets',
+    comparisonLocations: ['Boulder, CO'],
+  });
+  const key = randomUUID();
+  const first = await create(key);
+
+  // Place the persisted save and the workspace tally in the preceding UTC month.
+  // The real callable clock and Firestore timestamp comparisons still drive new saves.
+  const current = new Date();
+  const currentStart = Date.UTC(current.getUTCFullYear(), current.getUTCMonth(), 1);
+  const previousMonth = new Date(Date.UTC(current.getUTCFullYear(), current.getUTCMonth() - 1, 1)).toISOString();
+  const previousUsage = { month: previousMonth, used: 3 };
+  const previousCreatedAt = new Date(currentStart - 1);
+  await Promise.all([
+    docs.doc(first.id).update({ createdAt: previousCreatedAt }),
+    billing.set({ previewUsage: previousUsage }, { merge: true }),
+  ]);
+
+  assert.equal((await create(key)).id, first.id);
+  assert.deepEqual((await billing.get()).get('previewUsage'), previousUsage);
+  // The older browser sends no request ID and still uses the same new-month cap.
+  const fresh = await Promise.all([create(), create(randomUUID()), create(randomUUID())]);
+  assert.equal(new Set(fresh.map(result => result.id)).size, 3);
+  await assert.rejects(create(), { code: 'resource-exhausted' });
+  assert.equal((await create(key)).id, first.id);
+  assert.deepEqual((await billing.get()).get('previewUsage'), { month: new Date(currentStart).toISOString(), used: 3 });
+  assert.equal((await docs.count().get()).data().count, 4);
+  assert.equal((await docs.doc(first.id).get()).get('createdAt').toMillis(), previousCreatedAt.getTime());
+});
+
 test('pending Checkout prevents a second plan and does not convert a legacy Pro workspace',async()=>{
   await seedProject();
   await call('createCommercialCheckout',{offer:'starter',projectId:project});

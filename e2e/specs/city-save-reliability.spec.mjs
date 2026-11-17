@@ -32,6 +32,12 @@ test('retrying after a lost successful city creation response reopens the origin
   const ids = afterRetry.result.projects.map(project => project.id);
   expect(ids).toEqual([lostId]);
   expect(page.url().split('/').at(-1)).toBe(lostId);
+  const evidence = page.getByRole('region', { name: 'City comparison evidence' });
+  await expect(evidence.locator('details')).not.toHaveAttribute('open');
+  await evidence.getByText('Show the evidence', { exact: true }).click();
+  await expect(evidence).toContainText('$810,000 − $145,000 = $665,000');
+  await expect(evidence.getByRole('link', { name: 'Median home value (B25077_001E) for Birmingham, AL' }))
+    .toHaveAttribute('href', 'https://data.census.gov/table/ACSDT5Y2024.B25077?g=160XX00US0107000');
 });
 
 const createCity = (account, requestId, overrides = {}) => callable('createMarketIntelligenceProject', {

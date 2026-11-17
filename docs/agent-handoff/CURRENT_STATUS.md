@@ -2,7 +2,9 @@
 
 ## November 16, 2026 — City Decision Brief evidence
 
-**Candidate for founder review.** `codex/city-decision-evidence` from approved architecture merge `5015e3d43b9c3822d456dbc01c5c9d0b391fe44f`. The authorized free city brief now offers direct Census sources and reproducible differences. [Issue #108](https://github.com/alwat83/ifyoumind/issues/108) · [Demo and verification evidence](../product/CITY_DECISION_EVIDENCE.md). No write, quota, payment, provider or subscription change. Latest approved architecture [deployment workflow](https://github.com/alwat83/ifyoumind/actions/runs/44008073712) passed; live verification is separate from this draft.
+**Merged and deployed.** [PR #109](https://github.com/alwat83/ifyoumind/pull/109) merged at `1c4399d0165a06c285227d7e9631f0a7a63935ba`. The [production workflow](https://github.com/alwat83/ifyoumind/actions/runs/44032196558) passed. The authorized brief shows traceable Census comparisons and withholds numerical comparisons without verified primary evidence. [Issue #108](https://github.com/alwat83/ifyoumind/issues/108) · [Demo and verification evidence](../product/CITY_DECISION_EVIDENCE.md).
+
+[Draft #111](https://github.com/alwat83/ifyoumind/pull/111) integrates current master into `codex/city-save-reliability` for [Issue #110](https://github.com/alwat83/ifyoumind/issues/110). It preserves the evidence disclosure on a recovered result and checks replay across the UTC month boundary. Both old and new clients share the transactional quota. [Exact-head validation and Functions-first rollout](https://github.com/alwat83/ifyoumind/pull/111). Production release requires separate founder authorization. [Draft #112](https://github.com/alwat83/ifyoumind/pull/112) follows #111 for final integration on master.
 
 ## November 16, 2026 — Universal Decision Intelligence 4.0 architecture
 

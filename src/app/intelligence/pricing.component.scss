@@ -45,7 +45,7 @@ h1 { @include product.editorial; margin: 10px 0 16px; color: var(--iy-ink); font
   background: var(--iy-paper);
   color: var(--iy-ink);
 }
-.plan h3 { margin: 0; color: inherit; font-size: 16px; font-weight: 700; }
+.plan h2, .plan h3 { margin: 0; color: inherit; font-size: 16px; font-weight: 700; }
 .plan p { margin: 0; color: var(--iy-muted); }
 .plan .price { color: inherit; font-size: 34px; line-height: 1.05; font-variant-numeric: tabular-nums; letter-spacing: -.025em; }
 .price small { margin-left: 5px; font-size: 14px; letter-spacing: 0; }
@@ -69,4 +69,13 @@ h1 { @include product.editorial; margin: 10px 0 16px; color: var(--iy-ink); font
 @media (max-width: 600px) {
   .plans { grid-template-columns: minmax(0, 1fr); }
   .nav-links { gap: var(--iy-space-2); }
+}
+
+.plans.single-offer { grid-template-columns: minmax(0, 1fr); max-width: 540px; }
+.decision-return {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--iy-touch);
+  color: var(--iy-accent);
+  text-underline-offset: 3px;
 }

@@ -97,7 +97,8 @@ test('one-time checkout preserves the offer and report identity', async ({ page,
   await expect(page.getByText('QA fixture decision 1: where should the bakery open?', { exact: true })).toBeVisible();
   await expect(page.getByText(/Your report stays in Your decisions/)).toBeVisible();
   await expect(page.getByRole('link', { name: 'Back to your decision' })).toHaveAttribute('href', result);
-  await expect(page.locator('.plans')).toContainText('$79');
+  await expect(page.getByRole('region', { name: 'One-time Decision Report' })).toContainText('$79');
+  await expect(page.getByRole('heading', { name: 'Free', exact: true })).toHaveCount(0);
   await expect(page.locator('main')).not.toContainText('$39');
   await expect(page.getByRole('button', { name: 'Get Pro access' })).toHaveCount(0);
   await expect(page.locator('.billing-note').first()).toContainText('Stripe');

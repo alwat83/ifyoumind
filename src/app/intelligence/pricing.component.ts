@@ -91,8 +91,13 @@ export class PricingComponent implements OnInit {
       decision?.decisionReportAccess === 'purchased' || decision?.decisionReportAccess === 'pro';
   }
 
+  get focusedReportOffer():boolean{
+    return this.highlightedOffer === 'report' && this.selectedDecision !== null;
+  }
+
   get showMonthlyPlans():boolean{
-    return this.status?.subscriptionOffers === true && !this.status.subscription?.linked && this.status.plan !== 'pro';
+    return !this.hasReportAccess && this.status?.subscriptionOffers === true &&
+      !this.status.subscription?.linked && this.status.plan !== 'pro';
   }
 
   async request(offer:Exclude<CheckoutOffer,'pro'>):Promise<void>{

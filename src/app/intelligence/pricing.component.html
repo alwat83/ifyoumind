@@ -31,7 +31,7 @@
     View your remaining credits and manage your subscription in <a routerLink="/app/account">Account</a>.
   </p>
 
-  <section *ngIf="showMonthlyPlans && !hasReportAccess" class="offer-section" aria-labelledby="monthly-title">
+  <section *ngIf="showMonthlyPlans" class="offer-section" aria-labelledby="monthly-title">
     <div class="section-heading">
       <h2 id="monthly-title">Monthly subscriptions</h2>
       <p>Renews monthly. Cancel in Account before renewal. Unused credits expire at the end of each paid period. Unlocked reports stay saved.</p>
@@ -49,10 +49,11 @@
     <a *ngIf="!selectedDecision && !projectId" routerLink="/app/decide" class="action start-plans">Start a free decision to choose a plan</a>
   </section>
 
-  <section *ngIf="!loading && !hasReportAccess" class="offer-section" aria-labelledby="alternatives-title">
-    <div class="section-heading"><h2 id="alternatives-title">{{ showMonthlyPlans ? 'Other ways to get started' : 'Choose how to get started' }}</h2></div>
-    <div class="plans">
-      <article class="plan">
+  <section *ngIf="!loading && !hasReportAccess" class="offer-section"
+    [attr.aria-labelledby]="focusedReportOffer ? 'one-time-title' : 'alternatives-title'">
+    <div *ngIf="!focusedReportOffer" class="section-heading"><h2 id="alternatives-title">{{ showMonthlyPlans ? 'Other ways to get started' : 'Choose how to get started' }}</h2></div>
+    <div class="plans" [class.single-offer]="focusedReportOffer">
+      <article *ngIf="!focusedReportOffer" class="plan">
         <h3>Free</h3>
         <p class="price">$0</p>
         <p>Up to three Decision Briefs each month, with one comparison city and saved history.</p>
@@ -60,10 +61,11 @@
         <ng-template #startFree><a routerLink="/app/decide" class="action">Start a free decision</a></ng-template>
       </article>
       <article class="plan">
-        <h3>One-time Decision Report</h3>
+        <h2 *ngIf="focusedReportOffer; else standardReportTitle" id="one-time-title">One-time Decision Report</h2>
+        <ng-template #standardReportTitle><h3>One-time Decision Report</h3></ng-template>
         <p class="price">${{ status?.pricing?.reportOneTimeUsd ?? 79 }}<small>one time</small></p>
-        <p *ngIf="selectedDecision">Get a sourced market analysis, the limits of the evidence, and what to check before you decide. Your report stays in Your decisions.</p>
-        <p>A single charge with no renewal.</p>
+        <p *ngIf="selectedDecision; else generalReportScope">Get a sourced market analysis, the limits of the evidence, and what to check before you decide. Your report stays in Your decisions. A single charge with no renewal.</p>
+        <ng-template #generalReportScope><p>One full Decision Report. A single charge with no renewal.</p></ng-template>
         <ng-container *ngIf="!checkingReportReturn">
           <button *ngIf="selectedDecision && status; else chooseDecision" type="button" class="action" (click)="request('report')" [disabled]="requesting">
             {{ requesting === 'report' ? 'Opening Stripe Checkout…' : 'Buy Decision Report' }}
@@ -75,4 +77,7 @@
   </section>
 
   <p *ngIf="!loading && !hasReportAccess" class="billing-note">Secure checkout is handled by Stripe.</p>
+  <ng-container *ngIf="focusedReportOffer && !hasReportAccess">
+    <a *ngIf="selectedDecision as decision" class="decision-return" [routerLink]="['/app/result', decision.id]">Back to your decision</a>
+  </ng-container>
 </main>

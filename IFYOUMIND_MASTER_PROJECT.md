@@ -20,6 +20,8 @@
 
 [Draft PR #104](https://github.com/alwat83/ifyoumind/pull/104) brings the existing deterministic property-tax finding into the homepage hero. [Paired screenshots and review scope](docs/design/wow-3-3/REVIEW.md) show the existing design system and the lighter evidence entry. The separate [PR #103 production and paid-pilot record](https://github.com/alwat83/ifyoumind/blob/d2c836449961ecbb57034ba0ba41408e90ef3e93/docs/growth/CHECKOUT_RELIABILITY_GATE.md) remains the source for customer-pilot status.
 
+[Electric Minimal color refinement](docs/design/electric-minimal/REVIEW.md) is in draft PR #105 for founder visual review. The deployed Wow 3.3 release remains the comparison and rollback baseline.
+
 ## November 14, 2026 — Master product experience directive
 
 [Audit, unified blueprint and staged roadmap](docs/product/PRODUCT_EXPERIENCE_BLUEPRINT.md) are proposed for founder review. The permanent standard is to answer the visitor’s actual question with checkable evidence. Reuse PR #99 for relevance, preserve #95 and #96 as independent gates, and observe first use before changing the homepage or the commercial path.

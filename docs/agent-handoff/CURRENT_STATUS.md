@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 16, 2026 — Electric Minimal palette review
+
+[Draft PR #105](https://github.com/alwat83/ifyoumind/pull/105) refines the existing Wow 3.3 surfaces through shared color tokens. Geometry, wrapping, content and controls match the live baseline in four paired preview captures. [Palette, screenshot and verification evidence](../design/electric-minimal/REVIEW.md). The approved [Wow 3.3 production release](https://github.com/alwat83/ifyoumind/blob/a29668c7f530579a185e9aa0023ded28dabed2c0/docs/design/wow-3-3/REVIEW.md#production-release-verification) remains the live baseline.
+
 ## November 16, 2026 — Wow 3.3 homepage hero draft
 
 [Draft PR #104](https://github.com/alwat83/ifyoumind/pull/104) moves the worked property-tax question, its $420 finding, and optional evidence into the hero. It replaces the jump link and repeated chart. Existing Discovery and Business routes remain accessible. [Paired screenshots and review](../design/wow-3-3/REVIEW.md). The design candidate is local and draft-only. [PR #103 production and paid-pilot evidence](https://github.com/alwat83/ifyoumind/blob/d2c836449961ecbb57034ba0ba41408e90ef3e93/docs/growth/CHECKOUT_RELIABILITY_GATE.md) remains on the separate release record.

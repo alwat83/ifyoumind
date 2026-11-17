@@ -30,3 +30,21 @@ test('retrying after a lost successful city creation response reopens the origin
   expect(ids).toEqual([lostId]);
   expect(page.url().split('/').at(-1)).toBe(lostId);
 });
+
+test('a deliberate new decision is not treated as a retry just because its question matches', async ({ page, fixtures }) => {
+  const account = await fixtures(FIXTURES.FREE_NO_REPORTS);
+  await signInThroughUi(page, account, '/login?returnUrl=%2Fapp%2Fdecide');
+  const question = 'Compare Los Angeles and Birmingham, Alabama';
+  const submit = async () => {
+    await page.getByLabel('Your question').fill(question);
+    await page.getByRole('button', { name: 'Show my free brief' }).click();
+    await expect(page).toHaveURL(/\/app\/result\/[A-Za-z0-9]+$/);
+    return page.url().split('/').at(-1);
+  };
+  const first = await submit();
+  await page.getByRole('link', { name: 'Ask another question' }).click();
+  const second = await submit();
+  expect(second).not.toBe(first);
+  const { result } = await callable('getRecentMarketIntelligenceProjects', { organizationId: account.organizationId }, account.idToken);
+  expect(new Set(result.projects.map(project => project.id))).toEqual(new Set([first, second]));
+});

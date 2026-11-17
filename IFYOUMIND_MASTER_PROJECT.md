@@ -8,6 +8,10 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 16, 2026 — Universal Decision Intelligence 4.0
+
+[Proposed architecture](docs/architecture/decision-intelligence/README.md): use versioned evidence cases and a bounded typed registry on the existing city and browser-only bill paths. [Delivery milestones](docs/architecture/decision-intelligence/DELIVERY.md) rely on the final #106 contract for the city migration. The first implementation slice is fixtures and contracts. Report entitlements and dormant subscriptions remain independently owned by the current commercial path. Any later OpenAI experiment uses its separate staging authorization.
+
 ## November 15, 2026 — Revenue readiness
 
 [Founder brief and priorities](docs/growth/REVENUE_READINESS_20261115.md) verifies the #99 release and traces the household discovery and paid Decision Report paths. The sample destination fix removes repeat account creation for established sessions. The first independent one-time report purchase, delivery and return are the next commercial proof. Subscription enrollment and provider experiments remain under their separate gates.

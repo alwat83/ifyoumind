@@ -1,8 +1,12 @@
 # ifYouMind — Current development status
 
+## November 16, 2026 — Universal Decision Intelligence 4.0 architecture
+
+**Proposed, documentation only.** The separate `codex/universal-decision-architecture` branch is based on master `4765a5cd0ee7eff598f02e74f5a50de94a7d3772`. The [ADR, contracts, controls and evaluation plan](../architecture/decision-intelligence/README.md) reuse the existing city path and keep tax and electricity in browser memory. [PR #106](https://github.com/alwat83/ifyoumind/pull/106) merged independently at `4765a5cd0ee7eff598f02e74f5a50de94a7d3772`; its [build](https://github.com/alwat83/ifyoumind/actions/runs/44003472896) and [authenticated QA](https://github.com/alwat83/ifyoumind/actions/runs/44003472991) passed. Preserving #106 behavior and a shared city save and quota mechanism are prerequisites for any rollout that changes creation. [Draft PR #96](https://github.com/alwat83/ifyoumind/pull/96) is optional and outside deterministic delivery.
+
 ## November 16, 2026 — Question-to-Answer Intelligence, Phase 1
 
-**Draft candidate.** [PR #106](https://github.com/alwat83/ifyoumind/pull/106) from Electric Minimal merge `921d55b65800722e001c1df35993241b0d88deac`. The app sends recognized city questions straight to the existing free brief. Housing estimates and sources lead the answer. The user-supplied salary stays separate from Census household income. Manual place fields, private bill routes, free limits and report purchase remain available. [Journey evidence and release notes](../product/QUESTION_TO_ANSWER_PHASE_1.md) · [CI](https://github.com/alwat83/ifyoumind/pull/106/checks) · [Electric Minimal production workflow](https://github.com/alwat83/ifyoumind/actions/runs/43990589012).
+**Merged.** [PR #106](https://github.com/alwat83/ifyoumind/pull/106) merged at `4765a5cd0ee7eff598f02e74f5a50de94a7d3772` and its [production workflow](https://github.com/alwat83/ifyoumind/actions/runs/44005130946) passed. Live smoke was outside this audit. The app sends recognized city questions straight to the existing free brief. Housing estimates and sources lead the answer. The user-supplied salary stays separate from Census household income. Manual place fields, private bill routes, free limits and report purchase remain available. [Journey evidence and release notes](../product/QUESTION_TO_ANSWER_PHASE_1.md) · [CI](https://github.com/alwat83/ifyoumind/pull/106/checks) · [Electric Minimal production workflow](https://github.com/alwat83/ifyoumind/actions/runs/43990589012).
 
 ## November 16, 2026 — Electric Minimal palette review
 

@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 17, 2026 — Clean consumer routes
+
+The route migration on `codex/consumer-clean-routes` builds on [draft #116](https://github.com/alwat83/ifyoumind/pull/116) at `18a9344aadd2a3cdbb132712de5e1c65d89aed72`. Public and signed-in navigation use the existing Angular app. Decisions use `/decisions`, `/decide`, and `/decisions/:id`. Account tools use top-level paths such as `/account` and `/pricing`. Known bookmarks and provider returns use same-app redirects that retain the route parameters and anchor. Existing guards still handle sign-in and verification. Local Hosting verified direct loads, legacy redirects and private metadata. Production is on #111 and needs separate release authorization.
+
 ## November 17, 2026 — One public question-to-answer journey
 
 [Draft #116](https://github.com/alwat83/ifyoumind/pull/116) on `codex/consumer-question-entry` builds on [#115](https://github.com/alwat83/ifyoumind/pull/115) at `1e19500b21f6076060c9f9ab5cea24d7665017d4`. The homepage describes bills and city comparisons in plain language, surfaces the example tax limitation beside the finding, and asks what the Census figures can support. Discovery uses questions as section headings. Its existing footer returns visitors to the same public example by passing only its category. Local verification passed 78 Hosting browser tests, 36 standalone Discovery browser tests, 144 fast checks, both bundle checks, and the strengthened private-file return test in all three browser layouts. See the [review captures](../design/consumer-question-entry/) and [GitHub checks](https://github.com/alwat83/ifyoumind/pull/116/checks). Production retains the deployed #111 versions below. Release awaits the #111 live check and separate founder approval.

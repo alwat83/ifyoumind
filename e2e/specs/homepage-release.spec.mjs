@@ -49,15 +49,15 @@ test('homepage free brief and pricing keep their sign-in return paths', async ({
   const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
   await page.goto('/');
   await page.getByRole('link', { name: 'Start a Free Brief', exact: true }).click();
-  await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/app/decide?type=business');
+  await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/decide?type=business');
   await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
   const briefSignIn = page.url();
   await page.goto('/');
   await page.getByRole('link', { name: 'Pricing (sign-in required)', exact: true }).click();
-  await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/app/pricing');
+  await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/pricing');
   await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
 
   await signInThroughUi(page, user, briefSignIn);
-  await expect(page).toHaveURL(/\/app\/decide\?type=business$/);
+  await expect(page).toHaveURL(/\/decide\?type=business$/);
   await expect(page.getByLabel('Your question')).toHaveValue('Should I open this business here?');
 });

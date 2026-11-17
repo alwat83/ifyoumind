@@ -9,8 +9,10 @@ test('public island install excludes source maps, private inputs, previews and a
 test('discovery Hosting redirect and privacy headers preserve existing Business rewrites',()=>{
  const {hosting}=JSON.parse(readFileSync('firebase.json','utf8'));
  assert.deepEqual(hosting.redirects.find(r=>r.regex==='^/discover$'),{regex:'^/discover$',destination:'/discover/',type:301});
- assert.equal(hosting.rewrites.some(r=>r.source.includes('discover')),false);
- for(const path of ['/login','/register','/app/**'])assert.equal(hosting.rewrites.find(r=>r.source===path)?.destination,'/app-shell.html');
+ assert.equal(hosting.rewrites.some(r=>r.source?.includes('discover')||(r.regex&&new RegExp(r.regex).test('/discover/'))),false);
+ for(const path of ['/login','/register','/decide','/app/decide']){
+  assert.equal(hosting.rewrites.find(r=>r.source===path||(r.regex&&new RegExp(r.regex).test(path)))?.destination,'/app-shell.html');
+ }
  const headers=hosting.headers.find(r=>r.source==='/discover/**').headers;
  assert.match(headers.find(h=>h.key==='Content-Security-Policy').value,/connect-src 'none'/);
  assert.match(headers.find(h=>h.key==='X-Robots-Tag').value,/noindex/);

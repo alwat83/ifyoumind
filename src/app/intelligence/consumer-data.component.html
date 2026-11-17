@@ -1,7 +1,7 @@
 <main class="data-shell">
   <nav class="topbar">
-    <a routerLink="/app" class="brand">ifYouMind</a>
-    <a routerLink="/app">Back to your decisions</a>
+    <a routerLink="/" class="brand" aria-label="ifYouMind home">ifYouMind</a>
+    <a routerLink="/decisions">Back to your decisions</a>
   </nav>
 
   <header>
@@ -71,7 +71,7 @@
   <section *ngIf="datasets.length" class="library">
     <div class="section-head">
       <div><p class="eyebrow">Saved</p><h2>Your data library</h2></div>
-      <a routerLink="/app/advanced">Advanced analysis</a>
+      <a routerLink="/advanced">Advanced analysis</a>
     </div>
     <div class="dataset-grid">
       <article *ngFor="let dataset of datasets">

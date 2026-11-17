@@ -28,7 +28,7 @@ test('query strings, fragments and trailing slashes do not change the canonical'
 });
 
 test('sign-in, app and private report pages are noindex with no canonical',()=>{
-  for(const url of ['/login','/register','/verify-email','/app','/app/decide','/app/pricing','/app/result/abc123','/app/growth']){
+  for(const url of ['/login','/register','/verify-email','/decisions','/decide','/pricing','/decisions/abc123','/growth']){
     const meta=pageMetaFor(url,pages);
     assert.equal(meta.robots,'noindex,nofollow',url);
     assert.equal(meta.canonical,null,url);

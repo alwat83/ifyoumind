@@ -30,7 +30,17 @@ test('app pages cannot be framed by other sites, but Firebase Auth helpers under
 
 test('only known private app routes use the noindex shell; unknown URLs retain HTTP 404', () => {
   assert.equal(config.hosting.cleanUrls, true);
-  assert.deepEqual(config.hosting.rewrites, ['/login', '/register', '/verify-email', '/app', '/app/**'].map(source => ({ source, destination: '/app-shell.html' })));
+  const rewrites = config.hosting.rewrites;
+  const servesShell = path => rewrites.some(rule => rule.destination === '/app-shell.html' &&
+    (rule.source === path || (rule.regex && new RegExp(rule.regex).test(path))));
+  for (const path of ['/login', '/register', '/verify-email', '/decisions', '/decisions/old-id', '/decide',
+    '/pricing', '/account', '/growth', '/data', '/ask', '/advanced', '/app', '/app/result/old-id',
+    '/app/decide', '/app/pricing', '/app/account', '/app/data', '/app/ask', '/app/advanced', '/app/growth']) {
+    assert.ok(servesShell(path), path);
+  }
+  for (const path of ['/app/unknown', '/decisions/extra/path', '/discover/', '/sample-report', '/__/auth/iframe']) {
+    assert.equal(servesShell(path), false, path);
+  }
   assert.ok(!config.hosting.rewrites.some(rule => rule.source === '**'));
   const appRedirect = config.hosting.redirects[0];
   assert.ok(new RegExp(appRedirect.regex).test('/sample-report/'));

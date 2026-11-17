@@ -5,8 +5,8 @@ import { FIXTURES, outbox, fixtureEmail, newRunId } from '../support/fixtures.mj
 
 test('a free result opens with what the figures show, then the evidence, then the offer', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
-  await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent(`/app/result/${user.projectIds[0]}?intent=report`)}`);
-  await expect(page).toHaveURL(new RegExp(`/app/result/${user.projectIds[0]}`));
+  await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent(`/decisions/${user.projectIds[0]}?intent=report`)}`);
+  await expect(page).toHaveURL(new RegExp(`/decisions/${user.projectIds[0]}`));
   const summary = page.locator('#recommendation');
   await expect(summary.getByText('What the figures show')).toBeVisible();
   await expect(summary.locator('h2')).not.toHaveText(/favorable|caution|mixed/i);

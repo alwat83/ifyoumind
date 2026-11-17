@@ -14,7 +14,7 @@ import {
 } from '@angular/fire/auth';
 
 /** New accounts go straight to the market-analysis flow: they have no decisions to look at yet. */
-export const FIRST_DECISION_ROUTE=['/app/decide'];
+export const FIRST_DECISION_ROUTE=['/decide'];
 export const FIRST_DECISION_QUERY={type:'business'};
 
 @Component({
@@ -81,11 +81,11 @@ export class RegisterComponent {
       const isNew=result.user.metadata.creationTime===result.user.metadata.lastSignInTime;
       if(this.returnUrl) await this.router.navigateByUrl(this.decisionDestination());
       else if(isNew) await this.router.navigate(FIRST_DECISION_ROUTE,{queryParams:intentParams(FIRST_DECISION_QUERY,this.intent)});
-      else await this.router.navigate(['/app']);
+      else await this.router.navigate(['/decisions']);
     }catch(error:any){this.errorMessage=error.message;}
   }
   private decisionDestination(): string {
-    const [path, query] = (this.returnUrl ?? '/app/decide?type=business').split('?');
+    const [path, query] = (this.returnUrl ?? '/decide?type=business').split('?');
     const params = new URLSearchParams(query);
     if (this.intent) params.set('intent', this.intent);
     return path + (params.size ? '?' + params : '');

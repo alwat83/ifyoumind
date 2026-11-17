@@ -5,12 +5,32 @@ import { FIXTURES, disableAccount } from '../support/fixtures.mjs';
 test('signing out ends the session and protected pages need sign-in again', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.VERIFIED);
   await signInThroughUi(page, user);
-  await expect(page).toHaveURL(/\/app$/);
-  await page.goto('/app/account');
+  await expect(page).toHaveURL(/\/decisions$/);
+  await page.goto('/account');
   await page.getByRole('button', { name: 'Sign out' }).click();
   await expect(page).toHaveURL(/\/$/);
-  await page.goto('/app');
+  await page.goto('/decisions');
   await expect(page).toHaveURL(/\/login$/);
+});
+
+test('signed-in readers can go home and return to their decisions with the same session', async ({ page, fixtures }) => {
+  const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
+  await signInThroughUi(page, user);
+  await page.getByRole('link', { name: 'ifYouMind home', exact: true }).first().click();
+  await expect(page).toHaveURL(/\/$/);
+  const menu = page.locator('.mobile-navigation summary');
+  if (await menu.isVisible()) await menu.click();
+  const decisions = page.getByRole('link', { name: 'Your decisions', exact: true });
+  await expect(decisions).toHaveAttribute('href', '/decisions');
+  await decisions.click();
+  await expect(page).toHaveURL(/\/decisions$/);
+  await page.reload();
+  await expect(page.getByRole('heading', { name: 'Your decisions' })).toBeVisible();
+
+  const id = user.projectIds[0];
+  await page.goto(`/app/result/${id}?intent=report#market-analysis`);
+  await expect(page).toHaveURL(url =>
+    url.pathname === `/decisions/${id}` && url.search === '?intent=report' && url.hash === '#market-analysis');
 });
 
 /** Marks the stored Firebase session as expired so the next load must refresh it. */
@@ -34,19 +54,19 @@ test('an expired session for a disabled account is signed out and sent to sign-i
   const user = await fixtures(FIXTURES.EXPIRED_SESSION);
   consoleErrors.allow.push(/user-disabled|USER_DISABLED|400 \(Bad Request\)|Failed to load resource/i);
   await signInThroughUi(page, user);
-  await expect(page).toHaveURL(/\/app$/);
+  await expect(page).toHaveURL(/\/decisions$/);
   await disableAccount(user.uid);
   await expireStoredSession(page);
-  await page.goto('/app/account');
-  await expect(page).toHaveURL(/\/login\?returnUrl=%2Fapp%2Faccount$/);
+  await page.goto('/account');
+  await expect(page).toHaveURL(/\/login\?returnUrl=%2Faccount$/);
 });
 
 test('a session with an invalid refresh token is signed out and sent to sign-in', async ({ page, fixtures, consoleErrors }) => {
   const user = await fixtures(FIXTURES.EXPIRED_SESSION);
   consoleErrors.allow.push(/INVALID_REFRESH_TOKEN|invalid-refresh|token-expired|400 \(Bad Request\)|Failed to load resource/i);
   await signInThroughUi(page, user);
-  await expect(page).toHaveURL(/\/app$/);
+  await expect(page).toHaveURL(/\/decisions$/);
   await expireStoredSession(page, 'not-a-valid-refresh-token');
-  await page.goto('/app/pricing');
-  await expect(page).toHaveURL(/\/login\?returnUrl=%2Fapp%2Fpricing$/);
+  await page.goto('/pricing');
+  await expect(page).toHaveURL(/\/login\?returnUrl=%2Fpricing$/);
 });

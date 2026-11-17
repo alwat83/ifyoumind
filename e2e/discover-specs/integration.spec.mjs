@@ -10,6 +10,23 @@ test('actual Hosting serves prefixed assets, privacy headers, canonical and hone
  for(const path of ['/discover/not-real','/discover/private.csv','/not-a-real-page'])expect((await request.get(path)).status()).toBe(404);
  expect((await (await request.get('/sitemap.xml')).text())).not.toContain('/discover');await expect(page.locator('body')).not.toContainText('Local founder review');
 });
+
+test('Hosting serves canonical and bookmarked consumer routes through the existing private entry', async ({ page, request }) => {
+ for (const path of ['/decisions', '/decisions/saved_example', '/decide', '/pricing', '/account', '/data', '/ask', '/advanced', '/growth',
+   '/app', '/app/result/saved_example', '/app/pricing?offer=report&projectId=saved_example', '/app/account']) {
+   const response = await request.get(path);
+   expect(response.status(), path).toBe(200);
+   const html = await response.text();
+   expect(html, path).toContain('name="robots" content="noindex,nofollow"');
+   expect(html, path).not.toContain('rel="canonical"');
+ }
+ for (const path of ['/app/unknown', '/decisions/wrong/path', '/pricing/extra']) {
+   expect((await request.get(path)).status(), path).toBe(404);
+ }
+ await page.goto('/app/decide?type=compare&intent=report');
+ await expect(page).toHaveURL(/\/login\?returnUrl=/);
+ expect(new URL(page.url()).searchParams.get('returnUrl')).toBe('/decide?type=compare&intent=report');
+});
 test('homepage navigation opens discovery without signup; home return clears the journey',async({page},info)=>{
  await page.goto('/');await expect(page.getByRole('heading',{level:1})).toHaveText('Make sense of your numbers.');const link=page.getByRole('link',{name:/Understand Your Bills/});await expect(link).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(0);await page.screenshot({path:info.outputPath('home-navigation.png'),fullPage:true,scale:'css'});await link.click();await expect(page).toHaveURL(origin+'/discover/');await page.getByRole('button',{name:'Try property tax example',exact:true}).click();await expect(page.locator('.finding')).toHaveCount(3);await page.getByRole('link',{name:'ifYouMind home',exact:true}).click();await expect(page).toHaveURL(origin+'/');await page.goBack();await expect(page.locator('.finding')).toHaveCount(0);await expect(page.getByRole('heading',{name:'Why did the electricity bill go up?',exact:true})).toBeVisible();
 });
@@ -21,7 +38,7 @@ test('public navigation and Business registration presentation remain reachable'
  for(const path of ['/register','/login','/sample-report','/guides/'])expect((await request.get(path)).status()).toBe(200);
  await page.goto('/register');await expect(page.getByRole('heading',{name:'Build your market analysis.'})).toBeVisible();await expect(page.getByRole('textbox',{name:'Email',exact:true})).toBeVisible();
  await page.goto('/privacy-policy');await expect(page.getByRole('heading',{name:'Browser-local bill discovery'})).toBeVisible();await expect(page.locator('body')).toContainText('separately from registered Business');
- await page.goto('/');await expect(page.getByRole('link',{name:'Pricing (sign-in required)',exact:true})).toHaveAttribute('href','/app/pricing');
+ await page.goto('/');await expect(page.getByRole('link',{name:'Pricing (sign-in required)',exact:true})).toHaveAttribute('href','/pricing');
 });
 
 test('a first-time visitor sees a qualified property-tax answer before any input', async ({ page, context }) => {

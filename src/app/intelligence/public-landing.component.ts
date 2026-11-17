@@ -1,4 +1,6 @@
 import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Auth, user } from '@angular/fire/auth';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HOME_EXAMPLES } from './home-discovery-examples';
 
@@ -16,6 +18,7 @@ import { HOME_EXAMPLES } from './home-discovery-examples';
 })
 export class PublicLandingComponent {
   readonly examples = HOME_EXAMPLES;
+  readonly viewer = toSignal(user(inject(Auth)));
   private readonly route = inject(ActivatedRoute);
   example = this.examples.find(option => option.id === this.route.snapshot.queryParamMap.get('example')) ?? this.examples[0];
   discoveryAnnouncement = '';

@@ -13,15 +13,15 @@
     <ng-template #sampleIntroduction><strong>This sample is free.</strong> A full Decision Report example, with real Census data, sources and limits.</ng-template>
   </aside>
   <nav *ngIf="!sampleMode" class="report-nav no-print">
-    <a routerLink="/app">← Your decisions</a>
+    <a routerLink="/decisions">← Your decisions</a>
     <div>
-      <a routerLink="/app/decide">Ask another question</a>
+      <a routerLink="/decide">Ask another question</a>
       <button *ngIf="reportPurchased" type="button" (click)="printReport()">Print / save PDF</button>
       <span *ngIf="reportPurchased" class="report-upgrade">Full report unlocked</span>
       <button *ngIf="canUnlockWithPro" type="button" class="report-upgrade" (click)="unlockWithPro()" [disabled]="unlocking">
         {{ unlocking ? 'Unlocking…' : 'Unlock full report with Pro' }}
       </button>
-      <a *ngIf="!reportPurchased && !canUnlockWithPro && !canGeneratePaidReport && !status?.subscriptionOffers" [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Full report · $79</a>
+      <a *ngIf="!reportPurchased && !canUnlockWithPro && !canGeneratePaidReport && !status?.subscriptionOffers" [routerLink]="['/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Full report · $79</a>
     </div>
   </nav>
 
@@ -168,7 +168,7 @@
     <aside *ngIf="showPurchasePrompt" class="state no-print intent-prompt" role="note" aria-labelledby="intent-title">
       <h2 id="intent-title">Your free brief is ready. Want the full $79 Decision Report for this decision?</h2>
       <p>It adds up to three comparison cities, the plan-ready write-up and the action plan. Payment is by secure Stripe checkout.</p>
-      <a [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Get the full report · $79</a>
+      <a [routerLink]="['/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Get the full report · $79</a>
     </aside>
 
     <section *ngIf="sampleMode" class="report-offer no-print">
@@ -219,8 +219,8 @@
         {{ unlocking ? 'Preparing your report…' : 'Generate full Decision Report' }}
       </button>
       <a *ngIf="!canUnlockWithPro && !canGeneratePaidReport && status?.subscriptionOffers && !status?.subscription?.linked"
-        [routerLink]="['/app/pricing']" [queryParams]="{projectId:project?.id}">Choose a monthly plan</a>
-      <a *ngIf="!canUnlockWithPro && !canGeneratePaidReport" [routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}">Get the $79 report</a>
+        [routerLink]="['/pricing']" [queryParams]="{projectId:project?.id}">Choose a monthly plan</a>
+      <a *ngIf="!canUnlockWithPro && !canGeneratePaidReport" [routerLink]="['/pricing']" [queryParams]="{offer:'report',projectId:project?.id}">Get the $79 report</a>
     </section>
 
     <ng-container *ngIf="decisionReport as reportDetail">

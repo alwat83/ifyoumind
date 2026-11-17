@@ -47,7 +47,7 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await expect(page.locator('#try').getByRole('link')).toHaveCount(1);
     await expect(page.locator('#try')).toContainText('Compare bills or cities. Try a free example.');
     const reports = page.getByRole('region', { name: 'Decision Reports', exact: true });
-    await expect(reports.getByRole('link', { name: 'Start a Free Brief' })).toHaveAttribute('href', '/app/decide?type=business');
+    await expect(reports.getByRole('link', { name: 'Start a Free Brief' })).toHaveAttribute('href', '/decide?type=business');
     await expect(reports).toContainText('A full Decision Report adds more comparisons, a sourced market analysis, and an action plan.');
     await expect(reports.getByRole('link', { name: 'View a Sample Report' })).toHaveAttribute('href', '/sample-report');
     const feature = page.locator('#business');
@@ -228,7 +228,7 @@ test('homepage navigation, guides, legal pages and report offers lead to existin
   const reports = page.getByRole('region', { name: 'Decision Reports' });
   await expect(reports.getByRole('link', { name: 'View a Sample Report' })).toHaveAttribute('href', '/sample-report');
   const footer = page.getByRole('contentinfo');
-  await expect(footer.getByRole('link', { name: 'Pricing (sign-in required)' })).toHaveAttribute('href', '/app/pricing');
+  await expect(footer.getByRole('link', { name: 'Pricing (sign-in required)' })).toHaveAttribute('href', '/pricing');
   await expect(footer.getByRole('link', { name: 'Terms', exact: true })).toHaveAttribute('href', '/terms-of-conduct');
   await expect(footer.getByRole('link', { name: 'Privacy', exact: true })).toHaveAttribute('href', '/privacy-policy');
 });

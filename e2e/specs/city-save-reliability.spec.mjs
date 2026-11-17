@@ -4,7 +4,7 @@ import { callable, FIXTURES } from '../support/fixtures.mjs';
 
 test('retrying after a lost successful city creation response reopens the original brief', async ({ page, fixtures, consoleErrors }) => {
   const account = await fixtures(FIXTURES.FREE_NO_REPORTS);
-  await signInThroughUi(page, account, '/login?returnUrl=%2Fapp%2Fdecide');
+  await signInThroughUi(page, account, '/login?returnUrl=%2Fdecide');
   const route = '**/createMarketIntelligenceProject';
   consoleErrors.allow.push(/503|Service Unavailable/);
   let lostId;
@@ -27,7 +27,7 @@ test('retrying after a lost successful city creation response reopens the origin
   await page.reload();
   await expect(question).toHaveValue('Compare Los Angeles and Birmingham, Alabama');
   await submit.click();
-  await expect(page).toHaveURL(/\/app\/result\/[A-Za-z0-9]+$/);
+  await expect(page).toHaveURL(/\/decisions\/[A-Za-z0-9]+$/);
   const afterRetry = await callable('getRecentMarketIntelligenceProjects', requestData, account.idToken);
   const ids = afterRetry.result.projects.map(project => project.id);
   expect(ids).toEqual([lostId]);
@@ -90,12 +90,12 @@ test('a rejected save leaves the key reusable and replay requires workspace auth
 
 test('a deliberate new decision is not treated as a retry just because its question matches', async ({ page, fixtures }) => {
   const account = await fixtures(FIXTURES.FREE_NO_REPORTS);
-  await signInThroughUi(page, account, '/login?returnUrl=%2Fapp%2Fdecide');
+  await signInThroughUi(page, account, '/login?returnUrl=%2Fdecide');
   const question = 'Compare Los Angeles and Birmingham, Alabama';
   const submit = async () => {
     await page.getByLabel('Your question').fill(question);
     await page.getByRole('button', { name: 'Show my free brief' }).click();
-    await expect(page).toHaveURL(/\/app\/result\/[A-Za-z0-9]+$/);
+    await expect(page).toHaveURL(/\/decisions\/[A-Za-z0-9]+$/);
     return page.url().split('/').at(-1);
   };
   const first = await submit();

@@ -48,7 +48,7 @@ test('unpaid brief shows what the $79 report adds, with the existing pricing CTA
   for(const item of ['up to three other cities','plan-ready market analysis','An action plan','Comparison takeaways','What could change the call','PDF']){
     assert.ok(reportHtml.includes(item),`lists: ${item}`);
   }
-  assert.ok(reportHtml.includes(`[routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}">Get the $79 report</a>`));
+  assert.ok(reportHtml.includes(`[routerLink]="['/pricing']" [queryParams]="{offer:'report',projectId:project?.id}">Get the $79 report</a>`));
 });
 
 test('sample offers a direct $79 CTA and keeps Start free as the secondary action',()=>{
@@ -70,9 +70,9 @@ test('pricing leads with eligible monthly plans and keeps Free, one-time and leg
   assert.match(pricingHtml,/\*ngIf="showMonthlyPlans"[^>]*aria-labelledby="monthly-title"/);
   assert.match(pricingHtml,/Legacy Pro/);
   assert.doesNotMatch(pricingHtml,/Get Pro access|request\('pro'\)/);
-  assert.match(landingHtml,/routerLink="\/app\/pricing">Pricing \(sign-in required\)/);
+  assert.match(landingHtml,/routerLink="\/pricing">Pricing \(sign-in required\)/);
   const marketHtml=read('src/app/intelligence/market-intelligence.component.html');
-  assert.match(marketHtml,/routerLink="\/app\/pricing" \[queryParams\]="\{projectId:project\?\.id\}">View report pricing/);
+  assert.match(marketHtml,/routerLink="\/pricing" \[queryParams\]="\{projectId:project\?\.id\}">View report pricing/);
 });
 
 test('account pricing keeps Free and uses the server prices for report and legacy Pro',()=>{

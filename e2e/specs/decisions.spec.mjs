@@ -172,6 +172,7 @@ test('a rejected extracted city opens the existing editor with both candidates',
   await expect(page.getByLabel('Second city')).toHaveValue('Madison, WI');
   await page.getByRole('button', { name: 'Show my free brief' }).click();
   await expect(page).toHaveURL(/\/app\/result\//);
+  await expect(page.getByRole('region', { name: 'City comparison evidence' })).toBeVisible();
 });
 
 test('a verified free user creates a decision through the app and sees the free brief', async ({ page, fixtures }) => {

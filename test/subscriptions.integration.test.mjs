@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { createHmac } from 'node:crypto';
+import { createHmac, randomUUID } from 'node:crypto';
 import { createRequire } from 'node:module';
 import { beforeEach, test } from 'node:test';
 import { performance } from 'node:perf_hooks';
@@ -175,6 +175,68 @@ test('closed enrollment hides offers and blocks both plans before contacting Str
     await assert.rejects(call('createCommercialCheckout', { offer, projectId: project }), { code: 'failed-precondition' });
   }
   assert.equal(checkoutCalls, 0);
+});
+
+test('city saves charge enrolled preview usage only on commit and preserve legacy Pro behavior', async () => {
+  const create = (requestId, location = 'Denver, CO') => call('createMarketIntelligenceProject', {
+    requestId, location, concept: 'Bookshop', decision: 'Compare candidate markets',
+    comparisonLocations: ['Boulder, CO', 'Austin, TX', 'Nashville, TN'],
+  });
+  const key = randomUUID();
+  await assert.rejects(create(key, 'Unavailable Fictional City, CO'), { code: 'not-found' });
+  assert.equal((await billing.get()).exists, false);
+  assert.equal((await docs.count().get()).data().count, 0);
+  const first = await create(key);
+  assert.deepEqual(first.comparisonLocations, ['Boulder, CO']);
+  assert.equal((await docs.doc(first.id).get()).get('decisionReportGenerationRequired'), true);
+  assert.equal((await create(key)).id, first.id);
+  assert.equal((await billing.get()).get('previewUsage.used'), 1);
+  await create(randomUUID());
+  await create(randomUUID());
+  await assert.rejects(create(randomUUID()), { code: 'resource-exhausted' });
+  const month = (await billing.get()).get('previewUsage.month');
+  await billing.set({ subscriptionId: sub.id, previewUsage: { month, used: 11 } }, { merge: true });
+  await create(randomUUID());
+  await assert.rejects(create(randomUUID()), { code: 'resource-exhausted' });
+  assert.equal((await billing.get()).get('previewUsage.used'), 12);
+  await org.update({ plan: 'pro' });
+  const pro = await create(randomUUID());
+  assert.equal(pro.comparisonLocations.length, 3);
+  assert.equal((await docs.doc(pro.id).get()).get('decisionReportGenerationRequired'), undefined);
+  assert.equal((await billing.get()).get('previewUsage.used'), 12);
+});
+
+test('replaying a city save across the UTC month boundary leaves the new allowance intact', async () => {
+  const create = requestId => call('createMarketIntelligenceProject', {
+    ...(requestId ? { requestId } : {}),
+    location: 'Denver, CO', concept: 'Bookshop', decision: 'Compare candidate markets',
+    comparisonLocations: ['Boulder, CO'],
+  });
+  const key = randomUUID();
+  const first = await create(key);
+
+  // Place the persisted save and the workspace tally in the preceding UTC month.
+  // The real callable clock and Firestore timestamp comparisons still drive new saves.
+  const current = new Date();
+  const currentStart = Date.UTC(current.getUTCFullYear(), current.getUTCMonth(), 1);
+  const previousMonth = new Date(Date.UTC(current.getUTCFullYear(), current.getUTCMonth() - 1, 1)).toISOString();
+  const previousUsage = { month: previousMonth, used: 3 };
+  const previousCreatedAt = new Date(currentStart - 1);
+  await Promise.all([
+    docs.doc(first.id).update({ createdAt: previousCreatedAt }),
+    billing.set({ previewUsage: previousUsage }, { merge: true }),
+  ]);
+
+  assert.equal((await create(key)).id, first.id);
+  assert.deepEqual((await billing.get()).get('previewUsage'), previousUsage);
+  // The older browser sends no request ID and still uses the same new-month cap.
+  const fresh = await Promise.all([create(), create(randomUUID()), create(randomUUID())]);
+  assert.equal(new Set(fresh.map(result => result.id)).size, 3);
+  await assert.rejects(create(), { code: 'resource-exhausted' });
+  assert.equal((await create(key)).id, first.id);
+  assert.deepEqual((await billing.get()).get('previewUsage'), { month: new Date(currentStart).toISOString(), used: 3 });
+  assert.equal((await docs.count().get()).data().count, 4);
+  assert.equal((await docs.doc(first.id).get()).get('createdAt').toMillis(), previousCreatedAt.getTime());
 });
 
 test('pending Checkout prevents a second plan and does not convert a legacy Pro workspace',async()=>{

@@ -159,14 +159,18 @@ export class MarketReportComponent implements OnInit, OnDestroy {
   get cityEvidence(): CityDecisionCase | undefined {
     const project = this.project;
     const brief = project?.brief;
-    if (this.sampleMode || this.reportPurchased || project?.mode !== 'live' || !brief?.comparisons?.length) return undefined;
+    if (this.sampleMode || this.reportPurchased || project?.mode !== 'live' || !brief || !(brief.comparisons?.length || project.comparisonLocations?.length)) return undefined;
     if (project !== this.evidenceProject) {
       this.evidenceProject = project;
-      this.evidenceCase = buildCityDecisionCase({ location: project.location, metrics: brief.metrics }, brief.comparisons,
+      this.evidenceCase = buildCityDecisionCase({ location: project.location, metrics: brief.metrics }, brief.comparisons ?? [],
         this.householdQuestion?.intent === 'cost-of-living' ? 'personal-living-cost' : 'city-comparison');
-      const primary = this.evidenceCase.places.find(item => item.location === project.location);
+      const { primary, places, calculations } = this.evidenceCase;
+      const paired = new Set(calculations.map(calculation => calculation.other.id));
       this.evidenceBrief = { ...brief, metrics: primary?.metrics ?? [],
-        comparisons: this.evidenceCase.places.filter(item => item !== primary) };
+        comparisons: places.filter(item => item !== primary).flatMap(place => {
+          const metrics = place.metrics.filter(metric => paired.has(metric.id));
+          return metrics.length ? [{ ...place, metrics }] : [];
+        }) };
     }
     return this.evidenceCase;
   }
@@ -181,11 +185,21 @@ export class MarketReportComponent implements OnInit, OnDestroy {
     const primary={location:this.project.location,metrics:brief.metrics||[]};
     const summary=summarizeEvidence(primary,brief.comparisons||[]);
     const context=this.householdQuestion;
-    if (this.cityEvidence && !brief.metrics.length && !context) return { ...summary,
-      headline: 'A verified comparison is unavailable for the main city.' };
+    const evidence = this.cityEvidence;
+    if (evidence && !evidence.calculations.length) return { ...summary,
+      headline: 'A verified city comparison is unavailable.',
+      limits: evidence.primary
+        ? 'This saved decision has no matching verified estimates for the requested cities.'
+        : 'This saved decision has no verified estimates for the main city.' };
+    if (evidence && context && !evidence.calculations.some(calculation => calculation.primary.key === 'homeValue')) {
+      return { ...summary, headline: 'A verified home-value comparison is unavailable.',
+        limits: 'The available estimates cannot establish personal housing expenses or a salary equivalent.' };
+    }
     return context ? {
       ...summary,
-      headline:housingTakeaway(primary,brief.comparisons?.[0]),
+      headline:housingTakeaway(primary, evidence
+        ? brief.comparisons.find(place => place.metrics.some(metric => metric.key === 'homeValue'))
+        : brief.comparisons?.[0]),
       limits:context.intent==='cost-of-living'
         ? 'These Census estimates describe each city’s population, household income, and home values. To compare your cost of living or calculate a salary equivalent, you’d need actual housing, taxes, transportation, and other recurring expenses.'
         : 'Median home value describes what owner-occupied homes are worth. To estimate what you would pay, check current rent or sale listings, financing, utilities, and fees for comparable homes.',
@@ -218,7 +232,7 @@ export class MarketReportComponent implements OnInit, OnDestroy {
     const brief=this.visibleBrief;
     if(!brief)return '';
     const sourced=brief.metrics.filter(metric=>!!metric.sourceLabel).length;
-    if (this.cityEvidence) return `${sourced} of 3 city figures`;
+    if (this.cityEvidence) return `${sourced} of 3 main-city figures`;
     return `${sourced} of ${brief.metrics.length} key figures`;
   }
 

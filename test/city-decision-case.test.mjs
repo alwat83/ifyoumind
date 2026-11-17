@@ -64,3 +64,13 @@ test('mixed place FIPS and duplicate place cannot masquerade as a comparison; le
   assert.equal(buildCityDecisionCase(la(), [la()], 'city-comparison').calculations.length, 0);
   assert.equal(buildCityDecisionCase({}, [{ location:'Birmingham, AL', metrics:[] }], 'city-comparison').coverage, 'unavailable');
 });
+
+test('a source for the secondary city cannot stand in for the primary city', () => {
+  const primary = la();
+  for (const metric of primary.metrics) delete metric.sourceUrl;
+  const result = buildCityDecisionCase(primary, [birmingham()], 'personal-living-cost');
+  assert.equal(result.coverage, 'partial');
+  assert.equal(result.primary, null);
+  assert.deepEqual(result.places.map(place => place.location), ['Birmingham, AL']);
+  assert.deepEqual(result.calculations, []);
+});

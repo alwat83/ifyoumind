@@ -91,6 +91,42 @@ test('a saved city brief keeps supported estimates when one receipt is invalid',
   await expect(page.getByText('$152,000', { exact: true })).toHaveCount(0);
 });
 
+test('legacy primary evidence cannot turn a secondary estimate into the answer', async ({ page, fixtures }) => {
+  const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
+  for (const legacy of [false, true]) {
+    await page.route('**/getMarketIntelligenceProject', async route => {
+      const response = await route.fetch();
+      const body = await response.json();
+      const result = body.result;
+      result.decision = 'Compare the cost of living between Springfield, Illinois and Madison, Wisconsin';
+      for (const metric of result.brief.metrics) metric.sourceUrl = metric.sourceUrl?.replace('/2024/', '/2019/');
+      if (legacy) for (const place of result.brief.comparisons) for (const metric of place.metrics) delete metric.sourceUrl;
+      await route.fulfill({ response, json: body });
+    });
+    if (legacy) await page.reload();
+    else await signInThroughUi(page, user, '/login?returnUrl=' + encodeURIComponent('/app/result/' + user.projectIds[0]));
+    await expect(page.locator('#recommendation h2')).toHaveText('A verified city comparison is unavailable.');
+    await expect(page.locator('#recommendation')).toContainText('0 of 3 main-city figures');
+    await expect(page.locator('#recommendation')).toContainText('no verified estimates for the main city');
+    await expect(page.locator('#signals, #comparison, #sources')).toHaveCount(0);
+    await expect(page.getByText('$152,000', { exact: true })).toHaveCount(0);
+    await expect(page.getByText('$345,000', { exact: true })).not.toBeVisible();
+    const evidence = page.getByRole('region', { name: 'City comparison evidence' });
+    await evidence.getByText('Show the evidence', { exact: true }).click();
+    await expect(evidence.getByText('How the differences were calculated')).toHaveCount(0);
+    if (legacy) {
+      await expect(evidence).toContainText('no verified place estimates');
+      await expect(evidence.getByRole('link')).toHaveCount(0);
+    } else {
+      await expect(evidence).toContainText('No difference could be verified');
+      await expect(evidence.getByRole('heading', { name: 'Madison, WI' })).toBeVisible();
+      await expect(evidence).toContainText('$345,000');
+      await expect(evidence.getByRole('heading', { name: 'Springfield, IL' })).toHaveCount(0);
+    }
+    await page.unroute('**/getMarketIntelligenceProject');
+  }
+});
+
 test('comparison without salary and a single-city housing question keep their own evidence', async ({ page, fixtures }) => {
   await signInThroughUi(page, await fixtures(FIXTURES.FREE_NO_REPORTS), '/login?returnUrl=%2Fapp%2Fdecide');
   await page.getByLabel('Your question').fill('Compare living costs in Los Angeles vs Birmingham, AL');

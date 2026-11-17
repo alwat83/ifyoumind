@@ -53,6 +53,7 @@ export interface CityDecisionCase {
   readonly intent: 'personal-living-cost' | 'city-comparison';
   readonly coverage: 'complete' | 'partial' | 'unavailable';
   readonly vintage: 2024;
+  readonly primary: CityEvidencePlace | null;
   readonly places: CityEvidencePlace[];
   readonly calculations: CityDifference[];
 }
@@ -112,10 +113,11 @@ export function buildCityDecisionCase(primary: unknown, comparisons: readonly un
   const main = decodePlace(primary);
   const seen = new Set<string>();
   if (main) seen.add(main.stateFips + main.placeFips);
+  const primaryLocation = asRecord(primary)?.['location'];
   const validComparisons = comparisons.slice(0, 3).flatMap(input => {
     const place = decodePlace(input);
     const key = place && place.stateFips + place.placeFips;
-    if (!place || !key || seen.has(key)) return [];
+    if (!place || !key || place.location === primaryLocation || seen.has(key)) return [];
     seen.add(key);
     return [place];
   });
@@ -131,6 +133,6 @@ export function buildCityDecisionCase(primary: unknown, comparisons: readonly un
   }
   const complete = !!main && comparisons.length > 0 && validComparisons.length === comparisons.length &&
     places.every(place => place.metrics.length === Object.keys(METRICS).length);
-  return { schemaVersion: 1, intent, vintage: 2024, places, calculations,
+  return { schemaVersion: 1, intent, vintage: 2024, primary: main, places, calculations,
     coverage: !places.length ? 'unavailable' : complete && intent === 'city-comparison' ? 'complete' : 'partial' };
 }

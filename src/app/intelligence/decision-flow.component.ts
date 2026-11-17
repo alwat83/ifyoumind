@@ -19,6 +19,7 @@ interface DecisionDraft {
   showConcept: boolean;
   type: DecisionType;
   result?: { signature: string; id: string };
+  pendingSave?: { signature: string; requestId: string };
 }
 
 @Component({
@@ -42,6 +43,7 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
   private initialType: DecisionType = 'custom';
   private acceptedQuestion = '';
   private savedResult?: DecisionDraft['result'];
+  private pendingSave?: DecisionDraft['pendingSave'];
 
   screen: 'question' | 'place' = 'question';
   type: DecisionType = 'custom';
@@ -71,6 +73,7 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
       this.showConcept = draft.showConcept;
       this.type = draft.type;
       this.savedResult = draft.result;
+      this.pendingSave = draft.pendingSave;
     }
   }
 
@@ -113,6 +116,7 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
       this.location = parsed.location ?? '';
       this.comparisons = parsed.comparison ? [{ id: this.nextComparisonId++, value: parsed.comparison }] : [];
       this.savedResult = undefined;
+      this.pendingSave = undefined;
       this.placeErrors = {};
     }
     this.rememberDraft();
@@ -215,13 +219,16 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
     const concept = this.concept.trim() || (
       this.type === 'compare' ? 'Location comparison' : this.type === 'growth' ? 'Market growth' : 'Location decision');
     const signature = JSON.stringify([location, comparisons, concept, this.question.trim()]);
-    this.rememberDraft();
     this.working = true;
     try {
       if (this.savedResult?.signature === signature) {
         await this.openResult(this.savedResult.id);
         return;
       }
+      const pendingSave = this.pendingSave?.signature === signature
+        ? this.pendingSave : { signature, requestId: crypto.randomUUID() };
+      this.pendingSave = pendingSave;
+      this.rememberDraft();
       let workspace = await this.organizations.getMyWorkspace();
       if (this.destroyed) return;
       if (!workspace) {
@@ -230,9 +237,10 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
       }
       if (this.destroyed) return;
       if (!workspace) throw new Error('Missing workspace');
-      const project = await this.market.create(workspace.organizationId, location, concept, this.question.trim(), comparisons);
+      const project = await this.market.create(workspace.organizationId, location, concept, this.question.trim(), comparisons, pendingSave.requestId);
       if (this.destroyed) return;
       this.savedResult = { signature, id: project.id };
+      this.pendingSave = undefined;
       this.rememberDraft();
       void this.analytics.track(workspace.organizationId, 'decision_created', {
         type: this.type,
@@ -264,7 +272,7 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
     if (!uid) return;
     const decisionDraft: DecisionDraft = {
       uid, question: this.acceptedQuestion, location: this.location, comparisons: this.comparisons.map(row => row.value),
-      concept: this.concept, showConcept: this.showConcept, type: this.type, result: this.savedResult,
+      concept: this.concept, showConcept: this.showConcept, type: this.type, result: this.savedResult, pendingSave: this.pendingSave,
     };
     this.history.replaceState(this.router.url, '', { ...(this.history.getState() as object), decisionDraft });
   }

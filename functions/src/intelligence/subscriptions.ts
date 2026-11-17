@@ -328,19 +328,6 @@ export const stripeSubscriptionWebhook = onRequest({ secrets: [stripeKey, webhoo
   }
 });
 
-export async function reserveSubscriptionPreview(org: DocumentReference, count: number, month: string) {
-  const billing = subscriptionBilling(org);
-  return getFirestore().runTransaction(async tx => {
-    const data = (await tx.get(billing)).data();
-    if (!subscriptionEnrollment(org.id) && !data?.subscriptionId) return false;
-    const limit = data?.subscriptionId ? 12 : 3;
-    const used = Math.max(count, data?.previewUsage?.month === month ? data.previewUsage.used : 0);
-    if (used >= limit) throw new HttpsError('resource-exhausted', 'This workspace has reached its decision limit for this month.');
-    tx.set(billing, { previewUsage: { month, used: used + 1 } }, { merge: true });
-    return true;
-  });
-}
-
 type ReportReservation = { token: string; projectId: string; periodKey: string | null; expiresAt: number };
 
 export async function reserveReport(org: DocumentReference, projectId: string) {

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { createHmac } from 'node:crypto';
+import { createHmac, randomUUID } from 'node:crypto';
 import { createRequire } from 'node:module';
 import { beforeEach, test } from 'node:test';
 import { performance } from 'node:perf_hooks';
@@ -175,6 +175,35 @@ test('closed enrollment hides offers and blocks both plans before contacting Str
     await assert.rejects(call('createCommercialCheckout', { offer, projectId: project }), { code: 'failed-precondition' });
   }
   assert.equal(checkoutCalls, 0);
+});
+
+test('city saves charge enrolled preview usage only on commit and preserve legacy Pro behavior', async () => {
+  const create = (requestId, location = 'Denver, CO') => call('createMarketIntelligenceProject', {
+    requestId, location, concept: 'Bookshop', decision: 'Compare candidate markets',
+    comparisonLocations: ['Boulder, CO', 'Austin, TX', 'Nashville, TN'],
+  });
+  const key = randomUUID();
+  await assert.rejects(create(key, 'Unavailable Fictional City, CO'), { code: 'not-found' });
+  assert.equal((await billing.get()).exists, false);
+  assert.equal((await docs.count().get()).data().count, 0);
+  const first = await create(key);
+  assert.deepEqual(first.comparisonLocations, ['Boulder, CO']);
+  assert.equal((await docs.doc(first.id).get()).get('decisionReportGenerationRequired'), true);
+  assert.equal((await create(key)).id, first.id);
+  assert.equal((await billing.get()).get('previewUsage.used'), 1);
+  await create(randomUUID());
+  await create(randomUUID());
+  await assert.rejects(create(randomUUID()), { code: 'resource-exhausted' });
+  const month = (await billing.get()).get('previewUsage.month');
+  await billing.set({ subscriptionId: sub.id, previewUsage: { month, used: 11 } }, { merge: true });
+  await create(randomUUID());
+  await assert.rejects(create(randomUUID()), { code: 'resource-exhausted' });
+  assert.equal((await billing.get()).get('previewUsage.used'), 12);
+  await org.update({ plan: 'pro' });
+  const pro = await create(randomUUID());
+  assert.equal(pro.comparisonLocations.length, 3);
+  assert.equal((await docs.doc(pro.id).get()).get('decisionReportGenerationRequired'), undefined);
+  assert.equal((await billing.get()).get('previewUsage.used'), 12);
 });
 
 test('pending Checkout prevents a second plan and does not convert a legacy Pro workspace',async()=>{

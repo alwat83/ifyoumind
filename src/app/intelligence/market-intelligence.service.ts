@@ -67,12 +67,13 @@ export class MarketIntelligenceService {
     concept:string,
     decision:string,
     comparisonLocations:string[],
+    requestId?: string,
   ):Promise<MarketProject>{
     const call=httpsCallable<
-      {organizationId:string;location:string;concept:string;decision:string;comparisonLocations:string[]},
+      {organizationId:string;location:string;concept:string;decision:string;comparisonLocations:string[];requestId?:string},
       MarketProject
     >(this.functions,'createMarketIntelligenceProject');
-    return (await call({organizationId,location,concept,decision,comparisonLocations})).data;
+    return (await call({organizationId,location,concept,decision,comparisonLocations,...(requestId ? { requestId } : {})})).data;
   }
 
   async sample():Promise<MarketProject>{

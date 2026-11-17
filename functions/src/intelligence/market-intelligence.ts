@@ -1,10 +1,12 @@
-import { FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
+import { createHash } from 'node:crypto';
+import { DocumentData, FieldValue, getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { onCall, HttpsError } from 'firebase-functions/v2/https';
 import { defineSecret } from 'firebase-functions/params';
 import { authorizeOrganization } from './authorization';
 import { decisionReportAccess, decisionView, freeBriefComparisonCount, freeDecisionLimitReached, freeDecisionPeriodStart, FREE_DECISIONS_PER_MONTH, REPORT_COMPARISON_LIMIT } from './report-entitlement-logic';
 import { buildMarketAnalysis, businessPhrase, marketAnalysisText } from './market-analysis';
-import { finishReport, reserveReport, reserveSubscriptionPreview } from './subscriptions';
+import { finishReport, reserveReport, subscriptionBilling } from './subscriptions';
+import { subscriptionEnrollment } from './subscription-plans';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const censusApiKey = defineSecret('CENSUS_API_KEY');
@@ -327,6 +329,35 @@ export function buildLiveBrief(primary:CensusPlace,comparisons:CensusPlace[],con
   };
 }
 
+const citySaveDigest = (parts: unknown[]) => createHash('sha256').update(JSON.stringify(parts)).digest('hex');
+
+function savedCityDecision(project: DocumentData | undefined, fingerprint: string | undefined) {
+  if (!project) return undefined;
+  if (!fingerprint || project.citySaveFingerprint !== fingerprint) {
+    throw new HttpsError('failed-precondition', 'This save belongs to a different decision. Start a new decision to save these changes.');
+  }
+  return project;
+}
+
+function cityDecisionUsage(plan: string, billing: DocumentData | undefined, organizationId: string) {
+  const previewLimit = billing?.subscriptionId ? 12 : subscriptionEnrollment(organizationId) ? 3 : null;
+  return { previewLimit, deferred: plan === 'free' && previewLimit !== null };
+}
+
+function checkCityDecisionUsage(count: number, previewLimit: number | null, billing: DocumentData | undefined, month: string) {
+  if (previewLimit !== null) {
+    const recorded = billing?.previewUsage?.month === month ? billing.previewUsage.used : 0;
+    const used = Math.max(count, Number.isSafeInteger(recorded) && recorded >= 0 ? recorded : 0);
+    if (used >= previewLimit) throw new HttpsError('resource-exhausted', 'This workspace has reached its decision limit for this month.');
+    return { month, used: used + 1 };
+  }
+  if (freeDecisionLimitReached('free', count)) {
+    throw new HttpsError('resource-exhausted',
+      `You have used your ${FREE_DECISIONS_PER_MONTH} free decisions this month. They reset on the 1st (UTC). You can still buy the full Decision Report for any decision you have already created.`);
+  }
+  return undefined;
+}
+
 export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, async (request) => {
   let stage='authorization';
   try{
@@ -334,10 +365,7 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
       request.auth?.uid, request.data?.organizationId, readMembership, ['owner','admin'],
     );
     const orgRef = organizations().doc(scope.organizationId);
-
-    stage='plan';
-    const orgData = (await orgRef.get()).data() || {};
-    const plan = orgData.plan === 'pro' ? 'pro' : 'free';
+    const projects = orgRef.collection('marketProjects');
 
     stage='input';
     const location = canonicalLocation(text(request.data?.location, 'Location', 160));
@@ -350,53 +378,83 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
       .filter(Boolean)
       .slice(0, REPORT_COMPARISON_LIMIT);
 
+    const requestId: unknown = request.data?.requestId;
+    if (requestId !== undefined && (typeof requestId !== 'string' || !/^[\da-f]{8}-[\da-f]{4}-4[\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}$/i.test(requestId))) {
+      throw new HttpsError('invalid-argument', 'Invalid decision save ID.');
+    }
+    const fingerprint = typeof requestId === 'string'
+      ? citySaveDigest([location, concept, decision, comparisonLocations]) : undefined;
+    const ref = typeof requestId === 'string' ? projects.doc(citySaveDigest([scope.uid, requestId.toLowerCase()])) : projects.doc();
+
     stage='usage';
-    let deferred = false;
-    if (plan === 'free') {
-      const monthStart = freeDecisionPeriodStart();
-      const usage = await orgRef.collection('marketProjects')
-        .where('createdAt', '>=', Timestamp.fromDate(monthStart)).count().get();
-      const count = usage.data().count;
-      deferred = await reserveSubscriptionPreview(orgRef, count, monthStart.toISOString());
-      if (!deferred && freeDecisionLimitReached(plan, count)) {
-        throw new HttpsError(
-          'resource-exhausted',
-          `You have used your ${FREE_DECISIONS_PER_MONTH} free decisions this month. They reset on the 1st (UTC). You can still buy the full Decision Report for any decision you have already created.`,
-        );
+    let project = fingerprint ? savedCityDecision((await ref.get()).data(), fingerprint) : undefined;
+    if (!project) {
+      const billingRef = subscriptionBilling(orgRef);
+      const org = await orgRef.get();
+      if (!org.exists) throw new HttpsError('not-found', 'Workspace not found.');
+      const plan = org.get('plan') === 'pro' ? 'pro' : 'free';
+      const billing = plan === 'free' ? (await billingRef.get()).data() : undefined;
+      const { deferred, previewLimit } = cityDecisionUsage(plan, billing, orgRef.id);
+      const currentUsage = (start: Date, limit: number | null) => projects
+        .where('createdAt', '>=', Timestamp.fromDate(start)).limit(limit ?? FREE_DECISIONS_PER_MONTH).count();
+      if (plan === 'free') {
+        const start = freeDecisionPeriodStart();
+        const count = (await currentUsage(start, previewLimit).get()).data().count;
+        // A concurrent copy may have committed before this precheck. Recover it even at the cap.
+        if (fingerprint) project = savedCityDecision((await ref.get()).data(), fingerprint);
+        if (!project) checkCityDecisionUsage(count, previewLimit, billing, start.toISOString());
+      }
+
+      if (!project) {
+        stage='market-data';
+        const places = deferred ? comparisonLocations.slice(0, 1) : comparisonLocations;
+        const [primary, ...comparisonPlaces] = await Promise.all([location, ...places].map(fetchCensusPlace));
+
+        stage='analysis';
+        const brief = buildLiveBrief(primary, comparisonPlaces, concept, !deferred);
+        const freeComparisonCount = deferred ? places.length : freeBriefComparisonCount(plan, comparisonPlaces.length);
+        const freeBrief = deferred ? brief : freeComparisonCount === null ? null
+          : buildLiveBrief(primary, comparisonPlaces.slice(0, freeComparisonCount), concept, false);
+        const prepared = {
+          schemaVersion: 2,
+          ...(deferred ? { decisionReportGenerationRequired: true } : {}),
+          ...(fingerprint ? { citySaveFingerprint: fingerprint } : {}),
+          location, concept, decision, comparisonLocations,
+          mode: 'live', brief, freeBrief, freeComparisonCount, status: 'ready', createdBy: scope.uid,
+          createdAt: FieldValue.serverTimestamp(), updatedAt: FieldValue.serverTimestamp(),
+        };
+
+        stage='save';
+        project = await getFirestore().runTransaction(async tx => {
+          await authorizeOrganization(scope.uid, scope.organizationId, async (_id, uid) =>
+            (await tx.get(orgRef.collection('members').doc(uid))).data(), ['owner', 'admin']);
+          const existing = savedCityDecision((await tx.get(ref)).data(), fingerprint);
+          if (existing) return existing;
+          const currentOrg = await tx.get(orgRef);
+          if (!currentOrg.exists) throw new HttpsError('not-found', 'Workspace not found.');
+          const currentPlan = currentOrg.get('plan') === 'pro' ? 'pro' : 'free';
+          const currentBilling = currentPlan === 'free' ? (await tx.get(billingRef)).data() : undefined;
+          const usage = cityDecisionUsage(currentPlan, currentBilling, orgRef.id);
+          if (currentPlan !== plan || usage.deferred !== deferred) {
+            throw new HttpsError('aborted', 'Workspace access changed during analysis. Try again.');
+          }
+          if (currentPlan === 'free') {
+            // Serialize writers before counting so parallel decisions cannot occupy the same free slot.
+            const lock = orgRef.collection('internalUsage').doc('cityDecisions');
+            await tx.get(lock);
+            const start = freeDecisionPeriodStart();
+            const count = (await tx.get(currentUsage(start, usage.previewLimit))).data().count;
+            const previewUsage = checkCityDecisionUsage(count, usage.previewLimit, currentBilling, start.toISOString());
+            if (previewUsage) tx.set(billingRef, { previewUsage }, { merge: true });
+            tx.set(lock, { updatedAt: FieldValue.serverTimestamp() });
+          }
+          tx.create(ref, prepared);
+          return prepared;
+        });
       }
     }
 
-    stage='market-data';
-    const places = deferred ? comparisonLocations.slice(0,1) : comparisonLocations;
-    const [primary,...comparisonPlaces]=await Promise.all([location,...places].map(fetchCensusPlace));
-
-    stage='analysis';
-    const brief = buildLiveBrief(primary,comparisonPlaces,concept,!deferred);
-    const freeComparisonCount = deferred ? places.length : freeBriefComparisonCount(plan,comparisonPlaces.length);
-    const freeBrief = deferred ? brief : freeComparisonCount===null
-      ? null
-      : buildLiveBrief(primary,comparisonPlaces.slice(0,freeComparisonCount),concept,false);
-
-    stage='save';
-    const ref = orgRef.collection('marketProjects').doc();
-    await ref.set({
-      schemaVersion:2,
-      ...(deferred ? { decisionReportGenerationRequired: true } : {}),
-      location,
-      concept,
-      decision,
-      comparisonLocations,
-      mode:'live',
-      brief,
-      freeBrief,
-      freeComparisonCount,
-      status:'ready',
-      createdBy:scope.uid,
-      createdAt:FieldValue.serverTimestamp(),
-      updatedAt:FieldValue.serverTimestamp(),
-    });
-
-    const view=decisionView({brief,freeBrief,freeComparisonCount,comparisonLocations},'none');
+    const view=decisionView(project,'none');
     return {
       id:ref.id,
       location,

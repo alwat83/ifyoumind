@@ -1,12 +1,16 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-16
+**Updated:** 2026-11-17
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
 **Purpose:** Living project context for the founder and all current/future development agents.
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
+
+## November 17, 2026 — Standing consumer-first directive
+
+[AGENTS.md](AGENTS.md#standing-consumer-first-product-and-engineering-directive--november-17-2026) is the permanent source for product and engineering decisions. Give everyday visitors a useful plain-language answer, inspectable evidence, and a practical next step before monetization. Use the Grandmother Test in the [PR template](.github/pull_request_template.md) and prioritize first-answer understanding and return use. Property tax leads Discovery and electricity follows. Existing paid and Business capabilities remain supported. [Issue #113](https://github.com/alwat83/ifyoumind/issues/113) follows the verified production release of [PR #111](https://github.com/alwat83/ifyoumind/pull/111).
 
 ## November 16, 2026 — City Decision Brief evidence
 

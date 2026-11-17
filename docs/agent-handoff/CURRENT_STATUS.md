@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 17, 2026 — Consumer-first directive and next delivery gate
+
+The founder's [standing directive](../../AGENTS.md#standing-consumer-first-product-and-engineering-directive--november-17-2026) prioritizes useful evidence-backed first answers, plain-language understanding, and return use before further $79 funnel work. The existing report and subscriptions stay supported. Apply the Grandmother Test to significant consumer changes and record evidence in the [PR template](../../.github/pull_request_template.md).
+
+GitHub master was verified at `1c4399d0165a06c285227d7e9631f0a7a63935ba`. [Draft #111](https://github.com/alwat83/ifyoumind/pull/111/checks) at `7d2e03213f5da3a8bbf55a9de352528dd8db8a0f` and [draft #112](https://github.com/alwat83/ifyoumind/pull/112/checks) at `375f5bd8c0fceb75768bf86aad8f189eb6d8eaae` remain open. Start [Issue #113](https://github.com/alwat83/ifyoumind/issues/113) after #111's production deployment and release gates are verified. Lead with a useful account-free property-tax finding, retain the electricity example, and test the first-use journey before any separately authorized release.
+
 ## November 16, 2026 — City Decision Brief evidence
 
 **Candidate for founder review.** `codex/city-decision-evidence` from approved architecture merge `5015e3d43b9c3822d456dbc01c5c9d0b391fe44f`. The authorized free city brief now offers direct Census sources and reproducible differences. [Issue #108](https://github.com/alwat83/ifyoumind/issues/108) · [Demo and verification evidence](../product/CITY_DECISION_EVIDENCE.md). No write, quota, payment, provider or subscription change. Latest approved architecture [deployment workflow](https://github.com/alwat83/ifyoumind/actions/runs/44008073712) passed; live verification is separate from this draft.

@@ -6,7 +6,7 @@ const livingQuestion = 'What is the difference in cost of living between Los Ang
 
 test('a cost-of-living question goes straight to a sourced answer and reopens without creating a duplicate', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.FREE_NO_REPORTS);
-  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fdecide');
+  await signInThroughUi(page, user, '/login?returnUrl=%2Fdecide');
   const creates = [];
   const unexpected = [];
   page.on('request', request => {
@@ -23,7 +23,7 @@ test('a cost-of-living question goes straight to a sourced answer and reopens wi
   await expect(submit).toBeFocused();
   await submit.press('Enter');
   await expect(cityScreen).toHaveCount(0);
-  await expect(page).toHaveURL(/\/app\/result\/[A-Za-z0-9]+$/);
+  await expect(page).toHaveURL(/\/decisions\/[A-Za-z0-9]+$/);
   const resultUrl = page.url();
   const title = page.getByRole('heading', { name: livingQuestion, exact: true });
   await expect(title).toBeFocused();
@@ -81,7 +81,7 @@ test('a saved city brief keeps supported estimates when one receipt is invalid',
     body.result.brief.metrics.find(metric => metric.key === 'homeValue').sourceUrl = 'https://example.test/unsupported';
     await route.fulfill({ response, json: body });
   });
-  await signInThroughUi(page, user, '/login?returnUrl=' + encodeURIComponent('/app/result/' + id));
+  await signInThroughUi(page, user, '/login?returnUrl=' + encodeURIComponent('/decisions/' + id));
   const evidence = page.getByRole('region', { name: 'City comparison evidence' });
   await evidence.getByText('Show the evidence', { exact: true }).click();
   await expect(evidence.getByText(/Some estimates could not be verified/)).toBeVisible();
@@ -104,7 +104,7 @@ test('legacy primary evidence cannot turn a secondary estimate into the answer',
       await route.fulfill({ response, json: body });
     });
     if (legacy) await page.reload();
-    else await signInThroughUi(page, user, '/login?returnUrl=' + encodeURIComponent('/app/result/' + user.projectIds[0]));
+    else await signInThroughUi(page, user, '/login?returnUrl=' + encodeURIComponent('/decisions/' + user.projectIds[0]));
     await expect(page.locator('#recommendation h2')).toHaveText('A verified city comparison is unavailable.');
     await expect(page.locator('#recommendation')).toContainText('0 of 3 main-city figures');
     await expect(page.locator('#recommendation')).toContainText('no verified estimates for the main city');
@@ -128,7 +128,7 @@ test('legacy primary evidence cannot turn a secondary estimate into the answer',
 });
 
 test('comparison without salary and a single-city housing question keep their own evidence', async ({ page, fixtures }) => {
-  await signInThroughUi(page, await fixtures(FIXTURES.FREE_NO_REPORTS), '/login?returnUrl=%2Fapp%2Fdecide');
+  await signInThroughUi(page, await fixtures(FIXTURES.FREE_NO_REPORTS), '/login?returnUrl=%2Fdecide');
   await page.getByLabel('Your question').fill('Compare living costs in Los Angeles vs Birmingham, AL');
   await page.getByRole('button', { name: 'Show my free brief' }).click();
   await expect(page.locator('#recommendation')).toContainText('$145,000 in Birmingham, AL');
@@ -142,7 +142,7 @@ test('comparison without salary and a single-city housing question keep their ow
 });
 
 test('a vague question stays editable and an ambiguous comparison keeps the recognized city', async ({ page, fixtures }) => {
-  await signInThroughUi(page, await fixtures(FIXTURES.FREE_NO_REPORTS), '/login?returnUrl=%2Fapp%2Fdecide');
+  await signInThroughUi(page, await fixtures(FIXTURES.FREE_NO_REPORTS), '/login?returnUrl=%2Fdecide');
   const question = page.getByLabel('Your question');
   await question.fill('Can you help me decide?');
   await page.getByRole('button', { name: 'Continue with city data' }).click();
@@ -161,7 +161,7 @@ test('a vague question stays editable and an ambiguous comparison keeps the reco
 
 test('a rejected extracted city opens the existing editor with both candidates', async ({ page, fixtures, consoleErrors }) => {
   consoleErrors.allow.push(/status of 404/i);
-  await signInThroughUi(page, await fixtures(FIXTURES.FREE_NO_REPORTS), '/login?returnUrl=%2Fapp%2Fdecide');
+  await signInThroughUi(page, await fixtures(FIXTURES.FREE_NO_REPORTS), '/login?returnUrl=%2Fdecide');
   const endpoint = '**/createMarketIntelligenceProject';
   await page.route(endpoint, route => route.fulfill({ status: 404, json: { error: { status: 'NOT_FOUND', message: 'Synthetic Census mismatch' } } }), { times: 1 });
   await page.getByLabel('Your question').fill('Compare Birmingham, Alabama with Madison, WI');
@@ -171,18 +171,18 @@ test('a rejected extracted city opens the existing editor with both candidates',
   await expect(page.getByLabel('First city')).toHaveValue('Birmingham, AL');
   await expect(page.getByLabel('Second city')).toHaveValue('Madison, WI');
   await page.getByRole('button', { name: 'Show my free brief' }).click();
-  await expect(page).toHaveURL(/\/app\/result\//);
+  await expect(page).toHaveURL(/\/decisions\//);
   await expect(page.getByRole('region', { name: 'City comparison evidence' })).toBeVisible();
 });
 
 test('a verified free user creates a decision through the app and sees the free brief', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.FREE_NO_REPORTS, { workspace: false });
   await signInThroughUi(page, user);
-  await expect(page).toHaveURL(/\/app$/);
+  await expect(page).toHaveURL(/\/decisions$/);
   await expect(page.getByRole('heading', { name: 'What are you trying to figure out?' })).toBeVisible();
   await expect(page.getByText('Nothing to manage yet')).toBeVisible();
 
-  await page.goto('/app/decide?type=business');
+  await page.goto('/decide?type=business');
   const question = page.getByLabel('Your question');
   await expect(question).toHaveValue('Should I open this business here?');
   await question.fill('Should the bakery open in Springfield?');
@@ -201,7 +201,7 @@ test('a verified free user creates a decision through the app and sees the free 
   await expect(page.getByLabel('City and state')).toHaveValue('Springfield, IL');
   await page.getByRole('button', { name: 'Show my free brief' }).click();
 
-  await expect(page).toHaveURL(/\/app\/result\/[A-Za-z0-9]+$/);
+  await expect(page).toHaveURL(/\/decisions\/[A-Za-z0-9]+$/);
   await expect(page.getByRole('heading', { level: 1, name: 'Should the bakery open in Springfield?' })).toBeVisible();
   await expect(page.getByText('Sources cited')).toBeVisible();
   await expect(page.getByText(/What the \$79 report adds/)).toBeVisible();
@@ -213,11 +213,11 @@ test('a returning user can open account and reopen a saved decision', async ({ p
   await signInThroughUi(page, user);
   await expect(page.getByRole('heading', { name: 'Your decisions' })).toBeVisible();
   await page.locator('nav.topbar').getByRole('link', { name: 'Account', exact: true }).click();
-  await expect(page).toHaveURL(/\/app\/account$/);
+  await expect(page).toHaveURL(/\/account$/);
   await expect(page.getByRole('heading', { name: 'Account details' })).toBeVisible();
   await page.getByRole('link', { name: 'Back to your decisions', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Your decisions' })).toBeVisible();
-  await page.locator(`a[href="/app/result/${user.projectIds[0]}"]`).click();
+  await page.locator(`a[href="/decisions/${user.projectIds[0]}"]`).click();
   await expect(page.getByRole('heading', { level: 1, name: /QA fixture decision 1/ })).toBeVisible();
   await expect(page.getByText('Sources cited')).toBeVisible();
 });
@@ -226,19 +226,19 @@ test("another account's decision never loads, even with its exact id", async ({ 
   const owner = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
   const intruder = await fixtures(FIXTURES.OTHER_TENANT);
   consoleErrors.allow.push(/not found|permission/i);
-  await signInThroughUi(page, intruder, `/login?returnUrl=${encodeURIComponent(`/app/result/${owner.projectIds[0]}`)}`);
-  await expect(page).toHaveURL(new RegExp(`/app/result/${owner.projectIds[0]}$`));
+  await signInThroughUi(page, intruder, `/login?returnUrl=${encodeURIComponent(`/decisions/${owner.projectIds[0]}`)}`);
+  await expect(page).toHaveURL(new RegExp(`/decisions/${owner.projectIds[0]}$`));
   await expect(page.locator('.state.error')).toBeVisible();
   await expect(page.getByText('QA fixture decision 1')).toHaveCount(0);
   await expect(page.getByText('Sources cited')).toHaveCount(0);
 });
 
-test('a non-admin account sees no founder metrics on /app/growth', async ({ page, fixtures, consoleErrors }) => {
+test('a non-admin account sees no founder metrics on /growth', async ({ page, fixtures, consoleErrors }) => {
   const user = await fixtures(FIXTURES.RESTRICTED_ROUTE);
   consoleErrors.allow.push(/status of 403/);
   await signInThroughUi(page, user);
-  await expect(page).toHaveURL(/\/app$/);
-  await page.goto('/app/growth');
+  await expect(page).toHaveURL(/\/decisions$/);
+  await page.goto('/growth');
   await expect(page.locator('.notice.error')).toBeVisible();
   await expect(page.locator('.notice.error')).not.toBeEmpty();
 });
@@ -247,8 +247,8 @@ test('founder metrics warn when the QA exclusion list is missing and keep the co
   const founder = await fixtures(FIXTURES.RESTRICTED_ROUTE);
   await grantAdminClaim(founder.uid);
   await signInThroughUi(page, founder);
-  await expect(page).toHaveURL(/\/app$/);
-  await page.goto('/app/growth');
+  await expect(page).toHaveURL(/\/decisions$/);
+  await page.goto('/growth');
   const audit = page.locator('.qa-exclusion');
   await expect(audit).toContainText(/QA and test activity excluded: \d+ workspace\(s\), \d+ event\(s\), \d+ payment\(s\), of which \d+ live/);
   await expect(audit).toContainText('Warning: The QA exclusion list (adminConfig/qaExclusion) has not been created');
@@ -260,21 +260,21 @@ test('the fourth free decision this month is refused with a clear message', asyn
   consoleErrors.allow.push(/status of 429|resource-exhausted|Too Many Requests/i);
   await signInThroughUi(page, user);
   await expect(page.getByRole('heading', { name: 'Your decisions' })).toBeVisible();
-  await page.goto('/app/decide?type=business');
+  await page.goto('/decide?type=business');
   await page.getByLabel('Your question').fill('A fourth decision this month?');
   await page.getByRole('button', { name: 'Continue' }).click();
   await page.getByLabel('City and state').fill('Springfield, IL');
   await page.getByRole('button', { name: 'Show my free brief' }).click();
   await expect(page.getByRole('alert')).toContainText('used your 3 free decisions this month');
   await expect(page.getByRole('link', { name: 'Open your saved decisions' })).toBeVisible();
-  await expect(page).toHaveURL(/\/app\/decide/);
+  await expect(page).toHaveURL(/\/decide/);
 });
 
 
 test('comparison validates two distinct places and keeps entries through a retry', async ({ page, fixtures, consoleErrors }) => {
   const user = await fixtures(FIXTURES.FREE_NO_REPORTS);
   consoleErrors.allow.push(/status of 503/);
-  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fdecide%3Ftype%3Dcompare');
+  await signInThroughUi(page, user, '/login?returnUrl=%2Fdecide%3Ftype%3Dcompare');
   await expect(page.getByLabel('Your question')).toHaveValue('How do these cities compare?');
   await page.getByRole('button', { name: 'Continue' }).click();
   const first = page.getByLabel('First city');
@@ -323,14 +323,14 @@ test('comparison validates two distinct places and keeps entries through a retry
   await expectAccessible(page);
   await page.unroute(endpoint);
   await brief.click();
-  await expect(page).toHaveURL(/\/app\/result\//);
+  await expect(page).toHaveURL(/\/decisions\//);
   await expect(page.getByRole('heading', { level: 1, name: 'How do these cities compare?' })).toBeVisible();
   await expect(page.locator('#comparison').getByRole('heading', { name: 'Madison, WI' })).toBeVisible();
 });
 
 test('local property tax questions preserve the question and do not pretend a sample is an answer', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.FREE_NO_REPORTS);
-  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fdecide');
+  await signInThroughUi(page, user, '/login?returnUrl=%2Fdecide');
   const question = page.getByLabel('Your question');
   const asked = 'What are the property taxes in Birmingham?';
   const marketCalls = [];
@@ -361,7 +361,7 @@ test('local property tax questions preserve the question and do not pretend a sa
 
 test('bill analysis leads to private Discovery; property checks and tariffs show their limits', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.FREE_NO_REPORTS);
-  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fdecide');
+  await signInThroughUi(page, user, '/login?returnUrl=%2Fdecide');
   const question = page.getByLabel('Your question');
   await question.fill('Compare property taxes and electricity bills');
   await expect(page.getByRole('group', { name: 'Optional made-up examples' }).getByRole('link')).toHaveCount(2);
@@ -381,7 +381,7 @@ test('bill analysis leads to private Discovery; property checks and tariffs show
   await expect(page.locator('.finding')).toHaveCount(0);
   await page.getByRole('button', { name: 'Use a property tax CSV' }).click();
   await expect(page.getByText(/remove names/i).first()).toBeVisible();
-  await page.goto('/app/decide');
+  await page.goto('/decide');
   await question.fill('What changed on my electric bill?');
   await expect(page.getByText(/two comparable electricity statements/)).toBeVisible();
   await page.getByRole('link', { name: 'See a made-up electricity example' }).click();

@@ -26,7 +26,7 @@ console.log(`Local QA accounts (password for all: ${FIXTURE_PASSWORD})`);
 for (const [id, options] of plan) {
   const fixture = await createFixture(id, { ...options, runId: 'local' }).catch(error => ({ fixtureId: id, error }));
   if (fixture.error) console.log(`- ${id}: ${/EMAIL_EXISTS/.test(fixture.error.message) ? 'already exists' : fixture.error.message}`);
-  else console.log(`- ${id}: ${fixture.email}${fixture.projectIds.length ? ` (decision /app/result/${fixture.projectIds[0]})` : ''}`);
+  else console.log(`- ${id}: ${fixture.email}${fixture.projectIds.length ? ` (decision /decisions/${fixture.projectIds[0]})` : ''}`);
 }
 console.log('Cities with seeded Census data: Springfield, IL; Madison, WI; Columbus, OH.');
 process.exit(0);

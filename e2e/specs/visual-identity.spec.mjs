@@ -88,15 +88,15 @@ test('workspace, eligible pricing and Account feel connected', async ({ page, fi
     const body = await response.json();
     await route.fulfill({ json: { ...body, result: { ...body.result, subscriptionOffers: true } } });
   });
-  await page.goto('/app/pricing');
+  await page.goto('/pricing');
   await compare(page, 'pricing', page.getByRole('region', { name: 'Monthly subscriptions' }), { fullPage: true });
-  await page.goto('/app/account');
+  await page.goto('/account');
   await compare(page, 'account', page.getByRole('heading', { name: 'Account details' }), { fullPage: true });
 });
 
 test('decision question and place share the editorial identity', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.FREE_NO_REPORTS, { workspace: false });
-  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fdecide%3Ftype%3Dbusiness');
+  await signInThroughUi(page, user, '/login?returnUrl=%2Fdecide%3Ftype%3Dbusiness');
   const question = page.getByLabel('Your question');
   await expect(question).toHaveValue('Should I open this business here?');
   await compare(page, 'decision-question', question, { fullPage: true });
@@ -109,7 +109,7 @@ test('decision question and place share the editorial identity', async ({ page, 
 
 test('a local tax question shows its evidence limit before an optional example', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.FREE_NO_REPORTS, { workspace: false });
-  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fdecide');
+  await signInThroughUi(page, user, '/login?returnUrl=%2Fdecide');
   const question = page.getByLabel('Your question');
   await question.fill('What are the property taxes in Birmingham?');
   await question.blur();

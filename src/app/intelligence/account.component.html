@@ -1,7 +1,7 @@
 <main class="account-shell">
   <nav class="topbar">
-    <a routerLink="/app" class="brand">ifYouMind</a>
-    <a routerLink="/app">Back to your decisions</a>
+    <a routerLink="/" class="brand" aria-label="ifYouMind home">ifYouMind</a>
+    <a routerLink="/decisions">Back to your decisions</a>
   </nav>
 
   <header>
@@ -39,7 +39,7 @@
       <div *ngIf="!status.subscription?.linked" class="usage-track"><i [style.width.%]="(status.usedMarketProjects / status.marketProjectsPerMonth) * 100"></i></div>
       <p *ngIf="status.plan==='free' && !status.subscription?.linked">You can keep using the free plan, or move up when you need more decisions and comparisons.</p>
       <p *ngIf="status.plan==='pro'">Your plan includes up to {{ status.marketProjectsPerMonth }} decisions and {{ status.includedReportsPerMonth }} full reports each month.</p>
-      <a *ngIf="status.plan==='free' && !status.subscription?.linked" routerLink="/app/pricing">View upgrade options</a>
+      <a *ngIf="status.plan==='free' && !status.subscription?.linked" routerLink="/pricing">View upgrade options</a>
       <ng-container *ngIf="status.subscription as subscription">
         <p *ngIf="subscription.pending" role="status">Checkout has started. Credits appear after Stripe confirms payment.</p>
         <ng-container *ngIf="subscription.linked">
@@ -70,7 +70,7 @@
       <h2>Privacy & control</h2>
       <p>Your decisions stay tied to your account. Source-backed reports show where important public-data values came from.</p>
       <div class="links">
-        <a routerLink="/app/data">Manage my data</a>
+        <a routerLink="/data">Manage my data</a>
         <a routerLink="/privacy-policy">Privacy policy</a>
         <a routerLink="/terms-of-conduct">Terms</a>
       </div>

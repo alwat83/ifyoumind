@@ -7,16 +7,17 @@ const read = (p) => fs.readFileSync(new URL(p, import.meta.url), 'utf8');
 const compiled = ts.transpileModule(read('../src/app/return-url.ts'), { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 } }).outputText;
 const { safeReturnUrl, loginParams, decisionReturnUrl, DEFAULT_RETURN_URL } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString('base64')}`);
 
-test('in-app paths come back rebuilt, keeping only allowed parameters', () => {
-  assert.equal(safeReturnUrl('/app'), '/app');
-  assert.equal(safeReturnUrl('/app/decide?type=business&intent=report'), '/app/decide?type=business&intent=report');
-  assert.equal(safeReturnUrl('/app/result/AbC_123-x?intent=report'), '/app/result/AbC_123-x?intent=report');
-  assert.equal(safeReturnUrl('/app/pricing?offer=report&projectId=p1'), '/app/pricing?offer=report&projectId=p1');
-  assert.equal(safeReturnUrl('/app/decide?type=business&intent=pro'), '/app/decide?type=business', 'only the report intent is kept');
-  assert.equal(safeReturnUrl('/app/pricing?offer=report&checkout=success'), '/app/pricing?offer=report', 'checkout results are never replayed');
-  assert.equal(safeReturnUrl('/app/decide?type=business&type=evil'), '/app/decide?type=business', 'first value wins');
-  assert.equal(safeReturnUrl('/app/decide?utm_source=x&email=a%40b.com'), '/app/decide', 'unknown parameters, including personal data, are dropped');
+test('return paths are rebuilt using clean URLs and keep only permitted parameters', () => {
+  assert.equal(safeReturnUrl('/app'), '/decisions');
+  assert.equal(safeReturnUrl('/app/decide?type=business&intent=report'), '/decide?type=business&intent=report');
+  assert.equal(safeReturnUrl('/app/result/AbC_123-x?intent=report'), '/decisions/AbC_123-x?intent=report');
+  assert.equal(safeReturnUrl('/app/pricing?offer=report&projectId=p1'), '/pricing?offer=report&projectId=p1');
+  assert.equal(safeReturnUrl('/decide?type=business&intent=pro'), '/decide?type=business', 'only the report intent is kept');
+  assert.equal(safeReturnUrl('/pricing?offer=report&checkout=success'), '/pricing?offer=report', 'checkout results are never replayed');
+  assert.equal(safeReturnUrl('/decide?type=business&type=evil'), '/decide?type=business', 'first value wins');
+  assert.equal(safeReturnUrl('/decide?utm_source=x&email=a%40b.com'), '/decide', 'unknown parameters, including personal data, are dropped');
 });
+
 
 test('anything that could leave the app or reach an unexpected page is refused', () => {
   const refused = [
@@ -31,11 +32,11 @@ test('anything that could leave the app or reach an unexpected page is refused',
 });
 
 test('the sign-in page only gets a return path when it is safe and not the default', () => {
-  assert.deepEqual(loginParams('/app/decide?type=business&intent=report'), { returnUrl: '/app/decide?type=business&intent=report' });
+  assert.deepEqual(loginParams('/app/decide?type=business&intent=report'), { returnUrl: '/decide?type=business&intent=report' });
   assert.deepEqual(loginParams('/app'), {});
   assert.deepEqual(loginParams('/app/growth'), {});
   assert.deepEqual(loginParams('//evil.example'), {});
-  assert.equal(DEFAULT_RETURN_URL, '/app');
+  assert.equal(DEFAULT_RETURN_URL, '/decisions');
 });
 
 test('the guard and sign-in page use the validator, and access control is unchanged', () => {
@@ -53,7 +54,7 @@ test('the guard and sign-in page use the validator, and access control is unchan
 test('the sample entry and $79 checkout preserve the report path and legacy Pro stays managed in Account', () => {
   const home = read('../src/app/intelligence/public-landing.component.html');
   assert.match(home, /routerLink="\/sample-report" class="button">View a Sample Report/);
-  const reportEntry = '/app/decide?type=business&intent=report';
+  const reportEntry = '/decide?type=business&intent=report';
   assert.deepEqual(loginParams(reportEntry), { returnUrl: reportEntry });
   assert.equal(decisionReturnUrl(reportEntry), reportEntry);
   const pricing = read('../src/app/intelligence/pricing.component.html');
@@ -66,7 +67,7 @@ test('property: any output is an allowlisted in-app path with allowlisted parame
     'type', 'business', 'intent', 'report', 'offer', 'pro', 'projectId', 'checkout', 'success', ' ', '\t', '\n', '∕', '／', '%00', 'javascript:', 'APP'];
   let seed = 7;
   const rand = (n) => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed % n; };
-  const ok = /^\/app(\/decide|\/pricing|\/account|\/result\/[A-Za-z0-9_-]{1,64})?(\?(type=[a-z_]{1,32}|intent=report|offer=(report|pro)|projectId=[A-Za-z0-9_-]{1,64})(&(type=[a-z_]{1,32}|intent=report|offer=(report|pro)|projectId=[A-Za-z0-9_-]{1,64}))*)?$/;
+  const ok = /^\/(?:decide|pricing|account|decisions(?:\/[A-Za-z0-9_-]{1,64})?)(\?(type=[a-z_]{1,32}|intent=report|offer=(report|pro)|projectId=[A-Za-z0-9_-]{1,64})(&(type=[a-z_]{1,32}|intent=report|offer=(report|pro)|projectId=[A-Za-z0-9_-]{1,64}))*)?$/;
   for (let i = 0; i < 20000; i++) {
     let s = rand(3) ? '/' : '';
     for (let j = 0, n = 1 + rand(8); j < n; j++) s += parts[rand(parts.length)];
@@ -77,7 +78,7 @@ test('property: any output is an allowlisted in-app path with allowlisted parame
     }
   }
   // Valid paths with random query strings: unknown or malformed parameters must be dropped, never passed through.
-  const paths = ['/app', '/app/decide', '/app/pricing', '/app/account', '/app/result/p1'];
+  const paths = ['/decisions', '/decide', '/pricing', '/account', '/decisions/p1', '/app', '/app/result/p1'];
   const keys = ['type', 'intent', 'offer', 'projectId', 'checkout', 'returnUrl', 'email', 'next'];
   const vals = ['business', 'report', 'pro', 'p1', 'success', '//evil.example', 'a%40b.com', 'https://evil', 'BUSINESS', ''];
   let kept = 0;
@@ -94,8 +95,8 @@ test('property: any output is an allowlisted in-app path with allowlisted parame
 });
 
 test('decision auth handoffs keep only a known type and commercial intent', () => {
-  assert.equal(decisionReturnUrl('/app/decide?type=compare&intent=report&location=private&question=mine'), '/app/decide?type=compare&intent=report');
-  assert.equal(decisionReturnUrl('/app/decide?type=private&offer=pro'), '/app/decide');
+  assert.equal(decisionReturnUrl('/app/decide?type=compare&intent=report&location=private&question=mine'), '/decide?type=compare&intent=report');
+  assert.equal(decisionReturnUrl('/app/decide?type=private&offer=pro'), '/decide');
   assert.equal(decisionReturnUrl('/app/pricing?intent=report'), null);
   assert.equal(decisionReturnUrl('//outside.example/app/decide'), null);
 });

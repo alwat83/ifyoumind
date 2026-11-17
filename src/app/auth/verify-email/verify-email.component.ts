@@ -39,7 +39,7 @@ export class VerifyEmailComponent {
       if (this.auth.currentUser?.emailVerified) {
         await this.auth.currentUser.getIdToken(true);
         if (this.returnUrl) await this.router.navigateByUrl(this.returnUrl);
-        else await this.router.navigate(['/app/decide'], { queryParams: intentParams({ type: 'business' }, readIntent()) });
+        else await this.router.navigate(['/decide'], { queryParams: intentParams({ type: 'business' }, readIntent()) });
         return;
       }
       this.message = { type: 'error', text: 'Not verified yet. Open the link in the email we sent, then try again.' };

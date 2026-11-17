@@ -18,7 +18,7 @@ test('integrated public pages: pricing, report, guides, accessibility and approv
       await expect(page.getByRole('link', { name: 'Business location evidence checklist' })).toHaveAttribute('href', '/guides/choose-business-location-evidence/');
     }
     if (path === '/') {
-      await expect(page.getByRole('link', { name: 'Pricing (sign-in required)', exact: true })).toHaveAttribute('href', '/app/pricing');
+      await expect(page.getByRole('link', { name: 'Pricing (sign-in required)', exact: true })).toHaveAttribute('href', '/pricing');
       await expect(page.getByRole('link', { name: 'View a Sample Report', exact: true })).toHaveAttribute('href', '/sample-report');
       await expect(page.getByRole('link', { name: 'Guides', exact: true })).toHaveAttribute('href', '/guides/');
       await expect(page.locator('a[href*="/life/quick-compare"]')).toHaveCount(0);
@@ -59,7 +59,7 @@ test('paid-report response contract: full report, copy and print controls remain
     window.print = () => { window.__releasePrintCalls = (window.__releasePrintCalls || 0) + 1; };
     Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText: async text => { window.__releaseCopiedText = text; } } });
   });
-  await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent(`/app/result/${user.projectIds[0]}`)}`);
+  await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent(`/decisions/${user.projectIds[0]}`)}`);
   await expect(page.getByText('Full report unlocked', { exact: true })).toBeVisible();
   await expect(page.locator('#market-analysis')).toBeVisible();
   await page.getByRole('button', { name: 'Copy as text' }).click();
@@ -88,7 +88,7 @@ test('one-time checkout preserves the offer and report identity', async ({ page,
     return route.fulfill({ json: { result: { url: 'https://checkout.stripe.com/c/pay/qa-release-contract' } } });
   });
   await page.route('https://checkout.stripe.com/**', route => route.fulfill({ contentType: 'text/html', body: '<h1>Intercepted checkout contract — no payment</h1>' }));
-  const path = `/app/pricing?offer=report&projectId=${user.projectIds[0]}`;
+  const path = `/pricing?offer=report&projectId=${user.projectIds[0]}`;
   await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent(path)}`);
   await expect(page.locator('.plans')).toContainText('$79');
   await expect(page.locator('main')).not.toContainText('$39');
@@ -115,8 +115,9 @@ test('one-time checkout return waits for report access before opening the saved 
   });
 
   await signInThroughUi(page, user);
-  await expect(page).toHaveURL(/\/app$/);
+  await expect(page).toHaveURL(/\/decisions$/);
   await page.goto(`/app/pricing?checkout=success&offer=report&projectId=${projectId}`);
+  await expect(page).toHaveURL(new RegExp(`/pricing\\?checkout=success&offer=report&projectId=${projectId}$`));
   await expect(page.getByRole('status').filter({ hasText: 'Report access is still being confirmed' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Open your Decision Report' })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Buy Decision Report', exact: true })).toHaveCount(0);
@@ -126,7 +127,7 @@ test('one-time checkout return waits for report access before opening the saved 
   await page.reload();
   await expect(page.getByRole('status').filter({ hasText: 'Your payment is complete' })).toBeVisible();
   await page.getByRole('link', { name: 'Open your Decision Report' }).click();
-  await expect(page).toHaveURL(new RegExp(`/app/result/${projectId}$`));
+  await expect(page).toHaveURL(new RegExp(`/decisions/${projectId}$`));
   await expect(page.getByText('Full report unlocked', { exact: true })).toBeVisible();
   await page.reload();
   await expect(page.getByText('Full report unlocked', { exact: true })).toBeVisible();

@@ -2,7 +2,7 @@
 import { test, expect, signInThroughUi } from '../support/test.mjs';
 import { FIXTURES } from '../support/fixtures.mjs';
 
-for (const path of ['/app', '/app/decide?type=business', '/app/pricing', '/app/account', '/app/result/anything']) {
+for (const path of ['/decisions', '/decide?type=business', '/pricing', '/account', '/decisions/anything']) {
   test(`unverified account is sent to /verify-email from ${path}`, async ({ page, fixtures }) => {
     const user = await fixtures(FIXTURES.UNVERIFIED, { verified: false, workspace: false });
     await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent(path)}`);

@@ -30,7 +30,7 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await page.setViewportSize({ width, height });
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('The answer is in your numbers.');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Make sense of your numbers.');
     const heroAction = page.getByRole('link', { name: 'Open the full tax example', exact: true });
     await expect(heroAction).toBeVisible();
     if (width >= 375) await expect(heroAction).toBeInViewport({ ratio: 1 });
@@ -45,17 +45,18 @@ test('homepage fits six reference widths with the flagship result and an actiona
     expect(await page.evaluate(() => [...document.fonts]
       .filter(font => font.family.includes('Instrument Serif') && font.status === 'loaded').length)).toBe(2);
     await expect(page.locator('#try').getByRole('link')).toHaveCount(1);
-    await expect(page.locator('#try')).toContainText('AI finds what matters, explains the evidence, and helps you decide what comes next.');
+    await expect(page.locator('#try')).toContainText('Compare bills or cities. Try a free example.');
     const reports = page.getByRole('region', { name: 'Decision Reports', exact: true });
-    await expect(reports.getByRole('link', { name: 'Start a Free Brief' })).toHaveAttribute('href', '/app/decide?type=business');
+    await expect(reports.getByRole('link', { name: 'Start a Free Brief' })).toHaveAttribute('href', '/decide?type=business');
     await expect(reports).toContainText('A full Decision Report adds more comparisons, a sourced market analysis, and an action plan.');
     await expect(reports.getByRole('link', { name: 'View a Sample Report' })).toHaveAttribute('href', '/sample-report');
     const feature = page.locator('#business');
     await expect(feature.getByRole('button', { pressed: true })).toHaveText('Property taxes');
-    await expect(feature.getByText('Made-up example · Fixed calculations', { exact: true })).toBeInViewport({ ratio: 1 });
+    await expect(feature.getByText('Made-up example', { exact: true })).toBeInViewport({ ratio: 1 });
     await expect(feature.getByRole('heading', { name: 'Why did my property taxes go up?', exact: true })).toBeInViewport({ ratio: 1 });
     await expect(feature.locator('.finding')).toContainText('$420 more than the year before.');
     await expect(feature.locator('.finding-note')).toContainText('School taxes rose by $240');
+    await expect(feature.locator('.finding-note')).toContainText('Two bills alone can’t tell you whether you paid too much.');
     await expect(feature.getByText('$420', { exact: true })).toBeInViewport({ ratio: 1 });
     await expect(feature.getByText('more than the year before.', { exact: true })).toBeVisible();
     const summary = feature.locator('.home-evidence summary');
@@ -112,6 +113,7 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await expect(evidence.getByRole('table', { name: 'Total tax source cells' })).toContainText('4620.00');
     await expect(evidence.getByRole('table', { name: 'How the charges add up source cells' })).toContainText('2640.00');
     await expect(evidence.locator('.evidence-limit')).toContainText('look up your assessed value and local tax rates');
+    await expect(evidence.locator('.evidence-limit')).toContainText('assessment notice and exemptions');
     const fullTax = feature.getByRole('link', { name: 'Open the full tax example' });
     await expect(fullTax).toBeVisible();
     await expect(fullTax).toHaveAttribute('href', '/discover/?example=tax');
@@ -127,8 +129,9 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await expect(evidence).not.toHaveAttribute('open');
     await expect(summary).toHaveText('Show the evidence', { useInnerText: true });
     await expect(announcement).toContainText('The bill rose 21% and electricity use rose 10%.');
-    await expect(feature.getByText('Made-up example · Fixed calculations', { exact: true })).toBeVisible();
+    await expect(feature.getByText('Made-up example', { exact: true })).toBeVisible();
     await expect(feature.locator('.finding')).toContainText('+21% in total billed, compared with +10% in electricity use.');
+    await expect(feature.locator('.finding-note')).toHaveText('Check the individual charges to see what else changed.');
     await expect(feature.getByRole('link', { name: 'Explore the electricity example' })).toHaveAttribute('href', '/discover/?example=electricity');
     await expect(page).toHaveURL(origin + '/');
     await noOverflow(page);
@@ -147,7 +150,9 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await expect(feature.getByRole('button', { pressed: true })).toHaveText('Compare cities');
     await expect(evidence).not.toHaveAttribute('open');
     await expect(announcement).toContainText('median household income estimate is $11,590 higher');
-    await expect(feature.getByText('Public Census sample · Fixed calculations', { exact: true })).toBeVisible();
+    await expect(feature.getByText('Public Census sample', { exact: true })).toBeVisible();
+    await expect(feature.getByRole('heading', { name: 'How do Austin and Charlotte compare?' })).toBeVisible();
+    await expect(feature.locator('.finding-note')).toContainText('checking local demand, competition, and rent');
     await expect(feature.getByRole('link', { name: 'View the Full Sample Report' })).toHaveAttribute('href', '/sample-report');
     await summary.click();
     const table = evidence.getByRole('table', { name: 'City estimates from the public Business sample' });
@@ -223,7 +228,7 @@ test('homepage navigation, guides, legal pages and report offers lead to existin
   const reports = page.getByRole('region', { name: 'Decision Reports' });
   await expect(reports.getByRole('link', { name: 'View a Sample Report' })).toHaveAttribute('href', '/sample-report');
   const footer = page.getByRole('contentinfo');
-  await expect(footer.getByRole('link', { name: 'Pricing (sign-in required)' })).toHaveAttribute('href', '/app/pricing');
+  await expect(footer.getByRole('link', { name: 'Pricing (sign-in required)' })).toHaveAttribute('href', '/pricing');
   await expect(footer.getByRole('link', { name: 'Terms', exact: true })).toHaveAttribute('href', '/terms-of-conduct');
   await expect(footer.getByRole('link', { name: 'Privacy', exact: true })).toHaveAttribute('href', '/privacy-policy');
 });

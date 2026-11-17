@@ -35,7 +35,7 @@ export class MarketReportComponent implements OnInit, OnDestroy {
     const account=this.sampleUser?.();
     if(account===undefined)return null;
     return account
-      ? { path:'/app/decide', free:{type:'business'}, report:{type:'business',intent:'report'} }
+      ? { path:'/decide', free:{type:'business'}, report:{type:'business',intent:'report'} }
       : { path:'/register', free:null, report:{intent:'report'} };
   });
 

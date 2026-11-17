@@ -1,7 +1,7 @@
 <main class="pricing-shell">
   <nav class="topbar" aria-label="Workspace">
-    <a routerLink="/app" class="brand">ifYouMind</a>
-    <div class="nav-links"><a routerLink="/app/account">Account</a><a routerLink="/app">Your decisions</a></div>
+    <a routerLink="/" class="brand" aria-label="ifYouMind home">ifYouMind</a>
+    <div class="nav-links"><a routerLink="/account">Account</a><a routerLink="/decisions">Your decisions</a></div>
   </nav>
 
   <header>
@@ -14,15 +14,15 @@
   <p *ngIf="error" class="notice error" role="alert">{{ error }}</p>
   <p *ngIf="message" class="notice" role="status">{{ message }}</p>
   <p *ngIf="reportReady" class="notice success">
-    <a [routerLink]="['/app/result',projectId]">Open your Decision Report</a>
+    <a [routerLink]="['/decisions',projectId]">Open your Decision Report</a>
   </p>
   <div *ngIf="status?.plan==='pro'" class="notice success">
     <strong>Legacy Pro · ${{ status?.pricing?.proMonthlyUsd }}/month</strong>
     <p>Your existing plan includes {{ status?.includedReportsPerMonth }} full reports each month. Reports you’ve unlocked stay saved if you cancel.</p>
-    <a routerLink="/app/account">Manage your plan in Account</a>
+    <a routerLink="/account">Manage your plan in Account</a>
   </div>
   <p *ngIf="status?.subscription?.linked" class="notice">
-    View your remaining credits and manage your subscription in <a routerLink="/app/account">Account</a>.
+    View your remaining credits and manage your subscription in <a routerLink="/account">Account</a>.
   </p>
 
   <section *ngIf="showMonthlyPlans" class="offer-section" aria-labelledby="monthly-title">
@@ -40,7 +40,7 @@
         </button>
       </article>
     </div>
-    <a *ngIf="!projectId" routerLink="/app/decide" class="action start-plans">Start a free decision to choose a plan</a>
+    <a *ngIf="!projectId" routerLink="/decide" class="action start-plans">Start a free decision to choose a plan</a>
   </section>
 
   <section *ngIf="!loading" class="offer-section" aria-labelledby="alternatives-title">
@@ -50,8 +50,8 @@
         <h3>Free</h3>
         <p class="price">$0</p>
         <p>Up to three Decision Briefs each month, with one comparison city and saved history.</p>
-        <a *ngIf="projectId; else startFree" [routerLink]="['/app/result', projectId]" class="action">Back to your decision</a>
-        <ng-template #startFree><a routerLink="/app/decide" class="action">Start a free decision</a></ng-template>
+        <a *ngIf="projectId; else startFree" [routerLink]="['/decisions', projectId]" class="action">Back to your decision</a>
+        <ng-template #startFree><a routerLink="/decide" class="action">Start a free decision</a></ng-template>
       </article>
       <article class="plan">
         <h3>One-time Decision Report</h3>
@@ -61,7 +61,7 @@
           <button *ngIf="projectId && status; else chooseDecision" type="button" class="action" (click)="request('report')" [disabled]="requesting">
             {{ requesting === 'report' ? 'Opening Stripe Checkout…' : 'Buy Decision Report' }}
           </button>
-          <ng-template #chooseDecision><a routerLink="/app" class="action">Choose a decision</a></ng-template>
+          <ng-template #chooseDecision><a routerLink="/decisions" class="action">Choose a decision</a></ng-template>
         </ng-container>
       </article>
     </div>

@@ -29,26 +29,26 @@ test('signed-in pages are accessible, fit the viewport and the app navigation wo
   const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
   await signInThroughUi(page, user);
   await expect(page.getByRole('heading', { name: 'Your decisions' })).toBeVisible();
-  for (const path of ['/app', '/app/decide?type=business', `/app/result/${user.projectIds[0]}`, '/app/pricing', '/app/account', '/verify-email']) {
+  for (const path of ['/decisions', '/decide?type=business', `/decisions/${user.projectIds[0]}`, '/pricing', '/account', '/verify-email']) {
     await page.goto(path);
     await page.waitForLoadState('networkidle');
     await expectNoHorizontalScroll(page);
     await expectAccessible(page);
   }
-  await page.goto('/app');
+  await page.goto('/decisions');
   const nav = page.locator('nav.topbar');
   await nav.getByRole('link', { name: 'Account' }).click();
-  await expect(page).toHaveURL(/\/app\/account$/);
-  await page.goto('/app');
+  await expect(page).toHaveURL(/\/account$/);
+  await page.goto('/decisions');
   const pricing = nav.getByRole('link', { name: 'Pricing' });
   if (test.info().project.name === 'mobile') {
     // By design the phone header drops Pricing (≤560 px); the report's upgrade panel links to it.
     await expect(pricing).toBeHidden();
-    await page.goto('/app/pricing');
+    await page.goto('/pricing');
   } else {
     await pricing.click();
   }
-  await expect(page).toHaveURL(/\/app\/pricing$/);
+  await expect(page).toHaveURL(/\/pricing$/);
   await expect(page.getByRole('heading', { name: 'One-time Decision Report' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Get Pro access' })).toHaveCount(0);
 });
@@ -60,13 +60,13 @@ test('shared app surfaces retain editorial headings, mobile fit and keyboard foc
   await expect(page.getByRole('heading', { name: 'Your decisions' })).toBeVisible();
 
   for (const [path, control] of [
-    ['/app', 'Start a decision'],
-    ['/app/decide?type=business', 'Your question'],
-    ['/app/pricing', 'Choose a decision'],
-    ['/app/account', 'Save profile'],
-    ['/app/data', 'Choose a CSV'],
-    ['/app/ask', 'Question'],
-    ['/app/advanced', 'Dataset name'],
+    ['/decisions', 'Start a decision'],
+    ['/decide?type=business', 'Your question'],
+    ['/pricing', 'Choose a decision'],
+    ['/account', 'Save profile'],
+    ['/data', 'Choose a CSV'],
+    ['/ask', 'Question'],
+    ['/advanced', 'Dataset name'],
   ]) {
     await page.goto(path);
     await expect(page.locator('h1')).toHaveCSS('font-family', /Instrument Serif/);
@@ -84,7 +84,7 @@ test('shared app surfaces retain editorial headings, mobile fit and keyboard foc
     await expectAccessible(page);
   }
 
-  await page.goto('/app/data');
+  await page.goto('/data');
   await page.getByLabel('Choose a CSV').focus();
   await expect(page.locator('.dropzone')).toHaveCSS('outline-style', 'solid');
 });
@@ -102,13 +102,13 @@ test('password recovery fits 320px with a long account address', async ({ page, 
 test('the Workspace navigation keeps Ask and Advanced on valid app routes', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.VERIFIED);
   await signInThroughUi(page, user);
-  await expect(page).toHaveURL(/\/app$/);
-  await page.goto('/app/ask');
+  await expect(page).toHaveURL(/\/decisions$/);
+  await page.goto('/ask');
   const nav = page.getByRole('navigation', { name: 'Workspace' });
   await expect(nav.getByRole('link', { name: 'Ask' })).toHaveAttribute('aria-current', 'page');
   await nav.getByRole('link', { name: 'Advanced' }).click();
-  await expect(page).toHaveURL(/\/app\/advanced$/);
+  await expect(page).toHaveURL(/\/advanced$/);
   await expect(nav.getByRole('link', { name: 'Advanced' })).toHaveAttribute('aria-current', 'page');
   await nav.getByRole('link', { name: 'My data' }).click();
-  await expect(page).toHaveURL(/\/app\/data$/);
+  await expect(page).toHaveURL(/\/data$/);
 });

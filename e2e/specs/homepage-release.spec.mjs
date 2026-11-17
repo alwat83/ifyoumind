@@ -3,7 +3,7 @@ import { FIXTURES } from '../support/fixtures.mjs';
 
 test('homepage opens the interactive demo and the complete free example', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('The answer is in your numbers.');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Make sense of your numbers.');
   await expect(page.getByRole('heading', { name: 'Why did my property taxes go up?' })).toBeInViewport({ ratio: 1 });
   await expect(page.locator('#discovery-result')).toContainText('$420 more than the year before.');
   await expectNoHorizontalScroll(page);
@@ -49,15 +49,15 @@ test('homepage free brief and pricing keep their sign-in return paths', async ({
   const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
   await page.goto('/');
   await page.getByRole('link', { name: 'Start a Free Brief', exact: true }).click();
-  await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/app/decide?type=business');
+  await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/decide?type=business');
   await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
   const briefSignIn = page.url();
   await page.goto('/');
   await page.getByRole('link', { name: 'Pricing (sign-in required)', exact: true }).click();
-  await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/app/pricing');
+  await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/pricing');
   await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
 
   await signInThroughUi(page, user, briefSignIn);
-  await expect(page).toHaveURL(/\/app\/decide\?type=business$/);
+  await expect(page).toHaveURL(/\/decide\?type=business$/);
   await expect(page.getByLabel('Your question')).toHaveValue('Should I open this business here?');
 });

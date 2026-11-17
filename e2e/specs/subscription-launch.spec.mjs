@@ -6,7 +6,7 @@ for (const [offer, plan, allowance] of [['starter', 'Starter', 1], ['plus', 'Plu
   test(`${plan} checkout, payment confirmation, report credit and cancellation`, async ({ page, fixtures }) => {
     const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
     const projectId = user.projectIds[0];
-    const resultPath = '/app/result/'+projectId;
+    const resultPath = '/decisions/'+projectId;
     const checkoutRequests = [];
     const generationRequests = [];
     let remaining = 0;
@@ -70,7 +70,8 @@ for (const [offer, plan, allowance] of [['starter', 'Starter', 1], ['plus', 'Plu
     await expect(page.getByRole('status').filter({hasText:'Checkout was cancelled'})).toBeVisible();
     await expect(page.getByRole('link',{name:'Back to your decision'})).toHaveAttribute('href',resultPath);
     expect(generationRequests).toEqual([]);
-    await page.goto(resultPath+'?subscription=confirming');
+    await page.goto(`/app/result/${projectId}?subscription=confirming`);
+    await expect(page).toHaveURL(new RegExp(`/decisions/${projectId}\\?subscription=confirming$`));
     await expect(page.getByText('Your report credit appears after Stripe confirms payment.')).toBeVisible();
     await expect(page.getByRole('button',{name:'Generate full Decision Report'})).toHaveCount(0);
     linked = true;
@@ -81,7 +82,7 @@ for (const [offer, plan, allowance] of [['starter', 'Starter', 1], ['plus', 'Plu
     await expect(page.getByRole('button',{name:'Print / save PDF'})).toBeVisible();
     expect(generationRequests).toEqual([{organizationId:user.organizationId,projectId}]);
     cancelAt = Math.floor(Date.now()/1000)+86400;
-    await page.goto('/app/account');
+    await page.goto('/account');
     await expect(page.getByRole('heading',{name:plan,exact:true})).toBeVisible();
     await expect(page.getByText(`${allowance-1} full report credits available.`, { exact:false })).toBeVisible();
     await expect(page.getByText(/Cancellation scheduled/)).toBeVisible();
@@ -110,9 +111,9 @@ test('Account explains the Stripe handoff and recovers from an unavailable porta
     await route.fulfill({ json: { result: { url: 'https://billing.stripe.com/p/session/qa-return-contract' } } });
   });
   await page.route('https://billing.stripe.com/**', route => route.fulfill({
-    status: 303, headers: { location: new URL('/app/account', page.url()).href },
+    status: 303, headers: { location: new URL('/account', page.url()).href },
   }));
-  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Faccount');
+  await signInThroughUi(page, user, '/login?returnUrl=%2Faccount');
   const billing = page.getByRole('button', { name: 'Manage billing' });
   await expect(billing).toHaveAccessibleDescription(/Billing opens in Stripe/);
   await expect(page.getByText(/Payment needs attention/)).toBeVisible();
@@ -120,11 +121,11 @@ test('Account explains the Stripe handoff and recovers from an unavailable porta
   await expect(page.getByRole('alert')).toHaveText('Billing is temporarily unavailable.');
   const handoff = page.waitForRequest('https://billing.stripe.com/p/session/qa-return-contract');
   const accountReturn = page.waitForResponse(response =>
-    response.request().isNavigationRequest() && new URL(response.url()).pathname === '/app/account');
+    response.request().isNavigationRequest() && new URL(response.url()).pathname === '/account');
   await billing.click();
   await handoff;
   expect((await accountReturn).status()).toBe(200);
-  await expect(page).toHaveURL(/\/app\/account$/);
+  await expect(page).toHaveURL(/\/account$/);
   await expect(billing).toBeVisible();
   expect(attempts).toBe(2);
 });
@@ -136,7 +137,7 @@ test('legacy Pro stays manageable in Account with its existing allowance', async
     await route.fulfill({ json: { result: { ...body.result, plan: 'pro', planName: 'Pro',
       includedReportsPerMonth: 5, remainingIncludedReports: 4, marketProjectsPerMonth: 50 } } });
   });
-  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fpricing');
+  await signInThroughUi(page, user, '/login?returnUrl=%2Fpricing');
   await expect(page.getByText('Legacy Pro · $39/month')).toBeVisible();
   await expect(page.getByRole('region', { name: 'Monthly subscriptions' })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Get Pro access' })).toHaveCount(0);

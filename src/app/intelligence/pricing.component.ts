@@ -102,8 +102,9 @@ export class PricingComponent implements OnInit {
 
   async request(offer:Exclude<CheckoutOffer,'pro'>):Promise<void>{
     if(!this.workspace||this.requesting)return;
+    if(offer==='report'&&this.checkingReportReturn)return;
 
-    if(!this.selectedDecision || this.hasReportAccess || this.checkingReportReturn){
+    if(!this.selectedDecision || this.hasReportAccess){
       this.error='Start or open a decision first, then purchase its Decision Report.';
       return;
     }

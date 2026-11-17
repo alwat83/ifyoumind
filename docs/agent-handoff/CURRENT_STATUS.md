@@ -1,10 +1,16 @@
 # ifYouMind — Current development status
 
+## November 17, 2026 — First useful Discovery answer
+
+[Draft #115](https://github.com/alwat83/ifyoumind/pull/115) is integrated with deployed master `6dcffca4eb186c6e0da7431523d7137652e14990` per the [founder’s continuation directive](https://github.com/alwat83/ifyoumind/pull/115#issuecomment-6954547713). The change still leads with a labeled property-tax example and keeps evidence, correction and electricity available. The merge resolved only the append-only development log; the public Discovery change and its [review captures](../design/discovery-first-answer/) are unchanged. Follow the [exact-head checks](https://github.com/alwat83/ifyoumind/pull/115/checks) and PR body for the integrated results. No #115 release is authorized.
+
+[PR #111](https://github.com/alwat83/ifyoumind/pull/111) was merged and [deployed](https://github.com/alwat83/ifyoumind/actions/runs/44126748079). Firebase readback shows Hosting `39dc573f3826dca6` (release `1794933315802000`) and ACTIVE city writer `createmarketintelligenceproject-00087-nub` at 100%. Previous Hosting `cd0b78221355e0f4` remains finalized. Signed-in decision creation navigation and the saved list loaded. The production lost-response save and exactly-once allowance check still need a controlled write to an approved QA workspace; the navigation check did not write a decision. Keep #115 on hold for release until that live gate and separate approval.
+
 ## November 16, 2026 — City Decision Brief evidence
 
 **Merged and deployed.** [PR #109](https://github.com/alwat83/ifyoumind/pull/109) merged at `1c4399d0165a06c285227d7e9631f0a7a63935ba`. The [production workflow](https://github.com/alwat83/ifyoumind/actions/runs/44032196558) passed. The authorized brief shows traceable Census comparisons and withholds numerical comparisons without verified primary evidence. [Issue #108](https://github.com/alwat83/ifyoumind/issues/108) · [Demo and verification evidence](../product/CITY_DECISION_EVIDENCE.md).
 
-[Draft #111](https://github.com/alwat83/ifyoumind/pull/111) integrates current master into `codex/city-save-reliability` for [Issue #110](https://github.com/alwat83/ifyoumind/issues/110). It preserves the evidence disclosure on a recovered result and checks replay across the UTC month boundary. Both old and new clients share the transactional quota. [Exact-head validation and Functions-first rollout](https://github.com/alwat83/ifyoumind/pull/111). Production release requires separate founder authorization. [Draft #112](https://github.com/alwat83/ifyoumind/pull/112) follows #111 for final integration on master.
+[PR #111](https://github.com/alwat83/ifyoumind/pull/111) addresses [Issue #110](https://github.com/alwat83/ifyoumind/issues/110). It preserves the evidence disclosure on a recovered result and checks replay across the UTC month boundary. Both old and new clients share the transactional quota. See the November 17 entry above for independent production evidence and the open live smoke gate. [Draft #112](https://github.com/alwat83/ifyoumind/pull/112) remains separate.
 
 ## November 16, 2026 — Universal Decision Intelligence 4.0 architecture
 

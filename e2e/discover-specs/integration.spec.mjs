@@ -24,6 +24,44 @@ test('public navigation and Business registration presentation remain reachable'
  await page.goto('/');await expect(page.getByRole('link',{name:'Pricing (sign-in required)',exact:true})).toHaveAttribute('href','/app/pricing');
 });
 
+test('a first-time visitor sees a qualified property-tax answer before any input', async ({ page, context }) => {
+ await page.goto('/discover/');
+ await expect(page.getByRole('heading', { level: 1 })).toHaveText('Am I paying too much in property taxes?');
+ const tax = page.getByRole('article', { name: 'Property tax discovery' });
+ await expect(tax).toContainText('Made-up example');
+ await expect(tax).toContainText('The bill went up by $420.00.');
+ await expect(tax).toContainText('School tax accounted for $240.00 of the increase.');
+ await expect(tax).toContainText('Two bills alone can’t tell you whether you paid too much.');
+ await expect(tax).toContainText('assessment notice and exemptions');
+ await expect(tax).toContainText('No account needed');
+ await expect(page.getByRole('textbox')).toHaveCount(0);
+ await expect(page.getByRole('main').getByRole('link', { name: /sign up|sign in|checkout/i })).toHaveCount(0);
+ const primary = tax.getByRole('button', { name: 'Try property tax example' });
+ await expect(primary).toBeInViewport({ ratio: 1 });
+
+ const requests = [];
+ page.on('request', request => requests.push(request.url()));
+ await context.setOffline(true);
+ await primary.focus();
+ await page.keyboard.press('Enter');
+ await expect(page.getByText('Example data—not your taxes.')).toBeVisible();
+ await expect(page.getByRole('table')).toHaveCount(0);
+ const finding = page.locator('.finding').first();
+ await finding.locator('summary').focus();
+ await page.keyboard.press('Enter');
+ await expect(finding.getByRole('table')).toBeVisible();
+ await expect(finding).toContainText('$4,620.00 − $4,200.00 = +$420.00');
+ await expect(finding.getByRole('row', { name: /E2/ })).toContainText('4200.00');
+ await page.getByRole('button', { name: 'Clear & choose another' }).click();
+ await expect(page.getByRole('heading', { level: 1 })).toBeFocused();
+ await expect(page.getByRole('status')).toContainText('Data cleared');
+ await expect(page.getByRole('table')).toHaveCount(0);
+ await expect(page.getByRole('button', { name: 'Try electricity example' })).toBeVisible();
+ await context.setOffline(false);
+ expect(requests).toEqual([]);
+ expect(await page.evaluate(async () => [localStorage.length, sessionStorage.length, document.cookie, (await indexedDB.databases()).length])).toEqual([0, 0, '', 0]);
+});
+
 test('discovery uses the shared local display font and preserves keyboard focus in reduced motion', async ({ page }) => {
  await page.emulateMedia({ reducedMotion: 'reduce' });
  await page.goto('/discover/');

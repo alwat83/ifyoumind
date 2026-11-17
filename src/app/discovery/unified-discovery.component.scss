@@ -139,6 +139,18 @@ h1 em { color: var(--iy-accent); }
   .bill-symbol { width: 28px; height: 28px; right: 0; font-size: 22px; }
   .shell-footer { padding: 20px; }
 }
+:host(.public-discovery) {
+  .entry { text-align: left; }
+  h1 { max-width: 18ch; }
+  .choice > .first-answer { color: var(--iy-ink); font-size: clamp(18px, 2.2vw, 24px); line-height: 1.35; }
+  .choice > .format { font-size: 14px; }
+  .secondary { @include product.secondary; display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; }
+}
+
+@media (min-width: 701px) {
+  :host(.public-discovery) .choices { grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); align-items: start; }
+}
+
 @media (max-width: 350px) {
   .choice { padding: 16px; }
   .bill-art { width: 85px; margin-left: 3px; }

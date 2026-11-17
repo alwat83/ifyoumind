@@ -1,12 +1,16 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-16
+**Updated:** 2026-11-17
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
 **Purpose:** Living project context for the founder and all current/future development agents.
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
+
+## November 17, 2026 — First useful consumer answer
+
+[Issue #113](https://github.com/alwat83/ifyoumind/issues/113) moves the labeled, deterministic property-tax takeaway before the first click on the public Discovery chooser. Evidence remains inspectable in the existing browser-local journey and electricity remains available. [Draft #115](https://github.com/alwat83/ifyoumind/pull/115) is integrated with the deployed #111 source. See the [current handoff](docs/agent-handoff/CURRENT_STATUS.md) for verification and the remaining live save-retry gate.
 
 ## November 16, 2026 — City Decision Brief evidence
 

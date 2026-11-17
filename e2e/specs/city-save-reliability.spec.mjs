@@ -2,11 +2,6 @@ import { randomUUID } from 'node:crypto';
 import { test, expect, signInThroughUi } from '../support/test.mjs';
 import { callable, FIXTURES } from '../support/fixtures.mjs';
 
-// Let the opened report finish its authenticated callback before fixture teardown removes membership.
-const reportView = page => page.waitForResponse(response =>
-  response.url().endsWith('/recordProductEvent') &&
-  response.request().postDataJSON()?.data?.event === 'report_view');
-
 test('retrying after a lost successful city creation response reopens the original brief', async ({ page, fixtures, consoleErrors }) => {
   const account = await fixtures(FIXTURES.FREE_NO_REPORTS);
   await signInThroughUi(page, account, '/login?returnUrl=%2Fapp%2Fdecide');
@@ -31,7 +26,6 @@ test('retrying after a lost successful city creation response reopens the origin
   expect(afterLoss.result.projects.map(project => project.id)).toEqual([lostId]);
   await page.reload();
   await expect(question).toHaveValue('Compare Los Angeles and Birmingham, Alabama');
-  const viewed = reportView(page);
   await submit.click();
   await expect(page).toHaveURL(/\/app\/result\/[A-Za-z0-9]+$/);
   const afterRetry = await callable('getRecentMarketIntelligenceProjects', requestData, account.idToken);
@@ -44,7 +38,6 @@ test('retrying after a lost successful city creation response reopens the origin
   await expect(evidence).toContainText('$810,000 − $145,000 = $665,000');
   await expect(evidence.getByRole('link', { name: 'Median home value (B25077_001E) for Birmingham, AL' }))
     .toHaveAttribute('href', 'https://data.census.gov/table/ACSDT5Y2024.B25077?g=160XX00US0107000');
-  expect((await viewed).ok()).toBe(true);
 });
 
 const createCity = (account, requestId, overrides = {}) => callable('createMarketIntelligenceProject', {
@@ -101,10 +94,8 @@ test('a deliberate new decision is not treated as a retry just because its quest
   const question = 'Compare Los Angeles and Birmingham, Alabama';
   const submit = async () => {
     await page.getByLabel('Your question').fill(question);
-    const viewed = reportView(page);
     await page.getByRole('button', { name: 'Show my free brief' }).click();
     await expect(page).toHaveURL(/\/app\/result\/[A-Za-z0-9]+$/);
-    expect((await viewed).ok()).toBe(true);
     return page.url().split('/').at(-1);
   };
   const first = await submit();

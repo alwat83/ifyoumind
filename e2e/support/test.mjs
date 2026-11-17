@@ -59,7 +59,7 @@ export const test = base.extend({
   }, { auto: true }],
 
   /** Creates fixtures for this test only and always removes them, even when the test fails. */
-  fixtures: async ({}, use) => {
+  fixtures: async ({ context }, use, testInfo) => {
     const created = [];
     const make = async (id, options) => {
       const fixture = await createFixture(id, options);
@@ -70,9 +70,17 @@ export const test = base.extend({
     /** For accounts the browser creates: cleaned up by address even if the test fails midway. */
     make.trackEmail = email => { created.push({ email, byEmail: true }); };
     await use(make);
-    for (const fixture of created.reverse()) {
-      if (fixture.byEmail) await cleanupFixtureByEmail(fixture.email);
-      else if (fixture.uid && isFixtureEmail(fixture.email)) await cleanupFixture(fixture);
+    try {
+      // Stop the successful test's client before deleting its membership. A result or background
+      // event can still be loading after assertions finish. Failed tests keep pages for artifacts.
+      if (testInfo.status === 'passed' && created.length) {
+        await Promise.all(context.pages().map(page => page.close()));
+      }
+    } finally {
+      for (const fixture of created.reverse()) {
+        if (fixture.byEmail) await cleanupFixtureByEmail(fixture.email);
+        else if (fixture.uid && isFixtureEmail(fixture.email)) await cleanupFixture(fixture);
+      }
     }
   },
 });

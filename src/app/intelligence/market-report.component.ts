@@ -12,6 +12,7 @@ import { clearIntent, parseIntent, readIntent } from '../purchase-intent';
 import { EvidenceSummary, housingTakeaway, summarizeEvidence } from './evidence-summary';
 import { loadSampleBeforeDeadline, SampleLoadFailure, sampleFailureCopy } from './sample-report-loading';
 import { understandCityQuestion } from './decision-steps';
+import { buildCityDecisionCase, CityDecisionCase } from './city-decision-case';
 
 @Component({
   selector:'app-market-report',
@@ -53,6 +54,9 @@ export class MarketReportComponent implements OnInit, OnDestroy {
   private sampleController:AbortController|null=null;
   private destroyed=false;
   private focusRecoveredReport=false;
+  private evidenceProject?: MarketProject;
+  private evidenceCase?: CityDecisionCase;
+  private evidenceBrief?: MarketProject['brief'];
   readonly focusDecisionTitle=(inject(Location).getState() as { focusDecisionTitle?: boolean } | null)?.focusDecisionTitle === true;
 
   @ViewChild('reportTitle') set reportTitle(title:ElementRef<HTMLElement>|undefined){
@@ -152,12 +156,33 @@ export class MarketReportComponent implements OnInit, OnDestroy {
    * What the figures show, measure by measure. Computed from the brief itself, so saved decisions and
    * the sample get it too. It never says favorable or caution: four demographic measures cannot.
    */
+  get cityEvidence(): CityDecisionCase | undefined {
+    const project = this.project;
+    const brief = project?.brief;
+    if (this.sampleMode || this.reportPurchased || project?.mode !== 'live' || !brief?.comparisons?.length) return undefined;
+    if (project !== this.evidenceProject) {
+      this.evidenceProject = project;
+      this.evidenceCase = buildCityDecisionCase({ location: project.location, metrics: brief.metrics }, brief.comparisons,
+        this.householdQuestion?.intent === 'cost-of-living' ? 'personal-living-cost' : 'city-comparison');
+      const primary = this.evidenceCase.places.find(item => item.location === project.location);
+      this.evidenceBrief = { ...brief, metrics: primary?.metrics ?? [],
+        comparisons: this.evidenceCase.places.filter(item => item !== primary) };
+    }
+    return this.evidenceCase;
+  }
+
+  get visibleBrief() {
+    return this.cityEvidence ? this.evidenceBrief : this.project?.brief;
+  }
+
   get summary():EvidenceSummary|null{
-    const brief=this.project?.brief;
+    const brief=this.visibleBrief;
     if(!brief||!this.project)return null;
     const primary={location:this.project.location,metrics:brief.metrics||[]};
     const summary=summarizeEvidence(primary,brief.comparisons||[]);
     const context=this.householdQuestion;
+    if (this.cityEvidence && !brief.metrics.length && !context) return { ...summary,
+      headline: 'A verified comparison is unavailable for the main city.' };
     return context ? {
       ...summary,
       headline:housingTakeaway(primary,brief.comparisons?.[0]),
@@ -190,9 +215,10 @@ export class MarketReportComponent implements OnInit, OnDestroy {
 
   /** How many key figures cite their source. This counts citations; it is not a confidence score. */
   get sourcesCited():string{
-    const brief=this.project?.brief;
+    const brief=this.visibleBrief;
     if(!brief)return '';
     const sourced=brief.metrics.filter(metric=>!!metric.sourceLabel).length;
+    if (this.cityEvidence) return `${sourced} of 3 city figures`;
     return `${sourced} of ${brief.metrics.length} key figures`;
   }
 

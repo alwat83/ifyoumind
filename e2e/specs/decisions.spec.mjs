@@ -1,11 +1,12 @@
 // Free decision creation, saved-decision retrieval, ownership and restricted pages.
 import { test, expect, expectAccessible, expectNoHorizontalScroll, signInThroughUi } from '../support/test.mjs';
-import { FIXTURES, grantAdminClaim } from '../support/fixtures.mjs';
+import { callable, FIXTURES, grantAdminClaim } from '../support/fixtures.mjs';
 
 const livingQuestion = 'What is the difference in cost of living between Los Angeles and Birmingham, Alabama, if someone makes $90,000?';
 
 test('a cost-of-living question goes straight to a sourced answer and reopens without creating a duplicate', async ({ page, fixtures }) => {
-  await signInThroughUi(page, await fixtures(FIXTURES.FREE_NO_REPORTS), '/login?returnUrl=%2Fapp%2Fdecide');
+  const user = await fixtures(FIXTURES.FREE_NO_REPORTS);
+  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fdecide');
   const creates = [];
   const unexpected = [];
   page.on('request', request => {
@@ -34,6 +35,19 @@ test('a cost-of-living question goes straight to a sourced answer and reopens wi
   expect(creates).toHaveLength(1);
   expect(creates[0]).toMatchObject({ location: 'Los Angeles, CA', comparisonLocations: ['Birmingham, AL'], decision: livingQuestion });
 
+  const evidence = page.getByRole('region', { name: 'City comparison evidence' });
+  const disclosure = evidence.getByText('Show the evidence', { exact: true });
+  await expect(evidence.locator('details')).not.toHaveAttribute('open');
+  await disclosure.focus();
+  await page.keyboard.press('Enter');
+  await expect(evidence.getByText(/Partial answer/)).toBeVisible();
+  await expect(evidence).toContainText('2024 ACS 5-year estimates (2020–2024)');
+  await expect(evidence).toContainText('State FIPS 06 · Place FIPS 44000');
+  await expect(evidence).toContainText('State FIPS 01 · Place FIPS 07000');
+  await expect(evidence).toContainText('$810,000 − $145,000 = $665,000');
+  await expect(evidence.getByRole('link', { name: 'Median home value (B25077_001E) for Birmingham, AL' }))
+    .toHaveAttribute('href', 'https://data.census.gov/table/ACSDT5Y2024.B25077?g=160XX00US0107000');
+
   for (const width of [320, 390, 768, 1280]) {
     await page.setViewportSize({ width, height: 844 });
     await expectNoHorizontalScroll(page);
@@ -50,7 +64,31 @@ test('a cost-of-living question goes straight to a sourced answer and reopens wi
   await expect(page).toHaveURL(resultUrl);
   await expect(title).toBeVisible();
   expect(creates).toHaveLength(1);
+  await expect(evidence.locator('details')).not.toHaveAttribute('open');
+  await disclosure.click();
+  await expect(evidence).toContainText('$810,000 − $145,000 = $665,000');
+  const { result } = await callable('getRecentMarketIntelligenceProjects', { organizationId: user.organizationId }, user.idToken);
+  expect(result.projects.map(project => project.id)).toEqual([resultUrl.split('/').at(-1)]);
   expect(unexpected).toEqual([]);
+});
+
+test('a saved city brief keeps supported estimates when one receipt is invalid', async ({ page, fixtures }) => {
+  const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
+  const id = user.projectIds[0];
+  await page.route('**/getMarketIntelligenceProject', async route => {
+    const response = await route.fetch();
+    const body = await response.json();
+    body.result.brief.metrics.find(metric => metric.key === 'homeValue').sourceUrl = 'https://example.test/unsupported';
+    await route.fulfill({ response, json: body });
+  });
+  await signInThroughUi(page, user, '/login?returnUrl=' + encodeURIComponent('/app/result/' + id));
+  const evidence = page.getByRole('region', { name: 'City comparison evidence' });
+  await evidence.getByText('Show the evidence', { exact: true }).click();
+  await expect(evidence.getByText(/Some estimates could not be verified/)).toBeVisible();
+  await expect(evidence).toContainText('Population compared with Madison, WI');
+  await expect(evidence).not.toContainText('Median home value compared with Madison, WI');
+  await expect(evidence.getByRole('link', { name: /Median home value.*Springfield/ })).toHaveCount(0);
+  await expect(page.getByText('$152,000', { exact: true })).toHaveCount(0);
 });
 
 test('comparison without salary and a single-city housing question keep their own evidence', async ({ page, fixtures }) => {
@@ -250,7 +288,7 @@ test('comparison validates two distinct places and keeps entries through a retry
   await brief.click();
   await expect(page).toHaveURL(/\/app\/result\//);
   await expect(page.getByRole('heading', { level: 1, name: 'How do these cities compare?' })).toBeVisible();
-  await expect(page.getByText('Madison, WI', { exact: true }).first()).toBeVisible();
+  await expect(page.locator('#comparison').getByRole('heading', { name: 'Madison, WI' })).toBeVisible();
 });
 
 test('local property tax questions preserve the question and do not pretend a sample is an answer', async ({ page, fixtures }) => {

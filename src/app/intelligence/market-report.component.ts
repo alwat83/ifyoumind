@@ -12,6 +12,7 @@ import { clearIntent, parseIntent, readIntent } from '../purchase-intent';
 import { EvidenceSummary, housingTakeaway, summarizeEvidence } from './evidence-summary';
 import { loadSampleBeforeDeadline, SampleLoadFailure, sampleFailureCopy } from './sample-report-loading';
 import { understandCityQuestion } from './decision-steps';
+import { buildCityDecisionCase, CityDecisionCase } from './city-decision-case';
 
 @Component({
   selector:'app-market-report',
@@ -53,6 +54,9 @@ export class MarketReportComponent implements OnInit, OnDestroy {
   private sampleController:AbortController|null=null;
   private destroyed=false;
   private focusRecoveredReport=false;
+  private evidenceProject?: MarketProject;
+  private evidenceCase?: CityDecisionCase;
+  private evidenceBrief?: MarketProject['brief'];
   readonly focusDecisionTitle=(inject(Location).getState() as { focusDecisionTitle?: boolean } | null)?.focusDecisionTitle === true;
 
   @ViewChild('reportTitle') set reportTitle(title:ElementRef<HTMLElement>|undefined){
@@ -152,15 +156,50 @@ export class MarketReportComponent implements OnInit, OnDestroy {
    * What the figures show, measure by measure. Computed from the brief itself, so saved decisions and
    * the sample get it too. It never says favorable or caution: four demographic measures cannot.
    */
+  get cityEvidence(): CityDecisionCase | undefined {
+    const project = this.project;
+    const brief = project?.brief;
+    if (this.sampleMode || this.reportPurchased || project?.mode !== 'live' || !brief || !(brief.comparisons?.length || project.comparisonLocations?.length)) return undefined;
+    if (project !== this.evidenceProject) {
+      this.evidenceProject = project;
+      this.evidenceCase = buildCityDecisionCase({ location: project.location, metrics: brief.metrics }, brief.comparisons ?? [],
+        this.householdQuestion?.intent === 'cost-of-living' ? 'personal-living-cost' : 'city-comparison');
+      const { primary, places, calculations } = this.evidenceCase;
+      const paired = new Set(calculations.map(calculation => calculation.other.id));
+      this.evidenceBrief = { ...brief, metrics: primary?.metrics ?? [],
+        comparisons: places.filter(item => item !== primary).flatMap(place => {
+          const metrics = place.metrics.filter(metric => paired.has(metric.id));
+          return metrics.length ? [{ ...place, metrics }] : [];
+        }) };
+    }
+    return this.evidenceCase;
+  }
+
+  get visibleBrief() {
+    return this.cityEvidence ? this.evidenceBrief : this.project?.brief;
+  }
+
   get summary():EvidenceSummary|null{
-    const brief=this.project?.brief;
+    const brief=this.visibleBrief;
     if(!brief||!this.project)return null;
     const primary={location:this.project.location,metrics:brief.metrics||[]};
     const summary=summarizeEvidence(primary,brief.comparisons||[]);
     const context=this.householdQuestion;
+    const evidence = this.cityEvidence;
+    if (evidence && !evidence.calculations.length) return { ...summary,
+      headline: 'A verified city comparison is unavailable.',
+      limits: evidence.primary
+        ? 'This saved decision has no matching verified estimates for the requested cities.'
+        : 'This saved decision has no verified estimates for the main city.' };
+    if (evidence && context && !evidence.calculations.some(calculation => calculation.primary.key === 'homeValue')) {
+      return { ...summary, headline: 'A verified home-value comparison is unavailable.',
+        limits: 'The available estimates cannot establish personal housing expenses or a salary equivalent.' };
+    }
     return context ? {
       ...summary,
-      headline:housingTakeaway(primary,brief.comparisons?.[0]),
+      headline:housingTakeaway(primary, evidence
+        ? brief.comparisons.find(place => place.metrics.some(metric => metric.key === 'homeValue'))
+        : brief.comparisons?.[0]),
       limits:context.intent==='cost-of-living'
         ? 'These Census estimates describe each city’s population, household income, and home values. To compare your cost of living or calculate a salary equivalent, you’d need actual housing, taxes, transportation, and other recurring expenses.'
         : 'Median home value describes what owner-occupied homes are worth. To estimate what you would pay, check current rent or sale listings, financing, utilities, and fees for comparable homes.',
@@ -190,9 +229,10 @@ export class MarketReportComponent implements OnInit, OnDestroy {
 
   /** How many key figures cite their source. This counts citations; it is not a confidence score. */
   get sourcesCited():string{
-    const brief=this.project?.brief;
+    const brief=this.visibleBrief;
     if(!brief)return '';
     const sourced=brief.metrics.filter(metric=>!!metric.sourceLabel).length;
+    if (this.cityEvidence) return `${sourced} of 3 main-city figures`;
     return `${sourced} of ${brief.metrics.length} key figures`;
   }
 

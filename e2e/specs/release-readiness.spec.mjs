@@ -76,7 +76,8 @@ test('paid-report response contract: full report, copy and print controls remain
 // Both callable responses and the destination are intercepted: this verifies browser wiring,
 // never opens a real Stripe session and never changes a billing configuration or entitlement.
 test('one-time checkout preserves the offer and report identity', async ({ page, fixtures }, testInfo) => {
-  const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
+  const user = await fixtures(FIXTURES.FREE_NO_REPORTS);
+  const question = 'Compare Los Angeles and Birmingham, Alabama';
   const calls = [];
   await page.route('**/getCommercialStatus', async route => {
     const response = await route.fetch();
@@ -88,13 +89,20 @@ test('one-time checkout preserves the offer and report identity', async ({ page,
     return route.fulfill({ json: { result: { url: 'https://checkout.stripe.com/c/pay/qa-release-contract' } } });
   });
   await page.route('https://checkout.stripe.com/**', route => route.fulfill({ contentType: 'text/html', body: '<h1>Intercepted checkout contract — no payment</h1>' }));
-  const path = `/app/pricing?offer=report&projectId=${user.projectIds[0]}`;
-  const result = '/app/result/' + user.projectIds[0];
-  await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent(result)}`);
+  await signInThroughUi(page, user, '/login?returnUrl=%2Fapp%2Fdecide');
+  await page.getByLabel('Your question').fill(question);
+  await page.getByRole('button', { name: 'Show my free brief' }).click();
+  await expect(page).toHaveURL(/\/app\/result\/[A-Za-z0-9]+$/);
+  const result = new URL(page.url()).pathname;
+  const projectId = result.split('/').at(-1);
+  const path = `/app/pricing?offer=report&projectId=${projectId}`;
+  const evidence = page.getByRole('region', { name: 'City comparison evidence' });
+  await evidence.getByText('Show the evidence', { exact: true }).click();
+  await expect(evidence).toContainText('$810,000 − $145,000 = $665,000');
   await page.getByRole('link', { name: 'Get the $79 report', exact: true }).click();
   await expect(page).toHaveURL(url => url.pathname + url.search === path);
   await expect(page.getByRole('heading', { name: 'A full report for your decision.' })).toBeVisible();
-  await expect(page.getByText('QA fixture decision 1: where should the bakery open?', { exact: true })).toBeVisible();
+  await expect(page.getByText(question, { exact: true })).toBeVisible();
   await expect(page.getByText(/Your report stays in Your decisions/)).toBeVisible();
   await expect(page.getByRole('link', { name: 'Back to your decision' })).toHaveAttribute('href', result);
   await expect(page.getByRole('region', { name: 'One-time Decision Report' })).toContainText('$79');
@@ -115,7 +123,7 @@ test('one-time checkout preserves the offer and report identity', async ({ page,
   await expect(buy).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page).toHaveURL('https://checkout.stripe.com/c/pay/qa-release-contract');
-  expect(calls).toEqual([{ organizationId: user.organizationId, offer: 'report', projectId: user.projectIds[0] }]);
+  expect(calls).toEqual([{ organizationId: user.organizationId, offer: 'report', projectId }]);
 });
 
 test('one-time checkout return waits for report access before opening the saved decision', async ({ page, fixtures }) => {

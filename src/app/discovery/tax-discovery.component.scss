@@ -47,3 +47,5 @@ footer { padding:28px 32px; color:var(--iy-muted); border-top:1px solid var(--iy
 // Keep the first finding above continuation and correction tools on phones.
 .discoveries>.section-title { min-height:44px; margin-block:12px; gap:8px; flex-direction:row; flex-wrap:wrap; }
 .discoveries>.section-title .quiet-button { padding:0; }
+.ready-status { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+@media(max-width:360px) { .discoveries>.section-title .checked { font-size:11px; }.discoveries>.section-title .quiet-button { font-size:12px; } }

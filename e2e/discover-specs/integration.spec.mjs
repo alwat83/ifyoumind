@@ -72,7 +72,7 @@ test('public navigation and Business registration presentation remain reachable'
 
 test('a first-time visitor sees a qualified property-tax answer before any input', async ({ page, context }) => {
  await page.goto('/discover/');
- await expect(page.getByRole('heading', { level: 1 })).toHaveText('Am I paying too much in property taxes?');
+ await expect(page.getByRole('heading', { level: 1 })).toHaveText('Choose a bill.');
  const tax = page.getByRole('article', { name: 'What changed in the example?' });
  await expect(tax).toContainText('Made-up example');
  await expect(tax).toContainText('The bill went up by $420.00');

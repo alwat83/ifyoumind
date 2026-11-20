@@ -1,28 +1,29 @@
 <a class="skip" [href]="category ? '#main' : '#discovery-entry'">Skip to discovery</a>
 <app-journey-navigation *ngIf="publicEntry" class="journey-header" current="explore" [example]="category || ''"></app-journey-navigation>
-<header *ngIf="category || !publicEntry" class="shell-header" [class.active]="category">
+<div *ngIf="category || !publicEntry" class="shell-header" [class.active]="category">
   <span *ngIf="!publicEntry" class="brand">ifYouMind<span>.</span></span>
   <span class="preview">{{ publicEntry ? 'Bill discovery' : 'Local preview' }}</span>
   <ng-container *ngIf="category">
     <span class="category">{{ category === 'tax' ? 'Property tax' : 'Electricity bills' }}</span>
     <nav aria-label="Discovery actions"><button type="button" (click)="home()">Clear &amp; choose another</button><button *ngIf="hasData" type="button" (click)="clear()">Clear my data</button></nav>
   </ng-container>
-</header>
+</div>
 <main *ngIf="!category" id="discovery-entry" class="entry">
   <p *ngIf="!publicEntry" class="eyebrow">You bring the data. We’ll find the story.</p>
-  <h1 #entryHeading tabindex="-1"><ng-container *ngIf="publicEntry; else localHeading">Am I paying too much in property taxes?</ng-container><ng-template #localHeading>Pick a bill.<br>Find your <em>aha.</em></ng-template></h1>
+  <h1 #entryHeading tabindex="-1"><ng-container *ngIf="publicEntry; else localHeading">Choose a bill.</ng-container><ng-template #localHeading>Pick a bill.<br>Find your <em>aha.</em></ng-template></h1>
   <p *ngIf="!publicEntry" class="lead">One little click. A whole new way to see your numbers.</p>
   <p class="message" role="status" aria-live="polite">{{ message }}</p>
   <div class="choices">
     <article class="choice tax" aria-labelledby="tax-title">
       <p class="kicker">{{ publicEntry ? 'Made-up example' : 'Year to year · Made-up example' }}</p>
       <h2 id="tax-title">{{ publicEntry ? 'What changed in the example?' : 'Property tax discovery' }}</h2>
+      <div class="actions"><button class="primary" type="button" (click)="choose('tax')" aria-label="Try property tax example">{{ publicEntry ? 'Try property tax example' : 'Try example' }} <span aria-hidden="true">↗</span></button><button class="quiet" type="button" (click)="choose('tax',false)" aria-label="Use a property tax CSV">Use my CSV</button></div>
       <ng-container *ngIf="publicEntry && taxExample.status === 'ready' && taxExample.delta > 0; else taxDescription">
-        <p class="first-answer"><span>The bill went up by</span> <strong>{{ usd(taxExample.delta) }}</strong> <span *ngIf="schoolTaxChange > 0">School tax accounted for <strong>{{ usd(schoolTaxChange) }}</strong> of the increase.</span></p>
+        <p class="first-answer"><span>The bill went up by</span>&ngsp;<strong>{{ usd(taxExample.delta) }}</strong>&ngsp;<span *ngIf="schoolTaxChange > 0">School tax accounted for <strong>{{ usd(schoolTaxChange) }}</strong> of the increase.</span></p>
         <p>Two bills alone can’t tell you whether you paid too much. Start by checking your county’s assessment notice and exemptions.</p>
       </ng-container>
       <ng-template #taxDescription><p>A bigger bill. See which charges changed.</p></ng-template>
-      <div class="actions"><button class="primary" type="button" (click)="choose('tax')" aria-label="Try property tax example">{{ publicEntry ? 'Try property tax example' : 'Try example' }} <span aria-hidden="true">↗</span></button><button class="quiet" type="button" (click)="choose('tax',false)" aria-label="Use a property tax CSV">Use my CSV</button></div>
+
       <p *ngIf="publicEntry" class="format">Free · No account needed</p>
       <p *ngIf="!publicEntry" class="format">Two annual statements · USD · one supported CSV format</p>
     </article>

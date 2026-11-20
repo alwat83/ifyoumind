@@ -67,6 +67,6 @@ test('a session with an invalid refresh token is signed out and sent to sign-in'
   await signInThroughUi(page, user);
   await expect(page).toHaveURL(/\/decisions$/);
   await expireStoredSession(page, 'not-a-valid-refresh-token');
-  await page.goto('/pricing');
-  await expect(page).toHaveURL(/\/login\?returnUrl=%2Fpricing$/);
+  await page.goto('/account');
+  await expect(page).toHaveURL(/\/login\?returnUrl=%2Faccount$/);
 });

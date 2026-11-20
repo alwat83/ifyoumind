@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 20, 2026 — Consumer integration release candidate
+
+`codex/consumer-integration-release` combines the reviewed #115 → #116 → #117 ancestry with #114's permanent consumer-first instructions. Pricing is public in the existing component. Only verified signed-in readers trigger workspace, report or subscription reads. Guests can inspect Free, the $79 report and closed monthly enrollment details. See the [integration review, screenshots and release plan](../releases/consumer-integration-20261120/REVIEW.md). Final candidate workflows and visual review are tracked on its draft PR.
+
+Fresh production metadata still shows Hosting `39dc573f3826dca6` and city writer `createmarketintelligenceproject-00087-nub` ACTIVE at 100%. The candidate has no backend, rule, city-writer service or monetization-service diff from deployed master. The #111 live test remains unverified. Recommendation is independent UI release review, subject to an explicit founder decision on the existing gate and release authorization.
+
 ## November 17, 2026 — Clean consumer routes
 
 The route migration on `codex/consumer-clean-routes` builds on [draft #116](https://github.com/alwat83/ifyoumind/pull/116) at `18a9344aadd2a3cdbb132712de5e1c65d89aed72`. Public and signed-in navigation use the existing Angular app. Decisions use `/decisions`, `/decide`, and `/decisions/:id`. Account tools use top-level paths such as `/account` and `/pricing`. Known bookmarks and provider returns use same-app redirects that retain the route parameters and anchor. Existing guards still handle sign-in and verification. Local Hosting verified direct loads, legacy redirects and private metadata. Production is on #111 and needs separate release authorization.

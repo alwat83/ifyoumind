@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Auth, user } from '@angular/fire/auth';
+import { firstValueFrom } from 'rxjs';
 import { IntelligenceOrganization, OrganizationService } from './organization.service';
 import { CheckoutOffer, CommercialStatus, MonetizationService } from './monetization.service';
 import { ProductAnalyticsService } from './product-analytics.service';
@@ -19,6 +21,7 @@ export class PricingComponent implements OnInit {
   private readonly route=inject(ActivatedRoute);
   private readonly analytics=inject(ProductAnalyticsService);
   private readonly market=inject(MarketIntelligenceService);
+  private readonly auth=inject(Auth);
 
   workspace:IntelligenceOrganization|null=null;
   status:CommercialStatus|null=null;
@@ -29,12 +32,20 @@ export class PricingComponent implements OnInit {
   highlightedOffer='';
   reportReady=false;
   error='';
+  signedIn=false;
   readonly subscriptionPlans = [
     { offer: 'starter' as const, name: 'Starter', price: '4.99', allowance: '1 full Decision Report' },
     { offer: 'plus' as const, name: 'Plus', price: '9.99', allowance: '3 full Decision Reports' },
   ];
 
   async ngOnInit():Promise<void>{
+    // Resolve identity before reading any workspace, report, credits or billing status.
+    const viewer = await firstValueFrom(user(this.auth));
+    this.signedIn = viewer?.emailVerified === true;
+    if (!this.signedIn) {
+      this.loading = false;
+      return;
+    }
     this.projectId=this.route.snapshot.queryParamMap.get('projectId')||'';
     this.highlightedOffer=this.route.snapshot.queryParamMap.get('offer')||'';
     const checkout=this.route.snapshot.queryParamMap.get('checkout')||'';

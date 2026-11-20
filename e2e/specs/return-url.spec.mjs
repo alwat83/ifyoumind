@@ -2,7 +2,7 @@
 import { test, expect, newIsolatedContext, pathOf, signInThroughUi } from '../support/test.mjs';
 import { FIXTURES } from '../support/fixtures.mjs';
 
-const KEPT = ['/decide?type=business&intent=report', '/pricing?offer=report', '/account', '/decisions/abc123'];
+const KEPT = ['/decide?type=business&intent=report', '/account', '/decisions/abc123'];
 // /decisions is the default destination, so it needs no return URL.
 const NOT_KEPT = ['/decisions', '/growth', '/data', '/ask', '/advanced'];
 
@@ -26,7 +26,6 @@ test('valid return URLs are restored after email sign-in', async ({ browser, fix
   const cases = [
     ['/decide?type=business&intent=report', '/decide?type=business&intent=report'],
     [`/app/result/${user.projectIds[0]}`, `/decisions/${user.projectIds[0]}`],
-    ['/app/pricing?offer=report&checkout=success', '/pricing?offer=report'],
   ];
   for (const [requested, expected] of cases) {
     const context = await newIsolatedContext(browser);
@@ -45,6 +44,14 @@ test('unknown query parameters are dropped and the page is kept', async ({ page,
   const user = await fixtures(FIXTURES.RETURN_URL);
   await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent('/decide?type=business&next=https://evil.example&checkout=success')}`);
   await expect.poll(() => pathOf(page)).toBe('/decide?type=business');
+});
+
+test('a saved pricing sign-in link canonicalizes the path and drops replayed payment flags', async ({ page, fixtures }) => {
+  const viewer = await fixtures(FIXTURES.RETURN_URL);
+  await signInThroughUi(page, viewer, '/login?returnUrl=' +
+    encodeURIComponent('/app/pricing?offer=report&checkout=success'));
+  await expect.poll(() => pathOf(page)).toBe('/pricing?offer=report');
+  await expect(page.locator('body')).not.toContainText('Your payment is complete');
 });
 
 const HOSTILE = [

@@ -5,6 +5,7 @@
     <nav class="desktop-nav" aria-label="Main navigation">
       <a href="#business">Examples</a>
       <a href="#reports">Decision Reports</a>
+      <a routerLink="/pricing">Pricing</a>
       @if (viewer()?.emailVerified) {
         <a routerLink="/decisions">Your decisions</a>
       } @else {
@@ -17,6 +18,7 @@
       <nav aria-label="Mobile navigation">
         <a href="#business" (click)="mobileNavigation.open = false">Examples</a>
         <a href="#reports" (click)="mobileNavigation.open = false">Decision Reports</a>
+        <a routerLink="/pricing">Pricing</a>
         @if (viewer()?.emailVerified) {
           <a routerLink="/decisions" (click)="mobileNavigation.open = false">Your decisions</a>
         } @else {
@@ -163,7 +165,7 @@
     <nav aria-label="Footer">
       <a href="/discover/">Understand Your Bills</a>
       <a href="/guides/">Guides</a>
-      <a routerLink="/pricing">Pricing (sign-in required)</a>
+      <a routerLink="/pricing">Pricing</a>
       <a href="#data-sources" (click)="evidence.open = true">Data Sources</a>
       <a routerLink="/privacy-policy">Privacy</a>
       <a routerLink="/terms-of-conduct">Terms</a>

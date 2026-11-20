@@ -1,7 +1,7 @@
 import { test, expect } from '../support/test.mjs';
 
 test('initial responses protect private routes and give public routes their own metadata', async ({ request }) => {
-  for (const path of ['/', '/sample-report?utm_source=regression', '/privacy-policy', '/terms-of-conduct']) {
+  for (const path of ['/', '/sample-report?utm_source=regression', '/pricing', '/privacy-policy', '/terms-of-conduct']) {
     const response = await request.get(path);
     expect(response.status()).toBe(200);
     const html = await response.text();

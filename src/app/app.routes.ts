@@ -49,7 +49,6 @@ export const routes:Routes=[
   },
   {
     path:'pricing',
-    canActivate:[authGuard],
     loadComponent:()=>import('./intelligence/pricing.component').then(m=>m.PricingComponent),
   },
   {

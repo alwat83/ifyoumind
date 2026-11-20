@@ -45,7 +45,7 @@ test('homepage comparison, sample report, paid intent and free registration rema
   await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
 });
 
-test('homepage free brief and pricing keep their sign-in return paths', async ({ page, fixtures }) => {
+test('homepage free brief keeps its return path and pricing opens publicly', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
   await page.goto('/');
   await page.getByRole('link', { name: 'Start a Free Brief', exact: true }).click();
@@ -53,9 +53,9 @@ test('homepage free brief and pricing keep their sign-in return paths', async ({
   await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
   const briefSignIn = page.url();
   await page.goto('/');
-  await page.getByRole('link', { name: 'Pricing (sign-in required)', exact: true }).click();
-  await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/pricing');
-  await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
+  await page.locator('.site-footer').getByRole('link', { name: 'Pricing', exact: true }).click();
+  await expect(page).toHaveURL(/\/pricing$/);
+  await expect(page.getByRole('heading', { name: 'One-time Decision Report' })).toBeVisible();
 
   await signInThroughUi(page, user, briefSignIn);
   await expect(page).toHaveURL(/\/decide\?type=business$/);

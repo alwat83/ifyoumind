@@ -3,10 +3,10 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
 const audit = JSON.parse(await readFile(process.argv[2], 'utf8'));
-assert.equal(audit.observations.length, 56, 'all routes, widths and JavaScript modes audited');
+assert.equal(audit.observations.length, 60, 'all routes, widths and JavaScript modes audited');
 for (const row of audit.observations) {
   const path = row.path.split('?')[0];
-  const privatePage = /^\/(login|register|app)(\/|$)/.test(path);
+  const privatePage = /^\/(login|register|app|decisions|decide|account|data|ask|advanced|growth)(\/|$)/.test(path);
   const missing = ['/seo-audit-missing-page', '/life/quick-compare'].includes(path);
   const label = `${row.path} JS=${row.javascript} width=${row.width}`;
   assert.equal(row.status, missing ? 404 : 200, label);
@@ -36,8 +36,8 @@ for (const row of audit.observations) {
 const sitemap = audit.resources.find(resource => resource.path === '/sitemap.xml');
 assert.equal(sitemap.status, 200);
 const urls = [...sitemap.body.matchAll(/<loc>(.*?)<\/loc>/g)].map(match => match[1]);
-assert.equal(urls.length, 9);
-assert.equal(new Set(urls).size, 9);
+assert.equal(urls.length, 10);
+assert.equal(new Set(urls).size, 10);
 assert.ok(urls.every(url => url.startsWith('https://ifyoumind.com/') && !/\/app|\/life|\/login|\/register/.test(url)));
 const robots = audit.resources.find(resource => resource.path === '/robots.txt');
 assert.equal(robots.status, 200);
@@ -46,4 +46,4 @@ for (const redirect of audit.redirects) {
   assert.equal(redirect.status, 301, `${redirect.path}: permanent redirect`);
   assert.ok(redirect.location);
 }
-console.log('PASS: 56 raw/rendered SEO observations, 9 sitemap URLs, robots, JSON-LD, redirects and Life 404.');
+console.log('PASS: 60 raw/rendered SEO observations, 10 sitemap URLs, robots, JSON-LD, redirects and Life 404.');

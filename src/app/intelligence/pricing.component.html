@@ -1,7 +1,10 @@
 <main class="pricing-shell">
-  <nav class="topbar" aria-label="Workspace">
+  <nav class="topbar" aria-label="Pricing navigation">
     <a routerLink="/" class="brand" aria-label="ifYouMind home">ifYouMind</a>
-    <div class="nav-links"><a routerLink="/account">Account</a><a routerLink="/decisions">Your decisions</a></div>
+    <div class="nav-links">
+      <ng-container *ngIf="signedIn; else publicNavigation"><a routerLink="/account">Account</a><a routerLink="/decisions">Your decisions</a></ng-container>
+      <ng-template #publicNavigation><a routerLink="/sample-report">Sample report</a><a routerLink="/login">Sign In</a></ng-template>
+    </div>
   </nav>
 
   <header>
@@ -49,23 +52,38 @@
       <article class="plan">
         <h3>Free</h3>
         <p class="price">$0</p>
+        <p *ngIf="!signedIn">Explore bill examples without an account. Your bill data stays in your browser.</p>
         <p>Up to three Decision Briefs each month, with one comparison city and saved history.</p>
         <a *ngIf="projectId; else startFree" [routerLink]="['/decisions', projectId]" class="action">Back to your decision</a>
-        <ng-template #startFree><a routerLink="/decide" class="action">Start a free decision</a></ng-template>
+        <ng-template #startFree>
+          <a *ngIf="signedIn; else freeExample" routerLink="/decide" class="action">Start a free decision</a>
+          <ng-template #freeExample><a href="/discover/?example=tax" class="action">Try a free example</a></ng-template>
+        </ng-template>
       </article>
       <article class="plan">
         <h3>One-time Decision Report</h3>
         <p class="price">${{ status?.pricing?.reportOneTimeUsd ?? 79 }}<small>one time</small></p>
         <p>One full Decision Report. A single charge with no renewal.</p>
+        <p *ngIf="!signedIn">For a city or business decision. Preview the report before creating an account.</p>
         <ng-container *ngIf="!checkingReportReturn">
           <button *ngIf="projectId && status; else chooseDecision" type="button" class="action" (click)="request('report')" [disabled]="requesting">
             {{ requesting === 'report' ? 'Opening Stripe Checkout…' : 'Buy Decision Report' }}
           </button>
-          <ng-template #chooseDecision><a routerLink="/decisions" class="action">Choose a decision</a></ng-template>
+          <ng-template #chooseDecision>
+            <a *ngIf="signedIn; else sampleReport" routerLink="/decisions" class="action">Choose a decision</a>
+            <ng-template #sampleReport><a routerLink="/sample-report" class="action">View a sample report</a></ng-template>
+          </ng-template>
         </ng-container>
       </article>
     </div>
   </section>
+
+  <details *ngIf="!loading && !signedIn" class="monthly-preview">
+    <summary>Monthly plans · New enrollment is closed</summary>
+    <p *ngFor="let plan of subscriptionPlans">{{ plan.name }} · ${{ plan.price }}/month · {{ plan.allowance }} per paid billing period.</p>
+    <p>Renews monthly. Cancel before renewal. Unused credits expire at the end of each paid period. Reports you’ve unlocked stay saved.</p>
+    <p>Existing subscribers can manage their plan and credits in Account after signing in.</p>
+  </details>
 
   <p *ngIf="!loading" class="billing-note">Secure checkout is handled by Stripe.</p>
 </main>

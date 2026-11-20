@@ -1,12 +1,16 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-17
+**Updated:** 2026-11-20
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
 **Purpose:** Living project context for the founder and all current/future development agents.
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
+
+## November 20, 2026 — Integrated consumer release candidate
+
+The integration candidate combines #114–#117 and makes pricing publicly readable using the existing component. Guests can inspect Free, the one-time report and closed monthly enrollment details. Verified identity gates private commercial reads. The [review and rollout evidence](docs/releases/consumer-integration-20261120/REVIEW.md) includes the technical assessment of the outstanding #111 live check. Merge and production release await separate founder authorization.
 
 ## November 17, 2026 — First useful consumer answer
 

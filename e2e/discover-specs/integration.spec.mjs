@@ -12,7 +12,7 @@ test('actual Hosting serves prefixed assets, privacy headers, canonical and hone
 });
 
 test('Hosting serves canonical and bookmarked consumer routes through the existing private entry', async ({ page, request }) => {
- for (const path of ['/decisions', '/decisions/saved_example', '/decide', '/pricing', '/account', '/data', '/ask', '/advanced', '/growth',
+ for (const path of ['/decisions', '/decisions/saved_example', '/decide', '/account', '/data', '/ask', '/advanced', '/growth',
    '/app', '/app/result/saved_example', '/app/pricing?offer=report&projectId=saved_example', '/app/account']) {
    const response = await request.get(path);
    expect(response.status(), path).toBe(200);
@@ -27,6 +27,35 @@ test('Hosting serves canonical and bookmarked consumer routes through the existi
  await expect(page).toHaveURL(/\/login\?returnUrl=/);
  expect(new URL(page.url()).searchParams.get('returnUrl')).toBe('/decide?type=compare&intent=report');
 });
+
+test('visitors can read prices and choose a free example without requesting private billing', async ({ page }, info) => {
+ const backendRequests = [];
+ page.on('request', request => {
+   if (request.method() !== 'GET' && request.method() !== 'HEAD') backendRequests.push(request.url());
+ });
+ await page.goto('/pricing?checkout=success&offer=report&projectId=private-test-marker');
+ await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://ifyoumind.com/pricing');
+ await expect(page.getByRole('heading', { name: 'One-time Decision Report' })).toBeVisible();
+ await expect(page.locator('.plans')).toContainText('$79');
+ await expect(page.locator('.plans')).toContainText('$0');
+ await expect(page.getByRole('button', { name: /Buy Decision Report|Choose Starter|Choose Plus/ })).toHaveCount(0);
+ await expect(page.locator('body')).not.toContainText('private-test-marker');
+ await expect(page.locator('body')).not.toContainText('Your payment is complete');
+ await expect(page.getByRole('link', { name: 'Account', exact: true })).toHaveCount(0);
+ const monthly = page.locator('.monthly-preview');
+ await monthly.locator('summary').focus();
+ await page.keyboard.press('Enter');
+ await expect(monthly).toContainText('Starter · $4.99/month');
+ await expect(monthly).toContainText('Plus · $9.99/month');
+ await expect(monthly).toContainText('New enrollment is closed');
+ await expect(monthly).toContainText('Unused credits expire');
+ expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze()).violations).toEqual([]);
+ expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBe(0);
+ await page.screenshot({ path: info.outputPath('public-pricing.png'), fullPage: true, scale: 'css' });
+ expect(backendRequests).toEqual([]);
+ await page.getByRole('link', { name: 'Try a free example' }).click();
+ await expect(page.locator('.finding')).toHaveCount(3);
+});
 test('homepage navigation opens discovery without signup; home return clears the journey',async({page},info)=>{
  await page.goto('/');await expect(page.getByRole('heading',{level:1})).toHaveText('Make sense of your numbers.');const link=page.getByRole('link',{name:/Understand Your Bills/});await expect(link).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(0);await page.screenshot({path:info.outputPath('home-navigation.png'),fullPage:true,scale:'css'});await link.click();await expect(page).toHaveURL(origin+'/discover/');await page.getByRole('button',{name:'Try property tax example',exact:true}).click();await expect(page.locator('.finding')).toHaveCount(3);await page.getByRole('link',{name:'ifYouMind home',exact:true}).click();await expect(page).toHaveURL(origin+'/');await page.goBack();await expect(page.locator('.finding')).toHaveCount(0);await expect(page.getByRole('heading',{name:'Why did the electricity bill go up?',exact:true})).toBeVisible();
 });
@@ -38,7 +67,7 @@ test('public navigation and Business registration presentation remain reachable'
  for(const path of ['/register','/login','/sample-report','/guides/'])expect((await request.get(path)).status()).toBe(200);
  await page.goto('/register');await expect(page.getByRole('heading',{name:'Build your market analysis.'})).toBeVisible();await expect(page.getByRole('textbox',{name:'Email',exact:true})).toBeVisible();
  await page.goto('/privacy-policy');await expect(page.getByRole('heading',{name:'Browser-local bill discovery'})).toBeVisible();await expect(page.locator('body')).toContainText('separately from registered Business');
- await page.goto('/');await expect(page.getByRole('link',{name:'Pricing (sign-in required)',exact:true})).toHaveAttribute('href','/pricing');
+ await page.goto('/');await expect(page.locator('.site-footer').getByRole('link',{name:'Pricing',exact:true})).toHaveAttribute('href','/pricing');
 });
 
 test('a first-time visitor sees a qualified property-tax answer before any input', async ({ page, context }) => {

@@ -53,6 +53,11 @@ test('registration and static recovery keep the public design', async ({ page, c
   await compare(page, 'not-found', page.getByRole('heading', { name: 'Page not found' }));
 });
 
+test('public pricing uses the existing consumer design without private billing', async ({ page }) => {
+  await page.goto('/pricing');
+  await compare(page, 'public-pricing', page.getByRole('link', { name: 'Try a free example' }), { fullPage: true });
+});
+
 test('sample, loading and retry use the report design', async ({ page, consoleErrors }) => {
   const sampleEndpoint = '**/getSampleDecisionReport';
   await page.route(sampleEndpoint, async route => {

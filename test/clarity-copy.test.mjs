@@ -17,12 +17,12 @@ test('Q4: the report counts sources cited and no longer shows a "coverage" score
 
 test('Q5: pricing buttons say what happens, and the prices are unchanged', () => {
   const home = read('../src/app/intelligence/public-landing.component.html');
-  assert.match(home, /routerLink="\/app\/pricing">Pricing \(sign-in required\)/);
+  assert.match(home, /routerLink="\/pricing">Pricing/);
   assert.match(home, /routerLink="\/sample-report"/);
-  assert.match(home, /routerLink="\/app\/decide"[^>]*>Start a Free Brief/);
+  assert.match(home, /routerLink="\/decide"[^>]*>Start a Free Brief/);
   const pricing = read('../src/app/intelligence/pricing.component.html');
   assert.match(pricing, /One full Decision Report\. A single charge with no renewal\./);
-  assert.match(pricing, /<a routerLink="\/app\/decide" class="action">Start a free decision/);
+  assert.match(pricing, /<a[^>]*routerLink="\/decide" class="action">Start a free decision/);
   assert.match(pricing, /Reports you’ve unlocked stay saved if you cancel\./);
   assert.match(pricing, /\$\{\{ status\?\.pricing\?\.proMonthlyUsd \}\}/, 'Pro price still comes from the server');
 });

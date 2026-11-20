@@ -37,14 +37,14 @@ test('sign-up verifies by email; the link opened in another browser keeps the $7
   // Before verifying, "I've verified" refuses and protected pages stay closed.
   await page.getByRole('button', { name: "I've verified, continue" }).click();
   await expect(page.getByRole('status')).toHaveText(/Not verified yet/);
-  await page.goto('/app/decide?type=business');
+  await page.goto('/decide?type=business');
   await expect(page).toHaveURL(/\/verify-email(?:\?|$)/);
 
   // The verification email: exactly one, carrying the market-analysis continue URL with the intent.
   const link = await latestVerificationLink(email);
   expect(link, 'verification email captured').toBeTruthy();
   const continueUrl = new URL(new URL(link.oobLink).searchParams.get('continueUrl'));
-  expect(continueUrl.pathname + continueUrl.search).toBe('/app/decide?type=business&intent=report');
+  expect(continueUrl.pathname + continueUrl.search).toBe('/decide?type=business&intent=report');
 
   // A different browser (no shared storage) opens the link, then follows the continue URL.
   const other = await newIsolatedContext(browser);
@@ -56,20 +56,20 @@ test('sign-up verifies by email; the link opened in another browser keeps the $7
   await phone.getByLabel('Email').fill(account.email);
   await phone.getByLabel('Password').fill(account.password);
   await phone.getByRole('button', { name: 'Sign in' }).click();
-  await expect.poll(() => pathOf(phone)).toBe('/app/decide?type=business&intent=report');
+  await expect.poll(() => pathOf(phone)).toBe('/decide?type=business&intent=report');
   await other.close();
 
   // Back in the first browser, the same account continues without a new sign-in.
   await page.goto('/verify-email');
   await page.getByRole('button', { name: "I've verified, continue" }).click();
-  await expect.poll(() => pathOf(page)).toBe('/app/decide?type=business&intent=report');
+  await expect.poll(() => pathOf(page)).toBe('/decide?type=business&intent=report');
 });
 
 test('signing up from a city comparison keeps context through email verification', async ({ page, fixtures }) => {
-  await page.goto('/app/decide?type=compare&question=private');
+  await page.goto('/decide?type=compare&question=private');
   await expect(page).toHaveURL(/\/login\?/);
   await page.getByRole('link', { name: 'Create a free account' }).click();
-  expect(new URL(page.url()).searchParams.get('returnUrl')).toBe('/app/decide?type=compare');
+  expect(new URL(page.url()).searchParams.get('returnUrl')).toBe('/decide?type=compare');
 
   const email = fixtureEmail('T02-email-signup', newRunId());
   fixtures.trackEmail(email);
@@ -78,7 +78,7 @@ test('signing up from a city comparison keeps context through email verification
   await page.getByLabel('Password').fill(FIXTURE_PASSWORD);
   await page.getByRole('button', { name: 'Create free account' }).click();
   await expect(page).toHaveURL(/\/verify-email\?/);
-  expect(new URL(page.url()).searchParams.get('returnUrl')).toBe('/app/decide?type=compare');
+  expect(new URL(page.url()).searchParams.get('returnUrl')).toBe('/decide?type=compare');
   const link = await latestVerificationLink(email);
   expect(new URL(new URL(link.oobLink).searchParams.get('continueUrl')).search).toBe('?type=compare');
   expect((await page.request.get(link.oobLink, { maxRedirects: 0 })).status()).toBeLessThan(400);

@@ -2,6 +2,14 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## November 20 — Integrated first-answer candidate
+
+[Draft #118](https://github.com/alwat83/ifyoumind/pull/118) integrates the existing consumer work and makes costs inspectable before registration. The [release review](../releases/consumer-integration-20261120/REVIEW.md) distinguishes engineering checks from human outcomes. Prioritize (1) the founder's exact candidate/release-scope decision, with the #111 live gate still explicit; (2) one permitted mobile first-use observation to test the finding, limitation and next action; (3) evidence-led correction of demonstrated friction. No new participants, purchases, conversion, revenue or cost observations were collected. The dated financial scoreboard is unchanged; current first-answer understanding and return use remain unknown. No new tracking, outreach, paid AI or enrollment change.
+
+## November 17 — Measure first-answer value before optimizing revenue
+
+The [standing consumer-first directive](../../AGENTS.md#standing-consumer-first-product-and-engineering-directive--november-17-2026) governs current priorities. Verify #111's release gate, then use [Issue #113](https://github.com/alwat83/ifyoumind/issues/113) to improve the first free Discovery answer. Track first-answer completion, evidence engagement, and return use using privacy-safe signals. Observe whether first-time visitors understand the answer and feel confident using it. Preserve the existing $79 and subscription flows and defer further $79 funnel optimization. The following entries and the revenue scoreboard retain their original evidence and dates.
+
 ## November 15 — Verify delivery for the first independent buyer
 
 [Revenue readiness brief](REVENUE_READINESS_20261115.md) verifies the live $79 offer and reports the new sample handoff candidate. Rank the repeated registration fix first, independent one-time fulfillment and return second, and supervised local learning third. Checkout and entitlement tests are engineering evidence. There is no newly verified independent purchase, delivery, conversion rate, or contribution margin. The existing scoreboard remains dated and scoped. Founder-channel outreach is pending founder setup.

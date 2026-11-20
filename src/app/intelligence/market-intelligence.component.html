@@ -1,13 +1,13 @@
 <main class="market-shell">
   <nav class="app-nav">
-    <a routerLink="/app" class="brand">ifYouMind <span>2.0</span></a>
+    <a routerLink="/decisions" class="brand">ifYouMind <span>2.0</span></a>
     <div>
-      <a routerLink="/app">Overview</a>
+      <a routerLink="/decisions">Overview</a>
       <a routerLink="/app/market" class="active">Market</a>
-      <a routerLink="/app/pricing">Pricing</a>
+      <a routerLink="/pricing">Pricing</a>
       <a routerLink="/app/canvas">Canvas</a>
       <a routerLink="/app/import">Import</a>
-      <a routerLink="/app/ask">Ask</a>
+      <a routerLink="/ask">Ask</a>
     </div>
   </nav>
 
@@ -34,7 +34,7 @@
         <strong>{{ commercial.planName }} plan</strong>
         <span>{{ commercial.usedMarketProjects }} / {{ commercial.marketProjectsPerMonth }} projects used this month</span>
       </div>
-      <a routerLink="/app/pricing">View pricing →</a>
+      <a routerLink="/pricing">View pricing →</a>
     </section>
 
     <section class="intake panel">
@@ -113,12 +113,12 @@
 
       <article class="next-questions">
         <p class="eyebrow">Ask next</p>
-        <a *ngFor="let question of brief.questions" routerLink="/app/ask">{{ question }}</a>
+        <a *ngFor="let question of brief.questions" routerLink="/ask">{{ question }}</a>
       </article>
 
       <div class="report-actions" *ngIf="project?.id">
         <a [routerLink]="['/app/market', project?.id, 'report']">Open printable report →</a>
-        <a routerLink="/app/pricing" [queryParams]="{projectId:project?.id}">View report pricing →</a>
+        <a routerLink="/pricing" [queryParams]="{projectId:project?.id}">View report pricing →</a>
       </div>
       <p class="data-notice">{{ project?.dataNotice }}</p>
     </section>

@@ -1,12 +1,30 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-16
+**Updated:** 2026-11-20
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
 **Purpose:** Living project context for the founder and all current/future development agents.
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
+
+## November 20, 2026 — Integrated consumer release candidate
+
+The integration candidate combines #114–#117 and makes pricing publicly readable using the existing component. Guests can inspect Free, the one-time report and closed monthly enrollment details. Verified identity gates private commercial reads; sign-out clears private state and rejects delayed responses. The [review and rollout evidence](docs/releases/consumer-integration-20261120/REVIEW.md) includes the technical assessment of the outstanding #111 live check. Merge and production release await separate founder authorization.
+
+Implementation head `8f5c86ceba165439cea5406c36c416f730088b4d` passed both exact-head workflows, including 180 authenticated browser checks and the reviewed visual references. [Draft #118](https://github.com/alwat83/ifyoumind/pull/118) records its final evidence-only candidate and checks. Notion and Issue #113 carry the same conditional release recommendation. Production is unchanged; no human comprehension or return-use result has been measured.
+
+## November 17, 2026 — First useful consumer answer
+
+The consumer route migration gives saved decisions, decision creation, pricing, and account settings clean URLs in the existing Angular app. Legacy bookmarks and provider returns continue to resolve, and signed-in visitors can move from the homepage to their decisions. See [the current snapshot](docs/agent-handoff/CURRENT_STATUS.md) for branch and release status.
+
+A follow-on consumer draft makes the homepage examples and the browser-local Discovery handoff one journey. It leads with the question and finding, exposes the tax limitation before opening the evidence, and lets a visitor return to the chosen public example. See [the current snapshot](docs/agent-handoff/CURRENT_STATUS.md) for build and release evidence.
+
+[Issue #113](https://github.com/alwat83/ifyoumind/issues/113) moves the labeled, deterministic property-tax takeaway before the first click on the public Discovery chooser. Evidence remains inspectable in the existing browser-local journey and electricity remains available. [Draft #115](https://github.com/alwat83/ifyoumind/pull/115) is integrated with the deployed #111 source. The founder authorized the live save and retry, and the preflight stopped before a write because no eligible existing QA workspace could be verified. See the [current handoff](docs/agent-handoff/CURRENT_STATUS.md) for verification and the remaining gate.
+
+## November 17, 2026 — Standing consumer-first directive
+
+[AGENTS.md](AGENTS.md#standing-consumer-first-product-and-engineering-directive--november-17-2026) is the permanent source for product and engineering decisions. Give everyday visitors a useful plain-language answer, inspectable evidence, and a practical next step before monetization. Use the Grandmother Test in the [PR template](.github/pull_request_template.md) and prioritize first-answer understanding and return use. Property tax leads Discovery and electricity follows. Existing paid and Business capabilities remain supported. [Issue #113](https://github.com/alwat83/ifyoumind/issues/113) follows the verified production release of [PR #111](https://github.com/alwat83/ifyoumind/pull/111).
 
 ## November 16, 2026 — City Decision Brief evidence
 

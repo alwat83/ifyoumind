@@ -3,14 +3,26 @@
 // send a visitor to another site or replay something like ?checkout=success.
 // Kept free of Angular so test/return-url.test.mjs can run it directly.
 
-export const DEFAULT_RETURN_URL='/app';
+export const DEFAULT_RETURN_URL='/decisions';
+
+export const LEGACY_CONSUMER_ROUTES = [
+  { from: 'app', to: 'decisions' },
+  { from: 'app/decide', to: 'decide' },
+  { from: 'app/result/:projectId', to: 'decisions' },
+  { from: 'app/pricing', to: 'pricing' },
+  { from: 'app/growth', to: 'growth' },
+  { from: 'app/account', to: 'account' },
+  { from: 'app/data', to: 'data' },
+  { from: 'app/ask', to: 'ask' },
+  { from: 'app/advanced', to: 'advanced' },
+] as const;
 
 const PATHS=[
-  /^\/app$/,
-  /^\/app\/decide$/,
-  /^\/app\/pricing$/,
-  /^\/app\/account$/,
-  /^\/app\/result\/[A-Za-z0-9_-]{1,64}$/,
+  /^\/decisions$/,
+  /^\/decide$/,
+  /^\/pricing$/,
+  /^\/account$/,
+  /^\/decisions\/[A-Za-z0-9_-]{1,64}$/,
 ];
 
 const PARAMS:Record<string,RegExp>={
@@ -30,11 +42,13 @@ export function safeReturnUrl(value:unknown):string|null{
   let url:URL;
   try{url=new URL(value,BASE);}catch{return null;}
   if(url.origin!==BASE||url.hash||url.username||url.password)return null;
-  if(!PATHS.some(path=>path.test(url.pathname)))return null;
+  const legacy = LEGACY_CONSUMER_ROUTES.find(route => '/' + route.from === url.pathname);
+  const pathname = legacy ? '/' + legacy.to : url.pathname.replace(/^\/app\/result\//, '/decisions/');
+  if(!PATHS.some(path=>path.test(pathname)))return null;
   const kept=new URLSearchParams();
   url.searchParams.forEach((v,k)=>{if(PARAMS[k]?.test(v)&&!kept.has(k))kept.set(k,v);});
   const query=kept.toString();
-  return query?`${url.pathname}?${query}`:url.pathname;
+  return query?`${pathname}?${query}`:pathname;
 }
 
 /** Query parameters for the sign-in page, carrying a return path only when it is safe and useful. */
@@ -49,7 +63,7 @@ export function decisionReturnUrl(value: unknown): string | null {
   const safe = safeReturnUrl(value);
   if (!safe) return null;
   const url = new URL(safe, BASE);
-  if (url.pathname !== '/app/decide') return null;
+  if (url.pathname !== '/decide') return null;
   const params = new URLSearchParams();
   const type = url.searchParams.get('type');
   if (type === 'business' || type === 'compare' || type === 'growth') params.set('type', type);

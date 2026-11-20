@@ -1,7 +1,7 @@
 <main class="flow">
   <nav aria-label="Decision navigation">
-    <a routerLink="/app" class="brand">ifYouMind</a>
-    <a routerLink="/app" class="return">Your decisions</a>
+    <a routerLink="/" class="brand" aria-label="ifYouMind home">ifYouMind</a>
+    <a routerLink="/decisions" class="return">Your decisions</a>
   </nav>
 
   @if (screen === 'question') {
@@ -60,7 +60,7 @@
         <div class="bill-links" aria-label="Other ways to start" role="group">
           <a href="/discover/?example=tax">Property tax example</a>
           <a href="/discover/?example=electricity">Electricity example</a>
-          <a routerLink="/app/data">Explore my own data</a>
+          <a routerLink="/data">Explore my own data</a>
         </div>
       }
     </section>
@@ -115,7 +115,7 @@
   @if (error) {
     <p id="brief-error" class="error" role="alert" tabindex="-1">{{ error }}</p>
     @if (limited) {
-      <a routerLink="/app" class="return">Open your saved decisions</a>
+      <a routerLink="/decisions" class="return">Open your saved decisions</a>
     }
   }
 </ng-template>

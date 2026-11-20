@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, NgZone, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Auth, user } from '@angular/fire/auth';
 import { IntelligenceOrganization, OrganizationService } from './organization.service';
 import { CheckoutOffer, CommercialStatus, MonetizationService } from './monetization.service';
 import { ProductAnalyticsService } from './product-analytics.service';
@@ -19,6 +21,10 @@ export class PricingComponent implements OnInit {
   private readonly route=inject(ActivatedRoute);
   private readonly analytics=inject(ProductAnalyticsService);
   private readonly market=inject(MarketIntelligenceService);
+  private readonly auth=inject(Auth);
+  private readonly destroyRef=inject(DestroyRef);
+  private readonly zone=inject(NgZone);
+  private viewerUid: string | null | undefined;
 
   workspace:IntelligenceOrganization|null=null;
   status:CommercialStatus|null=null;
@@ -29,12 +35,33 @@ export class PricingComponent implements OnInit {
   highlightedOffer='';
   reportReady=false;
   error='';
+  signedIn=false;
   readonly subscriptionPlans = [
     { offer: 'starter' as const, name: 'Starter', price: '4.99', allowance: '1 full Decision Report' },
     { offer: 'plus' as const, name: 'Plus', price: '9.99', allowance: '3 full Decision Reports' },
   ];
 
-  async ngOnInit():Promise<void>{
+  ngOnInit():void{
+    this.destroyRef.onDestroy(() => { this.viewerUid = undefined; });
+    user(this.auth).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(viewer => this.zone.run(() => {
+      const uid = viewer?.emailVerified ? viewer.uid : null;
+      if (this.viewerUid === uid) return;
+      this.viewerUid = uid;
+      this.signedIn = uid !== null;
+      this.workspace = null;
+      this.status = null;
+      this.reportReady = false;
+      this.projectId = '';
+      this.highlightedOffer = '';
+      this.requesting = '';
+      this.message = '';
+      this.error = '';
+      this.loading = uid !== null;
+      if (uid) void this.loadPricing(uid);
+    }));
+  }
+
+  private async loadPricing(uid: string):Promise<void>{
     this.projectId=this.route.snapshot.queryParamMap.get('projectId')||'';
     this.highlightedOffer=this.route.snapshot.queryParamMap.get('offer')||'';
     const checkout=this.route.snapshot.queryParamMap.get('checkout')||'';
@@ -47,16 +74,21 @@ export class PricingComponent implements OnInit {
       : 'Checkout was cancelled. You can return to your decision or try again.';
 
     try{
-      this.workspace=await this.organizations.getMyWorkspace();
+      const workspace=await this.organizations.getMyWorkspace();
+      if (this.viewerUid !== uid) return;
+      this.workspace=workspace;
       if(this.workspace){
         void this.analytics.track(this.workspace.organizationId,'pricing_view',{
           offer:this.highlightedOffer||'none',
         });
         if(checkout==='success') void this.analytics.track(this.workspace.organizationId,'checkout_success',{offer:this.highlightedOffer||'unknown'});
         if(checkout==='cancelled') void this.analytics.track(this.workspace.organizationId,'checkout_cancelled',{offer:this.highlightedOffer||'unknown'});
-        this.status=await this.monetization.status(this.workspace.organizationId);
+        const status=await this.monetization.status(this.workspace.organizationId);
+        if (this.viewerUid !== uid) return;
+        this.status=status;
         if(checkout==='success'&&this.highlightedOffer==='report'&&this.projectId){
           const project=await this.market.get(this.workspace.organizationId,this.projectId);
+          if (this.viewerUid !== uid) return;
           this.reportReady=project.decisionReportPurchased===true;
           this.message=this.reportReady
             ? project.decisionReportGenerationRequired
@@ -69,8 +101,8 @@ export class PricingComponent implements OnInit {
             : 'Your checkout returned successfully. Pro access is still being confirmed. Refresh this page shortly.';
         }
       }
-    }catch(error){this.error=this.messageFor(error);}
-    finally{this.loading=false;}
+    }catch(error){if(this.viewerUid===uid)this.error=this.messageFor(error);}
+    finally{if(this.viewerUid===uid)this.loading=false;}
   }
 
   get checkingReportReturn():boolean{
@@ -82,7 +114,8 @@ export class PricingComponent implements OnInit {
   }
 
   async request(offer:Exclude<CheckoutOffer,'pro'>):Promise<void>{
-    if(!this.workspace||this.requesting)return;
+    const uid=this.viewerUid;
+    if(!uid||this.auth.currentUser?.uid!==uid||!this.auth.currentUser.emailVerified||!this.workspace||this.requesting)return;
 
     if(!this.projectId){
       this.error='Start or open a decision first, then purchase its Decision Report.';
@@ -101,18 +134,21 @@ export class PricingComponent implements OnInit {
           offer,
           this.projectId,
         );
+        if(this.viewerUid!==uid)return;
         if(!url) throw new Error('Checkout did not return a payment URL.');
         window.location.assign(url);
         return;
       }
 
       if(offer==='starter'||offer==='plus') throw new Error('Subscription checkout is currently unavailable.');
-      this.message=await this.monetization.requestAccess(
+      const message=await this.monetization.requestAccess(
         this.workspace.organizationId,
         offer,
         'Decision report interest for project '+this.projectId,
       );
+      if(this.viewerUid===uid)this.message=message;
     }catch(error){
+      if(this.viewerUid!==uid)return;
       this.error=this.messageFor(error);
       this.requesting='';
     }

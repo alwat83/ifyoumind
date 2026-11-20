@@ -30,18 +30,18 @@ test('public sample can be printed without registration while preserving the pai
 test('signed-in sample visitor can start a brief or continue with report intent', async ({ page, fixtures }) => {
   const visitor = await fixtures(FIXTURES.FREE_NO_REPORTS);
   await signInThroughUi(page, visitor);
-  await expect(page).toHaveURL(/\/app$/);
+  await expect(page).toHaveURL(/\/decisions$/);
 
   // A fresh load must restore the current session before choosing link targets.
   await page.goto('/sample-report');
   const reportLink = page.getByRole('link', { name: 'Get this report for your cities · $79' });
   const freeLink = page.getByRole('link', { name: 'Start free', exact: true });
   for (const position of [0, 1]) {
-    await expect(freeLink.nth(position)).toHaveAttribute('href', '/app/decide?type=business');
-    await expect(reportLink.nth(position)).toHaveAttribute('href', '/app/decide?type=business&intent=report');
+    await expect(freeLink.nth(position)).toHaveAttribute('href', '/decide?type=business');
+    await expect(reportLink.nth(position)).toHaveAttribute('href', '/decide?type=business&intent=report');
   }
   await reportLink.last().click();
-  await expect(page).toHaveURL(/\/app\/decide\?type=business&intent=report$/);
+  await expect(page).toHaveURL(/\/decide\?type=business&intent=report$/);
   await expect(page.getByRole('textbox', { name: 'Your question' })).not.toHaveValue('');
 });
 
@@ -52,5 +52,5 @@ test('the sample report offer preserves decision context through email verificat
   await page.goto('/sample-report');
   await page.getByRole('link', { name: 'Get this report for your cities · $79' }).last().click();
   await expect(page).toHaveURL(/\/verify-email\?returnUrl=/);
-  expect(new URL(page.url()).searchParams.get('returnUrl')).toBe('/app/decide?type=business&intent=report');
+  expect(new URL(page.url()).searchParams.get('returnUrl')).toBe('/decide?type=business&intent=report');
 });

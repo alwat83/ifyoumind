@@ -2,9 +2,9 @@
 import { test, expect, newIsolatedContext, pathOf, signInThroughUi } from '../support/test.mjs';
 import { FIXTURES } from '../support/fixtures.mjs';
 
-const KEPT = ['/app/decide?type=business&intent=report', '/app/pricing?offer=report', '/app/account', '/app/result/abc123'];
-// /app is the default destination, so it needs no return URL.
-const NOT_KEPT = ['/app', '/app/growth', '/app/data', '/app/ask', '/app/advanced'];
+const KEPT = ['/decide?type=business&intent=report', '/account', '/decisions/abc123'];
+// /decisions is the default destination, so it needs no return URL.
+const NOT_KEPT = ['/decisions', '/growth', '/data', '/ask', '/advanced'];
 
 for (const path of KEPT) {
   test(`signed out, ${path} goes to sign-in and remembers the page`, async ({ page }) => {
@@ -24,9 +24,8 @@ for (const path of NOT_KEPT) {
 test('valid return URLs are restored after email sign-in', async ({ browser, fixtures }) => {
   const user = await fixtures(FIXTURES.RETURN_URL, { decisions: 1 });
   const cases = [
-    ['/app/decide?type=business&intent=report', '/app/decide?type=business&intent=report'],
-    [`/app/result/${user.projectIds[0]}`, `/app/result/${user.projectIds[0]}`],
-    ['/app/pricing?offer=report&checkout=success', '/app/pricing?offer=report'],
+    ['/decide?type=business&intent=report', '/decide?type=business&intent=report'],
+    [`/app/result/${user.projectIds[0]}`, `/decisions/${user.projectIds[0]}`],
   ];
   for (const [requested, expected] of cases) {
     const context = await newIsolatedContext(browser);
@@ -43,24 +42,32 @@ test('valid return URLs are restored after email sign-in', async ({ browser, fix
 
 test('unknown query parameters are dropped and the page is kept', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.RETURN_URL);
-  await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent('/app/decide?type=business&next=https://evil.example&checkout=success')}`);
-  await expect.poll(() => pathOf(page)).toBe('/app/decide?type=business');
+  await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent('/decide?type=business&next=https://evil.example&checkout=success')}`);
+  await expect.poll(() => pathOf(page)).toBe('/decide?type=business');
+});
+
+test('a saved pricing sign-in link canonicalizes the path and drops replayed payment flags', async ({ page, fixtures }) => {
+  const viewer = await fixtures(FIXTURES.RETURN_URL);
+  await signInThroughUi(page, viewer, '/login?returnUrl=' +
+    encodeURIComponent('/app/pricing?offer=report&checkout=success'));
+  await expect.poll(() => pathOf(page)).toBe('/pricing?offer=report');
+  await expect(page.locator('body')).not.toContainText('Your payment is complete');
 });
 
 const HOSTILE = [
   '//evil.example', 'https://evil.example/app', '/\\evil.example', '/app%2F..%2Flogin', '%2F%2Fevil.example',
-  'javascript:alert(1)', '/app/../login', '/app#//evil.example', '/app/result/%00', `/app/${'a'.repeat(600)}`,
+  'javascript:alert(1)', '/app/../login', '/decisions#//evil.example', '/decisions/%00', `/app/${'a'.repeat(600)}`,
   ' /app',
 ];
 
-test('hostile or malformed return URLs always land on /app inside the site', async ({ browser, fixtures }) => {
+test('hostile or malformed return URLs always land on /decisions inside the site', async ({ browser, fixtures }) => {
   const user = await fixtures(FIXTURES.HOSTILE_RETURN_URL);
   const origin = new URL(test.info().project.use.baseURL).origin;
   for (const value of HOSTILE) {
     const context = await newIsolatedContext(browser);
     const page = await context.newPage();
     await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent(value)}`);
-    await expect.poll(() => new URL(page.url()).pathname, { message: value }).toBe('/app');
+    await expect.poll(() => new URL(page.url()).pathname, { message: value }).toBe('/decisions');
     expect(new URL(page.url()).origin).toBe(origin);
     expect(context.externalRequests, value).toEqual([]);
     await context.close();

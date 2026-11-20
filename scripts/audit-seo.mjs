@@ -5,7 +5,7 @@ import { dirname } from 'node:path';
 
 const base = process.argv[2] || 'https://ifyoumind.com';
 const output = process.argv[3] || '/private/tmp/ifyoumind-seo-audit.json';
-const paths = ['/', '/sample-report?utm_source=seo-audit', '/privacy-policy', '/terms-of-conduct', '/login', '/register?intent=report', '/app/result/seo-audit', '/guides/', '/guides/market-analysis-business-plan/', '/guides/compare-job-offers-relocation/', '/guides/choose-business-location-evidence/', '/guides/compare-options-with-your-own-data/', '/seo-audit-missing-page', '/life/quick-compare'];
+const paths = ['/', '/sample-report?utm_source=seo-audit', '/pricing', '/privacy-policy', '/terms-of-conduct', '/login', '/register?intent=report', '/decisions/seo-audit', '/guides/', '/guides/market-analysis-business-plan/', '/guides/compare-job-offers-relocation/', '/guides/choose-business-location-evidence/', '/guides/compare-options-with-your-own-data/', '/seo-audit-missing-page', '/life/quick-compare'];
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
 const observations = [];
 try {

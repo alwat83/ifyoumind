@@ -278,7 +278,7 @@ export class DecisionFlowComponent implements OnInit, OnDestroy {
   }
 
   private openResult(id: string): Promise<boolean> {
-    return this.router.navigate(['/app/result', id], { queryParams: intentParams({}, readIntent()), state: { focusDecisionTitle: true } });
+    return this.router.navigate(['/decisions', id], { queryParams: intentParams({}, readIntent()), state: { focusDecisionTitle: true } });
   }
 
   private focus(id: string, waitForRender = true): void {

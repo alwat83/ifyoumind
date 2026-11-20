@@ -63,6 +63,9 @@ h1 { @include product.editorial; margin: 10px 0 16px; color: var(--iy-ink); font
 .plan.featured { --iy-focus: var(--iy-studio-accent); background: var(--iy-studio); border-color: var(--iy-studio); color: var(--iy-studio-text); }
 .plan.featured p:not(.price) { color: var(--iy-studio-muted); }
 .billing-note { margin: var(--iy-space-4) 0 0; color: var(--iy-muted); font-size: 13px; }
+.monthly-preview { margin-top: var(--iy-space-4); color: var(--iy-muted); font-size: 14px; }
+.monthly-preview summary { display: flex; align-items: center; min-height: var(--iy-touch); cursor: pointer; color: var(--iy-ink); }
+.monthly-preview p { margin-top: var(--iy-space-2); max-width: 65ch; line-height: 1.5; }
 
 @media (max-width: 600px) {
   .plans { grid-template-columns: minmax(0, 1fr); }

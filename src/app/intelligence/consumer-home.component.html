@@ -1,10 +1,10 @@
 <main class="home">
   <nav class="topbar">
-    <a routerLink="/app" class="brand">ifYouMind</a>
+    <a routerLink="/" class="brand" aria-label="ifYouMind home">ifYouMind</a>
     <div>
-      <a routerLink="/app/pricing">Pricing</a>
-      <a routerLink="/app/data">My data</a>
-      <a routerLink="/app/account">Account</a>
+      <a routerLink="/pricing">Pricing</a>
+      <a routerLink="/data">My data</a>
+      <a routerLink="/account">Account</a>
     </div>
   </nav>
 
@@ -12,7 +12,7 @@
     <p class="eyebrow">Make a smarter call</p>
     <h1>What are you trying to figure out?</h1>
     <p>Tell us what you’re considering. We’ll pull the useful facts together and explain what they mean in plain English.</p>
-    <a routerLink="/app/decide" class="primary">Start a decision</a>
+    <a routerLink="/decide" class="primary">Start a decision</a>
   </section>
 
   <div class="reassurance">
@@ -22,22 +22,22 @@
   </div>
 
   <section class="quick-grid">
-    <a routerLink="/app/decide" [queryParams]="{type:'business'}">
+    <a routerLink="/decide" [queryParams]="{type:'business'}">
       <span class="icon">⌂</span>
       <strong>Should I open here?</strong>
       <p>Compare a business idea across locations.</p>
     </a>
-    <a routerLink="/app/decide" [queryParams]="{type:'compare'}">
+    <a routerLink="/decide" [queryParams]="{type:'compare'}">
       <span class="icon">↔</span>
       <strong>Which place is better?</strong>
       <p>Put two or more markets side by side.</p>
     </a>
-    <a routerLink="/app/decide" [queryParams]="{type:'growth'}">
+    <a routerLink="/decide" [queryParams]="{type:'growth'}">
       <span class="icon">↗</span>
       <strong>Is this area growing?</strong>
       <p>See population, income, housing, and growth signals.</p>
     </a>
-    <a routerLink="/app/data">
+    <a routerLink="/data">
       <span class="icon">＋</span>
       <strong>Explore my own data</strong>
       <p>Look at a CSV of your own numbers. It isn’t used in Decision Reports yet.</p>
@@ -53,7 +53,7 @@
       <h2>Nothing to manage yet — that’s okay.</h2>
       <p>Once you ask your first question, your Decision Brief will show up here so you can come back to it anytime.</p>
     </div>
-    <a routerLink="/app/decide">Create my first brief</a>
+    <a routerLink="/decide">Create my first brief</a>
   </section>
 
   <section *ngIf="!loading && recent.length" class="recent">
@@ -62,11 +62,11 @@
         <p class="eyebrow">Recent</p>
         <h2>Your decisions</h2>
       </div>
-      <a routerLink="/app/decide">New decision</a>
+      <a routerLink="/decide">New decision</a>
     </div>
 
     <div class="recent-grid">
-      <a *ngFor="let item of recent" [routerLink]="['/app/result', item.id]">
+      <a *ngFor="let item of recent" [routerLink]="['/decisions', item.id]">
         <span>{{ item.location }}</span>
         <strong>{{ item.concept }}</strong>
         <small>{{ item.createdAt ? (item.createdAt | date:'mediumDate') : '' }}</small>
@@ -75,7 +75,7 @@
   </section>
 
   <footer class="app-footer">
-    <a routerLink="/app" class="brand">ifYouMind</a>
+    <a routerLink="/" class="brand" aria-label="ifYouMind home">ifYouMind</a>
     <span>Make sense of more than one data point.</span>
     <div>
       <a routerLink="/privacy-policy">Privacy</a>

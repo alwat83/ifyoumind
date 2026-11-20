@@ -5,6 +5,8 @@ import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize, resolve } from 'node:path';
 
 const root = resolve('dist/ifyoumind-local/browser');
+const { hosting } = JSON.parse(await readFile(new URL('../../firebase.json', import.meta.url), 'utf8'));
+const shellRewrites = hosting.rewrites.filter(rule => rule.destination === '/app-shell.html');
 const port = Number(process.argv[2] || process.env.QA_PORT || 4300);
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json',
   '.png': 'image/png', '.ico': 'image/x-icon', '.svg': 'image/svg+xml', '.txt': 'text/plain', '.xml': 'application/xml', '.webmanifest': 'application/manifest+json' };
@@ -23,7 +25,7 @@ createServer(async (req, res) => {
   }
   const requested = normalize(join(root, decodeURIComponent(url.pathname)));
   if (!requested.startsWith(`${root}/`) && requested !== root) { res.writeHead(404); res.end(); return; }
-  const privateRoute = /^\/(?:login|register|verify-email)\/?$/.test(url.pathname) || /^\/app(?:\/|$)/.test(url.pathname);
+  const privateRoute = shellRewrites.some(rule => rule.source === url.pathname || (rule.regex && new RegExp(rule.regex).test(url.pathname)));
   const target = await file(requested) || await file(`${requested}.html`) ||
     await file(join(requested, 'index.html')) || (privateRoute ? join(root, 'app-shell.html') : null);
   res.writeHead(target ? 200 : 404, { 'content-type': types[extname(target || '404.html')] || 'application/octet-stream', 'cache-control': 'no-store' });

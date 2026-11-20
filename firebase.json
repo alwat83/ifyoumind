@@ -39,8 +39,8 @@
       },
       { "source": "/register", "destination": "/app-shell.html" },
       { "source": "/verify-email", "destination": "/app-shell.html" },
-      { "source": "/app", "destination": "/app-shell.html" },
-      { "source": "/app/**", "destination": "/app-shell.html" }
+      { "regex": "^/(?:decisions(?:/[A-Za-z0-9_-]{1,128})?|decide|pricing|growth|account|data|ask|advanced)/?$", "destination": "/app-shell.html" },
+      { "regex": "^/app(?:/(?:result/[A-Za-z0-9_-]{1,128}|decide|pricing|growth|account|data|ask|advanced))?/?$", "destination": "/app-shell.html" }
     ],
     "headers": [
       {

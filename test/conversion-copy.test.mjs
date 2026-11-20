@@ -48,7 +48,7 @@ test('unpaid brief shows what the $79 report adds, with the existing pricing CTA
   for(const item of ['up to three other cities','plan-ready market analysis','An action plan','Comparison takeaways','What could change the call','PDF']){
     assert.ok(reportHtml.includes(item),`lists: ${item}`);
   }
-  assert.ok(reportHtml.includes(`[routerLink]="['/app/pricing']" [queryParams]="{offer:'report',projectId:project?.id}">Get the $79 report</a>`));
+  assert.ok(reportHtml.includes(`[routerLink]="['/pricing']" [queryParams]="{offer:'report',projectId:project?.id}">Get the $79 report</a>`));
 });
 
 test('sample offers a direct $79 CTA and keeps Start free as the secondary action',()=>{
@@ -70,9 +70,9 @@ test('pricing leads with eligible monthly plans and keeps Free, one-time and leg
   assert.match(pricingHtml,/\*ngIf="showMonthlyPlans"[^>]*aria-labelledby="monthly-title"/);
   assert.match(pricingHtml,/Legacy Pro/);
   assert.doesNotMatch(pricingHtml,/Get Pro access|request\('pro'\)/);
-  assert.match(landingHtml,/routerLink="\/app\/pricing">Pricing \(sign-in required\)/);
+  assert.match(landingHtml,/routerLink="\/pricing">Pricing/);
   const marketHtml=read('src/app/intelligence/market-intelligence.component.html');
-  assert.match(marketHtml,/routerLink="\/app\/pricing" \[queryParams\]="\{projectId:project\?\.id\}">View report pricing/);
+  assert.match(marketHtml,/routerLink="\/pricing" \[queryParams\]="\{projectId:project\?\.id\}">View report pricing/);
 });
 
 test('account pricing keeps Free and uses the server prices for report and legacy Pro',()=>{
@@ -113,10 +113,10 @@ test('register page says what happens next for email and Google sign-ups',()=>{
   assert.ok(registerHtml.includes('Google sign-ups skip the email check.'));
 });
 
-test('the homepage AI value statement keeps example provenance explicit',()=>{
-  const value = 'AI finds what matters, explains the evidence, and helps you decide what comes next.';
+test('the homepage states its free example promise and keeps provenance explicit',()=>{
+  const value = 'Compare bills or cities. Try a free example.';
   assert.ok(landingHtml.includes(value));
-  assert.match(landingHtml,/\{\{ example\.label \}\} · Fixed calculations/);
+  assert.match(landingHtml,/\{\{ example\.label \}\}/);
   for(const html of [reportHtml,landingHtml.replace(value,''),pricingHtml,registerHtml,analysisHtml]){
     assert.doesNotMatch(html,/\bAI\b|artificial intelligence|GPT/i);
   }

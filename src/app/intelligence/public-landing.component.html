@@ -5,7 +5,12 @@
     <nav class="desktop-nav" aria-label="Main navigation">
       <a href="#business">Examples</a>
       <a href="#reports">Decision Reports</a>
-      <a routerLink="/login">Sign In</a>
+      <a routerLink="/pricing">Pricing</a>
+      @if (viewer()?.emailVerified) {
+        <a routerLink="/decisions">Your decisions</a>
+      } @else {
+        <a routerLink="/login">Sign In</a>
+      }
     </nav>
     <!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus -- The native summary receives focus and Escape bubbles from the menu links. -->
     <details #mobileNavigation class="mobile-navigation" (keydown.escape)="mobileNavigation.open = false; mobileSummary.focus()">
@@ -13,7 +18,12 @@
       <nav aria-label="Mobile navigation">
         <a href="#business" (click)="mobileNavigation.open = false">Examples</a>
         <a href="#reports" (click)="mobileNavigation.open = false">Decision Reports</a>
-        <a routerLink="/login">Sign In</a>
+        <a routerLink="/pricing">Pricing</a>
+        @if (viewer()?.emailVerified) {
+          <a routerLink="/decisions" (click)="mobileNavigation.open = false">Your decisions</a>
+        } @else {
+          <a routerLink="/login">Sign In</a>
+        }
       </nav>
     </details>
   </header>
@@ -21,20 +31,18 @@
   <main>
     <section id="try" class="shell hero" aria-labelledby="hero-title" tabindex="-1">
       <div class="hero-copy">
-        <h1 id="hero-title">The answer is in <em>your numbers.</em></h1>
-        <p>AI finds what matters, explains the evidence, and helps you decide what comes next.</p>
+        <h1 id="hero-title">Make sense of <em>your numbers.</em></h1>
+        <p>Compare bills or cities. Try a free example.</p>
       </div>
 
       <section id="business" class="demo" aria-labelledby="discovery-question" tabindex="-1">
         <p class="sr-only" role="status">{{ discoveryAnnouncement }}</p>
 
         <div id="discovery-result" class="finding">
-          <p class="example-label">{{ example.label }} · Fixed calculations</p>
+          <p class="example-label">{{ example.label }}</p>
           <h2 id="discovery-question">{{ example.question }}</h2>
           <p class="conclusion"><strong>{{ example.finding.value }}</strong>&ngsp;<span>{{ example.finding.text }}</span></p>
-          @if (example.id === 'tax') {
-            <p class="finding-note">{{ example.takeaway }}</p>
-          }
+          <p class="finding-note">{{ example.guidance }}</p>
         </div>
 
         <div class="discovery-next">
@@ -145,7 +153,7 @@
           <p>Start with a free brief for your business and cities. A full Decision Report adds more comparisons, a sourced market analysis, and an action plan.</p>
           <div class="report-links">
             <a routerLink="/sample-report" class="button">View a Sample Report <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
-            <a routerLink="/app/decide" [queryParams]="{ type: 'business' }" class="text-link">Start a Free Brief</a>
+            <a routerLink="/decide" [queryParams]="{ type: 'business' }" class="text-link">Start a Free Brief</a>
           </div>
         </div>
       </div>
@@ -157,7 +165,7 @@
     <nav aria-label="Footer">
       <a href="/discover/">Understand Your Bills</a>
       <a href="/guides/">Guides</a>
-      <a routerLink="/app/pricing">Pricing (sign-in required)</a>
+      <a routerLink="/pricing">Pricing</a>
       <a href="#data-sources" (click)="evidence.open = true">Data Sources</a>
       <a routerLink="/privacy-policy">Privacy</a>
       <a routerLink="/terms-of-conduct">Terms</a>

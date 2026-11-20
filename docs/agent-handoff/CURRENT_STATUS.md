@@ -6,6 +6,8 @@
 
 Fresh production metadata still shows Hosting `39dc573f3826dca6` and city writer `createmarketintelligenceproject-00087-nub` ACTIVE at 100%. The candidate has no backend, rule, city-writer service or monetization-service diff from deployed master. The #111 live test remains unverified. Recommendation is independent UI release review, subject to an explicit founder decision on the existing gate and release authorization.
 
+The final pricing review also fixed cross-tab sign-out and delayed billing responses: private state clears on identity change and stale responses cannot restore it. Four new desktop/mobile emulator checks pass, and the production build passed again. A first sandbox build aborted before completion; its unsandboxed retry passed. Final exact-head CI is required on the follow-up commit. The working branch, source heads and release evidence are retained in #118; no merge or deployment is authorized.
+
 ## November 17, 2026 — Clean consumer routes
 
 The route migration on `codex/consumer-clean-routes` builds on [draft #116](https://github.com/alwat83/ifyoumind/pull/116) at `18a9344aadd2a3cdbb132712de5e1c65d89aed72`. Public and signed-in navigation use the existing Angular app. Decisions use `/decisions`, `/decide`, and `/decisions/:id`. Account tools use top-level paths such as `/account` and `/pricing`. Known bookmarks and provider returns use same-app redirects that retain the route parameters and anchor. Existing guards still handle sign-in and verification. Local Hosting verified direct loads, legacy redirects and private metadata. Production is on #111 and needs separate release authorization.

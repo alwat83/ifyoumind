@@ -70,3 +70,40 @@ test('a session with an invalid refresh token is signed out and sent to sign-in'
   await page.goto('/account');
   await expect(page).toHaveURL(/\/login\?returnUrl=%2Faccount$/);
 });
+
+for (const delayed of [false, true]) {
+  test(`public pricing clears private details after sign-out${delayed ? ' while billing is still loading' : ''}`, async ({ page, context, fixtures }) => {
+    const viewer = await fixtures(FIXTURES.VERIFIED);
+    let billingStarted;
+    const started = new Promise(resolve => { billingStarted = resolve; });
+    let releaseBilling;
+    const gate = new Promise(resolve => { releaseBilling = resolve; });
+    await page.route('**/getCommercialStatus', async route => {
+      const response = await route.fetch();
+      const body = await response.json();
+      billingStarted();
+      if (delayed) await gate;
+      await route.fulfill({ json: { result: { ...body.result, plan: 'pro', includedReportsPerMonth: 5 } } });
+    });
+    try {
+      await signInThroughUi(page, viewer, '/login?returnUrl=%2Fpricing');
+      await started;
+      if (!delayed) await expect(page.getByText('Legacy Pro · $39/month')).toBeVisible();
+      const account = await context.newPage();
+      await account.goto('/account');
+      await account.getByRole('button', { name: 'Sign out' }).click();
+      await expect(page.getByRole('link', { name: 'Try a free example' })).toBeVisible();
+      if (delayed) {
+        const finished = page.waitForResponse(response => response.url().includes('getCommercialStatus'));
+        releaseBilling();
+        await finished;
+        await page.evaluate(() => new Promise(requestAnimationFrame));
+      }
+      await expect(page.getByText('Legacy Pro · $39/month')).toHaveCount(0);
+      await expect(page.getByRole('link', { name: 'Account', exact: true })).toHaveCount(0);
+      await expect(page.getByRole('link', { name: 'Try a free example' })).toBeVisible();
+    } finally {
+      releaseBilling();
+    }
+  });
+}

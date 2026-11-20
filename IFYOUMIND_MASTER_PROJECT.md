@@ -10,7 +10,7 @@
 
 ## November 20, 2026 — Integrated consumer release candidate
 
-The integration candidate combines #114–#117 and makes pricing publicly readable using the existing component. Guests can inspect Free, the one-time report and closed monthly enrollment details. Verified identity gates private commercial reads. The [review and rollout evidence](docs/releases/consumer-integration-20261120/REVIEW.md) includes the technical assessment of the outstanding #111 live check. Merge and production release await separate founder authorization.
+The integration candidate combines #114–#117 and makes pricing publicly readable using the existing component. Guests can inspect Free, the one-time report and closed monthly enrollment details. Verified identity gates private commercial reads; sign-out clears private state and rejects delayed responses. The [review and rollout evidence](docs/releases/consumer-integration-20261120/REVIEW.md) includes the technical assessment of the outstanding #111 live check. Merge and production release await separate founder authorization.
 
 ## November 17, 2026 — First useful consumer answer
 

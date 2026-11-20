@@ -15,6 +15,8 @@ All four source heads had passing Launch and Authenticated QA workflows when ins
 
 The additional implementation makes pricing public in the existing component. Free examples and the $79 city/Business Decision Report can be inspected before sign-in. Monthly details explicitly show that new enrollment is closed. A verified identity is required before the component reads the workspace, report, credit or subscription status. Anonymous query parameters do not establish a payment outcome. Existing signed-in billing actions still use their current services.
 
+The public component also observes later identity changes. Signing out clears private status and controls; a delayed workspace, status or report response cannot restore the previous reader's information. Pending Checkout responses cannot redirect a signed-out reader. Four targeted desktop/mobile regressions cover sign-out before and after the billing response. The first lifecycle check exposed stale rendered pricing after cross-tab sign-out; running the identity update in Angular's zone and rejecting stale responses resolved it. All four then passed against the demo emulators.
+
 ## Screens and journey
 
 - [Current production homepage before](../../design/consumer-question-entry/before-home-1280.jpg) and [mobile before](../../design/consumer-question-entry/before-home-390.jpg).
@@ -32,6 +34,8 @@ Question → finding → evidence uses the existing tax and electricity calculat
 The integration PR records the final exact commit and workflow links. The local production build and fast tests passed. The first Hosting run passed 83 cases and reported one duplicate-link selector after adding header pricing. Scoping that assertion to the footer resolved the test. The targeted rerun passed six cases, including anonymous pricing without backend writes.
 
 The first full integration run passed 84 Hosting and 173 authenticated browser checks. Three visual cases reported the two missing public-pricing baselines and the mobile homepage footer change. Inspected both new pricing images and all expected/actual/diff images for the homepage before adopting those three baselines. The signed-in pricing and evidence baselines matched. The targeted authenticated rerun passed four cases, including unverified public pricing and a legacy pricing sign-in link. The local SEO audit passed 60 raw/rendered observations and 10 sitemap URLs. Follow the final candidate workflows for the exact reviewed head. They cover authentication, unverified access, unauthorized workspaces, city-save retry, entitlement confirmation, pending and canceled checkout, legacy Pro, screenshots, browser-local privacy and accessible mobile layouts. The historical server-side email-verification fixture remains skipped. Physical-device and spoken screen-reader validation and real-user comprehension remain unmeasured.
+
+After the identity-lifecycle correction, `npm run build` passed again. Angular aborted under sandbox worker restrictions on the first attempt; the normal unsandboxed build completed with the two existing Discovery stylesheet warnings. The four additional lifecycle checks passed with `QA_PORT=4307 QA_BROWSER_CHANNEL=chrome firebase emulators:exec --project demo-ifyoumind --only auth,firestore,functions "npx --no-install playwright test --config e2e/playwright.config.mjs e2e/specs/session.spec.mjs --grep 'public pricing clears' --workers=1"`. These local results are separate from the final exact-head workflows linked on the draft.
 
 ## #111 live gate assessment
 

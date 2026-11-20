@@ -16,6 +16,10 @@ A follow-on consumer draft makes the homepage examples and the browser-local Dis
 
 [Issue #113](https://github.com/alwat83/ifyoumind/issues/113) moves the labeled, deterministic property-tax takeaway before the first click on the public Discovery chooser. Evidence remains inspectable in the existing browser-local journey and electricity remains available. [Draft #115](https://github.com/alwat83/ifyoumind/pull/115) is integrated with the deployed #111 source. The founder authorized the live save and retry, and the preflight stopped before a write because no eligible existing QA workspace could be verified. See the [current handoff](docs/agent-handoff/CURRENT_STATUS.md) for verification and the remaining gate.
 
+## November 17, 2026 — Standing consumer-first directive
+
+[AGENTS.md](AGENTS.md#standing-consumer-first-product-and-engineering-directive--november-17-2026) is the permanent source for product and engineering decisions. Give everyday visitors a useful plain-language answer, inspectable evidence, and a practical next step before monetization. Use the Grandmother Test in the [PR template](.github/pull_request_template.md) and prioritize first-answer understanding and return use. Property tax leads Discovery and electricity follows. Existing paid and Business capabilities remain supported. [Issue #113](https://github.com/alwat83/ifyoumind/issues/113) follows the verified production release of [PR #111](https://github.com/alwat83/ifyoumind/pull/111).
+
 ## November 16, 2026 — City Decision Brief evidence
 
 [Issue #108 vertical slice](docs/product/CITY_DECISION_EVIDENCE.md) connects the existing city question to a read-only, validated evidence disclosure. It reuses the authorized free brief and makes partial answers explicit. This evidence slice shipped in [PR #109](https://github.com/alwat83/ifyoumind/pull/109). [PR #111](https://github.com/alwat83/ifyoumind/pull/111) integrates the separate transactional city save and replay safeguards, including the monthly boundary. See the current handoff for rollout and validation.

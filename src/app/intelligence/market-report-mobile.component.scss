@@ -1,23 +1,23 @@
-/* Phones: show the analytical answer within the first screen. Only spacing and type size change;
-   every link, label and sentence stays in the page, so desktop, SEO and accessibility are unaffected. */
-@media(max-width:560px){
-  .report-shell{padding-top:12px}
-  /* Top bar on one compact row: back link left, actions right. */
-  .report-nav{flex-direction:row!important;align-items:center!important;flex-wrap:wrap;gap:8px;margin-bottom:10px}
-  .report-nav>div{width:100%!important;flex-direction:row!important;align-items:center!important;justify-content:space-between;gap:8px}
-  .report-nav .report-upgrade{width:auto!important;order:0!important;min-height:40px;padding:8px 10px;font-size:12px}
-  /* Sample notice: same words, tighter box. */
-  .report-shell>aside.state{padding:10px 12px;font-size:13px;line-height:1.45;margin-bottom:10px!important}
-  .report{padding:18px!important}
-  header.answer-header{gap:10px;padding-bottom:16px}
-  .answer-header .brand{margin-bottom:10px;font-size:15px}
-  .answer-header h1{font-size:26px;line-height:1.12}
-  .answer-header .context{margin-top:6px;font-size:14px}
-  /* Contents: one horizontally scrolling row instead of a stacked list. Its label stays for
-     screen readers through the nav's aria-label. */
-  .jump-list{padding:10px 0 0}
-  .jump-list>.eyebrow{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-  .jump-list ul{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
-  .jump-list a{white-space:nowrap;min-height:40px}
-  .report>section{padding:20px 0}
+@media(max-width:600px) {
+ .report-shell { padding-top:0; }
+ .report-nav { min-height:68px; flex-wrap:wrap; gap:0 16px; padding-block:12px; margin-bottom:16px; }
+ .report-nav>div { gap:0 16px; }
+ .report-nav .report-upgrade { padding:0; background:none; border:0; color:var(--iy-accent); font-size:12px; }
+ .sample-intro { padding:16px 0!important; background:none; border:0; border-bottom:1px solid var(--iy-line); font-size:13px; }
+ .sample-intro details summary { min-height:44px; display:flex; align-items:center; color:var(--iy-accent); cursor:pointer; }
+ .report { padding:16px 0!important; }
+ .answer-header { flex-direction:column; gap:12px; margin-bottom:24px; }
+ .answer-header .brand { display:none; }
+ .answer-header h1 { font-size:36px; line-height:1.1; margin-top:16px; }
+ .meta { padding-top:0; flex:initial; display:flex; flex-wrap:wrap; gap:16px; }
+ .context { font-size:14px; }
+ .executive-summary { padding:24px 20px!important; margin-inline:calc(-1 * var(--iy-gutter)); }
+ .recommendation h2 { font-size:34px; }.recommendation p:last-child { font-size:14px; }
+ .confidence { display:grid; grid-template-columns:1fr auto; gap:0 12px; }
+ .confidence strong { padding:0; font-size:16px; }.confidence small { grid-column:1/-1; margin-top:8px; }
+ .report>section { padding-block:28px; }
+ .metrics { gap:12px 20px; }.metrics strong { font-size:30px; }
+ .report-offer { padding:24px!important; margin-inline:calc(-1 * var(--iy-gutter)); }
+ .report-offer h2 { font-size:34px; }
+ .comparison-grid dl { grid-template-columns:minmax(0,1fr) auto; }
 }

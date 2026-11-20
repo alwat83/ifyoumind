@@ -179,7 +179,7 @@ test('a verified free user creates a decision through the app and sees the free 
   const user = await fixtures(FIXTURES.FREE_NO_REPORTS, { workspace: false });
   await signInThroughUi(page, user);
   await expect(page).toHaveURL(/\/decisions$/);
-  await expect(page.getByRole('heading', { name: 'What are you trying to figure out?' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Your decisions' })).toBeVisible();
   await expect(page.getByText('Nothing to manage yet')).toBeVisible();
 
   await page.goto('/decide?type=business');
@@ -212,10 +212,14 @@ test('a returning user can open account and reopen a saved decision', async ({ p
   const user = await fixtures(FIXTURES.RETURNING_WITH_REPORT, { decisions: 1 });
   await signInThroughUi(page, user);
   await expect(page.getByRole('heading', { name: 'Your decisions' })).toBeVisible();
-  await page.locator('nav.topbar').getByRole('link', { name: 'Account', exact: true }).click();
+  const nav = page.locator('app-journey-navigation').first();
+  if (await nav.locator('.mobile-navigation').isVisible()) await nav.locator('summary').click();
+  await nav.getByRole('link', { name: 'Account', exact: true }).click();
   await expect(page).toHaveURL(/\/account$/);
   await expect(page.getByRole('heading', { name: 'Account details' })).toBeVisible();
-  await page.getByRole('link', { name: 'Back to your decisions', exact: true }).click();
+  const accountNav = page.locator('app-journey-navigation').first();
+  if (await accountNav.locator('.mobile-navigation').isVisible()) await accountNav.locator('summary').click();
+  await accountNav.getByRole('link', { name: 'Your decisions', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Your decisions' })).toBeVisible();
   await page.locator(`a[href="/decisions/${user.projectIds[0]}"]`).click();
   await expect(page.getByRole('heading', { level: 1, name: /QA fixture decision 1/ })).toBeVisible();

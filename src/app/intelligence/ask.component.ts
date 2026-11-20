@@ -1,3 +1,4 @@
+import { JourneyNavigationComponent } from '../journey-navigation.component';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +9,7 @@ import { IntelligenceOrganization, OrganizationService } from './organization.se
 @Component({
   selector:'app-ask-intelligence',
   standalone:true,
-  imports:[CommonModule,FormsModule,RouterLink],
+  imports:[JourneyNavigationComponent,CommonModule,FormsModule,RouterLink],
   templateUrl:'./ask.component.html',
   styleUrls:['./ask.component.scss'],
 })
@@ -20,10 +21,10 @@ export class AskIntelligenceComponent implements OnInit {
   recent:RecentQuestion[]=[]; saved:SavedQuestion[]=[];
   loading=true; asking=false; error='';
   readonly prompts=[
-    'What seems to be driving Median Home Price?',
+    'What is most strongly related to Median Home Price?',
     'What is most strongly related to Crime Rate?',
     'What else is related to Population Growth Index?',
-    'What seems to explain Median Household Income?',
+    'What is most strongly related to Median Household Income?',
   ];
   async ngOnInit():Promise<void>{
     try{

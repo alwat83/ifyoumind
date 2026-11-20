@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 20, 2026 — Connected Midnight Slate prototype
+
+`codex/midnight-slate` is a separate redesign based on protected draft #118 at `2f4975f94ac888547df8b1fbdf149a50741f6570`. It does not modify that branch or authorize releasing it. The founder’s connected-experience correction is highest priority: one free-example entry, a consistent finding/evidence/next-action pattern, explicit private-bill versus account-data boundaries, saved city questions before suggestions, and one contextual sample-report offer. [Journey map, complete route audit and acceptance protocol](../design/midnight-slate/REVIEW.md) · [desktop/mobile prototype index](../design/midnight-slate/PROTOTYPE.html).
+
+Working local prototype: 146 fast tests and 32 targeted browser/accessibility checks passed after correcting link distinguishability and a mobile navigation test race. Production-equivalent build and bundle/privacy-island guards passed. Four-width captures have zero overflow. Six clearly illustrative social templates render locally with no network/publication. Exact-head CI and Linux visual comparisons remain required on the separate draft; green #118 checks do not cover this redesign. Human comprehension, physical-device and spoken screen-reader checks are unverified. No production, billing, entitlement, enrollment or OpenAI change. #111’s live retry remains unverified and is not waived.
+
 ## November 20, 2026 — Consumer integration release candidate
 
 [Draft #118](https://github.com/alwat83/ifyoumind/pull/118) on `codex/consumer-integration-release` combines the reviewed #115 → #116 → #117 ancestry with #114's permanent consumer-first instructions. Pricing is public in the existing component. Only verified signed-in readers trigger workspace, report or subscription reads. Guests can inspect Free, the $79 report and closed monthly enrollment details. See the [integration review, screenshots and release plan](../releases/consumer-integration-20261120/REVIEW.md). The first full run passed 84 Hosting checks and 173 authenticated browser checks. Three reviewed visual baseline changes are included. Four targeted auth checks and the 60-observation metadata audit passed locally. The [final candidate workflows](https://github.com/alwat83/ifyoumind/pull/118/checks) carry the reviewed result.

@@ -1,3 +1,4 @@
+import { JourneyNavigationComponent } from '../journey-navigation.component';
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, NgZone, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -11,7 +12,7 @@ import { MarketIntelligenceService } from './market-intelligence.service';
 @Component({
   selector:'app-pricing',
   standalone:true,
-  imports:[CommonModule,RouterLink],
+  imports:[JourneyNavigationComponent,CommonModule,RouterLink],
   templateUrl:'./pricing.component.html',
   styleUrls:['./pricing.component.scss'],
 })

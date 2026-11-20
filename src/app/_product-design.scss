@@ -22,52 +22,51 @@
   --iy-display: var(--iy-editorial-font, Georgia, serif);
   --iy-body: Inter, Arial, sans-serif;
 
-  --iy-page: #fafafc;
-  --iy-panel: #eceef5;
-  --iy-accent: #4355e8;
-  --iy-ink: #171923;
-  --iy-periwinkle: #b9c4ff;
-
-  --iy-paper: #fff;
-  --iy-muted: #51586c;
-  --iy-line: #cdd1e1;
-  --iy-control: #767d94;
-  --iy-focus: var(--iy-accent);
-  --iy-clay: var(--iy-panel);
-  --iy-olive: #e6eaff;
-  --iy-hover: #3444c8;
-
-  --iy-studio: var(--iy-ink);
-  --iy-studio-panel: #202435;
-  --iy-studio-line: #525975;
-  --iy-studio-text: var(--iy-page);
-  --iy-studio-muted: #d3d9f2;
-  --iy-studio-accent: var(--iy-periwinkle);
-  --iy-studio-chart: var(--iy-periwinkle);
-  --iy-studio-control: #a0a9cd;
-  --iy-studio-hover: #5263f0;
-
-  --iy-good: #2f6247;
-  --iy-good-bg: #e6eedf;
-  --iy-warn: #7a491c;
-  --iy-warn-bg: #f6e7d1;
-  --iy-error: #963b30;
-  --iy-error-bg: #f6e5df;
-  --iy-studio-error: #ffc2b7;
-  --iy-chart: var(--iy-muted);
+  color-scheme: dark;
+  --iy-page: #090D17;
+  --iy-panel: #162330;
+  --iy-accent: #7C9CFF;
+  --iy-ink: #F1F7FA;
+  --iy-periwinkle: #58D5E8;
+  --iy-paper: #101A27;
+  --iy-muted: #A8BAC9;
+  --iy-line: #33485A;
+  --iy-control: #6D849A;
+  --iy-focus: #58D5E8;
+  --iy-clay: #162330;
+  --iy-olive: #122B36;
+  --iy-hover: #9AB3FF;
+  --iy-on-accent: #090D17;
+  --iy-studio: #162330;
+  --iy-studio-panel: #101A27;
+  --iy-studio-line: #40576B;
+  --iy-studio-text: #F1F7FA;
+  --iy-studio-muted: #B2C3D1;
+  --iy-studio-accent: #58D5E8;
+  --iy-studio-chart: #7C9CFF;
+  --iy-studio-control: #7D94A8;
+  --iy-studio-hover: #9AB3FF;
+  --iy-good: #8AE2C4;
+  --iy-good-bg: #102D2A;
+  --iy-warn: #F2CF8A;
+  --iy-warn-bg: #30291B;
+  --iy-error: #FFB4BD;
+  --iy-error-bg: #35202C;
+  --iy-studio-error: #FFB4BD;
+  --iy-chart: #58D5E8;
 
   --iy-space-1: 8px;
   --iy-space-2: 12px;
   --iy-space-3: 16px;
   --iy-space-4: 24px;
   --iy-space-5: 32px;
-  --iy-gutter: clamp(12px, 2.5vw, 24px);
+  --iy-gutter: clamp(20px, 4vw, 64px);
   --iy-reading: 900px;
   --iy-content: 980px;
   --iy-wide: 1180px;
   --iy-touch: 44px;
-  --iy-radius: 5px;
-  --iy-panel-radius: 8px;
+  --iy-radius: 3px;
+  --iy-panel-radius: 4px;
 }
 
 @mixin editorial {
@@ -93,7 +92,7 @@
   @include button;
   border: 1px solid transparent;
   background: var(--iy-accent);
-  color: var(--iy-paper);
+  color: var(--iy-on-accent);
 
   &:hover:not(:disabled, [aria-disabled='true']) {
     background: var(--iy-hover);
@@ -141,4 +140,30 @@
       transition: none;
     }
   }
+}
+
+// Structural primitives shared by the existing consumer surfaces.
+@mixin navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 80px;
+  padding-block: 12px;
+  border-bottom: 1px solid var(--iy-line);
+}
+@mixin title {
+  color: var(--iy-ink);
+  font-family: var(--iy-body);
+  font-weight: 600;
+  letter-spacing: -.055em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+@mixin eyebrow {
+  color: var(--iy-accent);
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: .13em;
+  text-transform: uppercase;
 }

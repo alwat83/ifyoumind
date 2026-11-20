@@ -73,3 +73,6 @@ th:first-child{background:var(--iy-panel)}
   .table-hint{display:block}
   th,td{padding:9px 10px}
 }
+h1 { @include product.title; font-size:clamp(44px,6vw,72px); }
+.guide-list li { border:0; border-bottom:1px solid var(--iy-line); border-radius:0; background:none; padding:24px 0; }
+.cta { border:0; border-left:2px solid var(--iy-periwinkle); padding:28px; background:var(--iy-panel); }

@@ -1,3 +1,4 @@
+import { JourneyNavigationComponent } from '../journey-navigation.component';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +9,7 @@ import { UniversalAnalysis, UniversalAnalysisRun, UniversalDataService, Universa
 @Component({
   selector: 'app-data-canvas',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports:[JourneyNavigationComponent,CommonModule, FormsModule, RouterLink],
   templateUrl: './data-canvas.component.html',
   styleUrls: ['./data-canvas.component.scss'],
 })

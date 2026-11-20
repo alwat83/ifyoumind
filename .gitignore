@@ -57,3 +57,6 @@ cors.json
 *-debug.log
 .firebase/
 /public/guides
+
+# Local emulator secret overrides must never be published.
+/functions/.secret.local

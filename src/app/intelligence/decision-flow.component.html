@@ -1,11 +1,9 @@
 <main class="flow">
-  <nav aria-label="Decision navigation">
-    <a routerLink="/" class="brand" aria-label="ifYouMind home">ifYouMind</a>
-    <a routerLink="/decisions" class="return">Your decisions</a>
-  </nav>
+  <app-journey-navigation current="decide"></app-journey-navigation>
 
   @if (screen === 'question') {
     <section class="scene" aria-labelledby="decision-question-heading">
+      <p class="eyebrow">Start with your question</p>
       <h1 id="decision-question-heading" tabindex="-1">What are you trying to decide?</h1>
       <p class="intro">Explore a bill or ask about a U.S. city. Start with what you want to know.</p>
       <form (ngSubmit)="continueToPlace()" novalidate [attr.aria-busy]="working">
@@ -66,6 +64,7 @@
     </section>
   } @else {
     <section class="scene" aria-labelledby="place-heading">
+      <p class="eyebrow">Add only what changes the answer</p>
       <p class="original-question">{{ question.trim() }}</p>
       <h1 id="place-heading" tabindex="-1">{{ type === 'compare' ? 'Which cities are you comparing?' : 'Which city are you looking at?' }}</h1>
       <p class="intro" id="city-purpose">We use the city to find U.S. Census data on population, income and housing.</p>

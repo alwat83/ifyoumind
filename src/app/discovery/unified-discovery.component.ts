@@ -1,3 +1,4 @@
+import { JourneyNavigationComponent } from '../journey-navigation.component';
 import {CommonModule,DOCUMENT,NgComponentOutlet} from '@angular/common';
 import {Component,ElementRef,HostListener,Injector,OnInit,ViewChild,inject} from '@angular/core';
 import {TaxDiscoveryComponent} from './tax-discovery.component';
@@ -6,7 +7,7 @@ import {EXAMPLE_CSV,LABELS,analyzeTax,parseTaxCsv,usd} from './tax-discovery';
 
 const taxExampleInput=parseTaxCsv(EXAMPLE_CSV);
 
-@Component({selector:'app-unified-discovery',standalone:true,imports:[CommonModule,NgComponentOutlet],templateUrl:'./unified-discovery.component.html',host:{'[class.public-discovery]':'publicEntry'},styleUrls:['./unified-discovery.component.scss']})
+@Component({selector:'app-unified-discovery',standalone:true,imports:[CommonModule,NgComponentOutlet,JourneyNavigationComponent],templateUrl:'./unified-discovery.component.html',host:{'[class.public-discovery]':'publicEntry'},styleUrls:['./unified-discovery.component.scss']})
 export class UnifiedDiscoveryComponent implements OnInit {
  readonly publicEntry=inject(PUBLIC_DISCOVERY);
  readonly journeyComponent=TaxDiscoveryComponent;
@@ -27,10 +28,11 @@ export class UnifiedDiscoveryComponent implements OnInit {
   return this.category ? '/?example=' + this.category + '#business' : '/#business';
  }
  ngOnInit():void {
-  // Public links may open only these synthetic examples. No file data in URLs.
+  // Allowlisted public category and mode only. Never put bill values in URLs.
   if(!this.publicEntry)return;
-  const example=new URLSearchParams(this.document.location?.search||'').get('example');
-  if(example==='electricity'||example==='tax')this.choose(example);
+  const query=new URLSearchParams(this.document.location?.search||'');
+  const example=query.get('example');
+  if(example==='electricity'||example==='tax')this.choose(example,query.get('input')!=='csv');
  }
  choose(category:'tax'|'electricity',example=true):void {
   // Clear before destroying a journey; pending reads cannot repopulate its replacement.

@@ -57,7 +57,7 @@ test('visitors can read prices and choose a free example without requesting priv
  await expect(page.locator('.finding')).toHaveCount(3);
 });
 test('homepage navigation opens discovery without signup; home return clears the journey',async({page},info)=>{
- await page.goto('/');await expect(page.getByRole('heading',{level:1})).toHaveText('Make sense of your numbers.');const link=page.getByRole('link',{name:/Understand Your Bills/});await expect(link).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(0);await page.screenshot({path:info.outputPath('home-navigation.png'),fullPage:true,scale:'css'});await link.click();await expect(page).toHaveURL(origin+'/discover/');await page.getByRole('button',{name:'Try property tax example',exact:true}).click();await expect(page.locator('.finding')).toHaveCount(3);await page.getByRole('link',{name:'ifYouMind home',exact:true}).click();await expect(page).toHaveURL(origin+'/');await page.goBack();await expect(page.locator('.finding')).toHaveCount(0);await expect(page.getByRole('heading',{name:'Why did the electricity bill go up?',exact:true})).toBeVisible();
+ await page.goto('/');await expect(page.getByRole('heading',{level:1})).toHaveText('Find the story.Make your move.');const link=page.getByRole('link',{name:/Understand Your Bills/});await expect(link).toBeVisible();expect(await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth)).toBeLessThanOrEqual(0);await page.screenshot({path:info.outputPath('home-navigation.png'),fullPage:true,scale:'css'});await link.click();await expect(page).toHaveURL(origin+'/discover/');await page.getByRole('button',{name:'Try property tax example',exact:true}).click();await expect(page.locator('.finding')).toHaveCount(3);await page.getByRole('link',{name:'ifYouMind home',exact:true}).click();await expect(page).toHaveURL(origin+'/');await page.goBack();await expect(page.locator('.finding')).toHaveCount(0);await expect(page.getByRole('heading',{name:'Why did the electricity bill go up?',exact:true})).toBeVisible();
 });
 test('public discovery works offline after load and retains keyboard evidence access',async({page,context},info)=>{
  await page.goto('/discover/');await expect(page.getByRole('button',{name:'Try electricity example',exact:true})).toBeVisible();await context.setOffline(true);await page.getByRole('button',{name:'Try electricity example',exact:true}).focus();await page.keyboard.press('Enter');await expect(page.locator('.finding')).toHaveCount(5);await page.locator('.finding summary').first().focus();await page.keyboard.press('Enter');await expect(page.getByRole('table')).toBeVisible();await page.screenshot({path:info.outputPath('electricity-offline-evidence.png'),fullPage:true,scale:'css'});await page.getByRole('button',{name:'Clear & choose another',exact:true}).click();await page.getByRole('button',{name:'Try property tax example',exact:true}).click();await expect(page.locator('.finding')).toHaveCount(3);await context.setOffline(false);
@@ -75,7 +75,7 @@ test('a first-time visitor sees a qualified property-tax answer before any input
  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Am I paying too much in property taxes?');
  const tax = page.getByRole('article', { name: 'What changed in the example?' });
  await expect(tax).toContainText('Made-up example');
- await expect(tax).toContainText('The bill went up by $420.00.');
+ await expect(tax).toContainText('The bill went up by $420.00');
  await expect(tax).toContainText('School tax accounted for $240.00 of the increase.');
  await expect(tax).toContainText('Two bills alone can’t tell you whether you paid too much.');
  await expect(tax).toContainText('assessment notice and exemptions');
@@ -146,7 +146,7 @@ test('a returning visitor can go back to the same public example after inspectin
 test('discovery uses the shared local display font and preserves keyboard focus in reduced motion', async ({ page }) => {
  await page.emulateMedia({ reducedMotion: 'reduce' });
  await page.goto('/discover/');
- await expect(page.getByRole('heading', { level: 1 })).toHaveCSS('font-family', /Instrument Serif/);
+ await expect(page.getByRole('heading', { level: 1 })).toHaveCSS('font-family', /Inter|Arial/);
  expect(await page.evaluate(async () => {
    const faces = await document.fonts.load('44px "Instrument Serif"');
    return faces.some(face => face.status === 'loaded');
@@ -167,7 +167,7 @@ test('discovery uses the shared local display font and preserves keyboard focus 
 test('the static 404 keeps its status and offers accessible recovery on Hosting', async ({ page }) => {
  const response = await page.goto('/missing-visual-fixture');
  expect(response.status()).toBe(404);
- await expect(page.getByRole('heading', { name: 'Page not found' })).toHaveCSS('font-family', /Instrument Serif/);
+ await expect(page.getByRole('heading', { name: 'Page not found' })).toHaveCSS('font-family', /Inter|Arial/);
  await expect(page.locator('meta[name=robots]')).toHaveAttribute('content', 'noindex,nofollow');
  await expect(page.locator('script')).toHaveCount(0);
  expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBe(0);

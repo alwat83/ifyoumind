@@ -20,3 +20,7 @@ input, select, textarea { min-height: var(--iy-touch); }
 input::placeholder, textarea::placeholder { color: var(--iy-studio-muted); opacity: .8; }
 .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (max-width: 820px) { .form-grid { grid-template-columns: minmax(0, 1fr); } }
+.app-nav { @include product.navigation; }
+header h1 { @include product.title; }
+.panel,.demo-banner { border:0; border-top:1px solid var(--iy-line); border-radius:0; box-shadow:none; }
+.dataset-card { border:0; border-bottom:1px solid var(--iy-line); border-radius:0; background:none; }

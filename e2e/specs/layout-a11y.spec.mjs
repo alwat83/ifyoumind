@@ -36,18 +36,17 @@ test('signed-in pages are accessible, fit the viewport and the app navigation wo
     await expectAccessible(page);
   }
   await page.goto('/decisions');
-  const nav = page.locator('nav.topbar');
+  const nav = page.locator('app-journey-navigation').first();
+  const menu = nav.locator('.mobile-navigation');
+  await expect(nav).toBeVisible();
+  if (await menu.isVisible()) await menu.locator('summary').click();
   await nav.getByRole('link', { name: 'Account' }).click();
   await expect(page).toHaveURL(/\/account$/);
   await page.goto('/decisions');
+  await expect(nav).toBeVisible();
+  if (await menu.isVisible()) await menu.locator('summary').click();
   const pricing = nav.getByRole('link', { name: 'Pricing' });
-  if (test.info().project.name === 'mobile') {
-    // By design the phone header drops Pricing (≤560 px); the report's upgrade panel links to it.
-    await expect(pricing).toBeHidden();
-    await page.goto('/pricing');
-  } else {
-    await pricing.click();
-  }
+  await pricing.click();
   await expect(page).toHaveURL(/\/pricing$/);
   await expect(page.getByRole('heading', { name: 'One-time Decision Report' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Get Pro access' })).toHaveCount(0);
@@ -69,7 +68,7 @@ test('shared app surfaces retain editorial headings, mobile fit and keyboard foc
     ['/advanced', 'Dataset name'],
   ]) {
     await page.goto(path);
-    await expect(page.locator('h1')).toHaveCSS('font-family', /Instrument Serif/);
+    await expect(page.locator('h1')).toHaveCSS('font-family', /Inter|Arial/);
     await expect(page.getByLabel(control, { exact: false }).or(page.getByRole('link', { name: control, exact: true }))
       .or(page.getByRole('button', { name: control, exact: true })).first()).toBeAttached();
     for (const width of [320, 390, 768, 1440]) {
@@ -105,10 +104,10 @@ test('the Workspace navigation keeps Ask and Advanced on valid app routes', asyn
   await expect(page).toHaveURL(/\/decisions$/);
   await page.goto('/ask');
   const nav = page.getByRole('navigation', { name: 'Workspace' });
-  await expect(nav.getByRole('link', { name: 'Ask' })).toHaveAttribute('aria-current', 'page');
-  await nav.getByRole('link', { name: 'Advanced' }).click();
+  await expect(nav.getByRole('link', { name: 'Ask about saved data' })).toHaveAttribute('aria-current', 'page');
+  await nav.getByRole('link', { name: 'Explore in detail' }).click();
   await expect(page).toHaveURL(/\/advanced$/);
-  await expect(nav.getByRole('link', { name: 'Advanced' })).toHaveAttribute('aria-current', 'page');
-  await nav.getByRole('link', { name: 'My data' }).click();
+  await expect(nav.getByRole('link', { name: 'Explore in detail' })).toHaveAttribute('aria-current', 'page');
+  await nav.getByRole('link', { name: 'Your datasets' }).click();
   await expect(page).toHaveURL(/\/data$/);
 });

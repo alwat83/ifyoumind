@@ -8,6 +8,10 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 20, 2026 — Connected Midnight Slate redesign
+
+A separate design branch builds on PR #118 without altering or releasing it. The founder identified fragmented entry points as the priority. The [route audit and connected journey](docs/design/midnight-slate/REVIEW.md) replace feature-oriented navigation with one example → finding → evidence → relevant continuation model, retain browser-local bill privacy, and distinguish saved city decisions and account-based datasets. The actual Angular application supplies the desktop/mobile prototype, with no duplicate website or shell. Shared Midnight Slate tokens, narrative report layouts, saved-question lists and draft editorial artwork support this flow. Human first-use acceptance and release authorization remain separate from automated tests.
+
 ## November 20, 2026 — Integrated consumer release candidate
 
 The integration candidate combines #114–#117 and makes pricing publicly readable using the existing component. Guests can inspect Free, the one-time report and closed monthly enrollment details. Verified identity gates private commercial reads; sign-out clears private state and rejects delayed responses. The [review and rollout evidence](docs/releases/consumer-integration-20261120/REVIEW.md) includes the technical assessment of the outstanding #111 live check. Merge and production release await separate founder authorization.

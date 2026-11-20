@@ -1,3 +1,4 @@
+import { JourneyNavigationComponent } from '../journey-navigation.component';
 import { CommonModule, Location } from '@angular/common';
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -17,7 +18,7 @@ import { buildCityDecisionCase, CityDecisionCase } from './city-decision-case';
 @Component({
   selector:'app-market-report',
   standalone:true,
-  imports:[CommonModule,RouterLink,MarketAnalysisComponent],
+  imports:[CommonModule,RouterLink,MarketAnalysisComponent,JourneyNavigationComponent],
   templateUrl:'./market-report.component.html',
   styleUrls:['./market-report.component.scss','./market-report-offers.component.scss','./market-report-findings.component.scss','./market-report-mobile.component.scss','./sample-report-state.component.scss'],
 })

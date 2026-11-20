@@ -17,3 +17,7 @@
 .sample-retry[aria-disabled='true'] { background: var(--iy-muted); }
 
 .sample-intro { margin-bottom: 14px; border: 1px solid var(--iy-line); background: var(--iy-warn-bg); color: var(--iy-warn); }
+.sample-intro { background:var(--iy-panel); color:var(--iy-muted); border:0; border-left:2px solid var(--iy-periwinkle); font-size:14px; }
+.sample-intro strong { color:var(--iy-ink); }
+.sample-intro summary { color:var(--iy-accent); min-height:44px; display:flex; align-items:center; cursor:pointer; }
+.sample-intro details p { max-width:80ch; }

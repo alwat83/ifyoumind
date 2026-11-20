@@ -16,13 +16,14 @@ test('sample report: the answer starts on the first screen, with nothing removed
     expect(top, `headline top ${Math.round(top)}px, viewport ${viewport.height}px`).toBeLessThan(viewport.height - 80);
   }
 
-  // Everything above the answer is still there: back link, both actions and price, the notice, every contents link.
-  const topBar = page.locator('main.report-shell > nav.report-nav');
-  await expect(topBar.getByRole('link', { name: '← ifYouMind' })).toBeVisible();
-  await expect(topBar.getByRole('link', { name: 'Start free' })).toBeVisible();
-  await expect(topBar.getByRole('link', { name: /Get this report for your cities · \$79/ })).toBeVisible();
-  await expect(page.locator('.report-shell > aside.state')).toContainText('This is a sample report.');
-  await expect(page.locator('.report-shell > aside.state')).toContainText('a free brief covers your main city and one comparison');
+  // One common header; the optional account/report continuation follows the sample.
+  const topBar = page.locator('app-journey-navigation');
+  await expect(topBar.getByRole('link', { name: 'ifYouMind home' })).toBeVisible();
+  const offer = page.locator('.report-offer');
+  await expect(offer.getByRole('link', { name: 'Start free', exact: true })).toBeAttached();
+  await expect(offer.getByRole('link', { name: /Get this report for your cities · \$79/ })).toBeAttached();
+  await expect(page.locator('.sample-intro')).toContainText('This is a sample report.');
+  await expect(page.locator('.sample-intro')).toContainText('a free brief covers your main city and one comparison');
   const contents = page.getByRole('navigation', { name: 'In this report' });
   await expect(contents.getByRole('link')).toHaveCount(7);
   await expect(contents.getByRole('link', { name: 'What the figures show' })).toBeAttached();
@@ -46,7 +47,7 @@ test('sample report: the answer starts on the first screen, with nothing removed
   await page.keyboard.press('Enter');
   await expect(page.locator('#sources')).toBeInViewport();
   await expect(page.locator('#sources a').first()).toHaveAttribute('href', /^https:\/\//);
-  await topBar.getByRole('link', { name: /Get this report for your cities/ }).click();
+  await offer.getByRole('link', { name: /Get this report for your cities/ }).click();
   await expect(page).toHaveURL(/\/register\?intent=report$/);
   await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
 });

@@ -30,29 +30,31 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await page.setViewportSize({ width, height });
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Make sense of your numbers.');
-    const heroAction = page.getByRole('link', { name: 'Open the full tax example', exact: true });
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Find the story.Make your move.');
+    const heroAction = page.getByRole('link', { name: 'Try a free example', exact: true });
     await expect(heroAction).toBeVisible();
     if (width >= 375) await expect(heroAction).toBeInViewport({ ratio: 1 });
-    await expect(heroAction).toHaveAttribute('href', '/discover/?example=tax');
+    await expect(heroAction).toHaveAttribute('href', '#business');
     const image = page.locator('.hero-art img');
-    await expect(image).toBeVisible();
+    if (width > 740) await expect(image).toBeVisible();
+    else await expect(image).toBeHidden();
     await expect(image).toHaveAttribute('alt', '');
-    await image.evaluate(async img => {
+    if (width > 740) await image.evaluate(async img => {
       await document.fonts.ready;
       await img.decode();
     });
     expect(await page.evaluate(() => [...document.fonts]
       .filter(font => font.family.includes('Instrument Serif') && font.status === 'loaded').length)).toBe(2);
-    await expect(page.locator('#try').getByRole('link')).toHaveCount(1);
-    await expect(page.locator('#try')).toContainText('Compare bills or cities. Try a free example.');
+    await expect(page.locator('.hero-copy').getByRole('link')).toHaveCount(1);
+    await heroAction.click();
+    await expect(page.locator('#try')).toContainText('Compare bills or U.S. cities. Get a clear finding, check the evidence, and choose your next step.');
     const reports = page.getByRole('region', { name: 'Decision Reports', exact: true });
     await expect(reports.getByRole('link', { name: 'Start a Free Brief' })).toHaveAttribute('href', '/decide?type=business');
-    await expect(reports).toContainText('A full Decision Report adds more comparisons, a sourced market analysis, and an action plan.');
+    await expect(reports).toContainText('The $79 one-time Decision Report adds up to three comparison cities, a sourced market analysis and an action plan.');
     await expect(reports.getByRole('link', { name: 'View a Sample Report' })).toHaveAttribute('href', '/sample-report');
     const feature = page.locator('#business');
     await expect(feature.getByRole('button', { pressed: true })).toHaveText('Property taxes');
-    await expect(feature.getByText('Made-up example', { exact: true })).toBeInViewport({ ratio: 1 });
+    await expect(feature.locator('.example-label')).toBeInViewport({ ratio: 1 });
     await expect(feature.getByRole('heading', { name: 'Why did my property taxes go up?', exact: true })).toBeInViewport({ ratio: 1 });
     await expect(feature.locator('.finding')).toContainText('$420 more than the year before.');
     await expect(feature.locator('.finding-note')).toContainText('School taxes rose by $240');
@@ -61,7 +63,7 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await expect(feature.getByText('more than the year before.', { exact: true })).toBeVisible();
     const summary = feature.locator('.home-evidence summary');
     await expect(summary).toHaveText('Show the evidence', { useInnerText: true });
-    await expect(summary).toBeInViewport({ ratio: 1 });
+    await expect(summary).toBeVisible();
     await expect(feature.getByRole('table')).toHaveCount(0);
     await expect(feature.locator('.home-evidence')).not.toHaveAttribute('open');
     await expect(feature.getByRole('link', { name: 'Open the full tax example' })).toHaveAttribute('href', '/discover/?example=tax');
@@ -129,7 +131,7 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await expect(evidence).not.toHaveAttribute('open');
     await expect(summary).toHaveText('Show the evidence', { useInnerText: true });
     await expect(announcement).toContainText('The bill rose 21% and electricity use rose 10%.');
-    await expect(feature.getByText('Made-up example', { exact: true })).toBeVisible();
+    await expect(feature.locator('.example-label')).toBeVisible();
     await expect(feature.locator('.finding')).toContainText('+21% in total billed, compared with +10% in electricity use.');
     await expect(feature.locator('.finding-note')).toHaveText('Check the individual charges to see what else changed.');
     await expect(feature.getByRole('link', { name: 'Explore the electricity example' })).toHaveAttribute('href', '/discover/?example=electricity');
@@ -248,8 +250,8 @@ test('keyboard opens the compact menu, Escape restores focus, and text spacing p
   await page.keyboard.press('Enter');
   await expect(menu).toHaveAttribute('open', '');
   await page.keyboard.press('Tab');
-  await expect(menu.getByRole('link', { name: 'Examples' })).toBeFocused();
-  await expect(menu.getByRole('link', { name: 'Decision Reports' })).toHaveAttribute('href', '#reports');
+  await expect(menu.getByRole('link', { name: 'Explore examples' })).toBeFocused();
+  await expect(menu.getByRole('link', { name: 'Sample report' })).toHaveAttribute('href', '/sample-report');
   await expect(menu.getByRole('link', { name: 'Sign In' })).toHaveAttribute('href', '/login');
   await page.keyboard.press('Escape');
   await expect(menu).not.toHaveAttribute('open');

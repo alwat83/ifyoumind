@@ -2,6 +2,10 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## November 20 — One connected consumer journey
+
+The separate [Midnight Slate prototype](../design/midnight-slate/REVIEW.md) prioritizes understanding what the product does, what is supported and what a click opens. Keep public bill value, account-based city evidence and the existing $79 report distinct but connected. Priorities: verify the prototype end to end; observe the founder’s five unassisted first-use tasks with a consenting participant; correct actual confusion before expanding features or distribution. No participant feedback, new revenue, conversion lift or operating-cost observation is claimed. Existing scoreboard dates and scope are unchanged. No publishing, pricing, enrollment or paid AI activation.
+
 ## November 20 — Integrated first-answer candidate
 
 [Draft #118](https://github.com/alwat83/ifyoumind/pull/118) integrates the existing consumer work and makes costs inspectable before registration. The [release review](../releases/consumer-integration-20261120/REVIEW.md) distinguishes engineering checks from human outcomes. Prioritize (1) the founder's exact candidate/release-scope decision, with the #111 live gate still explicit; (2) one permitted mobile first-use observation to test the finding, limitation and next action; (3) evidence-led correction of demonstrated friction. No new participants, purchases, conversion, revenue or cost observations were collected. The dated financial scoreboard is unchanged; current first-answer understanding and return use remain unknown. No new tracking, outreach, paid AI or enrollment change.

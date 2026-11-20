@@ -35,3 +35,12 @@ header h1 { @include product.editorial; }
 
 input, select { @include product.field; }
 .import-button { @include product.primary; }
+.topbar { @include product.navigation; }
+.data-shell { padding-top:0; }
+header h1 { @include product.title; }
+.upload-card,.details-card { padding:28px 0; border:0; border-top:1px solid var(--iy-line); border-radius:0; }
+.dropzone { display:flex; align-items:center; flex-wrap:wrap; justify-content:start; padding:28px; text-align:left; gap:16px; }
+.privacy-note { font-size:14px; max-width:70ch; }.privacy-note a { color:var(--iy-accent); text-underline-offset:4px; }
+.dataset-grid { display:block; }.dataset-grid article { border:0; border-bottom:1px solid var(--iy-line); background:none; padding:24px 0; border-radius:0; }
+.library-actions { display:flex; gap:20px; flex-wrap:wrap; }.library-actions a,.notice a { color:var(--iy-accent); min-height:44px; display:inline-flex; align-items:center; }
+.privacy-note a,.notice a { text-decoration:underline; }

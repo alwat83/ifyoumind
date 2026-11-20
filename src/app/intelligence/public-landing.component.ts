@@ -1,3 +1,4 @@
+import { JourneyNavigationComponent } from '../journey-navigation.component';
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Auth, user } from '@angular/fire/auth';
@@ -7,7 +8,7 @@ import { HOME_EXAMPLES } from './home-discovery-examples';
 @Component({
   selector: 'app-public-landing',
   standalone: true,
-  imports: [RouterLink],
+  imports:[JourneyNavigationComponent,RouterLink],
   templateUrl: './public-landing.component.html',
   styleUrls: [
     './public-landing.component.scss',

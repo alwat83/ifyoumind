@@ -1,14 +1,9 @@
 <main class="report-shell">
-  <nav *ngIf="sampleMode" class="report-nav no-print">
-    <a routerLink="/">← ifYouMind</a>
-    <div *ngIf="sampleEntry() as entry">
-      <a [routerLink]="entry.path" [queryParams]="entry.free">Start free</a>
-      <a [routerLink]="entry.path" [queryParams]="entry.report" class="report-upgrade">Get this report for your cities · $79</a>
-    </div>
-  </nav>
+  <app-journey-navigation class="no-print" current="reports" example="cities"></app-journey-navigation>
   <aside *ngIf="sampleMode" class="state no-print sample-intro">
     <ng-container *ngIf="project; else sampleIntroduction">
-      <strong>This is a sample report.</strong> The question is an example, but every figure is real U.S. Census Bureau data with its source linked. Your own report uses your decision, business type and locations. This sample is the full $79 Decision Report; a free brief covers your main city and one comparison.
+      <strong>This is a sample report.</strong> An example question, with sourced Census evidence.
+      <details><summary>About this sample</summary><p>The question is an example, but every figure is real U.S. Census Bureau data with its source linked. Your own report uses your decision, business type and locations. This sample is the full $79 Decision Report; a free brief covers your main city and one comparison.</p></details>
     </ng-container>
     <ng-template #sampleIntroduction><strong>This sample is free.</strong> A full Decision Report example, with real Census data, sources and limits.</ng-template>
   </aside>
@@ -56,18 +51,7 @@
       </div>
     </header>
 
-    <nav *ngIf="sampleMode" class="jump-list no-print" aria-label="In this report">
-      <p class="eyebrow">In this report</p>
-      <ul>
-        <li><a href="/sample-report#recommendation" (click)="jumpTo($event,'recommendation')">What the figures show</a></li>
-        <li><a href="/sample-report#signals" (click)="jumpTo($event,'signals')">Signals</a></li>
-        <li *ngIf="brief.comparisons.length"><a href="/sample-report#comparison" (click)="jumpTo($event,'comparison')">City comparison</a></li>
-        <li *ngIf="decisionReport?.marketAnalysis"><a href="/sample-report#market-analysis" (click)="jumpTo($event,'market-analysis')">Market analysis</a></li>
-        <li *ngIf="decisionReport"><a href="/sample-report#action-plan" (click)="jumpTo($event,'action-plan')">Action plan</a></li>
-        <li *ngIf="decisionReport"><a href="/sample-report#change-the-call" (click)="jumpTo($event,'change-the-call')">What could change the call</a></li>
-        <li *ngIf="brief.sources?.length"><a href="/sample-report#sources" (click)="jumpTo($event,'sources')">Sources</a></li>
-      </ul>
-    </nav>
+
 
     <section id="recommendation" class="executive-summary" *ngIf="summary as s">
       <div class="recommendation">
@@ -82,6 +66,19 @@
         <ng-template #standardCitationNote><small>Each links to its official table. This counts citations; it is not a measure of how certain the findings are.</small></ng-template>
       </aside>
     </section>
+
+    <nav *ngIf="sampleMode" class="jump-list no-print" aria-label="In this report">
+      <p class="eyebrow">In this report</p>
+      <ul>
+        <li><a href="/sample-report#recommendation" (click)="jumpTo($event,'recommendation')">What the figures show</a></li>
+        <li><a href="/sample-report#signals" (click)="jumpTo($event,'signals')">Signals</a></li>
+        <li *ngIf="brief.comparisons.length"><a href="/sample-report#comparison" (click)="jumpTo($event,'comparison')">City comparison</a></li>
+        <li *ngIf="decisionReport?.marketAnalysis"><a href="/sample-report#market-analysis" (click)="jumpTo($event,'market-analysis')">Market analysis</a></li>
+        <li *ngIf="decisionReport"><a href="/sample-report#action-plan" (click)="jumpTo($event,'action-plan')">Action plan</a></li>
+        <li *ngIf="decisionReport"><a href="/sample-report#change-the-call" (click)="jumpTo($event,'change-the-call')">What could change the call</a></li>
+        <li *ngIf="brief.sources?.length"><a href="/sample-report#sources" (click)="jumpTo($event,'sources')">Sources</a></li>
+      </ul>
+    </nav>
 
     <section *ngIf="cityEvidence as evidence" class="city-evidence" aria-label="City comparison evidence">
       <details>
@@ -171,20 +168,7 @@
       <a [routerLink]="['/pricing']" [queryParams]="{offer:'report',projectId:project?.id}" class="report-upgrade">Get the full report · $79</a>
     </aside>
 
-    <section *ngIf="sampleMode" class="report-offer no-print">
-      <div>
-        <p class="eyebrow">Your decision, your locations</p>
-        <h2>Get this analysis for your own question.</h2>
-        <p>Start with a free Decision Brief: your city compared with one other. Upgrade to the $79 Decision Report for up to three comparisons, the plan-ready write-up and the action plan.</p>
-      </div>
-      <div class="offer-actions">
-        <ng-container *ngIf="sampleEntry() as entry">
-          <a [routerLink]="entry.path" [queryParams]="entry.report" class="offer-primary">Get this report for your cities · $79</a>
-          <a [routerLink]="entry.path" [queryParams]="entry.free" class="offer-secondary">Start free</a>
-        </ng-container>
-        <button type="button" class="offer-secondary" (click)="printReport()">Print / save this sample</button>
-      </div>
-    </section>
+
 
     <section *ngIf="!reportPurchased" class="report-offer report-adds no-print" aria-labelledby="report-adds-title">
       <div *ngIf="checkoutReturned && !canGeneratePaidReport" role="status">
@@ -280,6 +264,21 @@
     </section>
 
     <p *ngIf="sampleMode" class="no-print"><a href="/guides/choose-business-location-evidence/">Business location evidence checklist</a> · <a href="/guides/">All decision guides</a></p>
+    <section *ngIf="sampleMode" class="report-offer no-print">
+      <div>
+        <p class="eyebrow">Your decision, your locations</p>
+        <h2>Get this analysis for your own question.</h2>
+        <p>Start with a free Decision Brief: your city compared with one other. Upgrade to the $79 Decision Report for up to three comparisons, the plan-ready write-up and the action plan.</p>
+      </div>
+      <div class="offer-actions">
+        <ng-container *ngIf="sampleEntry() as entry">
+          <a [routerLink]="entry.path" [queryParams]="entry.report" class="offer-primary">Get this report for your cities · $79</a>
+          <a [routerLink]="entry.path" [queryParams]="entry.free" class="offer-secondary">Start free</a>
+        </ng-container>
+        <button type="button" class="offer-secondary" (click)="printReport()">Print / save this sample</button>
+      </div>
+    </section>
+
     <section id="sources" *ngIf="brief.sources?.length && (!cityEvidence || cityEvidence.primary)" class="sources">
       <p class="eyebrow">Sources</p>
       <ul>

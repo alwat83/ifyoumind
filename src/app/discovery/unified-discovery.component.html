@@ -1,6 +1,7 @@
 <a class="skip" [href]="category ? '#main' : '#discovery-entry'">Skip to discovery</a>
-<header class="shell-header" [class.active]="category">
-  <a *ngIf="publicEntry; else localBrand" class="brand" href="/" aria-label="ifYouMind home">ifYouMind<span>.</span></a><ng-template #localBrand><span class="brand">ifYouMind<span>.</span></span></ng-template>
+<app-journey-navigation *ngIf="publicEntry" class="journey-header" current="explore" [example]="category || ''"></app-journey-navigation>
+<header *ngIf="category || !publicEntry" class="shell-header" [class.active]="category">
+  <span *ngIf="!publicEntry" class="brand">ifYouMind<span>.</span></span>
   <span class="preview">{{ publicEntry ? 'Bill discovery' : 'Local preview' }}</span>
   <ng-container *ngIf="category">
     <span class="category">{{ category === 'tax' ? 'Property tax' : 'Electricity bills' }}</span>
@@ -14,10 +15,10 @@
   <p class="message" role="status" aria-live="polite">{{ message }}</p>
   <div class="choices">
     <article class="choice tax" aria-labelledby="tax-title">
-      <div *ngIf="!publicEntry" class="bill-art" aria-hidden="true"><div class="bill"><span>2024</span><b>$4,200</b><i></i><i></i></div><div class="bill later"><span>2025</span><b>$4,620</b><i></i><i></i></div><span class="bill-symbol">⌂</span></div><p class="kicker">{{ publicEntry ? 'Made-up example' : 'Year to year · Made-up example' }}</p>
+      <p class="kicker">{{ publicEntry ? 'Made-up example' : 'Year to year · Made-up example' }}</p>
       <h2 id="tax-title">{{ publicEntry ? 'What changed in the example?' : 'Property tax discovery' }}</h2>
       <ng-container *ngIf="publicEntry && taxExample.status === 'ready' && taxExample.delta > 0; else taxDescription">
-        <p class="first-answer">The bill went up by <strong>{{ usd(taxExample.delta) }}</strong>.<ng-container *ngIf="schoolTaxChange > 0"> School tax accounted for <strong>{{ usd(schoolTaxChange) }}</strong> of the increase.</ng-container></p>
+        <p class="first-answer"><span>The bill went up by</span> <strong>{{ usd(taxExample.delta) }}</strong> <span *ngIf="schoolTaxChange > 0">School tax accounted for <strong>{{ usd(schoolTaxChange) }}</strong> of the increase.</span></p>
         <p>Two bills alone can’t tell you whether you paid too much. Start by checking your county’s assessment notice and exemptions.</p>
       </ng-container>
       <ng-template #taxDescription><p>A bigger bill. See which charges changed.</p></ng-template>
@@ -26,7 +27,7 @@
       <p *ngIf="!publicEntry" class="format">Two annual statements · USD · one supported CSV format</p>
     </article>
     <article class="choice electricity" aria-labelledby="electricity-title">
-      <div *ngIf="!publicEntry" class="bill-art" aria-hidden="true"><div class="bill"><span>Earlier bill</span><b>$120</b><i></i><i></i></div><div class="bill later"><span>Later bill</span><b>$145.20</b><i></i><i></i></div><span class="bill-symbol">ϟ</span></div><p class="kicker">{{ publicEntry ? 'Another made-up example' : 'Use versus cost · Made-up example' }}</p>
+      <p class="kicker">{{ publicEntry ? 'Another made-up example' : 'Use versus cost · Made-up example' }}</p>
       <h2 id="electricity-title">{{ publicEntry ? 'Why did the electricity bill go up?' : 'Electricity bill discovery' }}</h2>
       <p>{{ publicEntry ? 'See whether the example used more electricity and how the charges changed.' : 'More energy used, or a bigger bill? Look closer.' }}</p>
       <div class="actions"><button [class]="publicEntry ? 'secondary' : 'primary'" type="button" (click)="choose('electricity')" aria-label="Try electricity example">{{ publicEntry ? 'Try electricity example' : 'Try example' }} <span aria-hidden="true">↗</span></button><button class="quiet" type="button" (click)="choose('electricity',false)" aria-label="Use an electricity CSV">Use my CSV</button></div>

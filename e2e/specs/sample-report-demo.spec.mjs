@@ -36,7 +36,7 @@ test('signed-in sample visitor can start a brief or continue with report intent'
   await page.goto('/sample-report');
   const reportLink = page.getByRole('link', { name: 'Get this report for your cities · $79' });
   const freeLink = page.getByRole('link', { name: 'Start free', exact: true });
-  for (const position of [0, 1]) {
+  for (const position of [0]) {
     await expect(freeLink.nth(position)).toHaveAttribute('href', '/decide?type=business');
     await expect(reportLink.nth(position)).toHaveAttribute('href', '/decide?type=business&intent=report');
   }

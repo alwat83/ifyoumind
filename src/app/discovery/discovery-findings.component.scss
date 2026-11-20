@@ -4,3 +4,21 @@
 @media(max-width:700px){.eyebrow{font-size:11px}.cards{grid-template-columns:1fr}.finding{padding:22px}.finding h3{font-size:26px}.finding.pattern{grid-column:auto}.source-table{margin:0 -6px}.source-table th,.source-table td{padding:9px 4px}}
 
 .finding h3 { @include product.editorial; }
+
+// One reading sequence: lead finding, contributing charges, then limitations.
+.cards { display:block; }
+.finding { border:0; border-top:1px solid var(--iy-line); border-radius:0; background:none; padding:36px 0; display:grid; grid-template-columns:1fr 1fr; column-gap:64px; }
+.finding .eyebrow { grid-column:1/-1; color:var(--iy-periwinkle); }
+.finding h3 { font-family:var(--iy-body); font-size:clamp(30px,4vw,50px); font-weight:500; letter-spacing:-.045em; margin-bottom:20px; }
+.finding>p:not(.eyebrow) { grid-column:1; max-width:50ch; }
+.finding figure { grid-column:2; grid-row:2 / span 2; margin:0; align-self:center; }
+.finding .evidence { grid-column:1/-1; }
+.finding:first-child { background:var(--iy-panel); padding:36px; border-top:2px solid var(--iy-periwinkle); }
+.finding:first-child h3 { font:400 clamp(40px,5.3vw,68px)/1.05 var(--iy-display); color:var(--iy-ink); }
+.finding.pattern { background:none; }
+.track,.change-track { height:6px; background:var(--iy-studio-line); border-radius:0; }
+.bar-label strong { color:var(--iy-ink); font-variant-numeric:tabular-nums; }
+@media(max-width:700px) { .finding { display:block; padding-block:28px; }.finding:first-child { margin-inline:-20px; padding:28px 20px; }.finding h3 { font-size:30px; }.finding:first-child h3 { font-size:46px; }.finding figure { margin-top:28px; } }
+.finding-next { grid-column:1/-1; display:flex; align-items:center; flex-wrap:wrap; gap:16px 24px; margin-top:24px; }
+.finding-next button { @include product.primary; padding:12px 18px; min-height:48px; cursor:pointer; font:600 14px var(--iy-body); }
+.finding-next p { margin:0; font-size:13px; max-width:44ch; }

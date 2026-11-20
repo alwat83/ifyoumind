@@ -1,3 +1,4 @@
+import { JourneyNavigationComponent } from '../../journey-navigation.component';
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +15,7 @@ import {
 @Component({
   selector:'app-login',
   standalone:true,
-  imports:[CommonModule,FormsModule,RouterModule],
+  imports:[JourneyNavigationComponent,CommonModule,FormsModule,RouterModule],
   templateUrl:'./login.component.html',
   styleUrls:['./login.component.scss'],
 })

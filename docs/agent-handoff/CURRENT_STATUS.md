@@ -1,5 +1,13 @@
 # ifYouMind — Current development status
 
+## November 21, 2026 — Phase 5 consumer release isolation (in progress)
+
+`codex/hosting-release-isolation` from #122 `fded8759251204b4e3fa1db7573f05fd835aa41c`. [Consumer package/matrix](../releases/phase5/REVIEW.md), [proposed exact Hosting-only deployment/independent rollback](../releases/phase5/HOSTING_ONLY.md). Local-only artifact preparer and eight negative safety tests; no deploy mode. Source remains unchanged on #118/#119/#121/#120. No product UI, workflow, dependency, auth, billing, AI, rules or production write change.
+
+Fresh authenticated GETs: Hosting release1794933315802000/version39dc573f3826dca6; current and priorcd0b78221355e0f4 FINALIZED/58 ACTIVE files, older1beeaa395c606d55 FINALIZED/57. Config and file hashes accessible; no restore/mutation permission test. City writer00087-nub ACTIVE/latest Ready/100%, not a live retry. Current master-push workflow redeploys27 Functions plus Hosting/rules/Storage and cancels in-progress production runs. It is unchanged. A separately authorized Hosting-only artifact cannot silently bypass existing gates or prevent other deployers; exclusive window/serialization needs separate approval.
+
+Consumer founder review is supported; production execution remains NO-GO. #111 live retry, strict transaction recovery, distinct month/dataset findings, physical Safari, spoken VoiceOver, Linux pixel review, unassisted comprehension and live billing/activation proof remain unresolved/unverified. Exact-source consumer checks and final preview follow commitment; previous test records below remain historical, not new passes.
+
 ## November 21, 2026 — Phase 4 risk-based preparation
 
 [Draft #122](https://github.com/alwat83/ifyoumind/pull/122): exact tested `d792381be1dbc86f5d70c37f3704ff0f29ba1bc4`, base76ece8d. [Committed backend-level summary](../releases/phase4/VERIFIED_d792381.md) / JSON. Ten checks PASS/one FAIL;538 tests PASS/two strict recovery FAIL/15 SKIP, clean integrity VALID, zero source events. All48 commerce/214 authenticated pass; prior month/dataset findings remain open. Fourteen excluded full-plan checks are NOT_RUN, not passes. Fourteen runner tests pass, and a Consumer-level claim for sensitive runner changes is correctly refused with zero tests. Later commit is evidence/handoff only; executable bytes unchanged. No hosted run listed or CI success claimed.

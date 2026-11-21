@@ -1,0 +1,44 @@
+{
+  "observedAt": "2026-11-21T18:20:19.148Z",
+  "site": "ifyoumind-473fe",
+  "current": {
+    "release": "1794933315802000",
+    "type": "DEPLOY",
+    "releaseTime": "2026-11-17T16:35:15.802Z",
+    "version": "39dc573f3826dca6"
+  },
+  "versions": [
+    {
+      "id": "39dc573f3826dca6",
+      "status": "FINALIZED",
+      "createTime": "2026-11-17T16:34:05.323384Z",
+      "finalizeTime": "2026-11-17T16:35:15.684905Z",
+      "fileCount": 58,
+      "allFilesActive": true,
+      "allHashesPresent": true,
+      "configSha256": "1f5af706eafc72cebd32af96d4ccfb8bd0a6a0ba573800f5306ba7db6174fc84"
+    },
+    {
+      "id": "cd0b78221355e0f4",
+      "status": "FINALIZED",
+      "createTime": "2026-11-17T06:37:05.669962Z",
+      "finalizeTime": "2026-11-17T06:37:58.523029Z",
+      "fileCount": 58,
+      "allFilesActive": true,
+      "allHashesPresent": true,
+      "configSha256": "1f5af706eafc72cebd32af96d4ccfb8bd0a6a0ba573800f5306ba7db6174fc84"
+    },
+    {
+      "id": "1beeaa395c606d55",
+      "status": "FINALIZED",
+      "createTime": "2026-11-14T20:20:57.723367Z",
+      "finalizeTime": "2026-11-14T20:22:06.167507Z",
+      "fileCount": 57,
+      "allFilesActive": true,
+      "allHashesPresent": true,
+      "configSha256": "1f5af706eafc72cebd32af96d4ccfb8bd0a6a0ba573800f5306ba7db6174fc84"
+    }
+  ],
+  "mutationsPerformed": false,
+  "actualRestorePerformed": false
+}

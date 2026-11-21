@@ -1,5 +1,5 @@
 import { JourneyNavigationComponent } from '../journey-navigation.component';
-import { AfterViewInit, Component, HostListener, OnDestroy, inject } from '@angular/core';
+import { AfterRenderRef, AfterViewInit, Component, HostListener, Injector, OnDestroy, afterNextRender, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Auth, user } from '@angular/fire/auth';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -25,14 +25,15 @@ export class PublicLandingComponent implements AfterViewInit, OnDestroy {
   example = this.examples.find(option => option.id === this.route.snapshot.queryParamMap.get('example')) ?? this.examples[0];
   revealed = this.route.snapshot.fragment === 'business' || this.examples.some(option => option.id === this.route.snapshot.queryParamMap.get('example'));
   discoveryAnnouncement = '';
-  private frame: number | undefined;
+  private pending: AfterRenderRef | undefined;
+  private readonly injector = inject(Injector);
 
   ngAfterViewInit(): void {
     if (this.revealed) this.moveTo(document.getElementById('business'));
   }
 
   ngOnDestroy(): void {
-    if (this.frame !== undefined) cancelAnimationFrame(this.frame);
+    this.pending?.destroy();
   }
 
   @HostListener('window:hashchange')
@@ -59,12 +60,12 @@ export class PublicLandingComponent implements AfterViewInit, OnDestroy {
   }
 
   private moveTo(target: HTMLElement | null): void {
-    if (this.frame !== undefined) cancelAnimationFrame(this.frame);
+    this.pending?.destroy();
     const origin = document.activeElement;
-    this.frame = requestAnimationFrame(() => {
+    this.pending = afterNextRender({ write: () => {
       if (!target?.isConnected || (document.activeElement !== origin && document.activeElement !== document.body)) return;
       target.focus({ preventScroll: true });
       target.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
-    });
+    } }, { injector: this.injector });
   }
 }

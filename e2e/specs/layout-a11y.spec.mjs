@@ -13,7 +13,7 @@ for (const path of ['/', '/login', '/register', '/register?intent=report']) {
 
 test('homepage navigation reaches sign-in and registration', async ({ page }) => {
   await page.goto('/');
-  if (test.info().project.name === 'mobile') {
+  if (await page.locator('.mobile-navigation').isVisible()) {
     await page.locator('summary').filter({ hasText: 'Menu' }).click();
   }
   await page.getByRole('link', { name: 'Sign In', exact: true }).click();

@@ -78,3 +78,10 @@ Keep canonical Linux/Java21 reproduction and the #111 live retry in their existi
 **Recommendation:** review the implemented A opening and immediate payoff. Production remains NO-GO until required technical/visual/human gates, separately reconciled #118 and explicit release authorization. Do not merge or deploy.
 
 Final build checkpoint: 694.62 kB initial raw / 185.29 kB estimated transfer; public Discovery 248.14 / 68.38 kB. These are build estimates, not measured mobile latency or engagement. The decorative hero image is no longer requested by this opening; assets used elsewhere are preserved.
+
+
+### Preserved full-run checkpoint and follow-up
+
+[Exact 89ed72d result](../../../verification/local-first/VERIFIED_89ed72d.md) / [JSON](../../../verification/local-first/VERIFIED_89ed72d.json): 695 pass / 12 fail / 15 skip, source integrity valid. Failures were the old promise assertion, six keyboard readiness/modality checks, four compact-nav/reveal interaction expectations and one independent parallel dataset-cap failure. Production focus now waits for Angular's `afterNextRender` write phase and is destroyed on navigation. Updated steps retain strict evidence, focus, forced-color, auth, saved-return, privacy and quota assertions. All six affected Hosting keyboard cases and all 157 fast checks passed afterwards; scoped lint passed. The final exact-head gate belongs to the resulting PR head and is recorded there, not inferred from these checkpoints.
+
+The dataset-cap failure is in `writeWithinCap`/`universal-limits`, not the city-save callable. It remains a separate backend investigation; shared error text does not prove a common cause. No cap, retry, error-classification or concurrency assertion was changed. Earlier city-save and #111 live gates remain explicit.

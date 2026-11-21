@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November 20, 2026 — Selected A: render-ready follow-up
+
+The founder-authorized A implementation is in #119. [Review and before/after](../design/midnight-slate/first-five-seconds/REVIEW.md). Preserved exact `89ed72d7d612b621c48b80b70cb60c067ae41706` local result: [695 pass / 12 fail / 15 skip](../verification/local-first/VERIFIED_89ed72d.md), valid source integrity. Corrected stale copy/interaction expectations and made focus wait for Angular's completed render, with cleanup and user-focus protection. Six affected native Hosting keyboard cases, 157 fast checks and scoped lint pass. Auth/commerce/privacy/cap assertions remain; no backend changes.
+
+One independent fixture failure is a parallel dataset-cap aggregate transaction error in `writeWithinCap`, distinct from earlier city-save cases. Root causes remain unverified; do not treat a later pass as proof of resolution. The resulting exact head is independently verified and recorded in [PR #119](https://github.com/alwat83/ifyoumind/pull/119) and Notion. No source changes are permitted during its run. Linux visuals, physical devices, spoken screen readers and human comprehension remain unverified. #118 unchanged, #111 unwaived, no merge/deployment or commercial/provider authorization.
+
 ## November 20, 2026 — Founder-selected A: question → immediate reveal
 
 The founder selected the existing A study and authorized implementation in draft #119, with B's immediate answer payoff. [Comparison, selection, before/after screenshots and five-task review](../design/midnight-slate/first-five-seconds/REVIEW.md). The app now opens on the illustrative tax question and one “Reveal what changed” action, then shows the existing $420/$240 finding, evidence and supported local CSV continuation in place. Broader bill/city copy and compact navigation preserve other journeys. No new page, loader, provider call, privacy change or commercial logic.

@@ -86,6 +86,8 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
     await page.getByRole('button', { name: 'Reveal what changed', exact: true }).click();
+    await expect(page.locator('.revealed-content')).toBeVisible();
+    await expect(page.locator('#business')).toBeFocused();
     const feature = page.locator('#business');
     const city = feature.getByRole('button', { name: 'Compare cities', exact: true });
     const electricity = feature.getByRole('button', { name: 'Electricity bills', exact: true });
@@ -261,6 +263,9 @@ test('keyboard opens the compact menu, Escape restores focus, and text spacing p
   await expect(page.getByRole('link', { name: 'Open the full tax example', exact: true })).toBeVisible();
   await page.emulateMedia({ forcedColors: 'active' });
   await summary.focus();
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Shift+Tab');
+  await expect(summary).toBeFocused();
   expect(await summary.evaluate(node => getComputedStyle(node).outlineStyle)).toBe('solid');
   const selected = page.locator('.question-option[aria-pressed="true"]');
   expect(await selected.evaluate(node => getComputedStyle(node).textDecorationLine)).toContain('underline');

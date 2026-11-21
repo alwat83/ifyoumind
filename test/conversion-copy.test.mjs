@@ -114,7 +114,7 @@ test('register page says what happens next for email and Google sign-ups',()=>{
 });
 
 test('the homepage states its free example promise and keeps provenance explicit',()=>{
-  const value = 'Compare bills or U.S. cities. Get a clear finding, check the evidence, and choose your next step.';
+  const value = 'Understand your bills. Compare U.S. cities. See the numbers behind each finding.';
   assert.ok(landingHtml.includes(value));
   assert.match(landingHtml,/\{\{ example\.label \}\}/);
   for(const html of [reportHtml,landingHtml.replace(value,''),pricingHtml,registerHtml,analysisHtml]){

@@ -1,6 +1,6 @@
 # Consumer Release Candidate 1 — founder decision package
 
-November21,2026 · OpenAI / Codex. **Candidate preparation PASS; production release NO-GO under the current unwaived gates.** No product changes, merge, deployment, workflow/protection change, customer write, billing/enrollment action, provider generation or system installation. The approved headline, supporting copy and “Reveal what changed” CTA are unchanged.
+November21,2026 · OpenAI / Codex · [Draft evidence PR #125](https://github.com/alwat83/ifyoumind/pull/125). **Candidate preparation PASS; production release NO-GO under the current unwaived gates.** No product changes, merge, deployment, workflow/protection change, customer write, billing/enrollment action, provider generation or system installation. The approved headline, supporting copy and “Reveal what changed” CTA are unchanged.
 
 ## Exact candidate and package
 

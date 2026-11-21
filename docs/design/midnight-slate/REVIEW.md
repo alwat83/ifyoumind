@@ -144,3 +144,8 @@ The account lock no longer gates development or founder experience review. [The 
 
 
 The [first complete local gate](../../verification/local-first/VERIFIED_2583bf5.md) is preserved with 684 pass / three fail / 15 skip and valid exact-source integrity. It found an actual standalone mobile placement issue (fixed with spacing, assertion retained) and two failed concurrent-save cases (backend untouched, not waived). The resulting final head is rerun separately and linked from the PR. No GitHub billing action is necessary to review the real prototype. Supported Linux baseline review and human acceptance still remain.
+
+
+## Founder-selected question/reveal refinement
+
+The founder selected A's question-led first screen with B's immediate answer payoff and authorized implementation in #119. [Selected implementation, original A/B/C comparison, actual before/after screenshots and five-task protocol](first-five-seconds/REVIEW.md) supersede earlier recommendation of B. The homepage now reveals the existing figures in place; private CSV, city/report, auth and commerce boundaries remain. Exact-head verification uses the local-first gate; no merge/deployment authorized.

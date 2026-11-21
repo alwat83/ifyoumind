@@ -126,7 +126,8 @@ test('leaving a pending sample keeps homepage discovery and Business registratio
     await expect(page.getByRole('status')).toHaveText('Loading the sample report…');
     await page.getByRole('link',{name:'Back to the homepage',exact:true}).click();
     release();
-    await expect(page.locator('h1')).toHaveText('Find the story.Make your move.');
+    await expect(page.locator('h1')).toHaveText('Your tax bill went up.Where did the extra $420 go?');
+    await page.getByRole('button',{name:'Reveal what changed',exact:true}).click();
     await expect(page.locator('#discovery-result')).toContainText('$420 more than the year before.');
     await page.getByRole('link', { name: 'View a Sample Report', exact: true }).click();
     await expect(page).toHaveURL(/\/sample-report$/);

@@ -1,5 +1,13 @@
 # ifYouMind — Current development status
 
+## November 20, 2026 — Founder-selected A: question → immediate reveal
+
+The founder selected the existing A study and authorized implementation in draft #119, with B's immediate answer payoff. [Comparison, selection, before/after screenshots and five-task review](../design/midnight-slate/first-five-seconds/REVIEW.md). The app now opens on the illustrative tax question and one “Reveal what changed” action, then shows the existing $420/$240 finding, evidence and supported local CSV continuation in place. Broader bill/city copy and compact navigation preserve other journeys. No new page, loader, provider call, privacy change or commercial logic.
+
+Local builds and 20 affected authenticated browser cases passed after correcting repeated electricity headings and a focus race; initial result was 17 pass / three fail. Original study checks: 12 pass across 320/390/820/1440; 11 fixture/runner checks pass. Exact-head local-first results belong to the resulting PR head and are linked from [#119](https://github.com/alwat83/ifyoumind/pull/119); do not infer a pass from checkpoints. Historical baseline `19882ba22e5d0ba3ae28fbaf2f133a7e6180cf43` completed 25 checks and 688 tests, zero failures, 15 skips, valid source integrity, as independently recorded on that PR and Notion. Docker/Linux pixels remain unverified. No Linux baseline accepted.
+
+#118 remains unchanged at `2f4975f94ac888547df8b1fbdf149a50741f6570`. Intermittent concurrent saves are a separate unclosed investigation: transactional aggregate-count path identified, root cause not proven, #111 live retry still unverified. Human comprehension, physical devices and spoken VoiceOver are untested. GO for founder implementation review; no merge/deployment authorized. #95/#101 stay local and #96 AI stays staging-disabled.
+
 ## November 20, 2026 — Local-first verification operational
 
 Founder authorizes local verification as an alternative development gate; GitHub billing restoration is **not** a prerequisite for implementation, validation or prototype review. [Single command and pinned optional Linux path](../verification/local-first/README.md) · [preserved executed report](../verification/local-first/VERIFIED_2583bf5.md) · [machine report](../verification/local-first/VERIFIED_2583bf5.json).

@@ -2,6 +2,10 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## November 20 — Selected question-led first impression
+
+The founder selected A's tax question with an immediate, supported answer reveal. [Actual before/after and five-task protocol](../design/midnight-slate/first-five-seconds/REVIEW.md) distinguish preference and engineering checks from observed consumer understanding. Prioritize whether a first-time visitor can explain the finding, limitation, supported input and separate city-report offer. No new tracking, participant, revenue or conversion measurement. Keep the dated scoreboard unchanged, #111 reliability separate and release authorization explicit.
+
 ## November 20 — Continue validation without hosted Actions
 
 The [local-first gate](../verification/local-first/README.md) allows reliable exact-source engineering checks and founder prototype review while GitHub billing is unresolved. The preserved first run exposes mobile friction and concurrent-save failures instead of hiding them. Prioritize fixing evidenced friction and observing five unassisted tasks; do not wait for a hosted runner to learn whether the product is understood. Production release, #111, Linux visual review and #118 dependency remain separate. No new traffic, participant, purchase, revenue or cost observation; scoreboard unchanged.

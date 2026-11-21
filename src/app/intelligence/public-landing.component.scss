@@ -1,33 +1,32 @@
 @use '../product-design' as product;
 :host { display:block; background:var(--iy-page); color:var(--iy-ink); font:16px/1.55 var(--iy-body); }
 * { box-sizing:border-box; }
+[hidden] { display:none!important; }
 h1,h2,h3,p { margin:0; }
 a { color:inherit; }
-.shell { width:min(1280px,100% - 2 * var(--iy-gutter)); margin-inline:auto; }
+.shell { width:min(1180px,100% - 2 * var(--iy-gutter)); margin-inline:auto; }
 .icon { display:inline-block; width:18px; height:18px; flex:none; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
 .skip-link { position:absolute; z-index:10; left:16px; top:-100px; padding:12px 16px; background:var(--iy-panel); }
 .skip-link:focus { top:8px; }
 .sr-only { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
-.site-header { @include product.navigation; position:relative; z-index:5; }
 .wordmark { @include product.wordmark; display:inline-flex; align-items:center; min-height:44px; text-decoration:none; }
-.desktop-nav { display:flex; align-items:center; gap:32px; }
-.desktop-nav a,.site-footer nav a { min-height:44px; display:inline-flex; align-items:center; color:var(--iy-muted); font-size:13px; text-decoration:none; }
-.desktop-nav a:hover,.site-footer a:hover { color:var(--iy-ink); text-decoration:underline; text-underline-offset:5px; }
-.mobile-navigation { display:none; }
-.button { @include product.primary; display:inline-flex; align-items:center; justify-content:center; gap:20px; padding:12px 20px; font-size:14px; line-height:1.35; text-decoration:none; transition:background .18s; }
+.site-footer nav a { min-height:44px; display:inline-flex; align-items:center; color:var(--iy-muted); font-size:13px; text-decoration:none; }
+.site-footer a:hover { color:var(--iy-ink); text-decoration:underline; text-underline-offset:5px; }
+.button { @include product.primary; display:inline-flex; align-items:center; justify-content:space-between; gap:24px; padding:14px 20px; font:650 16px/1.35 var(--iy-body); text-decoration:none; cursor:pointer; transition:background .18s; }
 .text-link { display:inline-flex; min-height:44px; align-items:center; color:var(--iy-ink); font-size:14px; text-underline-offset:5px; }
 .edition { @include product.eyebrow; }
-.hero { position:relative; padding-block:56px 72px; }
-.hero-copy { position:relative; z-index:1; padding-bottom:44px; width:76%; }
-.hero-copy h1 { @include product.title; max-width:12ch; margin:18px 0 24px; font-size:clamp(60px,7.7vw,106px); }
-.hero-copy h1 em { font-family:var(--iy-display); font-weight:400; color:var(--iy-ink); }
-.hero-copy>p:last-child { color:var(--iy-muted); font-size:18px; line-height:1.6; }
-.hero-art { position:absolute; right:0; top:60px; width:31%; height:310px; overflow:hidden; opacity:.7; }
-.hero-art img { display:block; width:100%; height:100%; object-fit:cover; object-position:50% 42%; filter:saturate(.35); }
+.hero { padding-bottom:72px; }
+.hero-intro { display:grid; grid-template-columns:1.65fr 1fr; gap:80px; align-content:start; min-height:calc(100svh - 88px); padding-block:64px 64px; }
+.hero-copy h1 { @include product.title; font-size:clamp(56px,6.4vw,92px); margin-top:24px; max-width:14ch; }
+.hero-copy h1 em { font-family:var(--iy-display); font-weight:400; font-style:normal; }
+.hero-label { color:var(--iy-periwinkle); font-size:11px; font-weight:600; letter-spacing:.13em; text-transform:uppercase; }
+.hero-entry { padding-top:38px; }
+.hero-entry>p { color:var(--iy-muted); font-size:18px; max-width:36ch; line-height:1.6; }
+.hero-entry .hero-limit { font-size:14px; margin-top:20px; max-width:40ch; }
+.first-action { margin-top:28px; min-height:52px; }
+.demo { scroll-margin-top:24px; }
+.revealed-content { padding:32px 40px; background:var(--iy-panel); border-top:2px solid var(--iy-periwinkle); animation:finding-enter .24s ease-out; }
+@keyframes finding-enter { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+@media(prefers-reduced-motion:reduce) { .revealed-content { animation:none; } }
 @include product.focus;
 @include product.quiet-motion;
-.hero-copy { padding-bottom:36px; }
-.hero-copy h1 { font-size:clamp(56px,6.8vw,92px); margin-top:0; }
-.hero-copy>p { max-width:48ch; color:var(--iy-muted); font-size:18px; }
-.first-action { margin-top:24px; }
-.hero-art { top:56px; height:260px; }

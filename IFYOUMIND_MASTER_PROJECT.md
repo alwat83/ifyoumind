@@ -8,6 +8,10 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 20, 2026 — Question-led consumer opening selected
+
+The founder reviewed the existing A/B/C studies and selected A, with B's immediate answer reveal. [Actual implementation and review evidence](docs/design/midnight-slate/first-five-seconds/REVIEW.md) preserve the comparison and approval. PR #119 now connects question → reveal → evidence → existing browser-local CSV, with the $420/$240 illustrative result, broader bill/city copy and existing commercial boundaries. No second shell, new provider or billing behavior. Local-first verification continues; separate reliability, human acceptance, Linux visual and release gates remain. No merge/deployment or measured consumer outcome.
+
 ## November 20, 2026 — Local-first engineering continuity
 
 The founder approves a reproducible local development alternative while GitHub billing is unresolved. [One verification command](docs/verification/local-first/README.md) runs the existing workflow checks in an isolated exact-source copy, emits JSON/Markdown evidence and supports optional pinned Linux Docker with explicit native fallback. [First executed report](docs/verification/local-first/VERIFIED_2583bf5.md) preserves all failures and skips. This permits development and prototype review to continue; it does not authorize release or waive #118, #111, Linux visual review or human acceptance. The PR carries the resulting exact-head report; no full green run or customer outcome is assumed.

@@ -69,6 +69,7 @@ export function plan() {
     check('functions-build', 'npm --prefix functions run build'),
     check('functions-tests', 'npm --prefix functions test', ['functions-build'], 'tap'),
     check('fast-web', 'npm run test:seo', [], 'tap'),
+    check('first-screen-concepts', 'node scripts/review-first-seconds.mjs --check', [], 'review-tap'),
     check('production-build', 'npm run build'),
     check('production-bundle', 'npm run check:production-bundle', ['production-build']),
     check('production-isolation', 'node scripts/check-discovery-isolation.mjs --production', ['production-build']),

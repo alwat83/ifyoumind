@@ -1,10 +1,11 @@
-<header class="product-header">
+<header class="product-header" [class.compact]="compact">
   <a href="/" class="brand" aria-label="ifYouMind home">ifyoumind</a>
   <nav class="desktop-nav topbar" aria-label="Main navigation">
     <a *ngFor="let link of links" [href]="destination(link)" [attr.aria-current]="current === link.key ? 'page' : null">{{ link.label }}</a>
     <a href="/account" [attr.aria-current]="current === 'account' ? 'page' : null" *ngIf="accountLabel !== 'Sign In'; else login">{{ accountLabel }}</a>
     <ng-template #login><a href="/login">Sign In</a></ng-template>
   </nav>
+  <a *ngIf="compact" class="quick-saved" href="/decisions">Your decisions</a>
   <!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus -- Native summary owns focus; Escape from menu links restores it. -->
   <details #menu class="mobile-navigation" (keydown.escape)="menu.open = false; trigger.focus()">
     <summary #trigger>Menu <span aria-hidden="true">☰</span></summary>

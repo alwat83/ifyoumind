@@ -7,7 +7,7 @@ const examples = JSON.parse(raw);
 for (const category of ['tax', 'electricity']) {
   test(`the ${category} finding leads directly to its own private CSV input`, async ({ page }) => {
     await page.goto('/');
-    await page.getByRole('link', { name: 'Try a free example', exact: true }).click();
+    await page.getByRole('button', { name: 'Reveal what changed', exact: true }).click();
     if (category === 'electricity') await page.getByRole('button', { name: 'Electricity bills', exact: true }).click();
     const question = page.getByRole('heading', { name: category === 'tax' ? 'Why did my property taxes go up?' : 'Did my bill rise faster than my energy use?' });
     await expect(question).toBeVisible();

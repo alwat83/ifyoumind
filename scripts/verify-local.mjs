@@ -71,8 +71,9 @@ async function runSuite(worktree, out, environment, install=false) {
   const javaReady=environment.java!=='unavailable';
   for(const step of plan()){
     const item={...step};
+    const usesBrowser=step.kind.includes('browser')||step.kind==='review-tap';
     const unmet=step.needs.filter(id=>checks.find(c=>c.id===id)?.status!=='PASS');
-    if(unmet.length || (step.kind.includes('browser')&&!browserReady) || (step.kind.startsWith('emulator')&&!javaReady) || ((step.kind.includes('browser')||step.kind.startsWith('emulator'))&&busy.length)){
+    if(unmet.length || (usesBrowser&&!browserReady) || (step.kind.startsWith('emulator')&&!javaReady) || ((usesBrowser||step.kind.startsWith('emulator'))&&busy.length)){
       checks.push({...item,status:'BLOCKED',detail:unmet.length?'Failed prerequisites: '+unmet.join(', '):busy.length?'Required local ports already occupied; no processes were killed: '+busy.join(', '):'Browser or Java prerequisite unavailable'});continue;
     }
     console.log(`[${step.id}] starting`);

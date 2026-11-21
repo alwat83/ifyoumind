@@ -30,24 +30,20 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await page.setViewportSize({ width, height });
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Find the story.Make your move.');
-    const heroAction = page.getByRole('link', { name: 'Try a free example', exact: true });
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Your tax bill went up.Where did the extra $420 go?');
+    const heroAction = page.getByRole('button', { name: 'Reveal what changed', exact: true });
     await expect(heroAction).toBeVisible();
     if (width >= 375) await expect(heroAction).toBeInViewport({ ratio: 1 });
-    await expect(heroAction).toHaveAttribute('href', '#business');
-    const image = page.locator('.hero-art img');
-    if (width > 740) await expect(image).toBeVisible();
-    else await expect(image).toBeHidden();
-    await expect(image).toHaveAttribute('alt', '');
-    if (width > 740) await image.evaluate(async img => {
-      await document.fonts.ready;
-      await img.decode();
-    });
-    expect(await page.evaluate(() => [...document.fonts]
-      .filter(font => font.family.includes('Instrument Serif') && font.status === 'loaded').length)).toBe(2);
-    await expect(page.locator('.hero-copy').getByRole('link')).toHaveCount(1);
+    await expect(heroAction).toHaveAttribute('aria-expanded', 'false');
+    await expect(page.locator('.revealed-content')).toBeHidden();
+    await expect(page.locator('.hero-art')).toHaveCount(0);
+    await expect(page.locator('.hero-intro').getByRole('button')).toHaveCount(1);
     await heroAction.click();
-    await expect(page.locator('#try')).toContainText('Compare bills or U.S. cities. Get a clear finding, check the evidence, and choose your next step.');
+    await expect(heroAction).toHaveAttribute('aria-expanded', 'true');
+    await page.evaluate(() => document.fonts.ready);
+    expect(await page.evaluate(() => [...document.fonts]
+      .filter(font => font.family.includes('Instrument Serif') && font.status === 'loaded').length)).toBeGreaterThanOrEqual(1);
+    await expect(page.locator('#try')).toContainText('Understand your bills. Compare U.S. cities. See the numbers behind each finding.');
     const reports = page.getByRole('region', { name: 'Decision Reports', exact: true });
     await expect(reports.getByRole('link', { name: 'Start a Free Brief' })).toHaveAttribute('href', '/decide?type=business');
     await expect(reports).toContainText('The $79 one-time Decision Report adds up to three comparison cities, a sourced market analysis and an action plan.');
@@ -89,6 +85,7 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await page.setViewportSize({ width, height });
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
+    await page.getByRole('button', { name: 'Reveal what changed', exact: true }).click();
     const feature = page.locator('#business');
     const city = feature.getByRole('button', { name: 'Compare cities', exact: true });
     const electricity = feature.getByRole('button', { name: 'Electricity bills', exact: true });
@@ -256,6 +253,7 @@ test('keyboard opens the compact menu, Escape restores focus, and text spacing p
   await page.keyboard.press('Escape');
   await expect(menu).not.toHaveAttribute('open');
   await expect(summary).toBeFocused();
+  await page.getByRole('button', { name: 'Reveal what changed', exact: true }).click();
   expect(await page.locator('.hero .example-link').evaluate(node => getComputedStyle(node).transitionDuration)).toBe('0s');
   await page.addStyleTag({ content: '*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}' });
   await page.setViewportSize({ width: 320, height: 568 });

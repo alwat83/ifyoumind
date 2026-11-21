@@ -1,0 +1,42 @@
+{
+  "kind": "Actual Angular implementation; synthetic example",
+  "source": "working-tree checkpoint before exact-head gate",
+  "observations": [
+    {
+      "width": 1440,
+      "height": 900,
+      "actionBottom": 319.59375,
+      "overflow": 0,
+      "revealSameUrl": true,
+      "illustrativeFinding": "$420",
+      "evidenceOpen": true
+    },
+    {
+      "width": 820,
+      "height": 900,
+      "actionBottom": 335.390625,
+      "overflow": 0,
+      "revealSameUrl": true,
+      "illustrativeFinding": "$420",
+      "evidenceOpen": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "actionBottom": 473.671875,
+      "overflow": 0,
+      "revealSameUrl": true,
+      "illustrativeFinding": "$420",
+      "evidenceOpen": true
+    },
+    {
+      "width": 320,
+      "height": 568,
+      "actionBottom": 474.15625,
+      "overflow": 0,
+      "revealSameUrl": true,
+      "illustrativeFinding": "$420",
+      "evidenceOpen": true
+    }
+  ]
+}

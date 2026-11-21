@@ -11,6 +11,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./journey-navigation.component.scss'],
 })
 export class JourneyNavigationComponent {
+  @Input() compact = false;
   @Input() current = '';
   @Input() accountLabel = 'Account';
   @Input() example = '';

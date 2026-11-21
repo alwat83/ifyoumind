@@ -1,0 +1,32 @@
+[
+  {
+    "width": 1440,
+    "baseline": "19882ba22e5d0ba3ae28fbaf2f133a7e6180cf43",
+    "findingInitiallyWithinViewport": true,
+    "findingBottom": 791.25,
+    "primaryBottom": 473.328125,
+    "primaryEffect": "same-page #business scroll; finding was already loaded",
+    "evidence": "PASS",
+    "ownCsv": "PASS; exact category, no chooser",
+    "syntheticFileFinding": "PASS",
+    "categoryReturn": "PASS",
+    "secondaryCity": "PASS",
+    "publicSample": "PASS",
+    "realPayment": "NOT INITIATED"
+  },
+  {
+    "width": 390,
+    "baseline": "19882ba22e5d0ba3ae28fbaf2f133a7e6180cf43",
+    "findingInitiallyWithinViewport": true,
+    "findingBottom": 664.796875,
+    "primaryBottom": 317.640625,
+    "primaryEffect": "same-page #business scroll; finding was already loaded",
+    "evidence": "PASS",
+    "ownCsv": "PASS; exact category, no chooser",
+    "syntheticFileFinding": "PASS",
+    "categoryReturn": "PASS",
+    "secondaryCity": "PASS",
+    "publicSample": "PASS",
+    "realPayment": "NOT INITIATED"
+  }
+]

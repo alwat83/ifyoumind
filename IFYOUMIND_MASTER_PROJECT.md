@@ -10,6 +10,8 @@
 
 ## November 21, 2026 — Supported transaction recovery investigation
 
+[Draft #120](https://github.com/alwat83/ifyoumind/pull/120) preserves the [exact461c140 local result](docs/engineering/firestore-reliability/VERIFIED_461c140.md):162 pass/nine fail/one cancelled, valid clean-source integrity; no correction qualifies. This later evidence-only commit preserves all tested executable bytes.
+
 [Phase 3B decision table and reproducible qualification](docs/engineering/firestore-reliability/REVIEW.md) live on a separate reliability branch from approved Concept A. A passive fresh natural emulator trace establishes aggregate lock-timeout abort masking; the historical first error remains unknown. Supported SDK graphs retain the failure, and a public REST preference candidate fails broader query/deadline contracts. No production dependency, transaction or runtime change is justified. Preserve the strict failing gate, original records, protected #118/#119 and separate release sequence. No production action, customer data or commercial change occurred. The current handoff and draft reliability PR carry exact execution evidence; no supported correction is yet qualified.
 
 ## November 20, 2026 — Connected experience and strict recovery evidence

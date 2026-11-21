@@ -1,0 +1,645 @@
+{
+  "observations": {
+    "rest-contracts": {
+      "kind": "isolated supported preferRest; injected synthetic faults, not production proof",
+      "sdk": "7.11.6",
+      "status": "FAIL",
+      "results": [
+        {
+          "mode": "control",
+          "success": true,
+          "attempts": 1,
+          "faultApplied": 0,
+          "count": 1,
+          "milliseconds": 23,
+          "validation": "PASS"
+        },
+        {
+          "mode": "read-abort",
+          "success": true,
+          "attempts": 2,
+          "faultApplied": 1,
+          "count": 1,
+          "milliseconds": 1208,
+          "validation": "PASS"
+        },
+        {
+          "mode": "aggregate-abort",
+          "success": true,
+          "attempts": 2,
+          "faultApplied": 1,
+          "count": 1,
+          "milliseconds": 1447,
+          "validation": "PASS"
+        },
+        {
+          "mode": "commit-abort",
+          "success": true,
+          "attempts": 2,
+          "faultApplied": 1,
+          "count": 1,
+          "milliseconds": 1233,
+          "validation": "PASS"
+        },
+        {
+          "mode": "always-abort",
+          "success": false,
+          "code": 10,
+          "attempts": 2,
+          "faultApplied": 2,
+          "count": 0,
+          "milliseconds": 1455,
+          "validation": "PASS"
+        },
+        {
+          "mode": "permission",
+          "success": false,
+          "code": 7,
+          "attempts": 1,
+          "faultApplied": 1,
+          "count": 0,
+          "milliseconds": 17,
+          "validation": "PASS"
+        },
+        {
+          "mode": "invalid",
+          "success": false,
+          "code": 3,
+          "attempts": 1,
+          "faultApplied": 1,
+          "count": 0,
+          "milliseconds": 14,
+          "validation": "PASS"
+        },
+        {
+          "mode": "partial-query",
+          "validation": "FAIL"
+        },
+        {
+          "mode": "deadline",
+          "success": false,
+          "code": "ECONNRESET",
+          "attempts": 1,
+          "faultApplied": 1,
+          "count": 0,
+          "milliseconds": 25017,
+          "validation": "FAIL"
+        }
+      ],
+      "deadlineCase": "100ms RPC / 300ms GAX test-only budget; not a proposed production value"
+    },
+    "natural-locked": {
+      "candidate": "locked",
+      "kind": "passive observer; no injected errors, altered deadlines or mutation retry",
+      "status": "FAIL",
+      "failure": "Unexpected natural application outcome",
+      "providerRequests": 0,
+      "rounds": [
+        {
+          "round": 1,
+          "codes": [
+            "internal",
+            "success",
+            "resource-exhausted"
+          ],
+          "durableProjectCount": 3,
+          "milliseconds": 8542
+        }
+      ],
+      "events": [
+        {
+          "ms": 2419,
+          "rpc": 67,
+          "method": "RunAggregationQuery",
+          "phase": "error",
+          "transaction": "T4",
+          "code": 10,
+          "classification": "lock-timeout"
+        },
+        {
+          "ms": 4628,
+          "rpc": 78,
+          "method": "RunAggregationQuery",
+          "phase": "error",
+          "transaction": "T4",
+          "code": 3,
+          "classification": "closed-transaction"
+        },
+        {
+          "ms": 8717,
+          "rpc": 79,
+          "method": "RunAggregationQuery",
+          "phase": "error",
+          "transaction": "T4",
+          "code": 3,
+          "classification": "closed-transaction"
+        }
+      ]
+    }
+  },
+  "commit": "461c140d38bebad00b6a49788ea027207991320d",
+  "branch": "codex/firestore-transaction-reliability",
+  "started": "2026-11-21T16:10:28.710Z",
+  "finished": "2026-11-21T16:13:08.572Z",
+  "environment": {
+    "node": "v22.23.2",
+    "platform": "darwin",
+    "arch": "arm64",
+    "npm": "10.9.8",
+    "emulator": "loopback 8080; demo-ifyoumind; must be started independently"
+  },
+  "integrity": {
+    "valid": true,
+    "before": "7967798bd6a57494495146463d6b5351f44dcf2bd565b7cece5228f9144df537",
+    "after": "7967798bd6a57494495146463d6b5351f44dcf2bd565b7cece5228f9144df537",
+    "sourceEvents": 0,
+    "watcherError": false
+  },
+  "candidates": [
+    {
+      "id": "locked",
+      "lockSha256": "38c565f9ec48940235d95db61129e9def6f15e280f8651443d72daca49f31b4c",
+      "diagnosticSha256": "bc5ed41e66280a9d20402ee4d8aa712950e1b7b7b1d8ec33752cff403a575860",
+      "versions": {
+        "firebase-admin": "13.5.0",
+        "firebase-functions": "6.4.0",
+        "@google-cloud/firestore": "7.11.6",
+        "google-gax": "4.6.1",
+        "retry-request": "7.0.2",
+        "@grpc/grpc-js": "1.14.0"
+      },
+      "transport": {
+        "kind": "fault-injected SDK diagnostic; not natural-contention or production proof",
+        "sdk": "7.11.6",
+        "node": "v22.23.2",
+        "gax": "4.6.1",
+        "status": "FAIL",
+        "results": [
+          {
+            "arm": "control",
+            "attempts": 1,
+            "injected": false,
+            "milliseconds": 26,
+            "success": true,
+            "count": 1
+          },
+          {
+            "arm": "read-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 7300,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "aggregate-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 6490,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "commit-abort",
+            "attempts": 2,
+            "injected": true,
+            "milliseconds": 995,
+            "success": true,
+            "count": 1
+          }
+        ]
+      },
+      "status": "REJECTED"
+    },
+    {
+      "id": "admin13",
+      "lockSha256": "99f3c9c5ffb4cbd08d6f793a3cfe36b00c5e4f9cf6de1edcf9a0b71115c47547",
+      "diagnosticSha256": "bc5ed41e66280a9d20402ee4d8aa712950e1b7b7b1d8ec33752cff403a575860",
+      "versions": {
+        "firebase-admin": "13.10.0",
+        "firebase-functions": "6.4.0",
+        "@google-cloud/firestore": "7.11.6",
+        "google-gax": "4.6.1",
+        "retry-request": "7.0.2",
+        "@grpc/grpc-js": "1.14.7"
+      },
+      "transport": {
+        "kind": "fault-injected SDK diagnostic; not natural-contention or production proof",
+        "sdk": "7.11.6",
+        "node": "v22.23.2",
+        "gax": "4.6.1",
+        "status": "FAIL",
+        "results": [
+          {
+            "arm": "control",
+            "attempts": 1,
+            "injected": false,
+            "milliseconds": 25,
+            "success": true,
+            "count": 1
+          },
+          {
+            "arm": "read-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 6447,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "aggregate-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 6362,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "commit-abort",
+            "attempts": 2,
+            "injected": true,
+            "milliseconds": 1248,
+            "success": true,
+            "count": 1
+          }
+        ]
+      },
+      "status": "REJECTED"
+    },
+    {
+      "id": "firestore8",
+      "lockSha256": "f5dc47f4c55d110c6811c1acdf09c029f78de13dbc903f8f6c4e60438efbfa96",
+      "diagnosticSha256": "bc5ed41e66280a9d20402ee4d8aa712950e1b7b7b1d8ec33752cff403a575860",
+      "versions": {
+        "firebase-admin": "14.3.0",
+        "firebase-functions": "7.4.0",
+        "@google-cloud/firestore": "8.7.1",
+        "google-gax": "5.0.8",
+        "retry-request": "7.0.2",
+        "@grpc/grpc-js": "1.14.7"
+      },
+      "metadataAdapter": {
+        "from": "sdkRequire('google-gax/package.json').version",
+        "sha256": "ac311e8383d7490d616cabd45904ee6df0f68d6306e345c184c37e301bd816cb",
+        "assertionsChanged": false
+      },
+      "transport": {
+        "kind": "fault-injected SDK diagnostic; not natural-contention or production proof",
+        "sdk": "8.7.1",
+        "node": "v22.23.2",
+        "gax": "5.0.8",
+        "status": "FAIL",
+        "results": [
+          {
+            "arm": "control",
+            "attempts": 1,
+            "injected": false,
+            "milliseconds": 26,
+            "success": true,
+            "count": 1
+          },
+          {
+            "arm": "read-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 7814,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "aggregate-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 7107,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "commit-abort",
+            "attempts": 2,
+            "injected": true,
+            "milliseconds": 886,
+            "success": true,
+            "count": 1
+          }
+        ]
+      },
+      "status": "REJECTED"
+    },
+    {
+      "id": "current",
+      "lockSha256": "2c0392ce2bdce5716b5d3ffbe3d01723323c86f2dfa85d505fa92944609f121d",
+      "diagnosticSha256": "bc5ed41e66280a9d20402ee4d8aa712950e1b7b7b1d8ec33752cff403a575860",
+      "versions": {
+        "firebase-admin": "14.5.1",
+        "firebase-functions": "7.4.0",
+        "@google-cloud/firestore": "9.4.1",
+        "google-gax": "6.17.0",
+        "retry-request": "9.1.0",
+        "@grpc/grpc-js": "1.14.7"
+      },
+      "metadataAdapter": {
+        "from": "sdkRequire('google-gax/package.json').version",
+        "sha256": "ac311e8383d7490d616cabd45904ee6df0f68d6306e345c184c37e301bd816cb",
+        "assertionsChanged": false
+      },
+      "transport": {
+        "kind": "fault-injected SDK diagnostic; not natural-contention or production proof",
+        "sdk": "9.4.1",
+        "node": "v22.23.2",
+        "gax": "6.17.0",
+        "status": "FAIL",
+        "results": [
+          {
+            "arm": "control",
+            "attempts": 1,
+            "injected": false,
+            "milliseconds": 26,
+            "success": true,
+            "count": 1
+          },
+          {
+            "arm": "read-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 7065,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "aggregate-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 7778,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "commit-abort",
+            "attempts": 2,
+            "injected": true,
+            "milliseconds": 986,
+            "success": true,
+            "count": 1
+          }
+        ]
+      },
+      "status": "REJECTED"
+    }
+  ],
+  "checks": [
+    {
+      "id": "harness-safety",
+      "command": "node --test test/firestore-reliability-safety.spec.mjs",
+      "code": 0,
+      "timedOut": false,
+      "milliseconds": 139,
+      "status": "PASS",
+      "tests": {
+        "executed": 3,
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "harness-safety.log",
+      "logSha256": "f4bb79e88e2f9174016ac48e25e833e592513f06144fbf224a172c0bbe96f6bc"
+    },
+    {
+      "id": "locked-install",
+      "command": "npm ci --ignore-scripts --no-audit --no-fund --userconfig=/dev/null --registry=https://registry.npmjs.org",
+      "code": 0,
+      "timedOut": false,
+      "milliseconds": 3702,
+      "status": "PASS",
+      "tests": null,
+      "log": "locked-install.log",
+      "logSha256": "6ba09c9816e21930b0ba0cc27111548863b24b9bbca6f7aaccd8c86481d16ba0"
+    },
+    {
+      "id": "locked-build",
+      "command": "npm run build",
+      "code": 0,
+      "timedOut": false,
+      "milliseconds": 1544,
+      "status": "PASS",
+      "tests": null,
+      "log": "locked-build.log",
+      "logSha256": "8fe4571ad4e1c8d99b7bc7e6576a20f57e5d161cc24c4d631421068c0431e2c1"
+    },
+    {
+      "id": "locked-unit",
+      "command": "npm test",
+      "code": 0,
+      "timedOut": false,
+      "milliseconds": 1894,
+      "status": "PASS",
+      "tests": {
+        "executed": 72,
+        "passed": 72,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "locked-unit.log",
+      "logSha256": "65e04e0a8132cfac16b72710efe3726a9102c8bd2781941e0a651c81fc78dcd4"
+    },
+    {
+      "id": "locked-transport",
+      "command": "node --test test/diagnostics/firestore-transaction-transport.cjs",
+      "code": 1,
+      "timedOut": false,
+      "milliseconds": 15104,
+      "status": "FAIL",
+      "tests": {
+        "executed": 4,
+        "passed": 2,
+        "failed": 2,
+        "skipped": 0
+      },
+      "log": "locked-transport.log",
+      "logSha256": "7b5011597781095461ddb64ae7ecc063fda8d5be9bc0ae966b676cf8a23a6f83"
+    },
+    {
+      "id": "admin13-install",
+      "command": "npm ci --ignore-scripts --no-audit --no-fund --userconfig=/dev/null --registry=https://registry.npmjs.org",
+      "code": 0,
+      "timedOut": false,
+      "milliseconds": 1202,
+      "status": "PASS",
+      "tests": null,
+      "log": "admin13-install.log",
+      "logSha256": "dd564d88563e76d6be21ece0892f34ab7253b0ec8592076f32b68f2cac32cf34"
+    },
+    {
+      "id": "admin13-build",
+      "command": "npm run build",
+      "code": 0,
+      "timedOut": false,
+      "milliseconds": 1407,
+      "status": "PASS",
+      "tests": null,
+      "log": "admin13-build.log",
+      "logSha256": "8fe4571ad4e1c8d99b7bc7e6576a20f57e5d161cc24c4d631421068c0431e2c1"
+    },
+    {
+      "id": "admin13-unit",
+      "command": "npm test",
+      "code": 0,
+      "timedOut": false,
+      "milliseconds": 1839,
+      "status": "PASS",
+      "tests": {
+        "executed": 72,
+        "passed": 72,
+        "failed": 0,
+        "skipped": 0
+      },
+      "log": "admin13-unit.log",
+      "logSha256": "9c2941cf5b0a7eaa0e24cfbcc6277ded82fc64a8220c0b5852dd1d72d666e570"
+    },
+    {
+      "id": "admin13-transport",
+      "command": "node --test test/diagnostics/firestore-transaction-transport.cjs",
+      "code": 1,
+      "timedOut": false,
+      "milliseconds": 14379,
+      "status": "FAIL",
+      "tests": {
+        "executed": 4,
+        "passed": 2,
+        "failed": 2,
+        "skipped": 0
+      },
+      "log": "admin13-transport.log",
+      "logSha256": "c9643f5235c6db93cfa0ca2f951bfcbcf783174ce05cff1fc2c0d7301aff985e"
+    },
+    {
+      "id": "firestore8-install",
+      "command": "npm ci --ignore-scripts --no-audit --no-fund --userconfig=/dev/null --registry=https://registry.npmjs.org",
+      "code": 0,
+      "timedOut": false,
+      "milliseconds": 1135,
+      "status": "PASS",
+      "tests": null,
+      "log": "firestore8-install.log",
+      "logSha256": "a2e0e33562a87ca6e03635d0a9f788fae16db42d1f1fd9cbeb813d3daa5e8db9"
+    },
+    {
+      "id": "firestore8-build",
+      "command": "npm run build",
+      "code": 2,
+      "timedOut": false,
+      "milliseconds": 1501,
+      "status": "FAIL",
+      "tests": null,
+      "log": "firestore8-build.log",
+      "logSha256": "9e1e671c14a2907d8da8e579e31d75f81928cd0929ea2096efc26fdab22827a9"
+    },
+    {
+      "id": "firestore8-transport",
+      "command": "node --test test/diagnostics/firestore-transaction-metadata.cjs",
+      "code": 1,
+      "timedOut": false,
+      "milliseconds": 16117,
+      "status": "FAIL",
+      "tests": {
+        "executed": 4,
+        "passed": 2,
+        "failed": 2,
+        "skipped": 0
+      },
+      "log": "firestore8-transport.log",
+      "logSha256": "8e96847a95749af5f2fe42e6151ac2e515b66372597f6b5dda04e1253e1b0149"
+    },
+    {
+      "id": "current-install",
+      "command": "npm ci --ignore-scripts --no-audit --no-fund --userconfig=/dev/null --registry=https://registry.npmjs.org",
+      "code": 0,
+      "timedOut": false,
+      "milliseconds": 964,
+      "status": "PASS",
+      "tests": null,
+      "log": "current-install.log",
+      "logSha256": "ca8140da1147fee52f1a2020e0b3c73e2ff854eb8925cdef89a29f237f9f71d1"
+    },
+    {
+      "id": "current-build",
+      "command": "npm run build",
+      "code": 2,
+      "timedOut": false,
+      "milliseconds": 1399,
+      "status": "FAIL",
+      "tests": null,
+      "log": "current-build.log",
+      "logSha256": "61e544bea8129f05340e97611e578760014d1aa717d5f1412de62d6cba783d0a"
+    },
+    {
+      "id": "current-transport",
+      "command": "node --test test/diagnostics/firestore-transaction-metadata.cjs",
+      "code": 1,
+      "timedOut": false,
+      "milliseconds": 16160,
+      "status": "FAIL",
+      "tests": {
+        "executed": 4,
+        "passed": 2,
+        "failed": 2,
+        "skipped": 0
+      },
+      "log": "current-transport.log",
+      "logSha256": "415a69707037b83491a09ea2d77c258e7f906de085dcd38d57cac79bc5282e59"
+    },
+    {
+      "id": "rest-contracts",
+      "command": "node --test test/diagnostics/firestore-rest-candidate.cjs",
+      "code": 1,
+      "timedOut": false,
+      "milliseconds": 72042,
+      "status": "FAIL",
+      "tests": {
+        "executed": 9,
+        "passed": 7,
+        "failed": 2,
+        "skipped": 0
+      },
+      "log": "rest-contracts.log",
+      "logSha256": "3fa9eb49f1606d0a17136b14c8c4a7baff964729a3b484c2115857bfb13dbbf9"
+    },
+    {
+      "id": "natural-locked",
+      "command": "node test/diagnostics/firestore-natural-city.cjs --candidate=locked",
+      "code": 1,
+      "timedOut": false,
+      "milliseconds": 8870,
+      "status": "FAIL",
+      "tests": null,
+      "log": "natural-locked.log",
+      "logSha256": "c1da8ba441c85fd6af220f20b5129f48ac7aba7983866078bcb056986291a902"
+    }
+  ],
+  "status": "NO_QUALIFIED_CORRECTION",
+  "limitations": [
+    "No production verification.",
+    "Natural contention is timing-dependent, not a deterministic fault injection.",
+    "Rejected candidates do not proceed to full business-logic qualification.",
+    "No hosted CI; account billing lock remains. No visual/runtime changes."
+  ],
+  "rawReportSha256": "f9b28a267ad3423779c7d6972e9a30a7687a8c71e2b50e3b4d70202a83ba63a5",
+  "rawArtifacts": "test-results/firestore-reliability/runs/2026-11-21T16-10-28.710Z-461c140d",
+  "scope": "Exact tested source commit below; subsequent evidence-only commit does not change executable files."
+}

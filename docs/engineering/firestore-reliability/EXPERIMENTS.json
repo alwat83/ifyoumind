@@ -1,0 +1,761 @@
+{
+  "source": "172dbaa93231e88fd2256b3ca7c2726d81a7c6e0",
+  "scope": "synthetic demo emulator only; preliminary executed experiments, not exact-head candidate verification",
+  "hashes": {
+    "functions/package.json": "b114f9fefefbc18573e51f3ce0290edb30304e662f3827e1c10882900c7c9033",
+    "functions/package-lock.json": "38c565f9ec48940235d95db61129e9def6f15e280f8651443d72daca49f31b4c",
+    "test/diagnostics/firestore-transaction-transport.cjs": "bc5ed41e66280a9d20402ee4d8aa712950e1b7b7b1d8ec33752cff403a575860"
+  },
+  "natural": {
+    "status": "FAIL",
+    "kind": "passive observer; no injected errors, altered deadlines or mutation retry",
+    "rounds": [
+      {
+        "round": 1,
+        "codes": [
+          "resource-exhausted",
+          "success",
+          "resource-exhausted"
+        ],
+        "durableProjectCount": 3,
+        "milliseconds": 3557
+      },
+      {
+        "round": 2,
+        "codes": [
+          "resource-exhausted",
+          "resource-exhausted",
+          "success"
+        ],
+        "durableProjectCount": 3,
+        "milliseconds": 5504
+      },
+      {
+        "round": 3,
+        "codes": [
+          "success",
+          "internal",
+          "resource-exhausted"
+        ],
+        "durableProjectCount": 3,
+        "milliseconds": 9410
+      }
+    ],
+    "providerRequests": 0,
+    "wireErrors": [
+      {
+        "ms": 11429,
+        "rpc": 262,
+        "method": "RunAggregationQuery",
+        "phase": "error",
+        "transaction": "T21",
+        "code": 10,
+        "classification": "lock-timeout"
+      },
+      {
+        "ms": 13761,
+        "rpc": 273,
+        "method": "RunAggregationQuery",
+        "phase": "error",
+        "transaction": "T21",
+        "code": 3,
+        "classification": "closed-transaction"
+      },
+      {
+        "ms": 18697,
+        "rpc": 274,
+        "method": "RunAggregationQuery",
+        "phase": "error",
+        "transaction": "T21",
+        "code": 3,
+        "classification": "closed-transaction"
+      }
+    ],
+    "transactionLifecycle": [
+      {
+        "ms": 9406,
+        "rpc": 248,
+        "method": "BatchGetDocuments",
+        "phase": "transaction-created",
+        "transaction": "T21"
+      },
+      {
+        "ms": 9407,
+        "rpc": 251,
+        "method": "BatchGetDocuments",
+        "phase": "request",
+        "transaction": "T21"
+      },
+      {
+        "ms": 9407,
+        "rpc": 251,
+        "method": "BatchGetDocuments",
+        "phase": "end",
+        "transaction": "T21",
+        "code": 0
+      },
+      {
+        "ms": 9410,
+        "rpc": 254,
+        "method": "BatchGetDocuments",
+        "phase": "request",
+        "transaction": "T21"
+      },
+      {
+        "ms": 9411,
+        "rpc": 254,
+        "method": "BatchGetDocuments",
+        "phase": "end",
+        "transaction": "T21",
+        "code": 0
+      },
+      {
+        "ms": 9413,
+        "rpc": 257,
+        "method": "BatchGetDocuments",
+        "phase": "request",
+        "transaction": "T21"
+      },
+      {
+        "ms": 9414,
+        "rpc": 257,
+        "method": "BatchGetDocuments",
+        "phase": "end",
+        "transaction": "T21",
+        "code": 0
+      },
+      {
+        "ms": 9417,
+        "rpc": 261,
+        "method": "BatchGetDocuments",
+        "phase": "request",
+        "transaction": "T21"
+      },
+      {
+        "ms": 9417,
+        "rpc": 261,
+        "method": "BatchGetDocuments",
+        "phase": "end",
+        "transaction": "T21",
+        "code": 0
+      },
+      {
+        "ms": 9419,
+        "rpc": 262,
+        "method": "RunAggregationQuery",
+        "phase": "request",
+        "transaction": "T21"
+      },
+      {
+        "ms": 11429,
+        "rpc": 262,
+        "method": "RunAggregationQuery",
+        "phase": "error",
+        "transaction": "T21",
+        "code": 10,
+        "classification": "lock-timeout"
+      },
+      {
+        "ms": 11429,
+        "rpc": 262,
+        "method": "RunAggregationQuery",
+        "phase": "end",
+        "transaction": "T21",
+        "code": 0
+      },
+      {
+        "ms": 13755,
+        "rpc": 273,
+        "method": "RunAggregationQuery",
+        "phase": "request",
+        "transaction": "T21"
+      },
+      {
+        "ms": 13761,
+        "rpc": 273,
+        "method": "RunAggregationQuery",
+        "phase": "error",
+        "transaction": "T21",
+        "code": 3,
+        "classification": "closed-transaction"
+      },
+      {
+        "ms": 13761,
+        "rpc": 273,
+        "method": "RunAggregationQuery",
+        "phase": "end",
+        "transaction": "T21",
+        "code": 0
+      },
+      {
+        "ms": 18693,
+        "rpc": 274,
+        "method": "RunAggregationQuery",
+        "phase": "request",
+        "transaction": "T21"
+      },
+      {
+        "ms": 18697,
+        "rpc": 274,
+        "method": "RunAggregationQuery",
+        "phase": "error",
+        "transaction": "T21",
+        "code": 3,
+        "classification": "closed-transaction"
+      },
+      {
+        "ms": 18697,
+        "rpc": 274,
+        "method": "RunAggregationQuery",
+        "phase": "end",
+        "transaction": "T21",
+        "code": 0
+      },
+      {
+        "ms": 18701,
+        "rpc": 275,
+        "method": "Rollback",
+        "phase": "request",
+        "transaction": "T21"
+      },
+      {
+        "ms": 18702,
+        "rpc": 275,
+        "method": "Rollback",
+        "phase": "end",
+        "transaction": "T21",
+        "code": 0
+      }
+    ]
+  },
+  "grpcOriginal": [
+    {
+      "id": "locked",
+      "exitCode": 1,
+      "report": {
+        "kind": "fault-injected SDK diagnostic; not natural-contention or production proof",
+        "sdk": "7.11.6",
+        "node": "v22.23.2",
+        "gax": "4.6.1",
+        "status": "FAIL",
+        "results": [
+          {
+            "arm": "control",
+            "attempts": 1,
+            "injected": false,
+            "milliseconds": 44,
+            "success": true,
+            "count": 1
+          },
+          {
+            "arm": "read-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 6874,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "aggregate-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 7560,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "commit-abort",
+            "attempts": 2,
+            "injected": true,
+            "milliseconds": 608,
+            "success": true,
+            "count": 1
+          }
+        ],
+        "events": [
+          {
+            "arm": "read-abort",
+            "method": "BatchGetDocuments",
+            "transaction": "T2",
+            "origin": "injected-after-real-rollback",
+            "code": 10
+          },
+          {
+            "arm": "read-abort",
+            "method": "BatchGetDocuments",
+            "transaction": "T2",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "read-abort",
+            "method": "BatchGetDocuments",
+            "transaction": "T2",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "aggregate-abort",
+            "method": "RunAggregationQuery",
+            "transaction": "T3",
+            "origin": "injected-after-real-rollback",
+            "code": 10
+          },
+          {
+            "arm": "aggregate-abort",
+            "method": "RunAggregationQuery",
+            "transaction": "T3",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "aggregate-abort",
+            "method": "RunAggregationQuery",
+            "transaction": "T3",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "commit-abort",
+            "method": "Commit",
+            "transaction": "T4",
+            "origin": "injected-after-real-rollback",
+            "code": 10
+          }
+        ]
+      }
+    },
+    {
+      "id": "admin13",
+      "exitCode": 1,
+      "report": {
+        "kind": "fault-injected SDK diagnostic; not natural-contention or production proof",
+        "sdk": "7.11.6",
+        "node": "v22.23.2",
+        "gax": "4.6.1",
+        "status": "FAIL",
+        "results": [
+          {
+            "arm": "control",
+            "attempts": 1,
+            "injected": false,
+            "milliseconds": 33,
+            "success": true,
+            "count": 1
+          },
+          {
+            "arm": "read-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 7181,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "aggregate-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 7471,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "commit-abort",
+            "attempts": 2,
+            "injected": true,
+            "milliseconds": 1498,
+            "success": true,
+            "count": 1
+          }
+        ],
+        "events": [
+          {
+            "arm": "read-abort",
+            "method": "BatchGetDocuments",
+            "transaction": "T2",
+            "origin": "injected-after-real-rollback",
+            "code": 10
+          },
+          {
+            "arm": "read-abort",
+            "method": "BatchGetDocuments",
+            "transaction": "T2",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "read-abort",
+            "method": "BatchGetDocuments",
+            "transaction": "T2",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "aggregate-abort",
+            "method": "RunAggregationQuery",
+            "transaction": "T3",
+            "origin": "injected-after-real-rollback",
+            "code": 10
+          },
+          {
+            "arm": "aggregate-abort",
+            "method": "RunAggregationQuery",
+            "transaction": "T3",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "aggregate-abort",
+            "method": "RunAggregationQuery",
+            "transaction": "T3",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "commit-abort",
+            "method": "Commit",
+            "transaction": "T4",
+            "origin": "injected-after-real-rollback",
+            "code": 10
+          }
+        ]
+      }
+    },
+    {
+      "id": "firestore8",
+      "exitCode": 1,
+      "report": {
+        "status": "SETUP_FAILURE"
+      }
+    },
+    {
+      "id": "current",
+      "exitCode": 1,
+      "report": {
+        "status": "SETUP_FAILURE"
+      }
+    }
+  ],
+  "grpcMetadataAdapted": [
+    {
+      "id": "firestore8",
+      "exitCode": 1,
+      "report": {
+        "kind": "fault-injected SDK diagnostic; not natural-contention or production proof",
+        "sdk": "8.7.1",
+        "node": "v22.23.2",
+        "gax": "5.0.8",
+        "status": "FAIL",
+        "results": [
+          {
+            "arm": "control",
+            "attempts": 1,
+            "injected": false,
+            "milliseconds": 27,
+            "success": true,
+            "count": 1
+          },
+          {
+            "arm": "read-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 7674,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "aggregate-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 7110,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "commit-abort",
+            "attempts": 2,
+            "injected": true,
+            "milliseconds": 743,
+            "success": true,
+            "count": 1
+          }
+        ],
+        "events": [
+          {
+            "arm": "read-abort",
+            "method": "BatchGetDocuments",
+            "transaction": "T2",
+            "origin": "injected-after-real-rollback",
+            "code": 10
+          },
+          {
+            "arm": "read-abort",
+            "method": "BatchGetDocuments",
+            "transaction": "T2",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "read-abort",
+            "method": "BatchGetDocuments",
+            "transaction": "T2",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "aggregate-abort",
+            "method": "RunAggregationQuery",
+            "transaction": "T3",
+            "origin": "injected-after-real-rollback",
+            "code": 10
+          },
+          {
+            "arm": "aggregate-abort",
+            "method": "RunAggregationQuery",
+            "transaction": "T3",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "aggregate-abort",
+            "method": "RunAggregationQuery",
+            "transaction": "T3",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "commit-abort",
+            "method": "Commit",
+            "transaction": "T4",
+            "origin": "injected-after-real-rollback",
+            "code": 10
+          }
+        ]
+      }
+    },
+    {
+      "id": "current",
+      "exitCode": 1,
+      "report": {
+        "kind": "fault-injected SDK diagnostic; not natural-contention or production proof",
+        "sdk": "9.4.1",
+        "node": "v22.23.2",
+        "gax": "6.17.0",
+        "status": "FAIL",
+        "results": [
+          {
+            "arm": "control",
+            "attempts": 1,
+            "injected": false,
+            "milliseconds": 27,
+            "success": true,
+            "count": 1
+          },
+          {
+            "arm": "read-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 7326,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "aggregate-abort",
+            "attempts": 1,
+            "injected": true,
+            "milliseconds": 7537,
+            "success": false,
+            "code": 3,
+            "message": "Transaction is invalid or closed.",
+            "count": 0
+          },
+          {
+            "arm": "commit-abort",
+            "attempts": 2,
+            "injected": true,
+            "milliseconds": 794,
+            "success": true,
+            "count": 1
+          }
+        ],
+        "events": [
+          {
+            "arm": "read-abort",
+            "method": "BatchGetDocuments",
+            "transaction": "T2",
+            "origin": "injected-after-real-rollback",
+            "code": 10
+          },
+          {
+            "arm": "read-abort",
+            "method": "BatchGetDocuments",
+            "transaction": "T2",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "read-abort",
+            "method": "BatchGetDocuments",
+            "transaction": "T2",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "aggregate-abort",
+            "method": "RunAggregationQuery",
+            "transaction": "T3",
+            "origin": "injected-after-real-rollback",
+            "code": 10
+          },
+          {
+            "arm": "aggregate-abort",
+            "method": "RunAggregationQuery",
+            "transaction": "T3",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "aggregate-abort",
+            "method": "RunAggregationQuery",
+            "transaction": "T3",
+            "origin": "emulator",
+            "code": 3,
+            "message": "Transaction is invalid or closed."
+          },
+          {
+            "arm": "commit-abort",
+            "method": "Commit",
+            "transaction": "T4",
+            "origin": "injected-after-real-rollback",
+            "code": 10
+          }
+        ]
+      }
+    }
+  ],
+  "rest": {
+    "kind": "isolated supported preferRest; injected synthetic faults, not production proof",
+    "sdk": "7.11.6",
+    "status": "FAIL",
+    "results": [
+      {
+        "mode": "control",
+        "success": true,
+        "attempts": 1,
+        "faultApplied": 0,
+        "count": 1,
+        "milliseconds": 23,
+        "validation": "PASS"
+      },
+      {
+        "mode": "read-abort",
+        "success": true,
+        "attempts": 2,
+        "faultApplied": 1,
+        "count": 1,
+        "milliseconds": 1177,
+        "validation": "PASS"
+      },
+      {
+        "mode": "aggregate-abort",
+        "success": true,
+        "attempts": 2,
+        "faultApplied": 1,
+        "count": 1,
+        "milliseconds": 659,
+        "validation": "PASS"
+      },
+      {
+        "mode": "commit-abort",
+        "success": true,
+        "attempts": 2,
+        "faultApplied": 1,
+        "count": 1,
+        "milliseconds": 685,
+        "validation": "PASS"
+      },
+      {
+        "mode": "always-abort",
+        "success": false,
+        "code": 10,
+        "attempts": 2,
+        "faultApplied": 2,
+        "count": 0,
+        "milliseconds": 1233,
+        "validation": "PASS"
+      },
+      {
+        "mode": "permission",
+        "success": false,
+        "code": 7,
+        "attempts": 1,
+        "faultApplied": 1,
+        "count": 0,
+        "milliseconds": 83,
+        "validation": "PASS"
+      },
+      {
+        "mode": "invalid",
+        "success": false,
+        "code": 3,
+        "attempts": 1,
+        "faultApplied": 1,
+        "count": 0,
+        "milliseconds": 13,
+        "validation": "PASS"
+      },
+      {
+        "mode": "partial-query",
+        "validation": "FAIL"
+      },
+      {
+        "mode": "deadline",
+        "success": false,
+        "code": "ECONNRESET",
+        "attempts": 1,
+        "faultApplied": 1,
+        "count": 0,
+        "milliseconds": 25024,
+        "validation": "FAIL"
+      }
+    ],
+    "deadlineCase": "100ms RPC / 300ms GAX test-only budget; not a proposed production value"
+  },
+  "rejectedProbe": {
+    "valid": false,
+    "reason": "No injected-error events: attempted rollback used the wrong REST endpoint; HTTP 500 recovery cannot count as ABORTED recovery.",
+    "rawSha256": "36a56fb93c0e4049d7391494add16877ff18f583cb5190d3e823b6d88064a362",
+    "rawEvidence": "retained ignored file rest-probe-invalid-fault-setup.json; not counted as passing"
+  },
+  "fullBusinessQualification": "NOT RUN for rejected candidates: transport and/or source compatibility prerequisites fail. Historical exact172dbaa coverage is separate.",
+  "production": "NO-GO; no runtime change"
+}

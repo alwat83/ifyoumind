@@ -1,6 +1,6 @@
 # Phase 5 — isolated consumer release package
 
-November 21, 2026 · OpenAI / Codex. **Preparation only; production execution NO-GO.** No merge, deployment, production record write, workflow/protection change, provider request, enrollment activation or dependency experiment. [Hosting-only procedure](HOSTING_ONLY.md). Exact-source results are added after execution; historical results below are not this candidate's checks.
+November 21, 2026 · OpenAI / Codex. **Preparation complete; production execution NO-GO.** [Draft #123](https://github.com/alwat83/ifyoumind/pull/123). No merge, deployment, production record write, workflow/protection change, provider request, enrollment activation or dependency experiment. [Hosting-only procedure](HOSTING_ONLY.md), [new exact-source results](VERIFIED_4fa109f.md) / [JSON](VERIFIED_4fa109f.json). Historical backend evidence below remains distinct.
 
 ## Candidate and dependency order
 
@@ -8,7 +8,7 @@ Fresh GitHub inspection: master `6dcffca4eb186c6e0da7431523d7137652e14990`; #118
 
 Repository integration order remains **#118 → #119 → #121**, then tooling/documentation as reviewed. A master merge currently triggers the broad deployment workflow; do not merge even a frontend-only PR to master assuming it cannot redeploy Functions. The proposed alternative is a separately authorized exact-source Hosting artifact from the stacked candidate, with no merge. It requires explicit founder approval of this narrower release and residual gates; it is not an authorized change to the established sequence. Any later merges also need safe deployment coordination.
 
-The cumulative consumer source has **zero changes under `functions/`, Firestore rules/indexes and Storage rules** versus current master. The city writer service and existing retry implementation are unchanged. New routing, navigation and public pricing still exercise the existing deployed backend, so source equality does not establish transaction reliability. Read-only function metadata independently confirms `createMarketIntelligenceProject` ACTIVE, Node22, `createmarketintelligenceproject-00087-nub` latest Ready and serving100%. [Writer readback](WRITER_READBACK.json) is identity evidence, not a live retry test.
+The cumulative consumer source has **zero changes under `functions/`, Firestore rules/indexes and Storage rules** versus current master. The city writer service and existing retry implementation are unchanged. The full Hosting artifact includes the new authenticated client/shell as well as public assets; this is not a public-homepage-only swap. New routing, navigation and public pricing still exercise the existing deployed backend, so source equality does not establish transaction reliability. Read-only function metadata independently confirms `createMarketIntelligenceProject` ACTIVE, Node22, `createmarketintelligenceproject-00087-nub` latest Ready and serving100%. [Writer readback](WRITER_READBACK.json) is identity evidence, not a live retry test.
 
 ## Connected journey and backend exposure
 
@@ -34,7 +34,7 @@ The isolated artifact copies the reviewed static headers/redirects/rewrites and 
 
 ## Founder experience review
 
-Working local preview is recorded with final verification below. Use synthetic data only. Existing full desktop/mobile screenshots remain current because this phase changes **no customer HTML, SCSS, routes or behavior**:
+Working local preview: **http://127.0.0.1:4392/** and [pricing](http://127.0.0.1:4392/pricing), with credential-free `demo-ifyoumind` Auth/Firestore/Functions emulators. Synthetic seed readiness and HTTP200/byte equality checked after restart from the tested source snapshot. [Restart instructions](PREVIEW.md), [actual preview checks](PREVIEW_READINESS.json). It is a local simulation, not production/header proof. Use synthetic data only. Existing full desktop/mobile screenshots remain current because this phase changes **no customer HTML, SCSS, routes or behavior**:
 
 - [Homepage1440](../../design/midnight-slate/first-five-seconds/implementation/after-home-1440-full.jpg), [390](../../design/midnight-slate/first-five-seconds/implementation/after-home-390-full.jpg), [320](../../design/midnight-slate/first-five-seconds/implementation/after-home-320-full.jpg).
 - [Pricing1440](../../design/consumer-pricing/screenshots/after-desktop.jpg), [390](../../design/consumer-pricing/screenshots/after-mobile.jpg), [320](../../design/consumer-pricing/screenshots/after-narrow.jpg), [820](../../design/consumer-pricing/screenshots/after-tablet.jpg). Before/after and active/legacy states: [pricing review](../../design/consumer-pricing/REVIEW.md).
@@ -49,6 +49,14 @@ Five tasks, without explanation or coaching:
 5. Find the four prices and explain what is available now, which reports cost money and why monthly signup is unavailable.
 
 Automated viewport/axe/keyboard checks are engineering coverage, not observed comprehension. **Physical Safari, spoken VoiceOver, Linux pixel comparisons and unassisted human comprehension are explicitly unverified.** No bulk baseline update, installation or invented participant outcome. These gaps remain visible for founder disposition; they are not passed by local Chrome screenshots.
+
+## New exact-source verification
+
+Tested executable source **`4fa109f5ba683e197efc781223225f0d1fca5407`**, base #122fded875. Consumer level: **19 checks PASS;594 tests PASS/zero FAIL/14 Linux visual SKIP**, selected development PASS; overall PARTIAL for native renderer/Node/Java differences. Source integrity VALID, clean SHA/branch/digest before and after, isolated digest equal, zero source events. Includes fast173 (new artifact safety8), first-screen12, Discovery48, electricity27, unified36, Hosting84 and authenticated214. Browser checks cover the connected journey, public/signed-in/tier/legacy pricing states, responsive/axe/keyboard, auth and recovery; they do not establish genuine payments or human outcomes.
+
+Functions tests, rules, organizations, commerce, fixture/access and strict transport diagnostic are **NOT_RUN at this level**, not new passes. Historical #121 three failures and #122 two strict failures remain open; no rejected SDK experiment repeated. The initial CLI invocation used a mismatched SHA and correctly refused with INVALID/zero tests; the final correct-source report is separate. No hosted check runs listed on #123; no hosted CI success claimed.
+
+Prepared and independently re-hashed **58 static files /2,044,304 bytes**. Manifest SHA256 `ea2a96117cc4b4cac271696c5b2c2c37e4c7350d85592c5332f52eea70e7e97f`, config SHA256 `a985fa400017d793640bd4c895435d0c8d4a302c183efcb7d50999794ce5dec0`. Exact commands/artifact provenance: [verification](VERIFIED_4fa109f.md). Package stays ignored; small redacted records are committed. Later evidence-only documentation commit changes no executable or customer bytes and is not presented as a rerun. Current master protection/rulesets/production approval readback still empty; no settings changed or gate bypassed.
 
 ## Release matrix
 

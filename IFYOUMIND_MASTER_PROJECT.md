@@ -468,3 +468,8 @@ Separate from #118/#119/#121 and independent #120: [reviewable consumer release 
 
 
 Phase5 completed in draft [#123](https://github.com/alwat83/ifyoumind/pull/123), exact executable4fa109f5ba683e197efc781223225f0d1fca5407: [consumer verification](docs/releases/phase5/VERIFIED_4fa109f.md)594 pass/zero fail/14 Linux skip,19 checks pass, VALID integrity/zero source events. Six sensitive suites NOT_RUN; known failures remain.58-file Hosting-only artifact independently re-hashed; local synthetic preview4392 available. No product/UI/backend/workflow/dependency change; evidence follow-up only. Notion synchronized. Review/development GO; execution and enrollment NO-GO until existing gate disposition, explicit exact authorization and exclusive deployment control. No customer/revenue outcome.
+
+
+## November 21, 2026 — Approved Midnight Slate, narrow homepage refinement
+
+Founder approves the visual direction and requests only responsive question cohesion and less hero whitespace. Separate codex/hero-question-wrap from #123ade00b0: [actual five-width pairs and review](docs/design/hero-question-refinement/REVIEW.md). Two CSS files only for product changes; no new content, capability or backend/commercial change. Existing reveal/evidence/keyboard/reduced-motion tests retained and extended. Consumer-level exact-source evidence follows commitment; merge/deployment not authorized. #123's earlier Hosting artifact does not include this refinement. No measured user/revenue result; physical/Linux/human gaps remain explicit.

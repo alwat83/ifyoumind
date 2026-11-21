@@ -1,7 +1,7 @@
 import { test, expect, expectAccessible, expectNoHorizontalScroll } from '../support/test.mjs';
 
 test('the question reveals an immediate supported answer in place, then evidence and private input', async ({ page }, info) => {
-  for (const width of info.project.name === 'mobile' ? [320,390] : [820,1440]) {
+  for (const width of info.project.name === 'mobile' ? [320,390] : [820,1280,1440]) {
     await page.setViewportSize({width,height:width===320?568:width===390?844:900});
     await page.emulateMedia({reducedMotion:'reduce'});
     await page.goto('/');await page.evaluate(()=>document.fonts.ready);
@@ -9,6 +9,25 @@ test('the question reveals an immediate supported answer in place, then evidence
     await expect(action).toBeInViewport({ratio:1});await expect(action).toHaveAttribute('aria-expanded','false');
     await expect(page.locator('.hero-label')).toContainText('Made-up figures');
     await expect(page.locator('.hero-entry')).toContainText('Compare U.S. cities');
+    const composition = await page.locator('.hero-intro').evaluate(intro => {
+      const question = intro.querySelector('h1 em');
+      const lines = [];
+      const walker = document.createTreeWalker(question, NodeFilter.SHOW_TEXT);
+      let node;
+      while ((node = walker.nextNode())) {
+        for (const word of node.textContent.matchAll(/\S+/g)) {
+          const range = document.createRange();
+          range.setStart(node, word.index); range.setEnd(node, word.index + word[0].length);
+          const top = range.getBoundingClientRect().top, last = lines.at(-1);
+          if (last && Math.abs(last.top - top) < 3) last.words.push(word[0]);
+          else lines.push({ top, words: [word[0]] });
+        }
+      }
+      const contentBottom = Math.max(...[...intro.children].map(child => child.getBoundingClientRect().bottom));
+      return { lines: lines.map(line => line.words), emptyTail: intro.getBoundingClientRect().bottom - contentBottom };
+    });
+    expect(composition.lines.every(line => line.length >= 2), `orphaned question at ${width}px: ${JSON.stringify(composition.lines)}`).toBe(true);
+    expect(composition.emptyTail, `unnecessary empty hero height at ${width}px`).toBeLessThanOrEqual(64);
     await expect(page.locator('.revealed-content')).toBeHidden();
     await expect(page.locator('.own-data')).toBeHidden();
     await expectNoHorizontalScroll(page);await expectAccessible(page);

@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 21, 2026 — Final homepage refinement (in progress)
+
+Separate `codex/hero-question-wrap` from #123ade00b0. [Review and five-width before/after](../design/hero-question-refinement/REVIEW.md). Product edits only two homepage CSS files: independent serif text balancing, max92→88px, content-driven hero height and reduced padding. No template/TypeScript/backend/enrollment/billing/AI/dependency change. Existing reveal browser regression expanded to1280 and actual word-line/empty-tail checks;4 targeted cases PASS, local build PASS. Both loaded Inter/Instrument Serif and existing QA fallback checked at320/390/820/1280/1440, no orphan/overflow, initial CTA visible. Physical Safari/VoiceOver/Linux/human gaps remain unverified. Exact-source Consumer run follows clean commitment; no hosted success claimed. #123/#119 and all existing candidates remain unchanged; old Hosting artifact does not include this refinement. No merge/deploy/production write authorized.
+
 ## November 21, 2026 — Phase 5 completed preparation; no production authorization
 
 [Draft #123](https://github.com/alwat83/ifyoumind/pull/123), `codex/hosting-release-isolation`, stacked on #122fded875. Exact tested executable source **4fa109f5ba683e197efc781223225f0d1fca5407**. [Committed local summary/JSON](../releases/phase5/VERIFIED_4fa109f.md): consumer19 checks PASS,594 tests PASS/zero FAIL/14 Linux visual SKIP; integrity VALID/zero source events; selected development PASS, overall PARTIAL/native platform differences. Six sensitive suites NOT_RUN, historical transaction failures/#111 remain open. No hosted check listed, no hosted CI success claimed. Initial wrong-SHA invocation was INVALID/zero tests; correct-source evidence retained. Evidence-only follow-up does not alter executable/customer bytes.

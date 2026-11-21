@@ -1,0 +1,116 @@
+{
+  "observedAt": "2026-11-21T23:51:47.687Z",
+  "liveRetryGate": "PASS",
+  "singleSameIdReplay": true,
+  "requests": {
+    "workspaceCreation": 1,
+    "save": 1,
+    "retry": 1,
+    "ownerRead": 1
+  },
+  "decisions": [
+    0,
+    1,
+    1
+  ],
+  "remainingAllowances": [
+    3,
+    2,
+    2
+  ],
+  "projectAndLockUnchangedOnRetry": true,
+  "ownerIndexAndMembershipUnchanged": true,
+  "noPaidEntitlement": true,
+  "cacheUnchanged": true,
+  "utcMonth": "2026-11",
+  "serving": [
+    {
+      "function": "createIntelligenceOrganization",
+      "revision": "createintelligenceorganization-00090-xoq",
+      "state": "ACTIVE",
+      "traffic": 100
+    },
+    {
+      "function": "createMarketIntelligenceProject",
+      "revision": "createmarketintelligenceproject-00087-nub",
+      "state": "ACTIVE",
+      "traffic": 100
+    },
+    {
+      "function": "getMarketIntelligenceProject",
+      "revision": "getmarketintelligenceproject-00086-gaq",
+      "state": "ACTIVE",
+      "traffic": 100
+    }
+  ],
+  "limitation": "Successful same-ID replay; no natural lost-response or concurrency failure induced. Historical SDK recovery gates remain separate.",
+  "authorization": "https://github.com/alwat83/ifyoumind/pull/111#issuecomment-7070107031",
+  "attemptReferenceSha256Prefix": "5ac148f6093949c8",
+  "distinctSavedDecisionIdsReturned": 1,
+  "httpResults": {
+    "workspace": {
+      "status": 200,
+      "latencyMs": 3211,
+      "startedAt": "2026-11-21T23:50:58.106Z",
+      "endedAt": "2026-11-21T23:51:01.317Z",
+      "traceHeaderPresent": true
+    },
+    "save": {
+      "status": 200,
+      "latencyMs": 3902,
+      "startedAt": "2026-11-21T23:51:13.592Z",
+      "endedAt": "2026-11-21T23:51:17.494Z",
+      "traceHeaderPresent": true
+    },
+    "retry": {
+      "status": 200,
+      "latencyMs": 249,
+      "startedAt": "2026-11-21T23:51:37.697Z",
+      "endedAt": "2026-11-21T23:51:37.946Z",
+      "traceHeaderPresent": true
+    },
+    "owner-read": {
+      "status": 200,
+      "latencyMs": 3490,
+      "startedAt": "2026-11-21T23:51:39.102Z",
+      "endedAt": "2026-11-21T23:51:42.592Z",
+      "traceHeaderPresent": true
+    }
+  },
+  "firestoreDocumentCounts": [
+    3,
+    5,
+    5
+  ],
+  "workspaceSetupDocuments": 3,
+  "firstSaveNewDocuments": 2,
+  "retryChangedDocuments": 0,
+  "hostingVersion": "39dc573f3826dca6",
+  "hostingRelease": "1794933315802000",
+  "subscriptionEnrollmentEmpty": true,
+  "newVerifiedPasswordIdentity": true,
+  "originalFounderAccountsUntouched": true,
+  "qaRecordsRetained": true,
+  "productionReleaseAuthorized": false,
+  "productionReleaseRecommendation": "NO-GO pending separate RC1 gates and authorization",
+  "finalServingReadback": {
+    "observedAt": "2026-11-21T23:53:28.460Z",
+    "writer": {
+      "state": "ACTIVE",
+      "revision": "createmarketintelligenceproject-00087-nub",
+      "latestReadyRevision": "createmarketintelligenceproject-00087-nub",
+      "traffic": [
+        {
+          "revision": "createmarketintelligenceproject-00087-nub",
+          "percent": 100
+        }
+      ],
+      "subscriptionEnrollmentEmpty": true
+    },
+    "hosting": {
+      "release": "1794933315802000",
+      "version": "39dc573f3826dca6"
+    }
+  },
+  "localSessionCleared": true
+}

@@ -30,9 +30,15 @@ No orphan or horizontal overflow after the correction at any requested width in 
 
 ## Verification
 
-Consumer frontend risk level is appropriate: this is a real public-surface refinement, not an infrastructure or backend change. Preserve the existing local-first selection and all its assertions. Clean exact-source Consumer verification follows commitment and is linked in the final draft.
+Consumer frontend risk level is appropriate: this is a real public-surface refinement, not an infrastructure or backend change. [Exact-source summary](VERIFIED_45ebd3f.md) / [JSON](VERIFIED_45ebd3f.json), tested **45ebd3fab6e8d0864ff30db6b20eee81baaf8c31**, reviewed baseade00b0c21c8e499a434ec8cf5581ef52984b829.19 checks PASS,594 tests PASS/zero FAIL/14 Linux visual SKIP; clean integrity VALID, zero source events. Selected development PASS; overall PARTIAL for native renderer/Node/Java differences. Six sensitive suites NOT_RUN, not new passes. Existing transaction findings remain open. No standalone lint run or hosted CI pass claimed; no test/assertion weakened.
 
-Checkpoint: `npm run build:local` PASS with existing unchanged Discovery stylesheet-budget warnings. Existing `question-reveal.spec.mjs`:4 cases PASS; desktop loop expanded to1280 alongside820/1440, mobile320/390. Added actual DOM word-line checks (no isolated word) and an empty-tail bound, retaining every keyboard, axe, overflow, reveal/focus, evidence, private-input and normal/reduced-motion assertion. No CSS-string mirror tests. Full consumer coverage follows; original backend failures are not rerun or cleared by these results.
+```sh
+npm run verify:local -- --level=consumer --base-sha=ade00b0c21c8e499a434ec8cf5581ef52984b829 --expected-sha=45ebd3fab6e8d0864ff30db6b20eee81baaf8c31
+```
+
+Local preview **http://127.0.0.1:4393/** uses the exact tested snapshot and synthetic demo emulators; seed readiness plus home/pricing/CSV-entry HTTP200 and actual-byte matches checked after restart. Run directory: `test-results/local-first/2026-11-21T19-10-41-520Z-45ebd3fa`. To restart, use the existing [credential-free preview procedure](../../releases/phase5/PREVIEW.md), substituting this run and port4393; never run overlapping emulators or use real information. Later evidence-only follow-up changes no executable/customer bytes and is not represented as a rerun.
+
+Checkpoint: `npm run build:local` PASS with existing unchanged Discovery stylesheet-budget warnings. Existing `question-reveal.spec.mjs`:4 cases PASS; desktop loop expanded to1280 alongside820/1440, mobile320/390. Added actual DOM word-line checks (no isolated word) and an empty-tail bound, retaining every keyboard, axe, overflow, reveal/focus, evidence, private-input and normal/reduced-motion assertion. No CSS-string mirror tests. The final exact-source Consumer run independently includes these cases; original backend failures are not rerun or cleared by these results.
 
 The first final-font capture command was not executed because automatic approval review hit an account usage limit. On the founder's resume it ran successfully through the normal approval mechanism. Earlier standard QA/fallback captures were replaced by actual primary-font pairs; fallback measurements retained. No permission bypass, source discard or production action.
 
@@ -54,4 +60,4 @@ Physical Safari/iPhone, spoken VoiceOver, Linux pixel comparisons and unassisted
 
 Hypothesis: a visitor can read one complete question, find the same CTA and reach the same useful finding without an awkward orphan or excessive empty space. This is a visual/engineering improvement, not measured comprehension or conversion lift. Founder review: compare the two390px and1440px pairs, read the question, reveal the finding and open the evidence. Keep the approved design; do not add elements.
 
-**GO for founder visual review when exact-source checks pass; no merge/deployment authorization.** The retained #123 Hosting artifact predates this refinement and must not be claimed to include it. Integration and a new exact-source release artifact require their own verification and approval; no protected draft head, production resource or existing release gate is altered here.
+**GO for founder visual review; no merge/deployment authorization.** The retained #123 Hosting artifact predates this refinement and must not be claimed to include it. Integration and a new exact-source release artifact require their own verification and approval; no protected draft head, production resource or existing release gate is altered here.

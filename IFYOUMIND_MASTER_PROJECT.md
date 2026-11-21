@@ -1,12 +1,16 @@
 # ifYouMind — Master Project Record and Roadmap
 
-**Updated:** 2026-11-20
+**Updated:** 2026-11-21
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  
 **Notion:** https://app.notion.com/p/3eb02474659c81ecba55cc4eed184a71
 **Purpose:** Living project context for the founder and all current/future development agents.
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
+
+## November 21, 2026 — Consumer pricing clarity before enrollment
+
+A separate branch from #119 makes Free, Starter, Plus and the one-time report publicly inspectable in the approved Midnight Slate identity. [Working review and actual before/after](docs/design/consumer-pricing/REVIEW.md). Monthly enrollment stays closed behind unchanged backend controls; existing subscribers and grandfathered Pro retain Account management. Free browser-local bills, saved city decisions and paid public-data reports have distinct, truthful scopes. No runtime billing, price, entitlement, AI or production change. The separate #120 reliability NO-GO is preserved; its sanitized upstream package remains unsent and its new reduction unexecuted. Founder UI review and full release readiness remain separate.
 
 ## November 20, 2026 — Connected experience and strict recovery evidence
 

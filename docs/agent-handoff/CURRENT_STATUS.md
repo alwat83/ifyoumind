@@ -1,5 +1,15 @@
 # ifYouMind — Current development status
 
+## November 21, 2026 — Consumer pricing first; reliability preserved
+
+New `codex/consumer-pricing-clarity` branches directly from protected #119 exact `172dbaa93231e88fd2256b3ca7c2726d81a7c6e0`, without importing #120's experiments or modifying #118/#119. [Pricing review, impact matrix and actual desktop/mobile before/after](../design/consumer-pricing/REVIEW.md). Free$0, Starter$4.99/one report, Plus$9.99/three reports and one-time$79 are public. Monthly offers are prominent but remain backend-eligibility gated, explicitly unavailable; the existing free action is near the heading. Copy distinguishes browser-local bills, saved city briefs and full city/business reports. The one-time report is transparently the same full scope without subscription. Legacy$39 Pro and active-subscriber Account behavior remain unchanged.
+
+Only pricing HTML/SCSS changes in product source: no TypeScript, backend, auth, billing, entitlement, dependency, AI, enrollment or production-data change. New browser cases cover public/signed-in/Starter/Plus/legacy at320/390/820/1440 and local closed-enrollment denial. Targeted48 initially42 pass/six inline-link accessibility failures; underlines restored and48 pass. Final free-action placement ten focused cases pass. Native fast159 pass; earlier sandbox watcher failure preserved. Exact-head full local-first evidence is recorded separately on the resulting draft PR; failures stay failures, no hosted CI pass claimed.
+
+[Minimal sanitized upstream package](../../test/fixtures/firestore-upstream/README.md) is UNSENT: existing redacted natural trace and unchanged #120 observer/guard, plus an unexecuted SDK-only reduction. Syntax, positive/negative guard and helper-provenance checks pass; no new install, rejected-version experiment, probe contention run or upstream contact. [#120](https://github.com/alwat83/ifyoumind/pull/120) remains at `f856c3b462903422a8cad4aaa6bdaed41268fe3b`, NO-GO with no qualified correction.
+
+Consumer UI founder-review readiness is independent of backend reliability/release readiness. Production NO-GO; no merge/deploy/enrollment activation authorized. Preserve #118 → verified foundation → reconciled consumer candidate → separate approval, #111 live retry, Linux individual image review, physical-device/VoiceOver and human comprehension gates. No new customer, participant, traffic or revenue outcome.
+
 ## November 20, 2026 — Phase 3 experience and strict reliability gate
 
 Continue on `codex/midnight-slate`, draft #119, preserving approved A and unchanged #118 (`2f4975f94ac888547df8b1fbdf149a50741f6570`). [Audit, actual before/after, diagnosis and dependency-aware release procedure](../design/midnight-slate/phase3/REVIEW.md). Starting exact head `52dea070267b2858d559ca55094f25b024520923` passed 707 ordinary native tests / zero failures / 15 skips with valid integrity; [committed report](../verification/local-first/VERIFIED_52dea07.md). New source requires a fresh exact-head run, recorded on #119 and Notion.

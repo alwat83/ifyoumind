@@ -2,6 +2,10 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## November 21 — Affordable offers visible before signup
+
+The [consumer pricing candidate](../design/consumer-pricing/REVIEW.md) removes a disclosure/signup barrier to understanding Starter and Plus, explicitly keeps enrollment unavailable, and gives visitors an immediate available free action. The$79 option transparently buys the same full city/business report scope without subscribing. Review whether a first-time visitor can distinguish private bill value, saved city briefs and paid reports before any activation. No tracking, participant, customer, purchase, revenue or cost observation; the dated scoreboard remains unchanged. Reliability #120 and release authorization remain separate; no outreach or paid enrollment.
+
 ## November 20 — Selected question-led first impression
 
 The founder selected A's tax question with an immediate, supported answer reveal. [Actual before/after and five-task protocol](../design/midnight-slate/first-five-seconds/REVIEW.md) distinguish preference and engineering checks from observed consumer understanding. Prioritize whether a first-time visitor can explain the finding, limitation, supported input and separate city-report offer. No new tracking, participant, revenue or conversion measurement. Keep the dated scoreboard unchanged, #111 reliability separate and release authorization explicit.

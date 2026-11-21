@@ -1,0 +1,81 @@
+{
+  "scope": "Actual synthetic local candidate screenshots, captured before commit from these exact component bytes",
+  "files": {
+    "src/app/intelligence/pricing.component.html": "fa0f53f8957308afc68c36d2ee46b6566aa9e114dffa42c2ec8d840a219ddeb3",
+    "src/app/intelligence/pricing.component.scss": "45df742d30f3d41e55a2b6356feb875a4c8d5cbf9bce2e7655ea3b3e35e98efb"
+  },
+  "records": [
+    {
+      "image": "after-desktop.jpg",
+      "width": 1440,
+      "state": "public",
+      "browser": "native Chrome",
+      "emulatorBannerHidden": true,
+      "sourceArtifacts": "test-results/e2e/consumer-pricing-public-pr-7897c-eps-closed-enrollment-inert-desktop/pricing-public-1440.jpg",
+      "sha256": "e0398899f594f1223b453c6a3b1a677367acc36f5361c7e54118b0664d093343"
+    },
+    {
+      "image": "after-mobile.jpg",
+      "width": 390,
+      "state": "public",
+      "browser": "native Chrome",
+      "emulatorBannerHidden": true,
+      "sourceArtifacts": "test-results/e2e/consumer-pricing-public-pr-7897c-eps-closed-enrollment-inert-mobile/pricing-public-390.jpg",
+      "sha256": "6a9a825282da88daec887e07feeab187bb31dd1f77969c1999a0028b0d23d82b"
+    },
+    {
+      "image": "after-narrow.jpg",
+      "width": 320,
+      "state": "public",
+      "browser": "native Chrome",
+      "emulatorBannerHidden": true,
+      "sourceArtifacts": "test-results/e2e/consumer-pricing-public-pr-7897c-eps-closed-enrollment-inert-mobile/pricing-public-320.jpg",
+      "sha256": "b60158f5812c02714d8b5b4421cdd874d4f4a98161a212e0fd168201d1ba0ae7"
+    },
+    {
+      "image": "after-tablet.jpg",
+      "width": 820,
+      "state": "public",
+      "browser": "native Chrome",
+      "emulatorBannerHidden": true,
+      "sourceArtifacts": "test-results/e2e/consumer-pricing-public-pr-7897c-eps-closed-enrollment-inert-desktop/pricing-public-820.jpg",
+      "sha256": "1776b233099bff0512a22db7cafa618506854d0824679ea9f6d1a3beda68024d"
+    },
+    {
+      "image": "plus-desktop.jpg",
+      "width": 1440,
+      "state": "plus",
+      "browser": "native Chrome",
+      "emulatorBannerHidden": true,
+      "sourceArtifacts": "test-results/e2e/consumer-pricing-existing--0ecf4-no-replacement-purchase-CTA-desktop/pricing-plus-1440.jpg",
+      "sha256": "fc5e593c6d6876be94c898a03fe479b805ef0c936d15040fde6a1139132837ce"
+    },
+    {
+      "image": "plus-mobile.jpg",
+      "width": 390,
+      "state": "plus",
+      "browser": "native Chrome",
+      "emulatorBannerHidden": true,
+      "sourceArtifacts": "test-results/e2e/consumer-pricing-existing--0ecf4-no-replacement-purchase-CTA-mobile/pricing-plus-390.jpg",
+      "sha256": "f61cf5a356eafc45f9efdf723d91705dfcbfea9573136e89a568e075be744656"
+    },
+    {
+      "image": "legacy-desktop.jpg",
+      "width": 1440,
+      "state": "legacy",
+      "browser": "native Chrome",
+      "emulatorBannerHidden": true,
+      "sourceArtifacts": "test-results/e2e/consumer-pricing-legacy-Pr-769cc-allowance-and-Account-route-desktop/pricing-legacy-1440.jpg",
+      "sha256": "c10dbfa23a274132cc0ba271b305106ff5843a40f03c4b1e607abe3923605414"
+    },
+    {
+      "image": "legacy-mobile.jpg",
+      "width": 390,
+      "state": "legacy",
+      "browser": "native Chrome",
+      "emulatorBannerHidden": true,
+      "sourceArtifacts": "test-results/e2e/consumer-pricing-legacy-Pr-769cc-allowance-and-Account-route-mobile/pricing-legacy-390.jpg",
+      "sha256": "ed22556dd699da02ba31a8fa9b2bf1df4492dd301023e709004c05bd0451fd7c"
+    }
+  ]
+}

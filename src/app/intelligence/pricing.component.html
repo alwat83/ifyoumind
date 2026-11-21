@@ -3,8 +3,17 @@
 
   <header>
     <p class="eyebrow">Pricing</p>
-    <h1>Start free. Get the full report when you need it.</h1>
-    <p class="lede">See a free Decision Brief for your cities. A full Decision Report adds more comparisons, sourced analysis, and an action plan.</p>
+    <h1>Start free. Go further.</h1>
+    <p class="lede">Understand your bills for free. Full city and business reports add more comparisons, sourced analysis, and an action plan.</p>
+    <div class="free-path">
+      <span>Free · $0</span>
+        <a *ngIf="projectId; else startFree" [routerLink]="['/decisions', projectId]" class="action">Back to your decision</a>
+        <ng-template #startFree>
+          <a *ngIf="signedIn; else freeExample" routerLink="/decide" class="action">Start a free decision</a>
+          <ng-template #freeExample><a href="/discover/?example=tax" class="action">Try a free example</a></ng-template>
+        </ng-template>
+      <a class="one-time-jump" href="#one-time">One-time report · ${{ status?.pricing?.reportOneTimeUsd ?? 79 }}</a>
+    </div>
   </header>
 
   <p *ngIf="loading" class="notice" role="status">Loading pricing…</p>
@@ -22,43 +31,43 @@
     View your remaining credits and manage your subscription in <a routerLink="/account">Account</a>.
   </p>
 
-  <section *ngIf="showMonthlyPlans" class="offer-section" aria-labelledby="monthly-title">
+  <section class="offer-section monthly-offers" aria-labelledby="monthly-title">
     <div class="section-heading">
       <h2 id="monthly-title">Monthly subscriptions</h2>
-      <p>Renews monthly. Cancel in Account before renewal. Unused credits expire at the end of each paid period. Unlocked reports stay saved.</p>
+      <p *ngIf="!showMonthlyPlans" id="enrollment-note" class="enrollment-note">Monthly enrollment is currently unavailable.</p>
     </div>
     <div class="plans">
-      <article *ngFor="let plan of subscriptionPlans" class="plan" [class.featured]="plan.offer === 'starter'">
+      <article *ngFor="let plan of subscriptionPlans" class="plan featured">
         <h3>{{ plan.name }}</h3>
         <p class="price">${{ plan.price }}<small>/month</small></p>
         <p>{{ plan.allowance }} per paid billing period.</p>
-        <button *ngIf="projectId" type="button" class="action" (click)="request(plan.offer)" [disabled]="requesting">
+        <p class="report-scope">For city and business decisions.</p>
+        <button *ngIf="!showMonthlyPlans" type="button" class="action" disabled
+          aria-describedby="enrollment-note" [attr.aria-label]="plan.name + ' enrollment currently unavailable'">Currently unavailable</button>
+        <button *ngIf="showMonthlyPlans && projectId" type="button" class="action" (click)="request(plan.offer)" [disabled]="requesting">
           {{ requesting === plan.offer ? 'Opening Stripe Checkout…' : 'Choose ' + plan.name }}
         </button>
       </article>
     </div>
-    <a *ngIf="!projectId" routerLink="/decide" class="action start-plans">Start a free decision to choose a plan</a>
+    <p class="subscription-terms">Renews monthly. Cancel in Account before renewal. Unused credits expire at the end of each paid period. Unlocked reports stay saved.</p>
+    <a *ngIf="showMonthlyPlans && !projectId" routerLink="/decide" class="action start-plans">Start a free decision to choose a plan</a>
   </section>
 
   <section *ngIf="!loading" class="offer-section" aria-labelledby="alternatives-title">
-    <div class="section-heading"><h2 id="alternatives-title">{{ showMonthlyPlans ? 'Other ways to get started' : 'Choose how to get started' }}</h2></div>
+    <div class="section-heading"><h2 id="alternatives-title">Start free, or pay once</h2></div>
     <div class="plans">
       <article class="plan">
         <h3>Free</h3>
         <p class="price">$0</p>
-        <p *ngIf="!signedIn">Explore bill examples without an account. Your bill data stays in your browser.</p>
-        <p>Up to three Decision Briefs each month, with one comparison city and saved history.</p>
-        <a *ngIf="projectId; else startFree" [routerLink]="['/decisions', projectId]" class="action">Back to your decision</a>
-        <ng-template #startFree>
-          <a *ngIf="signedIn; else freeExample" routerLink="/decide" class="action">Start a free decision</a>
-          <ng-template #freeExample><a href="/discover/?example=tax" class="action">Try a free example</a></ng-template>
-        </ng-template>
+        <p>Property-tax and electricity examples, plus supported CSV comparisons. Bill files stay in your browser. No account needed.</p>
+        <p>With an account: up to three saved city Decision Briefs each month, with one comparison city.</p>
       </article>
-      <article class="plan">
+      <article class="plan" id="one-time">
         <h3>One-time Decision Report</h3>
         <p class="price">${{ status?.pricing?.reportOneTimeUsd ?? 79 }}<small>one time</small></p>
         <p>One full Decision Report. A single charge with no renewal.</p>
-        <p *ngIf="!signedIn">For a city or business decision. Preview the report before creating an account.</p>
+        <p>For a city or business decision. The same full report scope as a monthly credit, without a subscription.</p>
+        <p *ngIf="!signedIn">Preview the report before creating an account.</p>
         <ng-container *ngIf="!checkingReportReturn">
           <button *ngIf="projectId && status; else chooseDecision" type="button" class="action" (click)="request('report')" [disabled]="requesting">
             {{ requesting === 'report' ? 'Opening Stripe Checkout…' : 'Buy Decision Report' }}
@@ -72,12 +81,8 @@
     </div>
   </section>
 
-  <details *ngIf="!loading && !signedIn" class="monthly-preview">
-    <summary>Monthly plans · New enrollment is closed</summary>
-    <p *ngFor="let plan of subscriptionPlans">{{ plan.name }} · ${{ plan.price }}/month · {{ plan.allowance }} per paid billing period.</p>
-    <p>Renews monthly. Cancel before renewal. Unused credits expire at the end of each paid period. Reports you’ve unlocked stay saved.</p>
-    <p>Existing subscribers can manage their plan and credits in Account after signing in.</p>
-  </details>
+  <p class="scope-note">Paid reports use public city and market evidence. They do not analyze a household bill, verify a property’s tax assessment, or establish that you are overpaying.</p>
+  <p *ngIf="!signedIn" class="existing-subscriber">Already subscribed? <a routerLink="/account">Sign in to manage your plan in Account</a>. Existing plans and unlocked reports are unchanged.</p>
 
   <p *ngIf="!loading" class="billing-note">Secure checkout is handled by Stripe.</p>
 </main>

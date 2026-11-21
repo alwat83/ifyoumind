@@ -107,6 +107,10 @@ Notion remains a synchronized coordination record. If unavailable, record the bl
 - Do not silently rewrite unrelated code or mix Dose Ninja assets into this repository.
 - Never expose secrets or API keys in code, commits, logs or documentation. Keep API secrets server-side.
 
+## Risk-based local development gates — November 21, 2026
+
+Founder-authorized [four-level verification standard](docs/verification/RISK_BASED_GATES.md): Prototype, Consumer frontend, Sensitive backend, Production release. GitHub billing must not halt unrelated development. Use the existing local-first exact-source runner with `--level` and a reviewed `--base-sha` for lower levels; sensitive changes cannot select a lower gate. Default full/release preflight retains all original checks. No test or failure evidence is removed, and NOT_RUN is not PASS. Carry known reliability defects in every report. Local selected-check success is neither hosted CI nor release authorization. Configured branch protections and explicit founder merge/deployment approval remain mandatory. Any automatic production workflow's full scope must be reviewed even for frontend-only source. Preserve existing commercial, AI, privacy and production-data boundaries.
+
 ## Cross-surface engineering standard
 
 For every meaningful change, assess the full impact before implementation. Use the [PR template](.github/pull_request_template.md) to record an impact matrix with **Change Required**, **Verify Only**, or **Not Affected**. Give a rationale for each row and add evidence as work progresses. Cover relevant public, authenticated, commercial, responsive, application-state, and operational surfaces. Include intentionally unchanged areas and explain their status.

@@ -1,5 +1,8 @@
 # Starter and Plus pricing readiness
 
+**November 21, 2026 update:** [Phase 4 read-only launch audit and ordered blockers](../releases/phase4/READINESS.md#subscription-readiness--configuration-is-not-live-fulfillment) supersedes historical current-status wording below. Current live catalog/portal/configuration were reverified with enrollment OFF; actual signed subscription delivery, deployed-key permissions, owner portal access, tax treatment and operational readiness remain distinct gates. New public pricing is draft #121, not deployed. Earlier genuine sandbox evidence remains historical. No Stripe or production setting changed.
+
+
 Founder confirmed Starter and Plus as the primary subscription choices for new customers. [Draft PR #93](https://github.com/alwat83/ifyoumind/pull/93) builds from [Wow 3.2 at `900dd2648f95358ef5e1416aa8a2cfd2f5c4be12`](https://github.com/alwat83/ifyoumind/pull/92) and reuses the existing subscription backend. [Issue #85](https://github.com/alwat83/ifyoumind/issues/85) remains the launch record.
 
 ## Production and enrollment evidence

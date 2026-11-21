@@ -1,5 +1,8 @@
 # Starter and Plus launch gate
 
+**November 21, 2026 update:** [Phase 4 read-only launch audit and ordered blockers](../releases/phase4/READINESS.md#subscription-readiness--configuration-is-not-live-fulfillment) supersedes historical current-status wording below. Current live catalog/portal/configuration were reverified with enrollment OFF; actual signed subscription delivery, deployed-key permissions, owner portal access, tax treatment and operational readiness remain distinct gates. New public pricing is draft #121, not deployed. Earlier genuine sandbox evidence remains historical. No Stripe or production setting changed.
+
+
 **November 12, 2026 Pacific · OpenAI / Codex · Issue #85.** Standalone candidate from production master `e5d8f15fb9171a3723fdfc324dd0066d8d5caf5e`. [Issue #85](https://github.com/alwat83/ifyoumind/issues/85) · [Pilot specification](https://github.com/alwat83/ifyoumind/blob/7b59d21412e746949852ee35afe977f20434e09e/docs/growth/subscription-strategy-20261111/PILOT_PREPARATION.md)
 
 The launch backend was subsequently merged and deployed dormant. See [pricing readiness](PRICING_READINESS.md) for the founder’s primary-offer decision, actual production and Stripe readbacks, and the workflow’s forced-empty enrollment gate. The original implementation and sandbox evidence below remain historical.

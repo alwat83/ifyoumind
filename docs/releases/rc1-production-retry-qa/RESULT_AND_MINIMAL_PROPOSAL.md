@@ -1,0 +1,41 @@
+# PR #111 live retry — read-only result and one minimal proposal
+
+November21,2026 · OpenAI / Codex · `codex/rc1-production-retry-qa`. **Eligible workspace verified: NO. Test executed: NO. RC1 production: NO-GO.** No production data writes, Firebase Auth identity/session or ID/custom-token creation, callable execution, billing action, deployment or code change. Existing administrative OAuth authentication was used only for reads. PR #125 remains074c8bad88f5e2f48f8b1cb3395bb24c3aa4a138; frozen source9d8caef and manifestb7067f63d53e08457b4234901415749f19600bdcb81ff2319432f0bb835ac397/archive756b3d23fc067025c13c4713d5d4708d599a9797e905e0f85d8ea366728963f7 are unchanged.
+
+## Verified read-only result
+
+[Redacted precheck](REDACTED_PRECHECK.json): current production root-workspace metadata was scanned completely using field projection and server read-time consistency. Workspace records were present; **zero explicit internal-QA candidates** matched the documented flags/purpose/name conventions. Test-looking names were not trusted. Without this first precondition, no decision/dataset/bill contents, member records or customer Auth profiles were queried and no allowance was inferred. No eligible workspace is established by the evidence; this is not a claim that an undocumented external designation cannot exist. If the founder supplies an existing approved QA reference, independently verify it before using the earlier authorization.
+
+The historical helper referenced a private evidence file that is no longer available; its old identifiers and conclusions were not reused. New private metadata evidence remains ignored locally, directory0700/file0600; no identities, contact details or workspace IDs are published. The read helper permits only field-projected queries/optional account lookup and contains no mutation/callable/Firebase-token-minting operation. No Auth lookup was needed because there were no candidates.
+
+[Serving/cache readback](SERVING_READINESS.json): writer `createmarketintelligenceproject-00087-nub` ACTIVE/latest Ready/100%, enrollment empty; Hosting39dc573f3826dca6/release1794933315802000. Austin,TX's existing2019/2024 ACS cache is present with usable numeric fields. This supports the proposal only, not a live retry result. [Deployed Auth-trigger metadata](AUTH_TRIGGER_READINESS.json): no Auth-creation triggers in inspected v1/v2 inventories or blocking Auth triggers. No configuration changed.
+
+The [existing-workspace test authorization](https://github.com/alwat83/ifyoumind/pull/111#issuecomment-6955510854) remains recorded. It does not authorize creating a new production identity/workspace. The founder's current section3 explicitly requires separate approval for the new setup and its test. Exactly-once saving, quota consumption and production recovery remain **UNVERIFIED**, not failed or passed by this audit. Existing SDK/month/dataset and release-control/device gates remain open; no rejected experiment repeated.
+
+## One dedicated setup proposal — approval required before any action
+
+**Identity and ownership:** one dedicated founder-controlled Firebase Auth identity, email verified through an existing enabled provider. Record its email/UID privately after approval; do not invent an address, accept credentials in chat, fabricate verification or grant site-wide custom/admin claims. Use authentication-only flow and existing callable APIs; avoid dashboards/analytics surfaces and automatic generic-workspace creation. No provider/IAM/authentication configuration change. Any necessary verification message goes only to the nominated owner as part of the approved setup, with no customer outreach.
+
+**Workspace:** create exactly one new empty workspace through existing `createIntelligenceOrganization`, named **“ifYouMind — Internal Production QA — Retry #111”** from creation. Its sole active owner and `createdBy` must match the verified UID and owner index. Approval/creation evidence establishes QA-only provenance; no relabeling or reuse of the ineligible workspace. No data imports, collaborators, files, old/customer decisions, payment records or copied memberships.
+
+**Normal allowance:** default Free, three city decisions per UTC month under current code. Baseline0 decisions,0 used/3 remaining; no Pro/subscription/report-credit/entitlement fields or manual usage values. If the account already has an owner index, another workspace, billing state or any unclassified content, stop. Do not reset, top up or bypass quota.
+
+| Approved operation sought | Exact expected production scope |
+|---|---|
+|Auth setup|One dedicated identity plus normal verification/sign-in metadata updates; no custom claims, customer identity changes or IAM grants.|
+|Workspace creation|Three normal Firestore documents: `intelligenceOrganizations/{newOrg}`, its `members/{qaUid}`, and `intelligenceWorkspaceOwners/{qaUid}`. No direct plan/quota/billing writes.|
+|First synthetic save|One `marketProjects/{digest(qaUid,requestId)}` document and one `internalUsage/cityDecisions` lock creation/update in the new workspace. Normal free monthly count becomes1; remaining2.|
+|One identical same-ID retry|Same payload/UUIDv4 and returned project ID; **no additional project, allowance use, lock timestamp update or other Firestore write**.|
+|Ownership/recovery checks|Read the same saved project and authoritative counts as its owner; no new decision or allowance.|
+
+**Bounded test:** refresh all serving/config/owner/index/member/empty-content/UTC-period/cache preconditions. Use one synthetic question about a hypothetical coffee shop in Austin,TX, explicitly labeled internal QA—not a customer decision—and no comparison cities. Use only the existing verified public cache; if it is absent/unusable, stop rather than generate a shared cache write. Generate one fresh UUIDv4 at execution, retain it privately and make one real authenticated `createMarketIntelligenceProject` request followed by exactly one identical request. Use an authentication-only callable harness compatible with the existing client contract; no product-event calls, UI navigation, purchase/report unlock, provider simulation or backend change. Existing security controls remain enforced.
+
+Record baseline/after-first/after-retry total and current-UTC-month counts, document update times and immutable owner/index state. Expected **0→1→1 decisions,3→2→2 remaining**, same ID both responses, no subscription/paid-access grant and no partial/duplicate records. Retry recovery must return the original result, not another decision. Correlate redacted request/revision evidence with private attempt/identity references. A normal same-ID replay is not a claim that a natural transport failure was observed. If transport/auth/config/UTC-period/write state is uncertain or any unexpected operation appears, stop and reconcile read-only before further action; no automatic retries or cleanup.
+
+**Audit and cleanup:** keep setup approval, provenance, identity references and before/after evidence privately; publish only redacted results. Keep the QA workspace and single saved decision as audit evidence. Clear local credentials/session memory after use. Do not delete/disable accounts, delete decisions, reset allowance or remove locks/ledger records without separate cleanup approval. No use of the two remaining slots is authorized. No Stripe object, subscription, paid entitlement, refund, OpenAI call or production deployment is included.
+
+## Smallest founder decision
+
+**Authorize this one dedicated production QA identity/workspace setup and its single synthetic save plus identical same-ID retry.** This is the new-setup scope required by section3, not a repeat request for the already authorized eligible-existing-workspace test. No action has been taken under this proposal. After approval, acquire the founder-controlled verified login securely and recheck every precondition; stop if any extra permission, write, configuration or account setup would be needed.
+
+No build/CI or sensitive regression rerun was warranted for this metadata-only audit. Historical RC1 verification is unchanged and not claimed as newly executed. Read-only preflight stopping correctly does not close #111 or establish production exactly-once behavior. No customer/revenue outcome is claimed.

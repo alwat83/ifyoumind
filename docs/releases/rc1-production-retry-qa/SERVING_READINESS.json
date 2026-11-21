@@ -1,0 +1,32 @@
+{
+  "observedAt": "2026-11-21T20:31:45.137Z",
+  "writer": {
+    "state": "ACTIVE",
+    "revision": "createmarketintelligenceproject-00087-nub",
+    "latestReadyRevision": "createmarketintelligenceproject-00087-nub",
+    "traffic": [
+      {
+        "revision": "createmarketintelligenceproject-00087-nub",
+        "percent": 100
+      }
+    ],
+    "subscriptionEnrollmentEmpty": true
+  },
+  "hosting": {
+    "release": "1794933315802000",
+    "version": "39dc573f3826dca6"
+  },
+  "proposedCachedPublicCity": {
+    "location": "Austin, TX",
+    "cachePresent": true,
+    "sourceYears": [
+      2019,
+      2024
+    ],
+    "usableNumericFields": true,
+    "stateMatches": true
+  },
+  "callableRequests": 0,
+  "productionDataMutations": 0,
+  "secretPayloadAccessed": false
+}

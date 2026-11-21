@@ -1,0 +1,15 @@
+{
+  "observedAt": "2026-11-21T20:33:24.978Z",
+  "functionInspection": [
+    {
+      "api": "v1",
+      "authCreationTriggers": []
+    },
+    {
+      "api": "v2",
+      "authCreationTriggers": []
+    }
+  ],
+  "blockingAuthTriggersPresent": false,
+  "productionMutations": 0
+}

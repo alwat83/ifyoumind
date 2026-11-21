@@ -1,0 +1,17 @@
+{
+  "observedAt": "2026-11-21T20:28:29.830Z",
+  "project": "ifyoumind-473fe",
+  "rootMetadataProjectionComplete": true,
+  "explicitQaCandidates": 0,
+  "candidateStatus": [],
+  "eligibleWorkspaceFound": false,
+  "eligibilityEstablished": false,
+  "testExecuted": false,
+  "productionMutations": 0,
+  "customerContentsRead": false,
+  "authAccountMutation": false,
+  "privateEvidenceRetainedLocally": true,
+  "notes": "Current root metadata inspected using documented QA markers and explicit internal-QA labels; ambiguous names are not evidence of eligibility.",
+  "firebaseIdOrCustomTokenMinted": false,
+  "administrativeAuthentication": "Existing Firebase CLI OAuth login used/refreshed for read-only requests; no credential value logged."
+}

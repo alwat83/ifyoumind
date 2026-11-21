@@ -1,0 +1,29 @@
+{
+  "name": "ifm-current-isolated-experiment",
+  "description": "Cloud Functions for ifYouMind",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "test": "npm run build && node --test test/*.test.cjs"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "14.5.1",
+    "firebase-functions": "7.4.0",
+    "@google-cloud/firestore": "9.4.1",
+    "google-gax": "6.17.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.19.19",
+    "typescript": "5.9.3"
+  },
+  "private": true
+}

@@ -1,0 +1,35 @@
+[
+  {
+    "name": "desktop",
+    "width": 1440,
+    "height": 1000,
+    "emulatorBannerHidden": true,
+    "source": "172dbaa93231e88fd2256b3ca7c2726d81a7c6e0",
+    "indexSha256": "0b49a1e1f4a559925fe18235a5988cd23685b2585969a5bdd55f97e069a2d9fd",
+    "image": "before-desktop.jpg",
+    "sha256": "2a4524621bcde3ce62546dd150bcf9444da71ac2b8938288d8cb0fb6712ba0ef",
+    "overflow": 0
+  },
+  {
+    "name": "mobile",
+    "width": 390,
+    "height": 844,
+    "emulatorBannerHidden": true,
+    "source": "172dbaa93231e88fd2256b3ca7c2726d81a7c6e0",
+    "indexSha256": "0b49a1e1f4a559925fe18235a5988cd23685b2585969a5bdd55f97e069a2d9fd",
+    "image": "before-mobile.jpg",
+    "sha256": "5b3ddd261710ec390fd94159e72d80d67d3ea1b1ad849eed6114a68f69cc9480",
+    "overflow": 0
+  },
+  {
+    "name": "narrow",
+    "width": 320,
+    "height": 700,
+    "emulatorBannerHidden": true,
+    "source": "172dbaa93231e88fd2256b3ca7c2726d81a7c6e0",
+    "indexSha256": "0b49a1e1f4a559925fe18235a5988cd23685b2585969a5bdd55f97e069a2d9fd",
+    "image": "before-narrow.jpg",
+    "sha256": "4b70485769befe5d1db1e6e267e76b9b589a805f408a8b2eddb5a11dacff6697",
+    "overflow": 0
+  }
+]

@@ -1,0 +1,47 @@
+{
+  "sourceCommit": "461c140d38bebad00b6a49788ea027207991320d",
+  "rawReportSha256": "f9b28a267ad3423779c7d6972e9a30a7687a8c71e2b50e3b4d70202a83ba63a5",
+  "scope": "actual callable passive emulator trace; SDK reduction not executed",
+  "rounds": [
+    {
+      "round": 1,
+      "codes": [
+        "internal",
+        "success",
+        "resource-exhausted"
+      ],
+      "durableProjectCount": 3,
+      "milliseconds": 8542
+    }
+  ],
+  "errors": [
+    {
+      "ms": 2419,
+      "rpc": 67,
+      "method": "RunAggregationQuery",
+      "phase": "error",
+      "transaction": "T4",
+      "code": 10,
+      "classification": "lock-timeout"
+    },
+    {
+      "ms": 4628,
+      "rpc": 78,
+      "method": "RunAggregationQuery",
+      "phase": "error",
+      "transaction": "T4",
+      "code": 3,
+      "classification": "closed-transaction"
+    },
+    {
+      "ms": 8717,
+      "rpc": 79,
+      "method": "RunAggregationQuery",
+      "phase": "error",
+      "transaction": "T4",
+      "code": 3,
+      "classification": "closed-transaction"
+    }
+  ],
+  "productionVerified": false
+}

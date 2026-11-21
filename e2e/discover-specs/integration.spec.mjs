@@ -36,19 +36,21 @@ test('visitors can read prices and choose a free example without requesting priv
  await page.goto('/pricing?checkout=success&offer=report&projectId=private-test-marker');
  await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', 'https://ifyoumind.com/pricing');
  await expect(page.getByRole('heading', { name: 'One-time Decision Report' })).toBeVisible();
- await expect(page.locator('.plans')).toContainText('$79');
- await expect(page.locator('.plans')).toContainText('$0');
+ await expect(page.getByRole('region', { name: 'Start free, or pay once' })).toContainText('$79');
+ await expect(page.getByRole('region', { name: 'Start free, or pay once' })).toContainText('$0');
  await expect(page.getByRole('button', { name: /Buy Decision Report|Choose Starter|Choose Plus/ })).toHaveCount(0);
  await expect(page.locator('body')).not.toContainText('private-test-marker');
  await expect(page.locator('body')).not.toContainText('Your payment is complete');
  await expect(page.getByRole('link', { name: 'Account', exact: true })).toHaveCount(0);
- const monthly = page.locator('.monthly-preview');
- await monthly.locator('summary').focus();
- await page.keyboard.press('Enter');
- await expect(monthly).toContainText('Starter · $4.99/month');
- await expect(monthly).toContainText('Plus · $9.99/month');
- await expect(monthly).toContainText('New enrollment is closed');
+ const monthly = page.getByRole('region', { name: 'Monthly subscriptions' });
+ await expect(monthly.getByRole('heading', { name: 'Starter', exact: true })).toBeVisible();
+ await expect(monthly).toContainText('$4.99/month');
+ await expect(monthly).toContainText('$9.99/month');
+ await expect(monthly).toContainText('Monthly enrollment is currently unavailable');
  await expect(monthly).toContainText('Unused credits expire');
+ for (const plan of ['Starter', 'Plus']) {
+   await expect(monthly.getByRole('button', { name: plan + ' enrollment currently unavailable' })).toBeDisabled();
+ }
  expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze()).violations).toEqual([]);
  expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBe(0);
  await page.screenshot({ path: info.outputPath('public-pricing.png'), fullPage: true, scale: 'css' });

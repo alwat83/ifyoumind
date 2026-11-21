@@ -90,7 +90,7 @@ test('one-time checkout preserves the offer and report identity', async ({ page,
   await page.route('https://checkout.stripe.com/**', route => route.fulfill({ contentType: 'text/html', body: '<h1>Intercepted checkout contract — no payment</h1>' }));
   const path = `/pricing?offer=report&projectId=${user.projectIds[0]}`;
   await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent(path)}`);
-  await expect(page.locator('.plans')).toContainText('$79');
+  await expect(page.getByRole('region', { name: 'Start free, or pay once' })).toContainText('$79');
   await expect(page.locator('main')).not.toContainText('$39');
   await expect(page.getByRole('button', { name: 'Get Pro access' })).toHaveCount(0);
   await expect(page.locator('.billing-note').first()).toContainText('Stripe');

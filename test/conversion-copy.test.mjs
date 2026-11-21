@@ -62,12 +62,15 @@ test('metric cards hide the unit line when the value already shows it',()=>{
   assert.ok(reportTs.includes("return unit!=='USD'&&unit!=='%';"));
 });
 
-test('pricing leads with eligible monthly plans and keeps Free, one-time and legacy access',()=>{
+test('pricing publishes monthly plans while checkout remains eligibility-gated',()=>{
   const monthly=pricingHtml.indexOf('id="monthly-title"');
   const free=pricingHtml.indexOf('<h3>Free</h3>');
   const oneTime=pricingHtml.indexOf('<h3>One-time Decision Report</h3>');
   assert.ok(monthly>=0&&monthly<free&&free<oneTime);
-  assert.match(pricingHtml,/\*ngIf="showMonthlyPlans"[^>]*aria-labelledby="monthly-title"/);
+  assert.match(pricingHtml,/<section class="offer-section monthly-offers" aria-labelledby="monthly-title"/);
+  assert.match(pricingHtml,/Monthly enrollment is currently unavailable/);
+  assert.match(pricingHtml,/\*ngIf="!showMonthlyPlans"[^>]*type="button"[^>]*disabled/);
+  assert.match(pricingHtml,/\*ngIf="showMonthlyPlans && projectId"/);
   assert.match(pricingHtml,/Legacy Pro/);
   assert.doesNotMatch(pricingHtml,/Get Pro access|request\('pro'\)/);
   assert.match(landingHtml,/routerLink="\/pricing">Pricing/);

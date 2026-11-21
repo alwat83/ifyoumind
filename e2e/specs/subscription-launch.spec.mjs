@@ -139,7 +139,10 @@ test('legacy Pro stays manageable in Account with its existing allowance', async
   });
   await signInThroughUi(page, user, '/login?returnUrl=%2Fpricing');
   await expect(page.getByText('Legacy Pro · $39/month')).toBeVisible();
-  await expect(page.getByRole('region', { name: 'Monthly subscriptions' })).toHaveCount(0);
+  await expect(page.getByRole('region', { name: 'Monthly subscriptions' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Starter enrollment currently unavailable' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Plus enrollment currently unavailable' })).toBeDisabled();
+  await expect(page.getByRole('button', { name: /^Choose (Starter|Plus)$/ })).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'Get Pro access' })).toHaveCount(0);
   await page.getByRole('link', { name: 'Manage your plan in Account' }).click();
   await expect(page.getByRole('heading', { name: 'Legacy Pro' })).toBeVisible();

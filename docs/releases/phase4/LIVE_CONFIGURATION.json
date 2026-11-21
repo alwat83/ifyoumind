@@ -122,7 +122,8 @@
     "Current permissions of the deployed application key (connector access is not proof)",
     "Actual signed live subscription delivery and entitlement fulfillment",
     "Authorized real-owner portal session and return",
-    "Real paid invoice/renewal/support outcomes and attributable operating costs"
+    "Real paid invoice/renewal/support outcomes and attributable operating costs",
+    "Merchant charge-acceptance capability flags not inspected; active Prices alone do not prove payment acceptance"
   ],
   "mutationsPerformed": false,
   "functions": [
@@ -225,5 +226,11 @@
     "repositoryRulesets": 0,
     "productionEnvironmentProtectionRules": 0,
     "settingsChanged": false
+  },
+  "deploymentCatalogVariables": {
+    "environmentVariables": 3,
+    "repositoryVariables": 0,
+    "effectiveValuesMatchActiveRuntime": true,
+    "identifiersRedacted": true
   }
 }

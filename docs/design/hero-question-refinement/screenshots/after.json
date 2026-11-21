@@ -1,0 +1,284 @@
+{
+  "phase": "after",
+  "base": "http://127.0.0.1:4393",
+  "observedAt": "2026-11-21T19:08:46.955Z",
+  "source": "working-frontend-refinement",
+  "externalRequests": [],
+  "stubbedFontOrigins": [],
+  "visualException": "Only the standard emulator warning overlay is hidden.",
+  "fontMode": "Existing Google Inter and self-hosted Instrument Serif loaded; only these existing font hosts allowed.",
+  "rows": [
+    {
+      "width": 320,
+      "lines": [
+        {
+          "y": 220.625,
+          "words": [
+            "Where",
+            "did",
+            "the"
+          ]
+        },
+        {
+          "y": 260.390625,
+          "words": [
+            "extra",
+            "$420",
+            "go?"
+          ]
+        }
+      ],
+      "loadedFontFaces": [
+        "Inter",
+        "Inter",
+        "Inter",
+        "Inter",
+        "Instrument Serif"
+      ],
+      "font": "\"Instrument Serif\", Georgia, serif",
+      "fontSize": "39px",
+      "headline": {
+        "x": 20,
+        "y": 147.09375,
+        "width": 280,
+        "height": 159.0625,
+        "bottom": 306.15625
+      },
+      "intro": {
+        "x": 20,
+        "y": 69,
+        "width": 280,
+        "height": 500.15625,
+        "bottom": 569.15625
+      },
+      "cta": {
+        "x": 20,
+        "y": 422.15625,
+        "width": 280,
+        "height": 52,
+        "bottom": 474.15625
+      },
+      "overflow": false,
+      "file": "after-320.jpg",
+      "sha256": "280783689b5b08d158eb4958093eff5d7a8d28c16e1db5be9dbe97b96bc10d01"
+    },
+    {
+      "width": 390,
+      "lines": [
+        {
+          "y": 216.859375,
+          "words": [
+            "Where",
+            "did",
+            "the"
+          ]
+        },
+        {
+          "y": 263.765625,
+          "words": [
+            "extra",
+            "$420",
+            "go?"
+          ]
+        }
+      ],
+      "loadedFontFaces": [
+        "Inter",
+        "Inter",
+        "Inter",
+        "Inter",
+        "Instrument Serif"
+      ],
+      "font": "\"Instrument Serif\", Georgia, serif",
+      "fontSize": "46px",
+      "headline": {
+        "x": 20,
+        "y": 130.046875,
+        "width": 350,
+        "height": 187.625,
+        "bottom": 317.671875
+      },
+      "intro": {
+        "x": 20,
+        "y": 69,
+        "width": 350,
+        "height": 473.671875,
+        "bottom": 542.671875
+      },
+      "cta": {
+        "x": 20,
+        "y": 413.671875,
+        "width": 350,
+        "height": 52,
+        "bottom": 465.671875
+      },
+      "overflow": false,
+      "file": "after-390.jpg",
+      "sha256": "0715e1eb0b1053b39a63864504fafa58c91d7c307bc4b245ab19cc883abdc089"
+    },
+    {
+      "width": 820,
+      "lines": [
+        {
+          "y": 287.578125,
+          "words": [
+            "Where",
+            "did",
+            "the"
+          ]
+        },
+        {
+          "y": 352.84375,
+          "words": [
+            "extra",
+            "$420",
+            "go?"
+          ]
+        }
+      ],
+      "loadedFontFaces": [
+        "Inter",
+        "Inter",
+        "Inter",
+        "Inter",
+        "Instrument Serif"
+      ],
+      "font": "\"Instrument Serif\", Georgia, serif",
+      "fontSize": "64px",
+      "headline": {
+        "x": 32.796875,
+        "y": 166.046875,
+        "width": 433.421875,
+        "height": 261.0625,
+        "bottom": 427.109375
+      },
+      "intro": {
+        "x": 32.796875,
+        "y": 69,
+        "width": 754.390625,
+        "height": 406.109375,
+        "bottom": 475.109375
+      },
+      "cta": {
+        "x": 498.21875,
+        "y": 275.390625,
+        "width": 247.484375,
+        "height": 52,
+        "bottom": 327.390625
+      },
+      "overflow": false,
+      "file": "after-820.jpg",
+      "sha256": "9b1bf52c08a513230f9573e390a066d28c12f71efe0617c03d38cf45ee314b60"
+    },
+    {
+      "width": 1280,
+      "lines": [
+        {
+          "y": 332.140625,
+          "words": [
+            "Where",
+            "did",
+            "the",
+            "extra",
+            "$420",
+            "go?"
+          ]
+        }
+      ],
+      "loadedFontFaces": [
+        "Inter",
+        "Inter",
+        "Inter",
+        "Inter",
+        "Instrument Serif"
+      ],
+      "font": "\"Instrument Serif\", Georgia, serif",
+      "fontSize": "81.92px",
+      "headline": {
+        "x": 51.203125,
+        "y": 177.046875,
+        "width": 683.40625,
+        "height": 250.640625,
+        "bottom": 427.6875
+      },
+      "intro": {
+        "x": 51.203125,
+        "y": 80,
+        "width": 1177.59375,
+        "height": 395.6875,
+        "bottom": 475.6875
+      },
+      "cta": {
+        "x": 814.609375,
+        "y": 259.59375,
+        "width": 247.484375,
+        "height": 52,
+        "bottom": 311.59375
+      },
+      "overflow": false,
+      "file": "after-1280.jpg",
+      "sha256": "767eda22120ffc1ab0c7f3faaf8e301840609450697f4cb30a9b1bb1841e7c70"
+    },
+    {
+      "width": 1440,
+      "lines": [
+        {
+          "y": 343.546875,
+          "words": [
+            "Where",
+            "did",
+            "the"
+          ]
+        },
+        {
+          "y": 433.296875,
+          "words": [
+            "extra",
+            "$420",
+            "go?"
+          ]
+        }
+      ],
+      "loadedFontFaces": [
+        "Inter",
+        "Inter",
+        "Inter",
+        "Inter",
+        "Instrument Serif"
+      ],
+      "font": "\"Instrument Serif\", Georgia, serif",
+      "fontSize": "88px",
+      "headline": {
+        "x": 130,
+        "y": 177.046875,
+        "width": 684.890625,
+        "height": 359,
+        "bottom": 536.046875
+      },
+      "intro": {
+        "x": 130,
+        "y": 80,
+        "width": 1180,
+        "height": 504.046875,
+        "bottom": 584.046875
+      },
+      "cta": {
+        "x": 894.890625,
+        "y": 259.59375,
+        "width": 247.484375,
+        "height": 52,
+        "bottom": 311.59375
+      },
+      "overflow": false,
+      "file": "after-1440.jpg",
+      "sha256": "022bbe57f3f30dd6686aa46bd14c5220a8d1dd39d38c9db1eb586c1a3deefd08"
+    }
+  ],
+  "reviewedBaseline": "ade00b0c21c8e499a434ec8cf5581ef52984b829",
+  "styleAndMarkupHashes": {
+    "src/app/intelligence/public-landing.component.scss": "77d1709ea44e976ba72c20dafb791eea1333df7dff56b0a7bca2daf56027ca85",
+    "src/app/intelligence/public-landing-visual-mobile.component.scss": "8e7438806ff123cd7c60365e50119836bcbb5d079ecf7b385a2f453180a1fd2e",
+    "src/app/intelligence/public-landing.component.html": "5850f9ebe11d7a4e32eb11e9d667c796da5c1482d4db4624de4fda22da869405"
+  },
+  "note": "Before serves exact4fa109f, executable identical to ade00b0. After captures the working candidate identified by style/markup hashes; exact-source run follows commitment."
+}

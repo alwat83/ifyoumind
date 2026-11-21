@@ -1,0 +1,365 @@
+{
+  "schemaVersion": 1,
+  "source": "45ebd3fab6e8d0864ff30db6b20eee81baaf8c31",
+  "branch": "codex/hero-question-wrap",
+  "reviewedBase": "ade00b0c21c8e499a434ec8cf5581ef52984b829",
+  "changeScope": {
+    "base": "ade00b0c21c8e499a434ec8cf5581ef52984b829",
+    "changedPaths": [
+      "IFYOUMIND_MASTER_PROJECT.md",
+      "docs/agent-handoff/CURRENT_STATUS.md",
+      "docs/agent-handoff/DEVELOPMENT_LOG.md",
+      "docs/design/hero-question-refinement/REVIEW.md",
+      "docs/design/hero-question-refinement/screenshots/after-1280.jpg",
+      "docs/design/hero-question-refinement/screenshots/after-1440.jpg",
+      "docs/design/hero-question-refinement/screenshots/after-320.jpg",
+      "docs/design/hero-question-refinement/screenshots/after-390.jpg",
+      "docs/design/hero-question-refinement/screenshots/after-820.jpg",
+      "docs/design/hero-question-refinement/screenshots/after.json",
+      "docs/design/hero-question-refinement/screenshots/before-1280.jpg",
+      "docs/design/hero-question-refinement/screenshots/before-1440.jpg",
+      "docs/design/hero-question-refinement/screenshots/before-320.jpg",
+      "docs/design/hero-question-refinement/screenshots/before-390.jpg",
+      "docs/design/hero-question-refinement/screenshots/before-820.jpg",
+      "docs/design/hero-question-refinement/screenshots/before.json",
+      "docs/design/hero-question-refinement/screenshots/fallback-wrap.json",
+      "docs/design/hero-question-refinement/screenshots/font-readiness.json",
+      "e2e/specs/question-reveal.spec.mjs",
+      "src/app/intelligence/public-landing-visual-mobile.component.scss",
+      "src/app/intelligence/public-landing.component.scss"
+    ],
+    "minimumLevel": "prototype",
+    "sensitivePaths": []
+  },
+  "startedAt": "2026-11-21T19:10:42.008Z",
+  "finishedAt": "2026-11-21T19:16:12.380Z",
+  "level": "consumer",
+  "status": "PARTIAL",
+  "developmentStatus": "PASS",
+  "productionReadiness": "NO-GO; no authorization",
+  "environment": {
+    "platform": "darwin",
+    "osRelease": "27.2.0",
+    "git": "git version 2.50.1 (Apple Git-155)",
+    "arch": "arm64",
+    "node": "v22.23.2",
+    "npm": "10.9.8",
+    "java": "openjdk version \"17.0.20.1\" 2026-08-18",
+    "mode": "native",
+    "docker": {
+      "requested": false,
+      "installed": false,
+      "available": false
+    },
+    "dependencies": {
+      "app/@angular/common": "19.2.25",
+      "app/@angular/compiler": "19.2.25",
+      "app/@angular/core": "19.2.25",
+      "app/@angular/fire": "19.2.0",
+      "app/@angular/forms": "19.2.25",
+      "app/@angular/platform-browser": "19.2.25",
+      "app/@angular/platform-browser-dynamic": "19.2.25",
+      "app/@angular/router": "19.2.25",
+      "app/firebase": "12.14.0",
+      "app/ngx-joyride": "2.5.0",
+      "app/rxjs": "7.8.2",
+      "app/tslib": "2.8.1",
+      "app/zone.js": "0.15.1",
+      "app/@angular-devkit/build-angular": "19.2.27",
+      "app/@angular/cli": "19.2.27",
+      "app/@angular/compiler-cli": "19.2.25",
+      "app/@axe-core/playwright": "4.10.2",
+      "app/@firebase/rules-unit-testing": "5.0.2",
+      "app/@playwright/test": "1.56.0",
+      "app/@types/jasmine": "5.1.15",
+      "app/angular-eslint": "20.3.0",
+      "app/autoprefixer": "10.5.0",
+      "app/eslint": "9.39.4",
+      "app/firebase-admin": "12.7.0",
+      "app/firebase-tools": "13.35.1",
+      "app/jasmine-core": "5.6.0",
+      "app/karma": "6.4.4",
+      "app/karma-chrome-launcher": "3.2.0",
+      "app/karma-coverage": "2.2.1",
+      "app/karma-jasmine": "5.1.0",
+      "app/karma-jasmine-html-reporter": "2.1.0",
+      "app/marked": "13.0.3",
+      "app/postcss": "8.5.15",
+      "app/tailwindcss": "3.4.19",
+      "app/typescript": "5.7.3",
+      "app/typescript-eslint": "8.40.0",
+      "functions/firebase-admin": "13.5.0",
+      "functions/firebase-functions": "6.4.0",
+      "functions/@types/node": "20.19.19",
+      "functions/typescript": "5.9.3"
+    },
+    "playwright": "1.56.0",
+    "browser": "157.0.8103.80",
+    "browserChannel": "chrome"
+  },
+  "integrity": {
+    "valid": true,
+    "before": {
+      "head": "45ebd3fab6e8d0864ff30db6b20eee81baaf8c31",
+      "digest": "c1c32116d8124c9ad50b8e3a5c3c84742129ac8599a6e497532af70704ea5b44",
+      "clean": true
+    },
+    "after": {
+      "head": "45ebd3fab6e8d0864ff30db6b20eee81baaf8c31",
+      "digest": "c1c32116d8124c9ad50b8e3a5c3c84742129ac8599a6e497532af70704ea5b44",
+      "clean": true
+    },
+    "snapshotDigest": "c1c32116d8124c9ad50b8e3a5c3c84742129ac8599a6e497532af70704ea5b44",
+    "sourceEvents": 0,
+    "watcherError": false
+  },
+  "totals": {
+    "checks": {
+      "pass": 19,
+      "fail": 0,
+      "blocked": 0
+    },
+    "tests": {
+      "executed": 594,
+      "passed": 594,
+      "failed": 0,
+      "skipped": 14
+    }
+  },
+  "checks": [
+    {
+      "id": "locked-dependencies",
+      "command": "Compare installed direct dependencies to both lockfiles",
+      "status": "PASS"
+    },
+    {
+      "id": "functions-build",
+      "command": "npm --prefix functions run build",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "id": "fast-web",
+      "command": "npm run test:seo",
+      "status": "PASS",
+      "tests": {
+        "executed": 173,
+        "passed": 173,
+        "failed": 0,
+        "skipped": 0
+      },
+      "exitCode": 0
+    },
+    {
+      "id": "first-screen-concepts",
+      "command": "node scripts/review-first-seconds.mjs --check",
+      "status": "PASS",
+      "tests": {
+        "executed": 12,
+        "passed": 12,
+        "failed": 0,
+        "skipped": 0
+      },
+      "exitCode": 0
+    },
+    {
+      "id": "production-build",
+      "command": "npm run build",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "id": "production-bundle",
+      "command": "npm run check:production-bundle",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "id": "production-isolation",
+      "command": "node scripts/check-discovery-isolation.mjs --production",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "id": "local-build",
+      "command": "npm run build:local",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "id": "discovery-build",
+      "command": "npm run build:discovery",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "id": "electricity-build",
+      "command": "npm run build:electricity",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "id": "unified-build",
+      "command": "npm run build:unified",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "id": "discovery-isolation",
+      "command": "node scripts/check-discovery-isolation.mjs --preview",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "id": "electricity-isolation",
+      "command": "node scripts/check-discovery-isolation.mjs --electricity",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "id": "unified-isolation",
+      "command": "node scripts/check-discovery-isolation.mjs --unified",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "id": "discovery-browser",
+      "command": "npm run test:discovery",
+      "status": "PASS",
+      "tests": {
+        "executed": 48,
+        "passed": 48,
+        "failed": 0,
+        "skipped": 0
+      },
+      "exitCode": 0
+    },
+    {
+      "id": "electricity-browser",
+      "command": "npm run test:electricity",
+      "status": "PASS",
+      "tests": {
+        "executed": 27,
+        "passed": 27,
+        "failed": 0,
+        "skipped": 0
+      },
+      "exitCode": 0
+    },
+    {
+      "id": "unified-browser",
+      "command": "npm run test:unified",
+      "status": "PASS",
+      "tests": {
+        "executed": 36,
+        "passed": 36,
+        "failed": 0,
+        "skipped": 0
+      },
+      "exitCode": 0
+    },
+    {
+      "id": "hosting-browser",
+      "command": "npm run test:discover",
+      "status": "PASS",
+      "tests": {
+        "executed": 84,
+        "passed": 84,
+        "failed": 0,
+        "skipped": 0
+      },
+      "exitCode": 0
+    },
+    {
+      "id": "authenticated-browser",
+      "command": "npm run test:e2e",
+      "status": "PASS",
+      "tests": {
+        "executed": 214,
+        "passed": 214,
+        "failed": 0,
+        "skipped": 14
+      },
+      "exitCode": 0
+    }
+  ],
+  "notRun": [
+    {
+      "id": "functions-tests",
+      "status": "NOT_RUN",
+      "reason": "Outside selected development level; not a pass or a waiver."
+    },
+    {
+      "id": "firestore-rules",
+      "status": "NOT_RUN",
+      "reason": "Outside selected development level; not a pass or a waiver."
+    },
+    {
+      "id": "organizations",
+      "status": "NOT_RUN",
+      "reason": "Outside selected development level; not a pass or a waiver."
+    },
+    {
+      "id": "commerce-entitlements",
+      "status": "NOT_RUN",
+      "reason": "Outside selected development level; not a pass or a waiver."
+    },
+    {
+      "id": "fixtures-access",
+      "status": "NOT_RUN",
+      "reason": "Outside selected development level; not a pass or a waiver."
+    },
+    {
+      "id": "transaction-transport",
+      "status": "NOT_RUN",
+      "reason": "Outside selected development level; not a pass or a waiver."
+    }
+  ],
+  "knownUnresolvedFailures": [
+    {
+      "id": "transaction-read-abort",
+      "status": "UNRESOLVED",
+      "releaseBlocker": true,
+      "evidence": "https://github.com/alwat83/ifyoumind/pull/120",
+      "detail": "Strict document and aggregate abort recovery fail; no qualified supported correction."
+    },
+    {
+      "id": "city-save-month-boundary",
+      "status": "UNRESOLVED",
+      "releaseBlocker": true,
+      "evidence": "https://github.com/alwat83/ifyoumind/blob/76ece8d911f7cec1dd269da732478b66199c2f12/docs/design/consumer-pricing/VERIFIED_76b4ca2.md",
+      "detail": "Concurrent new-month save returned INTERNAL; original wire error not captured. A later pass cannot close this finding."
+    },
+    {
+      "id": "dataset-cap-intermittent",
+      "status": "UNRESOLVED",
+      "releaseBlocker": true,
+      "evidence": "https://github.com/alwat83/ifyoumind/pull/119",
+      "detail": "Historical dataset-cap aggregate failure remains distinct; no supported correction verified."
+    }
+  ],
+  "limitations": [
+    "Installed Chrome fallback used; it is not the pinned Linux Playwright renderer. Functional browser checks remain useful; Linux pixel parity is not established.",
+    "Linux-only visual cases are explicitly skipped on this native OS. Native screenshots do not approve Linux baselines.",
+    "Native/container Node major differs from current hosted workflow Node 20 (Functions declares Node 22). Actual versions are recorded.",
+    "Java differs from hosted Java 21; actual local emulator results are recorded, without claiming identical environment parity."
+  ],
+  "rawReport": {
+    "path": "test-results/local-first/2026-11-21T19-10-41-520Z-45ebd3fa/report.json",
+    "sha256": "f99b182692f56743469bf4beb6421dd38df86716d57e658db00198c0bc946c18"
+  },
+  "visuals": {
+    "beforeMetadataSha256": "ddc251579bf3fc0217ca5b50290091ff5d16528a12e962c990fc8e1aeb94caa1",
+    "afterMetadataSha256": "df889c85ee174a2ca4836cab033855ad2bcff1f699985158d8b695e305e3b3b1",
+    "widths": [
+      320,
+      390,
+      820,
+      1280,
+      1440
+    ],
+    "fonts": "Primary loaded and QA fallback",
+    "baselineUpdated": false
+  },
+  "hostedCI": "No check runs listed; this report is local verification only."
+}

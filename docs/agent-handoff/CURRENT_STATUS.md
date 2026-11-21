@@ -1,5 +1,13 @@
 # ifYouMind — Current development status
 
+## November 21, 2026 — Final homepage refinement ready for visual review
+
+[Draft #124](https://github.com/alwat83/ifyoumind/pull/124), `codex/hero-question-wrap` from #123ade00b0. Exact tested executable **45ebd3fab6e8d0864ff30db6b20eee81baaf8c31**. [Review, actual five-width pairs and preview](../design/hero-question-refinement/REVIEW.md), [summary/JSON](../design/hero-question-refinement/VERIFIED_45ebd3f.md): Consumer19 checks PASS,594 tests PASS/zero FAIL/14 Linux visual SKIP; integrity VALID/zero source events, selected development PASS/overall PARTIAL for native platform differences. Six sensitive suites NOT_RUN, original failures/#111 remain open; no hosted CI success. Later evidence-only follow-up preserves executable bytes.
+
+Only two homepage stylesheets change product output: independent serif balancing, max92→88px, content-based height and smaller padding. Existing reveal test expanded with1280/rendered orphan/empty-tail checks; prior assertions retained. All320/390/820/1280/1440 verified with loaded Inter/Instrument Serif and QA fallback, no orphan/overflow and visible CTA. Physical Safari/iPhone, spoken VoiceOver, Linux pixels and human comprehension remain unverified. Local synthetic preview **http://127.0.0.1:4393/** restarted from tested snapshot, seed ready/three HTTP200-byte matches. Old4392 stopped for isolated verification; new preview replaces it for this review.
+
+Notion hub updated. GO for founder visual review, no merge/deploy authorization. #123 and other candidates unchanged; its artifact predates this refinement. No backend/template/TypeScript/billing/enrollment/AI/dependency/workflow or production-data change, no provider generation/customer/revenue outcome. Next: inspect desktop/mobile pairs; approve the narrow visual correction; separately reconcile/reverify and authorize any release candidate/artifact under existing gates.
+
 ## November 21, 2026 — Phase 5 completed preparation; no production authorization
 
 [Draft #123](https://github.com/alwat83/ifyoumind/pull/123), `codex/hosting-release-isolation`, stacked on #122fded875. Exact tested executable source **4fa109f5ba683e197efc781223225f0d1fca5407**. [Committed local summary/JSON](../releases/phase5/VERIFIED_4fa109f.md): consumer19 checks PASS,594 tests PASS/zero FAIL/14 Linux visual SKIP; integrity VALID/zero source events; selected development PASS, overall PARTIAL/native platform differences. Six sensitive suites NOT_RUN, historical transaction failures/#111 remain open. No hosted check listed, no hosted CI success claimed. Initial wrong-SHA invocation was INVALID/zero tests; correct-source evidence retained. Evidence-only follow-up does not alter executable/customer bytes.

@@ -1,0 +1,369 @@
+{
+  "fontMode": "Existing QA empty external-font CSS; self-hosted Instrument Serif remains loaded. Earlier screenshot variants replaced by primary-font captures.",
+  "measurements": {
+    "before": [
+      {
+        "width": 320,
+        "lines": [
+          {
+            "y": 220.625,
+            "words": [
+              "Where",
+              "did",
+              "the",
+              "extra",
+              "$420"
+            ]
+          },
+          {
+            "y": 260.390625,
+            "words": [
+              "go?"
+            ]
+          }
+        ],
+        "intro": {
+          "x": 20,
+          "y": 69,
+          "width": 280,
+          "height": 508.15625,
+          "bottom": 577.15625
+        },
+        "cta": {
+          "x": 20,
+          "y": 422.15625,
+          "width": 280,
+          "height": 52,
+          "bottom": 474.15625
+        },
+        "overflow": false
+      },
+      {
+        "width": 390,
+        "lines": [
+          {
+            "y": 224.859375,
+            "words": [
+              "Where",
+              "did",
+              "the",
+              "extra",
+              "$420"
+            ]
+          },
+          {
+            "y": 271.765625,
+            "words": [
+              "go?"
+            ]
+          }
+        ],
+        "intro": {
+          "x": 20,
+          "y": 69,
+          "width": 350,
+          "height": 776,
+          "bottom": 845
+        },
+        "cta": {
+          "x": 20,
+          "y": 421.671875,
+          "width": 350,
+          "height": 52,
+          "bottom": 473.671875
+        },
+        "overflow": false
+      },
+      {
+        "width": 820,
+        "lines": [
+          {
+            "y": 295.578125,
+            "words": [
+              "Where",
+              "did",
+              "the",
+              "extra"
+            ]
+          },
+          {
+            "y": 360.84375,
+            "words": [
+              "$420",
+              "go?"
+            ]
+          }
+        ],
+        "intro": {
+          "x": 32.796875,
+          "y": 69,
+          "width": 754.390625,
+          "height": 812,
+          "bottom": 881
+        },
+        "cta": {
+          "x": 498.21875,
+          "y": 283.390625,
+          "width": 243.375,
+          "height": 52,
+          "bottom": 335.390625
+        },
+        "overflow": false
+      },
+      {
+        "width": 1280,
+        "lines": [
+          {
+            "y": 341.140625,
+            "words": [
+              "Where",
+              "did",
+              "the",
+              "extra",
+              "$420"
+            ]
+          },
+          {
+            "y": 425.6875,
+            "words": [
+              "go?"
+            ]
+          }
+        ],
+        "intro": {
+          "x": 51.203125,
+          "y": 80,
+          "width": 1177.59375,
+          "height": 812,
+          "bottom": 892
+        },
+        "cta": {
+          "x": 814.609375,
+          "y": 267.59375,
+          "width": 243.375,
+          "height": 52,
+          "bottom": 319.59375
+        },
+        "overflow": false
+      },
+      {
+        "width": 1440,
+        "lines": [
+          {
+            "y": 359.703125,
+            "words": [
+              "Where",
+              "did",
+              "the",
+              "extra",
+              "$420"
+            ]
+          },
+          {
+            "y": 454.53125,
+            "words": [
+              "go?"
+            ]
+          }
+        ],
+        "intro": {
+          "x": 130,
+          "y": 80,
+          "width": 1180,
+          "height": 812,
+          "bottom": 892
+        },
+        "cta": {
+          "x": 894.890625,
+          "y": 267.59375,
+          "width": 243.375,
+          "height": 52,
+          "bottom": 319.59375
+        },
+        "overflow": false
+      }
+    ],
+    "after": [
+      {
+        "width": 320,
+        "lines": [
+          {
+            "y": 220.625,
+            "words": [
+              "Where",
+              "did",
+              "the"
+            ]
+          },
+          {
+            "y": 260.390625,
+            "words": [
+              "extra",
+              "$420",
+              "go?"
+            ]
+          }
+        ],
+        "intro": {
+          "x": 20,
+          "y": 69,
+          "width": 280,
+          "height": 500.15625,
+          "bottom": 569.15625
+        },
+        "cta": {
+          "x": 20,
+          "y": 422.15625,
+          "width": 280,
+          "height": 52,
+          "bottom": 474.15625
+        },
+        "overflow": false
+      },
+      {
+        "width": 390,
+        "lines": [
+          {
+            "y": 216.859375,
+            "words": [
+              "Where",
+              "did",
+              "the"
+            ]
+          },
+          {
+            "y": 263.765625,
+            "words": [
+              "extra",
+              "$420",
+              "go?"
+            ]
+          }
+        ],
+        "intro": {
+          "x": 20,
+          "y": 69,
+          "width": 350,
+          "height": 473.671875,
+          "bottom": 542.671875
+        },
+        "cta": {
+          "x": 20,
+          "y": 413.671875,
+          "width": 350,
+          "height": 52,
+          "bottom": 465.671875
+        },
+        "overflow": false
+      },
+      {
+        "width": 820,
+        "lines": [
+          {
+            "y": 287.578125,
+            "words": [
+              "Where",
+              "did",
+              "the"
+            ]
+          },
+          {
+            "y": 352.84375,
+            "words": [
+              "extra",
+              "$420",
+              "go?"
+            ]
+          }
+        ],
+        "intro": {
+          "x": 32.796875,
+          "y": 69,
+          "width": 754.390625,
+          "height": 406.109375,
+          "bottom": 475.109375
+        },
+        "cta": {
+          "x": 498.21875,
+          "y": 275.390625,
+          "width": 243.375,
+          "height": 52,
+          "bottom": 327.390625
+        },
+        "overflow": false
+      },
+      {
+        "width": 1280,
+        "lines": [
+          {
+            "y": 332.140625,
+            "words": [
+              "Where",
+              "did",
+              "the"
+            ]
+          },
+          {
+            "y": 415.6875,
+            "words": [
+              "extra",
+              "$420",
+              "go?"
+            ]
+          }
+        ],
+        "intro": {
+          "x": 51.203125,
+          "y": 80,
+          "width": 1177.59375,
+          "height": 479.234375,
+          "bottom": 559.234375
+        },
+        "cta": {
+          "x": 814.609375,
+          "y": 259.59375,
+          "width": 243.375,
+          "height": 52,
+          "bottom": 311.59375
+        },
+        "overflow": false
+      },
+      {
+        "width": 1440,
+        "lines": [
+          {
+            "y": 343.546875,
+            "words": [
+              "Where",
+              "did",
+              "the"
+            ]
+          },
+          {
+            "y": 433.296875,
+            "words": [
+              "extra",
+              "$420",
+              "go?"
+            ]
+          }
+        ],
+        "intro": {
+          "x": 130,
+          "y": 80,
+          "width": 1180,
+          "height": 504.046875,
+          "bottom": 584.046875
+        },
+        "cta": {
+          "x": 894.890625,
+          "y": 259.59375,
+          "width": 243.375,
+          "height": 52,
+          "bottom": 311.59375
+        },
+        "overflow": false
+      }
+    ]
+  }
+}

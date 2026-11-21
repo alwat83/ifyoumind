@@ -20,20 +20,20 @@ Free and one-time offers retain their existing paths. The $79 option explicitly 
 
 | View | Before: exact #119 | After: this candidate |
 |---|---|---|
-| Desktop1440 | [Before](screenshots/before-desktop.jpg) | [After](screenshots/after-desktop.jpg) |
-| Mobile390 | [Before](screenshots/before-mobile.jpg) | [After](screenshots/after-mobile.jpg) |
-| Narrow320 | [Before](screenshots/before-narrow.jpg) | [After](screenshots/after-narrow.jpg) |
-| Tablet820 | No new baseline | [After](screenshots/after-tablet.jpg) |
+| Desktop 1440 | [Before](screenshots/before-desktop.jpg) | [After](screenshots/after-desktop.jpg) |
+| Mobile 390 | [Before](screenshots/before-mobile.jpg) | [After](screenshots/after-mobile.jpg) |
+| Narrow 320 | [Before](screenshots/before-narrow.jpg) | [After](screenshots/after-narrow.jpg) |
+| Tablet 820 | No new baseline | [After](screenshots/after-tablet.jpg) |
 | Existing Plus | No layout change outside pricing | [Desktop](screenshots/plus-desktop.jpg) / [mobile](screenshots/plus-mobile.jpg) |
 | Legacy Pro | Existing Account logic retained | [Desktop](screenshots/legacy-desktop.jpg) / [mobile](screenshots/legacy-mobile.jpg) |
 
-The before preview's route-specific pricing HTML was byte-matched to the preserved172dbaa local build. Images are real Angular/demo screenshots, not mockups. Only the documented Firebase emulator overlay is hidden in review captures; all accessibility and overflow checks run on the normal page. [Capture metadata and hashes](screenshots/before.json) / [after](screenshots/after.json). No Linux snapshot is updated or approved. Physical-device Safari/VoiceOver and unassisted comprehension remain unverified.
+The before preview's route-specific pricing HTML was byte-matched to the preserved 172dbaa local build. Images are real Angular/demo screenshots, not mockups. Only the documented Firebase emulator overlay is hidden in review captures; all accessibility and overflow checks run on the normal page. [Capture metadata and hashes](screenshots/before.json) / [after](screenshots/after.json). No Linux snapshot is updated or approved. Physical-device Safari/VoiceOver and unassisted comprehension remain unverified.
 
 ## Verification and preserved failures
 
 New browser coverage verifies public, signed-in Free, active Starter, active Plus and legacy Pro on desktop/mobile, with320/390/820/1440 overflow and WCAG A/AA checks. It checks correct prices, allowances, disclosure, disabled enrollment, keyboard order, refresh, the free continuation, Account management and the preserved decision reference. Signed-in Free sends genuine **local** enrollment calls and receives FAILED_PRECONDITION before any Stripe access. Active/legacy billing responses are rendering fixtures only; they do not mutate entitlements.
 
-Checkpoint results: initial targeted48 cases:42 pass/six fail, all six a new inline-link visual distinction defect. Restoring underlines fixed it; the subsequent48 pass. After moving the existing free action above the unavailable plans, ten focused cases pass. Initial sandbox build aborted before compilation; native build passes. Initial sandbox fast run158 pass/one filesystem-watcher failure; native fast159 pass. None of these earlier failures is erased or called a pass. Final exact-head local-first evidence is recorded separately on the draft PR.
+Checkpoint results: initial targeted 48 cases: 42 pass/six fail, all six a new inline-link visual distinction defect. Restoring underlines fixed it; the subsequent 48 pass. After moving the existing free action above the unavailable plans, ten focused cases pass. Initial sandbox build aborted before compilation; native build passes. Initial sandbox fast run 158 pass/one filesystem-watcher failure; native fast 159 pass. None of these earlier failures is erased or called a pass. Final exact-source local-first [summary](VERIFIED_76b4ca2.md) / [machine report](VERIFIED_76b4ca2.json):738 pass/three fail/15 skip, integrity VALID, zero source events. All 214 authenticated and84 Hosting cases pass. Commerce month-boundary save and both strict read-recovery assertions fail. The following commit is evidence/handoff only; no executable changes after tested 76b4ca2.
 
 The complete existing local-first plan remains intact, including the strict transaction diagnostic. No assertion, cap, retry or failure classification is weakened. Expected existing Firestore recovery failures remain release blockers even if consumer UI checks pass. Do not label the overall gate green when those fail. No hosted CI success is claimed during deferred GitHub billing.
 

@@ -10,6 +10,8 @@
 
 ## November 21, 2026 — Consumer pricing clarity before enrollment
 
+[Draft #121](https://github.com/alwat83/ifyoumind/pull/121) preserves [exact76b4ca2 local verification](docs/design/consumer-pricing/VERIFIED_76b4ca2.md):738 pass/three existing-type transaction failures/15 skip, valid source integrity; all214 authenticated and84 Hosting cases pass. Consumer UI founder-review GO remains independent of backend/release NO-GO. The later evidence-only commit changes no executable bytes.
+
 A separate branch from #119 makes Free, Starter, Plus and the one-time report publicly inspectable in the approved Midnight Slate identity. [Working review and actual before/after](docs/design/consumer-pricing/REVIEW.md). Monthly enrollment stays closed behind unchanged backend controls; existing subscribers and grandfathered Pro retain Account management. Free browser-local bills, saved city decisions and paid public-data reports have distinct, truthful scopes. No runtime billing, price, entitlement, AI or production change. The separate #120 reliability NO-GO is preserved; its sanitized upstream package remains unsent and its new reduction unexecuted. Founder UI review and full release readiness remain separate.
 
 ## November 20, 2026 — Connected experience and strict recovery evidence

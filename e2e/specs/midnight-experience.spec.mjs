@@ -11,7 +11,7 @@ test('Midnight Slate remains dark across public and private journeys even with a
   }
   const viewer = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
   await signInThroughUi(page, viewer);
-  for (const path of ['/decisions', '/decide', '/account', '/pricing', `/decisions/${viewer.projectIds[0]}`]) {
+  for (const path of ['/decisions', '/decide', '/account', '/pricing', '/data', '/ask', '/advanced', `/decisions/${viewer.projectIds[0]}`]) {
     await page.goto(path);
     await page.waitForLoadState('networkidle');
     await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(9, 13, 23)');

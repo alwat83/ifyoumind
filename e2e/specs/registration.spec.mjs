@@ -73,9 +73,12 @@ test('signing up from a city comparison keeps context through email verification
 
   const email = fixtureEmail('T02-email-signup', newRunId());
   fixtures.trackEmail(email);
+  await expect(page.locator('form')).toHaveClass(/ng-invalid/);
   await page.getByLabel('Name').fill('QA comparison');
   await page.getByLabel('Email').fill(email);
   await page.getByLabel('Password').fill(FIXTURE_PASSWORD);
+  await expect(page.getByLabel('Name')).toHaveValue('QA comparison');
+  await expect(page.getByLabel('Email')).toHaveValue(email);
   await page.getByRole('button', { name: 'Create free account' }).click();
   await expect(page).toHaveURL(/\/verify-email\?/);
   expect(new URL(page.url()).searchParams.get('returnUrl')).toBe('/decide?type=compare');

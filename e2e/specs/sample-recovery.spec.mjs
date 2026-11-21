@@ -138,6 +138,7 @@ test('leaving a pending sample keeps homepage discovery and Business registratio
 
 test('losing the connection while loading releases the spinner immediately',async({page,context,consoleErrors})=>{
   expectedFailureDiagnostics(consoleErrors);
+  consoleErrors.allow.push(/^Failed to load resource: net::ERR_INTERNET_DISCONNECTED$/);
   let calls=0,release;
   const held=new Promise(resolve=>{release=resolve;});
   await page.route(endpoint,async route=>{

@@ -91,11 +91,11 @@ button {
 
 .ask-panel form button {
   justify-self: end;
-  background: var(--iy-paper);
-  color: var(--iy-studio);
+  background: var(--iy-periwinkle);
+  color: var(--iy-bg);
 }
 
-button:disabled { opacity: .5; cursor: default; }
+button:disabled { opacity: 1; cursor: default; }
 
 .prompt-row, .followups {
   display: flex;
@@ -141,8 +141,8 @@ button:disabled { opacity: .5; cursor: default; }
 
 .save-answer {
   margin-top: 14px;
-  background: var(--iy-paper);
-  color: var(--iy-studio);
+  background: var(--iy-periwinkle);
+  color: var(--iy-bg);
 }
 
 .saved-actions {
@@ -185,3 +185,5 @@ header h1 { @include product.title; }
 .history article { border:0; border-bottom:1px solid var(--iy-line); border-radius:0; background:none; }
 .data-context { color:var(--iy-muted); font-size:14px; }.data-context a,.panel>a { color:var(--iy-accent); }
 .data-context a { text-decoration:underline; }
+
+.ask-panel form button:disabled { background:var(--iy-panel); color:var(--iy-muted); border:1px solid var(--iy-control); }

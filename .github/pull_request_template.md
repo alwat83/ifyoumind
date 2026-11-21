@@ -1,3 +1,7 @@
+### Verification level and source
+
+Select Prototype / Consumer frontend / Sensitive backend / Production release using [the risk-based standard](../docs/verification/RISK_BASED_GATES.md). Record the exact candidate SHA and reviewed ancestor base, scope classification, local versus hosted evidence, executed failures, NOT_RUN checks and known unresolved findings. A green selected scope does not clear backend defects or release gates. Record applicable GitHub protection requirements and separate founder authorization; do not change or waive them here.
+
 ### Summary
 
 Describe what changed and why.

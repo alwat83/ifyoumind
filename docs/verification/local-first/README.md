@@ -2,6 +2,10 @@
 
 This is an alternative **development** gate while GitHub-hosted Actions cannot execute. It does not authorize a merge, deployment, billing change or provider request. #118 remains a separate dependency and #111's production retry remains unverified. Founder experience review can proceed with the prototype without waiting for GitHub billing restoration.
 
+## Risk-based levels
+
+The [four-level standard](../RISK_BASED_GATES.md) enables scoped development without requiring hosted Actions. Use `--level=prototype|consumer|backend|release`; default `release` retains the full existing plan. Prototype/consumer additionally require `--base-sha=REVIEWED_ANCESTOR_SHA`. Sensitive changes refuse lower levels. Reports list NOT_RUN checks, known unresolved failures and selected-check development status separately from overall coverage and production readiness. No existing assertion, workflow or failure record is removed. See [Phase 4 readiness](../../releases/phase4/READINESS.md) for the current consumer and subscription gates.
+
 ## One entry point
 
 Start from a clean, committed checkout of the candidate. Supply its full SHA explicitly:
@@ -64,3 +68,7 @@ Linux visual failures remain failures. Individually inspect expected, actual and
 The plan now also runs `npm run diagnose:transactions`. This uses a loopback demo-only gRPC proxy and real emulator rollback to test whether an original transaction abort reaches the SDK runner. It currently has two strict recovery failures in Firestore 7.11.6/GAX 4.6.1. They remain **FAIL**, not expected passes, and make the overall gate FAIL even if normal journeys pass. There is no SDK patch, application retry or backend logic change. [Mechanism, limitations and release gates](../../design/midnight-slate/phase3/REVIEW.md).
 
 Native `visual-readiness.spec.mjs` walks the same shared journeys as Linux pixel checks and captures visibility/overflow evidence. It does not read or approve baselines. Linux-only assertions, missing-baseline failures and individual image review remain mandatory for visual release acceptance. No automatic baseline update is provided.
+
+## Apple Silicon Linux preparation
+
+The November21 host has no usable Linux runtime. Reuse the pinned existing container after a separately approved local runtime installation; [Phase 4 exact proposed commands and limitations](../../releases/phase4/READINESS.md#local-linux-on-this-apple-silicon-mac). No installer, VM, Rosetta, security modification or recurring service was activated. Native verification remains supported; it does not approve Linux pixel baselines.

@@ -8,7 +8,9 @@ import { platform, arch, homedir, release } from 'node:os';
 import { resolve, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import net from 'node:net';
-import { IMAGE, fingerprint, digestFiles, integrity, credentialProblems, tapCounts, playwrightCounts, overall, summarize, markdown, evidence, plan, sha256, watchSource, mergeChecks, localDockerEndpoint } from './local-verification/core.mjs';
+import { IMAGE, fingerprint, digestFiles, integrity, credentialProblems, tapCounts, playwrightCounts, overall, summarize, markdown, evidence, sha256, watchSource, mergeChecks, localDockerEndpoint } from './local-verification/core.mjs';
+
+import { verificationSelection, developmentStatus, selectionMarkdown, assertRiskScope } from './local-verification/levels.mjs';
 
 const root = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const args = process.argv.slice(2);
@@ -45,7 +47,8 @@ async function deps(root) {
   }
   return versions;
 }
-async function runSuite(worktree, out, environment, install=false) {
+async function runSuite(worktree, out, environment, install=false, level='release') {
+  const selectedPlan = verificationSelection(level).selected;
   const checks=[];const limitations=[];await mkdir(join(out,'evidence'),{recursive:true});await mkdir(join(out,'home'),{recursive:true});
   // A new HOME has no ADC, Firebase login or cloud CLI config. No inherited credentials.
   const env={PATH:process.env.PATH,HOME:join(out,'home'),TMPDIR:process.env.TMPDIR || '/tmp',CI:'true',NO_COLOR:'1',NG_CLI_ANALYTICS:'false',FIREBASE_CLI_DISABLE_TELEMETRY:'1',GCLOUD_PROJECT:'demo-ifyoumind',GOOGLE_CLOUD_PROJECT:'demo-ifyoumind',METADATA_SERVER_DETECTION:'none',TZ:'UTC'};
@@ -53,7 +56,7 @@ async function runSuite(worktree, out, environment, install=false) {
   env.FIREBASE_EMULATORS_PATH=process.env.FIREBASE_EMULATORS_PATH || join(homedir(),'.cache/firebase/emulators');
   env.PLAYWRIGHT_BROWSERS_PATH=process.env.PLAYWRIGHT_BROWSERS_PATH || join(homedir(),platform()==='darwin'?'Library/Caches/ms-playwright':'.cache/ms-playwright');
   if(install){for(const [id,command] of [['app-install','npm ci'],['functions-install','npm --prefix functions ci']]){console.log(`[${id}] starting`);const result=await execute(command,worktree,env,join(out,'evidence',id+'.log'));checks.push({id,command,...result,status:result.exitCode===0?'PASS':'FAIL'});}}
-  try{environment.dependencies=await deps(worktree);}catch(e){checks.push({id:'locked-dependencies',command:'Compare installed direct dependencies to both lockfiles',status:'FAIL',detail:e.message});for(const step of plan())checks.push({...step,status:'BLOCKED',detail:'Locked dependency verification failed.'});return{checks,limitations};}
+  try{environment.dependencies=await deps(worktree);}catch(e){checks.push({id:'locked-dependencies',command:'Compare installed direct dependencies to both lockfiles',status:'FAIL',detail:e.message});for(const step of selectedPlan)checks.push({...step,status:'BLOCKED',detail:'Locked dependency verification failed.'});return{checks,limitations};}
   checks.push({id:'locked-dependencies',command:'Compare installed direct dependencies to both lockfiles',status:'PASS'});
   const require=createRequire(join(worktree,'package.json'));
   const pw=require('@playwright/test');environment.playwright=require('@playwright/test/package.json').version;
@@ -69,7 +72,7 @@ async function runSuite(worktree, out, environment, install=false) {
   if(!environment.java.includes('21.'))limitations.push('Java differs from hosted Java 21; actual local emulator results are recorded, without claiming identical environment parity.');
   const busy=(await Promise.all(ports.map(async p=>await occupied(p)?p:null))).filter(Boolean);
   const javaReady=environment.java!=='unavailable';
-  for(const step of plan()){
+  for(const step of selectedPlan){
     const item={...step};
     const usesBrowser=step.kind.includes('browser')||step.kind==='review-tap';
     const unmet=step.needs.filter(id=>checks.find(c=>c.id===id)?.status!=='PASS');
@@ -93,22 +96,28 @@ async function runSuite(worktree, out, environment, install=false) {
   return{checks,limitations};
 }
 async function main(){
-  if(args.some(a=>!/^--(?:help|docker|install|expected-sha=[a-f0-9]{40}|browser=(?:auto|chromium|chrome)|inside=.+)$/.test(a)))throw Error('Unknown argument; see --help. Snapshot updates and arbitrary commands are unsupported.');
-  if(args.includes('--help')){console.log('npm run verify:local -- --expected-sha=<40-char SHA> [--docker] [--install] [--browser=auto|chromium|chrome]\nReports and isolated sources: ignored test-results/local-first/<run-id>. Docker absence/daemon restrictions fall back to native with explicit limits. No baseline updates.');return;}
+  if(args.some(a=>!/^--(?:help|docker|install|expected-sha=[a-f0-9]{40}|browser=(?:auto|chromium|chrome)|base-sha=[a-f0-9]{40}|level=(?:prototype|consumer|backend|release)|inside=.+)$/.test(a)))throw Error('Unknown argument; see --help. Snapshot updates and arbitrary commands are unsupported.');
+  if(args.includes('--help')){console.log('npm run verify:local -- --expected-sha=<40-char SHA> [--docker] [--install] [--browser=auto|chromium|chrome] [--level=prototype|consumer|backend|release] [--base-sha=<reviewed-base-SHA>]\nPrototype/consumer require a distinct ancestor base; sensitive changes cannot use lower levels.\nDefault level=release retains the complete existing plan. All levels are non-deploying checks.\nReports and isolated sources: ignored test-results/local-first/<run-id>. Docker absence/daemon restrictions fall back to native with explicit limits. No baseline updates.');return;}
   if(option('--inside')){
     if(platform()!=='linux'||process.env.LOCAL_VERIFY_CONTAINER!=='1')throw Error('Internal container mode requires the isolated Linux container.');
     const manifest=JSON.parse(await readFile(option('--inside'),'utf8'));const environment={...manifest.environment,platform:platform(),osRelease:release(),git:version('git',['--version']),arch:arch(),node:process.version,npm:version('npm',['--version']),java:version('java',['-version']),mode:'docker',image:IMAGE};
     // java writes its version on stderr; metadata collection below handles that.
     environment.java=javaVersion();
-    const result=await runSuite(root,'/run',environment,true);await writeFile('/run/container-result.json',JSON.stringify({...result,environment,sourceDigest:await digestFiles(root,manifest.source.files)},null,2));return;
+    const result=await runSuite(root,'/run',environment,true,manifest.selection.level);await writeFile('/run/container-result.json',JSON.stringify({...result,environment,sourceDigest:await digestFiles(root,manifest.source.files)},null,2));return;
   }
+  const selection=verificationSelection(option('--level') || 'release');
   const expected=option('--expected-sha');if(!expected||!/^[a-f0-9]{40}$/.test(expected))throw Error('Supply --expected-sha=<full reviewed commit>; no implicit moving HEAD.');
   const id=new Date().toISOString().replace(/[:.]/g,'-')+'-'+expected.slice(0,8);const out=join(root,'test-results/local-first',id);await mkdir(out,{recursive:true});
   const before=await fingerprint(root);const environment={platform:platform(),osRelease:release(),git:version('git',['--version']),arch:arch(),node:process.version,npm:version('npm',['--version']),java:javaVersion(),mode:'native'};
-  const report={schemaVersion:1,commit:expected,branch:before.branch,startedAt:new Date().toISOString(),environment,integrity:{valid:false,before:{head:before.head,digest:before.digest,clean:!before.status}},checks:[],limitations:[],releaseAuthorized:false};
+  const report={schemaVersion:2,selection,commit:expected,branch:before.branch,startedAt:new Date().toISOString(),environment,integrity:{valid:false,before:{head:before.head,digest:before.digest,clean:!before.status}},checks:[],limitations:[],releaseAuthorized:false};
   let snapshot, watcher, checksStarted=false, dockerEndpoint;
   try{
     if(before.head!==expected||before.status)throw Error('Candidate SHA mismatch or working tree is not clean. No checks executed.');
+    const base=option('--base-sha');
+    if(['prototype','consumer'].includes(selection.level)&&(!base||base===expected))throw Error('Scoped verification requires a distinct reviewed --base-sha.');
+    let changedPaths=[];
+    if(base){execFileSync('git',['merge-base','--is-ancestor',base,expected],{cwd:root,stdio:'pipe'});changedPaths=execFileSync('git',['diff','--name-only','-z',base,expected],{cwd:root,encoding:'utf8'}).split('\0').filter(Boolean);}
+    report.changeScope={base:base||null,...assertRiskScope(selection.level,changedPaths),...(!base?{minimumLevel:'UNASSESSED_FULL_GATE'}:{})};
     watcher=watchSource(root,before.files);
     const credentials=credentialProblems(process.env);if(credentials.length)throw Error('Credential-bearing environment detected (names only): '+credentials.join(', '));
     snapshot=join(out,'worktree');await mkdir(snapshot,{recursive:true});
@@ -124,7 +133,7 @@ async function main(){
     }
     let result;checksStarted=true;
     if(environment.docker.requested&&environment.docker.available){
-      await writeFile(join(out,'container-manifest.json'),JSON.stringify({source:before,environment}));
+      await writeFile(join(out,'container-manifest.json'),JSON.stringify({source:before,environment,selection:{level:selection.level}}));
       const childEnv={PATH:process.env.PATH,HOME:process.env.HOME,DOCKER_HOST:dockerEndpoint,DOCKER_CONTEXT:''};
       const build=await execute('docker build --platform linux/amd64 -t ifyoumind-local-verify:pw1.56.0 scripts/local-verification',root,childEnv,join(out,'docker-build.log'));
       report.checks.push({id:'docker-image-build',command:'Build pinned local Linux verification image',...build,status:build.exitCode===0?'PASS':'FAIL'});
@@ -137,7 +146,7 @@ async function main(){
     }else{
       if(environment.docker.requested)report.limitations.push('Docker was requested but no usable local daemon is available. Native fallback executed; Docker path was not tested.');
       if(!args.includes('--install')){for(const p of ['node_modules','functions/node_modules'])await symlink(join(root,p),join(snapshot,p),'dir');}
-      result=await runSuite(snapshot,out,environment,args.includes('--install'));
+      result=await runSuite(snapshot,out,environment,args.includes('--install'),selection.level);
     }
     report.checks=mergeChecks(report.checks,result.checks);report.limitations.push(...result.limitations);
   }catch(e){
@@ -151,10 +160,10 @@ async function main(){
     report.integrity.after={head:after.head,digest:after.digest,clean:!after.status};report.integrity.snapshotDigest=copiedDigest;
     report.integrity.sourceEvents=watcher?.changes ?? 0;report.integrity.watcherError=watcher?.error ?? true;watcher?.close();
     report.integrity.valid=integrity(before,after,expected)&&copiedDigest===before.digest&&!report.integrity.sourceEvents&&!report.integrity.watcherError;
-    report.finishedAt=new Date().toISOString();report.status=overall(report);report.totals=summarize(report);
+    report.finishedAt=new Date().toISOString();report.status=overall(report);report.developmentStatus=developmentStatus(report);report.productionReadiness='NO-GO';report.totals=summarize(report);
     report.workflowHashes={launch:sha256(await readFile(join(root,'.github/workflows/launch-build-check.yml'))),qa:sha256(await readFile(join(root,'.github/workflows/authenticated-qa.yml')))};
     report.evidence=await evidence(join(out,'evidence')).catch(()=>[]);
-    await writeFile(join(out,'report.json'),JSON.stringify(report,null,2)+'\n',{mode:0o600});await writeFile(join(out,'SUMMARY.md'),markdown(report));
+    await writeFile(join(out,'report.json'),JSON.stringify(report,null,2)+'\n',{mode:0o600});await writeFile(join(out,'SUMMARY.md'),markdown(report)+selectionMarkdown(report));
     console.log(`\n${report.status}: ${relative(root,out)}/SUMMARY.md\n${JSON.stringify(report.totals)}`);
     process.exitCode=report.status==='PASS'?0:report.status==='INVALID'?3:report.status==='FAIL'?1:2;
   }

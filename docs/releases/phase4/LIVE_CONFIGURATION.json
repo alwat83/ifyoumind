@@ -1,0 +1,236 @@
+{
+  "observedDate": "2026-11-21",
+  "scope": "Read-only live iFyoumind catalog/configuration; no customer, session, subscription or payment operations",
+  "account": {
+    "verifiedName": "iFyoumind",
+    "live": true,
+    "identifiersRedacted": true
+  },
+  "prices": [
+    {
+      "offer": "plus",
+      "amountCents": 999,
+      "currency": "usd",
+      "active": true,
+      "live": true,
+      "interval": "month",
+      "intervalCount": 1,
+      "taxBehavior": "unspecified",
+      "productName": "ifYouMind Decision Reports"
+    },
+    {
+      "offer": "starter",
+      "amountCents": 499,
+      "currency": "usd",
+      "active": true,
+      "live": true,
+      "interval": "month",
+      "intervalCount": 1,
+      "taxBehavior": "unspecified",
+      "productName": "ifYouMind Decision Reports"
+    },
+    {
+      "offer": "report",
+      "amountCents": 7900,
+      "currency": "usd",
+      "active": true,
+      "live": true,
+      "interval": null,
+      "intervalCount": null,
+      "taxBehavior": "unspecified",
+      "productName": "ifYouMind Decision Report"
+    },
+    {
+      "offer": "pro",
+      "amountCents": 3900,
+      "currency": "usd",
+      "active": true,
+      "live": true,
+      "interval": "month",
+      "intervalCount": 1,
+      "taxBehavior": "unspecified",
+      "productName": "ifYouMind Pro"
+    }
+  ],
+  "hasMorePrices": false,
+  "webhooks": [
+    {
+      "target": "stripeSubscriptionWebhook",
+      "url": "https://us-central1-ifyoumind-473fe.cloudfunctions.net/stripeSubscriptionWebhook",
+      "enabled": true,
+      "live": true,
+      "apiVersion": "2025-02-24.acacia",
+      "events": [
+        "invoice.paid",
+        "customer.subscription.updated",
+        "customer.subscription.deleted",
+        "charge.refunded",
+        "charge.dispute.created",
+        "charge.dispute.updated",
+        "charge.dispute.closed"
+      ]
+    },
+    {
+      "target": "stripeCommercialWebhook",
+      "url": "https://us-central1-ifyoumind-473fe.cloudfunctions.net/stripeCommercialWebhook",
+      "enabled": true,
+      "live": true,
+      "apiVersion": "2026-08-26.dahlia",
+      "events": [
+        "checkout.session.completed",
+        "customer.subscription.created",
+        "customer.subscription.deleted",
+        "customer.subscription.updated",
+        "checkout.session.async_payment_succeeded"
+      ]
+    }
+  ],
+  "portal": [
+    {
+      "active": true,
+      "default": true,
+      "live": true,
+      "returnUrl": "https://ifyoumind.com/app/account",
+      "invoiceHistory": true,
+      "paymentMethodUpdate": true,
+      "cancellation": {
+        "cancellation_reason": {
+          "enabled": false,
+          "feedback_options": [],
+          "options": [
+            "too_expensive",
+            "missing_features",
+            "switched_service",
+            "unused",
+            "other"
+          ]
+        },
+        "enabled": true,
+        "mode": "at_period_end",
+        "proration_behavior": "none"
+      },
+      "planSwitching": false
+    }
+  ],
+  "tax": {
+    "settingsStatus": "active",
+    "defaultTaxBehavior": "inferred_by_currency",
+    "activeRegistrations": 0,
+    "hasMore": false
+  },
+  "unverified": [
+    "Current permissions of the deployed application key (connector access is not proof)",
+    "Actual signed live subscription delivery and entitlement fulfillment",
+    "Authorized real-owner portal session and return",
+    "Real paid invoice/renewal/support outcomes and attributable operating costs",
+    "Merchant charge-acceptance capability flags not inspected; active Prices alone do not prove payment acceptance"
+  ],
+  "mutationsPerformed": false,
+  "functions": [
+    {
+      "name": "getCommercialStatus",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "revision": "getcommercialstatus-00088-soz",
+      "enrollmentEmpty": true,
+      "catalogMatchesVerifiedLivePrices": true,
+      "secretBindings": [
+        {
+          "key": "STRIPE_SECRET_KEY",
+          "version": "5"
+        }
+      ]
+    },
+    {
+      "name": "createCommercialCheckout",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "revision": "createcommercialcheckout-00071-doc",
+      "enrollmentEmpty": true,
+      "catalogMatchesVerifiedLivePrices": true,
+      "secretBindings": [
+        {
+          "key": "STRIPE_SECRET_KEY",
+          "version": "5"
+        }
+      ]
+    },
+    {
+      "name": "createBillingPortalSession",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "revision": "createbillingportalsession-00057-qoh",
+      "enrollmentEmpty": true,
+      "catalogMatchesVerifiedLivePrices": true,
+      "secretBindings": [
+        {
+          "key": "STRIPE_SECRET_KEY",
+          "version": "5"
+        }
+      ]
+    },
+    {
+      "name": "stripeSubscriptionWebhook",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "revision": "stripesubscriptionwebhook-00015-peb",
+      "enrollmentEmpty": true,
+      "catalogMatchesVerifiedLivePrices": true,
+      "secretBindings": [
+        {
+          "key": "STRIPE_SECRET_KEY",
+          "version": "5"
+        },
+        {
+          "key": "STRIPE_SUBSCRIPTION_WEBHOOK_SECRET",
+          "version": "1"
+        }
+      ]
+    },
+    {
+      "name": "generatePaidDecisionReport",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "revision": "generatepaiddecisionreport-00015-xek",
+      "enrollmentEmpty": true,
+      "catalogMatchesVerifiedLivePrices": true,
+      "secretBindings": [
+        {
+          "key": "CENSUS_API_KEY",
+          "version": "1"
+        },
+        {
+          "key": "STRIPE_SECRET_KEY",
+          "version": "5"
+        }
+      ]
+    }
+  ],
+  "secretVersions": [
+    {
+      "secret": "STRIPE_SECRET_KEY",
+      "version": "5",
+      "http": 200,
+      "state": "ENABLED"
+    },
+    {
+      "secret": "STRIPE_SUBSCRIPTION_WEBHOOK_SECRET",
+      "version": "1",
+      "http": 200,
+      "state": "ENABLED"
+    }
+  ],
+  "github": {
+    "master": "6dcffca4eb186c6e0da7431523d7137652e14990",
+    "classicMasterProtected": false,
+    "repositoryRulesets": 0,
+    "productionEnvironmentProtectionRules": 0,
+    "settingsChanged": false
+  },
+  "deploymentCatalogVariables": {
+    "environmentVariables": 3,
+    "repositoryVariables": 0,
+    "effectiveValuesMatchActiveRuntime": true,
+    "identifiersRedacted": true
+  }
+}

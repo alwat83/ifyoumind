@@ -1,0 +1,38 @@
+{
+  "source": "4fa109f5ba683e197efc781223225f0d1fca5407",
+  "observedAt": "2026-11-21T18:33:41.772Z",
+  "rows": [
+    {
+      "path": "/",
+      "file": "index.html",
+      "status": 200,
+      "sha256": "e5475614f7f291dcc3fa5fb597ce541b03827d16df7671b102f816ab3c3a403b"
+    },
+    {
+      "path": "/pricing",
+      "file": "pricing.html",
+      "status": 200,
+      "sha256": "88b50f11538ff0f26defeeaff9b0bcb1c304d3b1158b63d925f3dd047e48f2ba"
+    },
+    {
+      "path": "/discover/?example=tax&input=csv",
+      "file": "discover/index.html",
+      "status": 200,
+      "sha256": "e20fc27f420ba5fc31f583e3aab0f8af2f0f549c8b183970d728cb096a6e94dd"
+    },
+    {
+      "path": "/decide",
+      "file": "app-shell.html",
+      "status": 200,
+      "sha256": "3437ecb07d9de16c630dd1444e7772b67ec49075bf7879b74b6f99c619ef826e"
+    },
+    {
+      "path": "/app/account",
+      "file": "app-shell.html",
+      "status": 200,
+      "sha256": "3437ecb07d9de16c630dd1444e7772b67ec49075bf7879b74b6f99c619ef826e"
+    }
+  ],
+  "syntheticOnly": true,
+  "initialChecks": "Sandbox loopback EPERM; authorized loopback check then used wrong pricing expected filename (generic shell versus generated pricing.html). Corrected expected asset, no source change."
+}

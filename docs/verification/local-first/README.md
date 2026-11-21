@@ -6,6 +6,10 @@ This is an alternative **development** gate while GitHub-hosted Actions cannot e
 
 The [four-level standard](../RISK_BASED_GATES.md) enables scoped development without requiring hosted Actions. Use `--level=prototype|consumer|backend|release`; default `release` retains the full existing plan. Prototype/consumer additionally require `--base-sha=REVIEWED_ANCESTOR_SHA`. Sensitive changes refuse lower levels. Reports list NOT_RUN checks, known unresolved failures and selected-check development status separately from overall coverage and production readiness. No existing assertion, workflow or failure record is removed. See [Phase 4 readiness](../../releases/phase4/READINESS.md) for the current consumer and subscription gates.
 
+## Hosting-only preparation
+
+[Phase 5](../../releases/phase5/HOSTING_ONLY.md) can package verified production static assets without credentials or deployment. This does not change the current broad production workflow, authorize a release or clear existing backend/device gates.
+
 ## One entry point
 
 Start from a clean, committed checkout of the candidate. Supply its full SHA explicitly:

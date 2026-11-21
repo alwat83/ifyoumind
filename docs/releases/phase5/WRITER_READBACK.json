@@ -1,0 +1,16 @@
+{
+  "observedAt": "2026-11-21T18:20:48.758Z",
+  "function": "createMarketIntelligenceProject",
+  "state": "ACTIVE",
+  "runtime": "nodejs22",
+  "revision": "createmarketintelligenceproject-00087-nub",
+  "latestReadyRevision": "createmarketintelligenceproject-00087-nub",
+  "traffic": [
+    {
+      "revision": "createmarketintelligenceproject-00087-nub",
+      "percent": 100
+    }
+  ],
+  "mutationsPerformed": false,
+  "liveRetryTestPerformed": false
+}

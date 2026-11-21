@@ -2,6 +2,10 @@
 
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
+## November 21 — Isolate consumer release risk
+
+[Phase5 package](../releases/phase5/REVIEW.md) makes the stacked consumer/free/pricing experience reviewable while preserving transaction and paid-activation gates. Static Hosting-only preparation avoids automatic Functions/rules redeployment but still requires exact approval and controlled serialization; it does not prove saved-city reliability. Prioritize founder first-use review, a clearly scoped release decision and separately authorized reliability/customer proof. No new visitor, participant, payment, revenue or cost observations; the dated scoreboard remains unchanged.
+
 ## November 21 — Affordable offers visible before signup
 
 The [consumer pricing candidate](../design/consumer-pricing/REVIEW.md) removes a disclosure/signup barrier to understanding Starter and Plus, explicitly keeps enrollment unavailable, and gives visitors an immediate available free action. The$79 option transparently buys the same full city/business report scope without subscribing. Review whether a first-time visitor can distinguish private bill value, saved city briefs and paid reports before any activation. No tracking, participant, customer, purchase, revenue or cost observation; the dated scoreboard remains unchanged. Reliability #120 and release authorization remain separate; no outreach or paid enrollment.

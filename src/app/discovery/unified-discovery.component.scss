@@ -47,6 +47,7 @@ h1 { @include product.title; max-width:16ch; font-size:clamp(44px,6.6vw,86px); m
 }
 @media(max-width:700px) {
  .shell-header { gap:8px; }.shell-header.active { display:grid; grid-template-columns:1fr auto; }.shell-header.active .preview { display:none; }.shell-header nav { grid-column:1/-1; justify-content:space-between; }.shell-header button { font-size:13px; }
+ :host(:not(.public-discovery)) .entry { padding-top:24px; }
  .entry { padding-block:32px; }h1 { font-size:44px; margin-bottom:28px; }
  .choices { grid-template-columns:1fr; gap:20px; }.choice { padding:24px; }.choice h2 { font-size:25px; }
  :host(.public-discovery) {

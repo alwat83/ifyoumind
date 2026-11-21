@@ -1,5 +1,13 @@
 # ifYouMind — Current development status
 
+## November 20, 2026 — Local-first verification operational
+
+Founder authorizes local verification as an alternative development gate; GitHub billing restoration is **not** a prerequisite for implementation, validation or prototype review. [Single command and pinned optional Linux path](../verification/local-first/README.md) · [preserved executed report](../verification/local-first/VERIFIED_2583bf5.md) · [machine report](../verification/local-first/VERIFIED_2583bf5.json).
+
+Exact PR #119 candidate `2583bf5d4a31614b95f042a254e4c03c94bc9b1e` completed all 25 planned checks with valid unchanged source: 22 pass / three fail / zero blocked; 684 tests pass / three fail / 15 skip. Clean installs, production/local/standalone builds, guards, 153 fast, 72 Functions, 48 tax, 27 electricity, 84 Hosting, 8 rules, 5 organization and 24 fixture/access checks pass. Failures: standalone mobile action 3.28 px below viewport; one commerce new-month concurrent save; one authenticated mobile last-slot replay. The last two produced failed save responses and remain unresolved, with no backend or assertion change. Native macOS Chrome fallback is explicit; Docker absent, Linux visuals not executed. The first report is preserved even after corrections.
+
+Follow-up reduces only standalone mobile entry spacing, preserves partial/executed failure reporting and pins Docker execution to the verified local endpoint. Eight runner regressions pass. The final resulting head is rerun in full and recorded on [draft #119](https://github.com/alwat83/ifyoumind/pull/119); do not infer its result from this earlier report. #118 remains unchanged at `2f4975f94ac888547df8b1fbdf149a50741f6570`. **GO for supervised synthetic founder experience review; NO-GO for production.** Local-first checks do not waive Linux visual review, observed human acceptance, #111's unverified live retry or separate dependency/release authorization. No production, commerce, AI or customer data changed.
+
 ## November 20, 2026 — Connected Midnight Slate draft #119
 
 [Draft #119](https://github.com/alwat83/ifyoumind/pull/119), `codex/midnight-slate`, is stacked on protected #118 at `2f4975f94ac888547df8b1fbdf149a50741f6570`; that branch remains unchanged. UI checkpoint `1f800024f50650b81e6a656f648b12ed50bb27a5`, followed by targeted Ask/advanced action-contrast and truthful-capability copy fixes, plus test/evidence updates. The PR records the final candidate SHA. [Route audit, impact matrix and journey map](../design/midnight-slate/REVIEW.md) · [desktop/mobile prototype](../design/midnight-slate/PROTOTYPE.html) · [test evidence](../design/midnight-slate/LOCAL_VERIFICATION.md).

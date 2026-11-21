@@ -107,3 +107,13 @@ export function watchSource(root, files) {
   watcher.on('error', () => { error = true; });
   return { get changes() { return changes; }, get error() { return error; }, close() { watcher.close(); } };
 }
+
+export function mergeChecks(current, progress) {
+  const map = new Map(current.map(check => [check.id, check]));
+  for (const check of progress) {
+    const old = map.get(check.id);
+    if (!old || (check.status === 'FAIL' && old.status !== 'FAIL')) map.set(check.id, check);
+  }
+  return [...map.values()];
+}
+export const localDockerEndpoint = value => /^(?:unix|npipe):\/\//.test(value || '');

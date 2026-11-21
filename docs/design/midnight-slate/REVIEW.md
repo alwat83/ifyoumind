@@ -141,3 +141,6 @@ Fresh read-only production metadata retained Hosting `39dc573f3826dca6`, release
 ## Local-first continuation — founder authorization, November 20
 
 The account lock no longer gates development or founder experience review. [The single local verification command](../../verification/local-first/README.md) runs the applicable Launch/QA checks, records exact-source integrity, and offers optional pinned Linux Docker with native fallback. Failures and unsupported Linux coverage remain explicit. GitHub workflow definitions are preserved; local verification is not release authorization. Final executed evidence will be linked from the draft and handoff. Do not wait for billing restoration to conduct the five-task prototype review.
+
+
+The [first complete local gate](../../verification/local-first/VERIFIED_2583bf5.md) is preserved with 684 pass / three fail / 15 skip and valid exact-source integrity. It found an actual standalone mobile placement issue (fixed with spacing, assertion retained) and two failed concurrent-save cases (backend untouched, not waived). The resulting final head is rerun separately and linked from the PR. No GitHub billing action is necessary to review the real prototype. Supported Linux baseline review and human acceptance still remain.

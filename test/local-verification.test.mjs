@@ -4,7 +4,7 @@ import { mkdtemp, mkdir, writeFile, rm, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { fingerprint, integrity, credentialProblems, tapCounts, playwrightCounts, overall, summarize, plan, watchSource, IMAGE } from '../scripts/local-verification/core.mjs';
+import { fingerprint, integrity, credentialProblems, tapCounts, playwrightCounts, overall, summarize, plan, watchSource, IMAGE, mergeChecks, localDockerEndpoint } from '../scripts/local-verification/core.mjs';
 import { verificationReporters } from '../e2e/support/local-verification-reporters.mjs';
 
 test('exact-head integrity rejects dirty, changed, different-branch and different-SHA results', async () => {
@@ -63,4 +63,13 @@ test('local plan covers workflow run commands and never deploys or updates basel
 test('structured browser reporting is opt-in and retains the original reporter', () => {
   const before=process.env.LOCAL_VERIFY_JSON;
   try{delete process.env.LOCAL_VERIFY_JSON;assert.deepEqual(verificationReporters([['list']]),[['list']]);process.env.LOCAL_VERIFY_JSON='/tmp/synthetic-report.json';assert.deepEqual(verificationReporters([['list']]),[['list'],['json',{outputFile:'/tmp/synthetic-report.json'}]]);}finally{if(before===undefined)delete process.env.LOCAL_VERIFY_JSON;else process.env.LOCAL_VERIFY_JSON=before;}
+});
+
+
+test('partial results retain executed failures and Docker requires a local endpoint', () => {
+  const checks=mergeChecks([{id:'first',status:'FAIL'}],[{id:'first',status:'PASS'},{id:'second',status:'PASS'}]);
+  assert.deepEqual(checks,[{id:'first',status:'FAIL'},{id:'second',status:'PASS'}]);
+  assert.equal(localDockerEndpoint('unix:///var/run/docker.sock'),true);
+  assert.equal(localDockerEndpoint('npipe:////./pipe/docker_engine'),true);
+  for(const endpoint of ['tcp://remote:2376','ssh://remote','https://host',''])assert.equal(localDockerEndpoint(endpoint),false);
 });

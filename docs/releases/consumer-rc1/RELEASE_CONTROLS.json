@@ -1,0 +1,24 @@
+{
+  "observedAt": "2026-11-21T20:02:37.423687+00:00",
+  "master": "6dcffca4eb186c6e0da7431523d7137652e14990",
+  "masterProtected": false,
+  "rulesets": [],
+  "productionProtectionRules": [],
+  "productionDeploymentBranchPolicy": null,
+  "workflow": {
+    "id": 374057520,
+    "state": "active",
+    "path": ".github/workflows/firebase-production.yml",
+    "sha256": "33dc66f522611d09035817550819517fd1db719632b308ce36c202a693e5c792",
+    "concurrencyGroup": "firebase-production",
+    "cancelInProgress": true,
+    "outstandingRunCounts": {
+      "queued": 0,
+      "in_progress": 0,
+      "waiting": 0,
+      "pending": 0
+    }
+  },
+  "settingsChanged": false,
+  "exclusiveWindowEstablished": false
+}

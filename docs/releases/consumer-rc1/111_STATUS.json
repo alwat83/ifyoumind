@@ -1,0 +1,9 @@
+{
+  "source": "https://github.com/alwat83/ifyoumind/pull/111#issuecomment-6955694003",
+  "authorization": "https://github.com/alwat83/ifyoumind/pull/111#issuecomment-6955510854",
+  "status": "NOT_EXECUTED",
+  "lastDocumentedBlocker": "Existing workspace failed QA-only designation and available-allowance preconditions. Do not relabel it, reset quotas or delete records.",
+  "currentEvidence": "No eligible replacement workspace or successful live retry is established in the reviewed records. This does not prove no eligible workspace exists.",
+  "nextAction": "Identify a verified internal QA workspace with a legitimate unused allowance, or separately authorize dedicated synthetic QA setup; do not request the already granted test approval again.",
+  "productionDataReadOrChangedForThisReview": false
+}

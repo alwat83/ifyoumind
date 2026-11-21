@@ -58,3 +58,9 @@ Statuses and process exits: **PASS / 0** only with no failed, blocked or environ
 Do not commit raw reports containing test payloads, traces, logs or large screenshots. Commit only the sanitized JSON/Markdown summary and use existing approved synthetic design captures for review. The [preserved first result](VERIFIED_2583bf5.md) and [machine report](VERIFIED_2583bf5.json) identify their tested SHA; a subsequent evidence-only commit is a new head and must be identified separately. PR evidence records the final exact-head run, avoiding a false claim that an earlier run covers a moving branch.
 
 Linux visual failures remain failures. Individually inspect expected, actual and diff images; update only reviewed baselines through the existing design-system procedure. This runner cannot accept them automatically. Physical iPhone/Safari, spoken VoiceOver, human comprehension and the unwaived #111 live gate remain separate from automated local verification.
+
+## Phase 3 reliability and visual readiness
+
+The plan now also runs `npm run diagnose:transactions`. This uses a loopback demo-only gRPC proxy and real emulator rollback to test whether an original transaction abort reaches the SDK runner. It currently has two strict recovery failures in Firestore 7.11.6/GAX 4.6.1. They remain **FAIL**, not expected passes, and make the overall gate FAIL even if normal journeys pass. There is no SDK patch, application retry or backend logic change. [Mechanism, limitations and release gates](../../design/midnight-slate/phase3/REVIEW.md).
+
+Native `visual-readiness.spec.mjs` walks the same shared journeys as Linux pixel checks and captures visibility/overflow evidence. It does not read or approve baselines. Linux-only assertions, missing-baseline failures and individual image review remain mandatory for visual release acceptance. No automatic baseline update is provided.

@@ -1,0 +1,59 @@
+{
+  "observedAt": "2026-11-21T05:46:52.097Z",
+  "readOnly": true,
+  "channel": {
+    "name": "sites/ifyoumind-473fe/channels/live",
+    "release": "sites/ifyoumind-473fe/channels/live/releases/1794933315802000",
+    "releaseTime": "2026-11-17T16:35:15.802Z",
+    "version": "sites/ifyoumind-473fe/versions/39dc573f3826dca6",
+    "status": "FINALIZED"
+  },
+  "releases": [
+    {
+      "name": "sites/ifyoumind-473fe/releases/1794933315802000",
+      "version": "sites/ifyoumind-473fe/versions/39dc573f3826dca6",
+      "time": "2026-11-17T16:35:15.802Z",
+      "type": "DEPLOY"
+    },
+    {
+      "name": "sites/ifyoumind-473fe/releases/1794897478282000",
+      "version": "sites/ifyoumind-473fe/versions/cd0b78221355e0f4",
+      "time": "2026-11-17T06:37:58.282Z",
+      "type": "DEPLOY"
+    },
+    {
+      "name": "sites/ifyoumind-473fe/releases/1794885119997000",
+      "version": "sites/ifyoumind-473fe/versions/cb075e76ab2665f8",
+      "time": "2026-11-17T03:11:59.997Z",
+      "type": "DEPLOY"
+    }
+  ],
+  "39dc573f3826dca6": {
+    "name": "sites/ifyoumind-473fe/versions/39dc573f3826dca6",
+    "status": "FINALIZED",
+    "createTime": "2026-11-17T16:34:05.323384Z",
+    "fileCount": "58"
+  },
+  "cd0b78221355e0f4": {
+    "name": "sites/ifyoumind-473fe/versions/cd0b78221355e0f4",
+    "status": "FINALIZED",
+    "createTime": "2026-11-17T06:37:05.669962Z",
+    "fileCount": "58"
+  },
+  "writer": {
+    "state": "ACTIVE",
+    "revision": "createmarketintelligenceproject-00087-nub",
+    "enrollmentEmpty": true
+  },
+  "traffic": {
+    "latestReadyRevision": "projects/ifyoumind-473fe/locations/us-central1/services/createmarketintelligenceproject/revisions/createmarketintelligenceproject-00087-nub",
+    "traffic": [
+      {
+        "type": "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST",
+        "revision": "createmarketintelligenceproject-00087-nub",
+        "percent": 100
+      }
+    ]
+  },
+  "evidenceStage": "Checkpoint before Phase 3 exact-head verification; no production mutation"
+}

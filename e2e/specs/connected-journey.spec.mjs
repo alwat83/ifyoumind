@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
-import { test, expect, expectAccessible, expectNoHorizontalScroll } from '../support/test.mjs';
+import { FIXTURES } from '../support/fixtures.mjs';
+import { test, expect, expectAccessible, expectNoHorizontalScroll, signInThroughUi } from '../support/test.mjs';
 
 const raw = readFileSync('src/app/intelligence/home-bill-examples.json', 'utf8');
 const examples = JSON.parse(raw);
@@ -50,5 +51,27 @@ for (const category of ['tax', 'electricity']) {
     const menu = navigation.locator('.mobile-navigation');
     if (await menu.isVisible()) await menu.locator('summary').click();
     await expect(navigation.getByRole('link', { name: 'Explore examples', exact: true })).toHaveAttribute('href', `/?example=${category}#business`);
+  });
+}
+
+for (const fixtureId of [FIXTURES.FREE_NO_REPORTS, FIXTURES.FREE_WITH_DECISION]) {
+  test(`saved city decisions explain the private-bill boundary: ${fixtureId}`, async ({ page, fixtures }) => {
+    const user = await fixtures(fixtureId, { decisions: fixtureId === FIXTURES.FREE_WITH_DECISION ? 1 : 0 });
+    await signInThroughUi(page, user);
+    await expect(page.getByRole('heading', { name: 'Your decisions', exact: true })).toBeVisible();
+    await expect(page.locator('.hero')).toContainText('City briefs and reports are saved here.');
+    await expect(page.locator('.hero')).toContainText('Private bill comparisons stay in their browser tab.');
+    await expect(page.getByRole('link', { name: 'Start a decision', exact: false })).toHaveCount(1);
+    await expect(page.locator('.home a[href="/decide"]')).toHaveCount(1);
+    if (fixtureId === FIXTURES.FREE_NO_REPORTS) {
+      await expect(page.getByText('No saved city decisions yet.', { exact: true })).toBeVisible();
+      await expect(page.locator('.first-time a')).toHaveCount(0);
+    } else {
+      await expect(page.locator('.recent-grid a')).toHaveCount(1);
+      await page.locator('.recent-grid a').click();
+      await expect(page.locator('#recommendation')).toBeVisible();
+    }
+    await expectAccessible(page);
+    await expectNoHorizontalScroll(page);
   });
 }

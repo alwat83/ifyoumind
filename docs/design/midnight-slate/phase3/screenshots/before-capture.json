@@ -1,0 +1,60 @@
+{
+  "source": "52dea070267b2858d559ca55094f25b024520923",
+  "kind": "actual local app; synthetic QA city fixture, not real market evidence",
+  "observations": [
+    {
+      "phase": "before",
+      "state": "empty",
+      "width": 1440,
+      "overflow": 0,
+      "primaryActions": 1,
+      "duplicateEmptyActions": 1,
+      "boundaryInHero": false
+    },
+    {
+      "phase": "before",
+      "state": "empty",
+      "width": 390,
+      "overflow": 0,
+      "primaryActions": 1,
+      "duplicateEmptyActions": 1,
+      "boundaryInHero": false
+    },
+    {
+      "phase": "before",
+      "state": "empty",
+      "width": 320,
+      "overflow": 0,
+      "primaryActions": 1,
+      "duplicateEmptyActions": 1,
+      "boundaryInHero": false
+    },
+    {
+      "phase": "before",
+      "state": "saved",
+      "width": 1440,
+      "overflow": 0,
+      "primaryActions": 1,
+      "duplicateEmptyActions": 0,
+      "boundaryInHero": false
+    },
+    {
+      "phase": "before",
+      "state": "saved",
+      "width": 390,
+      "overflow": 0,
+      "primaryActions": 1,
+      "duplicateEmptyActions": 0,
+      "boundaryInHero": false
+    },
+    {
+      "phase": "before",
+      "state": "saved",
+      "width": 320,
+      "overflow": 0,
+      "primaryActions": 1,
+      "duplicateEmptyActions": 0,
+      "boundaryInHero": false
+    }
+  ]
+}

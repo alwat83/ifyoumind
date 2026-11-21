@@ -1,0 +1,136 @@
+{
+  "scope": "demo-only, synthetic, direct SDK, no provider calls",
+  "sdk": "7.11.6",
+  "results": [
+    {
+      "aggregate": false,
+      "waiting": 10,
+      "milliseconds": 3588,
+      "count": 50,
+      "outputs": [
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        },
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        },
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        },
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        },
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        },
+        {
+          "outcome": "created",
+          "attempts": 1
+        },
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        },
+        {
+          "outcome": "created",
+          "attempts": 2
+        },
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        },
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        }
+      ]
+    },
+    {
+      "aggregate": true,
+      "waiting": 10,
+      "milliseconds": 3418,
+      "count": 50,
+      "outputs": [
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        },
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        },
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        },
+        {
+          "outcome": "created",
+          "attempts": 1
+        },
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        },
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        },
+        {
+          "outcome": "created",
+          "attempts": 2
+        },
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        },
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        },
+        {
+          "outcome": "refused",
+          "attempts": 2,
+          "code": "CAP",
+          "message": "Cap reached"
+        }
+      ]
+    }
+  ],
+  "events": [],
+  "evidenceStage": "Checkpoint before Phase 3 exact-head verification; no production mutation"
+}

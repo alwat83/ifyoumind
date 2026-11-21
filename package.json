@@ -36,7 +36,8 @@
     "test:unified": "playwright test --config e2e/unified.config.mjs",
     "build:discover": "ng build --configuration discover",
     "test:discover": "playwright test --config e2e/discover.config.mjs",
-    "start:discover": "node e2e/support/hosting-server.mjs"
+    "start:discover": "node e2e/support/hosting-server.mjs",
+    "diagnose:transactions": "firebase emulators:exec --project demo-ifyoumind --only firestore \"node --test test/diagnostics/firestore-transaction-transport.cjs\""
   },
   "private": true,
   "dependencies": {

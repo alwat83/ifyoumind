@@ -1,0 +1,26 @@
+{
+  "scope": "synthetic local, no checkout/provider requests",
+  "observations": [
+    {
+      "width": 1440,
+      "publicPath": "question \u2192 reveal \u2192 evidence \u2192 private CSV \u2192 category return \u2192 cities \u2192 sample report",
+      "externalRequests": 0
+    },
+    {
+      "width": 390,
+      "publicPath": "question \u2192 reveal \u2192 evidence \u2192 private CSV \u2192 category return \u2192 cities \u2192 sample report",
+      "externalRequests": 0
+    },
+    {
+      "width": 320,
+      "publicPath": "question \u2192 reveal \u2192 evidence \u2192 private CSV \u2192 category return \u2192 cities \u2192 sample report",
+      "externalRequests": 0
+    },
+    {
+      "signedIn": true,
+      "path": "empty decisions \u2192 original question \u2192 supported free answer \u2192 saved decisions \u2192 reopen",
+      "externalRequests": 0
+    }
+  ],
+  "evidenceStage": "Checkpoint before Phase 3 exact-head verification; no production mutation"
+}

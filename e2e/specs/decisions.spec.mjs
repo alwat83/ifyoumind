@@ -180,7 +180,7 @@ test('a verified free user creates a decision through the app and sees the free 
   await signInThroughUi(page, user);
   await expect(page).toHaveURL(/\/decisions$/);
   await expect(page.getByRole('heading', { name: 'Your decisions' })).toBeVisible();
-  await expect(page.getByText('Nothing to manage yet')).toBeVisible();
+  await expect(page.getByText('No saved city decisions yet.')).toBeVisible();
 
   await page.goto('/decide?type=business');
   const question = page.getByLabel('Your question');

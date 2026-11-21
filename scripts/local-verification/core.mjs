@@ -89,6 +89,7 @@ export function plan() {
     check('commerce-entitlements', 'npm run test:commerce', ['functions-build'], 'emulator-tap'),
     check('fixtures-access', 'npm run test:qa-integration', ['functions-build'], 'emulator-tap'),
     check('authenticated-browser', 'npm run test:e2e', ['functions-build', 'local-build'], 'emulator-browser'),
+    check('transaction-transport', 'npm run diagnose:transactions', ['functions-build'], 'emulator-tap'),
   ];
 }
 

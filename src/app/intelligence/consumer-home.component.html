@@ -1,27 +1,44 @@
 <main class="home">
-  <nav class="topbar">
-    <a routerLink="/" class="brand" aria-label="ifYouMind home">ifYouMind</a>
-    <div>
-      <a routerLink="/pricing">Pricing</a>
-      <a routerLink="/data">My data</a>
-      <a routerLink="/account">Account</a>
-    </div>
-  </nav>
+  <app-journey-navigation current="saved"></app-journey-navigation>
 
   <section class="hero">
-    <p class="eyebrow">Make a smarter call</p>
-    <h1>What are you trying to figure out?</h1>
-    <p>Tell us what you’re considering. We’ll pull the useful facts together and explain what they mean in plain English.</p>
-    <a routerLink="/decide" class="primary">Start a decision</a>
+    <div><p class="eyebrow">Your thinking, kept together</p>
+    <h1>Your decisions</h1>
+    <p>City briefs and reports are saved here. Private bill comparisons stay in their browser tab.</p></div>
+    <a routerLink="/decide" class="primary">Start a decision <span aria-hidden="true">↗</span></a>
   </section>
 
-  <div class="reassurance">
-    <span>No special expertise needed</span>
-    <span>Live public data</span>
-    <span>Sources included</span>
-  </div>
+  <section *ngIf="loading" class="state">Loading your decisions…</section>
+  <section *ngIf="error" class="state error">{{ error }}</section>
 
-  <section class="quick-grid">
+  <section *ngIf="!loading && !error && !recent.length" class="first-time">
+    <div>
+      <p class="eyebrow">Your first brief</p>
+      <h2>No saved city decisions yet.</h2>
+    </div>
+  </section>
+
+  <section *ngIf="!loading && recent.length" class="recent">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Recent</p>
+        <h2>Pick up where you left off.</h2>
+      </div>
+    </div>
+
+    <div class="recent-grid">
+      <a *ngFor="let item of recent" [routerLink]="['/decisions', item.id]">
+        <span>{{ item.location }}</span>
+        <strong>{{ item.decision || item.concept }}</strong>
+        <small>{{ item.createdAt ? (item.createdAt | date:'mediumDate') : '' }}</small>
+      </a>
+    </div>
+  </section>
+
+  <section class="quick-grid" aria-label="Ways to explore">
+    <div class="section-head"><p class="eyebrow">A new perspective</p><h2>Where do you want to look next?</h2></div>
+    <a href="/discover/?example=tax"><span class="icon">01</span><strong>Understand a property-tax bill</strong><p>See which charges changed. Start with a free example.</p></a>
+    <a href="/discover/?example=electricity"><span class="icon">02</span><strong>Understand an electricity bill</strong><p>Separate changes in use from changes in total charges.</p></a>
     <a routerLink="/decide" [queryParams]="{type:'business'}">
       <span class="icon">⌂</span>
       <strong>Should I open here?</strong>
@@ -42,36 +59,6 @@
       <strong>Explore my own data</strong>
       <p>Look at a CSV of your own numbers. It isn’t used in Decision Reports yet.</p>
     </a>
-  </section>
-
-  <section *ngIf="loading" class="state">Loading your decisions…</section>
-  <section *ngIf="error" class="state error">{{ error }}</section>
-
-  <section *ngIf="!loading && !error && !recent.length" class="first-time">
-    <div>
-      <p class="eyebrow">Your first brief</p>
-      <h2>Nothing to manage yet — that’s okay.</h2>
-      <p>Once you ask your first question, your Decision Brief will show up here so you can come back to it anytime.</p>
-    </div>
-    <a routerLink="/decide">Create my first brief</a>
-  </section>
-
-  <section *ngIf="!loading && recent.length" class="recent">
-    <div class="section-head">
-      <div>
-        <p class="eyebrow">Recent</p>
-        <h2>Your decisions</h2>
-      </div>
-      <a routerLink="/decide">New decision</a>
-    </div>
-
-    <div class="recent-grid">
-      <a *ngFor="let item of recent" [routerLink]="['/decisions', item.id]">
-        <span>{{ item.location }}</span>
-        <strong>{{ item.concept }}</strong>
-        <small>{{ item.createdAt ? (item.createdAt | date:'mediumDate') : '' }}</small>
-      </a>
-    </div>
   </section>
 
   <footer class="app-footer">

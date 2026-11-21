@@ -91,11 +91,11 @@ button {
 
 .ask-panel form button {
   justify-self: end;
-  background: var(--iy-paper);
-  color: var(--iy-studio);
+  background: var(--iy-periwinkle);
+  color: var(--iy-bg);
 }
 
-button:disabled { opacity: .5; cursor: default; }
+button:disabled { opacity: 1; cursor: default; }
 
 .prompt-row, .followups {
   display: flex;
@@ -141,8 +141,8 @@ button:disabled { opacity: .5; cursor: default; }
 
 .save-answer {
   margin-top: 14px;
-  background: var(--iy-paper);
-  color: var(--iy-studio);
+  background: var(--iy-periwinkle);
+  color: var(--iy-bg);
 }
 
 .saved-actions {
@@ -176,3 +176,14 @@ button { @include product.button; }
 .saved-actions { flex-wrap: wrap; }
 
 textarea::placeholder { color: var(--iy-studio-muted); opacity: .8; }
+.app-nav { @include product.navigation; }
+header h1 { @include product.title; }
+.ask-panel { padding:28px 0; border:0; background:none; }
+.ask-panel textarea { background:none; border:0; border-bottom:1px solid var(--iy-control); border-radius:0; font-size:24px; padding:20px 0; }
+.prompt-row button { border:0; border-bottom:1px solid var(--iy-control); background:none; border-radius:0; }
+.answer-panel { padding:32px; border:0; border-left:2px solid var(--iy-periwinkle); background:var(--iy-panel); }
+.history article { border:0; border-bottom:1px solid var(--iy-line); border-radius:0; background:none; }
+.data-context { color:var(--iy-muted); font-size:14px; }.data-context a,.panel>a { color:var(--iy-accent); }
+.data-context a { text-decoration:underline; }
+
+.ask-panel form button:disabled { background:var(--iy-panel); color:var(--iy-muted); border:1px solid var(--iy-control); }

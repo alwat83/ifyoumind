@@ -1,5 +1,15 @@
 # ifYouMind design system
 
+## Midnight Slate connected redesign candidate
+
+The November 20 founder directive authorizes the separate Midnight Slate redesign on the PR #118 foundation. It does not approve deployment or replace the verified production baseline. [Journey audit and connected prototype](midnight-slate/REVIEW.md). Use one question/finding/evidence/next-action model; shared goal-based navigation is presentation-only and safe for the browser-local island. It must not read identity, storage or private bill rows.
+
+Candidate palette: Midnight `#090D17`, Deep Slate `#162330`, Ice White `#F1F7FA`, Soft Blue `#7C9CFF`, Electric Cyan `#58D5E8`. Purpose headings are confident sans; major findings use Instrument Serif. Prefer reading sequences and saved-question lists over equal-weight cards. Pricing explains the city-report scope; account-based datasets and private bill CSVs remain explicitly distinct. Blue buttons use dark foreground text. All inline links must have a non-color distinction, all controls visible focus, and native disclosures keyboard support. Print uses dark ink on white paper as an intentional output exception.
+
+The following historical reference and baseline review procedure remain useful; earlier light surface/color descriptions do not govern this candidate.
+
+## Historical approved identity
+
 [The approved Wow 3.1 homepage](https://github.com/alwat83/ifyoumind/tree/165b5bbe6f2d9f2c3ceb424ffc289ce7bcf4080c/src/app/intelligence) is the visual reference. [The shared Sass module](../../src/app/_product-design.scss) defines the implementation. App styles, browser-local Discovery, static guides and static 404 reuse it through their existing entry points.
 
 | Role | Use |

@@ -1,0 +1,166 @@
+{
+  "kind": "review-only native concept checks",
+  "browser": "157.0.8103.80",
+  "passed": 12,
+  "failed": 0,
+  "cases": [
+    {
+      "concept": "a",
+      "width": 320,
+      "height": 568,
+      "actionBottom": 488.3125,
+      "reward": {
+        "x": 20,
+        "y": 24.3125,
+        "width": 280,
+        "height": 101.71875
+      },
+      "status": "PASS"
+    },
+    {
+      "concept": "a",
+      "width": 390,
+      "height": 844,
+      "actionBottom": 481.5,
+      "reward": {
+        "x": 20,
+        "y": 23.5,
+        "width": 350,
+        "height": 67.8125
+      },
+      "status": "PASS"
+    },
+    {
+      "concept": "a",
+      "width": 820,
+      "height": 900,
+      "actionBottom": 356.09375,
+      "reward": {
+        "x": 426,
+        "y": 24.09375,
+        "width": 354,
+        "height": 120.796875
+      },
+      "status": "PASS"
+    },
+    {
+      "concept": "a",
+      "width": 1440,
+      "height": 900,
+      "actionBottom": 348.09375,
+      "reward": {
+        "x": 894.890625,
+        "y": 24.09375,
+        "width": 415.09375,
+        "height": 80.53125
+      },
+      "status": "PASS"
+    },
+    {
+      "concept": "b",
+      "width": 320,
+      "height": 568,
+      "actionBottom": 560.125,
+      "reward": {
+        "x": 20,
+        "y": 24.125,
+        "width": 280,
+        "height": 29.671875
+      },
+      "status": "PASS"
+    },
+    {
+      "concept": "b",
+      "width": 390,
+      "height": 844,
+      "actionBottom": 660.71875,
+      "reward": {
+        "x": 20,
+        "y": 23.71875,
+        "width": 350,
+        "height": 29.671875
+      },
+      "status": "PASS"
+    },
+    {
+      "concept": "b",
+      "width": 820,
+      "height": 900,
+      "actionBottom": 606.234375,
+      "reward": {
+        "x": 454,
+        "y": 24.234375,
+        "width": 298,
+        "height": 29.671875
+      },
+      "status": "PASS"
+    },
+    {
+      "concept": "b",
+      "width": 1440,
+      "height": 900,
+      "actionBottom": 624.34375,
+      "reward": {
+        "x": 796,
+        "y": 24.34375,
+        "width": 478,
+        "height": 29.671875
+      },
+      "status": "PASS"
+    },
+    {
+      "concept": "c",
+      "width": 320,
+      "height": 568,
+      "actionBottom": 561.140625,
+      "reward": {
+        "x": 20,
+        "y": 24.140625,
+        "width": 280,
+        "height": 102.59375
+      },
+      "status": "PASS"
+    },
+    {
+      "concept": "c",
+      "width": 390,
+      "height": 844,
+      "actionBottom": 566.40625,
+      "reward": {
+        "x": 20,
+        "y": 24.40625,
+        "width": 350,
+        "height": 102.59375
+      },
+      "status": "PASS"
+    },
+    {
+      "concept": "c",
+      "width": 820,
+      "height": 900,
+      "actionBottom": 694.90625,
+      "reward": {
+        "x": 40,
+        "y": 23.90625,
+        "width": 740,
+        "height": 125.390625
+      },
+      "status": "PASS"
+    },
+    {
+      "concept": "c",
+      "width": 1440,
+      "height": 900,
+      "actionBottom": 775.4375,
+      "reward": {
+        "x": 240,
+        "y": 24.4375,
+        "width": 960,
+        "height": 152
+      },
+      "status": "PASS"
+    }
+  ],
+  "humanComprehension": "UNTESTED",
+  "linuxBaselines": "NOT UPDATED"
+}

@@ -1,19 +1,23 @@
 <main class="ask-shell">
+  <app-journey-navigation current="data"></app-journey-navigation>
   <nav class="app-nav" aria-label="Workspace">
-    <a routerLink="/" class="brand" aria-label="ifYouMind home">ifYouMind</a>
+    <span class="eyebrow">Your saved data</span>
     <div>
-      <a routerLink="/decisions">Your decisions</a>
-      <a routerLink="/data">My data</a>
-      <a routerLink="/ask" class="active" aria-current="page">Ask</a>
-      <a routerLink="/advanced">Advanced</a>
+      <a routerLink="/data">Your datasets</a>
+      <a routerLink="/ask" class="active" aria-current="page">Ask about saved data</a>
+      <a routerLink="/advanced">Explore in detail</a>
     </div>
   </nav>
-  <header><p class="eyebrow">Ask ifYouMind</p><h1>Ask your data a question.</h1><p class="lede">ifYouMind finds the dataset you mean, compares it with the data you already have, and shows what the evidence supports.</p></header>
+  <header><p class="eyebrow">Ask ifYouMind</p><h1>Ask about your saved data.</h1><p class="lede">Ask about compatible datasets in your account. We can compare observations and show supported relationships; a relationship is not proof of cause.</p></header>
   <section *ngIf="loading" class="panel">Loading workspace…</section>
   <section *ngIf="error" class="panel error">{{ error }}</section>
+  <section *ngIf="!loading && !workspace" class="panel">
+    <h2>Start with data you can inspect.</h2><p>Import a supported dataset to your account before asking about its observations.</p><a routerLink="/data">Choose or add data</a>
+  </section>
   <section *ngIf="!loading && workspace" class="ask-panel">
+    <p class="data-context">This analyzes saved datasets, not bills in private Discovery. <a routerLink="/data">Choose or add data</a>.</p>
     <form (ngSubmit)="submit()">
-      <textarea aria-label="Question" name="question" [(ngModel)]="question" maxlength="500" rows="3" placeholder="What seems to be driving home prices?"></textarea>
+      <textarea aria-label="Question" name="question" [(ngModel)]="question" maxlength="500" rows="3" placeholder="What is related to Median Home Price?"></textarea>
       <button type="submit" [disabled]="asking || !question.trim()">{{ asking ? 'Looking across your data…' : 'Ask ifYouMind' }}</button>
     </form>
     <div class="prompt-row"><button *ngFor="let prompt of prompts" type="button" (click)="usePrompt(prompt)">{{ prompt }}</button></div>

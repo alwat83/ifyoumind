@@ -1,0 +1,1420 @@
+{
+  "schemaVersion": 1,
+  "commit": "2583bf5d4a31614b95f042a254e4c03c94bc9b1e",
+  "branch": "codex/midnight-slate",
+  "startedAt": "2026-11-21T00:44:20.699Z",
+  "environment": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "node": "v22.23.2",
+    "npm": "10.9.8",
+    "java": "openjdk version \"17.0.20.1\" 2026-08-18",
+    "mode": "native",
+    "docker": {
+      "requested": true,
+      "installed": false,
+      "available": false
+    },
+    "dependencies": {
+      "app/@angular/common": "19.2.25",
+      "app/@angular/compiler": "19.2.25",
+      "app/@angular/core": "19.2.25",
+      "app/@angular/fire": "19.2.0",
+      "app/@angular/forms": "19.2.25",
+      "app/@angular/platform-browser": "19.2.25",
+      "app/@angular/platform-browser-dynamic": "19.2.25",
+      "app/@angular/router": "19.2.25",
+      "app/firebase": "12.14.0",
+      "app/ngx-joyride": "2.5.0",
+      "app/rxjs": "7.8.2",
+      "app/tslib": "2.8.1",
+      "app/zone.js": "0.15.1",
+      "app/@angular-devkit/build-angular": "19.2.27",
+      "app/@angular/cli": "19.2.27",
+      "app/@angular/compiler-cli": "19.2.25",
+      "app/@axe-core/playwright": "4.10.2",
+      "app/@firebase/rules-unit-testing": "5.0.2",
+      "app/@playwright/test": "1.56.0",
+      "app/@types/jasmine": "5.1.15",
+      "app/angular-eslint": "20.3.0",
+      "app/autoprefixer": "10.5.0",
+      "app/eslint": "9.39.4",
+      "app/firebase-admin": "12.7.0",
+      "app/firebase-tools": "13.35.1",
+      "app/jasmine-core": "5.6.0",
+      "app/karma": "6.4.4",
+      "app/karma-chrome-launcher": "3.2.0",
+      "app/karma-coverage": "2.2.1",
+      "app/karma-jasmine": "5.1.0",
+      "app/karma-jasmine-html-reporter": "2.1.0",
+      "app/marked": "13.0.3",
+      "app/postcss": "8.5.15",
+      "app/tailwindcss": "3.4.19",
+      "app/typescript": "5.7.3",
+      "app/typescript-eslint": "8.40.0",
+      "functions/firebase-admin": "13.5.0",
+      "functions/firebase-functions": "6.4.0",
+      "functions/@types/node": "20.19.19",
+      "functions/typescript": "5.9.3"
+    },
+    "playwright": "1.56.0",
+    "browser": "157.0.8103.80",
+    "browserChannel": "chrome"
+  },
+  "integrity": {
+    "valid": true,
+    "before": {
+      "head": "2583bf5d4a31614b95f042a254e4c03c94bc9b1e",
+      "digest": "2e9c83aaa22397171884e5c392e13011078473b40b77b0f4217b8aec00f739ff",
+      "clean": true
+    },
+    "after": {
+      "head": "2583bf5d4a31614b95f042a254e4c03c94bc9b1e",
+      "digest": "2e9c83aaa22397171884e5c392e13011078473b40b77b0f4217b8aec00f739ff",
+      "clean": true
+    },
+    "snapshotDigest": "2e9c83aaa22397171884e5c392e13011078473b40b77b0f4217b8aec00f739ff",
+    "sourceEvents": 0,
+    "watcherError": false
+  },
+  "checks": [
+    {
+      "id": "app-install",
+      "command": "npm ci",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 68558,
+      "status": "PASS"
+    },
+    {
+      "id": "functions-install",
+      "command": "npm --prefix functions ci",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 2727,
+      "status": "PASS"
+    },
+    {
+      "id": "locked-dependencies",
+      "command": "Compare installed direct dependencies to both lockfiles",
+      "status": "PASS"
+    },
+    {
+      "id": "functions-build",
+      "command": "npm --prefix functions run build",
+      "needs": [],
+      "kind": "check",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 1518,
+      "status": "PASS"
+    },
+    {
+      "id": "functions-tests",
+      "command": "npm --prefix functions test",
+      "needs": [
+        "functions-build"
+      ],
+      "kind": "tap",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 1889,
+      "status": "PASS",
+      "tests": {
+        "executed": 72,
+        "passed": 72,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "fast-web",
+      "command": "npm run test:seo",
+      "needs": [],
+      "kind": "tap",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 1380,
+      "status": "PASS",
+      "tests": {
+        "executed": 153,
+        "passed": 153,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "production-build",
+      "command": "npm run build",
+      "needs": [],
+      "kind": "check",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 9476,
+      "status": "PASS"
+    },
+    {
+      "id": "production-bundle",
+      "command": "npm run check:production-bundle",
+      "needs": [
+        "production-build"
+      ],
+      "kind": "check",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 130,
+      "status": "PASS"
+    },
+    {
+      "id": "production-isolation",
+      "command": "node scripts/check-discovery-isolation.mjs --production",
+      "needs": [
+        "production-build"
+      ],
+      "kind": "check",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 43,
+      "status": "PASS"
+    },
+    {
+      "id": "local-build",
+      "command": "npm run build:local",
+      "needs": [],
+      "kind": "check",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 7703,
+      "status": "PASS"
+    },
+    {
+      "id": "discovery-build",
+      "command": "npm run build:discovery",
+      "needs": [],
+      "kind": "check",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 2691,
+      "status": "PASS"
+    },
+    {
+      "id": "electricity-build",
+      "command": "npm run build:electricity",
+      "needs": [],
+      "kind": "check",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 2722,
+      "status": "PASS"
+    },
+    {
+      "id": "unified-build",
+      "command": "npm run build:unified",
+      "needs": [],
+      "kind": "check",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 2993,
+      "status": "PASS"
+    },
+    {
+      "id": "discovery-isolation",
+      "command": "node scripts/check-discovery-isolation.mjs --preview",
+      "needs": [
+        "discovery-build"
+      ],
+      "kind": "check",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 36,
+      "status": "PASS"
+    },
+    {
+      "id": "electricity-isolation",
+      "command": "node scripts/check-discovery-isolation.mjs --electricity",
+      "needs": [
+        "electricity-build"
+      ],
+      "kind": "check",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 38,
+      "status": "PASS"
+    },
+    {
+      "id": "unified-isolation",
+      "command": "node scripts/check-discovery-isolation.mjs --unified",
+      "needs": [
+        "unified-build"
+      ],
+      "kind": "check",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 35,
+      "status": "PASS"
+    },
+    {
+      "id": "discovery-browser",
+      "command": "npm run test:discovery",
+      "needs": [
+        "discovery-build"
+      ],
+      "kind": "browser",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 26851,
+      "status": "PASS",
+      "tests": {
+        "executed": 48,
+        "passed": 48,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "electricity-browser",
+      "command": "npm run test:electricity",
+      "needs": [
+        "electricity-build"
+      ],
+      "kind": "browser",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 18066,
+      "status": "PASS",
+      "tests": {
+        "executed": 27,
+        "passed": 27,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "unified-browser",
+      "command": "npm run test:unified",
+      "needs": [
+        "unified-build"
+      ],
+      "kind": "browser",
+      "exitCode": 1,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 24752,
+      "status": "FAIL",
+      "tests": {
+        "executed": 36,
+        "passed": 35,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "hosting-browser",
+      "command": "npm run test:discover",
+      "needs": [
+        "production-build"
+      ],
+      "kind": "browser",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 50297,
+      "status": "PASS",
+      "tests": {
+        "executed": 84,
+        "passed": 84,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "firestore-rules",
+      "command": "npm run test:rules",
+      "needs": [],
+      "kind": "emulator-tap",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 4750,
+      "status": "PASS",
+      "tests": {
+        "executed": 8,
+        "passed": 8,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "organizations",
+      "command": "npm run test:organizations",
+      "needs": [
+        "functions-build"
+      ],
+      "kind": "emulator-tap",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 11066,
+      "status": "PASS",
+      "tests": {
+        "executed": 5,
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "commerce-entitlements",
+      "command": "npm run test:commerce",
+      "needs": [
+        "functions-build"
+      ],
+      "kind": "emulator-tap",
+      "exitCode": 1,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 33199,
+      "status": "FAIL",
+      "tests": {
+        "executed": 48,
+        "passed": 47,
+        "failed": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "fixtures-access",
+      "command": "npm run test:qa-integration",
+      "needs": [
+        "functions-build"
+      ],
+      "kind": "emulator-tap",
+      "exitCode": 0,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 61696,
+      "status": "PASS",
+      "tests": {
+        "executed": 24,
+        "passed": 24,
+        "failed": 0,
+        "skipped": 1
+      }
+    },
+    {
+      "id": "authenticated-browser",
+      "command": "npm run test:e2e",
+      "needs": [
+        "functions-build",
+        "local-build"
+      ],
+      "kind": "emulator-browser",
+      "exitCode": 1,
+      "signal": null,
+      "timedOut": false,
+      "spawnError": false,
+      "durationMs": 159896,
+      "status": "FAIL",
+      "tests": {
+        "executed": 182,
+        "passed": 181,
+        "failed": 1,
+        "skipped": 14
+      }
+    }
+  ],
+  "limitations": [
+    "Docker was requested but no usable local daemon is available. Native fallback executed; Docker path was not tested.",
+    "Installed Chrome fallback used; it is not the pinned Linux Playwright renderer. Functional browser checks remain useful; Linux pixel parity is not established.",
+    "Linux-only visual cases are explicitly skipped on this native OS. Native screenshots do not approve Linux baselines.",
+    "Native/container Node major differs from current hosted workflow Node 20 (Functions declares Node 22). Actual versions are recorded.",
+    "Java differs from hosted Java 21; actual local emulator results are recorded, without claiming identical environment parity."
+  ],
+  "releaseAuthorized": false,
+  "finishedAt": "2026-11-21T00:52:36.908Z",
+  "status": "FAIL",
+  "totals": {
+    "checks": {
+      "pass": 22,
+      "fail": 3,
+      "blocked": 0
+    },
+    "tests": {
+      "executed": 687,
+      "passed": 684,
+      "failed": 3,
+      "skipped": 15
+    }
+  },
+  "workflowHashes": {
+    "launch": "af595ac68379c4729c4523c22a88d66637baaff15bae46bc0fe903db01e87bca",
+    "qa": "399280e59eec3f0099731416c8f4b0c636d5f79987a2047d08fc48ee25076573"
+  },
+  "evidence": [
+    {
+      "path": "app-install.log",
+      "bytes": 4433,
+      "sha256": "d064ecdf6a4be9b21d3b97a5a57e1c34104d21f55224cc17fcf982adf2afffe4"
+    },
+    {
+      "path": "authenticated-browser.json",
+      "bytes": 229943,
+      "sha256": "9916d4ec2c707641eb959186403f802a8b9ce22e0bb9d04800a7f8bc03ac983a"
+    },
+    {
+      "path": "authenticated-browser.log",
+      "bytes": 434027,
+      "sha256": "b9d242425472a5248c3500fe82753bc3649a0a4bf05f63bfb6ea5f05152675a0"
+    },
+    {
+      "path": "commerce-entitlements.log",
+      "bytes": 27600,
+      "sha256": "73af16155d01cdfb21a8fe9bc8af5b75f0675c180377a80f7ec39b43d7102464"
+    },
+    {
+      "path": "discovery-browser.json",
+      "bytes": 55572,
+      "sha256": "bb08e98585f23f5b5141b630e0f27710b6da6fca92c95c9385e5cd555eff78d1"
+    },
+    {
+      "path": "discovery-browser.log",
+      "bytes": 9913,
+      "sha256": "ba3757f0d2be67d7fca616509e494f4e8824fd92bb717a27829d7e78aec2539b"
+    },
+    {
+      "path": "discovery-build.log",
+      "bytes": 968,
+      "sha256": "2b4e2d129e75dba123dcdf0924de86c3d7cac1befe11cdfe51d2e03f6da83950"
+    },
+    {
+      "path": "discovery-isolation.log",
+      "bytes": 84,
+      "sha256": "db4413c0e2c30640182d40c45e672eea924da28484e8ff99a919c5e7df9c4ad5"
+    },
+    {
+      "path": "electricity-browser.json",
+      "bytes": 33082,
+      "sha256": "c87d06d0a308e1474d8a3dda8cda9d4bb5c861584df7ccb781a88cdf70ebf70f"
+    },
+    {
+      "path": "electricity-browser.log",
+      "bytes": 6719,
+      "sha256": "b4a611a320d954e1a4e031abbeb05e814168143fa3308956f67e51b5e78a83b3"
+    },
+    {
+      "path": "electricity-build.log",
+      "bytes": 974,
+      "sha256": "c234f5d7188622c3d1f607e8146b797a409b94e8117c96e3117945d71f8d59f2"
+    },
+    {
+      "path": "electricity-isolation.log",
+      "bytes": 84,
+      "sha256": "db4413c0e2c30640182d40c45e672eea924da28484e8ff99a919c5e7df9c4ad5"
+    },
+    {
+      "path": "fast-web.log",
+      "bytes": 33164,
+      "sha256": "05a545535f9b1f17800ef18e44782a92fec2d586a8ddcfe4f7b1f11f171bf5bf"
+    },
+    {
+      "path": "firestore-rules.log",
+      "bytes": 5203,
+      "sha256": "953efd80d653b47ac9bebc5bcd13fd26758ef1912797f889cc9ea952b1eb510c"
+    },
+    {
+      "path": "fixtures-access.log",
+      "bytes": 69810,
+      "sha256": "ac7ea657e61fb777a58089c861ee0cb1305fbaa3ee1259ea4c1eb271a30b3766"
+    },
+    {
+      "path": "functions-build.log",
+      "bytes": 16,
+      "sha256": "8fe4571ad4e1c8d99b7bc7e6576a20f57e5d161cc24c4d631421068c0431e2c1"
+    },
+    {
+      "path": "functions-install.log",
+      "bytes": 362,
+      "sha256": "f097486f232aa63cb9a791c0c1485e31926359bc7c6c6b78468ad430e10b81e9"
+    },
+    {
+      "path": "functions-tests.log",
+      "bytes": 14484,
+      "sha256": "52b72b6121c7eafc9bdc2f2af969b3098f39949b5130f986d2e572680afd5567"
+    },
+    {
+      "path": "hosting-browser.json",
+      "bytes": 96183,
+      "sha256": "e66f6f4186689a4061e02fbabc07fb3a17a1fc65595ecb968ef99bdcf5c89def"
+    },
+    {
+      "path": "hosting-browser.log",
+      "bytes": 15659,
+      "sha256": "d942d783f9e6f422522bf50869bf77038eecdfb66ada24d240381f0872460514"
+    },
+    {
+      "path": "local-build.log",
+      "bytes": 3908,
+      "sha256": "83d12a38215a91b490920169d96aa991ff5203067059a65b8e06e9aeae31f3b9"
+    },
+    {
+      "path": "organizations.log",
+      "bytes": 2034,
+      "sha256": "ac1408eaf887328e29a153920be144b6cfef072b65c30d4000108d36794859b4"
+    },
+    {
+      "path": "playwright-report/data/0546b243761df697fc0704a2aee5a32b3b1db089.png",
+      "bytes": 11214,
+      "sha256": "b2be83031faf477431d28b8bf239affaf9980fea4818d9d1bd092e5c440062d8"
+    },
+    {
+      "path": "playwright-report/data/0f44290bfc2d8ccf34c4ba176fa7015340b571c7.zip",
+      "bytes": 11079,
+      "sha256": "5b237e68f81ab25f902a60c05265abcd06d90e8545c5966256cc335ba5f45a2d"
+    },
+    {
+      "path": "production-build.log",
+      "bytes": 6334,
+      "sha256": "dcdcfd953bd5593ac4fd1e4edbf8a81656d616dccb10383b362e984b9b91468f"
+    },
+    {
+      "path": "production-bundle.log",
+      "bytes": 130,
+      "sha256": "7764b496db6135ddc3bc144fd019702e0d196dae244cd5cff8614e34199ef476"
+    },
+    {
+      "path": "production-isolation.log",
+      "bytes": 156,
+      "sha256": "66129ea2ab65ea48d443b381bb2adb32ea007a0920f54dca759ab55019367b97"
+    },
+    {
+      "path": "test-results/discover/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "test-results/discover/discover-specs-integration-273d2-ns-keyboard-evidence-access-desktop/electricity-offline-evidence.png",
+      "bytes": 462072,
+      "sha256": "6b8af126669ee573d65803734910f197ee2e5df0f4396cc20ec6a72e11dfab53"
+    },
+    {
+      "path": "test-results/discover/discover-specs-integration-273d2-ns-keyboard-evidence-access-mobile/electricity-offline-evidence.png",
+      "bytes": 370747,
+      "sha256": "68975939467ee95dd761b793491226c5091dccff2841b04ef7e51550037a3b7c"
+    },
+    {
+      "path": "test-results/discover/discover-specs-integration-273d2-ns-keyboard-evidence-access-narrow/electricity-offline-evidence.png",
+      "bytes": 374875,
+      "sha256": "425802c7d2fe9333b8c909606e777e86397ecb294c326658a606b6b9e02f7c3b"
+    },
+    {
+      "path": "test-results/discover/discover-specs-integration-52110--requesting-private-billing-desktop/public-pricing.png",
+      "bytes": 143935,
+      "sha256": "5980b01700a19bc0db7cc39ea488dfbc203d39e963dfbd1bd1b2dd60e2d53bee"
+    },
+    {
+      "path": "test-results/discover/discover-specs-integration-52110--requesting-private-billing-mobile/public-pricing.png",
+      "bytes": 123968,
+      "sha256": "8ec8725ba55f65f56d5f829bb9b75b6003f68e9e03fb4fd1b1ffb4f2e6892527"
+    },
+    {
+      "path": "test-results/discover/discover-specs-integration-52110--requesting-private-billing-narrow/public-pricing.png",
+      "bytes": 117419,
+      "sha256": "d4f5753eb3930053deb9d61c52e62fb316de7197a72469fadf72dd969a456f2e"
+    },
+    {
+      "path": "test-results/discover/discover-specs-integration-dcd3d-e-return-clears-the-journey-desktop/home-navigation.png",
+      "bytes": 353654,
+      "sha256": "36c2a265300b7242d79aa6976aea3f6ccae0542c3c14a5b3bc79a2f1d66e7e30"
+    },
+    {
+      "path": "test-results/discover/discover-specs-integration-dcd3d-e-return-clears-the-journey-mobile/home-navigation.png",
+      "bytes": 127337,
+      "sha256": "73e7ca8fe9fa069b8e5622902f9be887adaa3696352469501b3c28330b47c0fc"
+    },
+    {
+      "path": "test-results/discover/discover-specs-integration-dcd3d-e-return-clears-the-journey-narrow/home-navigation.png",
+      "bytes": 125295,
+      "sha256": "2d0d7eb7a71928c8cff9522de604cdbdabbd23ddb63acc41eec0a1ff0310738c"
+    },
+    {
+      "path": "test-results/discover/discover-specs-visual-home-610aa-sult-and-an-actionable-hero-desktop/homepage-1024.png",
+      "bytes": 298728,
+      "sha256": "8fb72a67e2435ab00af39ee70e3638050353ee451fe3172dc8289211801c7651"
+    },
+    {
+      "path": "test-results/discover/discover-specs-visual-home-610aa-sult-and-an-actionable-hero-desktop/homepage-1440.png",
+      "bytes": 381555,
+      "sha256": "7533dd4203c11be3f85a1cb70d55fa44485f872931db58c2d5811a577658934d"
+    },
+    {
+      "path": "test-results/discover/discover-specs-visual-home-610aa-sult-and-an-actionable-hero-mobile/homepage-375.png",
+      "bytes": 125730,
+      "sha256": "e2a27ee48669f5bf733b3769455073578942dfe071149515b22f6e019f87e5e4"
+    },
+    {
+      "path": "test-results/discover/discover-specs-visual-home-610aa-sult-and-an-actionable-hero-mobile/homepage-390.png",
+      "bytes": 127346,
+      "sha256": "775eb6d2dcdd463d11c95119a5148341f158c9bf29a6ad221383ff88ce5357ed"
+    },
+    {
+      "path": "test-results/discover/discover-specs-visual-home-610aa-sult-and-an-actionable-hero-narrow/homepage-320.png",
+      "bytes": 125310,
+      "sha256": "4460d459a7af988298237ea4367c115fa8c5a4703339909b610beb6c67046709"
+    },
+    {
+      "path": "test-results/discover/discover-specs-visual-home-610aa-sult-and-an-actionable-hero-narrow/homepage-768.png",
+      "bytes": 242292,
+      "sha256": "2a0d4bb850aa5c7d20a97a050b11d0bf9d6949b86dc31c35d9cea2d8f9229c4d"
+    },
+    {
+      "path": "test-results/discover/discover-specs-visual-home-d3f0c-and-announce-the-new-answer-desktop/electricity-1024.png",
+      "bytes": 51276,
+      "sha256": "4bacc5b6ada8ac27ce05309556f161c96873aedb4091a14814ea3feeab5cf458"
+    },
+    {
+      "path": "test-results/discover/discover-specs-visual-home-d3f0c-and-announce-the-new-answer-desktop/electricity-1440.png",
+      "bytes": 62429,
+      "sha256": "199c6b51e95410493bee2b1186ddf7e13e6901b0e4f868c1c90ec192e482dffe"
+    },
+    {
+      "path": "test-results/discover/discover-specs-visual-home-d3f0c-and-announce-the-new-answer-mobile/electricity-375.png",
+      "bytes": 48539,
+      "sha256": "a15a8de1a162f9bb60cfecabf51d5d8eb5a8343e708aa16b2c8afb2789eb158c"
+    },
+    {
+      "path": "test-results/discover/discover-specs-visual-home-d3f0c-and-announce-the-new-answer-mobile/electricity-390.png",
+      "bytes": 48545,
+      "sha256": "fd533d3807e46a3a21a8e2c6b09d48397f9406b14c127e78ba61c8d48980d27d"
+    },
+    {
+      "path": "test-results/discover/discover-specs-visual-home-d3f0c-and-announce-the-new-answer-narrow/electricity-320.png",
+      "bytes": 45474,
+      "sha256": "75d8f2f480cd5e9dd9748102cdba140fb60ffc460bcb5a1b56453419a77ca315"
+    },
+    {
+      "path": "test-results/discover/discover-specs-visual-home-d3f0c-and-announce-the-new-answer-narrow/electricity-768.png",
+      "bytes": 47106,
+      "sha256": "2ab0b7cd5ce38ea17f1c866648c228b947ec16e2604de4f4a140445a263364e0"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-corr-23fed-rk-inside-the-unified-shell-desktop/corrected.png",
+      "bytes": 360613,
+      "sha256": "cb0e5db4bed2aecbaaee2bcf84365d79d6b47efb15a89cdcd4bba0ec651999f4"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-corr-23fed-rk-inside-the-unified-shell-mobile/corrected.png",
+      "bytes": 327227,
+      "sha256": "293f74c526fd546ff031164cb5fc95735a7148edec2d71fda66ff9dc9327017b"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-corr-23fed-rk-inside-the-unified-shell-narrow/corrected.png",
+      "bytes": 330444,
+      "sha256": "2d13678b60d4a06b62ad5af52dcdfdbe2213d5c006280257b60bfa05eb9ca810"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-elec-20af8-ndings-with-shared-evidence-desktop/electricity-evidence.png",
+      "bytes": 740478,
+      "sha256": "5ec43f1a8f9e86adc66c06476c985d2976ac0b03e7ce181ecd6c466707fa925a"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-elec-20af8-ndings-with-shared-evidence-desktop/electricity-findings.png",
+      "bytes": 402477,
+      "sha256": "204e4aecf4f0f71f84d7b1eb8a4389d040ec482478617724ebf6556ed7adabd7"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-elec-20af8-ndings-with-shared-evidence-mobile/electricity-evidence.png",
+      "bytes": 626537,
+      "sha256": "ae4bb35b6f6ad377b263b7f23c4eec9e43f5fd6968338774eff31792e2955a51"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-elec-20af8-ndings-with-shared-evidence-mobile/electricity-findings.png",
+      "bytes": 316030,
+      "sha256": "2ae64cb1f00bfd9c91622d24c08e5eb540d184a9939c1edf718909ecb5bff584"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-elec-20af8-ndings-with-shared-evidence-narrow/electricity-evidence.png",
+      "bytes": 625718,
+      "sha256": "e7a446bb6605e226ad5cca3e4976eedbb0f2b85ab0bd87c83ed155df34dd3b55"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-elec-20af8-ndings-with-shared-evidence-narrow/electricity-findings.png",
+      "bytes": 320426,
+      "sha256": "e60e2dbc6382d6f2023e4ed3ba48567655867c78d8db638cc1b1e2844c80fa3a"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-elec-2332d-remain-honest-after-tax-use-desktop/unknown.png",
+      "bytes": 330123,
+      "sha256": "72b3ee89c8594118d0a82f88cd4f9ab463c07c5bce3a082ff786b69dee115968"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-elec-2332d-remain-honest-after-tax-use-mobile/unknown.png",
+      "bytes": 259647,
+      "sha256": "f0d74168bfe044331b2e8c7321f3baa5d2310347d90d95240bce4455ad32185a"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-elec-2332d-remain-honest-after-tax-use-narrow/unknown.png",
+      "bytes": 262627,
+      "sha256": "4db6769daf64feff316894a7475e07c6e6d1ba4dfcde528a9f062e2f28526e2b"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-inco-88323-hout-leaving-the-experience-desktop/insufficient.png",
+      "bytes": 244194,
+      "sha256": "f4cf803804ae575ebb842973d81bffa02873e57f1bfdc05b60b2dd1f7537a43e"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-inco-88323-hout-leaving-the-experience-mobile/insufficient.png",
+      "bytes": 246005,
+      "sha256": "0c6e095636564940e0eb2f6311e7408588691443a9eaf3483a6ddb14a227ad59"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-inco-88323-hout-leaving-the-experience-narrow/insufficient.png",
+      "bytes": 248582,
+      "sha256": "0b0af72c590b0582fc59a5e1c65730cc1b8fdba258b3e2e85c096cb273c7cf1a"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-one--cdd03-clear-local-file-boundaries-desktop/entry.png",
+      "bytes": 116241,
+      "sha256": "948961c187d28f87c0bd33fdce082438d0efe18d47f83d0d416b850f09ddc0bc"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-one--cdd03-clear-local-file-boundaries-mobile/entry.png",
+      "bytes": 89930,
+      "sha256": "c84069dc55d9b4ae40a29301ceafaf61d53c915aefee2cca0128425da32a34b4"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-one--cdd03-clear-local-file-boundaries-narrow/entry.png",
+      "bytes": 90047,
+      "sha256": "78db9b5513bcdae2807d7de7295b13a805ddba9957a3165974a45d702720208d"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-tax--bcc5e-ndings-with-shared-evidence-desktop/tax-evidence.png",
+      "bytes": 476185,
+      "sha256": "aca5a6fcc54a563f6fdce67327c20eeb229cfeaf693a9a70b02bd40e06896a72"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-tax--bcc5e-ndings-with-shared-evidence-desktop/tax-findings.png",
+      "bytes": 297223,
+      "sha256": "f746c1e3c495b4ae9121b3dd25e9324a835b5c9d6d11c8444db56cdc9d0a479e"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-tax--bcc5e-ndings-with-shared-evidence-mobile/tax-evidence.png",
+      "bytes": 406962,
+      "sha256": "5ff64d0c72869cbd002369206d3a0dc83f39225165fcf131ce47b949c9185572"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-tax--bcc5e-ndings-with-shared-evidence-mobile/tax-findings.png",
+      "bytes": 241493,
+      "sha256": "e9f384c9ac61b983b04652fc28b3cc659bac3afe3d9e017fb87bc39c0551ae5d"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-tax--bcc5e-ndings-with-shared-evidence-narrow/tax-evidence.png",
+      "bytes": 406448,
+      "sha256": "0d811702b5b254ed779c97a3e096f46354c41e24beedfa2592ed713a75df51c0"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-tax--bcc5e-ndings-with-shared-evidence-narrow/tax-findings.png",
+      "bytes": 242158,
+      "sha256": "53d1aa9bf1f12f72346092cc83ef844a1f184539020ced993e0772c89cee23c7"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-wron-3d637-than-silently-reinterpreted-desktop/wrong-category.png",
+      "bytes": 171132,
+      "sha256": "7864d25feb782e3f04cdcd7c2e19a400878133e61b2099c46d89d791f6a599db"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-wron-3d637-than-silently-reinterpreted-mobile/wrong-category.png",
+      "bytes": 142552,
+      "sha256": "f063e8af2a1b45bb16c0595bc432c050986f89be69dfc424bc68a414b070cbed"
+    },
+    {
+      "path": "test-results/discover/unified-specs-unified-wron-3d637-than-silently-reinterpreted-narrow/wrong-category.png",
+      "bytes": 143350,
+      "sha256": "5855e98a3b99505d1a2b271f1cb9e441fe0f7354267885c4fa6e0eb5a2b9ce65"
+    },
+    {
+      "path": "test-results/discovery/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-corrected-va-1047e-ith-current-source-evidence-desktop/corrected.png",
+      "bytes": 363622,
+      "sha256": "d25dde3f64837a8b7b12db4e62f808cc216743c0176aee922424ef4e9ac61a0e"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-corrected-va-1047e-ith-current-source-evidence-mobile/corrected.png",
+      "bytes": 336967,
+      "sha256": "d0fabb7ebdfcbaed41f156b767b3cdd3a891cfebcff73afc75702b11fc4a6787"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-corrected-va-1047e-ith-current-source-evidence-narrow/corrected.png",
+      "bytes": 337594,
+      "sha256": "107f51d32f8b8a65ce3f76bc9348d6e18fd9b48cc6fcd1e55088cbf9ebd00035"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-each-finding-a0a37-nd-calculations-by-keyboard-desktop/evidence.png",
+      "bytes": 479010,
+      "sha256": "3fcac2a83e307beb0da8954508dbb4d0023eae7f1b8993669e515aae4ce7496b"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-each-finding-a0a37-nd-calculations-by-keyboard-mobile/evidence.png",
+      "bytes": 416325,
+      "sha256": "98944642d07660b55f008b98a364f95ef7557019668f400382b5bfc7951b9126"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-each-finding-a0a37-nd-calculations-by-keyboard-narrow/evidence.png",
+      "bytes": 414118,
+      "sha256": "d4ea37c8065015c9c57553d6d34e94576b736ea38a9e70f81c2ea705b859147f"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-first-meanin-3a2f7-s-without-account-or-prompt-desktop/discovered.png",
+      "bytes": 300229,
+      "sha256": "9eb5413e75739ea4bc2fa805239e356f2a1666d9c09030cd4ce30cc8a2f83b84"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-first-meanin-3a2f7-s-without-account-or-prompt-desktop/welcome.png",
+      "bytes": 140515,
+      "sha256": "3936c8a61dff6c901aba083c68948d2cdb3209a590e328dff0e132f370a9f59a"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-first-meanin-3a2f7-s-without-account-or-prompt-mobile/discovered.png",
+      "bytes": 251342,
+      "sha256": "e799b09994dc3ccc1863b84b56759d5904d2d5c0f8fa5234a8b4a3f158ec7f2c"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-first-meanin-3a2f7-s-without-account-or-prompt-mobile/welcome.png",
+      "bytes": 118808,
+      "sha256": "0b3cd7749d4a905ef2696108020d4726c85b0f456029a2caf5996f50b60a9e8b"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-first-meanin-3a2f7-s-without-account-or-prompt-narrow/discovered.png",
+      "bytes": 249625,
+      "sha256": "71fd75a74d0338dc4a0483adbc14d21f8800d68937bb9b60f769300a8122e6c8"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-first-meanin-3a2f7-s-without-account-or-prompt-narrow/welcome.png",
+      "bytes": 119037,
+      "sha256": "afbb17b8369524182845ec8252063bbb9e88dc2d82f9947991778c4d3c3198ba"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-missing-data-3cf88-validate-and-rerun-findings-desktop/inconsistent.png",
+      "bytes": 202209,
+      "sha256": "fca180a0f3ac8c204f752016f99f202dd8ab30e007205d9241ed7d352a0a0553"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-missing-data-3cf88-validate-and-rerun-findings-mobile/inconsistent.png",
+      "bytes": 198005,
+      "sha256": "0d608a532ad15183275aba56d3eab0ed624cf5ffb0986792971aac5df7dac046"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-missing-data-3cf88-validate-and-rerun-findings-narrow/inconsistent.png",
+      "bytes": 197735,
+      "sha256": "f74973c1c83521b334daa06b3ee6775daafd3c0790cfba14119cedfaeecb1b6b"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-one-statemen-44270-an-be-completed-on-the-page-desktop/insufficient.png",
+      "bytes": 193663,
+      "sha256": "c4131987e8b07fb7c87bbda36b3c758e3acdf526dca91b2c31577ab4a03a22c4"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-one-statemen-44270-an-be-completed-on-the-page-mobile/insufficient.png",
+      "bytes": 186983,
+      "sha256": "7f5f2b001b0bd26dcf7a798f4b45c3a86ba5ddf816ba24ecdc91c15f3b05bdfd"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-one-statemen-44270-an-be-completed-on-the-page-narrow/insufficient.png",
+      "bytes": 187547,
+      "sha256": "54ed23a9bdfd0a71552bd2e66ffdd845cf2e4028e183c8e95f2378190d4aaaf3"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-repeated-fil-20a8d-without-private-diagnostics-desktop/read-failure.png",
+      "bytes": 171026,
+      "sha256": "804ce6fa4d4b95bc2ef154de682a314deba1e3dc2db30ecbfd09360aeb089c20"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-repeated-fil-20a8d-without-private-diagnostics-mobile/read-failure.png",
+      "bytes": 148535,
+      "sha256": "90b4c2cf0cdffad7484a155aad16e1f3b5610c242d0271981c595855e3b47943"
+    },
+    {
+      "path": "test-results/discovery/tax-discovery-repeated-fil-20a8d-without-private-diagnostics-narrow/read-failure.png",
+      "bytes": 148964,
+      "sha256": "d20271545724638dd0742da03746e9f2e2b5e421ff6b5dea409a8922652fbf98"
+    },
+    {
+      "path": "test-results/e2e/.last-run.json",
+      "bytes": 96,
+      "sha256": "092785c33d723f221e2eb8a22245cce527bb49d704fda1d7aa07b0f81ab8d6b2"
+    },
+    {
+      "path": "test-results/e2e/city-save-reliability-conc-5503b--can-replay-after-the-limit-mobile/test-failed-1.png",
+      "bytes": 11214,
+      "sha256": "b2be83031faf477431d28b8bf239affaf9980fea4818d9d1bd092e5c440062d8"
+    },
+    {
+      "path": "test-results/e2e/city-save-reliability-conc-5503b--can-replay-after-the-limit-mobile/trace.zip",
+      "bytes": 11079,
+      "sha256": "5b237e68f81ab25f902a60c05265abcd06d90e8545c5966256cc335ba5f45a2d"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-desktop/choose-business-location-evidence.png",
+      "bytes": 535603,
+      "sha256": "554e3cb50a686b7566ddb29e94d562268bf20fff16e2916e5370efd849537cb9"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-desktop/compare-job-offers-relocation.png",
+      "bytes": 516726,
+      "sha256": "2868b71b9a8f7d580b3589bf8b4e5ff7f72262a9b8923bd8247be36e8f3418f0"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-desktop/compare-options-with-your-own-data.png",
+      "bytes": 522103,
+      "sha256": "37d1a565fbb1fd301e698dba53c34a83e8485625870a95af27183629e07ca253"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-desktop/guides-fold.png",
+      "bytes": 111636,
+      "sha256": "0a6deaad4ea661427c096c1744b73c9392c76065be16d0cdb79a3a5809d4c6c0"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-desktop/guides-full.png",
+      "bytes": 196505,
+      "sha256": "3f319d99fe4bccb5dacc1e362196235f97c68d6f914fb156b644d1144b1662d1"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-desktop/homepage-fold.png",
+      "bytes": 264713,
+      "sha256": "c59c38f2857b1b1be74ccf500ca2721b50a66d8f59189c8e864b100d884381bf"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-desktop/homepage-full.png",
+      "bytes": 358151,
+      "sha256": "030355a0b5d22e76ef3db03c505a3bd1cfc36a7c3009d1a5bc41e30ff44a5e60"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-desktop/sample-report-fold.png",
+      "bytes": 93851,
+      "sha256": "97aba616d8ecd9ea6ecf5cde05be3495d5da83fcffc0d86bb81be457baa3d6ad"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-desktop/sample-report-full.png",
+      "bytes": 915782,
+      "sha256": "92d4f8ef803970d15de0667d6ac41474f7c632656a0b2e5563619b885e875072"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-mobile/choose-business-location-evidence.png",
+      "bytes": 454957,
+      "sha256": "8297706be5f964a5703652f09eb63e57665f4e30d43aa65c7b8b5e790d576834"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-mobile/compare-job-offers-relocation.png",
+      "bytes": 438295,
+      "sha256": "65c9fa6a3c615b546fb6447518f20761dc9501d2d201f0a8bc2f41e25c3b2ec6"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-mobile/compare-options-with-your-own-data.png",
+      "bytes": 447543,
+      "sha256": "98c8542a6f1378690b6c33b623bace1cface892c4bd017dc7d5a9c4d579bc753"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-mobile/guides-fold.png",
+      "bytes": 73237,
+      "sha256": "1618ff1e6988bbe2976d1d19472104a0c6f25625ef86b2d18daa247c1f9bcc28"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-mobile/guides-full.png",
+      "bytes": 172451,
+      "sha256": "510c2a2fc971920c4905c1a131461f21857cbecb9182967037a0101639ca328e"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-mobile/homepage-fold.png",
+      "bytes": 67433,
+      "sha256": "d95b2d5a34b8dcf1ba9aa7cdcae2b11e26ff90e81aa8564854c3caf8f65ecce2"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-mobile/homepage-full.png",
+      "bytes": 127337,
+      "sha256": "73e7ca8fe9fa069b8e5622902f9be887adaa3696352469501b3c28330b47c0fc"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-mobile/sample-report-fold.png",
+      "bytes": 91928,
+      "sha256": "437ba70e33ea7895bd6ab0e749221f6e2c4cd06eeb10423d09a9977a05273517"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-integrat-5d353-ty-and-approval-screenshots-mobile/sample-report-full.png",
+      "bytes": 826100,
+      "sha256": "ef7b871f5b2c9c1b0bcfb915a021ac25bc702215f61172ebc801ec30c62b5b3e"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-one-time-ef91e-e-offer-and-report-identity-desktop/pricing-one-time.png",
+      "bytes": 98312,
+      "sha256": "78dc1e49f0cc58cbe2e0e348d08a7a711ce0aac04caaeacf332faf4e5a7f48df"
+    },
+    {
+      "path": "test-results/e2e/release-readiness-one-time-ef91e-e-offer-and-report-identity-mobile/pricing-one-time.png",
+      "bytes": 78684,
+      "sha256": "cf5c4905e173e50505047ab0a1405e778a08c6718db4f072a9cfa9375a5fe38b"
+    },
+    {
+      "path": "test-results/e2e/sample-recovery-offline-re-c1fbe-fter-the-connection-returns-desktop/sample-offline.png",
+      "bytes": 63367,
+      "sha256": "8cdb5e67c0be65a458b7845d1ee5d56d1ef0b1edec9af7e6893fcc378e027dae"
+    },
+    {
+      "path": "test-results/e2e/sample-recovery-offline-re-c1fbe-fter-the-connection-returns-mobile/sample-offline.png",
+      "bytes": 50755,
+      "sha256": "4bcfb0ed3f77dc574a7f6d2a6e222361df0099390d4bac98a380e5f816e23a46"
+    },
+    {
+      "path": "test-results/e2e/sample-recovery-persistent-94a64-n-without-automatic-retries-desktop/sample-persistent-error.png",
+      "bytes": 60271,
+      "sha256": "be8c5926e279bb0eda48b5781256232f907aa2813345e86aad471ad75d49ac58"
+    },
+    {
+      "path": "test-results/e2e/sample-recovery-persistent-94a64-n-without-automatic-retries-mobile/sample-persistent-error.png",
+      "bytes": 53480,
+      "sha256": "ac340b83eebfc4d97f0a7628462d99673a65a10a98d1ec3f01059ccbc1a82a3d"
+    },
+    {
+      "path": "test-results/e2e/sample-recovery-sample-rec-f2f19-ves-the-original-diagnostic-desktop/sample-error.png",
+      "bytes": 60539,
+      "sha256": "ce2f91167d3f70327d3fe01632b09ec4d486c77bc513593e3191f61be5b266b7"
+    },
+    {
+      "path": "test-results/e2e/sample-recovery-sample-rec-f2f19-ves-the-original-diagnostic-desktop/sample-recovered.png",
+      "bytes": 916587,
+      "sha256": "1773d85e5e2d346973a0a7da331e0b04b2ac37602eaf2744095ef643a5cf6e96"
+    },
+    {
+      "path": "test-results/e2e/sample-recovery-sample-rec-f2f19-ves-the-original-diagnostic-mobile/sample-error.png",
+      "bytes": 49604,
+      "sha256": "b2a686db37d5c8af1303b501170569d3dcb77e11246e38ac8584eb95fde4d0cf"
+    },
+    {
+      "path": "test-results/e2e/sample-recovery-sample-rec-f2f19-ves-the-original-diagnostic-mobile/sample-recovered.png",
+      "bytes": 826455,
+      "sha256": "bae62de6a4b7283cc95684802fac8b3d4850867e62b271c9eb3a787ba2e8922d"
+    },
+    {
+      "path": "test-results/e2e/sample-recovery-slow-sampl-920d8-over-without-a-stale-result-desktop/sample-timeout.png",
+      "bytes": 60606,
+      "sha256": "50d1254627ebc9ae2e438c494dae9bd49ae1b38f57ceedb8ff5f82a12cff4a18"
+    },
+    {
+      "path": "test-results/e2e/sample-recovery-slow-sampl-920d8-over-without-a-stale-result-mobile/sample-timeout.png",
+      "bytes": 49301,
+      "sha256": "adca07f4feb8b3826bbc87018fa36c8d9c089c7cd5e348de290d0fe74954127b"
+    },
+    {
+      "path": "test-results/e2e-junit.xml",
+      "bytes": 40894,
+      "sha256": "fc77a62da7784cbc9eec78af98049de5144512c9bfc477b625e6dfe3c50ef1e3"
+    },
+    {
+      "path": "test-results/electricity/.last-run.json",
+      "bytes": 45,
+      "sha256": "91d1c43004802cd49950d78eb11c8fa7d05da8ffffe219a8b13b2f561bc00903"
+    },
+    {
+      "path": "test-results/electricity/electricity-correction-inv-a926a-iation-and-updates-evidence-desktop/corrected.png",
+      "bytes": 577395,
+      "sha256": "71f593253d58aa4735ba60fc7b9da27a1e8c01f5a09e485cb709c8c33d723191"
+    },
+    {
+      "path": "test-results/electricity/electricity-correction-inv-a926a-iation-and-updates-evidence-mobile/corrected.png",
+      "bytes": 527325,
+      "sha256": "c0d77768f3ab19982cd19f061d2fc6a265c8621a8a1b9a7a1f450a2369bc116c"
+    },
+    {
+      "path": "test-results/electricity/electricity-correction-inv-a926a-iation-and-updates-evidence-narrow/corrected.png",
+      "bytes": 533489,
+      "sha256": "d3754077487dc2162ae10a0ed4e4691495edeb90b12c1acb8d617318955d6a25"
+    },
+    {
+      "path": "test-results/electricity/electricity-every-finding--8eecb-ls-and-formulas-by-keyboard-desktop/evidence.png",
+      "bytes": 748100,
+      "sha256": "0ce83c883fa752bacd6b2db697fda9fb7a1582152b4b7535d788529b4bc2e5dd"
+    },
+    {
+      "path": "test-results/electricity/electricity-every-finding--8eecb-ls-and-formulas-by-keyboard-mobile/evidence.png",
+      "bytes": 639839,
+      "sha256": "02cec098a8775ffd8ec22d79ce483656051fad045dd8ab8a94e53f63d64b2c6c"
+    },
+    {
+      "path": "test-results/electricity/electricity-every-finding--8eecb-ls-and-formulas-by-keyboard-narrow/evidence.png",
+      "bytes": 638860,
+      "sha256": "0101541854467ff5230902f3264f430cf079cbe4452fba57806b53e70240c3fd"
+    },
+    {
+      "path": "test-results/electricity/electricity-one-bill-is-in-af332-a-completed-discovery-claim-desktop/insufficient.png",
+      "bytes": 249657,
+      "sha256": "74277de077498f381476d21b509a06992135f9b64ba79d94713ddc21063f3c9e"
+    },
+    {
+      "path": "test-results/electricity/electricity-one-bill-is-in-af332-a-completed-discovery-claim-mobile/insufficient.png",
+      "bytes": 255527,
+      "sha256": "70a873c133490ec5d5f42f7aa451c0239a9b8d213e176a0cadd771e69c4aae20"
+    },
+    {
+      "path": "test-results/electricity/electricity-one-bill-is-in-af332-a-completed-discovery-claim-narrow/insufficient.png",
+      "bytes": 260270,
+      "sha256": "f41a66ff2202cb0b2114f7cf8057beddda059b8fc53cffc2676a76e6c02d9b80"
+    },
+    {
+      "path": "test-results/electricity/electricity-one-keyboard-a-9af82-rage-and-identified-charges-desktop/discovered.png",
+      "bytes": 410656,
+      "sha256": "39657a19866d29fc2a95fb448a58b83421390111542ce38b408ec76ed41381a6"
+    },
+    {
+      "path": "test-results/electricity/electricity-one-keyboard-a-9af82-rage-and-identified-charges-desktop/welcome.png",
+      "bytes": 150095,
+      "sha256": "bd42084d535d0bbf7a44b9ef08ed7250a503fd09bed6ecd90a4b5f2eb1fe5ad0"
+    },
+    {
+      "path": "test-results/electricity/electricity-one-keyboard-a-9af82-rage-and-identified-charges-mobile/discovered.png",
+      "bytes": 329621,
+      "sha256": "fa90588a00585727ba1f51631206574a1bf6ce1a5ffc02e225b92ee2fef901e3"
+    },
+    {
+      "path": "test-results/electricity/electricity-one-keyboard-a-9af82-rage-and-identified-charges-mobile/welcome.png",
+      "bytes": 126228,
+      "sha256": "c724a1a9e57974fafa1856ab09bf60dc73649a3f81544dcb8ef3ed4775b28678"
+    },
+    {
+      "path": "test-results/electricity/electricity-one-keyboard-a-9af82-rage-and-identified-charges-narrow/discovered.png",
+      "bytes": 334138,
+      "sha256": "c4048077bb05d8cec256822c6afa9dd619d5f899e7ce0140d70245688692a21a"
+    },
+    {
+      "path": "test-results/electricity/electricity-one-keyboard-a-9af82-rage-and-identified-charges-narrow/welcome.png",
+      "bytes": 129394,
+      "sha256": "1703a4d320473e87569179a6005a97f8c495c9153593fd3c9672cf5b51435235"
+    },
+    {
+      "path": "test-results/electricity/electricity-unknown-split--f3d01-g-fixed-or-variable-charges-desktop/unknown.png",
+      "bytes": 338093,
+      "sha256": "214322b5e7c91a8d0a26b89e1cce0cce2384b2594a04a511b4f633c7b21d50e0"
+    },
+    {
+      "path": "test-results/electricity/electricity-unknown-split--f3d01-g-fixed-or-variable-charges-mobile/unknown.png",
+      "bytes": 273150,
+      "sha256": "8c35fb4055a8a44be8da3886172aa0aaaee4dce52c3b68ced7d80001f4b3d8ea"
+    },
+    {
+      "path": "test-results/electricity/electricity-unknown-split--f3d01-g-fixed-or-variable-charges-narrow/unknown.png",
+      "bytes": 276321,
+      "sha256": "e432e7030c31c5d33c7ed0c30782ac637e934ba5d9e29243cea60e52b4b1112f"
+    },
+    {
+      "path": "test-results/unified/.last-run.json",
+      "bytes": 96,
+      "sha256": "ed2922b4580eeca17b1fda0ec91be27ab825e4aa87f1ca36f3052f7762b900e6"
+    },
+    {
+      "path": "test-results/unified/unified-correction-invalid-c6a93-rk-inside-the-unified-shell-desktop/corrected.png",
+      "bytes": 358019,
+      "sha256": "0b0a9299890e5ca921a4d8404e0e9a65b97f06e2f41f4b6f6bc899438455b35f"
+    },
+    {
+      "path": "test-results/unified/unified-correction-invalid-c6a93-rk-inside-the-unified-shell-mobile/corrected.png",
+      "bytes": 330737,
+      "sha256": "957bf3a450e1af208d958dcd8c71bb528cf45f59303c0110c48db490953d7355"
+    },
+    {
+      "path": "test-results/unified/unified-correction-invalid-c6a93-rk-inside-the-unified-shell-narrow/corrected.png",
+      "bytes": 330557,
+      "sha256": "e7984c318c4fa76c2a771bdc29e556be943ad24b92cf4c0a03cbe7d4ff06ae77"
+    },
+    {
+      "path": "test-results/unified/unified-electricity-one-cl-bf1b0-ndings-with-shared-evidence-desktop/electricity-evidence.png",
+      "bytes": 736963,
+      "sha256": "2b96d78034d662a509aa1be6daed7a96daf86bd74bf0a3d6aa962600284c456b"
+    },
+    {
+      "path": "test-results/unified/unified-electricity-one-cl-bf1b0-ndings-with-shared-evidence-desktop/electricity-findings.png",
+      "bytes": 399138,
+      "sha256": "ad43fb59c4fe48594d9ed653754b3fdc1ce46b52b9ea38f20893b7239e72d823"
+    },
+    {
+      "path": "test-results/unified/unified-electricity-one-cl-bf1b0-ndings-with-shared-evidence-mobile/electricity-evidence.png",
+      "bytes": 630220,
+      "sha256": "f80953cb3fb769c5e6912ad27d2d9174d19b40661447982f25162f384fef835a"
+    },
+    {
+      "path": "test-results/unified/unified-electricity-one-cl-bf1b0-ndings-with-shared-evidence-mobile/electricity-findings.png",
+      "bytes": 319688,
+      "sha256": "4e1ac0f70cb7814436d0105b9cfc86e39d5ec5ae78cc2ccdd4f603144c01cf56"
+    },
+    {
+      "path": "test-results/unified/unified-electricity-one-cl-bf1b0-ndings-with-shared-evidence-narrow/electricity-evidence.png",
+      "bytes": 627158,
+      "sha256": "3ddb8f7c46f71efc829ce9633c8469148413c5b5a389fe9fad30d76638030119"
+    },
+    {
+      "path": "test-results/unified/unified-electricity-one-cl-bf1b0-ndings-with-shared-evidence-narrow/electricity-findings.png",
+      "bytes": 322316,
+      "sha256": "fdfdf5daa332a50371eb9566ec5f052dcfbbc88770886aab0dc4ab19c070b05f"
+    },
+    {
+      "path": "test-results/unified/unified-electricity-unknow-ef284-remain-honest-after-tax-use-desktop/unknown.png",
+      "bytes": 326744,
+      "sha256": "122afd693d9a6784b8956f4f0b5f5cfb18da9cf3c7a460b3ead385c1fe5169a1"
+    },
+    {
+      "path": "test-results/unified/unified-electricity-unknow-ef284-remain-honest-after-tax-use-mobile/unknown.png",
+      "bytes": 263323,
+      "sha256": "0baadc33b3afd33193330cfccda57b5073608000e046e238dacfce6cd7498f15"
+    },
+    {
+      "path": "test-results/unified/unified-electricity-unknow-ef284-remain-honest-after-tax-use-narrow/unknown.png",
+      "bytes": 263900,
+      "sha256": "bdebaa81e6a05d1cc682f61896fde11c4f9f3524fd0887c98d53968fc42384e5"
+    },
+    {
+      "path": "test-results/unified/unified-incomplete-electri-fb8b4-hout-leaving-the-experience-desktop/insufficient.png",
+      "bytes": 238105,
+      "sha256": "75586d8820d8e77d1c37503f78d6d0fead495694dd5b5df0d3b90e16cb427f05"
+    },
+    {
+      "path": "test-results/unified/unified-incomplete-electri-fb8b4-hout-leaving-the-experience-mobile/insufficient.png",
+      "bytes": 245861,
+      "sha256": "64879246044d1d718e8f6ccb63e018f6eb88292742c1c6f4bfb5786aaf21f018"
+    },
+    {
+      "path": "test-results/unified/unified-incomplete-electri-fb8b4-hout-leaving-the-experience-narrow/insufficient.png",
+      "bytes": 248283,
+      "sha256": "d1eb5997e2d23788472bc70258ec956965af388220853ad98a856e1b7222b4e4"
+    },
+    {
+      "path": "test-results/unified/unified-one-coherent-entry-2dfbd-clear-local-file-boundaries-desktop/entry.png",
+      "bytes": 102855,
+      "sha256": "d169308b89367530be059725a21bc42e807fa25c75a633bce7575660c9407169"
+    },
+    {
+      "path": "test-results/unified/unified-one-coherent-entry-2dfbd-clear-local-file-boundaries-mobile/entry.png",
+      "bytes": 89758,
+      "sha256": "bc032f3d13e3f556608dce539ada75706f6502abd215643b513ff585d45f0684"
+    },
+    {
+      "path": "test-results/unified/unified-one-coherent-entry-2dfbd-clear-local-file-boundaries-mobile/test-failed-1.png",
+      "bytes": 171624,
+      "sha256": "1195fbf4f08a7866a96e463450baaf3276b6ec7f05cfb1cffff7069ff614e661"
+    },
+    {
+      "path": "test-results/unified/unified-one-coherent-entry-2dfbd-clear-local-file-boundaries-mobile/trace.zip",
+      "bytes": 1293673,
+      "sha256": "c50f3c3ff172c3a447162682a9de8a9218ae5eac69d366714731dfa8c2882960"
+    },
+    {
+      "path": "test-results/unified/unified-one-coherent-entry-2dfbd-clear-local-file-boundaries-narrow/entry.png",
+      "bytes": 89854,
+      "sha256": "77b8bc482aa1f700cdd8aaae2f47c184a251107a7b39a52cd324c7e37d6201d8"
+    },
+    {
+      "path": "test-results/unified/unified-tax-one-click-open-dbbf8-ndings-with-shared-evidence-desktop/tax-evidence.png",
+      "bytes": 473370,
+      "sha256": "36793d8c6e4ae845a54b2a21a3e3d61a79a79933d49c0cfb67829e435c4bcbc2"
+    },
+    {
+      "path": "test-results/unified/unified-tax-one-click-open-dbbf8-ndings-with-shared-evidence-desktop/tax-findings.png",
+      "bytes": 294055,
+      "sha256": "06dc5e80e95c9e364b6573a7055f69f847caf9fa3e0859946ce3737a8e7e666c"
+    },
+    {
+      "path": "test-results/unified/unified-tax-one-click-open-dbbf8-ndings-with-shared-evidence-mobile/tax-evidence.png",
+      "bytes": 410165,
+      "sha256": "6994b7fc9af22844a6f3e09a8ca63221fae7342edb796942c055abd223a03b48"
+    },
+    {
+      "path": "test-results/unified/unified-tax-one-click-open-dbbf8-ndings-with-shared-evidence-mobile/tax-findings.png",
+      "bytes": 244728,
+      "sha256": "6286545384411e60f0c5d7fb9715e2ca1e7222f49adeda0759299fbbfc6f2667"
+    },
+    {
+      "path": "test-results/unified/unified-tax-one-click-open-dbbf8-ndings-with-shared-evidence-narrow/tax-evidence.png",
+      "bytes": 408466,
+      "sha256": "6419027981ee6e0f678533cbc8cf7e9a91c958525d8985ec6cf9e510668adb40"
+    },
+    {
+      "path": "test-results/unified/unified-tax-one-click-open-dbbf8-ndings-with-shared-evidence-narrow/tax-findings.png",
+      "bytes": 243355,
+      "sha256": "9faee65eeea2d0a1982c1559aab72f0fa5228ab937ca5bbe14f6a476bb556970"
+    },
+    {
+      "path": "test-results/unified/unified-wrong-category-fil-7b7fa-than-silently-reinterpreted-desktop/wrong-category.png",
+      "bytes": 164529,
+      "sha256": "c4ef8e293cc825ce46f4e7c5b13f031e0c143a0dc313ef9d133fe8af946cce0c"
+    },
+    {
+      "path": "test-results/unified/unified-wrong-category-fil-7b7fa-than-silently-reinterpreted-mobile/wrong-category.png",
+      "bytes": 141943,
+      "sha256": "d9c1ac699aab5b27253b6bc32c84e12f08c4f359e7e80f3a9373195e9580e5c9"
+    },
+    {
+      "path": "test-results/unified/unified-wrong-category-fil-7b7fa-than-silently-reinterpreted-narrow/wrong-category.png",
+      "bytes": 142121,
+      "sha256": "3565df6a9bc4a09ebdfb58ef9e76a6647a3b74565f8c73e0e0cbdbfbf46ee850"
+    },
+    {
+      "path": "unified-browser.json",
+      "bytes": 49976,
+      "sha256": "2ee7e3c5789d006beb81f0fda7b4ba8a30c1212488509d50119c94da7818866d"
+    },
+    {
+      "path": "unified-browser.log",
+      "bytes": 12191,
+      "sha256": "ef9a32236e7c8bcbd384633edf85260db8691d05c21df9a3b55bcaa9bcefe88c"
+    },
+    {
+      "path": "unified-build.log",
+      "bytes": 1117,
+      "sha256": "a42597c848ac8790bd060136be67b9c6f9a37805d36a4e3a6e776dfac659bee4"
+    },
+    {
+      "path": "unified-isolation.log",
+      "bytes": 84,
+      "sha256": "db4413c0e2c30640182d40c45e672eea924da28484e8ff99a919c5e7df9c4ad5"
+    }
+  ]
+}

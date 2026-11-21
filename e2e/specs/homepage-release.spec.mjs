@@ -3,7 +3,9 @@ import { FIXTURES } from '../support/fixtures.mjs';
 
 test('homepage opens the interactive demo and the complete free example', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Make sense of your numbers.');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Your tax bill went up.Where did the extra $420 go?');
+  await expect(page.locator('.revealed-content')).toBeHidden();
+  await page.getByRole('button', { name: 'Reveal what changed', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Why did my property taxes go up?' })).toBeInViewport({ ratio: 1 });
   await expect(page.locator('#discovery-result')).toContainText('$420 more than the year before.');
   await expectNoHorizontalScroll(page);

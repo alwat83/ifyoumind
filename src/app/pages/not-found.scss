@@ -38,3 +38,4 @@ nav { display: flex; flex-wrap: wrap; gap: var(--iy-space-2) var(--iy-space-4); 
 nav a { display: inline-flex; align-items: center; color: var(--iy-accent); min-height: var(--iy-touch); text-underline-offset: 4px; }
 nav a:hover { text-decoration-thickness: 2px; }
 .home { @include product.primary; box-sizing: border-box; padding: 10px 16px; text-decoration: none; }
+h1 { @include product.title; font-size:clamp(48px,9vw,100px); max-width:10ch; }

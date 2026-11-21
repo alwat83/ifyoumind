@@ -1,3 +1,4 @@
+import { JourneyNavigationComponent } from '../journey-navigation.component';
 import { Location, NgTemplateOutlet } from '@angular/common';
 import { Component, ElementRef, OnDestroy, OnInit, inject } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
@@ -25,7 +26,7 @@ interface DecisionDraft {
 @Component({
   selector: 'app-decision-flow',
   standalone: true,
-  imports: [FormsModule, NgTemplateOutlet, RouterLink],
+  imports:[JourneyNavigationComponent,FormsModule, NgTemplateOutlet, RouterLink],
   templateUrl: './decision-flow.component.html',
   styleUrl: './decision-flow.component.scss',
 })

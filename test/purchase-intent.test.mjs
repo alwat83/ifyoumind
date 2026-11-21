@@ -30,7 +30,7 @@ test('query parameters carry the intent only when there is one', () => {
 
 test('the journey keeps verification and payment in place', () => {
   const report = read('../src/app/intelligence/market-report.component.html');
-  assert.equal((report.match(/\[queryParams\]="entry\.report"/g) || []).length, 2, 'both sample $79 buttons use the report destination');
+  assert.equal((report.match(/\[queryParams\]="entry\.report"/g) || []).length, 1, 'the single contextual sample offer preserves the report destination');
   assert.match(report, /\[routerLink\]="\['\/pricing'\]" \[queryParams\]="\{offer:'report',projectId:project\?\.id\}" class="report-upgrade">Get the full report · \$79/);
   const ts = read('../src/app/intelligence/market-report.component.ts');
   assert.match(ts, /!this\.sampleMode&&this\.purchaseIntent&&!this\.reportPurchased&&!this\.canUnlockWithPro/);

@@ -1,3 +1,4 @@
+import { verificationReporters } from './support/local-verification-reporters.mjs';
 // Authenticated browser QA against the Firebase emulators (demo-ifyoumind). Run: npm run test:e2e
 // The app under test is the local build (`npm run build:local`), served from dist/ifyoumind-local.
 import { defineConfig, devices } from '@playwright/test';
@@ -16,9 +17,9 @@ export default defineConfig({
   retries: 0,
   forbidOnly: !!process.env.CI,
   updateSnapshots: 'none',
-  reporter: process.env.CI
+  reporter: verificationReporters(process.env.CI
     ? [['list'], ['html', { open: 'never', outputFolder: '../playwright-report' }], ['junit', { outputFile: '../test-results/e2e-junit.xml' }]]
-    : [['list']],
+    : [['list']]),
   outputDir: '../test-results/e2e',
   use: {
     baseURL: process.env.QA_BASE_URL,

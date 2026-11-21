@@ -1,3 +1,4 @@
+import { JourneyNavigationComponent } from '../journey-navigation.component';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -8,7 +9,7 @@ import { ProductAnalyticsService } from './product-analytics.service';
 @Component({
   selector:'app-consumer-home',
   standalone:true,
-  imports:[CommonModule,RouterLink],
+  imports:[JourneyNavigationComponent,CommonModule,RouterLink],
   templateUrl:'./consumer-home.component.html',
   styleUrls:['./consumer-home.component.scss'],
 })

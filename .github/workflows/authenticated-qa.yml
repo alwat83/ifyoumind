@@ -94,6 +94,8 @@ jobs:
         run: npm run test:qa-integration
       - name: Authenticated browser tests (desktop and mobile)
         run: npm run test:e2e
+      - name: Transaction transport recovery diagnostic (strict, no accepted failures)
+        run: npm run diagnose:transactions
       - name: Upload Playwright report
         if: failure()
         uses: actions/upload-artifact@v4

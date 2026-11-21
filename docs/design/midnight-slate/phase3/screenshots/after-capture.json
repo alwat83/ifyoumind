@@ -1,0 +1,66 @@
+{
+  "source": "working-tree checkpoint before exact-head gate",
+  "kind": "actual local app; synthetic QA city fixture, not real market evidence",
+  "observations": [
+    {
+      "phase": "after",
+      "state": "empty",
+      "width": 1440,
+      "overflow": 0,
+      "decisionEntryLinks": 1,
+      "primaryActions": 1,
+      "duplicateEmptyActions": 0,
+      "boundaryInHero": true
+    },
+    {
+      "phase": "after",
+      "state": "empty",
+      "width": 390,
+      "overflow": 0,
+      "decisionEntryLinks": 1,
+      "primaryActions": 1,
+      "duplicateEmptyActions": 0,
+      "boundaryInHero": true
+    },
+    {
+      "phase": "after",
+      "state": "empty",
+      "width": 320,
+      "overflow": 0,
+      "decisionEntryLinks": 1,
+      "primaryActions": 1,
+      "duplicateEmptyActions": 0,
+      "boundaryInHero": true
+    },
+    {
+      "phase": "after",
+      "state": "saved",
+      "width": 1440,
+      "overflow": 0,
+      "decisionEntryLinks": 1,
+      "primaryActions": 1,
+      "duplicateEmptyActions": 0,
+      "boundaryInHero": true
+    },
+    {
+      "phase": "after",
+      "state": "saved",
+      "width": 390,
+      "overflow": 0,
+      "decisionEntryLinks": 1,
+      "primaryActions": 1,
+      "duplicateEmptyActions": 0,
+      "boundaryInHero": true
+    },
+    {
+      "phase": "after",
+      "state": "saved",
+      "width": 320,
+      "overflow": 0,
+      "decisionEntryLinks": 1,
+      "primaryActions": 1,
+      "duplicateEmptyActions": 0,
+      "boundaryInHero": true
+    }
+  ]
+}

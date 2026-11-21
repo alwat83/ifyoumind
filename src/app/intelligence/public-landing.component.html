@@ -1,43 +1,30 @@
 <div class="landing">
   <a class="skip-link" href="#try">Skip to content</a>
-  <header class="site-header shell">
-    <a routerLink="/" class="wordmark" aria-label="ifYouMind home">ifyoumind</a>
-    <nav class="desktop-nav" aria-label="Main navigation">
-      <a href="#business">Examples</a>
-      <a href="#reports">Decision Reports</a>
-      <a routerLink="/pricing">Pricing</a>
-      @if (viewer()?.emailVerified) {
-        <a routerLink="/decisions">Your decisions</a>
-      } @else {
-        <a routerLink="/login">Sign In</a>
-      }
-    </nav>
-    <!-- eslint-disable-next-line @angular-eslint/template/interactive-supports-focus -- The native summary receives focus and Escape bubbles from the menu links. -->
-    <details #mobileNavigation class="mobile-navigation" (keydown.escape)="mobileNavigation.open = false; mobileSummary.focus()">
-      <summary #mobileSummary>Menu <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#menu"/></svg></summary>
-      <nav aria-label="Mobile navigation">
-        <a href="#business" (click)="mobileNavigation.open = false">Examples</a>
-        <a href="#reports" (click)="mobileNavigation.open = false">Decision Reports</a>
-        <a routerLink="/pricing">Pricing</a>
-        @if (viewer()?.emailVerified) {
-          <a routerLink="/decisions" (click)="mobileNavigation.open = false">Your decisions</a>
-        } @else {
-          <a routerLink="/login">Sign In</a>
-        }
-      </nav>
-    </details>
-  </header>
+  <app-journey-navigation class="shell" current="explore" [compact]="true" [example]="example.id" [accountLabel]="viewer()?.emailVerified ? 'Account' : 'Sign In'"></app-journey-navigation>
 
   <main>
     <section id="try" class="shell hero" aria-labelledby="hero-title" tabindex="-1">
-      <div class="hero-copy">
-        <h1 id="hero-title">Make sense of <em>your numbers.</em></h1>
-        <p>Compare bills or cities. Try a free example.</p>
+      <div class="hero-intro">
+        <div class="hero-copy">
+          <p class="hero-label">{{ example.id === 'tax' ? 'Property-tax example · Made-up figures' : example.label }}</p>
+          @if (example.id === 'tax') {
+            <h1 id="hero-title">Your tax bill went up.<br><em>Where did the extra {{ taxIncrease }} go?</em></h1>
+          } @else if (example.id === 'electricity') {
+            <h1 id="hero-title">Your electricity bill changed.<br><em>What do the numbers show?</em></h1>
+          } @else {
+            <h1 id="hero-title">Two places.<br><em>What can the numbers tell you?</em></h1>
+          }
+        </div>
+        <div class="hero-entry">
+          <p>Understand your bills. Compare U.S. cities. See the numbers behind each finding.</p>
+          <button type="button" class="button first-action" [attr.aria-expanded]="revealed" aria-controls="discovery-answer" (click)="reveal(result)">Reveal what changed <span aria-hidden="true">↘</span></button>
+          <p class="hero-limit">{{ example.id === 'cities' ? 'City-level estimates, not a prediction of your personal costs.' : 'Illustrative numbers, not proof that a bill is wrong.' }}</p>
+        </div>
       </div>
 
-      <section id="business" class="demo" aria-labelledby="discovery-question" tabindex="-1">
+      <section #result id="business" class="demo" [class.is-revealed]="revealed" aria-label="Example findings" tabindex="-1">
         <p class="sr-only" role="status">{{ discoveryAnnouncement }}</p>
-
+        <div id="discovery-answer" class="revealed-content" [hidden]="!revealed">
         <div id="discovery-result" class="finding">
           <p class="example-label">{{ example.label }}</p>
           <h2 id="discovery-question">{{ example.question }}</h2>
@@ -79,7 +66,7 @@
                     }
                   </tbody>
                 </table>
-                <p id="data-sources" class="source-note">
+                <p id="data-sources" class="source-note" tabindex="-1">
                   @if (example.id === 'cities') {
                     <a href="https://www.census.gov/data/developers/data-sets/acs-5year.html">U.S. Census ACS</a> city-level estimates, 2020–2024. Population change compares 2015–2019 with 2020–2024. Differences have not been tested for statistical significance and may fall within survey margins of error.
                   } @else {
@@ -123,34 +110,40 @@
               }
             </div>
           </details>
+          <div class="own-information">
+            @if (example.id === 'cities') {
+              <a routerLink="/decide" [queryParams]="{type:'compare'}" class="button own-data">Compare my cities</a>
+              <p>A free account saves your city brief. Your question comes next.</p>
+            } @else {
+              <a [href]="'/discover/?example=' + example.id + '&input=csv'" class="button own-data">Compare my {{ example.id === 'tax' ? 'tax' : 'electricity' }} CSV</a>
+              <p>Two statements in one redacted CSV. No upload. No PDFs.</p>
+            }
+          </div>
           @if (example.id === 'cities') {
-            <a routerLink="/sample-report" class="button example-link">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
+            <a routerLink="/sample-report" class="text-link example-link">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
           } @else {
-            <a [href]="'/discover/?example=' + example.id" class="button example-link">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
+            <a [href]="'/discover/?example=' + example.id" class="text-link example-link">{{ example.action }} <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
           }
         </div>
-        <div class="question-options" role="group" aria-label="Choose an example">
+
+        </div>
+        <div class="question-options" role="group" aria-label="Other examples">
+          <p>Also explore</p>
           @for (option of examples; track option.id) {
             <button type="button" class="question-option" [attr.aria-pressed]="example.id === option.id"
-              aria-controls="discovery-result" (click)="chooseExample(option, evidence)">
-              {{ option.title }}
-            </button>
+              aria-controls="discovery-answer" (click)="chooseExample(option, evidence, result)">{{ option.title }}</button>
           }
         </div>
       </section>
 
-      <div class="hero-art">
-        <img src="/images/home/neighborhood-at-dusk.webp"
-          srcset="/images/home/neighborhood-at-dusk-small.webp 480w, /images/home/neighborhood-at-dusk.webp 960w"
-          sizes="(max-width: 740px) calc(100vw - 36px), (max-width: 1080px) 42vw, 535px" width="960" height="1440" alt="" fetchpriority="high">
-      </div>
     </section>
 
-    <section id="reports" class="reports" aria-labelledby="reports-title" tabindex="-1">
+    <section id="reports" class="reports" aria-label="Decision Reports" tabindex="-1">
       <div class="shell reports-inner">
-        <h2 id="reports-title">Decision Reports</h2>
+        <div><p class="edition">For the decisions that stay with you</p><h2 id="reports-title">Go beyond<br>the first answer.</h2></div>
         <div>
-          <p>Start with a free brief for your business and cities. A full Decision Report adds more comparisons, a sourced market analysis, and an action plan.</p>
+          <p>A free city brief puts Census evidence around your question. The $79 one-time Decision Report adds up to three comparison cities, a sourced market analysis and an action plan.</p>
+          <p class="report-boundary">For city and business decisions. Bill comparisons stay free and browser-local.</p>
           <div class="report-links">
             <a routerLink="/sample-report" class="button">View a Sample Report <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
             <a routerLink="/decide" [queryParams]="{ type: 'business' }" class="text-link">Start a Free Brief</a>
@@ -166,7 +159,7 @@
       <a href="/discover/">Understand Your Bills</a>
       <a href="/guides/">Guides</a>
       <a routerLink="/pricing">Pricing</a>
-      <a href="#data-sources" (click)="evidence.open = true">Data Sources</a>
+      <a href="#data-sources" (click)="showSources(evidence)">Data Sources</a>
       <a routerLink="/privacy-policy">Privacy</a>
       <a routerLink="/terms-of-conduct">Terms</a>
       <a href="mailto:support&#64;ifyoumind.com?subject=Organization%20inquiry">For Organizations</a>

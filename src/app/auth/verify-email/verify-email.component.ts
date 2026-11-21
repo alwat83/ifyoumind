@@ -1,3 +1,4 @@
+import { JourneyNavigationComponent } from '../../journey-navigation.component';
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { intentParams, readIntent } from '../../purchase-intent';
@@ -8,7 +9,7 @@ import { Auth, sendEmailVerification, signOut } from '@angular/fire/auth';
 @Component({
   selector: 'app-verify-email',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports:[JourneyNavigationComponent,CommonModule, RouterModule],
   templateUrl: './verify-email.component.html',
   styleUrls: ['./verify-email.component.scss'],
 })

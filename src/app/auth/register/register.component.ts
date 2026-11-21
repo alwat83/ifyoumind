@@ -1,3 +1,4 @@
+import { JourneyNavigationComponent } from '../../journey-navigation.component';
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
@@ -20,7 +21,7 @@ export const FIRST_DECISION_QUERY={type:'business'};
 @Component({
   selector:'app-register',
   standalone:true,
-  imports:[CommonModule,FormsModule,RouterModule],
+  imports:[JourneyNavigationComponent,CommonModule,FormsModule,RouterModule],
   templateUrl:'./register.component.html',
   styleUrls:['./register.component.scss'],
 })

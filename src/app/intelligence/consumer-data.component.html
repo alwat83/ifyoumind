@@ -1,17 +1,15 @@
 <main class="data-shell">
-  <nav class="topbar">
-    <a routerLink="/" class="brand" aria-label="ifYouMind home">ifYouMind</a>
-    <a routerLink="/decisions">Back to your decisions</a>
-  </nav>
+  <app-journey-navigation current="data"></app-journey-navigation>
 
   <header>
     <p class="eyebrow">Your data</p>
     <h1>Bring your own numbers.</h1>
-    <p>Upload a CSV and tell us what it represents. We’ll turn the rows into something ifYouMind can compare and reason across.</p>
+    <p>Import a CSV to your account, label its numbers, and explore the evidence.</p>
+    <p class="privacy-note">This workspace tool saves imported rows. For bill comparisons that stay on your device, use <a href="/discover/">private Bill Discovery</a>.</p>
   </header>
 
   <section *ngIf="error" class="notice error">{{ error }}</section>
-  <section *ngIf="importedCount !== null" class="notice success">{{ importedCount }} rows imported. Your data is ready to use.</section>
+  <section *ngIf="importedCount !== null" class="notice success">{{ importedCount }} rows imported. Your data is ready to use. <a routerLink="/ask">Ask about saved data</a></section>
 
   <section class="upload-card">
     <p class="eyebrow">Step 1</p>
@@ -71,7 +69,7 @@
   <section *ngIf="datasets.length" class="library">
     <div class="section-head">
       <div><p class="eyebrow">Saved</p><h2>Your data library</h2></div>
-      <a routerLink="/advanced">Advanced analysis</a>
+      <div class="library-actions"><a routerLink="/ask">Ask about saved data</a><a routerLink="/advanced">Explore in detail</a></div>
     </div>
     <div class="dataset-grid">
       <article *ngFor="let dataset of datasets">

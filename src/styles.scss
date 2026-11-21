@@ -11,39 +11,18 @@ app-root {
 @tailwind utilities;
 
 @layer base {
-  :root[data-theme='dark'] {
-    --bg-app: #09090b;
-    --bg-surface: #111113;
-    --text-primary: #ffffff;
-    --text-secondary: #9ca3af; /* neutral-400 */
-    --border-subtle: rgba(255, 255, 255, 0.05);
-    --bg-glass: rgba(255, 255, 255, 0.05);
-    --bg-glass-hover: rgba(255, 255, 255, 0.1);
-  }
-
-  :root[data-theme='light'] {
-    --bg-app: #f8fafc; /* slate-50 */
-    --bg-surface: #ffffff;
-    --text-primary: #0f172a; /* slate-900 */
-    --text-secondary: #475569; /* slate-600 */
-    --border-subtle: rgba(0, 0, 0, 0.1);
-    --bg-glass: rgba(0, 0, 0, 0.02);
-    --bg-glass-hover: rgba(0, 0, 0, 0.05);
-  }
-
-  /* Default fallback if data-theme isn't set */
-  :root {
-    --bg-app: #09090b;
-    --bg-surface: #111113;
-    --text-primary: #ffffff;
-    --text-secondary: #9ca3af;
-    --border-subtle: rgba(255, 255, 255, 0.05);
-    --bg-glass: rgba(255, 255, 255, 0.05);
-    --bg-glass-hover: rgba(255, 255, 255, 0.1);
+  :root, :root[data-theme='dark'], :root[data-theme='light'] {
+    --bg-app: #090D17;
+    --bg-surface: #162330;
+    --text-primary: #F1F7FA;
+    --text-secondary: #A8BAC9;
+    --border-subtle: #33485A;
+    --bg-glass: #101A27;
+    --bg-glass-hover: #162330;
   }
 
   body {
-    @apply bg-app text-fg-primary font-sans antialiased selection:bg-indigo-500/30 selection:text-white transition-colors duration-300;
+    @apply bg-app text-fg-primary font-sans antialiased selection:bg-cyan-500/30 selection:text-white transition-colors duration-300;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -58,7 +37,8 @@ app-root {
   }
 
   .btn-primary {
-    @apply btn text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 shadow-lg shadow-indigo-500/20 border border-outline;
+    @apply btn border border-outline;
+    background: var(--iy-accent); color: var(--iy-on-accent);
   }
 
   .btn-secondary {
@@ -151,7 +131,7 @@ app-root {
 }
 
 
-/* Light public landing overrides legacy dark heading token. */
+/* Shared consumer heading colors. */
 .landing .hero h1,.landing .demo-card h3{color:var(--iy-ink)}
 
 /* Mobile Decision Report polish kept global to stay under Angular component-style budget. */
@@ -163,4 +143,11 @@ app-root {
   .report-nav>div>a,.report-nav>div>button,.report-upgrade{width:100%;box-sizing:border-box;justify-content:center;text-align:center}
   .report-offer{padding:20px!important}
   .metrics strong{font-size:18px}
+}
+
+html { background: var(--iy-page); color-scheme: dark; }
+body { margin: 0; background: var(--iy-page); color: var(--iy-ink); }
+:where(button, a, input, textarea, select, summary) { -webkit-tap-highlight-color: transparent; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

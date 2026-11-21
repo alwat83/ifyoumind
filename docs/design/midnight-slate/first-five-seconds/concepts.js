@@ -1,0 +1,3 @@
+// Review-only: native disclosure, focus and reduced-motion aware scrolling. No API, storage or tracking.
+document.querySelectorAll('details.reveal,details.evidence').forEach(details=>details.addEventListener('toggle',()=>{if(!details.open)return;if(details.classList.contains('reveal'))document.body.classList.add('has-finding');const focus=details.querySelector('.revealed-focus');if(!focus)return;focus.focus({preventScroll:true});focus.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});}));
+document.querySelector('.menu').addEventListener('keydown',event=>{if(event.key==='Escape'){event.currentTarget.open=false;event.currentTarget.querySelector('summary').focus();}});

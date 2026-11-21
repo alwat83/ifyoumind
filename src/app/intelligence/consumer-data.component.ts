@@ -1,3 +1,4 @@
+import { JourneyNavigationComponent } from '../journey-navigation.component';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -9,7 +10,7 @@ import { CsvTable, parseCsv, suggestColumn } from './csv-parser';
 @Component({
   selector:'app-consumer-data',
   standalone:true,
-  imports:[CommonModule,FormsModule,RouterLink],
+  imports:[JourneyNavigationComponent,CommonModule,FormsModule,RouterLink],
   templateUrl:'./consumer-data.component.html',
   styleUrls:['./consumer-data.component.scss'],
 })

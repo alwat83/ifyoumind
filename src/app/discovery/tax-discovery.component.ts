@@ -52,6 +52,7 @@ export class TaxDiscoveryComponent implements OnInit, OnDestroy {
   @ViewChild('heading') heading?:ElementRef<HTMLElement>;
   get ready():TaxAnalysis|null{return this.analysis?.status==='ready'?this.analysis:null;}
   trackRow(index:number):number{return index;}
+  focusCsv():void {this.fileInput?.nativeElement.focus();}
   tryExample():void {
     this.clear(false);
     const input=this.parse(this.exampleCsv);

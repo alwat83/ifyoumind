@@ -39,7 +39,7 @@ test('sample marks every paid-only section with the "Included in the $79 report"
   assert.match(reportHtml,/<app-market-analysis[^>]*\[includedInReport\]="sampleMode"/);
   assert.ok(analysisHtml.includes(`<span *ngIf="includedInReport" class="paid-pill">${PILL}</span>`));
   // The public-report browser checks verify contrast on the rendered pill.
-  assert.match(reportScss,/\.paid-pill\{[^}]*background:var\(--iy-clay\);color:var\(--iy-accent\)/);
+  assert.match(reportScss,/\.paid-pill\s*\{/);
 });
 
 test('unpaid brief shows what the $79 report adds, with the existing pricing CTA',()=>{
@@ -53,7 +53,7 @@ test('unpaid brief shows what the $79 report adds, with the existing pricing CTA
 
 test('sample offers a direct $79 CTA and keeps Start free as the secondary action',()=>{
   const cta='Get this report for your cities · $79';
-  assert.equal(reportHtml.split(cta).length-1,2,'in the top nav and in the end offer');
+  assert.equal(reportHtml.split(cta).length-1,1,'one contextual offer after the sample');
   assert.match(reportHtml,/<a [^>]*class="offer-primary">Get this report for your cities · \$79<\/a>\s*<a [^>]*class="offer-secondary">Start free<\/a>/);
 });
 
@@ -96,7 +96,7 @@ test('consumer homepage preserves the Business entry point and plan-ready offer'
   assert.match(landingHtml,/id="business"/);
   assert.match(landingHtml,/routerLink="\/sample-report"/);
   assert.match(read('src/app/intelligence/home-discovery-examples.ts'),/action: 'View the Full Sample Report'/);
-  assert.match(landingHtml,/more comparisons, a sourced market analysis, and an action plan/);
+  assert.match(landingHtml,/three comparison cities, a sourced market analysis and an action plan/);
   assert.match(pricingHtml,/more comparisons, sourced analysis, and an action plan/);
   assert.match(reportHtml,/evidence boundaries/);
   assert.ok(landingHtml.indexOf('id="try"')<landingHtml.indexOf('id="business"'),'consumer discovery leads; Business remains available');
@@ -114,7 +114,7 @@ test('register page says what happens next for email and Google sign-ups',()=>{
 });
 
 test('the homepage states its free example promise and keeps provenance explicit',()=>{
-  const value = 'Compare bills or cities. Try a free example.';
+  const value = 'Understand your bills. Compare U.S. cities. See the numbers behind each finding.';
   assert.ok(landingHtml.includes(value));
   assert.match(landingHtml,/\{\{ example\.label \}\}/);
   for(const html of [reportHtml,landingHtml.replace(value,''),pricingHtml,registerHtml,analysisHtml]){

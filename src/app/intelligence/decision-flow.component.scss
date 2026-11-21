@@ -79,3 +79,18 @@ input[aria-invalid='true'], textarea[aria-invalid='true'] { border-color: var(--
   .comparison-row { grid-template-columns: minmax(0, 1fr); }
   .comparison-row > .quiet { justify-self: end; }
 }
+
+// Question as a writing surface, not a card or a setup wizard.
+nav { @include product.navigation; }
+.scene { max-width:860px; padding-block:64px; }
+.scene>.eyebrow { @include product.eyebrow; margin-bottom:24px; }
+h1 { @include product.title; font-size:clamp(40px,6.2vw,80px); max-width:15ch; }
+.intro { max-width:50ch; margin-block:24px 40px; }
+form { max-width:680px; }
+textarea { border:0; border-bottom:1px solid var(--iy-control); border-radius:0; padding:20px 0; font-size:clamp(22px,3vw,30px); line-height:1.4; min-height:124px; background:transparent; }
+input { min-height:56px; background:var(--iy-panel); }
+.primary { min-height:50px; gap:24px; padding-inline:24px; }
+.original-question { padding:18px 0; border-bottom:1px solid var(--iy-line); margin-bottom:32px; font-size:18px; max-width:680px; }
+.answer-title { font-size:24px; font-weight:500; max-width:32ch; margin-top:32px; }
+.answer-note { max-width:65ch; }
+@media(max-width:600px) { .scene { padding-block:36px; }.intro { margin-block:20px 28px; }.scene>.eyebrow { margin-bottom:18px; } }

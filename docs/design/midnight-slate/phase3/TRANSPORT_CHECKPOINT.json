@@ -1,0 +1,101 @@
+{
+  "kind": "fault-injected SDK diagnostic; not natural-contention or production proof",
+  "sdk": "7.11.6",
+  "node": "v22.23.2",
+  "gax": "4.6.1",
+  "status": "FAIL",
+  "results": [
+    {
+      "arm": "control",
+      "attempts": 1,
+      "injected": false,
+      "milliseconds": 26,
+      "success": true,
+      "count": 1
+    },
+    {
+      "arm": "read-abort",
+      "attempts": 1,
+      "injected": true,
+      "milliseconds": 6604,
+      "success": false,
+      "code": 3,
+      "message": "Transaction is invalid or closed.",
+      "count": 0
+    },
+    {
+      "arm": "aggregate-abort",
+      "attempts": 1,
+      "injected": true,
+      "milliseconds": 6955,
+      "success": false,
+      "code": 3,
+      "message": "Transaction is invalid or closed.",
+      "count": 0
+    },
+    {
+      "arm": "commit-abort",
+      "attempts": 2,
+      "injected": true,
+      "milliseconds": 852,
+      "success": true,
+      "count": 1
+    }
+  ],
+  "events": [
+    {
+      "arm": "read-abort",
+      "method": "BatchGetDocuments",
+      "transaction": "T2",
+      "origin": "injected-after-real-rollback",
+      "code": 10
+    },
+    {
+      "arm": "read-abort",
+      "method": "BatchGetDocuments",
+      "transaction": "T2",
+      "origin": "emulator",
+      "code": 3,
+      "message": "Transaction is invalid or closed."
+    },
+    {
+      "arm": "read-abort",
+      "method": "BatchGetDocuments",
+      "transaction": "T2",
+      "origin": "emulator",
+      "code": 3,
+      "message": "Transaction is invalid or closed."
+    },
+    {
+      "arm": "aggregate-abort",
+      "method": "RunAggregationQuery",
+      "transaction": "T3",
+      "origin": "injected-after-real-rollback",
+      "code": 10
+    },
+    {
+      "arm": "aggregate-abort",
+      "method": "RunAggregationQuery",
+      "transaction": "T3",
+      "origin": "emulator",
+      "code": 3,
+      "message": "Transaction is invalid or closed."
+    },
+    {
+      "arm": "aggregate-abort",
+      "method": "RunAggregationQuery",
+      "transaction": "T3",
+      "origin": "emulator",
+      "code": 3,
+      "message": "Transaction is invalid or closed."
+    },
+    {
+      "arm": "commit-abort",
+      "method": "Commit",
+      "transaction": "T4",
+      "origin": "injected-after-real-rollback",
+      "code": 10
+    }
+  ],
+  "evidenceStage": "Checkpoint before Phase 3 exact-head verification; no production mutation"
+}

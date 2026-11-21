@@ -8,6 +8,10 @@
 
 **Current development handoff:** [CURRENT_STATUS.md](docs/agent-handoff/CURRENT_STATUS.md); append-only [DEVELOPMENT_LOG.md](docs/agent-handoff/DEVELOPMENT_LOG.md). Root `AGENTS.md` requires every agent to read/update these and report in the permanent A–F format plus Business Impact (G). This file retains durable architecture, history and roadmap; the dated snapshot supersedes historical current-status paragraphs below. Per founder correction on 2026-10-22, GitHub and repository documentation are the development source of truth. Notion remains a synchronized coordination record at the founder-confirmed URL above.
 
+## November 21, 2026 — Dedicated QA authorized; identity precondition stopped execution
+
+Founder [comment7070107031](https://github.com/alwat83/ifyoumind/pull/111#issuecomment-7070107031) authorizes the minimal new-QA setup and one save/same-ID retry. [Fresh result](docs/releases/rc1-production-retry-qa/AUTHORIZED_SETUP_STOPPED.md): proposed alias eligible/unused, but the later nominated account is an older Google-linked identity with an existing workspace, failing the new/empty requirement. Authentication harness stopped without accepting a token; no workspace/save/retry executed. Do not reset/relabel or request the same scope authorization. A genuinely new verified owner identity is the blocker; live retry remains unverified/NO-GO and RC1 production NO-GO. Frozen artifact, historical reliability and other release gates preserved. No private identities, credentials, customer contents or revenue claim published.
+
 ## November 21, 2026 — Risk-based development independence
 
 [Draft #122](https://github.com/alwat83/ifyoumind/pull/122) records [exact d792381 backend-level evidence](docs/releases/phase4/VERIFIED_d792381.md):538 pass/two unresolved strict recovery failures/15 skip, valid integrity;14 runner tests pass and lower-level sensitive scope is refused. Omitted checks remain NOT_RUN, prior failures remain open, and the following commit records evidence only.

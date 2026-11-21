@@ -1,0 +1,11 @@
+{
+  "observedAt": "2026-11-21T23:23:25.937Z",
+  "project": "ifyoumind-473fe",
+  "proposedAliasUnused": true,
+  "emailPasswordProviderEnabled": true,
+  "accountCreated": false,
+  "workspaceCreated": false,
+  "authTokenMinted": false,
+  "credentialAccessed": false,
+  "limitation": "Read-only lookup establishes unused alias, not successful future registration or mailbox delivery."
+}

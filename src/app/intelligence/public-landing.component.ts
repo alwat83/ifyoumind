@@ -48,9 +48,10 @@ export class PublicLandingComponent implements AfterViewInit, OnDestroy {
   }
 
   chooseExample(example: typeof HOME_EXAMPLES[number], evidence: HTMLDetailsElement, target: HTMLElement): void {
+    const wasRevealed = this.revealed;
     evidence.open = false;
     this.example = example;
-    this.reveal(target);
+    this.reveal(wasRevealed ? null : target);
   }
 
   showSources(evidence: HTMLDetailsElement): void {
@@ -61,6 +62,7 @@ export class PublicLandingComponent implements AfterViewInit, OnDestroy {
 
   private moveTo(target: HTMLElement | null): void {
     this.pending?.destroy();
+    if (!target) return;
     const origin = document.activeElement;
     this.pending = afterNextRender({ write: () => {
       if (!target?.isConnected || (document.activeElement !== origin && document.activeElement !== document.body)) return;

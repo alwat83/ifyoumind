@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November 20, 2026 — Selected A: category focus correction
+
+[Preserved exact 2cc49b5 result](../verification/local-first/VERIFIED_2cc49b5.md): 706 pass / one fail / 15 skip, valid unchanged source. All 186 authenticated browser, 48 commerce and 24 fixture/access cases passed; the single narrow Hosting failure exposed a real category-switch focus move. First reveal still focuses the new answer, while changing an already-visible example now retains focus on its selected button and cancels pending movement. The strict focus assertion remains and is also checked after the updated answer paints. All three affected Hosting cases, production build and scoped lint passed after correction. No layout, evidence, privacy, backend or commercial change. Final exact-head result belongs to the resulting draft [#119](https://github.com/alwat83/ifyoumind/pull/119), not this checkpoint. No merge/deploy; #118 unchanged, #111 unwaived.
+
 ## November 20, 2026 — Selected A: render-ready follow-up
 
 The founder-authorized A implementation is in #119. [Review and before/after](../design/midnight-slate/first-five-seconds/REVIEW.md). Preserved exact `89ed72d7d612b621c48b80b70cb60c067ae41706` local result: [695 pass / 12 fail / 15 skip](../verification/local-first/VERIFIED_89ed72d.md), valid source integrity. Corrected stale copy/interaction expectations and made focus wait for Angular's completed render, with cleanup and user-focus protection. Six affected native Hosting keyboard cases, 157 fast checks and scoped lint pass. Auth/commerce/privacy/cap assertions remain; no backend changes.

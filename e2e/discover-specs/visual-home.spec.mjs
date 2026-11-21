@@ -130,6 +130,9 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await expect(evidence).not.toHaveAttribute('open');
     await expect(summary).toHaveText('Show the evidence', { useInnerText: true });
     await expect(announcement).toContainText('The bill rose 21% and electricity use rose 10%.');
+    // Check after the updated answer has painted, not only before a queued focus move.
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    await expect(electricity).toBeFocused();
     await expect(feature.locator('.example-label')).toBeVisible();
     await expect(feature.locator('.finding')).toContainText('+21% in total billed, compared with +10% in electricity use.');
     await expect(feature.locator('.finding-note')).toHaveText('Check the individual charges to see what else changed.');

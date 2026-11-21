@@ -2,6 +2,7 @@
   "name": "ifyoumind",
   "version": "0.0.0",
   "scripts": {
+    "verify:local": "node scripts/verify-local.mjs",
     "ng": "ng",
     "start": "ng serve",
     "build": "npm run preflight && node scripts/generate-sitemap.js && node scripts/build-guides.js && ng build && node scripts/build-seo.js && npm run build:discover && node scripts/install-discovery.mjs",

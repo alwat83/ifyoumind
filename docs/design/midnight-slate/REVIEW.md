@@ -136,3 +136,8 @@ Draft [#119](https://github.com/alwat83/ifyoumind/pull/119) remains stacked on p
 Fresh read-only production metadata retained Hosting `39dc573f3826dca6`, release `1794933315802000`, and `createmarketintelligenceproject-00087-nub` ACTIVE at 100%. Prior Hosting `cd0b78221355e0f4` remains finalized. This design was not merged or deployed. #118's head remains `2f4975f94ac888547df8b1fbdf149a50741f6570`. No production write, payment, customer record, provider generation, entitlement or enrollment change.
 
 **GO for connected-prototype founder review; NO-GO for production.** Remaining gates: restored GitHub execution and clean exact-head checks; individually reviewed Linux visual differences; real unassisted five-task acceptance; separately approved foundation reconciliation and release scope, including the unwaived #111 live retry. The current strict CSV requirement is a material consumer usability limitation, not arbitrary bill/PDF support. No new parsing feature is proposed here.
+
+
+## Local-first continuation — founder authorization, November 20
+
+The account lock no longer gates development or founder experience review. [The single local verification command](../../verification/local-first/README.md) runs the applicable Launch/QA checks, records exact-source integrity, and offers optional pinned Linux Docker with native fallback. Failures and unsupported Linux coverage remain explicit. GitHub workflow definitions are preserved; local verification is not release authorization. Final executed evidence will be linked from the draft and handoff. Do not wait for billing restoration to conduct the five-task prototype review.

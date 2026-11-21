@@ -117,6 +117,10 @@ Use one visual identity across every customer and administrative journey. Start 
 
 Run affected visual comparisons against reviewed, committed baselines. Missing baselines and material unexplained differences block release. Do not regenerate baselines in CI or accept them in bulk. Document the intended change, inspect the actual and diff images, and update only the reviewed images using the [baseline procedure](docs/design/DESIGN_SYSTEM.md#visual-regression-baselines). A green run and a baseline update do not authorize a release.
 
+## Local-first development verification — November 20, 2026
+
+GitHub's account billing lock must not pause implementation, local validation or prototype review. Use [the local-first gate](docs/verification/local-first/README.md): `npm run verify:local -- --expected-sha=<full candidate SHA>`. It runs existing workflow checks against an isolated tracked-source copy, records exact-head integrity, counts and limitations, and supports optional pinned Linux Docker with an explicit native fallback. Never hide failures, update baselines automatically or call skipped checks passing. GitHub workflows remain available for restoration. Local verification is a development alternative, not production authorization; #118's dependency, #111's live retry, human acceptance and separate merge/deployment approval remain explicit.
+
 ## Development and release
 - Use the repository's actual package scripts and lockfiles; inspect before running commands. The historical stack includes Angular, TypeScript, Firebase/Firestore/Functions and Stripe.
 - Prefer targeted tests plus build and regression checks. Verify tenant isolation, authentication, billing entitlement boundaries, data source attribution, rate limits and graceful API failure handling.

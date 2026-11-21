@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 1,
+  "source": "9d8caefc9943d65767198d6ec490dbdd63fd02e8",
+  "project": "ifyoumind-473fe",
+  "site": "ifyoumind-473fe",
+  "sourceDigest": "d0d892d1f88c6c2b2ae1107b1506beedf6104477ef658843d826d53c3b94dc55",
+  "reportSha256": "5e42256ecea9cd994e730298291d9572bbfcaf8fe2879e8c81df4bcd9e9659be",
+  "sourceConfigSha256": "49d17f6d0f9671f2509586d22beaf4e1fffd9905089cbbd0b7522ff90de9002f",
+  "configSha256": "a985fa400017d793640bd4c895435d0c8d4a302c183efcb7d50999794ce5dec0",
+  "firebaseTools": "13.35.1",
+  "files": [
+    {
+      "path": "404.html",
+      "bytes": 3679,
+      "sha256": "771f0bcd95195fc97ea92644de8c11ba46cd66cd1edfed70079c4f694ca61a10"
+    },
+    {
+      "path": "app-shell.html",
+      "bytes": 20959,
+      "sha256": "dc20fe06f253a751540aa0fdd42dc751e8ab0200ad6f0567b8dc1066ce63dda5"
+    },
+    {
+      "path": "apple-touch-icon.png",
+      "bytes": 23576,
+      "sha256": "4f74a3417992dd413860d3b45998206e3769abdd965d723617eac93fec004f0d"
+    },
+    {
+      "path": "chunk-22ZD7LZM.js",
+      "bytes": 10748,
+      "sha256": "272aa6f3802aee65890f6fc133e27f3caffafbb0486deb5fee27e00a78463387"
+    },
+    {
+      "path": "chunk-3JVDFTRV.js",
+      "bytes": 614,
+      "sha256": "6458a873bb75d43caa9b960058e1730f2e5846016804b2580090d334d298043e"
+    },
+    {
+      "path": "chunk-3TCS7XBK.js",
+      "bytes": 35631,
+      "sha256": "5196eff5ad51ce2dd0db6c194b551c8c457ca45cd6912f36cad7d8499524ada7"
+    },
+    {
+      "path": "chunk-4U5DXSUG.js",
+      "bytes": 18268,
+      "sha256": "b3f67e5e4ae10a05a2eacf96339c73148b60cd6cd45a3c52d6eccb62788395cd"
+    },
+    {
+      "path": "chunk-6CFRSES2.js",
+      "bytes": 6354,
+      "sha256": "7028474fe122bb156cb13dd280a793449633c2612e9489bc210fdf508cd99c73"
+    },
+    {
+      "path": "chunk-A5LZSKEK.js",
+      "bytes": 16739,
+      "sha256": "02ce7096b0f0c9c5f5a16f841ef42d780dbb1bf4ac71ee4421c089136f8d8533"
+    },
+    {
+      "path": "chunk-BBJG5EHC.js",
+      "bytes": 9172,
+      "sha256": "f0d6073c90ac2bee90aaf3389abd994d21b7745dadf21efea3337d2c45f26576"
+    },
+    {
+      "path": "chunk-BIFFUYTA.js",
+      "bytes": 19905,
+      "sha256": "25d65469964dd04fef204d5ad03d165e5265d9ca5406cf8745da9d68a55949c8"
+    },
+    {
+      "path": "chunk-CO2CAIQX.js",
+      "bytes": 1182,
+      "sha256": "5c1f561f503b38d6efb7f347bc69fc04af9e70b3a7dd202fae069dbcce777ab1"
+    },
+    {
+      "path": "chunk-F4GNGWNC.js",
+      "bytes": 24278,
+      "sha256": "99a09ef8376321ac6341c87a178763822e010a06a7aa259375f0e52de2bde930"
+    },
+    {
+      "path": "chunk-HHTYOWMZ.js",
+      "bytes": 29055,
+      "sha256": "c1388af18b21272e5c1363a5cad4ba256ad5395fb74bedd15e21d2d883a0c37d"
+    },
+    {
+      "path": "chunk-HPXZ7LDM.js",
+      "bytes": 672,
+      "sha256": "4841bb44e4ea3f1860dd130b991ced7f9f016e62c50d20319d755c258c40fa12"
+    },
+    {
+      "path": "chunk-NPOKSDZZ.js",
+      "bytes": 30536,
+      "sha256": "6a8f1ce4137f04ced8e5bd6f9dd04e10aed64a643137f42ec594d24d0e66be04"
+    },
+    {
+      "path": "chunk-QUTHTKJQ.js",
+      "bytes": 2203,
+      "sha256": "bc3ed579b1de7f2c8f0592dcddf2e02298f19dc0e7f9ff28b18e98d2fc6c8b90"
+    },
+    {
+      "path": "chunk-RYOIL5RP.js",
+      "bytes": 1620,
+      "sha256": "5823480701707e1447f339aadf2a24629ef8fcdffb3ee95ddacd59ea1d1299c1"
+    },
+    {
+      "path": "chunk-U2C7XN2C.js",
+      "bytes": 474,
+      "sha256": "34ae665edc1edaa60ac85d0bef7f6bcc7698a14be4c52d68e0d81a9bc58476cb"
+    },
+    {
+      "path": "chunk-VJQRPNOA.js",
+      "bytes": 403044,
+      "sha256": "219addf76cc1fd4a238e3896e8ccb6b3d3cf59f468a722521d75f5662cc60ff3"
+    },
+    {
+      "path": "chunk-VLS53FYH.js",
+      "bytes": 9872,
+      "sha256": "94ad980a550767ff335c387b62e75abeaa11d878a938bc27351ce77d631cc4e8"
+    },
+    {
+      "path": "chunk-WACTYS7Q.js",
+      "bytes": 18914,
+      "sha256": "ca27c1bbfafa0ed5915019e0e74f6802315e9a21b81c925dbc5d399b44c72e71"
+    },
+    {
+      "path": "chunk-XD2E44AO.js",
+      "bytes": 5781,
+      "sha256": "478ccbdea29e07a710c41a1689658b5d715c8bc798615639e35a798a0a45f350"
+    },
+    {
+      "path": "chunk-XIITDXYU.js",
+      "bytes": 66494,
+      "sha256": "57626c8132b0117045df4471d7ad9cbd21c77af474aa5c827c06d04fc9b55ee6"
+    },
+    {
+      "path": "discover/index.html",
+      "bytes": 1535,
+      "sha256": "e20fc27f420ba5fc31f583e3aab0f8af2f0f549c8b183970d728cb096a6e94dd"
+    },
+    {
+      "path": "discover/main-PBSDFV7T.js",
+      "bytes": 213558,
+      "sha256": "2eaa6187235bbae409ddda059358048c964aa60f581b4d4074d8cd9e83516d69"
+    },
+    {
+      "path": "discover/polyfills-D3QBKOLL.js",
+      "bytes": 34585,
+      "sha256": "15c6f58707b9b19116fde3a3f6a0ce9cf83427d64a91e95cb91fe1056c3da616"
+    },
+    {
+      "path": "favicon.ico",
+      "bytes": 4833,
+      "sha256": "8f80b82a4e0238237fb46c29e4b36aafe2f93cde6bea90bb168eb6274beb9ec4"
+    },
+    {
+      "path": "favicon.png",
+      "bytes": 4187,
+      "sha256": "58a828c8e41a7232eecbaa2b2ac2dafc1fe47e6097324a6720f809e7703f17eb"
+    },
+    {
+      "path": "fonts/instrument-serif/OFL.txt",
+      "bytes": 4404,
+      "sha256": "b6b2292aa580937fb63796878d65a027a27f8c3db2d97601d0c34d9031f4ca17"
+    },
+    {
+      "path": "fonts/instrument-serif/italic.woff2",
+      "bytes": 22128,
+      "sha256": "5a51946dfffa82972bc98745359c46761515641fda557c25116459a9f83da4a7"
+    },
+    {
+      "path": "fonts/instrument-serif/regular.woff2",
+      "bytes": 21032,
+      "sha256": "5eb09b5ac0e28b67c2f041c8ba6d244604ca0c0980d65912ab2d47fed84ddc31"
+    },
+    {
+      "path": "guides/choose-business-location-evidence/index.html",
+      "bytes": 10173,
+      "sha256": "1c8cbf1215b6e4168e711858742ecfc8a357fa1809ead025b2cb7fd022b6b316"
+    },
+    {
+      "path": "guides/compare-job-offers-relocation/index.html",
+      "bytes": 9876,
+      "sha256": "66304fef06d94241c67f1d5d29b49170b4c8169ad18b6dbfc09c694133cd3f8a"
+    },
+    {
+      "path": "guides/compare-options-with-your-own-data/index.html",
+      "bytes": 10084,
+      "sha256": "ce262b5fa640e4e4ea73543faeaab44adcbc17ee5f0412032bf4b27a9f9c73b5"
+    },
+    {
+      "path": "guides/guide.css",
+      "bytes": 6993,
+      "sha256": "29e9b3092c028ad1d81699d61d41259be2bd99f5028b78125e40846f1b565b2e"
+    },
+    {
+      "path": "guides/index.html",
+      "bytes": 5036,
+      "sha256": "a544ec0bbed2423c5e290a44994e54297b9171f1f776dac5a44fd591db9657c1"
+    },
+    {
+      "path": "guides/market-analysis-business-plan/index.html",
+      "bytes": 18719,
+      "sha256": "4bfefb4e0e4aca669582b95218464c890bd378c010db529f28c40eb3fbc12453"
+    },
+    {
+      "path": "images/discovery/story-hero.jpg",
+      "bytes": 111083,
+      "sha256": "7d90095dfbc0be62fd098268eb45e2e69673c7347b9992b2de30a6f9e11e8b79"
+    },
+    {
+      "path": "images/home/city-at-dusk.webp",
+      "bytes": 24390,
+      "sha256": "213841628aeb528f4174526ffce2c6d68ba3a306081498bf65aecd38e161dc7a"
+    },
+    {
+      "path": "images/home/city-sunrise-small.webp",
+      "bytes": 8866,
+      "sha256": "6bd5df0e40a798c27876df5d3967b7125ee5bd1afdaa25cc45a672f22c196880"
+    },
+    {
+      "path": "images/home/city-sunrise.webp",
+      "bytes": 30870,
+      "sha256": "a045de623756d90412ee5011e8662578d630b2046500c40eb5244a2461ca91ac"
+    },
+    {
+      "path": "images/home/coffee-shop.webp",
+      "bytes": 22118,
+      "sha256": "c667a35be176ee11ee554aaeb052a5d7eb06718f57442f3c09628c3809217650"
+    },
+    {
+      "path": "images/home/icons.svg",
+      "bytes": 1427,
+      "sha256": "47a06f4064f0b83f5a596c3a2e31f9eae10128fa6a3a0d4e9a6d86855cd01be6"
+    },
+    {
+      "path": "images/home/market-skyline.webp",
+      "bytes": 16398,
+      "sha256": "4e6059a1c506a5634639ec95b664deaac24a9ae6f8b0b317fe8d42f4f8fc28db"
+    },
+    {
+      "path": "images/home/neighborhood-at-dusk-small.webp",
+      "bytes": 77842,
+      "sha256": "a619770bd5366e3dbf3f5c067e7857296a87671bb8c3762b19a5f05db527e2bb"
+    },
+    {
+      "path": "images/home/neighborhood-at-dusk.webp",
+      "bytes": 251544,
+      "sha256": "e7c3cef76242f14e77380a6a898a018799cf3001a31351b0a9036ec91daa33cb"
+    },
+    {
+      "path": "images/home/neighborhood.webp",
+      "bytes": 23610,
+      "sha256": "bb917c02d5166daf0b2fb38f9cb774e3a2144e5978da900f0e50a53f25ce9680"
+    },
+    {
+      "path": "index.html",
+      "bytes": 22022,
+      "sha256": "6dacd85da609a874ed8c8aee012af7b911bd0ab77452d6b7febfbd83feda29bd"
+    },
+    {
+      "path": "main-57APZ7JL.js",
+      "bytes": 181465,
+      "sha256": "31769c9bb96a2d2f24b475bde9f3c07dfb8cb53860b17f143ab09558e970d77a"
+    },
+    {
+      "path": "polyfills-D3QBKOLL.js",
+      "bytes": 34585,
+      "sha256": "15c6f58707b9b19116fde3a3f6a0ce9cf83427d64a91e95cb91fe1056c3da616"
+    },
+    {
+      "path": "pricing.html",
+      "bytes": 21391,
+      "sha256": "cbbbd6eac9398d3da223a84c018400c2970ec09b9b8842c28f970227a500c810"
+    },
+    {
+      "path": "privacy-policy.html",
+      "bytes": 21180,
+      "sha256": "0988fd95e434e6321b44df55171fc7f4800e09e0a1c6596538c831dd07085916"
+    },
+    {
+      "path": "robots.txt",
+      "bytes": 146,
+      "sha256": "db92b36011be622fbfce10dbd51e06c68095a4daf2888e44389afa16e90684d5"
+    },
+    {
+      "path": "sample-report.html",
+      "bytes": 21463,
+      "sha256": "596517ea39014199537ced396edffc9ea92f0223daae59b94c2dc4bca7e53b66"
+    },
+    {
+      "path": "sitemap.xml",
+      "bytes": 1504,
+      "sha256": "e01368a132204df8e7580b9d04ab6f8063d61a5f995b3ccb4d85d2635b6c5bfa"
+    },
+    {
+      "path": "styles-QHKGUMVZ.css",
+      "bytes": 24341,
+      "sha256": "b6640f6346841dfd76c0aff61201c4a9265f10ff5f24acbf18ae5ec19d2f9fd6"
+    },
+    {
+      "path": "terms-of-conduct.html",
+      "bytes": 21121,
+      "sha256": "c55eb595768816b94c8c3b6cf9f9e3a46eca6fc002995b978f7d23c8fe39f9bd"
+    }
+  ],
+  "releaseAuthorized": false
+}

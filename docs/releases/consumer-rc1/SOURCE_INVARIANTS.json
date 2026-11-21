@@ -1,0 +1,74 @@
+{
+  "candidate": "9d8caefc9943d65767198d6ec490dbdd63fd02e8",
+  "master": "6dcffca4eb186c6e0da7431523d7137652e14990",
+  "invariants": [
+    {
+      "path": "functions",
+      "equalToMaster": true,
+      "changedFiles": []
+    },
+    {
+      "path": "firestore.rules",
+      "equalToMaster": true,
+      "changedFiles": []
+    },
+    {
+      "path": "firestore.indexes.json",
+      "equalToMaster": true,
+      "changedFiles": []
+    },
+    {
+      "path": "storage.rules",
+      "equalToMaster": true,
+      "changedFiles": []
+    },
+    {
+      "path": "src/environments",
+      "equalToMaster": true,
+      "changedFiles": []
+    },
+    {
+      "path": "src/app/intelligence/market-intelligence.service.ts",
+      "equalToMaster": true,
+      "changedFiles": []
+    },
+    {
+      "path": "src/app/intelligence/monetization.service.ts",
+      "equalToMaster": true,
+      "changedFiles": []
+    },
+    {
+      "path": "src/app/purchase-intent.ts",
+      "equalToMaster": true,
+      "changedFiles": []
+    },
+    {
+      "path": ".github/workflows/firebase-production.yml",
+      "equalToMaster": true,
+      "changedFiles": []
+    }
+  ],
+  "approvedConsumerSourceFiles": [
+    {
+      "path": "src/app/intelligence/public-landing.component.html",
+      "sha256": "5850f9ebe11d7a4e32eb11e9d667c796da5c1482d4db4624de4fda22da869405"
+    },
+    {
+      "path": "src/app/intelligence/public-landing.component.ts",
+      "sha256": "781986602b6c7fbfd1e41c8f49d6e87aa6a2f428a1e34ed07235aae65f34a3c4"
+    },
+    {
+      "path": "src/app/intelligence/public-landing.component.scss",
+      "sha256": "77d1709ea44e976ba72c20dafb791eea1333df7dff56b0a7bca2daf56027ca85"
+    },
+    {
+      "path": "src/app/intelligence/public-landing-visual-mobile.component.scss",
+      "sha256": "8e7438806ff123cd7c60365e50119836bcbb5d079ecf7b385a2f453180a1fd2e"
+    },
+    {
+      "path": "firebase.json",
+      "sha256": "49d17f6d0f9671f2509586d22beaf4e1fffd9905089cbbd0b7522ff90de9002f"
+    }
+  ],
+  "note": "Routing, auth UI returns and presentation changes are the approved consumer chain; no new change in RC1. Equality is source evidence, not deployed source attestation or live retry proof."
+}

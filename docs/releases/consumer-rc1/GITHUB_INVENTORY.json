@@ -1,0 +1,102 @@
+{
+  "prs": [
+    {
+      "baseRefName": "master",
+      "headRefName": "codex/consumer-integration-release",
+      "headRefOid": "2f4975f94ac888547df8b1fbdf149a50741f6570",
+      "isDraft": true,
+      "mergeable": "MERGEABLE",
+      "number": 118,
+      "state": "OPEN",
+      "url": "https://github.com/alwat83/ifyoumind/pull/118"
+    },
+    {
+      "baseRefName": "codex/consumer-integration-release",
+      "headRefName": "codex/midnight-slate",
+      "headRefOid": "172dbaa93231e88fd2256b3ca7c2726d81a7c6e0",
+      "isDraft": true,
+      "mergeable": "MERGEABLE",
+      "number": 119,
+      "state": "OPEN",
+      "url": "https://github.com/alwat83/ifyoumind/pull/119"
+    },
+    {
+      "baseRefName": "codex/midnight-slate",
+      "headRefName": "codex/firestore-transaction-reliability",
+      "headRefOid": "f856c3b462903422a8cad4aaa6bdaed41268fe3b",
+      "isDraft": true,
+      "mergeable": "MERGEABLE",
+      "number": 120,
+      "state": "OPEN",
+      "url": "https://github.com/alwat83/ifyoumind/pull/120"
+    },
+    {
+      "baseRefName": "codex/midnight-slate",
+      "headRefName": "codex/consumer-pricing-clarity",
+      "headRefOid": "76ece8d911f7cec1dd269da732478b66199c2f12",
+      "isDraft": true,
+      "mergeable": "MERGEABLE",
+      "number": 121,
+      "state": "OPEN",
+      "url": "https://github.com/alwat83/ifyoumind/pull/121"
+    },
+    {
+      "baseRefName": "codex/consumer-pricing-clarity",
+      "headRefName": "codex/phase4-launch-readiness",
+      "headRefOid": "fded8759251204b4e3fa1db7573f05fd835aa41c",
+      "isDraft": true,
+      "mergeable": "MERGEABLE",
+      "number": 122,
+      "state": "OPEN",
+      "url": "https://github.com/alwat83/ifyoumind/pull/122"
+    },
+    {
+      "baseRefName": "codex/phase4-launch-readiness",
+      "headRefName": "codex/hosting-release-isolation",
+      "headRefOid": "ade00b0c21c8e499a434ec8cf5581ef52984b829",
+      "isDraft": true,
+      "mergeable": "MERGEABLE",
+      "number": 123,
+      "state": "OPEN",
+      "url": "https://github.com/alwat83/ifyoumind/pull/123"
+    },
+    {
+      "baseRefName": "codex/hosting-release-isolation",
+      "headRefName": "codex/hero-question-wrap",
+      "headRefOid": "9d8caefc9943d65767198d6ec490dbdd63fd02e8",
+      "isDraft": true,
+      "mergeable": "MERGEABLE",
+      "number": 124,
+      "state": "OPEN",
+      "url": "https://github.com/alwat83/ifyoumind/pull/124"
+    }
+  ],
+  "ancestry": [
+    {
+      "from": 118,
+      "to": 119,
+      "ancestor": true
+    },
+    {
+      "from": 119,
+      "to": 121,
+      "ancestor": true
+    },
+    {
+      "from": 121,
+      "to": 122,
+      "ancestor": true
+    },
+    {
+      "from": 122,
+      "to": 123,
+      "ancestor": true
+    },
+    {
+      "from": 123,
+      "to": 124,
+      "ancestor": true
+    }
+  ],
+  "pr120NotIncluded": true
+}

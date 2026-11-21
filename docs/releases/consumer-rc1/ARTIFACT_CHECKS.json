@@ -1,0 +1,46 @@
+{
+  "source": "9d8caefc9943d65767198d6ec490dbdd63fd02e8",
+  "manifestSha256": "b7067f63d53e08457b4234901415749f19600bdcb81ff2319432f0bb835ac397",
+  "configSha256": "a985fa400017d793640bd4c895435d0c8d4a302c183efcb7d50999794ce5dec0",
+  "sourceDigest": "d0d892d1f88c6c2b2ae1107b1506beedf6104477ef658843d826d53c3b94dc55",
+  "reportSha256": "5e42256ecea9cd994e730298291d9572bbfcaf8fe2879e8c81df4bcd9e9659be",
+  "files": 58,
+  "bytes": 2044279,
+  "topLevelConfigKeys": [
+    "hosting"
+  ],
+  "site": "ifyoumind-473fe",
+  "public": "public",
+  "noDynamicRewrites": true,
+  "noDeploymentHooks": true,
+  "compiledHero": [
+    {
+      "path": "chunk-HHTYOWMZ.js",
+      "hasApprovedCopy": true,
+      "has88pxCap": true,
+      "hasIndependentSerif": true,
+      "hasOldViewportMinimum": false
+    }
+  ],
+  "previousArtifactSource": "4fa109f5ba683e197efc781223225f0d1fca5407",
+  "differentStaticFiles": [
+    "app-shell.html",
+    "chunk-HHTYOWMZ.js",
+    "index.html",
+    "main-57APZ7JL.js",
+    "pricing.html",
+    "privacy-policy.html",
+    "sample-report.html",
+    "terms-of-conduct.html"
+  ],
+  "removedOldPaths": [
+    "chunk-ROVNW67I.js",
+    "main-3PHNECEL.js"
+  ],
+  "releaseAuthorized": false,
+  "archive": {
+    "path": "test-results/hosting-consumer-rc1-9d8caef.tar.gz",
+    "sha256": "756b3d23fc067025c13c4713d5d4708d599a9797e905e0f85d8ea366728963f7",
+    "bytes": 1056098
+  }
+}

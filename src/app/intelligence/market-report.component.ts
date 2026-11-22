@@ -261,7 +261,12 @@ export class MarketReportComponent implements OnInit, OnDestroy {
     }
     this.checkoutReturned=this.route.snapshot.queryParamMap.get('subscription')==='confirming';
     try{
-      const workspace=await this.organizations.getMyWorkspace();
+      // A shared finding may belong to another workspace where this user is an active viewer.
+      // Resolve that membership on the server; never overwrite the user's own workspace index.
+      const sharedWorkspace=this.route.snapshot.queryParamMap.get('organizationId');
+      const workspace=sharedWorkspace
+        ? await this.organizations.getWorkspace(sharedWorkspace)
+        : await this.organizations.getMyWorkspace();
       if(!workspace) throw new Error('Workspace not found.');
       const projectId=this.route.snapshot.paramMap.get('projectId');
       if(!projectId) throw new Error('Market project not found.');

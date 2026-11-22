@@ -20,7 +20,7 @@ export async function reserveReportExplanation(organizationId: string, projectId
   return db.runTransaction(async tx => {
     const [gSnap, uSnap, jSnap, pSnap, memberSnap] = await tx.getAll(global, user, job, org.collection('marketProjects').doc(projectId), org.collection('members').doc(uid));
     const p = pSnap.data(), member = memberSnap.data();
-    if (!p || visibleReportEvidence(p)?.digest !== packet.digest || member?.status !== 'active' || !['owner', 'admin'].includes(member.role)) return { state: 'denied' as const };
+    if (!p || visibleReportEvidence(p)?.digest !== packet.digest || member?.status !== 'active' || !['owner', 'admin', 'viewer'].includes(member.role)) return { state: 'denied' as const };
     const prior = jSnap.data();
     if (prior) return prior.state === 'complete' && validReportSelection(prior.selection, packet)
       ? { state: 'cached' as const, selection: prior.selection } : { state: 'previous-attempt' as const };
@@ -59,7 +59,8 @@ export async function explainDecisionReportRequest(request: Pick<CallableRequest
       d.consent !== REPORT_AI_CONSENT || typeof d.projectId !== 'string' || !/^[A-Za-z0-9_-]{1,128}$/.test(d.projectId)) {
     throw new HttpsError('invalid-argument', 'Explicit consent and existing saved findings are required.');
   }
-  const scope = await authorizeOrganization(uid, d.organizationId, deps.readMembership, ['owner', 'admin']);
+  // Explaining already-readable evidence grants no decision-write or billing permission.
+  const scope = await authorizeOrganization(uid, d.organizationId, deps.readMembership);
   const project = await deps.readProject(scope.organizationId, d.projectId);
   if (!project) throw new HttpsError('not-found', 'Report not found.');
   const packet = visibleReportEvidence(project);

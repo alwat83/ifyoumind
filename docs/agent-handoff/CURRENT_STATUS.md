@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November22 — Public AI reader eligibility in progress
+
+PR126/codex/production-activation preserves verified executable298f3849. Small follow-up permits verified active viewer members to explain already-readable city evidence, with server-resolved shared workspace context through sign-in/refresh; ordinary self-signup already creates a Free owner. No new role or paid permission.101working unit/8return-path tests PASS; exact-source gates and deployment pending. Fresh08:57PST read confirms prior AI00005-pov/reader00089-bat ACTIVE/100%, Hosting7613e1675cf46380, secret1enabled, quota2/200/reserved0.01USD unchanged. New verified QA reader identity pending private founder setup; no provider request or production write in this assignment. Commercial live-payment waiver preserved, subscriptions closed. Campaign scripts/carousels/calendar prepared, not published; [implementation/impact](../product/PRODUCTION_ACTIVATION.md).
+
 ## November22,2026 08:35PST — Production AI GO, relevance correction verified
 
 **AI-specific GO / deployed and production verified.** [Draft126](https://github.com/alwat83/ifyoumind/pull/126), executable `298f384976b72d37ddc3cf755cc167401b56cf18`, codex/production-activation. Exact native7checks PASS/clean integrity:100Functions/173web/77critical emulator/8browser plus production/local builds and privacy/bundle guards. No hosted CI claim, paid GitHub dependency or master merge. Evidence-only follow-up changes no executable bytes.

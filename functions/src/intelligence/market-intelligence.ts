@@ -572,7 +572,7 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
     decisionReportPurchased,
     decisionReportAccess:reportAccess,
     decisionReportGenerationRequired:needsGeneration,
-    reportExplanationAvailable:request.auth?.token?.email_verified===true && ['owner','admin'].includes(scope.role) &&
+    reportExplanationAvailable:request.auth?.token?.email_verified===true &&
       Boolean(visibleReportEvidence(data)) && reportExplanationEnabled(process.env,scope.organizationId),
     dataNotice:data.mode === 'live'
       ? 'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.'

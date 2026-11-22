@@ -73,8 +73,18 @@ test('authentication, verified email, consent, workspace role and verified evide
  const fail=()=>{throw Error('provider or quota reached');};
  for(const auth of [undefined,{uid:'owner',token:{email_verified:false}}])await assert.rejects(explainDecisionReportRequest({...request(),auth},deps({reserve:fail,generate:fail})),e=>['unauthenticated','permission-denied'].includes(e.code));
  for(const data of [{...request().data,consent:false},{...request().data,consent:'public-census-explanation-v1'},{...request().data,question:'private'},{...request().data,projectId:'../foreign'}])await assert.rejects(explainDecisionReportRequest({...request(),data},deps({reserve:fail,generate:fail})),e=>e.code==='invalid-argument');
- for(const member of [null,{role:'viewer',status:'active'},{role:'owner',status:'disabled'}])await assert.rejects(explainDecisionReportRequest(request(),deps({readMembership:async()=>member,reserve:fail})),e=>e.code==='permission-denied');
+ for(const member of [null,{role:'member',status:'active'},{role:'viewer',status:'disabled'},{role:'owner',status:'disabled'}])await assert.rejects(explainDecisionReportRequest(request(),deps({readMembership:async()=>member,reserve:fail})),e=>e.code==='permission-denied');
  for(const p of [{...project(),brief:{metrics:[],comparisons:[]}},{...project(),mode:'demo'}])await assert.rejects(explainDecisionReportRequest(request(),deps({readProject:async()=>p,reserve:fail})),e=>e.code==='failed-precondition');
+});
+
+test('active verified readers can explain visible evidence; revocation before reservation stops spending',async()=>{
+ for(const role of ['owner','admin','viewer']){
+  let calls=0;
+  const result=await explainDecisionReportRequest(request(),deps({readMembership:async()=>({role,status:'active'}),generate:async()=>{calls++;return {selection,usage:{inputTokens:400,outputTokens:40},model:'gpt-6-luna'};}}));
+  assert.equal(result.source,'openai');assert.equal(calls,1);
+ }
+ const fail=()=>{throw Error('revoked reader reached provider');};
+ await assert.rejects(explainDecisionReportRequest(request(),deps({readMembership:async()=>({role:'viewer',status:'active'}),reserve:async()=>({state:'denied'}),generate:fail})),e=>e.code==='permission-denied');
 });
 
 test('free findings can be explained without payment or any entitlement change',async()=>{

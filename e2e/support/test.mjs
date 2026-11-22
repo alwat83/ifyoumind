@@ -36,6 +36,15 @@ export async function newIsolatedContext(browser) {
 export const test = base.extend({
   context: async ({ context }, use) => {
     await isolate(context);
+    // The isolated AI qualification stack must not disturb another local preview's emulators.
+    if (process.env.QA_FUNCTIONS_EMULATOR_HOST === '127.0.0.1:5008') {
+      for (const [oldPort, newPort] of [[9099, 9989], [5001, 5008], [8080, 9988]]) {
+        await context.route(`http://127.0.0.1:${oldPort}/**`, async route => {
+          const url = new URL(route.request().url()); url.port = String(newPort);
+          await route.fulfill({ response: await route.fetch({ url: url.toString() }) });
+        });
+      }
+    }
     await use(context);
     expect(context.externalRequests, 'requests outside the local emulator stack').toEqual([]);
   },

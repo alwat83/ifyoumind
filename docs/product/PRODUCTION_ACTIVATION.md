@@ -2,6 +2,16 @@
 
 November 21–22, 2026 · OpenAI / Codex. Build from the consumer source already serving production; preserve the approved Midnight Slate layout. **Production AI is now verified live within the scope below; new public subscriptions remain closed.** Earlier checkpoints are preserved as history.
 
+## Public AI eligibility follow-up — November22,2026
+
+Active verified viewers may request an explanation of city findings they already have permission to read. Self-service consumers already receive an owner membership in their own Free workspace; this correction does not require admin claims or a paid plan. The initial and transactional membership checks use the existing three-role allowlist. A shared saved-finding URL may carry a validated organizationId through sign-in; the reader resolves membership server-side instead of changing the user’s own workspace index. No invitation system, new role, entitlement, allowance or billing change. Unknown/disabled/foreign membership remains denied, including revocation before reservation.
+
+Status: implementation in progress, not yet deployed. Production baseline freshly read November22 08:57PST: AI00005-pov/reader00089-bat ACTIVE/100%, Hosting7613e1675cf46380, secret1ENABLED; quota2/200 and0.01USD reserved. No provider request made in this assignment. Working101unit and8return-path cases PASS; final exact-source native build/security/commerce/browser gates pending. Early fast-web run preserved one incorrect new test expectation (fixed to retain existing encoded-slash rejection) and the known sandbox file-watcher limitation; neither is relabeled PASS. A separately verified QA reader is needed for the new-role production canary; credential entry/verification stays private.
+
+Public homepage/privacy/bill calculation/CSP: Verify Only. Saved finding/sign-in: Change Required (safe shared context, no visual change). AI reader/callable: Change Required (readers only, not paid writes). Commerce/entitlements/quota/rules: Verify Only; strict existing assertions retained. Subscriptions/prices/Stripe/AI model/provider packet/design: Not Affected; no configuration change. Existing consumer design, PR95/101 pilots and stagingOFF stay separate.
+
+[Prepared property-tax-first campaign, scripts, carousels and 14-day calendar](../growth/PUBLIC_AI_ACQUISITION_14_DAY.md) makes no private-bill AI or savings claim. Publishing remains separately authorized, not performed.
+
 ## Final AI-specific GO — November22,2026
 
 | Evidence | Verified result |

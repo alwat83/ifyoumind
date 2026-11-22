@@ -25,6 +25,37 @@ const reserve=(project='report',uid='owner',when=date)=>reserveReportExplanation
 test('same-report concurrent and repeated reservations allow exactly one provider attempt',async()=>{
  const results=await Promise.all([reserve(),reserve()]);assert.deepEqual(results.map(x=>x.state).sort(),['previous-attempt','reserved']);assert.equal((await reserve()).state,'previous-attempt');assert.equal((await internal.doc('global').get()).get('monthCount'),1);assert.equal((await internal.where('state','==','reserved').get()).size,1);
 });
+test('viewer shares the evidence latch and budget without acquiring write or paid access',async()=>{
+ await org.collection('members').doc('viewer').set({role:'viewer',status:'active'});
+ const before=(await org.collection('marketProjects').doc('report').get()).data();
+ const results=await Promise.all([reserve('report','viewer'),reserve()]);
+ assert.deepEqual(results.map(x=>x.state).sort(),['previous-attempt','reserved']);
+ assert.equal((await internal.doc('global').get()).get('monthCount'),1);
+ assert.deepEqual((await org.collection('marketProjects').doc('report').get()).data(),before);
+ assert.deepEqual((await org.get()).data(),{plan:'free'});
+ const client=env.authenticatedContext('viewer',{email_verified:true}).firestore();
+ await assertFails(setDoc(doc(client,`intelligenceOrganizations/${org.id}/marketProjects/new`),fixture()));
+ await assertFails(setDoc(doc(client,`intelligenceOrganizations/${org.id}`),{plan:'pro'}));
+ await assertFails(getDoc(doc(client,'internalReportExplanation/global')));
+ await org.collection('members').doc('viewer').update({status:'disabled'});
+ assert.equal((await reserve('report','viewer')).state,'denied');
+ assert.equal((await internal.doc('global').get()).get('monthCount'),1);
+});
+test('callable readers accept an active viewer while writer, foreign tenant and revoked access stay denied',async()=>{
+ const handlers=require('../functions/lib/index.js');
+ const member=org.collection('members').doc('viewer');await member.set({role:'viewer',status:'active'});
+ const auth={uid:'viewer',token:{email_verified:true}},data={organizationId:org.id,projectId:'report'};
+ const result=await handlers.getMarketIntelligenceProject.run({auth,data});
+ assert.equal(result.id,'report');assert.equal(result.reportExplanationAvailable,false); // Emulator remains OFF.
+ const fallback=await handlers.explainDecisionReport.run({auth,data:{...data,consent:'public-census-explanation-v2'}});
+ assert.equal(fallback.reason,'disabled');assert.equal(fallback.source,'deterministic');
+ assert.equal((await internal.get()).size,0);
+ await assert.rejects(handlers.createMarketIntelligenceProject.run({auth,data}),{code:'permission-denied'});
+ await assert.rejects(handlers.getMarketIntelligenceProject.run({auth:{uid:'foreign',token:{email_verified:true}},data}),{code:'permission-denied'});
+ await member.update({status:'disabled'});
+ await assert.rejects(handlers.getMarketIntelligenceProject.run({auth,data}),{code:'permission-denied'});
+ assert.equal((await internal.get()).size,0);
+});
 test('different reports respect a user daily cap; no report entitlement/credit is consumed',async()=>{
  for(let i=0;i<4;i++)await org.collection('marketProjects').doc('r'+i).set(fixture());
  for(let i=0;i<3;i++)assert.equal((await reserve('r'+i)).state,'reserved');assert.equal((await reserve('r3')).state,'limit');

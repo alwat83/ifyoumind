@@ -1,8 +1,14 @@
 # ifYouMind — Current development status
 
-## November22,2026 — Approved launch asset publication in progress
+## November22,2026 14:07PST — Approved Instagram image verified live
 
-Separate codex/marketing-asset-launch from0ec37be3, PR126 unchanged. Founder authorizes exact supplied Instagram welcome JPEG at `/assets/marketing/social/instagram/posts/ifyoumind-launch-01.jpg`; no social publishing by Codex. Public folder tree and private-from-Hosting registry/README prepared. Exact approved SHA2560e87ff1aa9a9d1cb5db09175fe2c83624198ab86a5ef7c98cc4330e97bc19252,1080square/sRGB/76114bytes. Fresh read-only11:17PST preflight confirms current469cd9d1f8513ae6finalized, all58application assets match retained artifact, no known deployment, AI00006-ruk/reader00090-zobACTIVE/100%, quota3/reserved0.015USD. Prepare59-file additive Hosting package, same config/no app rebuild; deployment/readback pending. No backend/billing/AI/entitlement/enrollment/customer-data change or provider request. [Asset release/impact](../marketing/LAUNCH_IMAGE_RELEASE.md).
+**PASS / deployed and production verified**, separatecodex/marketing-asset-launch from0ec37be3; PR126 unchanged. Asset source `db22d11d6320358313740993356c91c863d2474f`; unchanged application executablefef9856b. Public [launch JPEG](https://ifyoumind.com/assets/marketing/social/instagram/posts/ifyoumind-launch-01.jpg) returns200/image/jpeg/noauth/noredirect,1080square/sRGB/76114bytes, exactSHA2560e87ff1aa9a9d1cb5db09175fe2c83624198ab86a5ef7c98cc4330e97bc19252. Hosting `2bb9f7f3c6545b0e`, release `1795375284691000`, deployed11:21:24.691PST; initial and resumed14:07PST readbacks PASS. No redeploy on resume.
+
+All58existing application files/configuration preserved;59approved static files match. Six public/auth-entry routes200/exactbytes, Discovery privacy CSP retained. All34Functions settings/revisions unchanged; AI00006-ruk/reader00090-zobACTIVE/Ready/100%, quota3/reserved0.015USD unchanged; public subscriptions closed. No billing/auth/entitlement/customer-data/Stripe/provider write. Prior469cd9d1f8513ae6FINALIZED/retained. No master merge, workflow change, new service or paid CI dependency.
+
+Requested publicmarketingfolder tree+exact JPEG, [registry/standards](../marketing/README.md), [release/checks/impact](../marketing/LAUNCH_IMAGE_RELEASE.md). New [property-tax draft pack](../marketing/drafts/property-tax/REVIEW.md):5portraitJPEGs/editableHTML/alttext/caption/Video1handoff, fixture-derived labels and limitations, outsidepublic/unpublished/pending visual approval. Local5export bounds/font/network checks PASS after preserved native-render readiness failures. No full application rebuild/suite rerun or physical-device/hostedCI claim; existing SDK/payment/platform risks remain separate.
+
+Founder confirms @ifyoumindapp/Windsor connection and approves welcome post; Codex only hosts the file. ChatGPT publishes the approved caption/image separately. No Instagram attempt/post/marketing results claimed. Next three: hand this URL to the approved Windsor publishing workflow; review the draft tax carousel; record actual post/visitor feedback without inferring revenue. Broader outreach still requires applicable specific authorization.
 
 ## November22,2026 09:16PST — Public AI reader rollout GO
 

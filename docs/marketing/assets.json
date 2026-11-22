@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "site": "https://ifyoumind.com",
   "createdAt": "2026-11-22T19:18:14Z",
-  "updatedAt": "2026-11-22T19:18:14Z",
+  "updatedAt": "2026-11-22T22:11:47Z",
   "assets": [
     {
       "filename": "ifyoumind-launch-01.jpg",
@@ -24,12 +24,17 @@
         "scope": "Exact supplied image; public Hosting asset only"
       },
       "publication": {
-        "hosting": "prepared",
+        "hosting": "verified-live",
+        "hostingVersion": "2bb9f7f3c6545b0e",
+        "hostingRelease": "1795375284691000",
+        "deployedAt": "2026-11-22T19:21:24.691Z",
+        "verifiedAt": "2026-11-22T22:07:16.358Z",
         "instagram": "not-published-by-codex"
       },
       "artworkCreatedAt": null,
       "createdAt": "2026-11-22T19:18:14Z",
-      "updatedAt": "2026-11-22T19:18:14Z"
+      "updatedAt": "2026-11-22T22:11:47Z",
+      "deploymentSourceCommit": "db22d11d6320358313740993356c91c863d2474f"
     }
   ]
 }

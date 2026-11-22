@@ -1,5 +1,9 @@
 # ifYouMind — Zero-to-One Launch Command Center
 
+## November22 — Instagram welcome-image delivery unblocked
+
+[Approved welcome JPEG](https://ifyoumind.com/assets/marketing/social/instagram/posts/ifyoumind-launch-01.jpg) is publiclyverified200/image/jpeg/exactbytes on Hosting2bb9f7f3c6545b0e, without changing application/AI/billing/enrollment. ChatGPT's existing Windsor workflow handles the approved @ifyoumindapp post; Codex made no posting call. Five [next tax-carousel drafts](../marketing/drafts/property-tax/REVIEW.md) are prepared for founder review, not deployed/published. Lead with deterministic, clearly illustrative tax findings; no bill-AI/overpayment claim. No visitor,conversion,independentcustomer or revenue outcome follows from filehosting; keep scoreboardunknowns unchanged. Next commercial action is the approved publishing handoff, then actual first-use feedback.
+
 ## November22 — Public AI verified; acquisition package prepared
 
 New verified non-admin viewer can explain already-visible saved city evidence in production; self-service Free owners were already eligible. One internal canary263input/37output/1,694ms/~0.000045USD estimated, valid citations/next step;3/200monthly attempts and0.015USD conservative reservation total. These are QA/provider observations, not traffic, willingness to pay or customer revenue. No scoreboard unknown is replaced with zero or a fabricated conversion. Subscriptions remain closed and waived real-payment proof stays UNVERIFIED.

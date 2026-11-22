@@ -1,8 +1,10 @@
 # ifYouMind — Master Project Record and Roadmap
 
-## November22,2026 — Approved marketing export infrastructure
+## November22,2026 — Approved welcome image production verified
 
-Founder authorizes one exact welcome image's public Hosting URL; Instagram publication stays with the existing ChatGPT/Windsor workflow. Separate asset branch preserves PR126 and the deployed application, adds the approved JPEG plus reusable public folder structure and [asset registry/standards](docs/marketing/README.md). [Release record](docs/marketing/LAUNCH_IMAGE_RELEASE.md) distinguishes prepared versus actual deployed evidence. No new service, design, backend, AI request, billing or enrollment change; no customer/marketing performance outcome inferred.
+Exact supplied Instagram JPEG is live at [the stable public URL](https://ifyoumind.com/assets/marketing/social/instagram/posts/ifyoumind-launch-01.jpg),200/image/jpeg/noauth/no redirect,1080×1080/sRGB/76114bytes/exactapprovedSHA256. Asset sourcedb22d11d6320358313740993356c91c863d2474f; isolatedHosting2bb9f7f3c6545b0e/release1795375284691000 deployed11:21:24.691PST and read back again14:07PST without redeploy. All58application files/config and34Functions/AI/billing/auth/subscription settings preserved; public enrollmentclosed, no providerrequest. App executable remainsfef9856b, priorHosting469cd9d1f8513ae6retained; PR126 untouched. [Registry/standards](docs/marketing/README.md), [exact release evidence](docs/marketing/LAUNCH_IMAGE_RELEASE.md).
+
+Five [property-tax carousel drafts](docs/marketing/drafts/property-tax/REVIEW.md), captions/alttext/Video1handoff reuse existing fixture/template and stay outsidepublic, pending founder review. No replacement welcomecreative or website redesign. Founder-approved welcome posting is reserved for ChatGPT/Windsor; Codex did not publish/schedule/spend or claimmarketingresults. No new service or paidGitHub dependency.
 
 ## November22,2026 — Public AI reader rollout production verified
 

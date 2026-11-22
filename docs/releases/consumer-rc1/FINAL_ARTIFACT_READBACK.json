@@ -1,0 +1,28 @@
+{
+  "source": "9d8caefc9943d65767198d6ec490dbdd63fd02e8",
+  "manifestSha256": "b7067f63d53e08457b4234901415749f19600bdcb81ff2319432f0bb835ac397",
+  "archiveSha256": "756b3d23fc067025c13c4713d5d4708d599a9797e905e0f85d8ea366728963f7",
+  "configSha256": "a985fa400017d793640bd4c895435d0c8d4a302c183efcb7d50999794ce5dec0",
+  "files": 58,
+  "bytes": 2044279,
+  "verificationCommand": "node scripts/prepare-hosting-release.mjs --expected-sha=9d8caefc9943d65767198d6ec490dbdd63fd02e8 --verify=test-results/hosting-consumer-rc1-9d8caef",
+  "verification": "PASS",
+  "artifactModified": false,
+  "rebuildPerformed": false,
+  "newProductTestRun": false,
+  "liveRetryRepeated": false,
+  "qaAllowanceConsumed": 0,
+  "releaseAuthorized": false,
+  "observedAt": "2026-11-22T00:28:58.825961+00:00",
+  "currentMaster": "6dcffca4eb186c6e0da7431523d7137652e14990",
+  "unchangedSensitiveSourceVsMaster": [
+    "functions",
+    "firestore.rules",
+    "firestore.indexes.json",
+    "storage.rules",
+    ".github/workflows/firebase-production.yml",
+    "src/app/intelligence/market-intelligence.service.ts",
+    "src/app/intelligence/monetization.service.ts"
+  ],
+  "finalIntegrityVerifiedAt": "2026-11-22T00:30:07.716598+00:00"
+}

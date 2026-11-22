@@ -1,0 +1,130 @@
+{
+  "observedAt": "2026-11-22T00:21:21.234379+00:00",
+  "master": "6dcffca4eb186c6e0da7431523d7137652e14990",
+  "masterProtected": false,
+  "masterProtectionReadback": {
+    "_readError": true,
+    "httpStatus": "404",
+    "message": "Branch not protected"
+  },
+  "rulesets": [],
+  "productionProtectionRules": [],
+  "productionDeploymentBranchPolicy": null,
+  "workflows": [
+    {
+      "id": 382504068,
+      "path": ".github/workflows/authenticated-qa.yml",
+      "state": "active",
+      "sha256": "399280e59eec3f0099731416c8f4b0c636d5f79987a2047d08fc48ee25076573",
+      "usesProductionEnvironment": false,
+      "usesCloudAuthentication": false,
+      "deployCommandPresent": false
+    },
+    {
+      "id": 380827524,
+      "path": ".github/workflows/dependency-audit.yml",
+      "state": "active",
+      "sourceAvailableAtMaster": false,
+      "sourceHttpStatus": "404"
+    },
+    {
+      "id": 374057520,
+      "path": ".github/workflows/firebase-production.yml",
+      "state": "active",
+      "sha256": "33dc66f522611d09035817550819517fd1db719632b308ce36c202a693e5c792",
+      "usesProductionEnvironment": true,
+      "usesCloudAuthentication": true,
+      "deployCommandPresent": true
+    },
+    {
+      "id": 374054969,
+      "path": ".github/workflows/launch-build-check.yml",
+      "state": "active",
+      "sha256": "687ffa918663c4b9b8de3ed21ae4b5009ddbf4f9021843fc69ebaee4924b3ecb",
+      "usesProductionEnvironment": false,
+      "usesCloudAuthentication": false,
+      "deployCommandPresent": false
+    }
+  ],
+  "repositoryActionsPermissions": {
+    "enabled": true,
+    "allowed_actions": "all",
+    "sha_pinning_required": false
+  },
+  "productionWorkflow": {
+    "id": 374057520,
+    "path": ".github/workflows/firebase-production.yml",
+    "state": "active",
+    "sha256": "33dc66f522611d09035817550819517fd1db719632b308ce36c202a693e5c792",
+    "usesProductionEnvironment": true,
+    "usesCloudAuthentication": true,
+    "deployCommandPresent": true,
+    "concurrencyGroup": "firebase-production",
+    "cancelInProgress": true,
+    "triggers": [
+      "push:master",
+      "workflow_dispatch"
+    ],
+    "resources": [
+      "hosting",
+      "firestore:rules",
+      "firestore:indexes",
+      "storage",
+      "27 named functions"
+    ],
+    "enrollmentForcedEmpty": true
+  },
+  "outstandingRunsAllWorkflows": {
+    "queued": [],
+    "in_progress": [],
+    "waiting": [],
+    "pending": [],
+    "requested": []
+  },
+  "outstandingRunCounts": {
+    "queued": 0,
+    "in_progress": 0,
+    "waiting": 0,
+    "pending": 0,
+    "requested": 0
+  },
+  "latestProductionRuns": [
+    {
+      "id": 44126748079,
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "6dcffca4eb186c6e0da7431523d7137652e14990",
+      "url": "https://github.com/alwat83/ifyoumind/actions/runs/44126748079"
+    },
+    {
+      "id": 44032196558,
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "1c4399d0165a06c285227d7e9631f0a7a63935ba",
+      "url": "https://github.com/alwat83/ifyoumind/actions/runs/44032196558"
+    },
+    {
+      "id": 44008073712,
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "5015e3d43b9c3822d456dbc01c5c9d0b391fe44f",
+      "url": "https://github.com/alwat83/ifyoumind/actions/runs/44008073712"
+    },
+    {
+      "id": 44005130946,
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "4765a5cd0ee7eff598f02e74f5a50de94a7d3772",
+      "url": "https://github.com/alwat83/ifyoumind/actions/runs/44005130946"
+    },
+    {
+      "id": 43990589012,
+      "status": "completed",
+      "conclusion": "success",
+      "headSha": "921d55b65800722e001c1df35993241b0d88deac",
+      "url": "https://github.com/alwat83/ifyoumind/actions/runs/43990589012"
+    }
+  ],
+  "settingsChanged": false,
+  "exclusiveWindowEstablished": false
+}

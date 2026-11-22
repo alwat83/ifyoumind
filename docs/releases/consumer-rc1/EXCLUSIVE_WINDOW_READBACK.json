@@ -1,0 +1,64 @@
+{
+  "observedAt": "2026-11-22T00:20:42.630Z",
+  "projectPolicyRead": true,
+  "projectHasParent": false,
+  "projectPolicyBindingCount": 31,
+  "principalTypeBindingCounts": {
+    "serviceAccount": 34,
+    "user": 1
+  },
+  "policyRoles": [
+    "roles/artifactregistry.serviceAgent",
+    "roles/cloudaicompanion.serviceAgent",
+    "roles/cloudbuild.builds.builder",
+    "roles/cloudbuild.serviceAgent",
+    "roles/cloudfunctions.serviceAgent",
+    "roles/cloudscheduler.serviceAgent",
+    "roles/containerregistry.ServiceAgent",
+    "roles/developerconnect.readTokenAccessor",
+    "roles/developerconnect.serviceAgent",
+    "roles/editor",
+    "roles/eventarc.eventReceiver",
+    "roles/eventarc.serviceAgent",
+    "roles/firebase.admin",
+    "roles/firebase.managementServiceAgent",
+    "roles/firebase.sdkAdminServiceAgent",
+    "roles/firebaseappcheck.admin",
+    "roles/firebaseapphosting.computeRunner",
+    "roles/firebaseapphosting.serviceAgent",
+    "roles/firebaseauth.admin",
+    "roles/firebasemods.serviceAgent",
+    "roles/firebaserules.system",
+    "roles/firebasestorage.serviceAgent",
+    "roles/firestore.serviceAgent",
+    "roles/iam.serviceAccountTokenCreator",
+    "roles/iam.serviceAccountUser",
+    "roles/owner",
+    "roles/run.invoker",
+    "roles/run.serviceAgent",
+    "roles/secretmanager.admin",
+    "roles/secretmanager.viewer",
+    "roles/storage.admin"
+  ],
+  "exclusivePrincipalEstablished": false,
+  "iamInventoryLimitation": "Project-level allow policy only; inherited roles, group membership, service-account impersonation and every credential holder are not established. No exclusivity inferred.",
+  "hostingCreatedVersions": {
+    "observedAt": "2026-11-22T00:22:59.674Z",
+    "initialFilteredReadHttpStatus": 400,
+    "method": "Unfiltered documented versions.list; all pages inspected locally",
+    "paginationComplete": true,
+    "totalVersionsInspected": 162,
+    "pages": 2,
+    "count": 0,
+    "versions": []
+  },
+  "functionInventory": {
+    "count": 33,
+    "paginationComplete": true,
+    "states": {
+      "ACTIVE": 33
+    }
+  },
+  "productionMutationsPerformed": false,
+  "accessChanged": false
+}

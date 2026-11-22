@@ -1,0 +1,181 @@
+{
+  "observedAt": "2026-11-22T00:10:55.012Z",
+  "project": "ifyoumind-473fe",
+  "hosting": {
+    "liveChannelVersion": "39dc573f3826dca6",
+    "current": {
+      "release": "1794933315802000",
+      "type": "DEPLOY",
+      "version": "39dc573f3826dca6",
+      "releaseTime": "2026-11-17T16:35:15.802Z"
+    },
+    "versions": [
+      {
+        "id": "39dc573f3826dca6",
+        "status": "FINALIZED",
+        "createTime": "2026-11-17T16:34:05.323384Z",
+        "finalizeTime": "2026-11-17T16:35:15.684905Z",
+        "fileCount": 58,
+        "allFilesActive": true,
+        "allHashesPresent": true,
+        "configSha256": "1f5af706eafc72cebd32af96d4ccfb8bd0a6a0ba573800f5306ba7db6174fc84"
+      },
+      {
+        "id": "cd0b78221355e0f4",
+        "status": "FINALIZED",
+        "createTime": "2026-11-17T06:37:05.669962Z",
+        "finalizeTime": "2026-11-17T06:37:58.523029Z",
+        "fileCount": 58,
+        "allFilesActive": true,
+        "allHashesPresent": true,
+        "configSha256": "1f5af706eafc72cebd32af96d4ccfb8bd0a6a0ba573800f5306ba7db6174fc84"
+      },
+      {
+        "id": "1beeaa395c606d55",
+        "status": "FINALIZED",
+        "createTime": "2026-11-14T20:20:57.723367Z",
+        "finalizeTime": "2026-11-14T20:22:06.167507Z",
+        "fileCount": 57,
+        "allFilesActive": true,
+        "allHashesPresent": true,
+        "configSha256": "1f5af706eafc72cebd32af96d4ccfb8bd0a6a0ba573800f5306ba7db6174fc84"
+      }
+    ]
+  },
+  "permissions": {
+    "method": "testIamPermissions; read-only POST",
+    "requested": [
+      "firebasehosting.sites.get",
+      "firebasehosting.sites.update",
+      "firebase.projects.get",
+      "resourcemanager.projects.get"
+    ],
+    "granted": [
+      "firebase.projects.get",
+      "firebasehosting.sites.get",
+      "firebasehosting.sites.update",
+      "resourcemanager.projects.get"
+    ],
+    "allRequestedGranted": true,
+    "policyChanged": false
+  },
+  "functions": [
+    {
+      "name": "createMarketIntelligenceProject",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "updateTime": "2026-11-17T16:35:08.405110289Z",
+      "revision": "createmarketintelligenceproject-00087-nub",
+      "latestReadyRevision": "createmarketintelligenceproject-00087-nub",
+      "traffic": [
+        {
+          "revision": "createmarketintelligenceproject-00087-nub",
+          "percent": 100
+        }
+      ],
+      "functionsHash": "9a204c514d63adacf01525bd87c0ec90b1f2da4b",
+      "subscriptionEnrollment": "EMPTY"
+    },
+    {
+      "name": "getRecentMarketIntelligenceProjects",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "updateTime": "2026-11-17T16:35:06.212624686Z",
+      "revision": "getrecentmarketintelligenceprojects-00086-fox",
+      "latestReadyRevision": "getrecentmarketintelligenceprojects-00086-fox",
+      "traffic": [
+        {
+          "revision": "getrecentmarketintelligenceprojects-00086-fox",
+          "percent": 100
+        }
+      ],
+      "functionsHash": "614511bfcb0fdfb51c519de0a7915b9dd19e4736",
+      "subscriptionEnrollment": "EMPTY"
+    },
+    {
+      "name": "getMarketIntelligenceProject",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "updateTime": "2026-11-17T16:35:05.611379415Z",
+      "revision": "getmarketintelligenceproject-00086-gaq",
+      "latestReadyRevision": "getmarketintelligenceproject-00086-gaq",
+      "traffic": [
+        {
+          "revision": "getmarketintelligenceproject-00086-gaq",
+          "percent": 100
+        }
+      ],
+      "functionsHash": "614511bfcb0fdfb51c519de0a7915b9dd19e4736",
+      "subscriptionEnrollment": "EMPTY"
+    },
+    {
+      "name": "getSampleDecisionReport",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "updateTime": "2026-11-17T16:35:05.630256717Z",
+      "revision": "getsampledecisionreport-00045-gow",
+      "latestReadyRevision": "getsampledecisionreport-00045-gow",
+      "traffic": [
+        {
+          "revision": "getsampledecisionreport-00045-gow",
+          "percent": 100
+        }
+      ],
+      "functionsHash": "9a204c514d63adacf01525bd87c0ec90b1f2da4b",
+      "subscriptionEnrollment": "EMPTY"
+    },
+    {
+      "name": "getCommercialStatus",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "updateTime": "2026-11-17T16:35:05.286502795Z",
+      "revision": "getcommercialstatus-00088-soz",
+      "latestReadyRevision": "getcommercialstatus-00088-soz",
+      "traffic": [
+        {
+          "revision": "getcommercialstatus-00088-soz",
+          "percent": 100
+        }
+      ],
+      "functionsHash": "7612c0143ad3e515f636b38efa4066240bc1c437",
+      "subscriptionEnrollment": "EMPTY"
+    },
+    {
+      "name": "createCommercialCheckout",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "updateTime": "2026-11-17T16:35:05.760415368Z",
+      "revision": "createcommercialcheckout-00071-doc",
+      "latestReadyRevision": "createcommercialcheckout-00071-doc",
+      "traffic": [
+        {
+          "revision": "createcommercialcheckout-00071-doc",
+          "percent": 100
+        }
+      ],
+      "functionsHash": "7612c0143ad3e515f636b38efa4066240bc1c437",
+      "subscriptionEnrollment": "EMPTY"
+    },
+    {
+      "name": "generatePaidDecisionReport",
+      "state": "ACTIVE",
+      "runtime": "nodejs22",
+      "updateTime": "2026-11-17T16:35:06.074630406Z",
+      "revision": "generatepaiddecisionreport-00015-xek",
+      "latestReadyRevision": "generatepaiddecisionreport-00015-xek",
+      "traffic": [
+        {
+          "revision": "generatepaiddecisionreport-00015-xek",
+          "percent": 100
+        }
+      ],
+      "functionsHash": "3429c329f53e0e3f4a8b617e76510ea325a47a49",
+      "subscriptionEnrollment": "EMPTY"
+    }
+  ],
+  "productionMutationsPerformed": false,
+  "callableInvocationsPerformed": false,
+  "liveRetryPerformed": false,
+  "rollbackPerformed": false,
+  "secretPayloadAccessed": false
+}

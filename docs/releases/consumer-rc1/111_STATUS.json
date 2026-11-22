@@ -1,9 +1,30 @@
 {
-  "source": "https://github.com/alwat83/ifyoumind/pull/111#issuecomment-6955694003",
-  "authorization": "https://github.com/alwat83/ifyoumind/pull/111#issuecomment-6955510854",
-  "status": "NOT_EXECUTED",
-  "lastDocumentedBlocker": "Existing workspace failed QA-only designation and available-allowance preconditions. Do not relabel it, reset quotas or delete records.",
-  "currentEvidence": "No eligible replacement workspace or successful live retry is established in the reviewed records. This does not prove no eligible workspace exists.",
-  "nextAction": "Identify a verified internal QA workspace with a legitimate unused allowance, or separately authorize dedicated synthetic QA setup; do not request the already granted test approval again.",
-  "productionDataReadOrChangedForThisReview": false
+  "status": "GO",
+  "evidenceCommit": "e9005b491b77d8414d6d8e06f599d72a51255ae2",
+  "source": "https://github.com/alwat83/ifyoumind/pull/111#issuecomment-7071200275",
+  "authorization": "https://github.com/alwat83/ifyoumind/pull/111#issuecomment-7070107031",
+  "observedAt": "2026-11-21T23:51:47.687Z",
+  "decisions": [
+    0,
+    1,
+    1
+  ],
+  "remainingAllowances": [
+    3,
+    2,
+    2
+  ],
+  "retryChangedDocuments": 0,
+  "scope": "One dedicated QA workspace, one cached synthetic city save, one identical same-ID retry and owner read; no repeat performed in final readiness preparation.",
+  "limitation": "Successful same-ID replay; no natural lost-response or concurrency failure induced. Historical SDK recovery gates remain separate.",
+  "historicalSupersededStatus": {
+    "source": "https://github.com/alwat83/ifyoumind/pull/111#issuecomment-6955694003",
+    "authorization": "https://github.com/alwat83/ifyoumind/pull/111#issuecomment-6955510854",
+    "status": "NOT_EXECUTED",
+    "lastDocumentedBlocker": "Existing workspace failed QA-only designation and available-allowance preconditions. Do not relabel it, reset quotas or delete records.",
+    "currentEvidence": "No eligible replacement workspace or successful live retry is established in the reviewed records. This does not prove no eligible workspace exists.",
+    "nextAction": "Identify a verified internal QA workspace with a legitimate unused allowance, or separately authorize dedicated synthetic QA setup; do not request the already granted test approval again.",
+    "productionDataReadOrChangedForThisReview": false
+  },
+  "nextAction": "No repeat save/retry and no use of remaining QA allowance. Address independent RC1 controls/risk/coverage/authorization gates."
 }

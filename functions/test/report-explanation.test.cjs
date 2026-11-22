@@ -35,7 +35,11 @@ test('server renders only supplied facts and always preserves scope limitations'
 });
 test('production flag is default OFF, project-specific and fails closed in emulators',()=>{
  for(const env of [{},{GCLOUD_PROJECT:'ifyoumind-473fe',ENABLE_REPORT_OPENAI_EXPLANATION:'TRUE'},{GCLOUD_PROJECT:'ifyoumind-staging',ENABLE_REPORT_OPENAI_EXPLANATION:'true'},{GCLOUD_PROJECT:'ifyoumind-473fe',ENABLE_REPORT_OPENAI_EXPLANATION:'true',FUNCTIONS_EMULATOR:'true'}])assert.equal(reportExplanationEnabled(env),false);
- assert.equal(reportExplanationEnabled({GCLOUD_PROJECT:'ifyoumind-473fe',ENABLE_REPORT_OPENAI_EXPLANATION:'true'}),true);
+ const enabled={GCLOUD_PROJECT:'ifyoumind-473fe',ENABLE_REPORT_OPENAI_EXPLANATION:'true',REPORT_OPENAI_ENROLLMENT:'org'};
+ assert.equal(reportExplanationEnabled(enabled,'org'),true);
+ assert.equal(reportExplanationEnabled(enabled,'foreign'),false);
+ assert.equal(reportExplanationEnabled({...enabled,REPORT_OPENAI_ENROLLMENT:''},'org'),false);
+ assert.equal(reportExplanationEnabled({...enabled,REPORT_OPENAI_ENROLLMENT:'public'},'org'),true);
 });
 test('authentication, verified email, consent, workspace role and paid readiness are enforced before provider/quota',async()=>{
  const fail=()=>{throw Error('provider or quota reached');};

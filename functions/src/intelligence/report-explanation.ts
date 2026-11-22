@@ -103,6 +103,11 @@ export async function explainReportEvidence(packet: ReportPacket, apiKey: string
   }, send, 12_288);
 }
 
-export function reportExplanationEnabled(env: NodeJS.ProcessEnv = process.env): boolean {
-  return env.GCLOUD_PROJECT === 'ifyoumind-473fe' && env.ENABLE_REPORT_OPENAI_EXPLANATION === 'true' && env.FUNCTIONS_EMULATOR !== 'true';
+export function reportExplanationEnabled(env: NodeJS.ProcessEnv = process.env, organizationId = ''): boolean {
+  if (env.GCLOUD_PROJECT !== 'ifyoumind-473fe' || env.ENABLE_REPORT_OPENAI_EXPLANATION !== 'true' || env.FUNCTIONS_EMULATOR === 'true' ||
+      !/^[A-Za-z0-9_-]{1,128}$/.test(organizationId)) return false;
+  const enrollment = env.REPORT_OPENAI_ENROLLMENT || '';
+  if (enrollment === 'public') return true;
+  const ids = enrollment.split(',').filter(Boolean);
+  return ids.length > 0 && ids.length <= 10 && ids.every(id => /^[A-Za-z0-9_-]{1,128}$/.test(id)) && ids.includes(organizationId);
 }

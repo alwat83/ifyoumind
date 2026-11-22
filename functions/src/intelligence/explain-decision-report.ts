@@ -43,7 +43,7 @@ export async function reserveReportExplanation(organizationId: string, projectId
 type Dependencies = {
   readMembership: MembershipReader;
   readProject: (organizationId: string, projectId: string) => Promise<Record<string, unknown> | undefined>;
-  enabled: () => boolean;
+  enabled: (organizationId: string) => boolean;
   readKey: () => string;
   reserve: typeof reserveReportExplanation;
   generate: typeof explainReportEvidence;
@@ -65,7 +65,7 @@ export async function explainDecisionReportRequest(request: Pick<CallableRequest
   const packet = projectReportEvidence(project);
   if (!packet) throw new HttpsError('failed-precondition', 'A verified primary-city evidence packet is required.');
   const fallback = (reason: string) => ({ ...deterministicReportExplanation(packet), reason });
-  if (!deps.enabled()) return fallback('disabled');
+  if (!deps.enabled(scope.organizationId)) return fallback('disabled');
   let reserved = false;
   try {
     const key = deps.readKey();
@@ -90,7 +90,7 @@ export const explainDecisionReport = onCall({ secrets: [apiKey], timeoutSeconds:
   explainDecisionReportRequest(request, {
     readMembership: async (org, uid) => (await getFirestore().collection('intelligenceOrganizations').doc(org).collection('members').doc(uid).get()).data(),
     readProject: async (org, project) => (await getFirestore().collection('intelligenceOrganizations').doc(org).collection('marketProjects').doc(project).get()).data(),
-    enabled: reportExplanationEnabled, readKey: () => apiKey.value().trim(), reserve: reserveReportExplanation, generate: explainReportEvidence,
+    enabled: org => reportExplanationEnabled(process.env,org), readKey: () => apiKey.value().trim(), reserve: reserveReportExplanation, generate: explainReportEvidence,
     finish: async (org, project, digest, result) => { await store().doc('job-' + jobId(org, project, digest)).update({ state: result ? 'complete' : 'failed',
       ...(result ? { selection: result.selection, usage: result.usage, model: result.model } : {}), finishedAt: FieldValue.serverTimestamp() }); },
   }));

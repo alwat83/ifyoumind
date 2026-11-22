@@ -17,7 +17,7 @@ process.env.SUBSCRIPTION_STRIPE_ACCOUNT = account;
 process.env.SUBSCRIPTION_STARTER_PRICE = catalog.starter;
 process.env.SUBSCRIPTION_PLUS_PRICE = catalog.plus;
 const handlers = require('./lib/index.js');
-const { getFirestore } = require('firebase-admin/firestore');
+const { getFirestore, Timestamp } = require('firebase-admin/firestore');
 assert.ok(process.env.FIRESTORE_EMULATOR_HOST,'This suite requires the Firestore emulator.');
 process.env.CENSUS_API_KEY = 'fixture';
 const db = getFirestore();
@@ -37,6 +37,7 @@ let attempt;
 let start;
 let end;
 let sequence = 0;
+let onCensusRequest;
 const now = () => Math.floor(Date.now()/1000);
 const auth = (uid='owner') => ({ uid, token: { email_verified: true } });
 const call = (name, data, uid) => handlers[name].run({ data: { organizationId: org.id, ...data }, auth: auth(uid) });
@@ -44,6 +45,7 @@ const call = (name, data, uid) => handlers[name].run({ data: { organizationId: o
 globalThis.fetch = async (url, init) => {
   const u = new URL(url);
   if (u.hostname === 'api.census.gov') {
+    const hook=onCensusRequest;onCensusRequest=undefined;if(hook)await hook();
     censusCalls++;
     const state = u.searchParams.get('in')?.match(/state:(\d+)/)?.[1];
     const fixture = { '08': ['Denver','Boulder'], '48': ['Austin'], '47': ['Nashville'] };
@@ -86,6 +88,7 @@ globalThis.fetch = async (url, init) => {
 };
 
 beforeEach(async () => {
+  onCensusRequest=undefined;
   const suffix = ++sequence;
   org = db.collection('intelligenceOrganizations').doc(workspace+'-'+suffix);
   billing = org.collection('subscriptionBilling').doc('current');
@@ -225,6 +228,8 @@ const checkMonthBoundaryReplay = async () => {
   await Promise.all([
     docs.doc(first.id).update({ createdAt: previousCreatedAt }),
     billing.set({ previewUsage: previousUsage }, { merge: true }),
+    // Move the new counter to the prior month too: every persisted part of this fixture is old.
+    org.collection('internalUsage').doc('cityDecisions').update({ period: previousMonth, savedCount: 1 }),
   ]);
 
   assert.equal((await create(key)).id, first.id);
@@ -237,10 +242,30 @@ const checkMonthBoundaryReplay = async () => {
   assert.deepEqual((await billing.get()).get('previewUsage'), { month: new Date(currentStart).toISOString(), used: 3 });
   assert.equal((await docs.count().get()).data().count, 4);
   assert.equal((await docs.doc(first.id).get()).get('createdAt').toMillis(), previousCreatedAt.getTime());
+  assert.equal((await org.collection('internalUsage').doc('cityDecisions').get()).get('savedCount'), 3);
 };
 test('replaying a city save across the UTC month boundary leaves the new allowance intact', checkMonthBoundaryReplay);
 test('month-boundary replay contention qualification round 2', checkMonthBoundaryReplay);
 test('month-boundary replay contention qualification round 3', checkMonthBoundaryReplay);
+
+test('legacy writer changes after usage seeding fail closed and the same save ID recovers once',async()=>{
+  await db.collection('censusPlaceCache').doc('acs5-2024-2019-08-denver').delete();
+  onCensusRequest=async()=>{const batch=db.batch();batch.set(docs.doc('legacy-writer'),{createdAt:Timestamp.now(),mode:'live'});batch.set(org.collection('internalUsage').doc('cityDecisions'),{updatedAt:Timestamp.now()});await batch.commit();};
+  const requestId=randomUUID(),input={requestId,location:'Denver, CO',concept:'Bookshop',decision:'Compare candidate markets',comparisonLocations:[]};
+  await assert.rejects(call('createMarketIntelligenceProject',input),{code:'aborted'});
+  assert.equal((await docs.count().get()).data().count,1);
+  const saved=await call('createMarketIntelligenceProject',input);
+  assert.equal((await call('createMarketIntelligenceProject',input)).id,saved.id);
+  assert.equal((await docs.count().get()).data().count,2);
+  assert.equal((await org.collection('internalUsage').doc('cityDecisions').get()).get('savedCount'),2);
+});
+
+test('malformed usage counters never reset allowance or partially create a decision',async()=>{
+  const lock=org.collection('internalUsage').doc('cityDecisions'),period=new Date(Date.UTC(new Date().getUTCFullYear(),new Date().getUTCMonth(),1)).toISOString();
+  await lock.set({period,savedCount:-1});
+  await assert.rejects(call('createMarketIntelligenceProject',{requestId:randomUUID(),location:'Denver, CO',concept:'Bookshop',decision:'Compare candidate markets',comparisonLocations:[]}),{code:'failed-precondition'});
+  assert.equal((await docs.count().get()).data().count,0);assert.equal((await lock.get()).get('savedCount'),-1);
+});
 
 test('pending Checkout prevents a second plan and does not convert a legacy Pro workspace',async()=>{
   await seedProject();

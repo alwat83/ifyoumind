@@ -396,14 +396,16 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
       const plan = org.get('plan') === 'pro' ? 'pro' : 'free';
       const billing = plan === 'free' ? (await billingRef.get()).data() : undefined;
       const { deferred, previewLimit } = cityDecisionUsage(plan, billing, orgRef.id);
-      // The existing cap bounds this read to 3 or 12 IDs. A normal transactional QuerySnapshot
-      // avoids the aggregate-stream path that masked an aborted read as "transaction closed".
-      // Keep the authoritative check inside the transaction; never infer usage from the precheck.
+      // Read only bounded IDs when initializing legacy usage. No query runs in the write transaction.
       const currentUsage = (start: Date, limit: number | null) => projects
         .where('createdAt', '>=', Timestamp.fromDate(start)).limit(limit ?? FREE_DECISIONS_PER_MONTH).select();
+      const usageLock = orgRef.collection('internalUsage').doc('cityDecisions');
+      let usageSeed: { period: string; count: number; lock: FirebaseFirestore.DocumentSnapshot } | undefined;
       if (plan === 'free') {
         const start = freeDecisionPeriodStart();
+        const lock = await usageLock.get();
         const count = (await currentUsage(start, previewLimit).get()).size;
+        usageSeed = { period: start.toISOString(), count, lock };
         // A concurrent copy may have committed before this precheck. Recover it even at the cap.
         if (fingerprint) project = savedCityDecision((await ref.get()).data(), fingerprint);
         if (!project) checkCityDecisionUsage(count, previewLimit, billing, start.toISOString());
@@ -430,6 +432,9 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
 
         stage='save';
         project = await getFirestore().runTransaction(async tx => {
+          // All writers acquire this same document first. Do not hold project/billing reads while
+          // waiting for the usage lock, and do not stream a query under a held transaction lock.
+          const usageSnapshot = await tx.get(usageLock);
           await authorizeOrganization(scope.uid, scope.organizationId, async (_id, uid) =>
             (await tx.get(orgRef.collection('members').doc(uid))).data(), ['owner', 'admin']);
           const existing = savedCityDecision((await tx.get(ref)).data(), fingerprint);
@@ -443,14 +448,24 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
             throw new HttpsError('aborted', 'Workspace access changed during analysis. Try again.');
           }
           if (currentPlan === 'free') {
-            // Serialize writers before counting so parallel decisions cannot occupy the same free slot.
-            const lock = orgRef.collection('internalUsage').doc('cityDecisions');
-            await tx.get(lock);
             const start = freeDecisionPeriodStart();
-            const count = (await tx.get(currentUsage(start, usage.previewLimit))).size;
+            const period = start.toISOString(), counter = usageSnapshot.data();
+            if (counter && ('period' in counter || 'savedCount' in counter) &&
+                (typeof counter.period !== 'string' || !/^\d{4}-\d{2}-01T00:00:00\.000Z$/.test(counter.period) ||
+                 !Number.isSafeInteger(counter.savedCount) || counter.savedCount < 0)) {
+              throw new HttpsError('failed-precondition', 'Decision usage needs review. No decision was saved.');
+            }
+            if (counter?.period > period) throw new HttpsError('aborted', 'The decision period changed. Retry with the same save ID.');
+            const initialized = counter?.period === period;
+            const sameVersion = usageSeed && usageSeed.period === period && usageSeed.lock.exists === usageSnapshot.exists &&
+              (!usageSnapshot.exists || usageSnapshot.updateTime!.isEqual(usageSeed.lock.updateTime!));
+            // A legacy writer may have changed usage after the historical query. Never seed from
+            // stale counts; ask for a same-ID retry instead of bypassing or resetting allowance.
+            if (!initialized && !sameVersion) throw new HttpsError('aborted', 'Decision usage changed. Retry with the same save ID.');
+            const count = initialized ? counter!.savedCount : usageSeed!.count;
             const previewUsage = checkCityDecisionUsage(count, usage.previewLimit, currentBilling, start.toISOString());
             if (previewUsage) tx.set(billingRef, { previewUsage }, { merge: true });
-            tx.set(lock, { updatedAt: FieldValue.serverTimestamp() });
+            tx.set(usageLock, { period, savedCount: count + 1, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
           }
           tx.create(ref, prepared);
           return prepared;
@@ -563,7 +578,7 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
     decisionReportPurchased,
     decisionReportAccess:reportAccess,
     decisionReportGenerationRequired:needsGeneration,
-    reportExplanationAvailable:reportAccess!=='none' && !needsGeneration && reportExplanationEnabled(),
+    reportExplanationAvailable:reportAccess!=='none' && !needsGeneration && reportExplanationEnabled(process.env,scope.organizationId),
     dataNotice:data.mode === 'live'
       ? 'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.'
       : 'Synthetic demo enrichment — not real market data.',

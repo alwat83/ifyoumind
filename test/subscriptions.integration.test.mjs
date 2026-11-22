@@ -33,6 +33,7 @@ let charge;
 let disputes;
 let censusCalls;
 let checkoutCalls;
+let checkoutKeys;
 let attempt;
 let start;
 let end;
@@ -63,6 +64,7 @@ globalThis.fetch = async (url, init) => {
   }
   if (u.pathname === '/v1/checkout/sessions' && init.method === 'POST') {
     checkoutCalls++;
+    checkoutKeys.push(init.headers['Idempotency-Key']);
     assert.equal(init.headers['Stripe-Version'],'2025-02-24.acacia');
     assert.match(init.headers['Idempotency-Key'],/^ifyoumind-subscription-/);
     assert.equal(init.body.get('mode'),'subscription');
@@ -105,12 +107,13 @@ beforeEach(async () => {
   mode=false;
   censusCalls=0;
   checkoutCalls=0;
+  checkoutKeys=[];
   disputes=[];
   charge={ id:'ch_fixture'+suffix,livemode:false,paid:true,customer:'cus_fixture'+suffix,refunded:false,disputed:false };
   sub={ id:'sub_fixture'+suffix,customer:charge.customer,status:'active',livemode:false,current_period_end:end,
     metadata:{source,organizationId:org.id,offer:'starter'} };
   session={ id:'cs_test_fixture'+suffix, status:'open', livemode:false, subscription:sub.id,customer:sub.customer,
-    client_reference_id:org.id,url:'https://checkout.stripe.com/c/pay/fixture',metadata:{source} };
+    client_reference_id:org.id,url:'https://checkout.stripe.com/c/pay/cs_test_fixture'+suffix,metadata:{source} };
   invoice={ id:'in_fixture'+suffix,subscription:sub.id,customer:sub.customer,status:'paid',paid:true,
     livemode:false,amount_paid:cents,currency:'usd',collection_method:'charge_automatically',billing_reason:'subscription_create',
     lines:{has_more:false,data:[{type:'subscription',quantity:1,proration:false,price:{id:catalog.starter},period:{start,end}}]},
@@ -148,6 +151,47 @@ async function begin(offer='starter', id=project) {
 
 const paid = () => deliver('invoice.paid',{id:invoice.id});
 const status = async () => (await call('getCommercialStatus',{})).subscription;
+
+for (const family of ['c','g']) test(`subscription Checkout accepts exact ${family}/pay path and reuses the same session`,async()=>{
+  await seedProject();
+  session.url=`https://checkout.stripe.com/${family}/pay/${session.id}#provider-fragment`;
+  const first=await call('createCommercialCheckout',{offer:'starter',projectId:project});
+  session.metadata.attempt=attempt;
+  const again=await call('createCommercialCheckout',{offer:'starter',projectId:project});
+  assert.equal(first.url,session.url);
+  assert.deepEqual(again,first);
+  assert.equal(checkoutCalls,1);
+  assert.equal((await billing.get()).data().checkout.id,session.id);
+  assert.equal((await status()).remaining,0);
+  assert.equal((await docs.doc(project).get()).data().paidReport,undefined);
+});
+
+for(const invalid of ['foreign-origin','different-session','extra-path']) test(`subscription Checkout rejects ${invalid} without granting access`,async()=>{
+  await seedProject();
+  session.url=invalid==='foreign-origin'?`https://example.invalid/g/pay/${session.id}`
+    :invalid==='different-session'?'https://checkout.stripe.com/g/pay/cs_test_other'
+    :`https://checkout.stripe.com/g/pay/${session.id}/extra`;
+  await assert.rejects(call('createCommercialCheckout',{offer:'starter',projectId:project}),{code:'unavailable'});
+  assert.equal(checkoutCalls,1);
+  assert.equal((await billing.get()).data().checkout.id,undefined);
+  assert.equal((await status()).remaining,0);
+  assert.equal((await docs.doc(project).get()).data().paidReport,undefined);
+});
+
+test('missing saved session response recovers with the original Stripe idempotency key',async()=>{
+  await seedProject();
+  session.url=`https://checkout.stripe.com/g/pay/${session.id}`;
+  const first=await call('createCommercialCheckout',{offer:'starter',projectId:project});
+  const original=(await billing.get()).data().checkout;
+  const {id,...pending}=original;
+  await billing.update({checkout:pending}); // Emulator-only lost-persistence fixture.
+  const recovered=await call('createCommercialCheckout',{offer:'starter',projectId:project});
+  assert.deepEqual(recovered,first);
+  assert.equal(new Set(checkoutKeys).size,1);
+  assert.equal((await billing.get()).data().checkout.attempt,original.attempt);
+  assert.equal((await billing.get()).data().checkout.id,id);
+  assert.equal((await status()).remaining,0);
+});
 
 test('only a canonical settled invoice creates a grant, including invoice-first and duplicate delivery',async()=>{
   await seedProject();

@@ -14,10 +14,12 @@ test.beforeEach(async({page})=>{
 for(const [source,paid] of [['openai',true],['deterministic',true],['openai',false]])test(`${paid?'paid report':'free brief'} explanation requires consent and labels ${source} honestly`,async({page,fixtures})=>{
   const visitor=await fixtures(FIXTURES.FREE_WITH_DECISION,{decisions:1}),id=visitor.projectIds[0];
   const sample=(await callable('getSampleDecisionReport',{})).result;
+  const {decisionReport: paidDetail,...freeBrief}=sample.brief;
+  const shownBrief=paid?sample.brief:{...freeBrief,comparisons:freeBrief.comparisons.slice(0,1)};
   await page.route('**/getMarketIntelligenceProject',async route=>{
     const url=process.env.QA_FUNCTIONS_EMULATOR_HOST==='127.0.0.1:5008'?route.request().url().replace(':5001/',':5008/'):route.request().url();
     const result=(await (await route.fetch({url})).json()).result;
-    await route.fulfill({json:{result:{...sample,...result,brief:sample.brief,location:sample.location,comparisonLocations:sample.comparisonLocations,id,sample:false,decisionReportPurchased:paid,decisionReportAccess:paid?'purchased':'none',decisionReportGenerationRequired:!paid,reportExplanationAvailable:true}}});
+    await route.fulfill({json:{result:{...sample,...result,brief:shownBrief,location:sample.location,comparisonLocations:sample.comparisonLocations.slice(0,paid?3:1),id,sample:false,decisionReportPurchased:paid,decisionReportAccess:paid?'purchased':'none',decisionReportGenerationRequired:!paid,reportExplanationAvailable:true}}});
   });
   const requests=[];
   await page.route('**/explainDecisionReport',async route=>{

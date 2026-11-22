@@ -44,7 +44,7 @@ test('authorization, changed visibility, stale evidence and malformed counters f
  await internal.doc('global').set({day:'2026-11-21',month:'2026-11',dayCount:-1,monthCount:0});assert.equal((await reserve()).state,'limit');assert.equal((await internal.where('state','==','reserved').get()).size,0);
 });
 test('complete cached result and failed/uncertain latches never spend again',async()=>{
- assert.equal((await reserve()).state,'reserved');const job=(await internal.where('state','==','reserved').get()).docs[0];await job.ref.update({state:'complete',selection:{lead:'p0.income',observations:[],nextStep:'costs'}});assert.equal((await reserve()).state,'cached');await job.ref.update({state:'failed'});assert.equal((await reserve()).state,'previous-attempt');assert.equal((await internal.doc('global').get()).get('monthCount'),1);
+ assert.equal((await reserve()).state,'reserved');const job=(await internal.where('state','==','reserved').get()).docs[0];await job.ref.update({state:'complete',selection:{lead:'p0.income',observations:[],nextStep:'context'}});assert.equal((await reserve()).state,'cached');await job.ref.update({state:'failed'});assert.equal((await reserve()).state,'previous-attempt');assert.equal((await internal.doc('global').get()).get('monthCount'),1);
 });
 test('quota/job documents are denied to anonymous, member and site-admin clients',async()=>{
  for(const ctx of [env.unauthenticatedContext(),env.authenticatedContext('owner',{admin:true,email_verified:true})]){const client=ctx.firestore();await assertFails(getDoc(doc(client,'internalReportExplanation/global')));await assertFails(getDocs(collection(client,'internalReportExplanation')));await assertFails(setDoc(doc(client,'internalReportExplanation/global'),{monthCount:0}));}

@@ -2,9 +2,10 @@ import { createHash } from 'node:crypto';
 import { EXPLANATION_MODEL, sendExplanationRequest, ProviderDiagnostic } from './openai-explanation';
 import { decisionReportAccess, decisionView } from './report-entitlement-logic';
 import { CENSUS_STATE_FIPS } from './census-geography';
+import { businessPhrase } from './market-analysis';
 
 export const REPORT_AI_LIMITS = { userDay: 3, globalDay: 20, globalMonth: 200, reservedMicroUsd: 5_000, monthlyMicroUsd: 1_000_000 } as const;
-export const REPORT_AI_CONSENT = 'public-census-explanation-v1';
+export const REPORT_AI_CONSENT = 'public-census-explanation-v2';
 const meanings: Record<string, { label: string; unit: string; limitation: string }> = {
   population: { label: 'population estimate', unit: 'people', limitation: 'Population does not establish demand for a particular business.' },
   income: { label: 'median household income estimate', unit: 'USD', limitation: 'Household income is not an individual salary or a personal cost-of-living calculation.' },
@@ -14,17 +15,33 @@ export const REPORT_AI_NEXT = {
   costs: 'Check current housing, transport and other costs that matter to your decision. These Census estimates do not measure your personal expenses.',
   demand: 'Check local demand, competition and commercial rent before committing to a business location.',
   housing: 'Compare current listings and your actual housing budget before deciding where to live.',
+  context: 'Check the latest source release and identify which local evidence matters to your decision before acting.',
 } as const;
 export interface ReportFact { id: string; place: string; label: string; value: number; unit: string; statement: string; limitation: string; sourceUrl: string; }
-export interface ReportPacket { facts: ReportFact[]; digest: string; }
+export interface ReportPacket { facts: ReportFact[]; purpose: 'business' | 'housing' | 'living-costs' | 'general'; digest: string; }
 const record = (v: unknown): v is Record<string, unknown> => Boolean(v) && typeof v === 'object' && !Array.isArray(v);
 
 /** Match the existing reader's entitlement-filtered view. Explaining a free brief never unlocks a report. */
 export function visibleReportEvidence(project: Record<string, unknown>): ReportPacket | null {
   const access = project.decisionReportGenerationRequired === true ? 'none' : decisionReportAccess(project);
   const view = decisionView(project, access);
-  return projectReportEvidence({ mode: project.mode, location: project.location, brief: view.brief });
+  return projectReportEvidence({ mode: project.mode, location: project.location, concept: project.concept, decision: project.decision, brief: view.brief });
 }
+
+/** A coarse local category, never the original question or business name. */
+function reportPurpose(project: Record<string, unknown>): ReportPacket['purpose'] {
+  const question = typeof project.decision === 'string' ? project.decision.slice(0, 240) : '';
+  const concept = typeof project.concept === 'string' ? project.concept.slice(0, 240) : '';
+  const context = question + ' ' + concept;
+  // Explicit business context wins over mentions of rent/housing within that business question.
+  if (/\b(?:business|coffee shop|cafe|café|bakery|restaurant|retail|store|commercial rent|foot traffic|customer demand)\b/i.test(context)) return 'business';
+  if (/\b(?:cost of living|living costs?|relocat\w*|mov(?:e|ing))\b/i.test(context)) return 'living-costs';
+  if (/\b(?:housing|home prices?|home values?|rent)\b/i.test(context)) return 'housing';
+  return concept && businessPhrase(concept) ? 'business' : 'general';
+}
+
+const nextForPurpose = (purpose: ReportPacket['purpose']): keyof typeof REPORT_AI_NEXT =>
+  purpose === 'business' ? 'demand' : purpose === 'housing' ? 'housing' : purpose === 'living-costs' ? 'costs' : 'context';
 
 /** Only public, sourced metrics. No question, name, concept, city name, bill or identifier leaves the server. */
 export function projectReportEvidence(project: unknown): ReportPacket | null {
@@ -68,7 +85,8 @@ export function projectReportEvidence(project: unknown): ReportPacket | null {
     geographies.add(geography);
   }
   if (!facts.length) return null;
-  return { facts, digest: createHash('sha256').update(JSON.stringify(facts)).digest('hex') };
+  const purpose = reportPurpose(project);
+  return { facts, purpose, digest: createHash('sha256').update(JSON.stringify({ facts, purpose })).digest('hex') };
 }
 
 export interface ReportSelection { lead: string; observations: string[]; nextStep: keyof typeof REPORT_AI_NEXT; }
@@ -78,7 +96,7 @@ export function validReportSelection(selected: unknown, packet: ReportPacket): s
     typeof selected.lead === 'string' && ids.includes(selected.lead) && Array.isArray(selected.observations) &&
     selected.observations.length >= Math.min(2, ids.length - 1) && selected.observations.length <= 3 && selected.observations.every(id => typeof id === 'string' && ids.includes(id)) &&
     new Set([selected.lead, ...selected.observations]).size === selected.observations.length + 1 &&
-    typeof selected.nextStep === 'string' && Object.prototype.hasOwnProperty.call(REPORT_AI_NEXT, selected.nextStep);
+    selected.nextStep === nextForPurpose(packet.purpose);
 }
 export function renderReportExplanation(packet: ReportPacket, selection: ReportSelection, source: 'openai' | 'deterministic') {
   const by = new Map(packet.facts.map(f => [f.id, f]));
@@ -87,7 +105,7 @@ export function renderReportExplanation(packet: ReportPacket, selection: ReportS
     evidenceDigest: packet.digest };
 }
 export function deterministicReportExplanation(packet: ReportPacket) {
-  return renderReportExplanation(packet, { lead: packet.facts[0].id, observations: packet.facts.slice(1, 4).map(f => f.id), nextStep: 'costs' }, 'deterministic');
+  return renderReportExplanation(packet, { lead: packet.facts[0].id, observations: packet.facts.slice(1, 4).map(f => f.id), nextStep: nextForPurpose(packet.purpose) }, 'deterministic');
 }
 
 export async function explainReportEvidence(packet: ReportPacket, apiKey: string, send: typeof fetch = fetch, observe?: (value: ProviderDiagnostic) => void) {
@@ -95,11 +113,11 @@ export async function explainReportEvidence(packet: ReportPacket, apiKey: string
   const body = JSON.stringify({ model: EXPLANATION_MODEL, store: false, service_tier: 'default', truncation: 'disabled',
     reasoning: { effort: 'none' }, max_output_tokens: 512,
     instructions: 'Compose a useful evidence summary by selecting the most relevant supplied fact as the takeaway and up to three other facts as observations. Select one useful next check. Return only IDs. The server renders every amount, source and limitation; do not generate prose or infer causation, demand, savings or personal expenses. Place aliases follow the report order.',
-    input: JSON.stringify({ facts: packet.facts.map(({ id, place, label, value, unit }) => ({ id, place, label, value, unit })), scope: 'public-city-evidence' }),
+    input: JSON.stringify({ facts: packet.facts.map(({ id, place, label, value, unit }) => ({ id, place, label, value, unit })), decisionCategory: packet.purpose, scope: 'public-city-evidence' }),
     text: { format: { type: 'json_schema', name: 'report_evidence_summary', strict: true, schema: { type: 'object', additionalProperties: false,
       required: ['lead', 'observations', 'nextStep'], properties: { lead: { type: 'string', enum: ids },
         observations: { type: 'array', minItems: Math.min(2, ids.length - 1), maxItems: 3, items: { type: 'string', enum: ids } },
-        nextStep: { type: 'string', enum: Object.keys(REPORT_AI_NEXT) } } } } },
+        nextStep: { type: 'string', enum: [nextForPurpose(packet.purpose)] } } } } },
   });
   return sendExplanationRequest(apiKey, body, response => {
     if (!record(response) || response.status !== 'completed' || response.error != null || response.incomplete_details != null || response.service_tier !== 'default' ||

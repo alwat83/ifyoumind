@@ -76,7 +76,7 @@ export class MarketIntelligenceService {
     const call=httpsCallable<{organizationId:string;projectId:string;consent:string},ReportExplanation>(
       this.functions,'explainDecisionReport',{timeout:25_000}
     );
-    return (await call({organizationId,projectId,consent:'public-census-explanation-v1'})).data;
+    return (await call({organizationId,projectId,consent:'public-census-explanation-v2'})).data;
   }
 
   async create(

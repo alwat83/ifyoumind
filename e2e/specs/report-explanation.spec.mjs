@@ -34,7 +34,7 @@ for(const [source,paid] of [['openai',true],['deterministic',true],['openai',fal
   await expect(section).toContainText('Your question, city names, identity, bills and documents are not sent.');
   await button.focus();await page.keyboard.press('Enter');
   await expect(section).toContainText(source==='openai'?'AI-selected evidence summary':'Local evidence summary');
-  expect(requests).toEqual([{organizationId:visitor.organizationId,projectId:id,consent:'public-census-explanation-v1'}]);
+  expect(requests).toEqual([{organizationId:visitor.organizationId,projectId:id,consent:'public-census-explanation-v2'}]);
   await expect(button).toHaveCount(0);await expect(section).toContainText('$62,000');
   await page.screenshot({path:`test-results/production-activation/after-consent-${paid}-${source}-${test.info().project.name}.png`,fullPage:true});
   for(const width of [320,390,820,1440]){await page.setViewportSize({width,height:844});await expectNoHorizontalScroll(page);}

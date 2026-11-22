@@ -172,7 +172,7 @@
 
     <section *ngIf="!sampleMode && project?.reportExplanationAvailable" class="limitations" aria-labelledby="report-explanation-title">
         <h2 id="report-explanation-title">Understand the evidence</h2>
-        <p *ngIf="!explanation">Optional: OpenAI selects a concise summary from the public Census figures shown here. Only numbered place aliases, metric names and numbers leave this site. Your question, city names, identity, bills and documents are not sent. OpenAI may retain inputs for abuse monitoring for up to 30 days. Your findings work without this step.</p>
+        <p *ngIf="!explanation">Optional: OpenAI selects a concise summary from the public Census figures shown here. Only numbered place aliases, metric names, numbers and a broad decision category leave this site. Your question, city names, identity, bills and documents are not sent. OpenAI may retain inputs for abuse monitoring for up to 30 days. Your findings work without this step.</p>
         <button *ngIf="!explanation" type="button" (click)="explainReport()" [disabled]="explaining">{{ explaining ? 'Preparing your explanation…' : 'Agree and explain my findings' }}</button>
         <p *ngIf="explanationError" role="alert">{{ explanationError }}</p>
         <div *ngIf="explanation as detail" aria-live="polite">

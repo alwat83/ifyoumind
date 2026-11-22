@@ -5,7 +5,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 let env;
 before(async () => {
   env = await initializeTestEnvironment({ projectId: 'demo-ifyoumind', firestore: {
-    host: '127.0.0.1', port: 8080, rules: await readFile('firestore.rules', 'utf8'),
+    host: '127.0.0.1', port: Number(process.env.FIRESTORE_EMULATOR_HOST?.split(':').at(-1) || 8080), rules: await readFile('firestore.rules', 'utf8'),
   }});
   await env.withSecurityRulesDisabled(async (context) => {
     const db = context.firestore();

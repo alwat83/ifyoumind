@@ -49,6 +49,7 @@ export interface MarketProject {
   brief?:MarketBrief;
   decisionReportPurchased?:boolean;
   decisionReportGenerationRequired?:boolean;
+  reportExplanationAvailable?:boolean;
   decisionReportAccess?:'purchased'|'pro'|'none';
   sample?:boolean;
   /** Places compared only in the full Decision Report (free briefs show one comparison). */
@@ -58,9 +59,25 @@ export interface MarketProject {
   createdAt?:string|null;
 }
 
+export interface ReportExplanation {
+  source:'openai'|'deterministic';
+  takeaway:{id:string;place:string;statement:string;sourceUrl:string;limitation:string};
+  observations:Array<{id:string;place:string;statement:string;sourceUrl:string;limitation:string}>;
+  limitation:string;
+  nextStep:string;
+  reason?:string;
+}
+
 @Injectable({providedIn:'root'})
 export class MarketIntelligenceService {
   private readonly functions=inject(Functions);
+
+  async explainReport(organizationId:string,projectId:string):Promise<ReportExplanation>{
+    const call=httpsCallable<{organizationId:string;projectId:string;consent:string},ReportExplanation>(
+      this.functions,'explainDecisionReport',{timeout:25_000}
+    );
+    return (await call({organizationId,projectId,consent:'public-census-explanation-v1'})).data;
+  }
 
   async create(
     organizationId:string,

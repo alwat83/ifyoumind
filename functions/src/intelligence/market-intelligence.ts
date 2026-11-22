@@ -7,6 +7,7 @@ import { decisionReportAccess, decisionView, freeBriefComparisonCount, freeDecis
 import { buildMarketAnalysis, businessPhrase, marketAnalysisText } from './market-analysis';
 import { finishReport, reserveReport, subscriptionBilling } from './subscriptions';
 import { subscriptionEnrollment } from './subscription-plans';
+import { reportExplanationEnabled } from './report-explanation';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const censusApiKey = defineSecret('CENSUS_API_KEY');
@@ -395,11 +396,14 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
       const plan = org.get('plan') === 'pro' ? 'pro' : 'free';
       const billing = plan === 'free' ? (await billingRef.get()).data() : undefined;
       const { deferred, previewLimit } = cityDecisionUsage(plan, billing, orgRef.id);
+      // The existing cap bounds this read to 3 or 12 IDs. A normal transactional QuerySnapshot
+      // avoids the aggregate-stream path that masked an aborted read as "transaction closed".
+      // Keep the authoritative check inside the transaction; never infer usage from the precheck.
       const currentUsage = (start: Date, limit: number | null) => projects
-        .where('createdAt', '>=', Timestamp.fromDate(start)).limit(limit ?? FREE_DECISIONS_PER_MONTH).count();
+        .where('createdAt', '>=', Timestamp.fromDate(start)).limit(limit ?? FREE_DECISIONS_PER_MONTH).select();
       if (plan === 'free') {
         const start = freeDecisionPeriodStart();
-        const count = (await currentUsage(start, previewLimit).get()).data().count;
+        const count = (await currentUsage(start, previewLimit).get()).size;
         // A concurrent copy may have committed before this precheck. Recover it even at the cap.
         if (fingerprint) project = savedCityDecision((await ref.get()).data(), fingerprint);
         if (!project) checkCityDecisionUsage(count, previewLimit, billing, start.toISOString());
@@ -443,7 +447,7 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
             const lock = orgRef.collection('internalUsage').doc('cityDecisions');
             await tx.get(lock);
             const start = freeDecisionPeriodStart();
-            const count = (await tx.get(currentUsage(start, usage.previewLimit))).data().count;
+            const count = (await tx.get(currentUsage(start, usage.previewLimit))).size;
             const previewUsage = checkCityDecisionUsage(count, usage.previewLimit, currentBilling, start.toISOString());
             if (previewUsage) tx.set(billingRef, { previewUsage }, { merge: true });
             tx.set(lock, { updatedAt: FieldValue.serverTimestamp() });
@@ -559,6 +563,7 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
     decisionReportPurchased,
     decisionReportAccess:reportAccess,
     decisionReportGenerationRequired:needsGeneration,
+    reportExplanationAvailable:reportAccess!=='none' && !needsGeneration && reportExplanationEnabled(),
     dataNotice:data.mode === 'live'
       ? 'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.'
       : 'Synthetic demo enrichment — not real market data.',

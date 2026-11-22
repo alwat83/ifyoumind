@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November21,2026 — Production activation in progress — gated implementation
+
+New founder P0mission authorizes completing and independently releasing verified capabilities. ConsumerRC1 remains live; no new production change yet. Branchcodex/production-activation from frozen9d8caef preserves the local-only release-evidence branch. [Implementation/gates](../product/PRODUCTION_ACTIVATION.md): PR96transport reused, consented paid-report evidence summaries/defaultOFF, transaction-safe cost limits/cache, deterministic fallback; no private bill transmission. Production-only secretv1 metadata ENABLED; runtime binding not yet deployed/verified. Supported bounded ID-query city-save correction passed66applicable tests including3fresh month-boundary contention cases;95unit tests/builds and6mocked browser cases pass at working-source scope. Generic SDK/dataset recovery remains separate. Exact-head checks/deployments follow committed candidate. Founder authorized max$93.98live review, user personally pays; public subscriptions/AI remainOFF until gates. Original founder/customer data preserved; private QA sign-in pending. No real payment/provider call in this phase.
+
 ## November 21, 2026 — Final homepage refinement ready for visual review
 
 [Draft #124](https://github.com/alwat83/ifyoumind/pull/124), `codex/hero-question-wrap` from #123ade00b0. Exact tested executable **45ebd3fab6e8d0864ff30db6b20eee81baaf8c31**. [Review, actual five-width pairs and preview](../design/hero-question-refinement/REVIEW.md), [summary/JSON](../design/hero-question-refinement/VERIFIED_45ebd3f.md): Consumer19 checks PASS,594 tests PASS/zero FAIL/14 Linux visual SKIP; integrity VALID/zero source events, selected development PASS/overall PARTIAL for native platform differences. Six sensitive suites NOT_RUN, original failures/#111 remain open; no hosted CI success. Later evidence-only follow-up preserves executable bytes.

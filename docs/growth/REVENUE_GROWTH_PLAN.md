@@ -1,5 +1,9 @@
 # ifYouMind — Zero-to-One Launch Command Center
 
+## November21 — Activation work supports a real purchase, not a revenue claim
+
+The approved consumer website is live. [Production activation](../product/PRODUCTION_ACTIVATION.md) now targets actual report intelligence and safe Starter/Plus fulfillment with bounded provider spend. Founder-authorized internal paid review is capped at$93.98beforetax with refunds/cancellations; it is **not independently paying customer traction**. No payment or provider call has yet occurred in this phase. Keep all existing scoreboard values/unknowns unchanged; verify real signed fulfillment before opening enrollment. Privacy and deterministic findings remain available without sending bills to a provider.
+
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
 ## November 21 — Isolate consumer release risk

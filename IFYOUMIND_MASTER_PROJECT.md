@@ -1,5 +1,9 @@
 # ifYouMind — Master Project Record and Roadmap
 
+## November21,2026 — Production activation — first bounded integration
+
+[Candidate implementation/gates](docs/product/PRODUCTION_ACTIVATION.md) adapts PR96transport/quota/bootstrap patterns for consented public-Census report explanations. Model selects supported evidence, server renders amounts/sources/limitations; no raw/private data transfer or claim of free-prose factual validation.200monthlyattemptcap/reserved modeled$1budget, cached exactly-once provider attempts; OFFuntilverified. Bounded ID-only city usage query replaces the implicated aggregate path without SDK changes or weakening caps/idempotency.66applicable tests including3month-contentioncases pass; generic SDK findings preserved. Production secretmetadata1enabled, runtimebinding stillpending. Founder authorized controlled internal three-product live purchases max$93.98beforetax/refund/cancellation verification, not independent-customer revenue. Approved design and RC1Hosting preserved. No new deployment/provider/payment outcome yet.
+
 **Updated:** 2026-11-21
 **Repository:** https://github.com/alwat83/ifyoumind  
 **Website:** https://ifyoumind.com  

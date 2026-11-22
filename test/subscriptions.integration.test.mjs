@@ -206,7 +206,7 @@ test('city saves charge enrolled preview usage only on commit and preserve legac
   assert.equal((await billing.get()).get('previewUsage.used'), 12);
 });
 
-test('replaying a city save across the UTC month boundary leaves the new allowance intact', async () => {
+const checkMonthBoundaryReplay = async () => {
   const create = requestId => call('createMarketIntelligenceProject', {
     ...(requestId ? { requestId } : {}),
     location: 'Denver, CO', concept: 'Bookshop', decision: 'Compare candidate markets',
@@ -237,7 +237,10 @@ test('replaying a city save across the UTC month boundary leaves the new allowan
   assert.deepEqual((await billing.get()).get('previewUsage'), { month: new Date(currentStart).toISOString(), used: 3 });
   assert.equal((await docs.count().get()).data().count, 4);
   assert.equal((await docs.doc(first.id).get()).get('createdAt').toMillis(), previousCreatedAt.getTime());
-});
+};
+test('replaying a city save across the UTC month boundary leaves the new allowance intact', checkMonthBoundaryReplay);
+test('month-boundary replay contention qualification round 2', checkMonthBoundaryReplay);
+test('month-boundary replay contention qualification round 3', checkMonthBoundaryReplay);
 
 test('pending Checkout prevents a second plan and does not convert a legacy Pro workspace',async()=>{
   await seedProject();

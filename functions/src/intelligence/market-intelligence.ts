@@ -7,7 +7,7 @@ import { decisionReportAccess, decisionView, freeBriefComparisonCount, freeDecis
 import { buildMarketAnalysis, businessPhrase, marketAnalysisText } from './market-analysis';
 import { finishReport, reserveReport, subscriptionBilling } from './subscriptions';
 import { subscriptionEnrollment } from './subscription-plans';
-import { reportExplanationEnabled } from './report-explanation';
+import { reportExplanationEnabled, visibleReportEvidence } from './report-explanation';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const censusApiKey = defineSecret('CENSUS_API_KEY');
@@ -578,7 +578,8 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
     decisionReportPurchased,
     decisionReportAccess:reportAccess,
     decisionReportGenerationRequired:needsGeneration,
-    reportExplanationAvailable:reportAccess!=='none' && !needsGeneration && reportExplanationEnabled(process.env,scope.organizationId),
+    reportExplanationAvailable:request.auth?.token?.email_verified===true && ['owner','admin'].includes(scope.role) &&
+      Boolean(visibleReportEvidence(data)) && reportExplanationEnabled(process.env,scope.organizationId),
     dataNotice:data.mode === 'live'
       ? 'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.'
       : 'Synthetic demo enrichment — not real market data.',

@@ -1,7 +1,8 @@
 import { createHash } from 'node:crypto';
-import { EXPLANATION_MODEL, sendExplanationRequest } from './openai-explanation';
+import { EXPLANATION_MODEL, sendExplanationRequest, ProviderDiagnostic } from './openai-explanation';
+import { decisionReportAccess, decisionView } from './report-entitlement-logic';
 
-export const REPORT_AI_LIMITS = { userDay: 3, globalDay: 20, globalMonth: 200, reservedMicroUsd: 5_000 } as const;
+export const REPORT_AI_LIMITS = { userDay: 3, globalDay: 20, globalMonth: 200, reservedMicroUsd: 5_000, monthlyMicroUsd: 1_000_000 } as const;
 export const REPORT_AI_CONSENT = 'public-census-explanation-v1';
 const meanings: Record<string, { label: string; unit: string; limitation: string }> = {
   population: { label: 'population estimate', unit: 'people', limitation: 'Population does not establish demand for a particular business.' },
@@ -16,6 +17,13 @@ export const REPORT_AI_NEXT = {
 export interface ReportFact { id: string; place: string; label: string; value: number; unit: string; statement: string; limitation: string; sourceUrl: string; }
 export interface ReportPacket { facts: ReportFact[]; digest: string; }
 const record = (v: unknown): v is Record<string, unknown> => Boolean(v) && typeof v === 'object' && !Array.isArray(v);
+
+/** Match the existing reader's entitlement-filtered view. Explaining a free brief never unlocks a report. */
+export function visibleReportEvidence(project: Record<string, unknown>): ReportPacket | null {
+  const access = project.decisionReportGenerationRequired === true ? 'none' : decisionReportAccess(project);
+  const view = decisionView(project, access);
+  return projectReportEvidence({ mode: project.mode, brief: view.brief });
+}
 
 /** Only public, sourced metrics. No question, name, concept, city name, bill or identifier leaves the server. */
 export function projectReportEvidence(project: unknown): ReportPacket | null {
@@ -71,7 +79,7 @@ export function deterministicReportExplanation(packet: ReportPacket) {
   return renderReportExplanation(packet, { lead: packet.facts[0].id, observations: packet.facts.slice(1, 4).map(f => f.id), nextStep: 'costs' }, 'deterministic');
 }
 
-export async function explainReportEvidence(packet: ReportPacket, apiKey: string, send: typeof fetch = fetch) {
+export async function explainReportEvidence(packet: ReportPacket, apiKey: string, send: typeof fetch = fetch, observe?: (value: ProviderDiagnostic) => void) {
   const ids = packet.facts.map(f => f.id);
   const body = JSON.stringify({ model: EXPLANATION_MODEL, store: false, service_tier: 'default', truncation: 'disabled',
     reasoning: { effort: 'none' }, max_output_tokens: 512,
@@ -100,7 +108,7 @@ export async function explainReportEvidence(packet: ReportPacket, apiKey: string
         typeof selected.nextStep !== 'string' || !Object.prototype.hasOwnProperty.call(REPORT_AI_NEXT, selected.nextStep)) return null;
     return { selection: selected as unknown as ReportSelection, usage: { inputTokens: Number(response.usage.input_tokens), outputTokens: Number(response.usage.output_tokens),
       estimatedMicroUsd: Math.ceil(Number(response.usage.input_tokens) / 10 + Number(response.usage.output_tokens) / 2) }, model: EXPLANATION_MODEL };
-  }, send, 12_288);
+  }, send, 12_288, observe);
 }
 
 export function reportExplanationEnabled(env: NodeJS.ProcessEnv = process.env, organizationId = ''): boolean {

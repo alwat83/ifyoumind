@@ -2,6 +2,14 @@
 
 November 21, 2026 · OpenAI / Codex. Build from the consumer source already serving production; preserve the approved Midnight Slate layout. This candidate is not a declaration that AI or new subscriptions are live.
 
+## November22 — Independently authorized production AI rollout
+
+Founder explicitly authorizes production AI activation independently of the waived real-payment review. Keep subscriptions closed and entitlements unchanged. The existing callable now explains only the entitlement-filtered city findings the authenticated, verified owner/admin can already read, including a free brief; it never unlocks premium comparisons/full reports, consumes report credits, or needs a fabricated paid record. Reuse the reader's `decisionView` in both projection and transactional recheck. Public samples/private bills/unsupported primary evidence remain excluded. Default OFF and controlled-workspace enrollment remain mandatory before the real provider check; later availability expansion requires AI-specific gates only, not another payment.
+
+Explicit in-page consent, minimized public Census facts and numbered aliases, current provider retention disclosure, inspectable evidence and deterministic fallback remain. OpenAI performs structured evidence selection; server-verified wording/numbers are not presented as unconstrained model-written prose. No private bill or original question is transmitted. Server-only sanitized provider outcome/status/request ID/latency diagnostics preserve failure evidence without raw response/credential logging. Failed/uncertain attempts remain latched; no automatic retry.
+
+In addition to200attempts/month,20/day and3/user/day, explicitly validate the monetary reservation ledger against5,000microUSD/attempt and a1,000,000microUSD/month ceiling. Inconsistent/oversized counters fail closed; no production reset. This application-side conservative ceiling covers this callable at the fixed model/request/output bounds, not all OpenAI-project activity or Firebase costs. Model/support/prices reverified against current official docs. Unit and emulator coverage now includes free-versus-paid visibility, unchanged paid access/allowances, corrupt dollar counters, existing concurrent/daily/monthly budgets, provider failures and sanitized diagnostics. Browser checks cover explicit consent/labeling on both briefs and full reports,320/390/820/1440 and the full explanation region's accessibility. New exact-source results and deployment/provider evidence must be recorded after execution; no real provider success claimed yet.
+
 ## Working implementation
 
 - Reuse PR96's bounded Responses transport and validated Luna model. Its fixed synthetic callable remains staging-only/default OFF; it is not exported by the production bootstrap.

@@ -120,7 +120,7 @@ export class MarketReportComponent implements OnInit, OnDestroy {
   }
 
   async explainReport():Promise<void>{
-    if(this.sampleMode||!this.reportPurchased||!this.project?.reportExplanationAvailable||!this.organizationId||this.explaining)return;
+    if(this.sampleMode||!this.project?.reportExplanationAvailable||!this.organizationId||this.explaining)return;
     this.explaining=true;
     this.explanationError='';
     const organizationId=this.organizationId,projectId=this.project.id;

@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November22 — Independent AI rollout in progress
+
+Founder explicitly authorizes production AI rollout without a real purchase, with billing/enrollment separate. Existing PR126/codex/production-activation preserved. Reuse the same callable/provider/quota engine for already-visible saved city findings, including free briefs; filter using existing entitlement reader before both request and transaction, never create paid access. Tighten independent dollar-counter validation and sanitized provider diagnostics; move the existing consent/summary section outside the paid report container. No new design, integration, dependencies, private-bill transfer or price/billing changes.98working-source unit tests PASS; exact-source build/security/browser qualification, controlled deployment, real provider and rendering verification pending. AI currently OFF/public enrollment still closed. Latest waiver remains recorded below; it is not an AI blocker or a claim of paid success.
+
 ## November22,2026 — Founder one-release live-payment exception
 
 Founder declined a real test purchase and explicitly selected: **“Waive live-payment verification for this release; keep it recorded as unverified.”** This supersedes the pending payment handoff below for the current PR126 activation release only. Do not request another payment to clear this same gate, treat assumed functionality as observed success, or carry this exception to later releases. Live payment, genuine signed paid-webhook fulfillment, paid access/delivery/reopening, refund and cancellation outcomes remain **UNVERIFIED**; the live-payment prerequisite is explicitly excepted, not passed. Preserve actual local/sandbox evidence and all other security, entitlement, privacy, model-validity and spending gates.

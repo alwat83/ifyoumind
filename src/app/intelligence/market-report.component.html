@@ -170,6 +170,22 @@
 
 
 
+    <section *ngIf="!sampleMode && project?.reportExplanationAvailable" class="limitations" aria-labelledby="report-explanation-title">
+        <h2 id="report-explanation-title">Understand the evidence</h2>
+        <p *ngIf="!explanation">Optional: OpenAI selects a concise summary from the public Census figures shown here. Only numbered place aliases, metric names and numbers leave this site. Your question, city names, identity, bills and documents are not sent. OpenAI may retain inputs for abuse monitoring for up to 30 days. Your findings work without this step.</p>
+        <button *ngIf="!explanation" type="button" (click)="explainReport()" [disabled]="explaining">{{ explaining ? 'Preparing your explanation…' : 'Agree and explain my findings' }}</button>
+        <p *ngIf="explanationError" role="alert">{{ explanationError }}</p>
+        <div *ngIf="explanation as detail" aria-live="polite">
+          <p>{{ detail.source === 'openai' ? 'AI-selected evidence summary · figures and wording verified by ifYouMind' : 'Local evidence summary · AI unavailable; your findings are unchanged' }}</p>
+          <p>Place 1 is your primary city. Places 2–4 follow the comparison order shown above.</p>
+          <p><strong>{{ detail.takeaway.statement }}</strong> <a [href]="detail.takeaway.sourceUrl">Source</a></p>
+          <p>{{ detail.takeaway.limitation }}</p>
+          <ul><li *ngFor="let item of detail.observations">{{ item.statement }} <a [href]="item.sourceUrl">Source</a> {{ item.limitation }}</li></ul>
+          <p>{{ detail.limitation }}</p>
+          <p><strong>Next check:</strong> {{ detail.nextStep }}</p>
+        </div>
+      </section>
+
     <section *ngIf="!reportPurchased" class="report-offer report-adds no-print" aria-labelledby="report-adds-title">
       <div *ngIf="checkoutReturned && !canGeneratePaidReport" role="status">
         <p>Your report credit appears after Stripe confirms payment.</p>
@@ -208,21 +224,7 @@
     </section>
 
     <ng-container *ngIf="decisionReport as reportDetail">
-      <section *ngIf="!sampleMode && project?.reportExplanationAvailable && reportPurchased" class="limitations" aria-labelledby="report-explanation-title">
-        <h2 id="report-explanation-title">Understand the evidence</h2>
-        <p *ngIf="!explanation">Optional: OpenAI selects a concise summary from this report’s public Census figures. Only anonymized place aliases, metric names and numbers leave this site. Your question, city names, identity, bills and documents are not sent. OpenAI may retain inputs for abuse monitoring for up to 30 days. Your report works without this step.</p>
-        <button *ngIf="!explanation" type="button" (click)="explainReport()" [disabled]="explaining">{{ explaining ? 'Preparing your explanation…' : 'Agree and explain my report' }}</button>
-        <p *ngIf="explanationError" role="alert">{{ explanationError }}</p>
-        <div *ngIf="explanation as detail" aria-live="polite">
-          <p>{{ detail.source === 'openai' ? 'AI-selected evidence summary · figures and wording verified by ifYouMind' : 'Local evidence summary · AI unavailable; your report is unchanged' }}</p>
-          <p>Place 1 is your primary city. Places 2–4 follow the comparison order in your report.</p>
-          <p><strong>{{ detail.takeaway.statement }}</strong> <a [href]="detail.takeaway.sourceUrl">Source</a></p>
-          <p>{{ detail.takeaway.limitation }}</p>
-          <ul><li *ngFor="let item of detail.observations">{{ item.statement }} <a [href]="item.sourceUrl">Source</a> {{ item.limitation }}</li></ul>
-          <p>{{ detail.limitation }}</p>
-          <p><strong>Next check:</strong> {{ detail.nextStep }}</p>
-        </div>
-      </section>
+
       <app-market-analysis id="market-analysis" *ngIf="reportDetail.marketAnalysis as analysis" [section]="analysis" [includedInReport]="sampleMode"></app-market-analysis>
       <section id="action-plan" class="action-plan">
         <p class="eyebrow">Action plan <span *ngIf="sampleMode" class="paid-pill">Included in the $79 report</span></p>

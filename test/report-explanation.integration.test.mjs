@@ -37,9 +37,9 @@ test('global monthly ceiling reserves at most the modeled $1, including concurre
 test('UTC day/month rollover preserves forward-only windows and cannot reset newer usage',async()=>{
  assert.equal((await reserve()).state,'reserved');await org.collection('marketProjects').doc('december').set(fixture());assert.equal((await reserve('december','owner',new Date('2026-12-01T00:00:00Z'))).state,'reserved');await org.collection('marketProjects').doc('stale').set(fixture());assert.equal((await reserve('stale')).state,'limit');assert.equal((await internal.doc('global').get()).get('month'),'2026-12');
 });
-test('authorization, entitlement, stale evidence and malformed counters fail before any reservation',async()=>{
+test('authorization, changed visibility, stale evidence and malformed counters fail before any reservation',async()=>{
  for(const uid of ['foreign','disabled'])assert.equal((await reserve('report',uid)).state,'denied');
- await org.collection('marketProjects').doc('report').update({decisionReportPurchased:false});assert.equal((await reserve()).state,'denied');await org.collection('marketProjects').doc('report').set(fixture());
+ await org.collection('marketProjects').doc('report').update({decisionReportPurchased:false,freeComparisonCount:0,freeBrief:{metrics:[],comparisons:[]}});assert.equal((await reserve()).state,'denied');await org.collection('marketProjects').doc('report').set(fixture());
  const changed=fixture();changed.brief.metrics[0].value=99999;await org.collection('marketProjects').doc('report').set(changed);assert.equal((await reserve()).state,'denied');await org.collection('marketProjects').doc('report').set(fixture());
  await internal.doc('global').set({day:'2026-11-21',month:'2026-11',dayCount:-1,monthCount:0});assert.equal((await reserve()).state,'limit');assert.equal((await internal.where('state','==','reserved').get()).size,0);
 });
@@ -51,5 +51,23 @@ test('quota/job documents are denied to anonymous, member and site-admin clients
  assert.equal((await internal.get()).size,0);
 });
 test('global daily bound blocks another buyer and disabled membership cannot reserve',async()=>{
- await internal.doc('global').set({day:'2026-11-21',month:'2026-11',dayCount:20,monthCount:20});assert.equal((await reserve()).state,'limit');await org.collection('members').doc('owner').update({status:'disabled'});assert.equal((await reserve()).state,'denied');assert.equal((await internal.get()).size,1);
+ await internal.doc('global').set({day:'2026-11-21',month:'2026-11',dayCount:20,monthCount:20,reservedMicroUsd:100000});assert.equal((await reserve()).state,'limit');await org.collection('members').doc('owner').update({status:'disabled'});assert.equal((await reserve()).state,'denied');assert.equal((await internal.get()).size,1);
+});
+
+test('free-brief AI reservations preserve project access, billing records and report allowances',async()=>{
+ const p={...fixture(),decisionReportPurchased:false,decisionReportGenerationRequired:true};
+ await org.collection('marketProjects').doc('report').set(p);
+ assert.equal((await reserve()).state,'reserved');
+ assert.deepEqual((await org.collection('marketProjects').doc('report').get()).data(),p);
+ assert.equal((await org.collection('subscriptionBilling').get()).size,0);
+ assert.equal((await org.collection('internalUsage').get()).size,0);
+});
+
+test('inconsistent or excessive dollar reservations fail closed without resetting budget',async()=>{
+ for(const reservedMicroUsd of [undefined,-1,NaN,1000001,5000]){
+  const value={day:'2026-11-21',month:'2026-11',dayCount:0,monthCount:0,...(reservedMicroUsd===undefined?{}:{reservedMicroUsd})};
+  await internal.doc('global').set(value);
+  assert.equal((await reserve()).state,'limit');
+  assert.equal((await internal.where('state','==','reserved').get()).size,0);
+ }
 });

@@ -121,9 +121,9 @@ test('the homepage states its free example promise and keeps provenance explicit
   assert.ok(landingHtml.includes(value));
   assert.match(landingHtml,/\{\{ example\.label \}\}/);
   // The founder-authorized optional report summary is gated, consented and explicitly labeled.
-  const optional=reportHtml.match(/<section \*ngIf="!sampleMode && project\?\.reportExplanationAvailable && reportPurchased"[\s\S]*?<\/section>/)?.[0];
+  const optional=reportHtml.match(/<section \*ngIf="!sampleMode && project\?\.reportExplanationAvailable"[\s\S]*?<\/section>/)?.[0];
   assert.ok(optional);
-  assert.match(optional,/Agree and explain my report/);
+  assert.match(optional,/Agree and explain my findings/);
   assert.match(optional,/AI-selected evidence summary/);
   assert.match(optional,/Local evidence summary/);
   assert.match(optional,/Your question, city names, identity, bills and documents are not sent/);

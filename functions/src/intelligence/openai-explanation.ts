@@ -117,20 +117,34 @@ async function readBoundedJson(response: Response): Promise<unknown> {
 }
 
 /** Shared PR96 transport: one request, bounded body/response/deadline, no redirects or retry. */
+export type ProviderDiagnostic = { outcome: 'valid' | 'rejected' | 'http-error' | 'transport-error' | 'deadline' | 'request-too-large';
+  elapsedMs: number; httpStatus?: number; requestId?: string };
 export async function sendExplanationRequest<T>(apiKey: string, body: string,
   validate: (response: unknown) => T | null, send: typeof fetch = fetch,
-  maxRequestBytes = MAX_REQUEST_BYTES): Promise<T | null> {
-  if (Buffer.byteLength(body, 'utf8') > maxRequestBytes) return null;
+  maxRequestBytes = MAX_REQUEST_BYTES, observe?: (value: ProviderDiagnostic) => void): Promise<T | null> {
+  const started = Date.now();
+  let status: number | undefined, requestId: string | undefined;
+  const report = (outcome: ProviderDiagnostic['outcome']) => {
+    try { observe?.({ outcome, elapsedMs: Math.max(0, Date.now() - started), ...(status ? { httpStatus: status } : {}), ...(requestId ? { requestId } : {}) }); } catch { /* Telemetry never changes the request outcome. */ }
+  };
+  if (Buffer.byteLength(body, 'utf8') > maxRequestBytes) { report('request-too-large'); return null; }
+  const signal = AbortSignal.timeout(PROVIDER_TIMEOUT_MS);
   try {
-    const signal = AbortSignal.timeout(PROVIDER_TIMEOUT_MS);
-    const response = await readBoundedJson(await send(RESPONSES_URL, {
+    const response = await send(RESPONSES_URL, {
       method: 'POST', redirect: 'error', signal,
       headers: { authorization: `Bearer ${apiKey}`, 'content-type': 'application/json' },
       body,
-    }));
-    return signal.aborted ? null : validate(response);
+    });
+    status = response.status;
+    const header = response.headers.get('x-request-id');
+    if (header && /^[A-Za-z0-9_-]{1,128}$/.test(header)) requestId = header;
+    const parsed = await readBoundedJson(response);
+    const result = signal.aborted ? null : validate(parsed);
+    report(signal.aborted ? 'deadline' : !response.ok ? 'http-error' : result === null ? 'rejected' : 'valid');
+    return result;
   } catch {
     // Provider responses and exception messages can include content. Return no raw details.
+    report(signal.aborted ? 'deadline' : 'transport-error');
     return null;
   }
 }

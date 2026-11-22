@@ -1,5 +1,9 @@
 # ifYouMind — Master Project Record and Roadmap
 
+## November 22, 2026 — Property-tax campaign creative v2
+
+The existing [five-slide carousel](docs/marketing/drafts/property-tax/REVIEW.md) is refined and ready for final founder visual approval in draft PR127. [Before/after evidence](docs/marketing/drafts/property-tax/comparison.jpg) preserves the originals. Larger question-led +$420, source-backed school comparison and 57.1% graphic, precise limitations and an authentic product preview connect to the free example. All five portrait exports pass offline bounds/font/contrast/mobile-scale/numerical checks; alt text and caption are updated. This is local marketing artwork, not deployed product or measured conversion. No website, AI/billing/enrollment, public asset or publishing change; future publication requires separate approval.
+
 ## November22,2026 — Approved welcome image production verified
 
 Exact supplied Instagram JPEG is live at [the stable public URL](https://ifyoumind.com/assets/marketing/social/instagram/posts/ifyoumind-launch-01.jpg),200/image/jpeg/noauth/no redirect,1080×1080/sRGB/76114bytes/exactapprovedSHA256. Asset sourcedb22d11d6320358313740993356c91c863d2474f; isolatedHosting2bb9f7f3c6545b0e/release1795375284691000 deployed11:21:24.691PST and read back again14:07PST without redeploy. All58application files/config and34Functions/AI/billing/auth/subscription settings preserved; public enrollmentclosed, no providerrequest. App executable remainsfef9856b, priorHosting469cd9d1f8513ae6retained; PR126 untouched. [Registry/standards](docs/marketing/README.md), [exact release evidence](docs/marketing/LAUNCH_IMAGE_RELEASE.md).

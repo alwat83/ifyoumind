@@ -1,5 +1,15 @@
 # ifYouMind — Current development status
 
+## November 22, 2026 — Refined tax carousel ready for founder approval
+
+**Local creative complete; not deployed or published.** Existing [draft PR #127](https://github.com/alwat83/ifyoumind/pull/127), `codex/marketing-asset-launch`, continues from `ea70bb9c`. The five 1080 × 1350 JPEGs now use a larger +$420 question hook, zero-based school-tax comparison, proportional 57.1% graphic, clearer limits and a prominent free-example invitation with an authentic live-product capture. Approved Midnight Slate template and original 2024/2025 fixture are reused. Website/approved welcome creative/public assets are unchanged.
+
+[Before/after comparison](../marketing/drafts/property-tax/comparison.jpg) · [Review/caption](../marketing/drafts/property-tax/REVIEW.md) · [Manifest/alt text](../marketing/drafts/property-tax/manifest.json). All five original images remain byte-identical in `before-v1/`. The live preview was captured read-only from the public synthetic example; source URL/crop/hash are recorded, with no retouching or private data.
+
+Five offline exports pass decoded dimensions, hashes, bounds, loaded local fonts, chart proportions and source-cell arithmetic. Minimum tested text contrast 7.45:1; primary text at least 13.33 px equivalent at 360 px width; disclosure text 10.67 px equivalent. All full-size and 390 px previews individually reviewed. Zero external render requests/page errors. Physical Instagram/iPhone, spoken assistive technology and actual comprehension/engagement remain untested. Full application/backend/hosted CI suites were NOT_RUN for this draft-only change; previous risks remain separate.
+
+No deployment, merge, social call, ad spend, provider call or production/configuration change in this assignment. The existing live welcome-image Hosting release remains historical evidence, not revalidated here. Only next decisions: approve or revise this carousel/caption; separately authorize any export hosting/posting; observe actual response after authorized publication. No new customer or revenue outcome claimed.
+
 ## November22,2026 14:07PST — Approved Instagram image verified live
 
 **PASS / deployed and production verified**, [draft PR127](https://github.com/alwat83/ifyoumind/pull/127), separatecodex/marketing-asset-launch from0ec37be3; PR126 unchanged. Asset source `db22d11d6320358313740993356c91c863d2474f`; unchanged application executablefef9856b. Public [launch JPEG](https://ifyoumind.com/assets/marketing/social/instagram/posts/ifyoumind-launch-01.jpg) returns200/image/jpeg/noauth/noredirect,1080square/sRGB/76114bytes, exactSHA2560e87ff1aa9a9d1cb5db09175fe2c83624198ab86a5ef7c98cc4330e97bc19252. Hosting `2bb9f7f3c6545b0e`, release `1795375284691000`, deployed11:21:24.691PST; initial and resumed14:07PST readbacks PASS. No redeploy on resume.

@@ -1,104 +1,187 @@
 {
+  "version": 2,
   "status": "draft-not-for-publication",
-  "updatedAt": "2026-11-22T22:10:15.416Z",
+  "updatedAt": "2026-11-22T23:05:26.207Z",
   "source": "src/app/intelligence/home-bill-examples.json",
+  "sourceSha256": "e753b1cc677401fc97d551b9ef4a927e85b65c6ec17971822639790743a61eb6",
   "template": "scripts/render-midnight-social.mjs",
+  "productPreview": {
+    "url": "https://ifyoumind.com/?example=tax",
+    "capturedAt": "2026-11-22T22:58:51Z",
+    "capture": "Unmodified read-only browser screenshot of #discovery-result",
+    "viewport": {
+      "width": 1000,
+      "height": 1100
+    },
+    "crop": {
+      "x": 80,
+      "y": 520.140625,
+      "width": 834,
+      "height": 192.546875
+    },
+    "sha256": "f036c703f998167858623ddce24daad4f0253b566a730e56fc4580e3814866f0",
+    "content": "Live free illustrative example; synthetic figures, no customer data",
+    "retouching": false,
+    "providerCalls": 0
+  },
   "externalRequests": 0,
   "pageErrors": 0,
+  "numericalValidation": {
+    "before": 4200,
+    "after": 4620,
+    "increase": 420,
+    "schoolBefore": 2400,
+    "schoolAfter": 2640,
+    "school": 240,
+    "county": 90,
+    "municipal": 90,
+    "other": 180,
+    "share": 0.5714285714285714,
+    "displayedShare": "57.1%"
+  },
   "assets": [
     {
       "filename": "01-question.jpg",
-      "title": "Your tax bill went up.",
-      "altText": "Illustrative, made-up property-tax example: an annual bill increased by $420. Start with what changed, then check the evidence.",
+      "title": "Your property-tax bill increased by $420. What changed?",
+      "altText": "Synthetic property-tax example: the annual total rises from $4,200 in 2024 to $4,620 in 2025, an increase of $420. What changed? No assessment error or appeal eligibility is established.",
       "width": 1080,
       "height": 1350,
       "mimeType": "image/jpeg",
-      "bytes": 119589,
-      "sha256": "e779c88a881d53493f44e5f73f586c46251a2778dbc0ebe372741ed8fb72d829",
+      "bytes": 159449,
+      "sha256": "237fd791af550fe0af727b9cb6b6ba4a1abcfebf92e61316d792870b60c6a67c",
       "approval": "pending-founder-visual-review",
       "publicUrl": null,
       "publication": "not-published",
-      "bounds": {
+      "checks": {
         "overflow": false,
-        "overlap": false,
-        "footerBottom": 1270,
-        "fontLoaded": true
+        "contentBottom": 944.515625,
+        "noteTop": 1149.09375,
+        "footerBottom": 1306,
+        "fontLoaded": true,
+        "imageLoaded": true,
+        "clipped": [],
+        "minContrast": 7.45,
+        "minMobileNarrativePx": 13.33,
+        "disclosurePxAt360": 10.666666666666666,
+        "barWidths": [],
+        "schoolRatio": null
       }
     },
     {
       "filename": "02-school.jpg",
-      "title": "Follow the increase.",
-      "altText": "Made-up example: school tax rises from $2,400 in 2024 to $2,640 in 2025, accounting for $240 of the $420 total increase.",
+      "title": "$240 of that increase came from school tax.",
+      "altText": "Synthetic example: $240 of the $420 increase came from school tax. Zero-based bars compare $2,400 in 2024 with $2,640 in 2025. $2,640 minus $2,400 equals $240. No assessment error or appeal eligibility is established.",
       "width": 1080,
       "height": 1350,
       "mimeType": "image/jpeg",
-      "bytes": 112262,
-      "sha256": "b4a37bfd25b34a805ff883f196040ea8f6b4af0180a4cbd14a95847db59466b6",
+      "bytes": 141251,
+      "sha256": "a1a3e44c89fe609eb144586fcbb32f9f11a870b336b289ea70c69f981fc03561",
       "approval": "pending-founder-visual-review",
       "publicUrl": null,
       "publication": "not-published",
-      "bounds": {
+      "checks": {
         "overflow": false,
-        "overlap": false,
-        "footerBottom": 1270,
-        "fontLoaded": true
+        "contentBottom": 915.671875,
+        "noteTop": 1149.09375,
+        "footerBottom": 1306,
+        "fontLoaded": true,
+        "imageLoaded": true,
+        "clipped": [],
+        "minContrast": 7.45,
+        "minMobileNarrativePx": 13.33,
+        "disclosurePxAt360": 10.666666666666666,
+        "barWidths": [
+          {
+            "ratio": 0.9090878739316239,
+            "expected": 0.9090909090909091
+          },
+          {
+            "ratio": 1,
+            "expected": 1
+          }
+        ],
+        "schoolRatio": null
       }
     },
     {
       "filename": "03-evidence.jpg",
-      "title": "Check the arithmetic.",
-      "altText": "Made-up example arithmetic: $4,620 minus $4,200 equals a $420 increase. The $240 school-tax contribution divided by $420 is 57.1 percent of that increase.",
+      "title": "School tax accounts for 57.1% of the increase.",
+      "altText": "Synthetic example: school tax accounts for 57.1 percent of the $420 increase. A proportional bar shows $240 school tax and $180 other charges. $240 divided by $420 times 100 equals 57.1 percent, rounded. This is not a tax rate or evidence of an assessment error or appeal eligibility.",
       "width": 1080,
       "height": 1350,
       "mimeType": "image/jpeg",
-      "bytes": 120776,
-      "sha256": "fb9d21a177e587d554d21eb42e5717f11ea7dc59f5c18edd78f43690c8424b75",
+      "bytes": 156054,
+      "sha256": "afbbf61a2bedc4f59373e75d2b181536b9c66da974158000c68e32fe9b826998",
       "approval": "pending-founder-visual-review",
       "publicUrl": null,
       "publication": "not-published",
-      "bounds": {
+      "checks": {
         "overflow": false,
-        "overlap": false,
-        "footerBottom": 1270,
-        "fontLoaded": true
+        "contentBottom": 991.796875,
+        "noteTop": 1149.09375,
+        "footerBottom": 1306,
+        "fontLoaded": true,
+        "imageLoaded": true,
+        "clipped": [],
+        "minContrast": 7.45,
+        "minMobileNarrativePx": 13.33,
+        "disclosurePxAt360": 10.666666666666666,
+        "barWidths": [],
+        "schoolRatio": 0.5714142628205128
       }
     },
     {
       "filename": "04-limitation.jpg",
-      "title": "Know the limit.",
-      "altText": "A bill increase is not proof of a tax error. Two statements show what changed, not whether an assessment is correct or appealable.",
+      "title": "Understanding an increase doesn't mean your bill is wrong.",
+      "altText": "Understanding an increase does not mean your bill is wrong. Synthetic figures show which charges changed and how much they contributed. They do not establish an assessment error or eligibility for an appeal.",
       "width": 1080,
       "height": 1350,
       "mimeType": "image/jpeg",
-      "bytes": 105872,
-      "sha256": "92f968e125e6d699be0acc031c870a07b59aa84e902de05eb17c8a95af9ec9d3",
+      "bytes": 180488,
+      "sha256": "93ba4a70ea4877b76ad02d68dd9ff0460d9b3be8b1c4f93d2902b426fcc11be1",
       "approval": "pending-founder-visual-review",
       "publicUrl": null,
       "publication": "not-published",
-      "bounds": {
+      "checks": {
         "overflow": false,
-        "overlap": false,
-        "footerBottom": 1270,
-        "fontLoaded": true
+        "contentBottom": 934.90625,
+        "noteTop": 1149.09375,
+        "footerBottom": 1306,
+        "fontLoaded": true,
+        "imageLoaded": true,
+        "clipped": [],
+        "minContrast": 7.45,
+        "minMobileNarrativePx": 13.33,
+        "disclosurePxAt360": 10.666666666666666,
+        "barWidths": [],
+        "schoolRatio": null
       }
     },
     {
       "filename": "05-action.jpg",
-      "title": "Try it for yourself.",
-      "altText": "Reveal what changed. Try the free illustrative example at ifyoumind.com, with no account needed for the example.",
+      "title": "Your numbers have a story. Reveal what changed.",
+      "altText": "Your numbers have a story. Reveal what changed. An authentic preview of the live free illustrative tax example shows the $420 increase and school-tax contribution. Try the free example at ifyoumind.com; no account needed for the example. Synthetic figures do not establish an assessment error or appeal eligibility.",
       "width": 1080,
       "height": 1350,
       "mimeType": "image/jpeg",
-      "bytes": 91585,
-      "sha256": "25a2f58e70a5f3da461b03c0525863b30631fb64aa3ab8c136ef9a5dd2242e42",
+      "bytes": 173011,
+      "sha256": "7dade1d76a8d10a6487d2a276ee75ca63ffaae8d6b3e909e7a7fb3a28b3a1041",
       "approval": "pending-founder-visual-review",
       "publicUrl": null,
       "publication": "not-published",
-      "bounds": {
+      "checks": {
         "overflow": false,
-        "overlap": false,
-        "footerBottom": 1270,
-        "fontLoaded": true
+        "contentBottom": 1015.109375,
+        "noteTop": 1149.09375,
+        "footerBottom": 1306,
+        "fontLoaded": true,
+        "imageLoaded": true,
+        "clipped": [],
+        "minContrast": 7.45,
+        "minMobileNarrativePx": 13.33,
+        "disclosurePxAt360": 10.666666666666666,
+        "barWidths": [],
+        "schoolRatio": null
       }
     }
   ]

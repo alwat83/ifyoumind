@@ -1,5 +1,9 @@
 # ifYouMind — Zero-to-One Launch Command Center
 
+## November 22 — Refined first tax campaign ready for creative review
+
+[Carousel v2](../marketing/drafts/property-tax/REVIEW.md) delivers five actual unpublished portrait JPEGs, before/after comparison, alt text and a draft caption. The revised hook, informative charts and live-product/free-example invitation aim to improve first-use comprehension; that effect remains unmeasured. All figures are synthetic and traceable; no tax-error, savings, appeal or bill-AI claim. Original welcome post/image scope is unchanged. Next revenue-focused action is founder approval of this concrete creative, followed by separately authorized publication and real visitor learning. No scoreboard unknown is replaced with invented traffic, customers, revenue or engagement.
+
 ## November22 — Instagram welcome-image delivery unblocked
 
 [Approved welcome JPEG](https://ifyoumind.com/assets/marketing/social/instagram/posts/ifyoumind-launch-01.jpg) is publiclyverified200/image/jpeg/exactbytes on Hosting2bb9f7f3c6545b0e, without changing application/AI/billing/enrollment. ChatGPT's existing Windsor workflow handles the approved @ifyoumindapp post; Codex made no posting call. Five [next tax-carousel drafts](../marketing/drafts/property-tax/REVIEW.md) are prepared for founder review, not deployed/published. Lead with deterministic, clearly illustrative tax findings; no bill-AI/overpayment claim. No visitor,conversion,independentcustomer or revenue outcome follows from filehosting; keep scoreboardunknowns unchanged. Next commercial action is the approved publishing handoff, then actual first-use feedback.

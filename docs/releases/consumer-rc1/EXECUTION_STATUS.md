@@ -1,0 +1,13 @@
+# RC1 conditional authorization — stopped before window
+
+November21,2026 · OpenAI / Codex · `codex/rc1-production-retry-qa`. **STOPPED; no deployment attempt.** [Machine record](EXECUTION_STATUS.json).
+
+Read and verified [founder final GO7071675451](https://github.com/alwat83/ifyoumind/pull/125#issuecomment-7071675451) and the exact [74b6a75 decision package](https://github.com/alwat83/ifyoumind/blob/74b6a75f1f9e0b210e171653490ee22ee6d14555/docs/releases/consumer-rc1/FINAL_GATE.md). Founder accepts E1–E6 only for frozen9d8caef Hosting scope and names Codex using the previously checked founder-controlled CLI identity. Scope/risk approval is now recorded, not missing or being re-requested. It does not prove successful independent preflight.
+
+The execution attachment specifies **November21,5:00–5:20p.m. PST** and explicitly says: “If this window has expired, has not started, or cannot accommodate safe execution, STOP and request a new founder-approved window.” First independent clock read was **November21,4:39:15p.m. PST** (November22,00:39:15UTC). Thus WINDOW_NOT_STARTED is the first failed gate. Stopped before any production mutation; no automatic waiting/scheduling, extension or silent later execution.
+
+No Actions policy pause/restoration, mutex acquisition, deploy/rollback, Functions/rules/Storage/IAM/billing/enrollment/AI/entitlement/customer-data/QA-save/retry operation. No QA allowance consumed. No new Hosting version or deployed-asset/browser verification. All later execution preconditions—including current credential custody/exclusion, permissions, provider quiescence, protections, current Hosting/rollback/backend/enrollment—are **NOT_RUN after this stop**, not passed or failed by inference. Historical retained-version39dc and other4:10–4:23p.m. readbacks stay available but are not a fresh execution-time verification. No new source/artifact build or mutation; exact source9d8caef and approved hashes remain the scope.
+
+Smallest founder input: an active execution window (or renewed in-window instruction as explicitly authorized by the founder). No repeat E1–E6/artifact-scope approval or #111 test is requested. On a resumed authorized run, independently verify every hard gate before any settings/deployment action. Do not infer exclusive custody from project IAM alone. No automatic rollback; actual restoration needs its separate exact approval if ever necessary.
+
+Repository/PR125/Notion updates record only this timing stop. Existing failures/coverage remain unresolved but accepted for the scoped conditional release; no customer, revenue, paid-fulfillment or deployment outcome is claimed.

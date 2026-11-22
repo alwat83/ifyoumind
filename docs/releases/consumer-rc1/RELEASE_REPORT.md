@@ -1,5 +1,7 @@
 # Consumer Release Candidate 1 — founder decision package
 
+**Execution update:** [Founder final GO7071675451](https://github.com/alwat83/ifyoumind/pull/125#issuecomment-7071675451) records risk/scope approval for5:00–5:20p.m.PST. The [execution attempt stopped at4:39:15p.m.PST](EXECUTION_STATUS.md) under the explicit not-started-window rule, before any mutation or later preflight. No deployment attempted; active window remains necessary. The preparation memo below remains historical and its earlier “two decisions” wording is superseded by this approval/timing record.
+
 **Current final-gate reconciliation — November21,4:23p.m. PST:** [Decision package and risk disposition](FINAL_GATE.md). #111 is now **verified GO** at e9005b491b77d8414d6d8e06f599d72a51255ae2; do not repeat it. Fresh source/artifact/control/rollback readbacks are linked there. **Production remains NO-GO pending explicit risk disposition and controlled exact Hosting release authorization.** Original preparation results below are historical unless specifically updated. No new production write/retry, rebuild or artifact change in this reconciliation.
 
 November21,2026 · OpenAI / Codex · [Draft evidence PR #125](https://github.com/alwat83/ifyoumind/pull/125). **Candidate preparation PASS; production release NO-GO under the current unwaived gates.** No product changes, merge, deployment, workflow/protection change, customer write, billing/enrollment action, provider generation or system installation. The approved headline, supporting copy and “Reveal what changed” CTA are unchanged.

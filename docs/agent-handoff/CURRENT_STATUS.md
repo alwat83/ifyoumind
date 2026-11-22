@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November21,2026 — Conditional RC1 release authorized; execution STOPPED before window
+
+[Execution status](../releases/consumer-rc1/EXECUTION_STATUS.md), [JSON](../releases/consumer-rc1/EXECUTION_STATUS.json). Verified founder final GO7071675451 and exact74b6a75 decision record. E1–E6 acceptance and frozen source/artifact/operator scope are now recorded, not pending. Authorized production window is5:00–5:20p.m. PST. First clock read4:39:15p.m. PST fails the attachment’s explicit WINDOW_NOT_STARTED stop rule; no automatic wait/reschedule/extension or execution. **STOPPED; no deployment attempt/new Hosting version.**
+
+Actions never paused/no restoration required, mutex not acquired, no production settings/data/QA allowance/billing/AI/entitlement/customer change or rollback. Later independent custody/permissions/quiescence/Hosting/backend/enrollment/rollback/asset/browser execution checks NOT_RUN after timing stop; earlier4:10–4:23 readbacks are historical, not fresh proof. Frozen9d8caef package/source unaltered; no rebuild. PR125 remains draft and no merge. #111 GO remains complete; no repeat. Smallest remaining founder input is an active/newly approved window; do not request already granted scope/risk approvals. Then recheck every hard gate and stop on failure. No deployment/customer/revenue result. Existing Notion/PR125/handoff synchronized.
+
 ## November21,2026 — RC1 final preparation complete; two founder decisions remain
 
 [Final decision brief/risk disposition/control and authorization proposal](../releases/consumer-rc1/FINAL_GATE.md). Evidence-only `codex/rc1-production-retry-qa` builds on verified e9005b4; no product/runtime/source/artifact change. Current RC1 #111 JSON/report reconciled to **GO**, retaining the superseded NOT_EXECUTED snapshot as history. Do not repeat the production test, inspect QA content or consume remaining allowance. Historical snapshots below are as-of records, not a reopened #111 gate.

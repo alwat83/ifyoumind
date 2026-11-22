@@ -1,6 +1,6 @@
 # Approved Instagram welcome image — Hosting release
 
-November22,2026 · OpenAI / Codex · `codex/marketing-asset-launch`, based on production evidence head `0ec37be3ed840fe114975d3e5b4ef34b3b84928a`. Separate from PR126; no master merge or broad workflow dispatch. Founder explicitly authorizes the exact supplied image's static Hosting publication; Instagram posting is reserved for ChatGPT's existing Windsor.ai workflow and approved caption.
+November22,2026 · OpenAI / Codex · `codex/marketing-asset-launch`, based on production evidence head `0ec37be3ed840fe114975d3e5b4ef34b3b84928a`. [Draft PR127](https://github.com/alwat83/ifyoumind/pull/127), separate from PR126; no master merge or broad workflow dispatch. Founder explicitly authorizes the exact supplied image's static Hosting publication; Instagram posting is reserved for ChatGPT's existing Windsor.ai workflow and approved caption.
 
 ## Asset and publication state
 

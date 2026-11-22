@@ -1,5 +1,11 @@
 # ifYouMind — Current development status
 
+## November22,2026 — Founder one-release live-payment exception
+
+Founder declined a real test purchase and explicitly selected: **“Waive live-payment verification for this release; keep it recorded as unverified.”** This supersedes the pending payment handoff below for the current PR126 activation release only. Do not request another payment to clear this same gate, treat assumed functionality as observed success, or carry this exception to later releases. Live payment, genuine signed paid-webhook fulfillment, paid access/delivery/reopening, refund and cancellation outcomes remain **UNVERIFIED**; the live-payment prerequisite is explicitly excepted, not passed. Preserve actual local/sandbox evidence and all other security, entitlement, privacy, model-validity and spending gates.
+
+Read-only Stripe reconciliation before closing the payment tab: original Session still open/unpaid499USDcents, no PaymentIntent/subscription/invoice. No payment, refund, cancellation or new Session; no provider mutation to expire it. Its existing expiry is retained. Closed only the agent-created payment tab; unrelated tabs/accounts preserved. Public enrollment and production AI remain OFF while remaining activation checks continue. No code, prices, entitlements, runtime/configuration or Hosting changes from this decision. [PR126](https://github.com/alwat83/ifyoumind/pull/126), prior tested/deployed sourcea891fc9d and all failure evidence retained. Historical payment authorization does not require executing a transaction the founder has now deferred.
+
 ## November22,2026 — Qualified backend live; Starter payment handoff
 
 [Draft PR126](https://github.com/alwat83/ifyoumind/pull/126), `codex/production-activation`. Exact5f24bdff7e5a27bce4f9e75b905e794139b33c5a native7checks PASS/clean fingerprint:95Functions,173fast-web,68critical emulator,6mocked browser, builds/isolation. Five selected Functions deployed under founder activation authority; independent ACTIVE/Ready/100%, runtime, OpenAI enabled/bound version1 and narrow accessor verified. Anonymous AI401. AI OFF/public monthly enrollment closed; only dedicated QA admitted. Hosting9a6198fb3bfb6761 and unselected services unchanged.

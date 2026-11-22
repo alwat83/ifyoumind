@@ -1,5 +1,9 @@
 # ifYouMind — Master Project Record and Roadmap
 
+## November22,2026 — One-release exception to live-payment verification
+
+Founder explicitly waived real-payment verification for the current activation release while retaining **UNVERIFIED** status. Do not interpret “assume end to end works” as payment, webhook, refund, customer or revenue evidence. No real purchase is currently requested; do not repeat the payment request to clear this same gate. Existing automated evidence and security/entitlement/privacy/AI-validity/cost safeguards remain required. The current original Checkout was reconciled open/unpaid with no PaymentIntent/subscription/invoice, then only its browser tab closed. No provider mutation or release/flag change. [Current exception and actual status](docs/agent-handoff/CURRENT_STATUS.md), [release gates](docs/product/PRODUCTION_ACTIVATION.md); not a standing waiver for future releases.
+
 ## November22,2026 — Production activation qualification and first live Checkout recovery
 
 [Draft PR126 / implementation and evidence](docs/product/PRODUCTION_ACTIVATION.md) supersedes the earlier query-only qualification below: that candidate failed exact-source stress and was never deployed. Guarded lock-first/version-checked monthly counter and default-OFF consented evidence-summary backend qualified at5f24bdff (95unit/173web/68critical/6browser plus builds/guards) and deployed as five selected Functions, with Hosting unchanged. OpenAI version1 runtime binding/secret-level accessor and ACTIVE/Ready/100% verified; public subscriptions and AI remain closed. Generic SDK/dataset findings are not declared fixed.

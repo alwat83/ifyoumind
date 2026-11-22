@@ -1,5 +1,9 @@
 # ifYouMind — Zero-to-One Launch Command Center
 
+## November22 — Real-payment review deferred; one-release gate exception
+
+Founder explicitly waived live-payment verification for this release and declined the current test purchase. Mark live payment/fulfillment/refund/cancellation UNVERIFIED, not successful. No actual revenue, paid customer or willingness-to-pay outcome is established; preserve scoreboard values and unknowns. Do not repeat the real-payment request for the current gate. Continue remaining non-payment activation checks under existing security/privacy/cost controls; public enrollment and AI remain OFF until those checks pass. Original unpaid Session reconciled, payment tab closed, no additional attempt or provider mutation.
+
 ## November22 — Live purchase handoff, no payment outcome yet
 
 [Draft126](https://github.com/alwat83/ifyoumind/pull/126) deploys the qualified default-OFF report-intelligence backend and QA-only billing eligibility. The first Starter request exposed a real Stripe hosted-URL validation defect; the separately qualified Checkout-only correction recovered the same single unpaid4.99USD Session. Founder personally completes payment next. No paid fulfillment or provider call has been verified; public enrollment stays closed. Internal, founder-funded and refunded review transactions must remain excluded from independent-customer/revenue traction. Existing scoreboard observations and unknowns are not replaced by these technical checks. Highest-impact next action is signed payment→credit→report→saved reopening proof, followed by the authorized refund/cancellation and remaining product reviews.

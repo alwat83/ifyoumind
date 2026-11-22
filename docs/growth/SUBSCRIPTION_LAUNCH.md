@@ -1,5 +1,8 @@
 # Starter and Plus launch gate
 
+**November22,2026 current boundary:** public Starter/Plus enrollment remains closed; prices/legacy entitlements and all subscription configuration are unchanged. The latest exact-source79critical emulator cases include commerce, verified invoices, duplicate events/Checkout, credit reservation, renewal, cancellation, authorization and saved report access; PASS onfef9856b. They use synthetic/mocked provider data, not real paid transactions. Founder waived live-payment verification for this release only: actual paid webhook fulfillment/refund/cancellation remains UNVERIFIED, neither failed nor assumed successful. Do not request another payment for this gate. Public pricing is already deployed with availability disclosure. The independent [public AI release](../product/PRODUCTION_ACTIVATION.md) is verified live and does not authorize enrollment. Older deployment/pilot instructions below are historical and do not override these boundaries.
+
+
 **November 21, 2026 update:** [Phase 4 read-only launch audit and ordered blockers](../releases/phase4/READINESS.md#subscription-readiness--configuration-is-not-live-fulfillment) supersedes historical current-status wording below. Current live catalog/portal/configuration were reverified with enrollment OFF; actual signed subscription delivery, deployed-key permissions, owner portal access, tax treatment and operational readiness remain distinct gates. New public pricing is draft #121, not deployed. Earlier genuine sandbox evidence remains historical. No Stripe or production setting changed.
 
 

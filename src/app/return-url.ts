@@ -30,6 +30,7 @@ const PARAMS:Record<string,RegExp>={
   intent:/^report$/,
   offer:/^(report|pro)$/,
   projectId:/^[A-Za-z0-9_-]{1,64}$/,
+  organizationId:/^[A-Za-z0-9_-]{1,128}$/,
 };
 
 const BASE='https://return-url.invalid';
@@ -46,7 +47,10 @@ export function safeReturnUrl(value:unknown):string|null{
   const pathname = legacy ? '/' + legacy.to : url.pathname.replace(/^\/app\/result\//, '/decisions/');
   if(!PATHS.some(path=>path.test(pathname)))return null;
   const kept=new URLSearchParams();
-  url.searchParams.forEach((v,k)=>{if(PARAMS[k]?.test(v)&&!kept.has(k))kept.set(k,v);});
+  url.searchParams.forEach((v,k)=>{
+    if(k==='organizationId'&&!/^\/decisions\/[A-Za-z0-9_-]{1,64}$/.test(pathname))return;
+    if(PARAMS[k]?.test(v)&&!kept.has(k))kept.set(k,v);
+  });
   const query=kept.toString();
   return query?`${pathname}?${query}`:pathname;
 }

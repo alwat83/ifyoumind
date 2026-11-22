@@ -120,7 +120,14 @@ test('the homepage states its free example promise and keeps provenance explicit
   const value = 'Understand your bills. Compare U.S. cities. See the numbers behind each finding.';
   assert.ok(landingHtml.includes(value));
   assert.match(landingHtml,/\{\{ example\.label \}\}/);
-  for(const html of [reportHtml,landingHtml.replace(value,''),pricingHtml,registerHtml,analysisHtml]){
+  // The founder-authorized optional report summary is gated, consented and explicitly labeled.
+  const optional=reportHtml.match(/<section \*ngIf="!sampleMode && project\?\.reportExplanationAvailable"[\s\S]*?<\/section>/)?.[0];
+  assert.ok(optional);
+  assert.match(optional,/Agree and explain my findings/);
+  assert.match(optional,/AI-selected evidence summary/);
+  assert.match(optional,/Local evidence summary/);
+  assert.match(optional,/Your question, city names, identity, bills and documents are not sent/);
+  for(const html of [reportHtml.replace(optional,''),landingHtml.replace(value,''),pricingHtml,registerHtml,analysisHtml]){
     assert.doesNotMatch(html,/\bAI\b|artificial intelligence|GPT/i);
   }
 });

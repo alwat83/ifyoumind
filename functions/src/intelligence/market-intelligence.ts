@@ -7,6 +7,7 @@ import { decisionReportAccess, decisionView, freeBriefComparisonCount, freeDecis
 import { buildMarketAnalysis, businessPhrase, marketAnalysisText } from './market-analysis';
 import { finishReport, reserveReport, subscriptionBilling } from './subscriptions';
 import { subscriptionEnrollment } from './subscription-plans';
+import { reportExplanationEnabled, visibleReportEvidence } from './report-explanation';
 
 const organizations = () => getFirestore().collection('intelligenceOrganizations');
 const censusApiKey = defineSecret('CENSUS_API_KEY');
@@ -14,13 +15,7 @@ const stripeSecretKey = defineSecret('STRIPE_SECRET_KEY');
 const readMembership = async (organizationId: string, uid: string) =>
   (await organizations().doc(organizationId).collection('members').doc(uid).get()).data();
 
-const STATE_FIPS: Record<string,string> = {
-  AL:'01',AK:'02',AZ:'04',AR:'05',CA:'06',CO:'08',CT:'09',DE:'10',DC:'11',FL:'12',GA:'13',HI:'15',
-  ID:'16',IL:'17',IN:'18',IA:'19',KS:'20',KY:'21',LA:'22',ME:'23',MD:'24',MA:'25',MI:'26',MN:'27',
-  MS:'28',MO:'29',MT:'30',NE:'31',NV:'32',NH:'33',NJ:'34',NM:'35',NY:'36',NC:'37',ND:'38',OH:'39',
-  OK:'40',OR:'41',PA:'42',RI:'44',SC:'45',SD:'46',TN:'47',TX:'48',UT:'49',VT:'50',VA:'51',WA:'53',
-  WV:'54',WI:'55',WY:'56'
-};
+import { CENSUS_STATE_FIPS as STATE_FIPS } from './census-geography';
 
 const STATE_NAMES: Record<string,string> = {
   Alabama:'AL',Alaska:'AK',Arizona:'AZ',Arkansas:'AR',California:'CA',Colorado:'CO',Connecticut:'CT',
@@ -395,11 +390,16 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
       const plan = org.get('plan') === 'pro' ? 'pro' : 'free';
       const billing = plan === 'free' ? (await billingRef.get()).data() : undefined;
       const { deferred, previewLimit } = cityDecisionUsage(plan, billing, orgRef.id);
+      // Read only bounded IDs when initializing legacy usage. No query runs in the write transaction.
       const currentUsage = (start: Date, limit: number | null) => projects
-        .where('createdAt', '>=', Timestamp.fromDate(start)).limit(limit ?? FREE_DECISIONS_PER_MONTH).count();
+        .where('createdAt', '>=', Timestamp.fromDate(start)).limit(limit ?? FREE_DECISIONS_PER_MONTH).select();
+      const usageLock = orgRef.collection('internalUsage').doc('cityDecisions');
+      let usageSeed: { period: string; count: number; lock: FirebaseFirestore.DocumentSnapshot } | undefined;
       if (plan === 'free') {
         const start = freeDecisionPeriodStart();
-        const count = (await currentUsage(start, previewLimit).get()).data().count;
+        const lock = await usageLock.get();
+        const count = (await currentUsage(start, previewLimit).get()).size;
+        usageSeed = { period: start.toISOString(), count, lock };
         // A concurrent copy may have committed before this precheck. Recover it even at the cap.
         if (fingerprint) project = savedCityDecision((await ref.get()).data(), fingerprint);
         if (!project) checkCityDecisionUsage(count, previewLimit, billing, start.toISOString());
@@ -426,6 +426,9 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
 
         stage='save';
         project = await getFirestore().runTransaction(async tx => {
+          // All writers acquire this same document first. Do not hold project/billing reads while
+          // waiting for the usage lock, and do not stream a query under a held transaction lock.
+          const usageSnapshot = await tx.get(usageLock);
           await authorizeOrganization(scope.uid, scope.organizationId, async (_id, uid) =>
             (await tx.get(orgRef.collection('members').doc(uid))).data(), ['owner', 'admin']);
           const existing = savedCityDecision((await tx.get(ref)).data(), fingerprint);
@@ -439,14 +442,24 @@ export const createMarketIntelligenceProject = onCall({secrets:[censusApiKey]}, 
             throw new HttpsError('aborted', 'Workspace access changed during analysis. Try again.');
           }
           if (currentPlan === 'free') {
-            // Serialize writers before counting so parallel decisions cannot occupy the same free slot.
-            const lock = orgRef.collection('internalUsage').doc('cityDecisions');
-            await tx.get(lock);
             const start = freeDecisionPeriodStart();
-            const count = (await tx.get(currentUsage(start, usage.previewLimit))).data().count;
+            const period = start.toISOString(), counter = usageSnapshot.data();
+            if (counter && ('period' in counter || 'savedCount' in counter) &&
+                (typeof counter.period !== 'string' || !/^\d{4}-\d{2}-01T00:00:00\.000Z$/.test(counter.period) ||
+                 !Number.isSafeInteger(counter.savedCount) || counter.savedCount < 0)) {
+              throw new HttpsError('failed-precondition', 'Decision usage needs review. No decision was saved.');
+            }
+            if (counter?.period > period) throw new HttpsError('aborted', 'The decision period changed. Retry with the same save ID.');
+            const initialized = counter?.period === period;
+            const sameVersion = usageSeed && usageSeed.period === period && usageSeed.lock.exists === usageSnapshot.exists &&
+              (!usageSnapshot.exists || usageSnapshot.updateTime!.isEqual(usageSeed.lock.updateTime!));
+            // A legacy writer may have changed usage after the historical query. Never seed from
+            // stale counts; ask for a same-ID retry instead of bypassing or resetting allowance.
+            if (!initialized && !sameVersion) throw new HttpsError('aborted', 'Decision usage changed. Retry with the same save ID.');
+            const count = initialized ? counter!.savedCount : usageSeed!.count;
             const previewUsage = checkCityDecisionUsage(count, usage.previewLimit, currentBilling, start.toISOString());
             if (previewUsage) tx.set(billingRef, { previewUsage }, { merge: true });
-            tx.set(lock, { updatedAt: FieldValue.serverTimestamp() });
+            tx.set(usageLock, { period, savedCount: count + 1, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
           }
           tx.create(ref, prepared);
           return prepared;
@@ -559,6 +572,8 @@ export const getMarketIntelligenceProject = onCall(async (request) => {
     decisionReportPurchased,
     decisionReportAccess:reportAccess,
     decisionReportGenerationRequired:needsGeneration,
+    reportExplanationAvailable:request.auth?.token?.email_verified===true &&
+      Boolean(visibleReportEvidence(data)) && reportExplanationEnabled(process.env,scope.organizationId),
     dataNotice:data.mode === 'live'
       ? 'Live demographic enrichment from U.S. Census Bureau ACS 5-year estimates. Competition, commercial rent, foot traffic, and concept-level demand are not yet included.'
       : 'Synthetic demo enrichment — not real market data.',

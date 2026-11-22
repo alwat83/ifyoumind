@@ -5,7 +5,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { Auth, user } from '@angular/fire/auth';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { OrganizationService } from './organization.service';
-import { DecisionReportPayload, MarketIntelligenceService, MarketProject } from './market-intelligence.service';
+import { DecisionReportPayload, MarketIntelligenceService, MarketProject, ReportExplanation } from './market-intelligence.service';
 import { ProductAnalyticsService } from './product-analytics.service';
 import { CommercialStatus, MonetizationService } from './monetization.service';
 import { MarketAnalysisComponent } from './market-analysis.component';
@@ -47,6 +47,9 @@ export class MarketReportComponent implements OnInit, OnDestroy {
   unlocking=false;
   unlockError='';
   checkingSubscription=false;
+  explaining=false;
+  explanation:ReportExplanation|null=null;
+  explanationError='';
   checkoutReturned=false;
   error='';
   sampleFailure:{title:string;detail:string}|null=null;
@@ -114,6 +117,19 @@ export class MarketReportComponent implements OnInit, OnDestroy {
     return (this.project.decisionReportGenerationRequired === true &&
       (this.project.decisionReportPurchased === true || this.project.decisionReportAccess === 'pro')) ||
       (this.status?.subscription?.remaining??0)>0;
+  }
+
+  async explainReport():Promise<void>{
+    if(this.sampleMode||!this.project?.reportExplanationAvailable||!this.organizationId||this.explaining)return;
+    this.explaining=true;
+    this.explanationError='';
+    const organizationId=this.organizationId,projectId=this.project.id;
+    try{
+      const result=await this.market.explainReport(organizationId,projectId);
+      if(!this.destroyed&&this.organizationId===organizationId&&this.project?.id===projectId)this.explanation=result;
+    }
+    catch{if(!this.destroyed&&this.project?.id===projectId)this.explanationError='The explanation is unavailable. Your verified report and access are unchanged.';}
+    finally{this.explaining=false;}
   }
 
   async refreshSubscription():Promise<void>{
@@ -245,7 +261,12 @@ export class MarketReportComponent implements OnInit, OnDestroy {
     }
     this.checkoutReturned=this.route.snapshot.queryParamMap.get('subscription')==='confirming';
     try{
-      const workspace=await this.organizations.getMyWorkspace();
+      // A shared finding may belong to another workspace where this user is an active viewer.
+      // Resolve that membership on the server; never overwrite the user's own workspace index.
+      const sharedWorkspace=this.route.snapshot.queryParamMap.get('organizationId');
+      const workspace=sharedWorkspace
+        ? await this.organizations.getWorkspace(sharedWorkspace)
+        : await this.organizations.getMyWorkspace();
       if(!workspace) throw new Error('Workspace not found.');
       const projectId=this.route.snapshot.paramMap.get('projectId');
       if(!projectId) throw new Error('Market project not found.');

@@ -1,5 +1,27 @@
 # ifYouMind — Zero-to-One Launch Command Center
 
+## November22 — Public AI verified; acquisition package prepared
+
+New verified non-admin viewer can explain already-visible saved city evidence in production; self-service Free owners were already eligible. One internal canary263input/37output/1,694ms/~0.000045USD estimated, valid citations/next step;3/200monthly attempts and0.015USD conservative reservation total. These are QA/provider observations, not traffic, willingness to pay or customer revenue. No scoreboard unknown is replaced with zero or a fabricated conversion. Subscriptions remain closed and waived real-payment proof stays UNVERIFIED.
+
+[Three short-video scripts, two carousels, exact campaign message/CTA, privacy-safe event proposal and14-day calendar](PUBLIC_AI_ACQUISITION_14_DAY.md) are concrete founder-review drafts. Lead with the existing illustrative tax finding and deterministic browser-local Discovery; do not advertise private-bill AI. Existing website design/copy unchanged. No publication/outreach/tracking/spend; channel setup remains Pending Founder Setup. Highest near-term opportunity is an approved, truthful demonstration followed by observing a consenting outside visitor's finding/limitation comprehension; next is a compatible voluntary city/report experience. More speculative product code ranks lower until real feedback exists.
+
+## November22 — Real production AI available before a purchase
+
+[PR126](https://github.com/alwat83/ifyoumind/pull/126): optional evidence-grounded explanations now work in production for verified authorized owners/admins on already-visible saved city findings. Real corrected response and category-appropriate business next step, cache recovery, no-provider fallback and capped usage verified; no additional paid report credit or purchase required. This advances demonstrated value before monetization without sending private bills or original questions to OpenAI. Two internal provider attempts, no customer purchase/revenue claimed; keep existing independent-customer/visitor/feedback scoreboard unknowns unchanged. Monthly subscription enrollment remains closed and the one-release live-payment exception remains UNVERIFIED, not PASS. Next revenue-focused action is founder/consenting-user comprehension of the actual result under existing pilot/outreach boundaries, followed by separate non-payment commercial readiness—not more speculative AI or another request to pay for this waived gate.
+
+## November22 — Real-payment review deferred; one-release gate exception
+
+Founder explicitly waived live-payment verification for this release and declined the current test purchase. Mark live payment/fulfillment/refund/cancellation UNVERIFIED, not successful. No actual revenue, paid customer or willingness-to-pay outcome is established; preserve scoreboard values and unknowns. Do not repeat the real-payment request for the current gate. Continue remaining non-payment activation checks under existing security/privacy/cost controls; public enrollment and AI remain OFF until those checks pass. Original unpaid Session reconciled, payment tab closed, no additional attempt or provider mutation.
+
+## November22 — Live purchase handoff, no payment outcome yet
+
+[Draft126](https://github.com/alwat83/ifyoumind/pull/126) deploys the qualified default-OFF report-intelligence backend and QA-only billing eligibility. The first Starter request exposed a real Stripe hosted-URL validation defect; the separately qualified Checkout-only correction recovered the same single unpaid4.99USD Session. Founder personally completes payment next. No paid fulfillment or provider call has been verified; public enrollment stays closed. Internal, founder-funded and refunded review transactions must remain excluded from independent-customer/revenue traction. Existing scoreboard observations and unknowns are not replaced by these technical checks. Highest-impact next action is signed payment→credit→report→saved reopening proof, followed by the authorized refund/cancellation and remaining product reviews.
+
+## November21 — Activation work supports a real purchase, not a revenue claim
+
+The approved consumer website is live. [Production activation](../product/PRODUCTION_ACTIVATION.md) now targets actual report intelligence and safe Starter/Plus fulfillment with bounded provider spend. Founder-authorized internal paid review is capped at$93.98beforetax with refunds/cancellations; it is **not independently paying customer traction**. No payment or provider call has yet occurred in this phase. Keep all existing scoreboard values/unknowns unchanged; verify real signed fulfillment before opening enrollment. Privacy and deterministic findings remain available without sending bills to a provider.
+
 Founder-directed strategic reset, October 22, 2026. Repository/GitHub are authoritative; Notion is the coordination copy. **We are creating a business, not optimizing an established one.** There is no established customer base, validated demand or meaningful commercial history. Technology and test passes are implementation evidence only. Earlier analysis-heavy plans are superseded by this execution-first plan; [historical plan](https://github.com/alwat83/ifyoumind/blob/aad0b9e22d11dab9b0e7aac1e5b82384c240ef26/docs/growth/REVENUE_GROWTH_PLAN.md) remains history.
 
 ## November 21 — Isolate consumer release risk

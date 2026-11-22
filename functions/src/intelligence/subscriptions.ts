@@ -50,11 +50,9 @@ function checkoutOrigin() {
     process.env.SUBSCRIPTION_LOCAL_RETURN === 'true' ? 'http://localhost:4200' : 'https://ifyoumind.com';
 }
 
-function checkoutUrl(value: unknown, reportSessionId?: string): string {
+function checkoutUrl(value: unknown, sessionId: string): string {
   const url = new URL(typeof value === 'string' ? value : '');
-  const expectedPath = reportSessionId === undefined
-    ? url.pathname.startsWith('/c/pay/')
-    : [`/c/pay/${reportSessionId}`, `/g/pay/${reportSessionId}`].includes(url.pathname);
+  const expectedPath = [`/c/pay/${sessionId}`, `/g/pay/${sessionId}`].includes(url.pathname);
   requireRecord(url.origin === 'https://checkout.stripe.com' && !url.username && !url.password && expectedPath);
   return url.href;
 }
@@ -113,7 +111,7 @@ export async function startSubscriptionCheckout(organizationId: string, offer: S
         if (checkout.offer !== offer || checkout.projectId !== projectId) {
           throw new HttpsError('failed-precondition', 'An existing checkout is open for a different choice. Return to it or wait for it to expire.');
         }
-        return { url: checkoutUrl(existing.url) };
+        return { url: checkoutUrl(existing.url, existing.id) };
       }
       if (existing.status !== 'expired') throw new HttpsError('failed-precondition', 'Checkout is complete. Return to your decision while payment is confirmed.');
       await getFirestore().runTransaction(async tx => {
@@ -141,7 +139,7 @@ export async function startSubscriptionCheckout(organizationId: string, offer: S
     }
     const session = await stripe('checkout/sessions', params, 'ifyoumind-subscription-' + checkout.attempt);
     requireRecord(providerId(session.id, mode === 'live' ? 'cs_live_' : 'cs_test_') && session.livemode === (mode === 'live'));
-    const url = checkoutUrl(session.url);
+    const url = checkoutUrl(session.url, session.id);
     await getFirestore().runTransaction(async tx => {
       const current = (await tx.get(billing)).data();
       requireRecord(current && current.checkout?.attempt === checkout.attempt && (!current.checkout.id || current.checkout.id === session.id));

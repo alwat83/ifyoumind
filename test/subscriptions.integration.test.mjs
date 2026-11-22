@@ -17,7 +17,7 @@ process.env.SUBSCRIPTION_STRIPE_ACCOUNT = account;
 process.env.SUBSCRIPTION_STARTER_PRICE = catalog.starter;
 process.env.SUBSCRIPTION_PLUS_PRICE = catalog.plus;
 const handlers = require('./lib/index.js');
-const { getFirestore } = require('firebase-admin/firestore');
+const { getFirestore, Timestamp } = require('firebase-admin/firestore');
 assert.ok(process.env.FIRESTORE_EMULATOR_HOST,'This suite requires the Firestore emulator.');
 process.env.CENSUS_API_KEY = 'fixture';
 const db = getFirestore();
@@ -33,10 +33,12 @@ let charge;
 let disputes;
 let censusCalls;
 let checkoutCalls;
+let checkoutKeys;
 let attempt;
 let start;
 let end;
 let sequence = 0;
+let onCensusRequest;
 const now = () => Math.floor(Date.now()/1000);
 const auth = (uid='owner') => ({ uid, token: { email_verified: true } });
 const call = (name, data, uid) => handlers[name].run({ data: { organizationId: org.id, ...data }, auth: auth(uid) });
@@ -44,6 +46,7 @@ const call = (name, data, uid) => handlers[name].run({ data: { organizationId: o
 globalThis.fetch = async (url, init) => {
   const u = new URL(url);
   if (u.hostname === 'api.census.gov') {
+    const hook=onCensusRequest;onCensusRequest=undefined;if(hook)await hook();
     censusCalls++;
     const state = u.searchParams.get('in')?.match(/state:(\d+)/)?.[1];
     const fixture = { '08': ['Denver','Boulder'], '48': ['Austin'], '47': ['Nashville'] };
@@ -61,6 +64,7 @@ globalThis.fetch = async (url, init) => {
   }
   if (u.pathname === '/v1/checkout/sessions' && init.method === 'POST') {
     checkoutCalls++;
+    checkoutKeys.push(init.headers['Idempotency-Key']);
     assert.equal(init.headers['Stripe-Version'],'2025-02-24.acacia');
     assert.match(init.headers['Idempotency-Key'],/^ifyoumind-subscription-/);
     assert.equal(init.body.get('mode'),'subscription');
@@ -86,6 +90,9 @@ globalThis.fetch = async (url, init) => {
 };
 
 beforeEach(async () => {
+  onCensusRequest=undefined;
+  // Each case owns this emulator-only launch fixture; do not accumulate seats across cases.
+  await db.collection('subscriptionLaunch').doc('test_'+account).set({workspaces:[]});
   const suffix = ++sequence;
   org = db.collection('intelligenceOrganizations').doc(workspace+'-'+suffix);
   billing = org.collection('subscriptionBilling').doc('current');
@@ -102,12 +109,13 @@ beforeEach(async () => {
   mode=false;
   censusCalls=0;
   checkoutCalls=0;
+  checkoutKeys=[];
   disputes=[];
   charge={ id:'ch_fixture'+suffix,livemode:false,paid:true,customer:'cus_fixture'+suffix,refunded:false,disputed:false };
   sub={ id:'sub_fixture'+suffix,customer:charge.customer,status:'active',livemode:false,current_period_end:end,
     metadata:{source,organizationId:org.id,offer:'starter'} };
   session={ id:'cs_test_fixture'+suffix, status:'open', livemode:false, subscription:sub.id,customer:sub.customer,
-    client_reference_id:org.id,url:'https://checkout.stripe.com/c/pay/fixture',metadata:{source} };
+    client_reference_id:org.id,url:'https://checkout.stripe.com/c/pay/cs_test_fixture'+suffix,metadata:{source} };
   invoice={ id:'in_fixture'+suffix,subscription:sub.id,customer:sub.customer,status:'paid',paid:true,
     livemode:false,amount_paid:cents,currency:'usd',collection_method:'charge_automatically',billing_reason:'subscription_create',
     lines:{has_more:false,data:[{type:'subscription',quantity:1,proration:false,price:{id:catalog.starter},period:{start,end}}]},
@@ -145,6 +153,58 @@ async function begin(offer='starter', id=project) {
 
 const paid = () => deliver('invoice.paid',{id:invoice.id});
 const status = async () => (await call('getCommercialStatus',{})).subscription;
+
+for (const family of ['c','g']) test(`subscription Checkout accepts exact ${family}/pay path and reuses the same session`,async()=>{
+  await seedProject();
+  session.url=`https://checkout.stripe.com/${family}/pay/${session.id}#provider-fragment`;
+  const first=await call('createCommercialCheckout',{offer:'starter',projectId:project});
+  session.metadata.attempt=attempt;
+  const again=await call('createCommercialCheckout',{offer:'starter',projectId:project});
+  assert.equal(first.url,session.url);
+  assert.deepEqual(again,first);
+  assert.equal(checkoutCalls,1);
+  assert.equal((await billing.get()).data().checkout.id,session.id);
+  assert.equal((await status()).remaining,0);
+  assert.equal((await docs.doc(project).get()).data().paidReport,undefined);
+});
+
+for(const invalid of ['foreign-origin','different-session','extra-path']) test(`subscription Checkout rejects ${invalid} without granting access`,async()=>{
+  await seedProject();
+  session.url=invalid==='foreign-origin'?`https://example.invalid/g/pay/${session.id}`
+    :invalid==='different-session'?'https://checkout.stripe.com/g/pay/cs_test_other'
+    :`https://checkout.stripe.com/g/pay/${session.id}/extra`;
+  await assert.rejects(call('createCommercialCheckout',{offer:'starter',projectId:project}),{code:'unavailable'});
+  assert.equal(checkoutCalls,1);
+  assert.equal((await billing.get()).data().checkout.id,undefined);
+  assert.equal((await status()).remaining,0);
+  assert.equal((await docs.doc(project).get()).data().paidReport,undefined);
+});
+
+test('missing saved session response recovers with the original Stripe idempotency key',async()=>{
+  await seedProject();
+  session.url=`https://checkout.stripe.com/g/pay/${session.id}`;
+  const first=await call('createCommercialCheckout',{offer:'starter',projectId:project});
+  const original=(await billing.get()).data().checkout;
+  const {id,...pending}=original;
+  await billing.update({checkout:pending}); // Emulator-only lost-persistence fixture.
+  const recovered=await call('createCommercialCheckout',{offer:'starter',projectId:project});
+  assert.deepEqual(recovered,first);
+  assert.equal(new Set(checkoutKeys).size,1);
+  assert.equal((await billing.get()).data().checkout.attempt,original.attempt);
+  assert.equal((await billing.get()).data().checkout.id,id);
+  assert.equal((await status()).remaining,0);
+});
+
+test('launch capacity remains enforced before creating another Checkout',async()=>{
+  await seedProject();
+  const launch=db.collection('subscriptionLaunch').doc('test_'+account);
+  const occupied=Array.from({length:10},(_,i)=>'occupied-fixture-'+i);
+  await launch.set({workspaces:occupied});
+  await assert.rejects(call('createCommercialCheckout',{offer:'starter',projectId:project}),{code:'resource-exhausted'});
+  assert.equal(checkoutCalls,0);
+  assert.deepEqual((await launch.get()).data().workspaces,occupied);
+  assert.equal((await billing.get()).exists,false);
+});
 
 test('only a canonical settled invoice creates a grant, including invoice-first and duplicate delivery',async()=>{
   await seedProject();
@@ -206,7 +266,7 @@ test('city saves charge enrolled preview usage only on commit and preserve legac
   assert.equal((await billing.get()).get('previewUsage.used'), 12);
 });
 
-test('replaying a city save across the UTC month boundary leaves the new allowance intact', async () => {
+const checkMonthBoundaryReplay = async () => {
   const create = requestId => call('createMarketIntelligenceProject', {
     ...(requestId ? { requestId } : {}),
     location: 'Denver, CO', concept: 'Bookshop', decision: 'Compare candidate markets',
@@ -225,6 +285,8 @@ test('replaying a city save across the UTC month boundary leaves the new allowan
   await Promise.all([
     docs.doc(first.id).update({ createdAt: previousCreatedAt }),
     billing.set({ previewUsage: previousUsage }, { merge: true }),
+    // Move the new counter to the prior month too: every persisted part of this fixture is old.
+    org.collection('internalUsage').doc('cityDecisions').update({ period: previousMonth, savedCount: 1 }),
   ]);
 
   assert.equal((await create(key)).id, first.id);
@@ -237,6 +299,29 @@ test('replaying a city save across the UTC month boundary leaves the new allowan
   assert.deepEqual((await billing.get()).get('previewUsage'), { month: new Date(currentStart).toISOString(), used: 3 });
   assert.equal((await docs.count().get()).data().count, 4);
   assert.equal((await docs.doc(first.id).get()).get('createdAt').toMillis(), previousCreatedAt.getTime());
+  assert.equal((await org.collection('internalUsage').doc('cityDecisions').get()).get('savedCount'), 3);
+};
+test('replaying a city save across the UTC month boundary leaves the new allowance intact', checkMonthBoundaryReplay);
+test('month-boundary replay contention qualification round 2', checkMonthBoundaryReplay);
+test('month-boundary replay contention qualification round 3', checkMonthBoundaryReplay);
+
+test('legacy writer changes after usage seeding fail closed and the same save ID recovers once',async()=>{
+  await db.collection('censusPlaceCache').doc('acs5-2024-2019-08-denver').delete();
+  onCensusRequest=async()=>{const batch=db.batch();batch.set(docs.doc('legacy-writer'),{createdAt:Timestamp.now(),mode:'live'});batch.set(org.collection('internalUsage').doc('cityDecisions'),{updatedAt:Timestamp.now()});await batch.commit();};
+  const requestId=randomUUID(),input={requestId,location:'Denver, CO',concept:'Bookshop',decision:'Compare candidate markets',comparisonLocations:[]};
+  await assert.rejects(call('createMarketIntelligenceProject',input),{code:'aborted'});
+  assert.equal((await docs.count().get()).data().count,1);
+  const saved=await call('createMarketIntelligenceProject',input);
+  assert.equal((await call('createMarketIntelligenceProject',input)).id,saved.id);
+  assert.equal((await docs.count().get()).data().count,2);
+  assert.equal((await org.collection('internalUsage').doc('cityDecisions').get()).get('savedCount'),2);
+});
+
+test('malformed usage counters never reset allowance or partially create a decision',async()=>{
+  const lock=org.collection('internalUsage').doc('cityDecisions'),period=new Date(Date.UTC(new Date().getUTCFullYear(),new Date().getUTCMonth(),1)).toISOString();
+  await lock.set({period,savedCount:-1});
+  await assert.rejects(call('createMarketIntelligenceProject',{requestId:randomUUID(),location:'Denver, CO',concept:'Bookshop',decision:'Compare candidate markets',comparisonLocations:[]}),{code:'failed-precondition'});
+  assert.equal((await docs.count().get()).data().count,0);assert.equal((await lock.get()).get('savedCount'),-1);
 });
 
 test('pending Checkout prevents a second plan and does not convert a legacy Pro workspace',async()=>{

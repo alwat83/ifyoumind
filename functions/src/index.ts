@@ -218,3 +218,4 @@ export { recordProductEvent } from './intelligence/product-analytics';
 export { getProductFunnelMetrics } from './intelligence/growth-metrics';
 
 export { stripeSubscriptionWebhook } from './intelligence/subscriptions';
+export { explainDecisionReport } from './intelligence/explain-decision-report';

@@ -179,10 +179,7 @@
       </div>
 
       <div class="ai-action">
-        <button type="button" (click)="explainWithAi()" [disabled]="synthesizing">
-          {{ synthesizing ? 'Synthesizing…' : 'Explain with AI' }}
-        </button>
-        <span>AI explains the saved evidence packet; it does not recalculate the statistics.</span>
+        <p>AI explanations for private datasets are not available. Your calculations and source evidence remain usable.</p>
       </div>
 
       <div class="limitations">

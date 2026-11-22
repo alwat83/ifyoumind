@@ -25,6 +25,15 @@ export async function isolate(context) {
     if (!EXPECTED_BLOCKED_HOSTS.has(host)) external.push(route.request().url());
     return route.abort('blockedbyclient');
   });
+  // Applies to both the primary page and fresh-session contexts in registration tests.
+  if (process.env.QA_FUNCTIONS_EMULATOR_HOST === '127.0.0.1:5008') {
+    for (const [oldPort, newPort] of [[9099, 9989], [5001, 5008], [8080, 9988]]) {
+      await context.route(`http://127.0.0.1:${oldPort}/**`, async route => {
+        const url = new URL(route.request().url()); url.port = String(newPort);
+        await route.fulfill({ response: await route.fetch({ url: url.toString() }) });
+      });
+    }
+  }
   context.externalRequests = external;
   return context;
 }

@@ -18,6 +18,14 @@ test('return paths are rebuilt using clean URLs and keep only permitted paramete
   assert.equal(safeReturnUrl('/decide?utm_source=x&email=a%40b.com'), '/decide', 'unknown parameters, including personal data, are dropped');
 });
 
+test('shared saved findings retain only a validated workspace context through sign-in',()=>{
+ assert.equal(safeReturnUrl('/decisions/p1?organizationId=org-2'),'/decisions/p1?organizationId=org-2');
+ assert.equal(safeReturnUrl('/decisions/p1?organizationId=org-2&organizationId=other&question=private'),'/decisions/p1?organizationId=org-2');
+ for(const value of ['../foreign','https://evil.example'])assert.equal(safeReturnUrl('/decisions/p1?organizationId='+encodeURIComponent(value)),null);
+ assert.equal(safeReturnUrl('/decisions/p1?organizationId='+'a'.repeat(129)),'/decisions/p1');
+ for(const path of ['/decide','/account','/pricing','/decisions'])assert.equal(safeReturnUrl(path+'?organizationId=org-2'),path);
+});
+
 
 test('anything that could leave the app or reach an unexpected page is refused', () => {
   const refused = [
@@ -67,7 +75,7 @@ test('property: any output is an allowlisted in-app path with allowlisted parame
     'type', 'business', 'intent', 'report', 'offer', 'pro', 'projectId', 'checkout', 'success', ' ', '\t', '\n', '∕', '／', '%00', 'javascript:', 'APP'];
   let seed = 7;
   const rand = (n) => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed % n; };
-  const ok = /^\/(?:decide|pricing|account|decisions(?:\/[A-Za-z0-9_-]{1,64})?)(\?(type=[a-z_]{1,32}|intent=report|offer=(report|pro)|projectId=[A-Za-z0-9_-]{1,64})(&(type=[a-z_]{1,32}|intent=report|offer=(report|pro)|projectId=[A-Za-z0-9_-]{1,64}))*)?$/;
+  const ok = /^\/(?:decide|pricing|account|decisions(?:\/[A-Za-z0-9_-]{1,64})?)(\?(type=[a-z_]{1,32}|intent=report|offer=(report|pro)|projectId=[A-Za-z0-9_-]{1,64}|organizationId=[A-Za-z0-9_-]{1,128})(&(type=[a-z_]{1,32}|intent=report|offer=(report|pro)|projectId=[A-Za-z0-9_-]{1,64}|organizationId=[A-Za-z0-9_-]{1,128}))*)?$/;
   for (let i = 0; i < 20000; i++) {
     let s = rand(3) ? '/' : '';
     for (let j = 0, n = 1 + rand(8); j < n; j++) s += parts[rand(parts.length)];
@@ -79,7 +87,7 @@ test('property: any output is an allowlisted in-app path with allowlisted parame
   }
   // Valid paths with random query strings: unknown or malformed parameters must be dropped, never passed through.
   const paths = ['/decisions', '/decide', '/pricing', '/account', '/decisions/p1', '/app', '/app/result/p1'];
-  const keys = ['type', 'intent', 'offer', 'projectId', 'checkout', 'returnUrl', 'email', 'next'];
+  const keys = ['type', 'intent', 'offer', 'projectId', 'organizationId', 'checkout', 'returnUrl', 'email', 'next'];
   const vals = ['business', 'report', 'pro', 'p1', 'success', '//evil.example', 'a%40b.com', 'https://evil', 'BUSINESS', ''];
   let kept = 0;
   for (let i = 0; i < 5000; i++) {

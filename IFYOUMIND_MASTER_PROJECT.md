@@ -1,5 +1,9 @@
 # ifYouMind — Master Project Record and Roadmap
 
+## November22,2026 — Approved marketing export infrastructure
+
+Founder authorizes one exact welcome image's public Hosting URL; Instagram publication stays with the existing ChatGPT/Windsor workflow. Separate asset branch preserves PR126 and the deployed application, adds the approved JPEG plus reusable public folder structure and [asset registry/standards](docs/marketing/README.md). [Release record](docs/marketing/LAUNCH_IMAGE_RELEASE.md) distinguishes prepared versus actual deployed evidence. No new service, design, backend, AI request, billing or enrollment change; no customer/marketing performance outcome inferred.
+
 ## November22,2026 — Public AI reader rollout production verified
 
 [PR126](https://github.com/alwat83/ifyoumind/pull/126), executablefef9856b99e65435d9328a61a38d328e2ea2fd3f, remains unmerged. Verified owners/admins and active viewers may opt into explanations of supported already-visible city facts without purchase. Shared finding context reauthorizes server-side through sign-in/refresh; original questions/private bills never leave for OpenAI. No new integration, billing permission, invitation system or design change.

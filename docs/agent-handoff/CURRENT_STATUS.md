@@ -1,5 +1,9 @@
 # ifYouMind — Current development status
 
+## November22,2026 — Approved launch asset publication in progress
+
+Separate codex/marketing-asset-launch from0ec37be3, PR126 unchanged. Founder authorizes exact supplied Instagram welcome JPEG at `/assets/marketing/social/instagram/posts/ifyoumind-launch-01.jpg`; no social publishing by Codex. Public folder tree and private-from-Hosting registry/README prepared. Exact approved SHA2560e87ff1aa9a9d1cb5db09175fe2c83624198ab86a5ef7c98cc4330e97bc19252,1080square/sRGB/76114bytes. Fresh read-only11:17PST preflight confirms current469cd9d1f8513ae6finalized, all58application assets match retained artifact, no known deployment, AI00006-ruk/reader00090-zobACTIVE/100%, quota3/reserved0.015USD. Prepare59-file additive Hosting package, same config/no app rebuild; deployment/readback pending. No backend/billing/AI/entitlement/enrollment/customer-data change or provider request. [Asset release/impact](../marketing/LAUNCH_IMAGE_RELEASE.md).
+
 ## November22,2026 09:16PST — Public AI reader rollout GO
 
 **Deployed / production verified**, [PR126](https://github.com/alwat83/ifyoumind/pull/126), codex/production-activation, executable `fef9856b99e65435d9328a61a38d328e2ea2fd3f`. Exact native7checks PASS/clean integrity:101unit/174web/79critical emulator/16browser, both builds/guards; no hosted CI claim. Two earlier harness failures and all original transaction evidence preserved. Documentation-only follow-up changes no executable bytes.

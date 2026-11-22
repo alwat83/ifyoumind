@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "site": "https://ifyoumind.com",
+  "createdAt": "2026-11-22T19:18:14Z",
+  "updatedAt": "2026-11-22T19:18:14Z",
+  "assets": [
+    {
+      "filename": "ifyoumind-launch-01.jpg",
+      "sourceFilename": "ifyoumind_instagram_launch_1080.jpg",
+      "repositoryPath": "public/assets/marketing/social/instagram/posts/ifyoumind-launch-01.jpg",
+      "publicUrl": "https://ifyoumind.com/assets/marketing/social/instagram/posts/ifyoumind-launch-01.jpg",
+      "channel": "instagram",
+      "account": "@ifyoumindapp",
+      "campaign": "welcome-launch",
+      "width": 1080,
+      "height": 1080,
+      "mimeType": "image/jpeg",
+      "bytes": 76114,
+      "version": 1,
+      "sha256": "0e87ff1aa9a9d1cb5db09175fe2c83624198ab86a5ef7c98cc4330e97bc19252",
+      "approval": {
+        "status": "founder-approved",
+        "date": "2026-11-22",
+        "scope": "Exact supplied image; public Hosting asset only"
+      },
+      "publication": {
+        "hosting": "prepared",
+        "instagram": "not-published-by-codex"
+      },
+      "artworkCreatedAt": null,
+      "createdAt": "2026-11-22T19:18:14Z",
+      "updatedAt": "2026-11-22T19:18:14Z"
+    }
+  ]
+}

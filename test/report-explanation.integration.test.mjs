@@ -42,7 +42,7 @@ test('viewer shares the evidence latch and budget without acquiring write or pai
  assert.equal((await internal.doc('global').get()).get('monthCount'),1);
 });
 test('callable readers accept an active viewer while writer, foreign tenant and revoked access stay denied',async()=>{
- const handlers=require('../functions/lib/index.js');
+ const handlers={...require('../functions/lib/intelligence/market-intelligence.js'),...require('../functions/lib/intelligence/explain-decision-report.js')};
  const member=org.collection('members').doc('viewer');await member.set({role:'viewer',status:'active'});
  const auth={uid:'viewer',token:{email_verified:true}},data={organizationId:org.id,projectId:'report'};
  const result=await handlers.getMarketIntelligenceProject.run({auth,data});

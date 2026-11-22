@@ -1,5 +1,9 @@
 # ifYouMind — Zero-to-One Launch Command Center
 
+## November22 — Real production AI available before a purchase
+
+[PR126](https://github.com/alwat83/ifyoumind/pull/126): optional evidence-grounded explanations now work in production for verified authorized owners/admins on already-visible saved city findings. Real corrected response and category-appropriate business next step, cache recovery, no-provider fallback and capped usage verified; no additional paid report credit or purchase required. This advances demonstrated value before monetization without sending private bills or original questions to OpenAI. Two internal provider attempts, no customer purchase/revenue claimed; keep existing independent-customer/visitor/feedback scoreboard unknowns unchanged. Monthly subscription enrollment remains closed and the one-release live-payment exception remains UNVERIFIED, not PASS. Next revenue-focused action is founder/consenting-user comprehension of the actual result under existing pilot/outreach boundaries, followed by separate non-payment commercial readiness—not more speculative AI or another request to pay for this waived gate.
+
 ## November22 — Real-payment review deferred; one-release gate exception
 
 Founder explicitly waived live-payment verification for this release and declined the current test purchase. Mark live payment/fulfillment/refund/cancellation UNVERIFIED, not successful. No actual revenue, paid customer or willingness-to-pay outcome is established; preserve scoreboard values and unknowns. Do not repeat the real-payment request for the current gate. Continue remaining non-payment activation checks under existing security/privacy/cost controls; public enrollment and AI remain OFF until those checks pass. Original unpaid Session reconciled, payment tab closed, no additional attempt or provider mutation.

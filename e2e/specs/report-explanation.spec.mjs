@@ -17,7 +17,7 @@ for(const [source,paid] of [['openai',true],['deterministic',true],['openai',fal
   await page.route('**/getMarketIntelligenceProject',async route=>{
     const url=process.env.QA_FUNCTIONS_EMULATOR_HOST==='127.0.0.1:5008'?route.request().url().replace(':5001/',':5008/'):route.request().url();
     const result=(await (await route.fetch({url})).json()).result;
-    await route.fulfill({json:{result:{...sample,...result,brief:sample.brief,id,sample:false,decisionReportPurchased:paid,decisionReportAccess:paid?'purchased':'none',decisionReportGenerationRequired:!paid,reportExplanationAvailable:true}}});
+    await route.fulfill({json:{result:{...sample,...result,brief:sample.brief,location:sample.location,comparisonLocations:sample.comparisonLocations,id,sample:false,decisionReportPurchased:paid,decisionReportAccess:paid?'purchased':'none',decisionReportGenerationRequired:!paid,reportExplanationAvailable:true}}});
   });
   const requests=[];
   await page.route('**/explainDecisionReport',async route=>{
@@ -27,6 +27,7 @@ for(const [source,paid] of [['openai',true],['deterministic',true],['openai',fal
   await signInThroughUi(page,visitor,'/login?returnUrl='+encodeURIComponent('/decisions/'+id));
   const section=page.getByRole('region',{name:'Understand the evidence'}),button=page.getByRole('button',{name:'Agree and explain my findings'});
   await expect(button).toBeVisible();expect(requests).toEqual([]);
+  await expect(page.locator('#recommendation')).not.toContainText('A verified city comparison is unavailable.');
   await page.screenshot({path:`test-results/production-activation/before-consent-${paid}-${source}-${test.info().project.name}.png`,fullPage:true});
   await expect(section).toContainText('Your question, city names, identity, bills and documents are not sent.');
   await button.focus();await page.keyboard.press('Enter');

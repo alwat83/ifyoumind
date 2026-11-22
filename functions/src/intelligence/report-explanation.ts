@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { EXPLANATION_MODEL, sendExplanationRequest, ProviderDiagnostic } from './openai-explanation';
 import { decisionReportAccess, decisionView } from './report-entitlement-logic';
+import { CENSUS_STATE_FIPS } from './census-geography';
 
 export const REPORT_AI_LIMITS = { userDay: 3, globalDay: 20, globalMonth: 200, reservedMicroUsd: 5_000, monthlyMicroUsd: 1_000_000 } as const;
 export const REPORT_AI_CONSENT = 'public-census-explanation-v1';
@@ -22,7 +23,7 @@ const record = (v: unknown): v is Record<string, unknown> => Boolean(v) && typeo
 export function visibleReportEvidence(project: Record<string, unknown>): ReportPacket | null {
   const access = project.decisionReportGenerationRequired === true ? 'none' : decisionReportAccess(project);
   const view = decisionView(project, access);
-  return projectReportEvidence({ mode: project.mode, brief: view.brief });
+  return projectReportEvidence({ mode: project.mode, location: project.location, brief: view.brief });
 }
 
 /** Only public, sourced metrics. No question, name, concept, city name, bill or identifier leaves the server. */
@@ -30,10 +31,15 @@ export function projectReportEvidence(project: unknown): ReportPacket | null {
   if (!record(project) || project.mode !== 'live' || !record(project.brief)) return null;
   const brief = project.brief;
   if (!Array.isArray(brief.metrics) || !brief.metrics.length || !Array.isArray(brief.comparisons) || brief.comparisons.length > 3) return null;
-  const places = [{ metrics: brief.metrics }, ...brief.comparisons];
+  const places = [{ location: project.location, metrics: brief.metrics }, ...brief.comparisons];
   const facts: ReportFact[] = [];
+  const geographies = new Set<string>();
   for (const [index, place] of places.entries()) {
     if (!record(place) || !Array.isArray(place.metrics) || place.metrics.length > 8) return null;
+    const state = typeof place.location === 'string' ? /^[^,]{1,150}, ([A-Z]{2})$/.exec(place.location)?.[1] : undefined;
+    const stateFips = state ? CENSUS_STATE_FIPS[state] : undefined;
+    if (!stateFips) return null;
+    let geography = '';
     const seen = new Set<string>();
     for (const m of place.metrics) {
       if (!record(m) || typeof m.key !== 'string' || !Object.prototype.hasOwnProperty.call(meanings, m.key)) continue;
@@ -45,8 +51,11 @@ export function projectReportEvidence(project: unknown): ReportPacket | null {
       try { url = new URL(m.sourceUrl); } catch { return null; }
       if (url.origin !== 'https://api.census.gov' || url.pathname !== '/data/2024/acs/acs5' || url.hash || url.username || url.password ||
           url.searchParams.get('get') !== 'NAME,B01003_001E,B19013_001E,B25077_001E' ||
-          !/^place:\d{1,7}$/.test(url.searchParams.get('for') || '') || !/^state:\d{2}$/.test(url.searchParams.get('in') || '') ||
+          !/^place:\d{1,7}$/.test(url.searchParams.get('for') || '') || url.searchParams.get('in') !== 'state:' + stateFips ||
           [...url.searchParams.keys()].sort().join(',') !== 'for,get,in') return null;
+      const metricGeography = stateFips + ':' + url.searchParams.get('for');
+      if (geography && geography !== metricGeography) return null;
+      geography = metricGeography;
       seen.add(m.key);
       const alias = `Place ${index + 1}`;
       const display = new Intl.NumberFormat('en-US', { maximumFractionDigits: 2, ...(meaning.unit === 'USD' ? { style: 'currency', currency: 'USD' } : {}) }).format(m.value);
@@ -55,6 +64,8 @@ export function projectReportEvidence(project: unknown): ReportPacket | null {
         limitation: meaning.limitation, sourceUrl: url.toString() });
     }
     if (!seen.size) return null; // Invalid/unavailable primary evidence must never leave a comparison-only conclusion.
+    if (geographies.has(geography)) return null;
+    geographies.add(geography);
   }
   if (!facts.length) return null;
   return { facts, digest: createHash('sha256').update(JSON.stringify(facts)).digest('hex') };

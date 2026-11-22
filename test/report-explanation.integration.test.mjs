@@ -14,7 +14,7 @@ assert.ok(process.env.FIRESTORE_EMULATOR_HOST?.startsWith('127.0.0.1:'));
 if(!getApps().length)initializeApp({projectId:'demo-ifyoumind'});
 const db=getFirestore(),org=db.collection('intelligenceOrganizations').doc('report-ai-fixture'),internal=db.collection('internalReportExplanation');
 const url='https://api.census.gov/data/2024/acs/acs5?get=NAME%2CB01003_001E%2CB19013_001E%2CB25077_001E&for=place%3A123&in=state%3A08';
-const fixture=()=>({mode:'live',decisionReportPurchased:true,brief:{metrics:[{key:'income',value:62000,unit:'USD',sourceUrl:url}],comparisons:[]}});
+const fixture=()=>({mode:'live',location:'Fixture, CO',decisionReportPurchased:true,brief:{metrics:[{key:'income',value:62000,unit:'USD',sourceUrl:url}],comparisons:[]}});
 let env,packet;
 const date=new Date('2026-11-21T12:00:00Z');
 before(async()=>{env=await initializeTestEnvironment({projectId:'demo-ifyoumind',firestore:{host:'127.0.0.1',port:Number(process.env.FIRESTORE_EMULATOR_HOST.split(':').at(-1)),rules:await readFile('firestore.rules','utf8')}});});

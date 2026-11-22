@@ -91,6 +91,8 @@ globalThis.fetch = async (url, init) => {
 
 beforeEach(async () => {
   onCensusRequest=undefined;
+  // Each case owns this emulator-only launch fixture; do not accumulate seats across cases.
+  await db.collection('subscriptionLaunch').doc('test_'+account).set({workspaces:[]});
   const suffix = ++sequence;
   org = db.collection('intelligenceOrganizations').doc(workspace+'-'+suffix);
   billing = org.collection('subscriptionBilling').doc('current');
@@ -191,6 +193,17 @@ test('missing saved session response recovers with the original Stripe idempoten
   assert.equal((await billing.get()).data().checkout.attempt,original.attempt);
   assert.equal((await billing.get()).data().checkout.id,id);
   assert.equal((await status()).remaining,0);
+});
+
+test('launch capacity remains enforced before creating another Checkout',async()=>{
+  await seedProject();
+  const launch=db.collection('subscriptionLaunch').doc('test_'+account);
+  const occupied=Array.from({length:10},(_,i)=>'occupied-fixture-'+i);
+  await launch.set({workspaces:occupied});
+  await assert.rejects(call('createCommercialCheckout',{offer:'starter',projectId:project}),{code:'resource-exhausted'});
+  assert.equal(checkoutCalls,0);
+  assert.deepEqual((await launch.get()).data().workspaces,occupied);
+  assert.equal((await billing.get()).exists,false);
 });
 
 test('only a canonical settled invoice creates a grant, including invoice-first and duplicate delivery',async()=>{

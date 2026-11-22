@@ -1,5 +1,9 @@
 # ifYouMind — Zero-to-One Launch Command Center
 
+## November22 — Live purchase handoff, no payment outcome yet
+
+[Draft126](https://github.com/alwat83/ifyoumind/pull/126) deploys the qualified default-OFF report-intelligence backend and QA-only billing eligibility. The first Starter request exposed a real Stripe hosted-URL validation defect; the separately qualified Checkout-only correction recovered the same single unpaid4.99USD Session. Founder personally completes payment next. No paid fulfillment or provider call has been verified; public enrollment stays closed. Internal, founder-funded and refunded review transactions must remain excluded from independent-customer/revenue traction. Existing scoreboard observations and unknowns are not replaced by these technical checks. Highest-impact next action is signed payment→credit→report→saved reopening proof, followed by the authorized refund/cancellation and remaining product reviews.
+
 ## November21 — Activation work supports a real purchase, not a revenue claim
 
 The approved consumer website is live. [Production activation](../product/PRODUCTION_ACTIVATION.md) now targets actual report intelligence and safe Starter/Plus fulfillment with bounded provider spend. Founder-authorized internal paid review is capped at$93.98beforetax with refunds/cancellations; it is **not independently paying customer traction**. No payment or provider call has yet occurred in this phase. Keep all existing scoreboard values/unknowns unchanged; verify real signed fulfillment before opening enrollment. Privacy and deterministic findings remain available without sending bills to a provider.

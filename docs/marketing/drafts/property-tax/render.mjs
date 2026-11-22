@@ -5,8 +5,14 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { chromium } from '@playwright/test';
 import { editorialHtml } from '../../../../scripts/render-midnight-social.mjs';
+import { renderVersion, exportName } from '../../../../scripts/marketing-assets/core.mjs';
 
 const dir = new URL('./', import.meta.url), hash = bytes => createHash('sha256').update(bytes).digest('hex');
+const root = fileURLToPath(new URL('../../../../', dir));
+const version = renderVersion(root, 'property-tax');
+if (process.env.MARKETING_ASSET_VERSION && Number(process.env.MARKETING_ASSET_VERSION) !== version) throw Error('Requested version would overwrite reviewed history.');
+const caption = await readFile(new URL('caption.txt', dir));
+await writeFile(new URL(`caption-v${version}.txt`, dir), caption);
 const source = await readFile(new URL('../../../../src/app/intelligence/home-bill-examples.json', dir));
 const fixture = JSON.parse(source).tax, amount = text => Number(text.replace(/[^\d.-]/g, ''));
 const [before, after] = fixture.rows[0].values.map(amount);
@@ -54,7 +60,8 @@ try {
   for(const [index,slide] of slides.entries()){
     const body=`<main data-format="portrait" data-slide="${slide.id}"><div class="brand">ifyoumind</div><p class="edition">Property-tax example · Synthetic figures</p><section class="content" aria-label="${slide.title.replace(/"/g,'&quot;')}">${slide.body}</section><p class="note">Synthetic figures. Not a customer result.<br>No assessment error or appeal eligibility established.</p><div class="foot"><span>${index+1} / 5</span><span>ifyoumind.com ↗</span></div></main>`;
     const html=editorialHtml('tax','portrait').replace('</head>',extra+'</head>').replace(/<main[\s\S]*<\/main>/,body).replace(/<title>.*?<\/title>/,`<title>ifYouMind draft v2 — ${slide.title}</title>`);
-    const file=new URL(slide.id+'.html',dir);await writeFile(file,html);await page.goto(file.href);
+    const filename=exportName('property-tax',index+1,version);
+    const file=new URL(filename.replace('.jpg','.html'),dir);await writeFile(file,html);await page.goto(file.href);
     await page.evaluate(async()=>{await document.fonts.load('218px Instrument');await document.fonts.ready;});
     const checks=await page.evaluate(()=>{
       const main=document.querySelector('main'),content=document.querySelector('.content'),note=document.querySelector('.note'),foot=document.querySelector('.foot'),box=el=>el.getBoundingClientRect();
@@ -70,14 +77,16 @@ try {
       return{overflow:document.documentElement.scrollWidth>1080||document.documentElement.scrollHeight>1350,contentBottom:box(content).bottom,noteTop:box(note).top,footerBottom:box(foot).bottom,fontLoaded:document.fonts.check('218px Instrument'),imageLoaded:[...document.images].every(i=>i.complete&&i.naturalWidth>0),clipped,minContrast:Number(minContrast.toFixed(2)),minMobileNarrativePx:Number(Math.min(...narrative.map(el=>parseFloat(getComputedStyle(el).fontSize)/3)).toFixed(2)),disclosurePxAt360:parseFloat(getComputedStyle(note).fontSize)/3,barWidths,schoolRatio:segment?box(segment).width/box(segment.parentElement).width:null};
     });
     if(checks.overflow||checks.contentBottom>checks.noteTop-18||checks.footerBottom>1307||!checks.fontLoaded||!checks.imageLoaded||checks.clipped.length||checks.minContrast<4.5||checks.minMobileNarrativePx<13||checks.disclosurePxAt360<10||checks.barWidths.some(x=>Math.abs(x.ratio-x.expected)>.001)||checks.schoolRatio!==null&&Math.abs(checks.schoolRatio-share)>.001)throw Error(`Slide ${slide.id} fails checks: ${JSON.stringify(checks)}`);
-    const image=await page.screenshot({type:'jpeg',quality:94,fullPage:true});await writeFile(new URL(slide.id+'.jpg',dir),image);
-    assets.push({filename:slide.id+'.jpg',title:slide.title,altText:slide.alt,width:1080,height:1350,mimeType:'image/jpeg',bytes:image.length,sha256:hash(image),approval:'pending-founder-visual-review',publicUrl:null,publication:'not-published',checks});
+    const image=await page.screenshot({type:'jpeg',quality:94,fullPage:true});await writeFile(new URL(filename,dir),image);
+    assets.push({filename,title:slide.title,altText:slide.alt,width:1080,height:1350,mimeType:'image/jpeg',bytes:image.length,sha256:hash(image),sourceSha256:hash(html),checks});
   }
   if(requests.length||errors.length)throw Error('External request or page error during offline export.');
-  await writeFile(new URL('manifest.json',dir),JSON.stringify({version:2,status:'draft-not-for-publication',updatedAt:new Date().toISOString(),source:'src/app/intelligence/home-bill-examples.json',sourceSha256:hash(source),template:'scripts/render-midnight-social.mjs',productPreview:capture,externalRequests:requests.length,pageErrors:errors.length,numericalValidation:{before,after,increase,schoolBefore,schoolAfter,school,county,municipal,other,share,displayedShare:percent},assets},null,2)+'\n');
+  const receipt=JSON.stringify({version,status:'render-receipt-only-lifecycle-in-assets.json',updatedAt:new Date().toISOString(),source:'src/app/intelligence/home-bill-examples.json',sourceSha256:hash(source),template:'scripts/render-midnight-social.mjs',productPreview:capture,externalRequests:requests.length,pageErrors:errors.length,numericalValidation:{before,after,increase,schoolBefore,schoolAfter,school,county,municipal,other,share,displayedShare:percent},assets},null,2)+'\n';
+  await writeFile(new URL(`render-receipt-v${version}.json`,dir),receipt);
+  await writeFile(new URL('manifest.json',dir),receipt);
   const css='body{margin:0;background:#090d17;color:#f1f7fa;font:20px Arial;padding:32px}h1{font-size:32px}h2{font-size:24px}p{color:#a8bac9}a{color:#58d5e8}section{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}img{display:block;width:100%;height:auto}figure{margin:0}figcaption{font-size:16px;margin-block:10px}@media(max-width:900px){section{grid-template-columns:repeat(2,1fr)}}';
   await writeFile(new URL('index.html',dir),`<!doctype html><html lang="en"><meta charset="utf-8"><title>ifYouMind — refined tax carousel</title><style>${css}</style><h1>Property-tax carousel · Refined draft</h1><p>Unpublished / pending founder approval. Synthetic figures, not customer results. <a href="comparison.html">Before / after</a></p><section>${assets.map(a=>`<figure><a href="${a.filename}"><img src="${a.filename}" alt="${a.altText}"></a><figcaption>${a.title}</figcaption></figure>`).join('')}</section></html>`);
-  await writeFile(new URL('comparison.html',dir),`<!doctype html><html lang="en"><meta charset="utf-8"><title>ifYouMind — carousel before and after</title><style>${css}section{margin-bottom:32px}</style><h1>Before / after · Property-tax carousel</h1><p>Same example and Midnight Slate identity. Refined hook, charts, context and authentic product invitation. Both rows are drafts.</p><h2>Before</h2><section>${assets.map(a=>`<figure><img src="before-v1/${a.filename}" alt="Previous draft: ${a.filename}"></figure>`).join('')}</section><h2>After</h2><section>${assets.map(a=>`<figure><img src="${a.filename}" alt="${a.altText}"></figure>`).join('')}</section></html>`);
+  await writeFile(new URL('comparison.html',dir),`<!doctype html><html lang="en"><meta charset="utf-8"><title>ifYouMind — carousel before and after</title><style>${css}section{margin-bottom:32px}</style><h1>Before / after · Property-tax carousel</h1><p>Same example and Midnight Slate identity. Refined hook, charts, context and authentic product invitation. Both rows are drafts.</p><h2>Before</h2><section>${assets.map((a,i)=>`<figure><img src="before-v1/${slides[i].id}.jpg" alt="Previous draft: ${slides[i].id}"></figure>`).join('')}</section><h2>After</h2><section>${assets.map(a=>`<figure><img src="${a.filename}" alt="${a.altText}"></figure>`).join('')}</section></html>`);
   await page.setViewportSize({width:1800,height:1150});await page.goto(new URL('comparison.html',dir).href);await page.screenshot({path:fileURLToPath(new URL('comparison.jpg',dir)),type:'jpeg',quality:92,fullPage:true});
   await mkdir(new URL('mobile-review/',dir),{recursive:true});
   for(const a of assets){await page.setViewportSize({width:390,height:500});await page.setContent(`<body style="margin:0;background:#090d17"><img src="${new URL(a.filename,dir).href}" style="display:block;width:390px;height:auto" alt="${a.altText}"></body>`);await page.locator('img').evaluate(i=>i.decode());await page.screenshot({path:fileURLToPath(new URL('mobile-review/'+a.filename,dir)),type:'jpeg',quality:94,fullPage:true});}

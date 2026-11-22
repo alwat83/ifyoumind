@@ -2,19 +2,19 @@
 
 November 22, 2026 · OpenAI / Codex · Version 2 · **Ready for final visual approval, not publication.**
 
-[Before / after overview](comparison.jpg) · [Interactive file gallery](comparison.html) · [Refined slides](index.html) · [Numbers, alt text and checksums](manifest.json)
+[Before / after overview](comparison.jpg) · [Interactive file gallery](comparison.html) · [Refined slides](index.html) · [Numbers and rendering receipt](manifest.json) · [Authoritative asset states](../../assets.json) · [Contact sheet](contact-sheet.jpg)
 
 Five 1080 × 1350 JPEG exports reuse the existing Midnight Slate template, local Instrument Serif/Arial typography and the original deterministic example. No production application changes, deployment, social publishing, advertising spend or provider request.
 
 | Slide | Refinement | Export |
 |---|---|---|
-| 1 — Hook | A much larger +$420, the specific property-tax question, and 2024/2025 totals | [01-question.jpg](01-question.jpg) |
-| 2 — Discovery | $240 contribution with zero-based school-tax bars: $2,400 → $2,640 | [02-school.jpg](02-school.jpg) |
-| 3 — Evidence | 57.1% proportional split: school $240, other charges $180; explicit “not your tax rate” | [03-evidence.jpg](03-evidence.jpg) |
-| 4 — Context | What changed versus what is not established, without claiming error or appeal eligibility | [04-limitation.jpg](04-limitation.jpg) |
-| 5 — Action | “Your numbers have a story. Reveal what changed.” Authentic product preview and prominent free-example invitation | [05-action.jpg](05-action.jpg) |
+| 1 — Hook | A much larger +$420, the specific property-tax question, and 2024/2025 totals | [Slide 01](property-tax-carousel-01-v2.jpg) |
+| 2 — Discovery | $240 contribution with zero-based school-tax bars: $2,400 → $2,640 | [Slide 02](property-tax-carousel-02-v2.jpg) |
+| 3 — Evidence | 57.1% proportional split: school $240, other charges $180; explicit “not your tax rate” | [Slide 03](property-tax-carousel-03-v2.jpg) |
+| 4 — Context | What changed versus what is not established, without claiming error or appeal eligibility | [Slide 04](property-tax-carousel-04-v2.jpg) |
+| 5 — Action | “Your numbers have a story. Reveal what changed.” Authentic product preview and prominent free-example invitation | [Slide 05](property-tax-carousel-05-v2.jpg) |
 
-The [preserved originals](before-v1/manifest.json) match commit ea70bb9c8611340e09d08fe12c861febf7c27655. Old JPEGs are retained in before-v1; no bulk baseline acceptance or silent replacement of historical evidence. Smaller [390-pixel review images](mobile-review/01-question.jpg) supplement full-resolution inspection.
+The [preserved originals](before-v1/manifest.json) match commit ea70bb9c8611340e09d08fe12c861febf7c27655. Old JPEGs are retained in before-v1; no bulk baseline acceptance or silent replacement of historical evidence. Smaller [390-pixel review images](mobile-review/property-tax-carousel-01-v2.jpg) supplement full-resolution inspection.
 
 ## Evidence and product preview
 
@@ -29,7 +29,7 @@ Slide 5 uses an **unaltered** screenshot of the live free example at https://ify
 Run with existing installed Chrome/Playwright, no new dependency:
 
 ```sh
-node docs/marketing/drafts/property-tax/render.mjs
+npm run marketing:assets:render
 ```
 
 All five exports pass: exact dimensions/JPEG format; loaded local type; text/canvas bounds and disclosure separation; chart proportions; numerical/source-cell reconciliation; text contrast at least **7.45:1**; primary copy/values at least **13.33 px equivalent at 360 px width**; disclosure text 10.67 px equivalent. Full-resolution and all five 390 px previews were individually reviewed. Offline render, comparison and phone previews report zero external requests and zero page errors. Alt text/caption are updated. Native rendering requires the existing permitted headless-Chrome environment; no browser/OS installation occurred.
@@ -38,13 +38,7 @@ The live preview retains the actual product's typography and is not independentl
 
 ## Draft caption — final founder review required
 
-Your property-tax bill increased by $420. What changed?
-
-In this synthetic example, $240 of the increase came from school tax — 57.1% of the total change. Follow the figures, check the calculation, and see what the evidence establishes.
-
-Your numbers have a story. Reveal what changed. Try the free example at ifyoumind.com. No account needed for the example.
-
-Illustrative figures, not a customer result. These figures do not establish an assessment error or eligibility for an appeal. This is a deterministic bill example, not AI-based tax analysis.
+[Versioned caption text](caption-v2.txt) is included automatically in the generated review package. It remains unapproved.
 
 ## Approval boundary
 

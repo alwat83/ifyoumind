@@ -1,5 +1,11 @@
 # ifYouMind — Master Project Record and Roadmap
 
+## November 22, 2026 — Permanent marketing asset pipeline
+
+Existing [draft PR127](https://github.com/alwat83/ifyoumind/pull/127) now extends the existing renderer into [one shared local-first workflow](docs/marketing/README.md): versioned draft sources/exports/captions, canonical metadata/lifecycle, validation, review sheets, approval-gated additive Hosting preparation and actual external publication receipts. Permanent AGENTS instructions require reuse.21targeted local tests and five offline renders pass; exact source/limitations/impact and reproduction commands are in [verification evidence](docs/marketing/releases/PIPELINE_VERIFICATION.md). No dependencies/services/install or production operations.
+
+Five existing tax creative JPEGs retain their exact bytes under normalized versioned names; pending final export/caption approval, no public URLs. Registry also preserves5archived originals and records the externally verified welcome post receipt17924317206450814/permalinkDgD21-tiLBZ/2026-11-22T22:16:28Z. This corrects historical publication-unknown notes without inventing caption/traffic/revenue. Welcome public JPEG and retained59-file artifact remain exact. Website/backend/AI/auth/commerce/enrollment/security unchanged. MP4 presets fail closed without existing ffprobe; physical/human/platform coverage remains unverified. GO for creative review only; external release/publication stays separately authorized.
+
 ## November 22, 2026 — Property-tax campaign creative v2
 
 The existing [five-slide carousel](docs/marketing/drafts/property-tax/REVIEW.md) is refined and ready for final founder visual approval in draft PR127. [Before/after evidence](docs/marketing/drafts/property-tax/comparison.jpg) preserves the originals. Larger question-led +$420, source-backed school comparison and 57.1% graphic, precise limitations and an authentic product preview connect to the free example. All five portrait exports pass offline bounds/font/contrast/mobile-scale/numerical checks; alt text and caption are updated. This is local marketing artwork, not deployed product or measured conversion. No website, AI/billing/enrollment, public asset or publishing change; future publication requires separate approval.

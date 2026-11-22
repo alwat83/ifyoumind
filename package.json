@@ -37,7 +37,13 @@
     "build:discover": "ng build --configuration discover",
     "test:discover": "playwright test --config e2e/discover.config.mjs",
     "start:discover": "node e2e/support/hosting-server.mjs",
-    "diagnose:transactions": "firebase emulators:exec --project demo-ifyoumind --only firestore \"node --test test/diagnostics/firestore-transaction-transport.cjs\""
+    "diagnose:transactions": "firebase emulators:exec --project demo-ifyoumind --only firestore \"node --test test/diagnostics/firestore-transaction-transport.cjs\"",
+    "marketing:assets:render": "node scripts/marketing-assets/cli.mjs render",
+    "marketing:assets:validate": "node scripts/marketing-assets/cli.mjs validate",
+    "marketing:assets:manifest": "node scripts/marketing-assets/cli.mjs manifest",
+    "marketing:assets:review": "node scripts/marketing-assets/cli.mjs review",
+    "marketing:assets:prepare": "node scripts/marketing-assets/cli.mjs prepare",
+    "test:marketing-assets": "node --test scripts/marketing-assets/core.test.mjs"
   },
   "private": true,
   "dependencies": {

@@ -1,0 +1,78 @@
+{
+  "result": "STOPPED",
+  "stopGate": "ACTIONS_PAUSE_NOT_VERIFIED",
+  "authorization": "https://github.com/alwat83/ifyoumind/pull/125#issuecomment-7071675451",
+  "source": "9d8caefc9943d65767198d6ec490dbdd63fd02e8",
+  "initialTimePacific": "2026-11-21T17:01:18-08:00",
+  "authorizedWindowPacific": {
+    "start": "2026-11-21T17:00:00-08:00",
+    "end": "2026-11-21T17:20:00-08:00"
+  },
+  "windowActiveAtAttempt": true,
+  "frozenArtifactVerified": {
+    "files": 58,
+    "manifestSha256": "b7067f63d53e08457b4234901415749f19600bdcb81ff2319432f0bb835ac397",
+    "archiveSha256": "756b3d23fc067025c13c4713d5d4708d599a9797e905e0f85d8ea366728963f7",
+    "configSha256": "a985fa400017d793640bd4c895435d0c8d4a302c183efcb7d50999794ce5dec0"
+  },
+  "operatorIdentity": {
+    "matchesPreviouslyVerifiedOwner": true,
+    "verifiedByStandardCliScopesUserinfo": true,
+    "soleDirectHumanMatches": true,
+    "cliVersion": "13.35.1",
+    "founderCustodyFreezeConfirmed": true,
+    "userManagedKeyMetadataCount": 2,
+    "keyValueAccessed": false,
+    "supplementalCloudOnlyUserinfoStatus": 401,
+    "standardScopeVerificationSucceededAt": "2026-11-22T01:04:37.817Z"
+  },
+  "actionsControl": {
+    "attemptCount": 1,
+    "capturedAt": "2026-11-22T01:05:28.617Z",
+    "before": {
+      "enabled": true,
+      "allowed_actions": "all",
+      "sha_pinning_required": false
+    },
+    "stepProcessExitCode": 1,
+    "pauseConfirmed": false,
+    "afterReconciliation": {
+      "enabled": true,
+      "allowed_actions": "all",
+      "sha_pinning_required": false
+    },
+    "afterReconciliationObservedAt": "2026-11-22T01:09:48.223772+00:00",
+    "restorationPerformed": false,
+    "restorationNeeded": false,
+    "exactFailureLegOrHttpStatus": "NOT_RETAINED by original wrapper; not inferred. Account-level repo admin role reads true; token/API write failure cause remains unverified.",
+    "retryPerformed": false
+  },
+  "exclusiveWindowEstablished": false,
+  "mutexAcquired": false,
+  "deploymentAttempted": false,
+  "rollbackPerformed": false,
+  "newHostingVersion": null,
+  "currentHosting": {
+    "release": "1794933315802000",
+    "type": "DEPLOY",
+    "version": "39dc573f3826dca6",
+    "releaseTime": "2026-11-17T16:35:15.802Z"
+  },
+  "currentReadbackObservedAt": "2026-11-22T01:07:53.723Z",
+  "rollbackTargetRetained": true,
+  "rollbackPermissionsGranted": true,
+  "sevenBackendRevisionsUnchanged": true,
+  "allSevenEnrollmentValuesEmpty": true,
+  "nonterminalRunCounts": {
+    "queued": 0,
+    "in_progress": 0,
+    "waiting": 0,
+    "pending": 0,
+    "requested": 0
+  },
+  "postDeploymentBrowserSmoke": "NOT_RUN; no deployment",
+  "qaSaveRetryRepeated": false,
+  "qaAllowanceConsumed": 0,
+  "remainingPreflightGates": "NOT_RUN after pause failure; no inferred PASS",
+  "riskExceptionsAccepted": "E1\u2013E6 solely for exact frozen Hosting release, unresolved as before"
+}

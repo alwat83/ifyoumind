@@ -1,5 +1,13 @@
 # ifYouMind — Current development status
 
+## November21,2026 — Active-window RC1 attempt STOPPED: Actions pause unverified
+
+[Actual execution/evidence](../releases/consumer-rc1/ACTIVE_WINDOW_STOP.md), [JSON](../releases/consumer-rc1/ACTIVE_WINDOW_STOP.json). Initial5:01:18p.m.PST within approved5:00–5:20. Founder authorization/risk acceptance verified;58-file artifact + exact manifest/archive/config hashes PASS, existing CLI13.35.1 identity matches original owner through normal granted scopes; founder confirms custody/freeze, sole direct human matches, two user-managed keys inspected by metadata only. Supplemental cloud-only userinfo401 resolved via standard existing CLI scopes, no new permissions.
+
+**One Actions pause step at5:05:28 exited1 before disabled readback.** Original wrapper lost HTTP/error/stage detail; exact root remains unknown. Account admin:true read does not certify token write permission. Private future logging corrected/syntax-checked but no rerun. Independent policy GETs, latest5:09, still exactly `{enabled:true,allowed_actions:all,sha_pinning_required:false}`; no restoration needed/performed. Exclusivity gate not met, no mutex/deployment/rollback/newHostingversion. No automatic retry/workaround. Later final-predeploy/browser/quiescence gates NOT_RUN after stop.
+
+5:07:53 read-only reconciliation: Hosting39dc573f3826dca6/release1794933315802000 unchanged;7 backend revisions ACTIVE/100%/EMPTY enrollment unchanged; rollback39dc FINALIZED58 metadata/currentCLI permissions PASS, no actual restore. Zero pending run statuses5:09/master6dcffca/protections unchanged. Source/artifact untouched, no Functions/rules/Storage/IAM/billing/AI/customer/data/entitlement/QA allowance action or repeated111. Records/PR125/Notion synchronized on evidence branch. Next three: diagnose Actions-control failure with preserved responses, obtain explicit resume for a bounded control operation in an active approved window, then fresh hard gates and static release only if all pass. Existing risk/artifact scope approval remains valid; no new design/feature or commercial outcome.
+
 ## November21,2026 — Conditional RC1 release authorized; execution STOPPED before window
 
 [Execution status](../releases/consumer-rc1/EXECUTION_STATUS.md), [JSON](../releases/consumer-rc1/EXECUTION_STATUS.json). Verified founder final GO7071675451 and exact74b6a75 decision record. E1–E6 acceptance and frozen source/artifact/operator scope are now recorded, not pending. Authorized production window is5:00–5:20p.m. PST. First clock read4:39:15p.m. PST fails the attachment’s explicit WINDOW_NOT_STARTED stop rule; no automatic wait/reschedule/extension or execution. **STOPPED; no deployment attempt/new Hosting version.**

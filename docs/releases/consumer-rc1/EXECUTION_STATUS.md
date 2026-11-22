@@ -1,3 +1,5 @@
+**Newer execution result:** [Active-window attempt stopped at Actions pause verification](ACTIVE_WINDOW_STOP.md). The earlier timing-only record below is historical.
+
 # RC1 conditional authorization — stopped before window
 
 November21,2026 · OpenAI / Codex · `codex/rc1-production-retry-qa`. **STOPPED; no deployment attempt.** [Machine record](EXECUTION_STATUS.json).

@@ -1,0 +1,169 @@
+{
+  "status": "STOPPED_PRIVACY_GATE",
+  "observedAt": "2026-11-23T23:20:41.519Z",
+  "authorization": {
+    "pr": 129,
+    "comments": [
+      7113948791,
+      7114343078
+    ]
+  },
+  "hosting": {
+    "source": "297efc22ef45108d5b42afe328ae6ba75f116130",
+    "version": "267c912aeea5478b",
+    "release": "sites/ifyoumind-473fe/channels/live/releases/1795475756058000",
+    "releaseTime": "2026-11-23T23:15:56.058Z",
+    "files": 66,
+    "allFileHashesMatch": true,
+    "configUnchanged": true,
+    "manifestSha256": "17dad92c8d3e2a6511515e30e06bf10e3b00a78d0f752014e3be9907e29fc868",
+    "archiveSha256": "2041d0c3395fd8e9d0882714ccce791a00ee2b4905354f4d351d62391ce80731",
+    "configSha256": "a985fa400017d793640bd4c895435d0c8d4a302c183efcb7d50999794ce5dec0"
+  },
+  "callable": {
+    "source": "a661acd16969913ab85bb524aaf677acbbabe348",
+    "name": "claimVerifiedPurchase",
+    "state": "ACTIVE",
+    "revision": "claimverifiedpurchase-00001-jul",
+    "trafficPercent": 100,
+    "runtime": "nodejs22",
+    "timeoutSeconds": 15,
+    "maxInstances": 2,
+    "concurrency": 10,
+    "secretBindings": 0,
+    "anonymous": {
+      "http": 401,
+      "status": "UNAUTHENTICATED"
+    },
+    "manifestSha256": "0899eeee2ac1c35123226232081a907f4d9cea8c64ab1d7f0c1284edc5becc31",
+    "archiveSha256": "1b3f7b596ae7061787122c92234f05e65bebee79f4fa30932083cbd5658abf78"
+  },
+  "preserved": {
+    "preexistingFunctions": 34,
+    "subscriptionEnrollmentUnchanged": true,
+    "marketingJpegs": 6,
+    "privateDiscoveryAssetHashes": true,
+    "pricingBillingAiUnchanged": true,
+    "frozenArtifactsUnchanged": true
+  },
+  "liveVerification": {
+    "initialRun": {
+      "startedAt": "2026-11-23T23:19:29.973Z",
+      "mocked": false,
+      "contexts": [
+        {
+          "mode": "rejected",
+          "googleRequests": 0,
+          "syntheticFinding": true,
+          "evidence": true
+        },
+        {
+          "mode": "private-discovery",
+          "syntheticExample": true,
+          "cleared": true,
+          "googleRequests": 0
+        }
+      ],
+      "status": "FAIL",
+      "error": "Unexpected collector response/schema"
+    },
+    "collector": {
+      "startedAt": "2026-11-23T23:20:35.153Z",
+      "mocked": false,
+      "tagRequests": [
+        {
+          "stage": "granted",
+          "id": "G-NRT31062LW"
+        }
+      ],
+      "events": [
+        {
+          "stage": "granted",
+          "measurementId": "G-NRT31062LW",
+          "event": "page_view",
+          "pageLocation": "https://ifyoumind.com/privacy-policy?qa_release=internal",
+          "title": "Privacy Policy | ifYouMind",
+          "parameterKeys": [
+            "_fv",
+            "_nsi",
+            "_p",
+            "_s",
+            "_ss",
+            "_tu",
+            "cid",
+            "dl",
+            "dma",
+            "dma_cps",
+            "dt",
+            "en",
+            "frm",
+            "gcd",
+            "gcs",
+            "gtm",
+            "ngs",
+            "npa",
+            "pscdl",
+            "rcb",
+            "sct",
+            "seg",
+            "sid",
+            "sr",
+            "tag_exp",
+            "tfd",
+            "tid",
+            "uaa",
+            "uab",
+            "uafvl",
+            "uam",
+            "uamb",
+            "uap",
+            "uapv",
+            "uaw",
+            "ul",
+            "v"
+          ],
+          "httpStatus": 204
+        }
+      ],
+      "requestFailures": [],
+      "status": "OBSERVED",
+      "observed": true,
+      "disabledAfterWithdrawal": true,
+      "noAdditionalCollection": true,
+      "completedAt": "2026-11-23T23:20:41.519Z"
+    },
+    "expected": {
+      "pageLocation": "https://ifyoumind.com/privacy-policy",
+      "title": "Privacy policy"
+    },
+    "result": "FAIL: actual collector URL retained benign query and title was document title",
+    "realtime": "UNVERIFIED: UI showed zero users/no data at observation",
+    "debugView": "NOT_EXECUTED",
+    "positivePurchase": "NOT_EXECUTED; prohibited",
+    "customerDataUsed": false,
+    "noFurtherTesting": true
+  },
+  "rollback": {
+    "version": "08500dca665abbab",
+    "status": "FINALIZED",
+    "executed": false,
+    "requiresSeparateAuthorization": true,
+    "decision": "PENDING"
+  },
+  "cost": {
+    "newPaidService": false,
+    "paidGitHub": false,
+    "openaiRequests": 0,
+    "purchases": 0,
+    "build": {
+      "id": "8b23995b-4d77-45c4-abb8-a7d979b2d06e",
+      "status": "SUCCESS",
+      "startTime": "2026-11-23T23:10:50.212444535Z",
+      "finishTime": "2026-11-23T23:11:31.829070Z",
+      "seconds": 41.617
+    },
+    "actualDollars": "UNMEASURED: existing Firebase usage billing"
+  },
+  "sourceRebuilt": false,
+  "merged": false
+}

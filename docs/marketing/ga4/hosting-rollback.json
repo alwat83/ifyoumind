@@ -1,0 +1,71 @@
+{
+  "status": "RESTORED",
+  "observedAt": "2026-11-23T23:26:32.186Z",
+  "version": "08500dca665abbab",
+  "versionStatus": "FINALIZED",
+  "release": "sites/ifyoumind-473fe/channels/live/releases/1795476390936000",
+  "releaseTime": "2026-11-23T23:26:30.936Z",
+  "previousVersion": "267c912aeea5478b",
+  "all64FilesMatch": true,
+  "configUnchanged": true,
+  "protectedFunctionsUnchanged": 35,
+  "claimVerifiedPurchasePreserved": true,
+  "subscriptionEnrollmentUnchanged": true,
+  "scope": "Hosting only",
+  "sourceRebuilt": false,
+  "billingAiCustomerRulesChanges": false,
+  "browser": {
+    "startedAt": "2026-11-23T23:27:10.146Z",
+    "mocked": false,
+    "checks": [
+      "homepage/reveal/evidence",
+      "pricing offers / closed monthly enrollment",
+      "private Discovery example / clear / no post-load requests"
+    ],
+    "prices": {
+      "starter": true,
+      "plus": true,
+      "report": true,
+      "monthlyUnavailable": true
+    },
+    "discoveryCsp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; font-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'",
+    "postLoadDiscoveryRequests": 0,
+    "googleRequests": 0,
+    "runtimeGa4Present": false,
+    "assets": [
+      {
+        "path": "assets/marketing/social/instagram/carousels/property-tax-carousel-01-v2.jpg",
+        "status": 200,
+        "sha256": "237fd791af550fe0af727b9cb6b6ba4a1abcfebf92e61316d792870b60c6a67c"
+      },
+      {
+        "path": "assets/marketing/social/instagram/carousels/property-tax-carousel-02-v2.jpg",
+        "status": 200,
+        "sha256": "a1a3e44c89fe609eb144586fcbb32f9f11a870b336b289ea70c69f981fc03561"
+      },
+      {
+        "path": "assets/marketing/social/instagram/carousels/property-tax-carousel-03-v2.jpg",
+        "status": 200,
+        "sha256": "afbbf61a2bedc4f59373e75d2b181536b9c66da974158000c68e32fe9b826998"
+      },
+      {
+        "path": "assets/marketing/social/instagram/carousels/property-tax-carousel-04-v2.jpg",
+        "status": 200,
+        "sha256": "93ba4a70ea4877b76ad02d68dd9ff0460d9b3be8b1c4f93d2902b426fcc11be1"
+      },
+      {
+        "path": "assets/marketing/social/instagram/carousels/property-tax-carousel-05-v2.jpg",
+        "status": 200,
+        "sha256": "7dade1d76a8d10a6487d2a276ee75ca63ffaae8d6b3e909e7a7fb3a28b3a1041"
+      },
+      {
+        "path": "assets/marketing/social/instagram/posts/ifyoumind-launch-01.jpg",
+        "status": 200,
+        "sha256": "0e87ff1aa9a9d1cb5db09175fe2c83624198ab86a5ef7c98cc4330e97bc19252"
+      }
+    ],
+    "discoveryHeaderCsp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; font-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'",
+    "status": "PASS",
+    "completedAt": "2026-11-23T23:27:16.222Z"
+  }
+}

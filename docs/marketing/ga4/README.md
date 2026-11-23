@@ -1,14 +1,24 @@
 # GA4 — consented acquisition measurement
 
-November 23, 2026 · OpenAI / Codex · [Draft PR #128](https://github.com/alwat83/ifyoumind/pull/128) · **Implemented locally; not deployed.**
+> **Current production: founder-authorized rollback completed.** Hosting08500dca665abbab, release1795476390936000 at2026-11-23T23:26:30.936Z; tracking removed, all35Functions preserved. [Rollback/post-smoke evidence](hosting-rollback.json). Deployed/pending-rollback wording below is historical. Local correction only; no analytics redeployment authorized.
+
+> **Execution update: deployed, then STOPPED/NO-GO on actual collector privacy failure.** [Production receipt](PRODUCTION_RELEASE.md) supersedes historical not-deployed/ready statements below. Tracking remains deployed for consenting visitors pending a separate founder Hosting-only rollback decision. No automatic rollback or new live test.
+
+November 23, 2026 · OpenAI / Codex · [Draft PR #128](https://github.com/alwat83/ifyoumind/pull/128) · **OFF baseline preserved; separate activation candidate prepared, not deployed.**
+
+## Current reconciliation — November 23, 2026
+
+**Enhanced Measurement is independently verified savedOFF after a fresh reload** of property565380927 /stream16394318092 /G-NRT31062LW at approximately18:52–18:54UTC. The founder completed the change; Codex did not change a Google setting. The datedON observations below and in the frozenPR128 evidence are historical, superseded by this readback. The UI still lists standard Pageviews; the application retains `send_page_view:false` and manual sanitized views. No need to ask the founder to disable it again. Recheck at future deployment and STOP if it has driftedON.
+
+The original OFF source/evidence head **b86229d9f7887d0ba79204660d1be3bec098c55d**, executablea661acd1 and their frozen archives remain unchanged. A separate `codex/ga4-activation-candidate` branch changes only the productionflag in application code and necessary tests. A true flag **in an undeployed candidate is not live activation**. Do not merge, deploy or collect until separate production authorization. [Current reconciliation and release scope](ACTIVATION_RECONCILIATION.md).
 
 ## Decision and verified audit
 
-Use one direct Google tag, **G-NRT31062LW**, for the ifYouMind production stream **16394318092**, property **565380927**. Read-only authenticated Google Analytics administration confirmed the stream URL `https://ifyoumind.com`, the ID, zero connected site tags and **Enhanced Measurement ON**. The screen reported no data received in the preceding 48 hours; this is an observation, not a diagnosis of production traffic or revenue.
+Use one direct Google tag, **G-NRT31062LW**, for the ifYouMind production stream **16394318092**, property **565380927**. The earlier read-only audit confirmed the stream URL `https://ifyoumind.com`, the ID, zero connected site tags and Enhanced MeasurementON at that time. The fresh savedOFF readback above supersedes that setting observation. The screen reported no data received in the preceding 48 hours; this is an observation, not a diagnosis of production traffic or revenue.
 
 Google's installation screen offers **GTM-TMM5XMZF**. That container is absent from the repository's installed scripts and was not installed during this assignment. Do not install both that offered container and the direct tag. Historical Firebase configuration contained **G-DZMLBPS4ZX**, automatic screen/user tracking, and an unmounted consent UI. The candidate removes those Analytics providers and replaces the old arbitrary event/raw-URL service. This establishes code risk; it does not prove historical collection actually occurred.
 
-**Activation gate:** `GA4_PRODUCTION_ENABLED = false` in `src/app/services/analytics-policy.ts`. It remains false in this draft. No production tracking, Google settings change, Stripe request, deployment, purchase, provider call or account modification was performed.
+**Frozen OFF baseline:** `GA4_PRODUCTION_ENABLED = false` in PR128 at b86229d9. Only the separate, unmerged activation branch prepares `true`, still requiring consent. No released code was changed. No production tracking, Google settings change, Stripe request, deployment, purchase, provider call or account modification was performed.
 
 ## Privacy and consent contract
 
@@ -56,9 +66,9 @@ Allowed sources: instagram, facebook, google, bing, tiktok, linkedin, newsletter
 
 ## External activation and deployment checklist — not executed
 
-1. Founder authorizes the focused GA4 release and stream change. Select account **ifYouMind**, property **ifYouMind — Production (565380927)**, then **Admin → Data collection and modification → Data streams → ifYouMind — Production Website (16394318092)**. Confirm URL `https://ifyoumind.com` and measurement **G-NRT31062LW** before editing. The latest read-only review (November23, about17:40UTC) still showed Enhanced MeasurementON and0connected site tags. Do not use Dose Ninja's property or the offered GTM container. After authorization only, switch Enhanced MeasurementOFF, complete any confirmation/save presented by Google, close the details and reopen the same stream (then reload). Independently verify the saved switch readsOFF, auto/history/form/click/search/download/video/scroll measurement is disabled, and the ID/property/URL are unchanged. Capture a sanitized screenshot and timestamp. `send_page_view:false` must also remain in the application: it controls the standard initial view; the stream change prevents extra automatic events. If the saved state cannot be read back, stop activation. Review Google Signals, user-provided data collection, external tag destinations and advertising features; keep them off. Review property retention (recommend two months); these settings were not comprehensively verified in this review.
+1. **Completed prerequisite:** the founder disabled Enhanced Measurement, and independent readback after a fresh reload at18:52–18:54UTC confirmedOFF on accountifYouMind/property565380927, stream16394318092/G-NRT31062LW/URL`https://ifyoumind.com`,0connectedtags. Do not request another settings-change approval or toggle it again. Before any separately authorized deployment, reopen/reload that exact stream and confirm savedOFF; STOP on drift or a different destination. The application must retain `send_page_view:false`. GoogleSignals, user-provided data, unrelated destinations and retention were not comprehensively audited; do not claim those settings were changed or verified by this readback. Leave the offered GTM container uninstalled. Separate production deployment/controlled collection authorization remains outstanding.
 
-2. Enable only the reviewed `GA4_PRODUCTION_ENABLED` flag in a new exact source candidate after the readback. Re-run focused tests, changing the default-OFF test only as part of that explicitly approved release. No runtime URL/query parameter can enable production collection.
+2. The separate activation candidate already prepares only the reviewed `GA4_PRODUCTION_ENABLED` flag after thatOFFreadback; it is not deployed. Review its exact source/artifact under separate production authorization. Re-run focused tests, changing the default-OFF test only as part of that explicitly approved release. No runtime URL/query parameter can enable production collection.
 3. Separately authorize and deploy **only `claimVerifiedPurchase`**, with existing narrow Firestore access and no Stripe/OpenAI secret binding; verify its identity, authorization denials and rules. Do not deploy unrelated Functions/rules. Then deploy the matching Hosting candidate, retaining all current marketing assets. Neither deployment is authorized by this draft.
 4. Capture the then-current Hosting release and callable revision/absence for rollback. Last verified prior release is Hosting **08500dca665abbab**, release **1795392328755000**; retained previous **2bb9f7f3c6545b0e**. These are historical anchors, not a fresh rollback preflight. Restore only a separately authorized known Hosting artifact; do not automatically roll back or alter AI/billing.
 5. In a fresh signed-out browser, reject consent: verify no Google tag/collect request and usable examples. Clear only the test browser's preferences, allow consent, use an approved UTM link, then visit pricing and return: one manual page view per navigation, no raw query/IDs, one tag/destination. Check withdrawal and private Discovery in Network.
@@ -95,7 +105,7 @@ The homepage hero, reveal, typography and CTA are unchanged. The consent banner 
 
 Exact commands, final counts, source SHA and known failed diagnostic runs are recorded in [verification evidence](VERIFICATION.md). Retain ignored local logs/traces privately: they can contain synthetic Auth emulator tokens and must not be attached publicly.
 
-**Recommendation:** GO for draft code/founder review after applicable local checks. **NO-GO for production collection** until saved Enhanced Measurement is OFF, exact-source activation/deployment is separately authorized, and real collector/Realtime readback succeeds. Current implementation is not deployed or GA4-production-verified. No acquisition, willingness to pay or revenue result is claimed.
+**Recommendation:** GO for draft code/founder review after applicable local checks. **NO-GO for unauthorized production collection**; the saved-OFF prerequisite is now satisfied. Exact-source activation/deployment authorization and real collector/Realtime readback remain outstanding. Current implementation is not deployed or GA4-production-verified. No acquisition, willingness to pay or revenue result is claimed.
 
 ## Final release review — November 23, 2026
 

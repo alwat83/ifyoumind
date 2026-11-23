@@ -1,6 +1,6 @@
 /** One allowlisted GA4 destination. No private route/question/report values are accepted. */
 // Enable only in the authorized release after stream Enhanced Measurement is verified OFF.
-export const GA4_PRODUCTION_ENABLED = false;
+export const GA4_PRODUCTION_ENABLED = true;
 export const GA4_ID = 'G-NRT31062LW';
 export const GA4_STREAM_ID = '16394318092';
 export const ANALYTICS_CONSENT_VERSION = 'ga4-analytics-v1';

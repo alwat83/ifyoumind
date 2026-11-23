@@ -6,7 +6,7 @@ const source = fs.readFileSync('src/app/services/analytics-policy.ts', 'utf8'), 
 const { GA4_ID, GA4_STREAM_ID, GA4_PRODUCTION_ENABLED, safePage, safeEvent, safeAttribution, checkoutSessionFromUrl, AcquisitionTracker } = await import('data:text/javascript;base64,' + Buffer.from(js).toString('base64'));
 const flush = () => new Promise(r => setImmediate(r));
 function fixture(start = async () => true) { const events = [], port = { start, send: (name, params) => events.push({ name, params }), stop: () => events.push({ stop: true }) }; return { events, t: new AcquisitionTracker(port, { campaign_source: 'instagram' }) }; }
-test('one exact measurement destination; production disabled pending stream setup', () => { assert.equal(GA4_ID, 'G-NRT31062LW'); assert.equal(GA4_STREAM_ID, '16394318092'); assert.equal(GA4_PRODUCTION_ENABLED, false); });
+test('one exact measurement destination; reviewed activation candidate still requires consent', () => { assert.equal(GA4_ID, 'G-NRT31062LW'); assert.equal(GA4_STREAM_ID, '16394318092'); assert.equal(GA4_PRODUCTION_ENABLED, true); });
 test('route normalization removes queries/fragments and private decision IDs', () => { assert.deepEqual(safePage('/decisions/PrivateId?organizationId=secret#email'), { path: '/decisions/detail', title: 'Saved finding' }); for (const p of ['/discover/', '/unknown', '//evil.com', '/decisions/private%40email'])
     assert.equal(safePage(p), null); assert.equal(safePage('/pricing?projectId=private&question=secret').path, '/pricing'); });
 test('unknown fields, private numbers, report content and all identifiers rejected', () => { for (const field of ['email', 'user_id', 'organizationId', 'projectId', 'question', 'value', 'currency', 'transaction_id', 'bill', 'salary', 'page_location'])

@@ -1,5 +1,27 @@
 # ifYouMind — Zero-to-One Launch Command Center
 
+## November 23, 2026 — Authorized Hosting rollback verified; GA4 tracking removed
+
+Founder-authorized rollback completed at **23:26:30.936UTC**: restored **08500dca665abbab FINALIZED**, new release **1795476390936000**. All64static file hashes/config match the retained OFF baseline; **all35Functions unchanged**, including claimVerifiedPurchase00001-jul. Pricing/enrollment, AI, billing, rules and customer records untouched. Public Chrome smoke PASS: homepage reveal/evidence, pricing4.99/9.99/79 with monthlyclosed, privateDiscoveryexample/clear/CSP/no post-load requests; sixJPEGs200/exacthash. Zero Google requests. No source rebuild/merge/broad deploy or new live collector test.
+
+Analytics remains **NO-GO for redeployment** after the preserved full-URL/title failure. Local-only investigation/correction is authorized; analytics redeployment requires separate approval. [Rollback evidence](../marketing/ga4/hosting-rollback.json) supersedes the preceding deployed-and-pending-rollback status. Next3: diagnose actual tag serialization offline; prepare focused correction/regressions; seek new exact-candidate release authorization only after privacy gates pass.
+
+
+## November 23, 2026 — GA4 deployed; STOPPED on real collector privacy failure
+
+Founder-authorized PR129 exact artifacts deployed without rebuild: Hosting **267c912aeea5478b**, release **1795475756058000**,23:15:56.058UTC; callable **claimverifiedpurchase-00001-jul ACTIVE/Ready/100%**, anonymous401. All66Hosting file hashes/config, six marketing JPEGs and all34pre-existing Functions unchanged except approved analytics Hosting/new callable. Pricing, AI, public enrollment and commercial behavior preserved. Frozen source297efc22/backend a661acd1 and all153files/archives remain unchanged. No merge/real purchase/customer write.
+
+**NO-GO activation:** actual consented Google page_view204 contained benign QA query URL and document title instead of sanitized values. Reject/privateDiscovery zeroGoogle; withdrawal ga-disable=true/no additional observed collection. Tests stopped. Realtime no data at observation/DebugView unverified. Tracking remains deployed for consenting visitors; no automatic rollback. Prior OFF Hosting08500dca665abbab remainsFINALIZED. Founder Hosting-only rollback decision requested; no settings/provider/billing action. Detailed receipt and next3 in [production receipt](../marketing/ga4/PRODUCTION_RELEASE.md). Historical preparation below is superseded for production status; offline test passes are not actual collector privacy proof.
+
+
+## November23,2026 — GA4 savedOFF reconciled; isolated activation candidate
+
+Founder-completed Enhanced MeasurementOFF independently confirmed after freshreload of property565380927/stream16394318092/G-NRT31062LW at18:52–18:54UTC. EarlierON readings are historical, not a current blocker. No Google setting was edited. Original PR128/evidenceb86229d9 and OFFpackages remain frozen. [Separate draft PR129](https://github.com/alwat83/ifyoumind/pull/129), codex/ga4-activation-candidate, prepares one runtime flag change plus necessary tests; no deployment/livecollection authorization.
+
+Frozen file/manifest/archive/configuration hashes allPASS. Read-only18:56:32.596UTC Hosting08500dca665abbab/all64files+config and all34Functions unchanged; enrollmentstillone explicitallowlist; rollback2bb9finalized. No pricing/Stripe/AI/auth/entitlement/customer write. New offline production-origin probe passes desktop/390/320 with Google/productionfullyintercepted; FrozenactivationHosting297efc22ef45108d5b42afe328ae6ba75f116130 passes385tests/8gates/0sourcechanges;66-filearchive2041d0c3395fd8e9d0882714ccce791a00ee2b4905354f4d351d62391ce80731, configunchanged. Backend reusesunchangeda661package; finaldocumentationheadon candidatePR. [Reconciliation/release/costs](../marketing/ga4/ACTIVATION_RECONCILIATION.md).
+
+Next3: reviewexactactivationcandidate; authorizeonlynarrowcallable+HostingreleaseandcontrolledGAverification; verifyactualconsentedRealtimeandcampaignmeasurement. Do not requestduplicateGoogleOFFsetup. No hostedCI/liveGA/customer/revenueclaim; historicaltransaction/payment/device limits retained.
+
 ## November 23, 2026 — GA4 final release readiness
 
 [Draft PR #128](https://github.com/alwat83/ifyoumind/pull/128), reviewed from pinnedc4ede4ff, remains separate from production. One reproduced privacy correction: clearing all local preferences in another tab now withdraws consent immediately (null-key storage event). Added explicit real-reload grant/reject persistence, expired/invalid consent, keyboard/dialog and obstruction checks, plus failed/ambiguous receipt and lost-delivery coverage. No design, purchase callable, billing, AI, auth, entitlement or enrollment implementation change.

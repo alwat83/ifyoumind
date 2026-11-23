@@ -1,0 +1,62 @@
+{
+  "source": "297efc22ef45108d5b42afe328ae6ba75f116130",
+  "baseline": "b86229d9f7887d0ba79204660d1be3bec098c55d",
+  "releaseAuthorized": false,
+  "deployExecuted": false,
+  "collectionActivated": false,
+  "hosting": {
+    "source": "297efc22ef45108d5b42afe328ae6ba75f116130",
+    "project": "ifyoumind-473fe",
+    "files": 66,
+    "configSha256": "a985fa400017d793640bd4c895435d0c8d4a302c183efcb7d50999794ce5dec0",
+    "releaseAuthorized": false,
+    "productionFlag": true,
+    "consentStillRequired": true,
+    "manifestSha256": "17dad92c8d3e2a6511515e30e06bf10e3b00a78d0f752014e3be9907e29fc868",
+    "archiveSha256": "2041d0c3395fd8e9d0882714ccce791a00ee2b4905354f4d351d62391ce80731",
+    "marketingJpegsPreserved": 6,
+    "privateDiscoveryAssetsUnchanged": 3,
+    "excludedEmptyTrackedPlaceholders": 13
+  },
+  "functions": {
+    "files": 87,
+    "manifestSha256": "0899eeee2ac1c35123226232081a907f4d9cea8c64ab1d7f0c1284edc5becc31",
+    "archiveSha256": "1b3f7b596ae7061787122c92234f05e65bebee79f4fa30932083cbd5658abf78",
+    "exports": [
+      "claimVerifiedPurchase"
+    ],
+    "secretBindings": 0,
+    "region": "us-central1",
+    "timeoutSeconds": 15,
+    "maxInstances": 2,
+    "concurrency": 10,
+    "adminBootstrapVerified": true,
+    "source": "a661acd16969913ab85bb524aaf677acbbabe348",
+    "reusedFrozenPackage": true
+  },
+  "google": {
+    "property": "565380927",
+    "stream": "16394318092",
+    "measurement": "G-NRT31062LW",
+    "enhancedMeasurement": "OFF verified after reload",
+    "observationWindowUtc": "2026-11-23T18:52:00Z/2026-11-23T18:54:01Z",
+    "settingsChangedByCodex": false
+  },
+  "gate": {
+    "status": "PASS",
+    "totalPassed": 385,
+    "transientSourceChanges": 0
+  },
+  "costs": {
+    "newPaidGitHubDependency": false,
+    "newPaidService": false,
+    "providerCalls": 0,
+    "productionUsageCostMeasured": false
+  },
+  "limitations": [
+    "No deployment or live GA collector receipt",
+    "Every production-origin probe response is locally fulfilled; Google mocked",
+    "Physical Safari/VoiceOver/Linux pixel/human review remain unverified",
+    "Unchanged sensitive-backend 453-test OFF baseline retained separately, not relabeled as a new full run"
+  ]
+}

@@ -1,6 +1,6 @@
 # GA4 — consented acquisition measurement
 
-November 23, 2026 · OpenAI / Codex · **Implemented locally; not deployed.**
+November 23, 2026 · OpenAI / Codex · [Draft PR #128](https://github.com/alwat83/ifyoumind/pull/128) · **Implemented locally; not deployed.**
 
 ## Decision and verified audit
 

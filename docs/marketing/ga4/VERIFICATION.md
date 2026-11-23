@@ -2,7 +2,7 @@
 
 November 23, 2026 · OpenAI / Codex · native macOS arm64 · Node22.23.2 / Playwright1.56.0 / installed Chrome fallback. Local testing is not GitHub-hosted CI or proof of Google collection.
 
-Candidate branch: `codex/ga4-privacy-measurement`, based on `75afab61209db5f9389c696a6241020dfc1d59e2` / `codex/marketing-asset-launch`. The stacked base keeps previously deployed marketing/AI/consumer work out of this focused PR diff. No master merge or release is authorized. Exact final head and clean-source readbacks are recorded on the draft PR; ignored machine reports remain local.
+[Draft PR #128](https://github.com/alwat83/ifyoumind/pull/128). Candidate branch: `codex/ga4-privacy-measurement`, based on `75afab61209db5f9389c696a6241020dfc1d59e2` / `codex/marketing-asset-launch`. The stacked base keeps previously deployed marketing/AI/consumer work out of this focused PR diff. No master merge or release is authorized. Executable verification commit: **fd6e89f1f60d94867fbacbdb49d5956223033156**. Clean before/after, zero transient source changes, matching fingerprint. The final evidence-only head and remote readback are recorded on the draft PR; [sanitized machine summary](verification.json), detailed logs remain local.
 
 ## Executed checks
 
@@ -11,7 +11,7 @@ Candidate branch: `codex/ga4-privacy-measurement`, based on `75afab61209db5f9389
 | `npm --prefix functions test` | 101 PASS | Existing Functions unit tests |
 | `npm run test:seo` | 191 PASS | Existing fast web/guards plus17new analytics policy tests |
 | Firestore integration command below | 75 PASS | Existing commerce/subscriptions/rules and7new receipt tests, including signed synthetic webhook and concurrent claims |
-| `e2e/ga4.config.mjs` | 24 PASS before final banner-height correction; exact-head refresh recorded on PR | Consent/regrant, one tag/page, SPA, payload exclusions, attribution, registration, mocked Checkout, receipt proof, offline CSV/clear at1280/390/320 |
+| `e2e/ga4.config.mjs` | 24 PASS on clean fd6e89f1 after banner correction | Consent/regrant, one tag/page, SPA, payload exclusions, attribution, registration, mocked Checkout, receipt proof, offline CSV/clear at1280/390/320 |
 | Four affected existing browser suites below | 28 PASS after banner correction | Public/Free/Starter/Plus/legacyPro, Account, email verification, question/reveal, mock fulfillment/cancellation |
 | `npm run build:local` | PASS | Local app plus isolated Discovery |
 | `npm run build` | PASS | Production app/guides/SEO plus isolated Discovery; no deployment |

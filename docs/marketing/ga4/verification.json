@@ -1,0 +1,64 @@
+{
+  "commit": "fd6e89f1f60d94867fbacbdb49d5956223033156",
+  "branch": "codex/ga4-privacy-measurement",
+  "startedAt": "2026-11-23T17:13:01.736Z",
+  "finishedAt": "2026-11-23T17:13:32.108Z",
+  "mode": "native-local-not-hosted-ci",
+  "sourceBefore": "516e41669f849a057fc7a1699b5d39d5e3c738230c22d044dcf36b67666984ff",
+  "sourceAfter": "516e41669f849a057fc7a1699b5d39d5e3c738230c22d044dcf36b67666984ff",
+  "sourceChanges": 0,
+  "integrity": true,
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "policy",
+      "command": "node --test test/ga4-policy.test.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "tests": {
+        "executed": 17,
+        "passed": 17,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "browser",
+      "command": "node node_modules/@playwright/test/cli.js test --config e2e/ga4.config.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "tests": {
+        "executed": 24,
+        "passed": 24,
+        "failed": 0,
+        "skipped": 0
+      }
+    },
+    {
+      "id": "bundle",
+      "command": "npm run check:production-bundle",
+      "exitCode": 0,
+      "status": "PASS",
+      "tests": null
+    },
+    {
+      "id": "isolation",
+      "command": "node scripts/check-discovery-isolation.mjs --production",
+      "exitCode": 0,
+      "status": "PASS",
+      "tests": null
+    }
+  ],
+  "retainedSourceChecks": {
+    "functions": 101,
+    "web": 191,
+    "commerceRulesAndAnalytics": 75,
+    "existingBrowser": 28
+  },
+  "limitations": [
+    "Production flag OFF; Enhanced Measurement ON; no real GA collection",
+    "Physical Safari/VoiceOver/Linux visuals unverified",
+    "Retained counts were executed against precommit identical relevant implementation, not relabeled exact-head runs"
+  ],
+  "note": "Exact clean-source checks ran on fd6e89f1. Final documentation-only head retains identical executable files; final head/readback is on the draft PR."
+}

@@ -1,34 +1,7 @@
-<div class="modal-overlay" *ngIf="isOpen$ | async">
-  <div class="modal-content">
-    <h2>Cookie Preferences</h2>
-    <p>Manage your cookie settings. You can enable or disable different types of cookies below. Essential cookies are always enabled.</p>
-
-    <div class="cookie-category">
-      <label for="essential">Essential</label>
-      <input type="checkbox" id="essential" [ngModel]="consent.essential" disabled="true">
-    </div>
-
-    <div class="cookie-category">
-      <label for="analytics">Analytics</label>
-      <input type="checkbox" id="analytics" [(ngModel)]="consent.analytics">
-    </div>
-
-    <div class="cookie-category">
-      <label for="functional">Functional</label>
-      <input type="checkbox" id="functional" [(ngModel)]="consent.functional">
-    </div>
-
-    <div class="cookie-category">
-      <label for="marketing">Marketing</label>
-      <input type="checkbox" id="marketing" [(ngModel)]="consent.marketing">
-    </div>
-
-    <div class="actions">
-      <button (click)="save()">Save settings</button>
-      <button (click)="acceptAll()">Accept all</button>
-      <button (click)="rejectAll()">Reject all</button>
-    </div>
-
-    <button class="close-button" (click)="close()">&times;</button>
-  </div>
-</div>
+<dialog #dialog aria-labelledby="analytics-heading" (cancel)="close()">
+  <h2 id="analytics-heading">Analytics preferences</h2>
+  <p>Essential account and security features work without analytics. Google Analytics uses a browser identifier to measure visits and selected interactions only if you allow it. No bills, questions, report contents, email addresses or payment amounts are sent. Advertising features stay off.</p>
+  <label><input #choice type="checkbox"> Allow optional analytics</label>
+  <p>You can change this choice from the Privacy Policy. Withdrawing consent stops future collection and clears analytics cookies; it cannot undo information already sent.</p>
+  <div class="actions"><button type="button" (click)="save()">Save preferences</button><button type="button" (click)="rejectAll()">Reject analytics</button><button type="button" (click)="close()">Close</button></div>
+</dialog>

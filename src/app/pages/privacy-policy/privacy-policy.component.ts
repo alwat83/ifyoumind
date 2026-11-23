@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { CookiePreferencesService } from '../../services/cookie-preferences.service';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -9,7 +10,8 @@ import { RouterLink } from '@angular/router';
   styleUrl:'./privacy-policy.component.scss',
 })
 export class PrivacyPolicyComponent {
+  readonly preferences=inject(CookiePreferencesService);
   effectiveDate='October 2, 2026';
-  lastUpdated='November 21, 2026';
+  lastUpdated='November 23, 2026';
   contactEmail='privacy@ifyoumind.com';
 }

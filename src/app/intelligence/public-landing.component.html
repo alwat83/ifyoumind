@@ -33,7 +33,7 @@
         </div>
 
         <div class="discovery-next">
-          <details #evidence class="home-evidence">
+          <details #evidence class="home-evidence" (toggle)="evidenceToggled(evidence)">
             <summary>
               <span class="evidence-show">Show the evidence</span>
               <span class="evidence-hide">Hide the evidence</span>

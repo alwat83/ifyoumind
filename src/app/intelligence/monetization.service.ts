@@ -1,3 +1,5 @@
+import { AnalyticsService } from '../services/analytics.service';
+import { ANALYTICS_CONSENT_VERSION, Offer, checkoutSessionFromUrl } from '../services/analytics-policy';
 import { Injectable, inject } from '@angular/core';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 
@@ -33,6 +35,7 @@ export interface CommercialStatus {
 @Injectable({providedIn:'root'})
 export class MonetizationService {
   private readonly functions=inject(Functions);
+  private readonly analytics=inject(AnalyticsService);
 
   async status(organizationId:string):Promise<CommercialStatus>{
     const call=httpsCallable<{organizationId:string},CommercialStatus>(
@@ -50,7 +53,17 @@ export class MonetizationService {
       {organizationId:string;offer:CheckoutOffer;projectId:string},
       {url:string;sessionId:string}
     >(this.functions,'createCommercialCheckout');
-    return (await call({organizationId,offer,projectId})).data.url;
+    const result=(await call({organizationId,offer,projectId})).data;
+    await this.analytics.checkoutStarted(offer,result.sessionId||checkoutSessionFromUrl(result.url)||'');
+    return result.url;
+  }
+
+  async confirmAnalyticsPurchase(organizationId:string,projectId:string,offer:string):Promise<void>{
+    if(!this.analytics.permitted||!['report','starter','plus'].includes(offer))return;
+    this.analytics.afterReady(()=>{void (async()=>{try{const call=httpsCallable<{organizationId:string;projectId:string;offer:string;consentVersion:string},{confirmed:boolean;offer?:Offer}>(this.functions,'claimVerifiedPurchase');
+      const result=(await call({organizationId,projectId,offer,consentVersion:ANALYTICS_CONSENT_VERSION})).data;
+      if(result.confirmed&&result.offer&&this.analytics.permitted)this.analytics.purchaseVerified(result.offer);
+    }catch{/* No browser redirect or entitlement alone establishes a GA4 purchase. */}})();});
   }
 
   async unlockReportWithPro(organizationId:string,projectId:string):Promise<number>{

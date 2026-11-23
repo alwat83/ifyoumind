@@ -1,1 +1,4 @@
 @use '../legal-surface';
+
+@use '../../product-design' as product;
+article a{text-decoration:underline;text-underline-offset:3px}button{@include product.secondary;margin-top:16px}

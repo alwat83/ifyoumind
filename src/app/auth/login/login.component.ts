@@ -1,3 +1,4 @@
+import { AnalyticsService } from '../../services/analytics.service';
 import { JourneyNavigationComponent } from '../../journey-navigation.component';
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -9,6 +10,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   GoogleAuthProvider,
+  getAdditionalUserInfo,
   sendPasswordResetEmail,
 } from '@angular/fire/auth';
 
@@ -27,6 +29,7 @@ export class LoginComponent {
   resetMessage:string|null=null;
   resetting=false;
 
+  private analytics=inject(AnalyticsService);
   private auth:Auth=inject(Auth);
   private router:Router=inject(Router);
   private route=inject(ActivatedRoute);
@@ -70,7 +73,8 @@ export class LoginComponent {
 
   async googleLogin(){
     try{
-      await signInWithPopup(this.auth,new GoogleAuthProvider());
+      const result=await signInWithPopup(this.auth,new GoogleAuthProvider());
+      if(getAdditionalUserInfo(result)?.isNewUser)this.analytics.registrationCompleted('google');
       await this.router.navigateByUrl(this.destination());
     }catch(error:any){this.errorMessage=error.message;}
   }

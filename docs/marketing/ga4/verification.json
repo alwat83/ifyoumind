@@ -1,0 +1,127 @@
+{
+  "commit": "a661acd16969913ab85bb524aaf677acbbabe348",
+  "baseline": "c4ede4fffa866cad1ea9d2eaf20cad14cbf3368b",
+  "branch": "codex/ga4-privacy-measurement",
+  "startedAt": "2026-11-23T17:46:17.156Z",
+  "finishedAt": "2026-11-23T17:51:51.390Z",
+  "environment": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "node": "v22.23.2",
+    "mode": "native-local-not-hosted-ci"
+  },
+  "sourceBefore": "eec0085d8101cdd17669b67a2eaa072ea5f49bd740210da2ba334a57e4666bf4",
+  "sourceAfter": "eec0085d8101cdd17669b67a2eaa072ea5f49bd740210da2ba334a57e4666bf4",
+  "transientSourceChanges": 0,
+  "integrity": true,
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "functions",
+      "command": "npm --prefix functions test",
+      "exitCode": 0,
+      "status": "PASS",
+      "tests": {
+        "executed": 101,
+        "passed": 101,
+        "failed": 0,
+        "skipped": 0
+      },
+      "logSha256": "74f24aceba2e89f28187f95b98251be8dc02caf6cb31ab1526bca4abf12605df"
+    },
+    {
+      "id": "web",
+      "command": "npm run test:seo",
+      "exitCode": 0,
+      "status": "PASS",
+      "tests": {
+        "executed": 191,
+        "passed": 191,
+        "failed": 0,
+        "skipped": 0
+      },
+      "logSha256": "c78b86853e91d7edb880ab23e0542ce0f29cfac306528bb1591c43dfc6def1a5"
+    },
+    {
+      "id": "backend",
+      "command": "node --test --test-concurrency=1 test/commerce.integration.test.mjs test/subscriptions.integration.test.mjs test/report-explanation.integration.test.mjs test/intelligence.rules.test.mjs test/ga4-acquisition.integration.test.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "tests": {
+        "executed": 91,
+        "passed": 91,
+        "failed": 0,
+        "skipped": 0
+      },
+      "logSha256": "754ee2b528b04d757b35595130f07e5cd3942e78fa7613f4207e62d0b6fd0a49"
+    },
+    {
+      "id": "analytics-browser",
+      "command": "node node_modules/@playwright/test/cli.js test --config e2e/ga4.config.mjs",
+      "exitCode": 0,
+      "status": "PASS",
+      "tests": {
+        "passed": 42,
+        "failed": 0,
+        "skipped": 0
+      },
+      "logSha256": "930e788468c612783adb61ca827b281e3785d629e7aa1ba5f0ba0e02ec3f8fcf"
+    },
+    {
+      "id": "journeys",
+      "command": "node node_modules/@playwright/test/cli.js test --config e2e/playwright.config.mjs registration.spec.mjs consumer-pricing.spec.mjs subscription-launch.spec.mjs question-reveal.spec.mjs --workers=2",
+      "exitCode": 0,
+      "status": "PASS",
+      "tests": {
+        "passed": 28,
+        "failed": 0,
+        "skipped": 0
+      },
+      "logSha256": "3241d8e5f59a24cdd722a18c63bc1f17af5d5cd91c0272bb3ae67f8042a216ea"
+    },
+    {
+      "id": "bundle",
+      "command": "npm run check:production-bundle",
+      "exitCode": 0,
+      "status": "PASS",
+      "tests": null,
+      "logSha256": "3104ab34c78923f64a6724374b9e820b9b449cb16d8f78f287a3f9d6343456b9"
+    },
+    {
+      "id": "isolation",
+      "command": "node scripts/check-discovery-isolation.mjs --production",
+      "exitCode": 0,
+      "status": "PASS",
+      "tests": null,
+      "logSha256": "e53444994e56a723114c7face4f7a9bafd5908036669ccb6590a38675f100d8e"
+    }
+  ],
+  "builds": {
+    "local": {
+      "status": "PASS",
+      "logSha256": "9e9add3367835cf40f83c8d897ebb3d9750f8d3e75a20778ffb0864008e3d096"
+    },
+    "production": {
+      "status": "PASS",
+      "logSha256": "e67277e94a2c1bb79a07008f8cc4fb30c9a4bec4b49f506597413c2f9fb7ef23"
+    },
+    "note": "Builds completed before commit publication against identical executable inputs; no runtime inputs changed during documentation/commit."
+  },
+  "limitations": [
+    "GA4_PRODUCTION_ENABLED=false; no live GA collector/Realtime or Google setting mutation",
+    "Mocked Google/payment transports and synthetic demo data only",
+    "Physical Safari/VoiceOver/Linux visual/human comprehension unverified",
+    "Historical transaction recovery and live-payment exceptions preserved; not claimed resolved"
+  ],
+  "fixtureDiagnostic": {
+    "priorStatus": "FAILED_OR_INVALID",
+    "priorBackend": {
+      "passed": 75,
+      "failed": 16
+    },
+    "preserved": "final-gate-diagnostic.json",
+    "cause": "Reused local demo database retained 19 billing subcollections under 22 fixed-ID subscription fixture workspaces. No production data or application logic changed. Restarted owned demo stack and reran backend with its required fresh database; original failures retained."
+  },
+  "totalPassed": 453,
+  "evidenceOnlyHeadNote": "Final PR documentation head may differ; executable RC is a661acd16969913ab85bb524aaf677acbbabe348. No runtime/test/package/config bytes change in the final evidence commit."
+}

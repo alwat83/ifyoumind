@@ -17,12 +17,7 @@ import { provideAuth, getAuth, connectAuthEmulator } from '@angular/fire/auth';
 import { provideFirestore, getFirestore, connectFirestoreEmulator } from '@angular/fire/firestore';
 import { provideStorage, getStorage, connectStorageEmulator } from '@angular/fire/storage';
 import { provideFunctions, getFunctions, connectFunctionsEmulator } from '@angular/fire/functions';
-import {
-  provideAnalytics,
-  getAnalytics,
-  ScreenTrackingService,
-  UserTrackingService,
-} from '@angular/fire/analytics';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -58,10 +53,6 @@ export const appConfig: ApplicationConfig = {
       if (useLocalEmulators) connectFunctionsEmulator(functions, '127.0.0.1', 5001);
       return functions;
     }),
-    ...(useLocalEmulators ? [] : [
-      provideAnalytics(() => getAnalytics()),
-      ScreenTrackingService,
-      UserTrackingService,
-    ]),
+
   ],
 };

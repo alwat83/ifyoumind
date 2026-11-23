@@ -1,0 +1,34 @@
+{
+  "source": "a661acd16969913ab85bb524aaf677acbbabe348",
+  "releaseAuthorized": false,
+  "deployExecuted": false,
+  "hosting": {
+    "source": "a661acd16969913ab85bb524aaf677acbbabe348",
+    "project": "ifyoumind-473fe",
+    "files": 66,
+    "configSha256": "a985fa400017d793640bd4c895435d0c8d4a302c183efcb7d50999794ce5dec0",
+    "releaseAuthorized": false,
+    "manifestSha256": "d5c05b12fe251e9400ccc78397a417ff1c880625897126e067c741549e1d099c",
+    "archiveSha256": "6af07bc4562a126e2a10848bebdca81e8ff0da0ca5228c8056bd60a385b01b0d",
+    "marketingImagesPreserved": 6,
+    "privateDiscoveryFilesUnchanged": 3,
+    "configurationScope": "hosting-only",
+    "exclusionReason": "Only 13 empty tracked Git directory placeholders excluded, matching existing Hosting ignore **/.*. Unknown/private files still rejected by unmodified artifact guard.",
+    "excludedPlaceholderCount": 13
+  },
+  "functions": {
+    "files": 87,
+    "manifestSha256": "0899eeee2ac1c35123226232081a907f4d9cea8c64ab1d7f0c1284edc5becc31",
+    "archiveSha256": "1b3f7b596ae7061787122c92234f05e65bebee79f4fa30932083cbd5658abf78",
+    "exports": [
+      "claimVerifiedPurchase"
+    ],
+    "secretBindings": 0,
+    "region": "us-central1",
+    "timeoutSeconds": 15,
+    "maxInstances": 2,
+    "concurrency": 10,
+    "adminBootstrapVerified": true
+  },
+  "note": "Offline review packages only; source flag remains false. Full manifests/archives stay ignored locally. Do not deploy until separately authorized."
+}

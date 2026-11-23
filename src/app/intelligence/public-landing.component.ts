@@ -3,6 +3,9 @@ import { AfterRenderRef, AfterViewInit, Component, HostListener, Injector, OnDes
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Auth, user } from '@angular/fire/auth';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { AnalyticsService } from '../services/analytics.service';
+import { CookieService } from '../services/cookie.service';
+import { Subscription } from 'rxjs';
 import { HOME_EXAMPLES } from './home-discovery-examples';
 
 @Component({
@@ -18,6 +21,9 @@ import { HOME_EXAMPLES } from './home-discovery-examples';
   ],
 })
 export class PublicLandingComponent implements AfterViewInit, OnDestroy {
+  private readonly analytics=inject(AnalyticsService);
+  private consentSubscription:Subscription|undefined;
+  private readonly cookies=inject(CookieService);
   readonly examples = HOME_EXAMPLES;
   readonly taxIncrease = this.examples[0].finding.value;
   readonly viewer = toSignal(user(inject(Auth)));
@@ -29,11 +35,14 @@ export class PublicLandingComponent implements AfterViewInit, OnDestroy {
   private readonly injector = inject(Injector);
 
   ngAfterViewInit(): void {
+    this.consentSubscription=this.cookies.consentStatus$.subscribe(()=>{queueMicrotask(()=>{if(this.revealed)this.analytics.exampleViewed(this.example.id);});});
+    queueMicrotask(()=>{if(this.revealed)this.analytics.exampleViewed(this.example.id);});
     if (this.revealed) this.moveTo(document.getElementById('business'));
   }
 
   ngOnDestroy(): void {
     this.pending?.destroy();
+    this.consentSubscription?.unsubscribe();
   }
 
   @HostListener('window:hashchange')
@@ -43,6 +52,7 @@ export class PublicLandingComponent implements AfterViewInit, OnDestroy {
 
   reveal(target: HTMLElement | null): void {
     this.revealed = true;
+    this.analytics.exampleViewed(this.example.id);
     this.discoveryAnnouncement = `${this.example.label}. ${this.example.takeaway}`;
     this.moveTo(target);
   }
@@ -53,6 +63,8 @@ export class PublicLandingComponent implements AfterViewInit, OnDestroy {
     this.example = example;
     this.reveal(wasRevealed ? null : target);
   }
+
+  evidenceToggled(evidence:HTMLDetailsElement):void{if(evidence.open)this.analytics.evidenceRevealed(this.example.id);}
 
   showSources(evidence: HTMLDetailsElement): void {
     this.revealed = true;

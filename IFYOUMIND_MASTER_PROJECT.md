@@ -1,5 +1,12 @@
 # ifYouMind — Master Project Record and Roadmap
 
+## November 23, 2026 — Authorized Hosting rollback verified; GA4 tracking removed
+
+Founder-authorized rollback completed at **23:26:30.936UTC**: restored **08500dca665abbab FINALIZED**, new release **1795476390936000**. All64static file hashes/config match the retained OFF baseline; **all35Functions unchanged**, including claimVerifiedPurchase00001-jul. Pricing/enrollment, AI, billing, rules and customer records untouched. Public Chrome smoke PASS: homepage reveal/evidence, pricing4.99/9.99/79 with monthlyclosed, privateDiscoveryexample/clear/CSP/no post-load requests; sixJPEGs200/exacthash. Zero Google requests. No source rebuild/merge/broad deploy or new live collector test.
+
+Analytics remains **NO-GO for redeployment** after the preserved full-URL/title failure. Local-only investigation/correction is authorized; analytics redeployment requires separate approval. [Rollback evidence](docs/marketing/ga4/hosting-rollback.json) supersedes the preceding deployed-and-pending-rollback status. Next3: diagnose actual tag serialization offline; prepare focused correction/regressions; seek new exact-candidate release authorization only after privacy gates pass.
+
+
 ## November 23, 2026 — GA4 deployed; STOPPED on real collector privacy failure
 
 Founder-authorized PR129 exact artifacts deployed without rebuild: Hosting **267c912aeea5478b**, release **1795475756058000**,23:15:56.058UTC; callable **claimverifiedpurchase-00001-jul ACTIVE/Ready/100%**, anonymous401. All66Hosting file hashes/config, six marketing JPEGs and all34pre-existing Functions unchanged except approved analytics Hosting/new callable. Pricing, AI, public enrollment and commercial behavior preserved. Frozen source297efc22/backend a661acd1 and all153files/archives remain unchanged. No merge/real purchase/customer write.

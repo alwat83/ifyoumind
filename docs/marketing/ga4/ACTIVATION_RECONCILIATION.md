@@ -1,5 +1,7 @@
 # GA4 final activation reconciliation
 
+> **Current production: founder-authorized rollback completed.** Hosting08500dca665abbab, release1795476390936000 at2026-11-23T23:26:30.936Z; tracking removed, all35Functions preserved. [Rollback/post-smoke evidence](hosting-rollback.json). Deployed/pending-rollback wording below is historical. Local correction only; no analytics redeployment authorized.
+
 > **Execution update: deployed, then STOPPED/NO-GO on actual collector privacy failure.** [Production receipt](PRODUCTION_RELEASE.md) supersedes historical not-deployed/ready statements below. Tracking remains deployed for consenting visitors pending a separate founder Hosting-only rollback decision. No automatic rollback or new live test.
 
 November23,2026 · OpenAI /Codex · [Draft activation PR129](https://github.com/alwat83/ifyoumind/pull/129) · **Prepared only; no production authorization executed.**

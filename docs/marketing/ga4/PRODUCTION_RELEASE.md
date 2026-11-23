@@ -1,5 +1,7 @@
 # GA4 production execution receipt — STOPPED
 
+> **Current production: founder-authorized rollback completed.** Hosting08500dca665abbab, release1795476390936000 at2026-11-23T23:26:30.936Z; tracking removed, all35Functions preserved. [Rollback/post-smoke evidence](hosting-rollback.json). Deployed/pending-rollback wording below is historical. Local correction only; no analytics redeployment authorized.
+
 November 23, 2026 · OpenAI / Codex · [PR129](https://github.com/alwat83/ifyoumind/pull/129). Exact founder authorizations [7113948791](https://github.com/alwat83/ifyoumind/pull/129#issuecomment-7113948791) and [7114343078](https://github.com/alwat83/ifyoumind/pull/129#issuecomment-7114343078) were executed. **Deployment succeeded; live privacy validation failed. NO-GO for completed analytics activation.** No automatic rollback, settings change or corrective deployment was performed.
 
 [Machine-readable receipt](production-release.json). Raw credentials, browser IDs, cookies, account identifiers and unredacted cloud metadata remain outside public evidence.

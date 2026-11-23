@@ -1,0 +1,122 @@
+{
+  "source": "297efc22ef45108d5b42afe328ae6ba75f116130",
+  "baseline": "b86229d9f7887d0ba79204660d1be3bec098c55d",
+  "branch": "codex/ga4-activation-candidate",
+  "startedAt": "2026-11-23T19:02:32.110Z",
+  "finishedAt": "2026-11-23T19:03:52.511Z",
+  "sourceBefore": "2e9b85c865052f2de623aea90bf2d7a24d3650586aca867f60c291e8d902ecbd",
+  "sourceAfter": "2e9b85c865052f2de623aea90bf2d7a24d3650586aca867f60c291e8d902ecbd",
+  "transientSourceChanges": 0,
+  "integrity": true,
+  "status": "PASS",
+  "checks": [
+    {
+      "id": "functions",
+      "command": "npm --prefix functions test",
+      "status": "PASS",
+      "exitCode": 0,
+      "tests": {
+        "executed": 101,
+        "passed": 101,
+        "failed": 0,
+        "skipped": 0
+      },
+      "logSha256": "d0aea655cf6b4ba799adb5b66f4c84487dc0de8df20a67927b551d02f5b3096a"
+    },
+    {
+      "id": "web",
+      "command": "npm run test:seo",
+      "status": "PASS",
+      "exitCode": 0,
+      "tests": {
+        "executed": 191,
+        "passed": 191,
+        "failed": 0,
+        "skipped": 0
+      },
+      "logSha256": "36e9c6ab4b38048fa7b045c732d9cf05e7c86e5075996590cd3ff97c1d192980"
+    },
+    {
+      "id": "receipts-rules",
+      "command": "node --test --test-concurrency=1 test/ga4-acquisition.integration.test.mjs test/intelligence.rules.test.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "tests": {
+        "executed": 20,
+        "passed": 20,
+        "failed": 0,
+        "skipped": 0
+      },
+      "logSha256": "71343860021a377f9de7469fcf46dd856166e768c67de417d80e2e4d73c0f100"
+    },
+    {
+      "id": "analytics-browser",
+      "command": "node node_modules/@playwright/test/cli.js test --config e2e/ga4.config.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "tests": {
+        "passed": 42,
+        "failed": 0,
+        "skipped": 0
+      },
+      "logSha256": "6e1120e1792d633e04561db126ce2353eb166c11aa27a5da61bec80d3a5b9464"
+    },
+    {
+      "id": "journeys",
+      "command": "node node_modules/@playwright/test/cli.js test --config e2e/playwright.config.mjs registration.spec.mjs consumer-pricing.spec.mjs subscription-launch.spec.mjs question-reveal.spec.mjs --workers=2",
+      "status": "PASS",
+      "exitCode": 0,
+      "tests": {
+        "passed": 28,
+        "failed": 0,
+        "skipped": 0
+      },
+      "logSha256": "204e16199a104b197e9d44733438e388426e36e9b916078b877b78bc0d689a57"
+    },
+    {
+      "id": "production-origin",
+      "command": "node node_modules/@playwright/test/cli.js test --config e2e/ga4-activation.config.mjs",
+      "status": "PASS",
+      "exitCode": 0,
+      "tests": {
+        "passed": 3,
+        "failed": 0,
+        "skipped": 0
+      },
+      "logSha256": "fc70ed1a6f04f619f840b5bc15048412da27a9480bf54814324eed8d9e9b0466"
+    },
+    {
+      "id": "bundle",
+      "command": "npm run check:production-bundle",
+      "status": "PASS",
+      "exitCode": 0,
+      "tests": null,
+      "logSha256": "3104ab34c78923f64a6724374b9e820b9b449cb16d8f78f287a3f9d6343456b9"
+    },
+    {
+      "id": "isolation",
+      "command": "node scripts/check-discovery-isolation.mjs --production",
+      "status": "PASS",
+      "exitCode": 0,
+      "tests": null,
+      "logSha256": "e53444994e56a723114c7face4f7a9bafd5908036669ccb6590a38675f100d8e"
+    }
+  ],
+  "totalPassed": 385,
+  "environment": {
+    "node": "v22.23.2",
+    "platform": "darwin",
+    "arch": "arm64",
+    "mode": "native-local-not-hosted-ci"
+  },
+  "builds": {
+    "local": "PASS identical executable inputs before commit",
+    "production": "PASS identical executable inputs before commit"
+  },
+  "limitations": [
+    "No deployment or live GA collector receipt",
+    "Every production-origin probe response is locally fulfilled; Google mocked",
+    "Physical Safari/VoiceOver/Linux pixel/human review remain unverified",
+    "Unchanged sensitive-backend 453-test OFF baseline retained separately, not relabeled as a new full run"
+  ]
+}

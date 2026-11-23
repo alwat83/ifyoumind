@@ -61,3 +61,58 @@ No paidGitHub dependency, new provider/license, advertising spend, payment or Op
 5. Stop for unexpected collection, duplicate routes, private data or drift. With separate rollback authorization, restore then-current **08500dca665abbab** artifact/release (freshly recheck at execution); read back routing/assets and confirm trackingOFF. Older2bb9version is retained secondary evidence, not the defaulttarget. Do not automatically roll back, delete claims, alter Stripe/AI/rules or erase customer records.
 
 **Outstanding authorization:** deployment and controlled live collection only. Do not ask for another Enhanced Measurement change unless actual drift is observed. GA delivery remains unverified until release; at-most-once claim-before-delivery can undercount and Stripe remains the sole financial authority. No traffic/customer/revenue result is inferred from readiness.
+
+## Frozen activation source and completed gates
+
+**Hosting executable source:297efc22ef45108d5b42afe328ae6ba75f116130.** Backend package source remainsa661acd16969913ab85bb524aaf677acbbabe348. A final evidence-only branch head changes no executable/test/config/package byte. [Activation package record](activation-candidate.json) · [Exact-source verification](activation-verification.json).
+
+Native gate: **385PASS**, consisting of101Functions units,191web/policy,20receipt/rules,42analyticsbrowser,28existingregistration/pricing/subscription/account journeys and3newofflineproduction-origin probes. Eight gatesPASS, both productionbundle/isolation guardsPASS, identical before/after source fingerprint,0transientchanges. Production/localbuildsPASS against identical executable inputs before commit publication. No hostedCI/liveGAcollector claim. Original453-test backend-sensitiveOFFbaseline is retained, not mislabeled as reexecuted here. No test assertion or original artifact was weakened.
+
+Reproduction uses the existing demo-only setup/commands in VERIFICATION.md, with these focused selections:
+
+```sh
+npm --prefix functions test
+npm run test:seo
+# Fresh owned demo stack only; never a real Firebase project:
+GCLOUD_PROJECT=demo-ifyoumind FIRESTORE_EMULATOR_HOST=127.0.0.1:9988 \
+  FIREBASE_AUTH_EMULATOR_HOST=127.0.0.1:9989 \
+  node --test --test-concurrency=1 test/ga4-acquisition.integration.test.mjs \
+  test/intelligence.rules.test.mjs
+# Standard ga4.config and the four existing browser suites: same environment as VERIFICATION.md.
+QA_BROWSER_CHANNEL=chrome node node_modules/@playwright/test/cli.js test \
+  --config e2e/ga4-activation.config.mjs
+npm run check:production-bundle
+node scripts/check-discovery-isolation.mjs --production
+```
+
+Activation Hosting package: `test-results/ga4-activation/hosting-297efc22/` (66files,13knownemptytrackedplaceholders excluded under the existing Hostingignore; strict validator unchanged). Manifest **17dad92c8d3e2a6511515e30e06bf10e3b00a78d0f752014e3be9907e29fc868**; archive **2041d0c3395fd8e9d0882714ccce791a00ee2b4905354f4d351d62391ce80731**; config **a985fa400017d793640bd4c895435d0c8d4a302c183efcb7d50999794ce5dec0**. Reused backend archive **1b3f7b596ae7061787122c92234f05e65bebee79f4fa30932083cbd5658abf78**. OriginalOFFfiles/manifests/archives remain unchanged. No archive is publicly deployed.
+
+Reverify locally without rebuilding:
+
+```sh
+node scripts/prepare-hosting-release.mjs \
+  --expected-sha=297efc22ef45108d5b42afe328ae6ba75f116130 \
+  --verify=test-results/ga4-activation/hosting-297efc22
+shasum -a 256 test-results/ga4-activation/hosting-297efc22.tar.gz \
+  test-results/ga4-final/functions-a661acd1.tar.gz
+```
+
+### Commands reserved for separate production authorization
+
+These are a proposed exact sequence, **NOT executed or authorized by readiness approval**:
+
+```sh
+# Only after fresh source/hash/runtime/permissions/rollback/settings preflight and founder GO:
+node node_modules/firebase-tools/lib/bin/firebase.js deploy \
+  --project ifyoumind-473fe \
+  --config test-results/ga4-final/functions-a661acd1/firebase.json \
+  --only functions:claimVerifiedPurchase
+node node_modules/firebase-tools/lib/bin/firebase.js deploy \
+  --project ifyoumind-473fe \
+  --config test-results/ga4-activation/hosting-297efc22/firebase.json \
+  --only hosting
+```
+
+For a separately authorized rollback, the documented [Hosting releases.create operation](https://firebase.google.com/docs/reference/hosting/rest/v1beta1/sites.releases/create) can create a new live release pointing to the retained version. Planned endpoint: `POST https://firebasehosting.googleapis.com/v1beta1/sites/ifyoumind-473fe/releases?versionName=sites/ifyoumind-473fe/versions/08500dca665abbab`, with an explicit audit message. Do not call it during preparation. Freshly verify the version remainsFINALIZED/restorable and founder-controlled identity has release permission, then independently readback the live channel/version/files. No automatic rollback and no billing/AI/customer/rules changes. The [manual pageview reference](https://developers.google.com/analytics/devguides/collection/ga4/views) supports retaining `send_page_view:false`; savedOFF does not remove that application requirement.
+
+**Recommendation:GO for founder production authorization of these exact artifacts and bounded consented verification. Not a claim of live readiness already verified.** Remaining uncertainty is actual collector delivery, provider-owned settings beyond the observedOFF/IDs, physical devices/AT/Linux and previously preserved unrelated backend/payment risks. Recheck deploy/restore permissions and no conflicting release at the future execution point; no new credential or broader permission is requested now.

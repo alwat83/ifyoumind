@@ -1,5 +1,11 @@
 # ifYouMind — Master Project Record and Roadmap
 
+## November22,2026 — Approved tax carousel publicly hosted
+
+[PR127](https://github.com/alwat83/ifyoumind/pull/127) release executed under founder7087580868/7087807560. Five exact approved JPEGs/caption from33577c34 preserved; sourcea71cad822e40515b7e9f56ee926762ae53fd73e3. Hosting08500dca665abbab/release1795392328755000 at2026-11-23T00:05:28.755Z (November22 16:05:28.755PST). All5anonymousJPEG checks/64serverfiles PASS;59prior files/config/routes and34Functions unchanged, enrollmentclosed, AI/state/quotaunchanged. Prior2bb9f7f3c6545b0e finalized/retained. No rebuild/merge/backend/billing/customer/provider action.21targeted tests and exactsourceintegrity PASS, no fresh broad CI/device claims.
+
+[Release evidence/URLs/checks/rollback](docs/marketing/releases/PROPERTY_TAX_CAROUSEL_V2.md) · [canonical registry](docs/marketing/assets.json) · [ready exact caption/alt-text handoff](docs/marketing/drafts/property-tax/publication-handoff.json). This supersedes older pending-approval/unknown-URL snapshots. No Codex Instagram attempt; ChatGPT/Windsor handles the already-authorized one organic carousel. Record actual publishing receipt separately. No visits, conversions or revenue inferred from Hosting; historical reliability/payment/accessibility limits remain.
+
 ## November 22, 2026 — Permanent marketing asset pipeline
 
 Existing [draft PR127](https://github.com/alwat83/ifyoumind/pull/127) now extends the existing renderer into [one shared local-first workflow](docs/marketing/README.md): versioned draft sources/exports/captions, canonical metadata/lifecycle, validation, review sheets, approval-gated additive Hosting preparation and actual external publication receipts. Permanent AGENTS instructions require reuse.21targeted local tests and five offline renders pass; exact source/limitations/impact and reproduction commands are in [verification evidence](docs/marketing/releases/PIPELINE_VERIFICATION.md). No dependencies/services/install or production operations.

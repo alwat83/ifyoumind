@@ -1,5 +1,11 @@
 # ifYouMind — Zero-to-One Launch Command Center
 
+## November22 — Property-tax campaign distribution blocker removed
+
+Five approved carousel JPEGs are [publicly hosted and checksum verified](../marketing/releases/PROPERTY_TAX_CAROUSEL_V2.md), with exact approved caption and alt text in the ready handoff. Founder approval already exists for one organic @ifyoumindapp carousel; ChatGPT/Windsor publishes, Codex has made no posting request. No ads/spend/paid service. This is a concrete acquisition-enablement outcome, not evidence of reach, qualified visitors, useful outside experiences or revenue. Existing scoreboard unknowns remain unknown; no new analytics or financial query.
+
+Next opportunities ranked: (1) publish this already-approved finished campaign once using verified URLs — highest immediate distribution value, little remaining effort, response unproven; (2) record real finding/limitation comprehension from consenting outside visitors — high learning value/low cost; (3) guide genuinely interested city/Business users toward existing report value with unchanged payment safeguards. More asset production ranks below using the finished campaign and learning from actual response.
+
 ## November 22 — Acquisition operations ready; no inferred traction
 
 [Shared marketing pipeline](../marketing/README.md) now produces/reconciles/validates the actual5-slide property-tax pack and approval-gated handoff instead of another campaign system.21local regression cases pass; final exports/caption are pending, so no tax Hosting/social release occurs. This removes routine file/metadata work from the founder while preserving final external-action decisions. No product changes or new costs.

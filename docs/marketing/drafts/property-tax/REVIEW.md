@@ -4,7 +4,7 @@ November 22, 2026 · OpenAI / Codex · Version 2 · **Founder approved for Hosti
 
 [Before / after overview](comparison.jpg) · [Interactive file gallery](comparison.html) · [Refined slides](index.html) · [Numbers and rendering receipt](manifest.json) · [Authoritative asset states](../../assets.json) · [Contact sheet](contact-sheet.jpg)
 
-Five 1080 × 1350 JPEG exports reuse the existing Midnight Slate template, local Instrument Serif/Arial typography and the original deterministic example. No production application changes, deployment, social publishing, advertising spend or provider request.
+Five 1080 × 1350 JPEG exports reuse the existing Midnight Slate template, local Instrument Serif/Arial typography and the original deterministic example. No production application changes, social publishing, advertising spend or provider request. The exact approved exports are now [Hosting verified](../../releases/PROPERTY_TAX_CAROUSEL_V2.md); no creative regeneration.
 
 | Slide | Refinement | Export |
 |---|---|---|
@@ -34,7 +34,7 @@ npm run marketing:assets:render
 
 All five exports pass: exact dimensions/JPEG format; loaded local type; text/canvas bounds and disclosure separation; chart proportions; numerical/source-cell reconciliation; text contrast at least **7.45:1**; primary copy/values at least **13.33 px equivalent at 360 px width**; disclosure text 10.67 px equivalent. Full-resolution and all five 390 px previews were individually reviewed. Offline render, comparison and phone previews report zero external requests and zero page errors. Alt text/caption are updated. Native rendering requires the existing permitted headless-Chrome environment; no browser/OS installation occurred.
 
-The live preview retains the actual product's typography and is not independently restyled. Physical Instagram/iPhone legibility, assistive-technology reading of a posted carousel, engagement and customer comprehension remain untested. This is targeted creative verification, not hosted CI or a repeat of unrelated application/backend suites. Public URLs for the refined exports remain null; no file was copied into public/.
+The live preview retains the actual product's typography and is not independently restyled. Physical Instagram/iPhone legibility, assistive-technology reading of a posted carousel, engagement and customer comprehension remain untested. This is targeted creative verification, not hosted CI or a repeat of unrelated application/backend suites. At the original creative review public URLs were null. The subsequent authorized release copied the exact files into public/; [the current ready handoff](publication-handoff.json) records verified public URLs.
 
 ## Approved caption
 

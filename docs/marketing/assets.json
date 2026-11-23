@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "site": "https://ifyoumind.com",
   "createdAt": "2026-11-22T19:18:14Z",
-  "updatedAt": "2026-11-23T00:02:20.426Z",
+  "updatedAt": "2026-11-23T00:07:11.876Z",
   "campaigns": [
     {
       "id": "property-tax",
@@ -302,7 +302,7 @@
         "classification": "synthetic-public-only",
         "reference": "src/app/intelligence/home-bill-examples.json and sources/live-tax-finding.json"
       },
-      "state": "approved",
+      "state": "hosted",
       "approval": {
         "status": "approved",
         "scope": "final-export",
@@ -321,9 +321,24 @@
         "recordedAt": "2026-11-23T00:02:20.124Z"
       },
       "deployment": {
-        "status": "staged",
-        "publicUrl": null,
-        "publicPath": "assets/marketing/social/instagram/carousels/property-tax-carousel-01-v2.jpg"
+        "status": "hosted",
+        "publicUrl": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/property-tax-carousel-01-v2.jpg",
+        "publicPath": "assets/marketing/social/instagram/carousels/property-tax-carousel-01-v2.jpg",
+        "hostingVersion": "08500dca665abbab",
+        "hostingRelease": "1795392328755000",
+        "deployedAt": "2026-11-23T00:05:28.755Z",
+        "verifiedAt": "2026-11-23T00:06:20.178Z",
+        "sourceCommit": "a71cad822e40515b7e9f56ee926762ae53fd73e3",
+        "manifestSha256": "041091799b09ac159063df0011ebf2acc5b77869d235d6b8b2dd1f356384deb4",
+        "configSha256": "a985fa400017d793640bd4c895435d0c8d4a302c183efcb7d50999794ce5dec0",
+        "rollbackVersion": "2bb9f7f3c6545b0e",
+        "httpStatus": 200,
+        "mimeType": "image/jpeg",
+        "bytes": 159449,
+        "sha256": "237fd791af550fe0af727b9cb6b6ba4a1abcfebf92e61316d792870b60c6a67c",
+        "width": 1080,
+        "height": 1350,
+        "evidenceReference": "docs/marketing/releases/PROPERTY_TAX_CAROUSEL_V2.md"
       },
       "socialPublication": {
         "status": "not-published",
@@ -336,7 +351,7 @@
         "kind": "render-receipt"
       },
       "createdAt": "2026-11-22T23:23:02.847Z",
-      "updatedAt": "2026-11-23T00:02:20.124Z"
+      "updatedAt": "2026-11-23T00:07:11.876Z"
     },
     {
       "assetId": "property-tax-carousel-02-v2",
@@ -364,7 +379,7 @@
         "classification": "synthetic-public-only",
         "reference": "src/app/intelligence/home-bill-examples.json and sources/live-tax-finding.json"
       },
-      "state": "approved",
+      "state": "hosted",
       "approval": {
         "status": "approved",
         "scope": "final-export",
@@ -383,9 +398,24 @@
         "recordedAt": "2026-11-23T00:02:20.124Z"
       },
       "deployment": {
-        "status": "staged",
-        "publicUrl": null,
-        "publicPath": "assets/marketing/social/instagram/carousels/property-tax-carousel-02-v2.jpg"
+        "status": "hosted",
+        "publicUrl": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/property-tax-carousel-02-v2.jpg",
+        "publicPath": "assets/marketing/social/instagram/carousels/property-tax-carousel-02-v2.jpg",
+        "hostingVersion": "08500dca665abbab",
+        "hostingRelease": "1795392328755000",
+        "deployedAt": "2026-11-23T00:05:28.755Z",
+        "verifiedAt": "2026-11-23T00:06:20.392Z",
+        "sourceCommit": "a71cad822e40515b7e9f56ee926762ae53fd73e3",
+        "manifestSha256": "041091799b09ac159063df0011ebf2acc5b77869d235d6b8b2dd1f356384deb4",
+        "configSha256": "a985fa400017d793640bd4c895435d0c8d4a302c183efcb7d50999794ce5dec0",
+        "rollbackVersion": "2bb9f7f3c6545b0e",
+        "httpStatus": 200,
+        "mimeType": "image/jpeg",
+        "bytes": 141251,
+        "sha256": "a1a3e44c89fe609eb144586fcbb32f9f11a870b336b289ea70c69f981fc03561",
+        "width": 1080,
+        "height": 1350,
+        "evidenceReference": "docs/marketing/releases/PROPERTY_TAX_CAROUSEL_V2.md"
       },
       "socialPublication": {
         "status": "not-published",
@@ -398,7 +428,7 @@
         "kind": "render-receipt"
       },
       "createdAt": "2026-11-22T23:23:02.847Z",
-      "updatedAt": "2026-11-23T00:02:20.124Z"
+      "updatedAt": "2026-11-23T00:07:11.876Z"
     },
     {
       "assetId": "property-tax-carousel-03-v2",
@@ -426,7 +456,7 @@
         "classification": "synthetic-public-only",
         "reference": "src/app/intelligence/home-bill-examples.json and sources/live-tax-finding.json"
       },
-      "state": "approved",
+      "state": "hosted",
       "approval": {
         "status": "approved",
         "scope": "final-export",
@@ -445,9 +475,24 @@
         "recordedAt": "2026-11-23T00:02:20.124Z"
       },
       "deployment": {
-        "status": "staged",
-        "publicUrl": null,
-        "publicPath": "assets/marketing/social/instagram/carousels/property-tax-carousel-03-v2.jpg"
+        "status": "hosted",
+        "publicUrl": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/property-tax-carousel-03-v2.jpg",
+        "publicPath": "assets/marketing/social/instagram/carousels/property-tax-carousel-03-v2.jpg",
+        "hostingVersion": "08500dca665abbab",
+        "hostingRelease": "1795392328755000",
+        "deployedAt": "2026-11-23T00:05:28.755Z",
+        "verifiedAt": "2026-11-23T00:06:20.635Z",
+        "sourceCommit": "a71cad822e40515b7e9f56ee926762ae53fd73e3",
+        "manifestSha256": "041091799b09ac159063df0011ebf2acc5b77869d235d6b8b2dd1f356384deb4",
+        "configSha256": "a985fa400017d793640bd4c895435d0c8d4a302c183efcb7d50999794ce5dec0",
+        "rollbackVersion": "2bb9f7f3c6545b0e",
+        "httpStatus": 200,
+        "mimeType": "image/jpeg",
+        "bytes": 156054,
+        "sha256": "afbbf61a2bedc4f59373e75d2b181536b9c66da974158000c68e32fe9b826998",
+        "width": 1080,
+        "height": 1350,
+        "evidenceReference": "docs/marketing/releases/PROPERTY_TAX_CAROUSEL_V2.md"
       },
       "socialPublication": {
         "status": "not-published",
@@ -460,7 +505,7 @@
         "kind": "render-receipt"
       },
       "createdAt": "2026-11-22T23:23:02.847Z",
-      "updatedAt": "2026-11-23T00:02:20.124Z"
+      "updatedAt": "2026-11-23T00:07:11.876Z"
     },
     {
       "assetId": "property-tax-carousel-04-v2",
@@ -488,7 +533,7 @@
         "classification": "synthetic-public-only",
         "reference": "src/app/intelligence/home-bill-examples.json and sources/live-tax-finding.json"
       },
-      "state": "approved",
+      "state": "hosted",
       "approval": {
         "status": "approved",
         "scope": "final-export",
@@ -507,9 +552,24 @@
         "recordedAt": "2026-11-23T00:02:20.124Z"
       },
       "deployment": {
-        "status": "staged",
-        "publicUrl": null,
-        "publicPath": "assets/marketing/social/instagram/carousels/property-tax-carousel-04-v2.jpg"
+        "status": "hosted",
+        "publicUrl": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/property-tax-carousel-04-v2.jpg",
+        "publicPath": "assets/marketing/social/instagram/carousels/property-tax-carousel-04-v2.jpg",
+        "hostingVersion": "08500dca665abbab",
+        "hostingRelease": "1795392328755000",
+        "deployedAt": "2026-11-23T00:05:28.755Z",
+        "verifiedAt": "2026-11-23T00:06:20.869Z",
+        "sourceCommit": "a71cad822e40515b7e9f56ee926762ae53fd73e3",
+        "manifestSha256": "041091799b09ac159063df0011ebf2acc5b77869d235d6b8b2dd1f356384deb4",
+        "configSha256": "a985fa400017d793640bd4c895435d0c8d4a302c183efcb7d50999794ce5dec0",
+        "rollbackVersion": "2bb9f7f3c6545b0e",
+        "httpStatus": 200,
+        "mimeType": "image/jpeg",
+        "bytes": 180488,
+        "sha256": "93ba4a70ea4877b76ad02d68dd9ff0460d9b3be8b1c4f93d2902b426fcc11be1",
+        "width": 1080,
+        "height": 1350,
+        "evidenceReference": "docs/marketing/releases/PROPERTY_TAX_CAROUSEL_V2.md"
       },
       "socialPublication": {
         "status": "not-published",
@@ -522,7 +582,7 @@
         "kind": "render-receipt"
       },
       "createdAt": "2026-11-22T23:23:02.847Z",
-      "updatedAt": "2026-11-23T00:02:20.124Z"
+      "updatedAt": "2026-11-23T00:07:11.876Z"
     },
     {
       "assetId": "property-tax-carousel-05-v2",
@@ -550,7 +610,7 @@
         "classification": "synthetic-public-only",
         "reference": "src/app/intelligence/home-bill-examples.json and sources/live-tax-finding.json"
       },
-      "state": "approved",
+      "state": "hosted",
       "approval": {
         "status": "approved",
         "scope": "final-export",
@@ -569,9 +629,24 @@
         "recordedAt": "2026-11-23T00:02:20.124Z"
       },
       "deployment": {
-        "status": "staged",
-        "publicUrl": null,
-        "publicPath": "assets/marketing/social/instagram/carousels/property-tax-carousel-05-v2.jpg"
+        "status": "hosted",
+        "publicUrl": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/property-tax-carousel-05-v2.jpg",
+        "publicPath": "assets/marketing/social/instagram/carousels/property-tax-carousel-05-v2.jpg",
+        "hostingVersion": "08500dca665abbab",
+        "hostingRelease": "1795392328755000",
+        "deployedAt": "2026-11-23T00:05:28.755Z",
+        "verifiedAt": "2026-11-23T00:06:21.045Z",
+        "sourceCommit": "a71cad822e40515b7e9f56ee926762ae53fd73e3",
+        "manifestSha256": "041091799b09ac159063df0011ebf2acc5b77869d235d6b8b2dd1f356384deb4",
+        "configSha256": "a985fa400017d793640bd4c895435d0c8d4a302c183efcb7d50999794ce5dec0",
+        "rollbackVersion": "2bb9f7f3c6545b0e",
+        "httpStatus": 200,
+        "mimeType": "image/jpeg",
+        "bytes": 173011,
+        "sha256": "7dade1d76a8d10a6487d2a276ee75ca63ffaae8d6b3e909e7a7fb3a28b3a1041",
+        "width": 1080,
+        "height": 1350,
+        "evidenceReference": "docs/marketing/releases/PROPERTY_TAX_CAROUSEL_V2.md"
       },
       "socialPublication": {
         "status": "not-published",
@@ -584,7 +659,7 @@
         "kind": "render-receipt"
       },
       "createdAt": "2026-11-22T23:23:02.847Z",
-      "updatedAt": "2026-11-23T00:02:20.124Z"
+      "updatedAt": "2026-11-23T00:07:11.876Z"
     }
   ]
 }

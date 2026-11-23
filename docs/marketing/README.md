@@ -1,5 +1,7 @@
 # ifYouMind marketing assets
 
+**Property-tax carousel v2 is verified live** on Hosting08500dca665abbab/release1795392328755000,2026-11-23T00:05:28.755Z (November22Pacific). [Exact release/orderedURLs/checks/rollback](releases/PROPERTY_TAX_CAROUSEL_V2.md) · [ready publication handoff](drafts/property-tax/publication-handoff.json). Exact approved pixels/caption preserved; all59previous files/config and34Functions unchanged. No Codex Instagram publication attempted; ChatGPT/Windsor handles the already-authorized organic post.
+
 One local-first pipeline extends the existing Midnight Slate renderer. [assets.json](assets.json) is the **authoritative lifecycle registry**. Render receipts, review galleries and publication handoffs are derived evidence, not competing approval trackers. Drafts and editable sources stay under `docs/marketing/drafts/<campaign>/`; only exact approved exports may enter `public/assets/marketing/`. No new dependencies, services or paid GitHub requirement.
 
 ## Routine commands
@@ -63,8 +65,8 @@ npm run marketing:assets:prepare -- --campaign property-tax --promote
 # Commit the exact approved registry/promoted exports on the isolated marketing branch.
 # Then prepare from a clean exact source, using the retained serving artifact:
 npm run marketing:assets:prepare -- --campaign property-tax \
-  --baseline test-results/marketing-assets/hosting-db22d11d \
-  --baseline-record docs/marketing/releases/welcome-launch.json \
+  --baseline test-results/marketing-assets/hosting-tax-a71cad82 \
+  --baseline-record docs/marketing/releases/property-tax-carousel-v2.json \
   --out test-results/marketing-assets/<new-unique-release-directory>
 ```
 

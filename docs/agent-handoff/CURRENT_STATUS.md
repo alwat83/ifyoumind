@@ -1,5 +1,15 @@
 # ifYouMind — Current development status
 
+## November22,2026 — Tax carousel Hosting release verified GO
+
+**Deployed / production verified**, existing draft [PR127](https://github.com/alwat83/ifyoumind/pull/127). Founder approvals7087580868/7087807560 reconciled without asking again. Approved creative33577c34 and exact caption preserved byte-for-byte; deployment source **a71cad822e40515b7e9f56ee926762ae53fd73e3**, based on pipeline72fa09fa. No render/rebuild/merge. [Release evidence/orderedURLs](../marketing/releases/PROPERTY_TAX_CAROUSEL_V2.md), [canonical registry](../marketing/assets.json), [ready approved-caption/alt-text handoff](../marketing/drafts/property-tax/publication-handoff.json).
+
+Hosting **08500dca665abbab**, release **1795392328755000**,2026-11-23T00:05:28.755Z /November22 16:05:28.755PST. Independent postcheck00:06:24.078Z PASS: five anonymous direct200/image/jpeg/1080×1350/expectedbytes/exactSHA; all64server file hashes match, all59prior files/config unchanged; six existing routes exactbytes/DiscoveryCSP retained. All34Functions state/update/build/service config unchanged; AI00006-ruk/reader00090-zobACTIVE/Ready/100%, quota unchanged; public subscriptions remain closed. Prior **2bb9f7f3c6545b0e** FINALIZED/retained, no rollback. No Stripe/auth/entitlement/customer/rules/AI/config/advertising change or provider call.
+
+Marketing validation/preparation and21targeted tests PASS; pending-negative fixtures isolated from real approval state, assertions retained. First read-only workflow-list ENOBUFS was fixed with field filtering before any deployment. Exact clean source before/after deployment PASS. Original source/archive/caption hashes unchanged. No fresh full app/sensitive/hostedCI/device coverage; historical reliability/payment/physicalSafari/VoiceOver/Linux/human limitations preserved. Current64-file artifact is retained ignored/local; detailed logs mode0600. Existing Notion hub synchronized.
+
+**No Instagram publication attempted by Codex.** No new post ID/permalink or campaign/customer/revenue outcome claimed. Next three: ChatGPT/Windsor publishes the already-authorized exact five URLs/caption once; record actual media receipt; observe genuine first-use/finding+limitation outcomes. Hosting execution is complete, no additional creative approval is needed.
+
 ## November 22, 2026 — Reusable marketing pipeline complete; tax exports await approval
 
 **Implemented / locally tested / not deployed.** Existing `codex/marketing-asset-launch`, [draft PR127](https://github.com/alwat83/ifyoumind/pull/127), continues from33577c34. [Shared commands/standards](../marketing/README.md), [canonical lifecycle registry](../marketing/assets.json) and [verification/impact evidence](../marketing/releases/PIPELINE_VERIFICATION.md) now manage versioned rendering, metadata, validation, review/contact sheet and approval-gated additive Hosting preparation. No new dependency/service. Permanent AGENTS policy covers future campaigns.

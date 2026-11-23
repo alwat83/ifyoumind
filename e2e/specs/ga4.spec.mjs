@@ -63,3 +63,96 @@ test('Checkout attempts reuse one measurement and redirects require server purch
     for (const privateValue of [viewer.organizationId, viewer.uid, viewer.email, id, 'cs_live_GA4Browser'])
         expect(wire).not.toContain(privateValue);
 });
+
+for (const granted of [true, false]) {
+    test(`stored ${granted ? 'granted' : 'rejected'} consent survives SPA navigation and reload`, async ({ page }) => {
+        const loads = await setup(page);
+        await page.goto('/');
+        await page.getByRole('button', { name: granted ? 'Allow analytics' : 'Reject analytics', exact: true }).click();
+        await expect(page.getByRole('region', { name: 'Optional analytics' })).toHaveCount(0);
+        const choice = await page.evaluate(key => localStorage.getItem(key), KEY);
+        await page.getByRole('link', { name: 'Pricing', exact: true }).last().click();
+        await expect(page).toHaveURL(/\/pricing$/);
+        await expect(page.getByRole('region', { name: 'Optional analytics' })).toHaveCount(0);
+        await page.reload();
+        await expect(page.getByRole('heading', { name: 'Start free. Go further.' })).toBeVisible();
+        await expect(page.getByRole('region', { name: 'Optional analytics' })).toHaveCount(0);
+        expect(await page.evaluate(key => localStorage.getItem(key), KEY)).toBe(choice);
+        if (granted) {
+            await expect.poll(async () => (await events(page, 'page_view')).length).toBe(1);
+            expect(loads).toHaveLength(2); // One tag per document, none for the SPA transition.
+        } else {
+            expect(loads).toHaveLength(0);
+            expect(await calls(page)).toEqual([]);
+        }
+    });
+}
+
+test('expired, future-dated and malformed stored permissions require a fresh choice', async ({ page }) => {
+    const loads = await setup(page);
+    await page.goto('/');
+    const values = [
+        { version: 'ga4-analytics-v1', analytics: true, at: Date.now() - 181 * 86400000 },
+        { version: 'ga4-analytics-v1', analytics: true, at: Date.now() + 86400000 },
+        { version: 'ga4-analytics-v1', analytics: 'true', at: Date.now() },
+        { version: 'ga4-analytics-v1', analytics: true },
+        { version: 'retired-consent', analytics: true, at: Date.now() },
+    ];
+    for (const value of values) {
+        await page.evaluate(({ key, value }) => localStorage.setItem(key, JSON.stringify(value)), { key: KEY, value });
+        await page.reload();
+        await expect(page.getByRole('region', { name: 'Optional analytics' })).toBeVisible();
+        expect(loads).toHaveLength(0);
+        expect(await calls(page)).toEqual([]);
+    }
+});
+
+test('clearing consent in another tab immediately withdraws collection', async ({ page, context }) => {
+    await setup(page);
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Allow analytics', exact: true }).click();
+    await expect.poll(async () => (await events(page, 'page_view')).length).toBe(1);
+    const other = await context.newPage();
+    await other.goto('/discover/');
+    await other.evaluate(() => localStorage.clear()); // StorageEvent.key is null for clear().
+    await expect(page.getByRole('region', { name: 'Optional analytics' })).toBeVisible();
+    expect(await page.evaluate(() => window['ga-disable-G-NRT31062LW'])).toBe(true);
+    const before = (await events(page)).length;
+    await page.getByRole('button', { name: 'Reveal what changed' }).click();
+    await expect(page.locator('#discovery-result')).toContainText('$420');
+    expect((await events(page)).length).toBe(before);
+    await other.close();
+});
+
+test('pending consent never obstructs registration, pricing or private Discovery controls', async ({ page }) => {
+    const loads = await setup(page);
+    await page.goto('/login');
+    await page.getByRole('link', { name: 'Create a free account', exact: true }).click();
+    await expect(page.getByLabel('Name', { exact: true })).toBeVisible();
+    await page.getByLabel('Name', { exact: true }).focus();
+    await page.keyboard.press('Tab');
+    await expect(page.getByLabel('Email', { exact: true })).toBeFocused();
+    await expectNoHorizontalScroll(page);
+    await page.goto('/pricing');
+    await page.getByRole('link', { name: 'Try a free example', exact: true }).click();
+    await expect(page).toHaveURL(/\/discover\/\?example=tax/);
+    await page.getByRole('button', { name: 'Clear & choose another', exact: true }).click();
+    await page.getByRole('button', { name: 'Use a property tax CSV', exact: true }).click();
+    await expect(page.getByLabel('Choose a redacted CSV', { exact: true })).toBeFocused();
+    expect(loads).toHaveLength(0);
+});
+
+test('preferences support keyboard focus, Escape and rejection without collection', async ({ page }) => {
+    const loads = await setup(page);
+    await page.goto('/');
+    await page.getByRole('button', { name: 'Manage', exact: true }).click();
+    await expect(page.getByLabel('Allow optional analytics')).toBeFocused();
+    await expectAccessible(page);
+    await page.keyboard.press('Escape');
+    await expect(page.getByRole('dialog')).toBeHidden();
+    await expect(page.getByRole('button', { name: 'Manage', exact: true })).toBeFocused();
+    await page.keyboard.press('Enter');
+    await page.getByRole('button', { name: 'Reject analytics', exact: true }).last().click();
+    await expect(page.getByRole('dialog')).toBeHidden();
+    expect(loads).toHaveLength(0);
+});

@@ -16,7 +16,8 @@ export class CookieService {
     readonly consentStatus$ = this.subject.asObservable();
     private browser = isPlatformBrowser(inject(PLATFORM_ID));
     constructor() { if (!this.browser)
-        return; this.load(); window.addEventListener('storage', e => { if (e.key === KEY)
+        return; this.load(); // clear() emits a null key; withdrawing preferences in another tab must stop collection too.
+        window.addEventListener('storage', e => { if (e.key === KEY || e.key === null)
         this.load(); }); }
     private load(): void { let choice: ConsentStatus | null = null; try {
         const raw = JSON.parse(localStorage.getItem(KEY) || 'null');

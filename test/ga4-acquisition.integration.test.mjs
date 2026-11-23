@@ -32,3 +32,43 @@ test('Starter and Plus initial paid-invoice receipts qualify, renewals without c
     assert.deepEqual(await call({ offer }), { confirmed: false });
 } });
 test('genuine signed webhook processing supplies the receipt; analytics never calls Stripe', async () => { const event = { id: 'evt_ga4_fixture', type: 'checkout.session.completed', created: Math.floor(Date.now() / 1000), livemode: true, data: { object: { id: 'cs_live_GA4Fixture', payment_status: 'paid', amount_total: 7900, currency: 'usd', metadata: { offer: 'report', organizationId: org.id, projectId: data.projectId } } } }; const raw = Buffer.from(JSON.stringify(event)), t = String(Math.floor(Date.now() / 1000)), sig = createHmac('sha256', process.env.STRIPE_WEBHOOK_SECRET).update(t + '.' + raw.toString()).digest('hex'); const response = { code: 0, status(n) { this.code = n; return this; }, send() { return this; } }; await handlers.stripeCommercialWebhook({ rawBody: raw, headers: { 'stripe-signature': `t=${t},v1=${sig}` } }, response); assert.equal(response.code, 200); assert.deepEqual(await call(), { confirmed: true, offer: 'report' }); });
+
+test('lost browser delivery is not reissued after the server has claimed the receipt', async () => {
+    await payment();
+    assert.deepEqual(await call(), { confirmed: true, offer: 'report' });
+    // No GA transport is invoked. Losing this result can undercount, never double-count.
+    assert.deepEqual(await call(), { confirmed: false });
+    assert.equal((await db.collection('analyticsPurchaseClaims').get()).size, 1);
+});
+
+test('incomplete receipts, future timestamps and mismatched projects never count', async () => {
+    for (const overrides of [
+        { fulfilment: 'pending' }, { fulfilment: 'processing' }, { fulfilment: 'failed' },
+        { paidAt: null }, { paidAt: Timestamp.fromMillis(Date.now() + 86400000) },
+        { projectId: 'different-project' },
+    ]) {
+        await payment(overrides);
+        assert.deepEqual(await call(), { confirmed: false });
+    }
+    assert.equal((await db.collection('analyticsPurchaseClaims').get()).size, 0);
+});
+
+test('missing or ambiguous subscription Checkout receipts are rejected', async () => {
+    await org.collection('subscriptionBilling').doc('current').set({ offer: 'starter', checkout: null });
+    assert.deepEqual(await call({ offer: 'starter' }), { confirmed: false });
+    await org.collection('subscriptionBilling').doc('current').set({ offer: 'starter', checkout: { id: 'cs_live_Ambiguous', projectId: data.projectId } });
+    assert.deepEqual(await call({ offer: 'starter' }), { confirmed: false });
+    for (const id of ['in_First', 'in_Second']) {
+        await db.collection('stripePayments').doc(id).set({ offer: 'starter', organizationId: org.id, checkoutSessionId: 'cs_live_Ambiguous', amountTotal: 499, currency: 'usd', livemode: true, paidAt: Timestamp.now(), fulfilment: 'credits-granted' });
+    }
+    assert.deepEqual(await call({ offer: 'starter' }), { confirmed: false });
+    assert.equal((await db.collection('analyticsPurchaseClaims').get()).size, 0);
+});
+
+test('active workspace admin may claim a verified receipt, without changing entitlements', async () => {
+    await payment();
+    await org.collection('members').doc(auth.uid).set({ role: 'admin', status: 'active' });
+    assert.deepEqual(await call(), { confirmed: true, offer: 'report' });
+    assert.equal((await org.get()).get('plan'), 'free');
+    assert.equal((await org.collection('marketProjects').doc(data.projectId).get()).get('decisionReportPurchased'), true);
+});

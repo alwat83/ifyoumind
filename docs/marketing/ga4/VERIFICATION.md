@@ -1,5 +1,17 @@
 # GA4 verification evidence
 
+## Final activation-readiness review — November 23, 2026
+
+Started at pinnedPR128 head **c4ede4fffa866cad1ea9d2eaf20cad14cbf3368b**, independently verified clean/open/draft/mergeable against75afab61. No other worktree or PR was modified. The one application correction is recognition of null-key cross-tab storage clear as withdrawal; failing-before evidence is retained privately. Purchase callable and all billing/AI/auth/entitlement logic are unchanged.
+
+Fresh qualification after correction: **101 Functions,191web,91backend (including existing report-explanation and11receipt cases),42GA4browser and28existingjourney tests PASS**, local+productionbuilds PASS. Browser checks use1280/390/320 and existing pricing additionally820/1440; axe/keyboard/focus/Escape, real reload persistence, expiry/future/malformed preferences, reject/regrant and control obstruction are covered. Google and payment transports remain mocked, with synthetic demo data only. The final clean-source SHA/fingerprint and refreshed gate results are recorded in the draftPR and the sanitized machine report. Earlier November23 results below remain historical evidence, not overwritten.
+
+ProductionGET-only observation17:42:33.548UTC:08500dca665abbabFINALIZED/all64filehashes+configmatch, prior2bb9f7f3c6545b0eHTTP200/FINALIZED, claimVerifiedPurchase404. Read-only Google review confirms property565380927/stream16394318092/G-NRT31062LW, Enhanced MeasurementON and0connectedtags; no saved settings were edited. Offline artifact preparation and narrow release/rollback instructions are in the runbook; these are not a deployment claim.
+
+**GO for founder authorization of the reviewed disabled release candidate. Live collection remainsNO-GO pending separate Google-setting/flag/deployment authorization and post-release collector verification.** Hosted CI, actual GA collector/Realtime, physicalSafari/VoiceOver/Linuxpixels and outside-user understanding remainunverified. The platform necessarily sends ordinary network/browser metadata after consent; no claim of anonymous analytics or zero provider-visible IP/browser identifiers. App-supplied private payloads are excluded by allowlists. No live purchase or new production test write.
+
+New browser cases are in the existingGA4config; the new negative/undercount/admin/ambiguous-subscription receipt cases are included by the existingcommerce entry. Commands below remain valid; the fresh backend command additionally includes `test/report-explanation.integration.test.mjs`, and the final browser config now runs42cases. Exact-source final gate details follow in the machine record/PR.
+
 November 23, 2026 · OpenAI / Codex · native macOS arm64 · Node22.23.2 / Playwright1.56.0 / installed Chrome fallback. Local testing is not GitHub-hosted CI or proof of Google collection.
 
 [Draft PR #128](https://github.com/alwat83/ifyoumind/pull/128). Candidate branch: `codex/ga4-privacy-measurement`, based on `75afab61209db5f9389c696a6241020dfc1d59e2` / `codex/marketing-asset-launch`. The stacked base keeps previously deployed marketing/AI/consumer work out of this focused PR diff. No master merge or release is authorized. Executable verification commit: **fd6e89f1f60d94867fbacbdb49d5956223033156**. Clean before/after, zero transient source changes, matching fingerprint. The final evidence-only head and remote readback are recorded on the draft PR; [sanitized machine summary](verification.json), detailed logs remain local.

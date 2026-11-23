@@ -1,5 +1,13 @@
 # ifYouMind — Master Project Record and Roadmap
 
+## November 23, 2026 — GA4 final release readiness
+
+[Draft PR #128](https://github.com/alwat83/ifyoumind/pull/128), reviewed from pinnedc4ede4ff, remains separate from production. One reproduced privacy correction: clearing all local preferences in another tab now withdraws consent immediately (null-key storage event). Added explicit real-reload grant/reject persistence, expired/invalid consent, keyboard/dialog and obstruction checks, plus failed/ambiguous receipt and lost-delivery coverage. No design, purchase callable, billing, AI, auth, entitlement or enrollment implementation change.
+
+Fresh native101Functions/191web/91backend/42GA4browser/28existingbrowser and bothbuilds pass. Final exact-source gate is recorded on PR128 with sanitized evidence; no hostedCI or liveGAcollection claim. ProductionGET-only17:42:33.548UTC confirms08500dca665abbabFINALIZED/all64hashes+configunchanged; older2bb9f7f3c6545b0e remainsFINALIZED and newcallable404. Google read-only confirms correct property/stream/measurement, EnhancedMeasurementstillON. Flag remainsfalse. No merge/deployment/settings/payment/customer write.
+
+[Release/rollback/activation instructions](docs/marketing/ga4/README.md) and [preserved failures/current verification](docs/marketing/ga4/VERIFICATION.md). **GO for founder review of disabledRC; activation notauthorized.** Remaining gates: savedEnhancedMeasurementOFF, exactapprovedflag/deploymentcandidate, realconsentedcollectorverification. Safari/VoiceOver/Linux/human and historicaltransaction/payment limits remain explicit. Next3: reviewPR128; separatelyauthorizeGoogle/callable/Hostingactivationsteps; validateRealtimeandcampaignmeasurement before inferringbusinessoutcomes. No measurednewtraffic/conversion/revenue claimed.
+
 ## November 23, 2026 — GA4 privacy integration prepared; production OFF
 
 **Implemented / locally tested / not deployed.** Isolated [draft PR #128](https://github.com/alwat83/ifyoumind/pull/128), `codex/ga4-privacy-measurement`, based on75afab61/marketing branch; [runbook/impact/activation](docs/marketing/ga4/README.md), [verification and preserved failures](docs/marketing/ga4/VERIFICATION.md). One direct G-NRT31062LW destination replaces legacy automatic Firebase analytics; explicit versioned basic consent, finite event/URL/UTM schemas, no user/question/bill/report/payment details, and untracked private Discovery. New verified-owner/admin receipt claim projects existing signed Stripe ledger into one count-only event, with atomic duplicate suppression and no Stripe API or entitlement mutation. Existing first-party telemetry is consent-gated and never forwarded to GA4.

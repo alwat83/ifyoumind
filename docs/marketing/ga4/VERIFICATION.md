@@ -1,5 +1,7 @@
 # GA4 verification evidence
 
+> Current reconciliation: saved Enhanced Measurement is independently verifiedOFF after refresh (November23,18:52–18:54UTC). This document preserves the earlier OFF-source/datedON-observation history; thoseONreadings are not current setup blockers. See [the isolated activation candidate and current gates](ACTIVATION_RECONCILIATION.md), based on unchangedPR128evidenceb86229d9. No Google setting or production deployment was performed by Codex.
+
 ## Final activation-readiness review — November 23, 2026
 
 Started at pinnedPR128 head **c4ede4fffa866cad1ea9d2eaf20cad14cbf3368b**, independently verified clean/open/draft/mergeable against75afab61. No other worktree or PR was modified. The one application correction is recognition of null-key cross-tab storage clear as withdrawal; failing-before evidence is retained privately. Purchase callable and all billing/AI/auth/entitlement logic are unchanged.

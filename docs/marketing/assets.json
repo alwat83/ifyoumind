@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "site": "https://ifyoumind.com",
   "createdAt": "2026-11-22T19:18:14Z",
-  "updatedAt": "2026-11-22T23:31:20.743Z",
+  "updatedAt": "2026-11-23T00:02:20.426Z",
   "campaigns": [
     {
       "id": "property-tax",
@@ -302,16 +302,28 @@
         "classification": "synthetic-public-only",
         "reference": "src/app/intelligence/home-bill-examples.json and sources/live-tax-finding.json"
       },
-      "state": "review-ready",
+      "state": "approved",
       "approval": {
-        "status": "pending"
+        "status": "approved",
+        "scope": "final-export",
+        "sha256": "237fd791af550fe0af727b9cb6b6ba4a1abcfebf92e61316d792870b60c6a67c",
+        "reference": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087580868",
+        "reconciliation": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087807560",
+        "approvedCreativeCommit": "33577c342fc49fa02891dfb01da3fc9ba4f1e677",
+        "pipelineCommit": "72fa09faf825107c7d56cefa0bf4c98a45156672",
+        "recordedAt": "2026-11-23T00:02:20.124Z"
       },
       "captionApproval": {
-        "status": "pending"
+        "status": "approved",
+        "sha256": "1d4ac9955e102ac5f76b5cb9899d3596f15092f30512e232838d5c209616ca67",
+        "reference": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087580868",
+        "reconciliation": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087807560",
+        "recordedAt": "2026-11-23T00:02:20.124Z"
       },
       "deployment": {
-        "status": "not-deployed",
-        "publicUrl": null
+        "status": "staged",
+        "publicUrl": null,
+        "publicPath": "assets/marketing/social/instagram/carousels/property-tax-carousel-01-v2.jpg"
       },
       "socialPublication": {
         "status": "not-published",
@@ -324,7 +336,7 @@
         "kind": "render-receipt"
       },
       "createdAt": "2026-11-22T23:23:02.847Z",
-      "updatedAt": "2026-11-22T23:24:38.586Z"
+      "updatedAt": "2026-11-23T00:02:20.124Z"
     },
     {
       "assetId": "property-tax-carousel-02-v2",
@@ -352,16 +364,28 @@
         "classification": "synthetic-public-only",
         "reference": "src/app/intelligence/home-bill-examples.json and sources/live-tax-finding.json"
       },
-      "state": "review-ready",
+      "state": "approved",
       "approval": {
-        "status": "pending"
+        "status": "approved",
+        "scope": "final-export",
+        "sha256": "a1a3e44c89fe609eb144586fcbb32f9f11a870b336b289ea70c69f981fc03561",
+        "reference": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087580868",
+        "reconciliation": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087807560",
+        "approvedCreativeCommit": "33577c342fc49fa02891dfb01da3fc9ba4f1e677",
+        "pipelineCommit": "72fa09faf825107c7d56cefa0bf4c98a45156672",
+        "recordedAt": "2026-11-23T00:02:20.124Z"
       },
       "captionApproval": {
-        "status": "pending"
+        "status": "approved",
+        "sha256": "1d4ac9955e102ac5f76b5cb9899d3596f15092f30512e232838d5c209616ca67",
+        "reference": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087580868",
+        "reconciliation": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087807560",
+        "recordedAt": "2026-11-23T00:02:20.124Z"
       },
       "deployment": {
-        "status": "not-deployed",
-        "publicUrl": null
+        "status": "staged",
+        "publicUrl": null,
+        "publicPath": "assets/marketing/social/instagram/carousels/property-tax-carousel-02-v2.jpg"
       },
       "socialPublication": {
         "status": "not-published",
@@ -374,7 +398,7 @@
         "kind": "render-receipt"
       },
       "createdAt": "2026-11-22T23:23:02.847Z",
-      "updatedAt": "2026-11-22T23:24:38.586Z"
+      "updatedAt": "2026-11-23T00:02:20.124Z"
     },
     {
       "assetId": "property-tax-carousel-03-v2",
@@ -402,16 +426,28 @@
         "classification": "synthetic-public-only",
         "reference": "src/app/intelligence/home-bill-examples.json and sources/live-tax-finding.json"
       },
-      "state": "review-ready",
+      "state": "approved",
       "approval": {
-        "status": "pending"
+        "status": "approved",
+        "scope": "final-export",
+        "sha256": "afbbf61a2bedc4f59373e75d2b181536b9c66da974158000c68e32fe9b826998",
+        "reference": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087580868",
+        "reconciliation": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087807560",
+        "approvedCreativeCommit": "33577c342fc49fa02891dfb01da3fc9ba4f1e677",
+        "pipelineCommit": "72fa09faf825107c7d56cefa0bf4c98a45156672",
+        "recordedAt": "2026-11-23T00:02:20.124Z"
       },
       "captionApproval": {
-        "status": "pending"
+        "status": "approved",
+        "sha256": "1d4ac9955e102ac5f76b5cb9899d3596f15092f30512e232838d5c209616ca67",
+        "reference": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087580868",
+        "reconciliation": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087807560",
+        "recordedAt": "2026-11-23T00:02:20.124Z"
       },
       "deployment": {
-        "status": "not-deployed",
-        "publicUrl": null
+        "status": "staged",
+        "publicUrl": null,
+        "publicPath": "assets/marketing/social/instagram/carousels/property-tax-carousel-03-v2.jpg"
       },
       "socialPublication": {
         "status": "not-published",
@@ -424,7 +460,7 @@
         "kind": "render-receipt"
       },
       "createdAt": "2026-11-22T23:23:02.847Z",
-      "updatedAt": "2026-11-22T23:24:38.586Z"
+      "updatedAt": "2026-11-23T00:02:20.124Z"
     },
     {
       "assetId": "property-tax-carousel-04-v2",
@@ -452,16 +488,28 @@
         "classification": "synthetic-public-only",
         "reference": "src/app/intelligence/home-bill-examples.json and sources/live-tax-finding.json"
       },
-      "state": "review-ready",
+      "state": "approved",
       "approval": {
-        "status": "pending"
+        "status": "approved",
+        "scope": "final-export",
+        "sha256": "93ba4a70ea4877b76ad02d68dd9ff0460d9b3be8b1c4f93d2902b426fcc11be1",
+        "reference": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087580868",
+        "reconciliation": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087807560",
+        "approvedCreativeCommit": "33577c342fc49fa02891dfb01da3fc9ba4f1e677",
+        "pipelineCommit": "72fa09faf825107c7d56cefa0bf4c98a45156672",
+        "recordedAt": "2026-11-23T00:02:20.124Z"
       },
       "captionApproval": {
-        "status": "pending"
+        "status": "approved",
+        "sha256": "1d4ac9955e102ac5f76b5cb9899d3596f15092f30512e232838d5c209616ca67",
+        "reference": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087580868",
+        "reconciliation": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087807560",
+        "recordedAt": "2026-11-23T00:02:20.124Z"
       },
       "deployment": {
-        "status": "not-deployed",
-        "publicUrl": null
+        "status": "staged",
+        "publicUrl": null,
+        "publicPath": "assets/marketing/social/instagram/carousels/property-tax-carousel-04-v2.jpg"
       },
       "socialPublication": {
         "status": "not-published",
@@ -474,7 +522,7 @@
         "kind": "render-receipt"
       },
       "createdAt": "2026-11-22T23:23:02.847Z",
-      "updatedAt": "2026-11-22T23:24:38.586Z"
+      "updatedAt": "2026-11-23T00:02:20.124Z"
     },
     {
       "assetId": "property-tax-carousel-05-v2",
@@ -502,16 +550,28 @@
         "classification": "synthetic-public-only",
         "reference": "src/app/intelligence/home-bill-examples.json and sources/live-tax-finding.json"
       },
-      "state": "review-ready",
+      "state": "approved",
       "approval": {
-        "status": "pending"
+        "status": "approved",
+        "scope": "final-export",
+        "sha256": "7dade1d76a8d10a6487d2a276ee75ca63ffaae8d6b3e909e7a7fb3a28b3a1041",
+        "reference": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087580868",
+        "reconciliation": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087807560",
+        "approvedCreativeCommit": "33577c342fc49fa02891dfb01da3fc9ba4f1e677",
+        "pipelineCommit": "72fa09faf825107c7d56cefa0bf4c98a45156672",
+        "recordedAt": "2026-11-23T00:02:20.124Z"
       },
       "captionApproval": {
-        "status": "pending"
+        "status": "approved",
+        "sha256": "1d4ac9955e102ac5f76b5cb9899d3596f15092f30512e232838d5c209616ca67",
+        "reference": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087580868",
+        "reconciliation": "https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087807560",
+        "recordedAt": "2026-11-23T00:02:20.124Z"
       },
       "deployment": {
-        "status": "not-deployed",
-        "publicUrl": null
+        "status": "staged",
+        "publicUrl": null,
+        "publicPath": "assets/marketing/social/instagram/carousels/property-tax-carousel-05-v2.jpg"
       },
       "socialPublication": {
         "status": "not-published",
@@ -524,7 +584,7 @@
         "kind": "render-receipt"
       },
       "createdAt": "2026-11-22T23:23:02.847Z",
-      "updatedAt": "2026-11-22T23:24:38.586Z"
+      "updatedAt": "2026-11-23T00:02:20.124Z"
     }
   ]
 }

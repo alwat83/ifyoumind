@@ -1,6 +1,6 @@
 # Property-tax carousel — refined founder-review pack
 
-November 22, 2026 · OpenAI / Codex · Version 2 · **Ready for final visual approval, not publication.**
+November 22, 2026 · OpenAI / Codex · Version 2 · **Founder approved for Hosting and organic publication; execution tracked in the registry.**
 
 [Before / after overview](comparison.jpg) · [Interactive file gallery](comparison.html) · [Refined slides](index.html) · [Numbers and rendering receipt](manifest.json) · [Authoritative asset states](../../assets.json) · [Contact sheet](contact-sheet.jpg)
 
@@ -36,10 +36,10 @@ All five exports pass: exact dimensions/JPEG format; loaded local type; text/can
 
 The live preview retains the actual product's typography and is not independently restyled. Physical Instagram/iPhone legibility, assistive-technology reading of a posted carousel, engagement and customer comprehension remain untested. This is targeted creative verification, not hosted CI or a repeat of unrelated application/backend suites. Public URLs for the refined exports remain null; no file was copied into public/.
 
-## Draft caption — final founder review required
+## Approved caption
 
-[Versioned caption text](caption-v2.txt) is included automatically in the generated review package. It remains unapproved.
+[Exact approved caption](caption-v2.txt) is included automatically in the generated handoff; its SHA256 is1d4ac9955e102ac5f76b5cb9899d3596f15092f30512e232838d5c209616ca67.
 
 ## Approval boundary
 
-Review these five exports and the caption together. Only a separate founder approval can authorize their public asset deployment or social publication. The earlier welcome-image approval and existing Windsor connection do not automatically approve this carousel. No Instagram API call, scheduling, merge, ad spend or production operation occurred. Existing website design, privacy, billing, AI configuration and entitlements remain untouched.
+Founder authorization [7087580868](https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087580868) explicitly approves the exact five exports at33577c34 and this caption for public Hosting and organic Instagram publication. [Reconciliation7087807560](https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7087807560) verifies unchanged bytes at72fa09fa. Registry approval now reflects that decision. Codex executes isolated Hosting only; ChatGPT/Windsor handles the one organic carousel. No Codex Instagram call, ad spend, unrelated merge or application change. Refer to the canonical registry for actual release evidence, never infer publication from Hosting.

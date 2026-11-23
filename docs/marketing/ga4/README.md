@@ -1,14 +1,20 @@
 # GA4 — consented acquisition measurement
 
-November 23, 2026 · OpenAI / Codex · [Draft PR #128](https://github.com/alwat83/ifyoumind/pull/128) · **Implemented locally; not deployed.**
+November 23, 2026 · OpenAI / Codex · [Draft PR #128](https://github.com/alwat83/ifyoumind/pull/128) · **OFF baseline preserved; separate activation candidate prepared, not deployed.**
+
+## Current reconciliation — November 23, 2026
+
+**Enhanced Measurement is independently verified savedOFF after a fresh reload** of property565380927 /stream16394318092 /G-NRT31062LW at approximately18:52–18:54UTC. The founder completed the change; Codex did not change a Google setting. The datedON observations below and in the frozenPR128 evidence are historical, superseded by this readback. The UI still lists standard Pageviews; the application retains `send_page_view:false` and manual sanitized views. No need to ask the founder to disable it again. Recheck at future deployment and STOP if it has driftedON.
+
+The original OFF source/evidence head **b86229d9f7887d0ba79204660d1be3bec098c55d**, executablea661acd1 and their frozen archives remain unchanged. A separate `codex/ga4-activation-candidate` branch changes only the productionflag in application code and necessary tests. A true flag **in an undeployed candidate is not live activation**. Do not merge, deploy or collect until separate production authorization. [Current reconciliation and release scope](ACTIVATION_RECONCILIATION.md).
 
 ## Decision and verified audit
 
-Use one direct Google tag, **G-NRT31062LW**, for the ifYouMind production stream **16394318092**, property **565380927**. Read-only authenticated Google Analytics administration confirmed the stream URL `https://ifyoumind.com`, the ID, zero connected site tags and **Enhanced Measurement ON**. The screen reported no data received in the preceding 48 hours; this is an observation, not a diagnosis of production traffic or revenue.
+Use one direct Google tag, **G-NRT31062LW**, for the ifYouMind production stream **16394318092**, property **565380927**. The earlier read-only audit confirmed the stream URL `https://ifyoumind.com`, the ID, zero connected site tags and Enhanced MeasurementON at that time. The fresh savedOFF readback above supersedes that setting observation. The screen reported no data received in the preceding 48 hours; this is an observation, not a diagnosis of production traffic or revenue.
 
 Google's installation screen offers **GTM-TMM5XMZF**. That container is absent from the repository's installed scripts and was not installed during this assignment. Do not install both that offered container and the direct tag. Historical Firebase configuration contained **G-DZMLBPS4ZX**, automatic screen/user tracking, and an unmounted consent UI. The candidate removes those Analytics providers and replaces the old arbitrary event/raw-URL service. This establishes code risk; it does not prove historical collection actually occurred.
 
-**Activation gate:** `GA4_PRODUCTION_ENABLED = false` in `src/app/services/analytics-policy.ts`. It remains false in this draft. No production tracking, Google settings change, Stripe request, deployment, purchase, provider call or account modification was performed.
+**Frozen OFF baseline:** `GA4_PRODUCTION_ENABLED = false` in PR128 at b86229d9. Only the separate, unmerged activation branch prepares `true`, still requiring consent. No released code was changed. No production tracking, Google settings change, Stripe request, deployment, purchase, provider call or account modification was performed.
 
 ## Privacy and consent contract
 
@@ -95,7 +101,7 @@ The homepage hero, reveal, typography and CTA are unchanged. The consent banner 
 
 Exact commands, final counts, source SHA and known failed diagnostic runs are recorded in [verification evidence](VERIFICATION.md). Retain ignored local logs/traces privately: they can contain synthetic Auth emulator tokens and must not be attached publicly.
 
-**Recommendation:** GO for draft code/founder review after applicable local checks. **NO-GO for production collection** until saved Enhanced Measurement is OFF, exact-source activation/deployment is separately authorized, and real collector/Realtime readback succeeds. Current implementation is not deployed or GA4-production-verified. No acquisition, willingness to pay or revenue result is claimed.
+**Recommendation:** GO for draft code/founder review after applicable local checks. **NO-GO for unauthorized production collection**; the saved-OFF prerequisite is now satisfied. Exact-source activation/deployment authorization and real collector/Realtime readback remain outstanding. Current implementation is not deployed or GA4-production-verified. No acquisition, willingness to pay or revenue result is claimed.
 
 ## Final release review — November 23, 2026
 

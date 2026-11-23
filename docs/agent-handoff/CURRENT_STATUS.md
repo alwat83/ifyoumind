@@ -1,5 +1,13 @@
 # ifYouMind — Current development status
 
+## November23,2026 — GA4 savedOFF reconciled; isolated activation candidate
+
+Founder-completed Enhanced MeasurementOFF independently confirmed after freshreload of property565380927/stream16394318092/G-NRT31062LW at18:52–18:54UTC. EarlierON readings are historical, not a current blocker. No Google setting was edited. Original PR128/evidenceb86229d9 and OFFpackages remain frozen. Separate codex/ga4-activation-candidate prepares one runtime flag change plus necessary tests; no deployment/livecollection authorization.
+
+Frozen file/manifest/archive/configuration hashes allPASS. Read-only18:56:32.596UTC Hosting08500dca665abbab/all64files+config and all34Functions unchanged; enrollmentstillone explicitallowlist; rollback2bb9finalized. No pricing/Stripe/AI/auth/entitlement/customer write. New offline production-origin probe passes desktop/390/320 with Google/productionfullyintercepted; final exactsource/focusedresults/artifacthashes on candidatePR. [Reconciliation/release/costs](../marketing/ga4/ACTIVATION_RECONCILIATION.md).
+
+Next3: reviewexactactivationcandidate; authorizeonlynarrowcallable+HostingreleaseandcontrolledGAverification; verifyactualconsentedRealtimeandcampaignmeasurement. Do not requestduplicateGoogleOFFsetup. No hostedCI/liveGA/customer/revenueclaim; historicaltransaction/payment/device limits retained.
+
 ## November 23, 2026 — GA4 final release readiness
 
 [Draft PR #128](https://github.com/alwat83/ifyoumind/pull/128), reviewed from pinnedc4ede4ff, remains separate from production. One reproduced privacy correction: clearing all local preferences in another tab now withdraws consent immediately (null-key storage event). Added explicit real-reload grant/reject persistence, expired/invalid consent, keyboard/dialog and obstruction checks, plus failed/ambiguous receipt and lost-delivery coverage. No design, purchase callable, billing, AI, auth, entitlement or enrollment implementation change.

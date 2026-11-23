@@ -1,6 +1,6 @@
 # GA4 final activation reconciliation
 
-November23,2026 · OpenAI /Codex · **Prepared only; no production authorization executed.**
+November23,2026 · OpenAI /Codex · [Draft activation PR129](https://github.com/alwat83/ifyoumind/pull/129) · **Prepared only; no production authorization executed.**
 
 ## Saved setting and authority
 

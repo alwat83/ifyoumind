@@ -2,7 +2,7 @@
 
 ## November23,2026 — GA4 savedOFF reconciled; isolated activation candidate
 
-Founder-completed Enhanced MeasurementOFF independently confirmed after freshreload of property565380927/stream16394318092/G-NRT31062LW at18:52–18:54UTC. EarlierON readings are historical, not a current blocker. No Google setting was edited. Original PR128/evidenceb86229d9 and OFFpackages remain frozen. Separate codex/ga4-activation-candidate prepares one runtime flag change plus necessary tests; no deployment/livecollection authorization.
+Founder-completed Enhanced MeasurementOFF independently confirmed after freshreload of property565380927/stream16394318092/G-NRT31062LW at18:52–18:54UTC. EarlierON readings are historical, not a current blocker. No Google setting was edited. Original PR128/evidenceb86229d9 and OFFpackages remain frozen. [Separate draft PR129](https://github.com/alwat83/ifyoumind/pull/129), codex/ga4-activation-candidate, prepares one runtime flag change plus necessary tests; no deployment/livecollection authorization.
 
 Frozen file/manifest/archive/configuration hashes allPASS. Read-only18:56:32.596UTC Hosting08500dca665abbab/all64files+config and all34Functions unchanged; enrollmentstillone explicitallowlist; rollback2bb9finalized. No pricing/Stripe/AI/auth/entitlement/customer write. New offline production-origin probe passes desktop/390/320 with Google/productionfullyintercepted; FrozenactivationHosting297efc22ef45108d5b42afe328ae6ba75f116130 passes385tests/8gates/0sourcechanges;66-filearchive2041d0c3395fd8e9d0882714ccce791a00ee2b4905354f4d351d62391ce80731, configunchanged. Backend reusesunchangeda661package; finaldocumentationheadon candidatePR. [Reconciliation/release/costs](docs/marketing/ga4/ACTIVATION_RECONCILIATION.md).
 

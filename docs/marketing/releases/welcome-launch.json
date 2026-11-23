@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "hostingVersion": "2bb9f7f3c6545b0e",
+  "hostingRelease": "1795375284691000",
+  "manifestSha256": "d0c14a6f135d6f41ff2217d5573f07c05d851ba8c1094708ddbfbc3d16c8538c",
+  "configSha256": "a985fa400017d793640bd4c895435d0c8d4a302c183efcb7d50999794ce5dec0",
+  "liveConfigSha256": "29c4788b16dba2d93fec74c137fe2eacaeb3b729fe004f3892dbe1378600e4c2",
+  "evidenceReference": "docs/marketing/LAUNCH_IMAGE_RELEASE.md",
+  "note": "Historical verified baseline record. Future prepare requires fresh read-only live file/configuration matching; not deployment authorization."
+}

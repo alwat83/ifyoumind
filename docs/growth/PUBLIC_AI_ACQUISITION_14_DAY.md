@@ -1,6 +1,6 @@
 # Property-tax-first acquisition — founder review draft
 
-November 22, 2026 · OpenAI / Codex · Prepared, not published or scheduled. No advertising spend, outreach or new tracking is authorized by this document. Existing channel setup remains Pending Founder Setup. Day 1 begins after approval of the exact sender, channel, audience and content; dates below are relative, not claims of activity.
+November 22, 2026 · OpenAI / Codex · Prepared, not published or scheduled. No advertising spend, outreach or new tracking is authorized by this document. Founder has now confirmed @ifyoumindapp is connected to Windsor.ai and approved one welcome post; its exact image is [verified publicly available](../marketing/LAUNCH_IMAGE_RELEASE.md). ChatGPT handles that post, not Codex. Further posts/channels/assets retain their own approval boundary. Day 1 campaign activity begins after approval of its exact sender, channel, audience and content; dates below are relative, not claims of activity.
 
 ## Claim boundary and landing destination
 
@@ -17,6 +17,8 @@ All footage uses the real product with synthetic example figures, the approved M
 | 1. Follow the $420 | “Your property-tax bill rose by $420. Where did it go? In this made-up example, school tax accounts for $240 of the increase. The evidence shows the arithmetic. It doesn't prove the bill is wrong.” | 0–3s: homepage question; 3–7s: click Reveal; 7–13s: finding and school contribution; 13–19s: open evidence and show both periods. Keep amounts attached to the example label. | 19–23s: “Start with a free example. Reveal what changed at ifYouMind.com.” |
 | 2. A finding you can check | “A bigger total is the start of a question. See what changed. Then check the figures behind the finding. You don't need an account to try the example.” | 0–4s: full question; 4–9s: reveal $420; 9–16s: evidence disclosure and calculation; 16–21s: supported private CSV route and its format/privacy explanation. Do not upload a real bill or imply PDF support. | “Try the example first. Reveal what changed.” |
 | 3. Bills and places, different evidence | “Comparing bills? Start with what changed. Comparing U.S. cities? Start with public population, income and housing estimates. Same idea: a useful finding, with evidence you can inspect.” | 0–8s: tax reveal; 8–14s: switch to electricity example; 14–23s: city example, source and limitation. Clearly label all illustrative displays. Do not present Census housing values as personal rent or a complete cost-of-living index. | “See the numbers behind the finding. Try ifYouMind.” |
+
+A five-slide, unpublished [Carousel A review pack](../marketing/drafts/property-tax/REVIEW.md) now implements the first concept using existing templates/fixtures; new artwork/caption approval is still pending.
 
 ## Two carousel concepts
 

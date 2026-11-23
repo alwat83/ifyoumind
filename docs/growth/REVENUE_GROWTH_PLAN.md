@@ -1,5 +1,27 @@
 # ifYouMind — Zero-to-One Launch Command Center
 
+## November22 — Property-tax campaign distribution blocker removed
+
+Five approved carousel JPEGs are [publicly hosted and checksum verified](../marketing/releases/PROPERTY_TAX_CAROUSEL_V2.md), with exact approved caption and alt text in the ready handoff. Founder approval already exists for one organic @ifyoumindapp carousel; ChatGPT/Windsor publishes, Codex has made no posting request. No ads/spend/paid service. This is a concrete acquisition-enablement outcome, not evidence of reach, qualified visitors, useful outside experiences or revenue. Existing scoreboard unknowns remain unknown; no new analytics or financial query.
+
+Next opportunities ranked: (1) publish this already-approved finished campaign once using verified URLs — highest immediate distribution value, little remaining effort, response unproven; (2) record real finding/limitation comprehension from consenting outside visitors — high learning value/low cost; (3) guide genuinely interested city/Business users toward existing report value with unchanged payment safeguards. More asset production ranks below using the finished campaign and learning from actual response.
+
+## November 22 — Acquisition operations ready; no inferred traction
+
+[Shared marketing pipeline](../marketing/README.md) now produces/reconciles/validates the actual5-slide property-tax pack and approval-gated handoff instead of another campaign system.21local regression cases pass; final exports/caption are pending, so no tax Hosting/social release occurs. This removes routine file/metadata work from the founder while preserving final external-action decisions. No product changes or new costs.
+
+The [recorded external welcome-post receipt](https://github.com/alwat83/ifyoumind/pull/127#issuecomment-7086695435) establishes one actual organic Instagram publication, not reach, qualified visitors, meaningful experiences, customers or revenue. Exact postID17924317206450814/permalinkDgD21-tiLBZ/published2026-11-22T22:16:28Z are retained in the asset registry. No new analytics/financial query was performed; all existing scoreboard unknowns and scoped historical evidence remain unchanged.
+
+Next revenue opportunities ranked: (1) approve the completed truthful tax carousel and authorize distribution — high near-term reach potential, low incremental effort/cost, actual response unproven; (2) observe consenting outside free-example completion/finding+limitation comprehension — strongest immediate learning, small effort/privacy risk; (3) guide a genuinely interested city/Business-report buyer through existing value — potential revenue, higher intent and separate payment safeguards required. More speculative asset/product work ranks below actual distribution and learning.
+
+## November 22 — Refined first tax campaign ready for creative review
+
+[Carousel v2](../marketing/drafts/property-tax/REVIEW.md) delivers five actual unpublished portrait JPEGs, before/after comparison, alt text and a draft caption. The revised hook, informative charts and live-product/free-example invitation aim to improve first-use comprehension; that effect remains unmeasured. All figures are synthetic and traceable; no tax-error, savings, appeal or bill-AI claim. Original welcome post/image scope is unchanged. Next revenue-focused action is founder approval of this concrete creative, followed by separately authorized publication and real visitor learning. No scoreboard unknown is replaced with invented traffic, customers, revenue or engagement.
+
+## November22 — Instagram welcome-image delivery unblocked
+
+[Approved welcome JPEG](https://ifyoumind.com/assets/marketing/social/instagram/posts/ifyoumind-launch-01.jpg) is publiclyverified200/image/jpeg/exactbytes on Hosting2bb9f7f3c6545b0e, without changing application/AI/billing/enrollment. ChatGPT's existing Windsor workflow handles the approved @ifyoumindapp post; Codex made no posting call. Five [next tax-carousel drafts](../marketing/drafts/property-tax/REVIEW.md) are prepared for founder review, not deployed/published. Lead with deterministic, clearly illustrative tax findings; no bill-AI/overpayment claim. No visitor,conversion,independentcustomer or revenue outcome follows from filehosting; keep scoreboardunknowns unchanged. Next commercial action is the approved publishing handoff, then actual first-use feedback.
+
 ## November22 — Public AI verified; acquisition package prepared
 
 New verified non-admin viewer can explain already-visible saved city evidence in production; self-service Free owners were already eligible. One internal canary263input/37output/1,694ms/~0.000045USD estimated, valid citations/next step;3/200monthly attempts and0.015USD conservative reservation total. These are QA/provider observations, not traffic, willingness to pay or customer revenue. No scoreboard unknown is replaced with zero or a fabricated conversion. Subscriptions remain closed and waived real-payment proof stays UNVERIFIED.

@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-11-22",
+  "reviewAfterDays": 30,
+  "sources": {
+    "instagram": "https://developers.facebook.com/documentation/instagram-platform/instagram-graph-api/reference/ig-user/media",
+    "facebook": "https://developers.facebook.com/docs/graph-api/reference/page/photos/",
+    "tiktok": "https://developers.tiktok.com/docs/en/content-posting-api-media-transfer-guide"
+  },
+  "presets": {
+    "instagram-feed": { "platform": "instagram", "mimeType": "image/jpeg", "width": 1080, "height": 1350, "maxBytes": 8000000 },
+    "instagram-square": { "platform": "instagram", "mimeType": "image/jpeg", "width": 1080, "height": 1080, "maxBytes": 8000000 },
+    "instagram-story-image": { "platform": "instagram", "mimeType": "image/jpeg", "width": 1080, "height": 1920, "maxBytes": 8000000 },
+    "facebook-feed": { "platform": "facebook", "mimeType": "image/jpeg", "width": 1080, "height": 1350, "maxBytes": 10000000 },
+    "instagram-reel": { "platform": "instagram", "mimeType": "video/mp4", "width": 1080, "height": 1920, "maxBytes": 300000000, "minSeconds": 3, "maxSeconds": 900, "minFps": 23, "maxFps": 60, "requiresFaststart": true },
+    "instagram-story-video": { "platform": "instagram", "mimeType": "video/mp4", "width": 1080, "height": 1920, "maxBytes": 100000000, "minSeconds": 3, "maxSeconds": 60, "minFps": 23, "maxFps": 60, "requiresFaststart": true },
+    "tiktok-video": { "platform": "tiktok", "mimeType": "video/mp4", "width": 1080, "height": 1920, "maxBytes": 4000000000, "minSeconds": 3, "maxSeconds": 180, "minFps": 23, "maxFps": 60, "requiresFaststart": true }
+  },
+  "notes": [
+    "Dimensions are house export targets within documented platform bounds, not all accepted dimensions.",
+    "TikTok uses a conservative 180-second house limit; account-specific publication permission/duration and URL ownership still require the publishing workflow.",
+    "MP4 validation requires an existing ffprobe executable; absent tooling fails closed. No encoder, video generation or software installation is claimed.",
+    "Revalidate platform specifications before release when this record is older than 30 days. Container acceptance and account permissions are not established by file validation."
+  ]
+}

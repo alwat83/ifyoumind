@@ -1,0 +1,55 @@
+{
+  "status": "READY_FOR_SEPARATELY_AUTHORIZED_PUBLICATION",
+  "campaign": "property-tax",
+  "platform": "instagram",
+  "caption": "Your property-tax bill increased by $420. What changed?\n\nIn this synthetic example, $240 of the increase came from school tax — 57.1% of the total change. Follow the figures, check the calculation, and see what the evidence establishes.\n\nYour numbers have a story. Reveal what changed. Try the free example at ifyoumind.com. No account needed for the example.\n\nIllustrative figures, not a customer result. These figures do not establish an assessment error or eligibility for an appeal. This is a deterministic bill example, not AI-based tax analysis.\n",
+  "draftCaption": null,
+  "assets": [
+    {
+      "assetId": "property-tax-carousel-01-v2",
+      "sha256": "237fd791af550fe0af727b9cb6b6ba4a1abcfebf92e61316d792870b60c6a67c",
+      "version": 2,
+      "publicUrl": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/property-tax-carousel-01-v2.jpg",
+      "hostingRelease": "1795392328755000",
+      "altText": "Synthetic property-tax example: the annual total rises from $4,200 in 2024 to $4,620 in 2025, an increase of $420. What changed? No assessment error or appeal eligibility is established.",
+      "publicationStatus": "not-published"
+    },
+    {
+      "assetId": "property-tax-carousel-02-v2",
+      "sha256": "a1a3e44c89fe609eb144586fcbb32f9f11a870b336b289ea70c69f981fc03561",
+      "version": 2,
+      "publicUrl": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/property-tax-carousel-02-v2.jpg",
+      "hostingRelease": "1795392328755000",
+      "altText": "Synthetic example: $240 of the $420 increase came from school tax. Zero-based bars compare $2,400 in 2024 with $2,640 in 2025. $2,640 minus $2,400 equals $240. No assessment error or appeal eligibility is established.",
+      "publicationStatus": "not-published"
+    },
+    {
+      "assetId": "property-tax-carousel-03-v2",
+      "sha256": "afbbf61a2bedc4f59373e75d2b181536b9c66da974158000c68e32fe9b826998",
+      "version": 2,
+      "publicUrl": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/property-tax-carousel-03-v2.jpg",
+      "hostingRelease": "1795392328755000",
+      "altText": "Synthetic example: school tax accounts for 57.1 percent of the $420 increase. A proportional bar shows $240 school tax and $180 other charges. $240 divided by $420 times 100 equals 57.1 percent, rounded. This is not a tax rate or evidence of an assessment error or appeal eligibility.",
+      "publicationStatus": "not-published"
+    },
+    {
+      "assetId": "property-tax-carousel-04-v2",
+      "sha256": "93ba4a70ea4877b76ad02d68dd9ff0460d9b3be8b1c4f93d2902b426fcc11be1",
+      "version": 2,
+      "publicUrl": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/property-tax-carousel-04-v2.jpg",
+      "hostingRelease": "1795392328755000",
+      "altText": "Understanding an increase does not mean your bill is wrong. Synthetic figures show which charges changed and how much they contributed. They do not establish an assessment error or eligibility for an appeal.",
+      "publicationStatus": "not-published"
+    },
+    {
+      "assetId": "property-tax-carousel-05-v2",
+      "sha256": "7dade1d76a8d10a6487d2a276ee75ca63ffaae8d6b3e909e7a7fb3a28b3a1041",
+      "version": 2,
+      "publicUrl": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/property-tax-carousel-05-v2.jpg",
+      "hostingRelease": "1795392328755000",
+      "altText": "Your numbers have a story. Reveal what changed. An authentic preview of the live free illustrative tax example shows the $420 increase and school-tax contribution. Try the free example at ifyoumind.com; no account needed for the example. Synthetic figures do not establish an assessment error or appeal eligibility.",
+      "publicationStatus": "not-published"
+    }
+  ],
+  "publishExecuted": false
+}

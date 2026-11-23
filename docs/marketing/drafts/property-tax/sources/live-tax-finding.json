@@ -1,0 +1,19 @@
+{
+  "url": "https://ifyoumind.com/?example=tax",
+  "capturedAt": "2026-11-22T22:58:51Z",
+  "capture": "Unmodified read-only browser screenshot of #discovery-result",
+  "viewport": {
+    "width": 1000,
+    "height": 1100
+  },
+  "crop": {
+    "x": 80,
+    "y": 520.140625,
+    "width": 834,
+    "height": 192.546875
+  },
+  "sha256": "f036c703f998167858623ddce24daad4f0253b566a730e56fc4580e3814866f0",
+  "content": "Live free illustrative example; synthetic figures, no customer data",
+  "retouching": false,
+  "providerCalls": 0
+}

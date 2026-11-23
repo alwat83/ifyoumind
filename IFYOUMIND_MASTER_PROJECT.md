@@ -1,5 +1,27 @@
 # ifYouMind — Master Project Record and Roadmap
 
+## November22,2026 — Approved tax carousel publicly hosted
+
+[PR127](https://github.com/alwat83/ifyoumind/pull/127) release executed under founder7087580868/7087807560. Five exact approved JPEGs/caption from33577c34 preserved; sourcea71cad822e40515b7e9f56ee926762ae53fd73e3. Hosting08500dca665abbab/release1795392328755000 at2026-11-23T00:05:28.755Z (November22 16:05:28.755PST). All5anonymousJPEG checks/64serverfiles PASS;59prior files/config/routes and34Functions unchanged, enrollmentclosed, AI/state/quotaunchanged. Prior2bb9f7f3c6545b0e finalized/retained. No rebuild/merge/backend/billing/customer/provider action.21targeted tests and exactsourceintegrity PASS, no fresh broad CI/device claims.
+
+[Release evidence/URLs/checks/rollback](docs/marketing/releases/PROPERTY_TAX_CAROUSEL_V2.md) · [canonical registry](docs/marketing/assets.json) · [ready exact caption/alt-text handoff](docs/marketing/drafts/property-tax/publication-handoff.json). This supersedes older pending-approval/unknown-URL snapshots. No Codex Instagram attempt; ChatGPT/Windsor handles the already-authorized one organic carousel. Record actual publishing receipt separately. No visits, conversions or revenue inferred from Hosting; historical reliability/payment/accessibility limits remain.
+
+## November 22, 2026 — Permanent marketing asset pipeline
+
+Existing [draft PR127](https://github.com/alwat83/ifyoumind/pull/127) now extends the existing renderer into [one shared local-first workflow](docs/marketing/README.md): versioned draft sources/exports/captions, canonical metadata/lifecycle, validation, review sheets, approval-gated additive Hosting preparation and actual external publication receipts. Permanent AGENTS instructions require reuse.21targeted local tests and five offline renders pass; exact source/limitations/impact and reproduction commands are in [verification evidence](docs/marketing/releases/PIPELINE_VERIFICATION.md). No dependencies/services/install or production operations.
+
+Five existing tax creative JPEGs retain their exact bytes under normalized versioned names; pending final export/caption approval, no public URLs. Registry also preserves5archived originals and records the externally verified welcome post receipt17924317206450814/permalinkDgD21-tiLBZ/2026-11-22T22:16:28Z. This corrects historical publication-unknown notes without inventing caption/traffic/revenue. Welcome public JPEG and retained59-file artifact remain exact. Website/backend/AI/auth/commerce/enrollment/security unchanged. MP4 presets fail closed without existing ffprobe; physical/human/platform coverage remains unverified. GO for creative review only; external release/publication stays separately authorized.
+
+## November 22, 2026 — Property-tax campaign creative v2
+
+The existing [five-slide carousel](docs/marketing/drafts/property-tax/REVIEW.md) is refined and ready for final founder visual approval in draft PR127. [Before/after evidence](docs/marketing/drafts/property-tax/comparison.jpg) preserves the originals. Larger question-led +$420, source-backed school comparison and 57.1% graphic, precise limitations and an authentic product preview connect to the free example. All five portrait exports pass offline bounds/font/contrast/mobile-scale/numerical checks; alt text and caption are updated. This is local marketing artwork, not deployed product or measured conversion. No website, AI/billing/enrollment, public asset or publishing change; future publication requires separate approval.
+
+## November22,2026 — Approved welcome image production verified
+
+Exact supplied Instagram JPEG is live at [the stable public URL](https://ifyoumind.com/assets/marketing/social/instagram/posts/ifyoumind-launch-01.jpg),200/image/jpeg/noauth/no redirect,1080×1080/sRGB/76114bytes/exactapprovedSHA256. Asset sourcedb22d11d6320358313740993356c91c863d2474f; isolatedHosting2bb9f7f3c6545b0e/release1795375284691000 deployed11:21:24.691PST and read back again14:07PST without redeploy. All58application files/config and34Functions/AI/billing/auth/subscription settings preserved; public enrollmentclosed, no providerrequest. App executable remainsfef9856b, priorHosting469cd9d1f8513ae6retained; PR126 untouched. [Registry/standards](docs/marketing/README.md), [exact release evidence](docs/marketing/LAUNCH_IMAGE_RELEASE.md).
+
+Five [property-tax carousel drafts](docs/marketing/drafts/property-tax/REVIEW.md), captions/alttext/Video1handoff reuse existing fixture/template and stay outsidepublic, pending founder review. No replacement welcomecreative or website redesign. Founder-approved welcome posting is reserved for ChatGPT/Windsor; Codex did not publish/schedule/spend or claimmarketingresults. No new service or paidGitHub dependency.
+
 ## November22,2026 — Public AI reader rollout production verified
 
 [PR126](https://github.com/alwat83/ifyoumind/pull/126), executablefef9856b99e65435d9328a61a38d328e2ea2fd3f, remains unmerged. Verified owners/admins and active viewers may opt into explanations of supported already-visible city facts without purchase. Shared finding context reauthorizes server-side through sign-in/refresh; original questions/private bills never leave for OpenAI. No new integration, billing permission, invitation system or design change.

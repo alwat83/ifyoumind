@@ -1,5 +1,7 @@
 # GA4 — consented acquisition measurement
 
+> **Execution update: deployed, then STOPPED/NO-GO on actual collector privacy failure.** [Production receipt](PRODUCTION_RELEASE.md) supersedes historical not-deployed/ready statements below. Tracking remains deployed for consenting visitors pending a separate founder Hosting-only rollback decision. No automatic rollback or new live test.
+
 November 23, 2026 · OpenAI / Codex · [Draft PR #128](https://github.com/alwat83/ifyoumind/pull/128) · **OFF baseline preserved; separate activation candidate prepared, not deployed.**
 
 ## Current reconciliation — November 23, 2026

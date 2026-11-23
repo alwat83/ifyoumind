@@ -1,5 +1,12 @@
 # ifYouMind — Current development status
 
+## November 23, 2026 — GA4 deployed; STOPPED on real collector privacy failure
+
+Founder-authorized PR129 exact artifacts deployed without rebuild: Hosting **267c912aeea5478b**, release **1795475756058000**,23:15:56.058UTC; callable **claimverifiedpurchase-00001-jul ACTIVE/Ready/100%**, anonymous401. All66Hosting file hashes/config, six marketing JPEGs and all34pre-existing Functions unchanged except approved analytics Hosting/new callable. Pricing, AI, public enrollment and commercial behavior preserved. Frozen source297efc22/backend a661acd1 and all153files/archives remain unchanged. No merge/real purchase/customer write.
+
+**NO-GO activation:** actual consented Google page_view204 contained benign QA query URL and document title instead of sanitized values. Reject/privateDiscovery zeroGoogle; withdrawal ga-disable=true/no additional observed collection. Tests stopped. Realtime no data at observation/DebugView unverified. Tracking remains deployed for consenting visitors; no automatic rollback. Prior OFF Hosting08500dca665abbab remainsFINALIZED. Founder Hosting-only rollback decision requested; no settings/provider/billing action. Detailed receipt and next3 in [production receipt](../marketing/ga4/PRODUCTION_RELEASE.md). Historical preparation below is superseded for production status; offline test passes are not actual collector privacy proof.
+
+
 ## November23,2026 — GA4 savedOFF reconciled; isolated activation candidate
 
 Founder-completed Enhanced MeasurementOFF independently confirmed after freshreload of property565380927/stream16394318092/G-NRT31062LW at18:52–18:54UTC. EarlierON readings are historical, not a current blocker. No Google setting was edited. Original PR128/evidenceb86229d9 and OFFpackages remain frozen. [Separate draft PR129](https://github.com/alwat83/ifyoumind/pull/129), codex/ga4-activation-candidate, prepares one runtime flag change plus necessary tests; no deployment/livecollection authorization.

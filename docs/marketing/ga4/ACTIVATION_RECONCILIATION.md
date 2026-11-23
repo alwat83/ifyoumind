@@ -1,5 +1,7 @@
 # GA4 final activation reconciliation
 
+> **Execution update: deployed, then STOPPED/NO-GO on actual collector privacy failure.** [Production receipt](PRODUCTION_RELEASE.md) supersedes historical not-deployed/ready statements below. Tracking remains deployed for consenting visitors pending a separate founder Hosting-only rollback decision. No automatic rollback or new live test.
+
 November23,2026 · OpenAI /Codex · [Draft activation PR129](https://github.com/alwat83/ifyoumind/pull/129) · **Prepared only; no production authorization executed.**
 
 ## Saved setting and authority

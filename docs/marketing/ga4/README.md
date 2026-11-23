@@ -130,3 +130,23 @@ The immediate Hosting rollback target for a future GA release is the currently s
 Restore the prior untracked Hosting client first if collection/privacy fails. The new receipt callable has no financial side effects and need not be deleted to restore the client; disabling/removing/changing that callable requires separate authorization. Do not roll back Stripe/webhooks/AI/rules or touch any claim/payment/customer records to make a test pass.
 
 For an approved flag-OFF deployment: verify no Google request even with stored analytics permission, correct auth/tenant denial on the callable, and unchanged purchase/report/navigation flows. Test a valid production receipt only if separately authorized; do not create payment/claim records for this readiness review. For an approved flag-ON activation: verify pending/rejected/expired consent sends nothing, one destination/manual view per SPA navigation/reload, withdrawal/regrant/cross-tab clear, sanitized payloads and private Discovery with zero post-load traffic; compare Realtime/DebugView to the explicit expected QA event sequence. Retain the claim-before-delivery undercount and the Stripe-only revenue rule. Unexpected collection, duplication or sensitive payloads stop activation immediately.
+
+### Prepared review packages — still OFF, not authorized for deployment
+
+Executable source **a661acd16969913ab85bb524aaf677acbbabe348** passed the exact-source native gate (453tests and both guards, zero changes). The final PR evidence commit is documentation-only. [Sanitized manifest/archive hashes](release-candidate.json) distinguish this frozen executable from its final documentation head.
+
+Local Hosting package: `test-results/ga4-final/hosting-a661acd1-filtered/` (66files); single-callable package: `test-results/ga4-final/functions-a661acd1/` (87files). Neither was deployed. The function package copies reviewed `src`, compiled `lib`, `tsconfig`, package/lockfile, changes only stagedpackage.main, and adds the bootstrap above; no environment/secret files or node_modules. Admin initialization/exports/endpoint metadata were inspected offline without invoking it. Full manifests/archives remain local.
+
+The Hosting staging step explicitly excludes only13empty tracked marketing `.gitkeep` directory placeholders in accordance with the existing Hosting `**/.*` ignore. It must verify each is zero-byte, tracked and under `public/assets/marketing/`; any other unexpected filename fails closed. Keep the standard artifact guard unchanged. This exclusion is packaging hygiene, not removal of application assets. All6approved marketingJPEGs and3Discovery files match the retained live baseline, and the Hosting configuration is unchanged.
+
+Reverify the exact prepared static package without rebuilding:
+
+```sh
+node scripts/prepare-hosting-release.mjs \
+  --expected-sha=a661acd16969913ab85bb524aaf677acbbabe348 \
+  --verify=test-results/ga4-final/hosting-a661acd1-filtered
+shasum -a 256 test-results/ga4-final/hosting-a661acd1-filtered.tar.gz \
+  test-results/ga4-final/functions-a661acd1.tar.gz
+```
+
+A founder can approve the narrowly defined callable and Hosting steps together; no need to deploy the disabled client twice. However these specific archives remainOFF: enabling collection requires a separately authorized, pinned flag-on source/artifact and saved Enhanced MeasurementOFF readback. Do not enable collection with the reviewed OFF artifact or reuse its hashes for a different build. No live purchase is needed or authorized for this readiness package.

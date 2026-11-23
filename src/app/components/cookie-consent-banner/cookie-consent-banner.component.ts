@@ -1,4 +1,5 @@
-import { Component, PLATFORM_ID, inject } from '@angular/core';
+import { Component, DestroyRef, ElementRef, PLATFORM_ID, ViewChild, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { CookieService } from '../../services/cookie.service';
 import { RouterLink } from '@angular/router';
@@ -18,9 +19,25 @@ export class CookieConsentBannerComponent {
   private cookiePreferencesService = inject(CookiePreferencesService);
   private platformId = inject(PLATFORM_ID);
 
+  private host = inject(ElementRef<HTMLElement>);
+  private destroy = inject(DestroyRef);
+  private resize?: ResizeObserver;
+
+  @ViewChild('banner') set banner(value: ElementRef<HTMLElement> | undefined) {
+    this.resize?.disconnect();
+    this.host.nativeElement.style.height = '0px';
+    if (!value || !isPlatformBrowser(this.platformId)) return;
+    // Reserve the fixed banner's actual height so bottom-of-page controls remain reachable.
+    const reserve = () => this.host.nativeElement.style.height = `${value.nativeElement.getBoundingClientRect().height}px`;
+    reserve();
+    this.resize = new ResizeObserver(reserve);
+    this.resize.observe(value.nativeElement);
+  }
+
   constructor() {
+    this.destroy.onDestroy(() => this.resize?.disconnect());
     if (isPlatformBrowser(this.platformId)) {
-      this.showBanner = this.cookieService.needsConsent();
+      this.cookieService.consentStatus$.pipe(takeUntilDestroyed()).subscribe(() => this.showBanner = this.cookieService.needsConsent());
     }
   }
 
@@ -36,6 +53,5 @@ export class CookieConsentBannerComponent {
 
   manage() {
     this.cookiePreferencesService.open();
-    this.showBanner = false;
   }
 }

@@ -1,3 +1,4 @@
+import { AnalyticsService } from '../../services/analytics.service';
 import { JourneyNavigationComponent } from '../../journey-navigation.component';
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -12,6 +13,7 @@ import {
   sendEmailVerification,
   signInWithPopup,
   GoogleAuthProvider,
+  getAdditionalUserInfo,
 } from '@angular/fire/auth';
 
 /** New accounts go straight to the market-analysis flow: they have no decisions to look at yet. */
@@ -34,6 +36,7 @@ export class RegisterComponent {
   showErrors=false;
   submitting=false;
 
+  private analytics=inject(AnalyticsService);
   private auth:Auth=inject(Auth);
   private router:Router=inject(Router);
   private route=inject(ActivatedRoute);
@@ -58,6 +61,7 @@ export class RegisterComponent {
   async register(){
     try{
       const credential=await createUserWithEmailAndPassword(this.auth,this.email,this.password);
+      this.analytics.registrationCompleted('email');
       await updateProfile(credential.user,{displayName:this.displayName.trim()});
       // Always verify first. Locally the Auth emulator captures the email instead of sending it.
       await this.sendVerification(credential.user);
@@ -78,6 +82,7 @@ export class RegisterComponent {
   async googleLogin(){
     try{
       const result=await signInWithPopup(this.auth,new GoogleAuthProvider());
+      if(getAdditionalUserInfo(result)?.isNewUser)this.analytics.registrationCompleted('google');
       // Returning Google users go to their decisions; brand-new ones start the market analysis.
       const isNew=result.user.metadata.creationTime===result.user.metadata.lastSignInTime;
       if(this.returnUrl) await this.router.navigateByUrl(this.decisionDestination());

@@ -1,3 +1,4 @@
+import { CookieService } from '../services/cookie.service';
 import { Injectable, inject } from '@angular/core';
 import { Functions, httpsCallable } from '@angular/fire/functions';
 
@@ -14,12 +15,15 @@ export type ProductEvent=
 @Injectable({providedIn:'root'})
 export class ProductAnalyticsService {
   private readonly functions=inject(Functions);
+  private readonly cookies=inject(CookieService);
 
   async track(
     organizationId:string,
     event:ProductEvent,
     context:Record<string,string>={},
   ):Promise<void>{
+    // Existing first-party product telemetry is optional too; never forward its tenant/user context to GA4.
+    if(!this.cookies.hasConsent('analytics'))return;
     try{
       const call=httpsCallable<
         {organizationId:string;event:ProductEvent;context:Record<string,string>},

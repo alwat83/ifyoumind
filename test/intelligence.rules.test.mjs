@@ -79,3 +79,9 @@ test('subscription billing documents, grants and launch seats are server-only', 
     await assertFails(setDoc(doc(db, path), { used: 0 }));
   }
 });
+
+test('analytics claims and authoritative Stripe receipts are never client-readable or writable',async()=>{
+  for(const context of [env.unauthenticatedContext(),env.authenticatedContext('alice')])for(const target of ['analyticsPurchaseClaims/opaque','stripePayments/private']){
+    const ref=doc(context.firestore(),target);await assertFails(getDoc(ref));await assertFails(setDoc(ref,{confirmed:true}));
+  }
+});

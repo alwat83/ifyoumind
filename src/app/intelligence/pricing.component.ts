@@ -87,6 +87,7 @@ export class PricingComponent implements OnInit {
         const status=await this.monetization.status(this.workspace.organizationId);
         if (this.viewerUid !== uid) return;
         this.status=status;
+        if(checkout==='success'&&this.projectId)void this.monetization.confirmAnalyticsPurchase(this.workspace.organizationId,this.projectId,this.highlightedOffer);
         if(checkout==='success'&&this.highlightedOffer==='report'&&this.projectId){
           const project=await this.market.get(this.workspace.organizationId,this.projectId);
           if (this.viewerUid !== uid) return;

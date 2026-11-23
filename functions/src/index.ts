@@ -219,3 +219,6 @@ export { getProductFunnelMetrics } from './intelligence/growth-metrics';
 
 export { stripeSubscriptionWebhook } from './intelligence/subscriptions';
 export { explainDecisionReport } from './intelligence/explain-decision-report';
+
+// Read verified webhook receipts; never changes billing, subscriptions or entitlements.
+export { claimVerifiedPurchase } from './intelligence/acquisition-measurement';

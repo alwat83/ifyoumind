@@ -27,6 +27,19 @@ export async function isolate(context) {
   });
   // Applies to both the primary page and fresh-session contexts in registration tests.
   if (process.env.QA_FUNCTIONS_EMULATOR_HOST === '127.0.0.1:5008') {
+    // Callable mocks use route.fetch(), which bypasses context routes. Rewrite the
+    // local browser request first so those mocks reach this run's emulator too.
+    await context.addInitScript(() => {
+      const original = window.fetch.bind(window);
+      window.fetch = (input, init) => {
+        const url = new URL(input instanceof Request ? input.url : String(input), location.href);
+        if (url.origin === 'http://127.0.0.1:5001') {
+          url.port = '5008';
+          input = input instanceof Request ? new Request(url, input) : url;
+        }
+        return original(input, init);
+      };
+    });
     for (const [oldPort, newPort] of [[9099, 9989], [5001, 5008], [8080, 9988]]) {
       await context.route(`http://127.0.0.1:${oldPort}/**`, async route => {
         const url = new URL(route.request().url()); url.port = String(newPort);

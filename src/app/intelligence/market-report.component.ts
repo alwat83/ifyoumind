@@ -275,6 +275,7 @@ export class MarketReportComponent implements OnInit, OnDestroy {
         this.market.get(workspace.organizationId,projectId),
         this.monetization.status(workspace.organizationId).catch(()=>null),
       ]);
+      if(this.checkoutReturned&&this.status?.subscription?.offer)void this.monetization.confirmAnalyticsPurchase(workspace.organizationId,projectId,this.status.subscription.offer);
       this.purchaseIntent=parseIntent(this.route.snapshot.queryParamMap.get('intent'))==='report'||readIntent()==='report';
       clearIntent();
       void this.analytics.track(workspace.organizationId,'report_view',{

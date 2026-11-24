@@ -1,0 +1,68 @@
+{
+  "status": "LOCAL_REVIEW_ONLY_NOT_DEPLOYED",
+  "implementation": "c28fa8bd52b7e27fead59b56033f15fde40f60d7",
+  "base": "cce90dc1",
+  "branch": "codex/ga4-url-privacy-repair",
+  "production": {
+    "hostingVersion": "08500dca665abbab",
+    "release": "1795476390936000",
+    "releaseTime": "2026-11-23T23:26:30.936Z",
+    "trackingRemoved": true,
+    "functionsUnchanged": 35,
+    "claimVerifiedPurchase": "claimverifiedpurchase-00001-jul"
+  },
+  "rootCause": "Destination initialization used document defaults before original config-scoped privacy overrides; no-manual-event offline control still emitted the automatic hit",
+  "correction": "Set existing privacy/default options before js initialization; reuse for config",
+  "verification": {
+    "build": "PASS, isolated local output",
+    "exactSourceFastTests": {
+      "pass": 194,
+      "fail": 0,
+      "skipped": 0
+    },
+    "focusedAdapterAndPolicy": {
+      "pass": 20,
+      "overlapWithFastTests": true
+    },
+    "browser": {
+      "uniquePassingCases": 9,
+      "widths": [
+        1280,
+        390,
+        320
+      ],
+      "singleCleanNineCaseRun": false,
+      "initialRun": {
+        "passed": 4,
+        "failed": 2,
+        "interrupted": 1,
+        "notRun": 2
+      },
+      "targetedReruns": {
+        "desktopStoredGrant": 1,
+        "mobileNavigation": 1,
+        "narrow": 3
+      },
+      "assertionsWeakened": false,
+      "automaticRetries": 0
+    },
+    "negativeFrozenControl": "EXPECTED_FAIL: raw URL/document title",
+    "originalFailuresPreserved": true,
+    "hostedCI": "NOT_RUN",
+    "physicalSafari": "NOT_RUN",
+    "spokenVoiceOver": "NOT_RUN",
+    "linuxPixels": "NOT_RUN"
+  },
+  "publicTagCapture": {
+    "at": "2026-11-23T23:27:48.152Z",
+    "url": "https://www.googletagmanager.com/gtag/js?id=G-NRT31062LW",
+    "bytes": 480479,
+    "sha256": "e2c32f0ef35c04567b06cde952b9a82357a6489f961e58a71cacf9ef127c9c47",
+    "purpose": "offline-only replay; all collector requests intercepted",
+    "collectorRequests": 0
+  },
+  "realCollectorRequestsDuringCorrection": 0,
+  "newProductionDeploymentsDuringCorrection": 0,
+  "frozenArtifactsUnchanged": true,
+  "redeploymentAuthorized": false
+}

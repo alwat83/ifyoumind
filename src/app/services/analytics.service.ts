@@ -28,8 +28,12 @@ function browserPort(): AnalyticsPort {
             owned('consent', 'update', { analytics_storage: 'granted', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
             owned('set', 'ads_data_redaction', true);
             owned('set', 'url_passthrough', false);
+            // Destinations can initialize before the queued config command. Set privacy
+            // defaults first so that initialization cannot fall back to document URLs/titles.
+            const settings = { ...page, send_page_view: false, allow_google_signals: false, allow_ad_personalization_signals: false, ignore_referrer: true, cookie_prefix: 'ifym', cookie_expires: 2592000, cookie_update: false, cookie_flags: 'SameSite=Lax;Secure' };
+            owned('set', settings);
             owned('js', new Date());
-            owned('config', GA4_ID, { ...page, send_page_view: false, allow_google_signals: false, allow_ad_personalization_signals: false, ignore_referrer: true, cookie_prefix: 'ifym', cookie_expires: 2592000, cookie_update: false, cookie_flags: 'SameSite=Lax;Secure' });
+            owned('config', GA4_ID, settings);
             loading = new Promise<boolean>(resolve => { script = document.createElement('script'); script.id = 'ifyoumind-ga4'; script.async = true; script.referrerPolicy = 'no-referrer'; script.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA4_ID; script.onload = () => resolve(true); script.onerror = () => resolve(false); document.head.appendChild(script); });
             return loading;
         },

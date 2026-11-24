@@ -1,5 +1,14 @@
 # ifYouMind — Zero-to-One Launch Command Center
 
+## November 23, 2026 — GA4 local correction prepared after verified rollback
+
+[Draft corrective PR130](https://github.com/alwat83/ifyoumind/pull/130) is stacked on PR129; no master merge or analytics deployment.
+
+Production remains Hosting **08500dca665abbab** / release **1795476390936000**, GA4 tracking removed; all35Functions including claimVerifiedPurchase preserved. New isolated branch `codex/ga4-url-privacy-repair`, implementation **c28fa8bd52b7e27fead59b56033f15fde40f60d7**, changes only startup privacy defaults before Google initialization plus regression tests. Original frozen packages are unchanged.
+
+Offline actual-tag replay confirms original sequence emits an automatic full-URL/title hit even without a manual event; global defaults before initialization suppress it and sanitize subsequent events. BuildPASS;194fast testsPASS;9distinct browser cases pass across1280/390/320 after targeted reruns (not one clean9-case run). Preserved first4pass/2fail/1interrupted/2notrun and timing/fixture/sandbox diagnostics remain explicit. Expected-negative frozen artifact stillfails privacy assertion. No livecollector/provider/customer/billing action or analyticsredeployment. [Correction/evidence/reproduction](../marketing/ga4/PRIVACY_REPAIR.md). **GO local review only; NO-GO analytics release without separate authorization.** Next3: reviewfix/repeatability; separatelyprepareexactartifact; separatelyauthorizelivecollector/Realtimeverification. No new customer/revenue outcome.
+
+
 ## November 23, 2026 — Authorized Hosting rollback verified; GA4 tracking removed
 
 Founder-authorized rollback completed at **23:26:30.936UTC**: restored **08500dca665abbab FINALIZED**, new release **1795476390936000**. All64static file hashes/config match the retained OFF baseline; **all35Functions unchanged**, including claimVerifiedPurchase00001-jul. Pricing/enrollment, AI, billing, rules and customer records untouched. Public Chrome smoke PASS: homepage reveal/evidence, pricing4.99/9.99/79 with monthlyclosed, privateDiscoveryexample/clear/CSP/no post-load requests; sixJPEGs200/exacthash. Zero Google requests. No source rebuild/merge/broad deploy or new live collector test.

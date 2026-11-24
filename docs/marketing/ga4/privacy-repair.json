@@ -64,5 +64,7 @@
   "realCollectorRequestsDuringCorrection": 0,
   "newProductionDeploymentsDuringCorrection": 0,
   "frozenArtifactsUnchanged": true,
-  "redeploymentAuthorized": false
+  "redeploymentAuthorized": false,
+  "reviewPr": 130,
+  "reviewUrl": "https://github.com/alwat83/ifyoumind/pull/130"
 }

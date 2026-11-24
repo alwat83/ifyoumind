@@ -2,6 +2,8 @@
 
 ## November 23, 2026 — GA4 local correction prepared after verified rollback
 
+[Draft corrective PR130](https://github.com/alwat83/ifyoumind/pull/130) is stacked on PR129; no master merge or analytics deployment.
+
 Production remains Hosting **08500dca665abbab** / release **1795476390936000**, GA4 tracking removed; all35Functions including claimVerifiedPurchase preserved. New isolated branch `codex/ga4-url-privacy-repair`, implementation **c28fa8bd52b7e27fead59b56033f15fde40f60d7**, changes only startup privacy defaults before Google initialization plus regression tests. Original frozen packages are unchanged.
 
 Offline actual-tag replay confirms original sequence emits an automatic full-URL/title hit even without a manual event; global defaults before initialization suppress it and sanitize subsequent events. BuildPASS;194fast testsPASS;9distinct browser cases pass across1280/390/320 after targeted reruns (not one clean9-case run). Preserved first4pass/2fail/1interrupted/2notrun and timing/fixture/sandbox diagnostics remain explicit. Expected-negative frozen artifact stillfails privacy assertion. No livecollector/provider/customer/billing action or analyticsredeployment. [Correction/evidence/reproduction](docs/marketing/ga4/PRIVACY_REPAIR.md). **GO local review only; NO-GO analytics release without separate authorization.** Next3: reviewfix/repeatability; separatelyprepareexactartifact; separatelyauthorizelivecollector/Realtimeverification. No new customer/revenue outcome.

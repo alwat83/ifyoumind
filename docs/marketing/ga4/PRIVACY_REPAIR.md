@@ -1,6 +1,6 @@
 # GA4 URL privacy repair — local review only
 
-November 23, 2026 PST · OpenAI / Codex · branch `codex/ga4-url-privacy-repair` · implementation **c28fa8bd52b7e27fead59b56033f15fde40f60d7**. Based on PR129 rollback-evidence **cce90dc1**, not master. No merge or analytics redeployment authorized/performed.
+November 23, 2026 PST · OpenAI / Codex · branch `codex/ga4-url-privacy-repair` · implementation **c28fa8bd52b7e27fead59b56033f15fde40f60d7**. Based on PR129 rollback-evidence **cce90dc1**, not master. [Draft corrective PR130](https://github.com/alwat83/ifyoumind/pull/130), stacked on PR129. No merge or analytics redeployment authorized/performed.
 
 ## Production is restored
 

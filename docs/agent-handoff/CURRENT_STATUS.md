@@ -12,7 +12,7 @@ The Hosting-only artifact `release-artifacts/ga4-hosting-b9151c6/` (tar SHA256 `
 - The diff against live source `a71cad82` is the GA4 consent stack only.
 - Config and rules are unchanged.
 
-**Not deployed.** Remaining: founder production GO and a Firebase-credentialed deployer, who must also do the authenticated Functions, enrollment and Enhanced Measurement readback. Do **not** release by merging to master, because that triggers the full backend workflow.
+**Deploy attempt Nov 26: NO-GO — no Firebase/Google credentials in the executing cloud session; preflight stopped before any change. Production unchanged.** Remaining: founder production GO and a Firebase-credentialed deployer, who must also do the authenticated Functions, enrollment and Enhanced Measurement readback. Do **not** release by merging to master, because that triggers the full backend workflow.
 
 ## November 23, 2026 — GA4 local correction prepared after verified rollback
 

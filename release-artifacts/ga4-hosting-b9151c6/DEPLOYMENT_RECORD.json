@@ -1,0 +1,340 @@
+{
+ "status": "DEPLOYED_PRIVACY_VERIFIED_REALTIME_PENDING",
+ "provider": "Anthropic / Claude Code (local session on founder machine, Firebase CLI authenticated)",
+ "authorization": {
+  "pr": 130,
+  "comment": 7201551072,
+  "enhancedMeasurementOff": "founder manual verification in GA4 Admin UI (property 565380927, stream 16394318092, G-NRT31062LW); Admin API readback unavailable: 403 ACCESS_TOKEN_SCOPE_INSUFFICIENT with Firebase CLI token"
+ },
+ "artifact": {
+  "path": "release-artifacts/ga4-hosting-b9151c6/hosting-browser.tar.gz",
+  "sha256": "bce0999643b447a629591e341de1c53a3311e9456a7e04c553876cf484c4e147",
+  "manifestSha256": "be3fb6822feac3f01b507ee314c27743010a45fddbba6f6ed11b1ced01e5cbda",
+  "manifestEntriesPassed": "66/66",
+  "rebuilt": false,
+  "source": "b9151c64b602e29b0ba98fd8b256b5d618e722d1",
+  "deployedFromCommit": "1d6985872ff991361c58f7aa108a89c99c345a04",
+  "firebaseJsonSha256": "49d17f6d0f9671f2509586d22beaf4e1fffd9905089cbbd0b7522ff90de9002f"
+ },
+ "preflight": {
+  "liveVersionBefore": "08500dca665abbab",
+  "liveReleaseBefore": "1795476390936000",
+  "functions": 35,
+  "functionsDriftBeforeDeploy": [],
+  "claimVerifiedPurchase": "ACTIVE claimverifiedpurchase-00001-jul",
+  "subscriptionEnrollment": "public closed; one explicit allowlist entry on 5 functions, unchanged since 2026-11-22 and matching prior recorded baseline",
+  "publicHeadersCsp": "present"
+ },
+ "deploy": {
+  "command": "firebase deploy --only hosting --project ifyoumind-473fe",
+  "startedAt": "2026-11-26T19:56:48Z",
+  "completedAt": "2026-11-26T19:56:54Z",
+  "release": "sites/ifyoumind-473fe/channels/live/releases/1795723013497000",
+  "version": "d47dcec2093b625f",
+  "versionStatus": "FINALIZED",
+  "releaseTime": "2026-11-26T19:56:53.497Z"
+ },
+ "postDeploy": {
+  "servedFilesMatchingManifest": "66/66 (HTML via cleanUrls 301 target)",
+  "providerFiles": 68,
+  "providerExtraFiles": [
+   "/__/firebase/init.js",
+   "/__/firebase/init.json"
+  ],
+  "functionsChanged": [],
+  "claimVerifiedPurchase": "ACTIVE claimverifiedpurchase-00001-jul",
+  "headersCspPresent": true,
+  "finalReadbackAt": "2026-11-26T20:02:04Z"
+ },
+ "livePrivacy": {
+  "syntheticData": true,
+  "customerData": false,
+  "purchases": 0,
+  "harnessNote": "Runs 1 and 2 aborted on test-navigation selectors (Privacy link, then Pricing link absent on the current page) before withdrawal checks; fallback navigation added, no privacy assertion changed. Their granted-stage hits were also sanitized.",
+  "finalRun": {
+   "started": "2026-11-26T20:00:46.947Z",
+   "completed": "2026-11-26T20:01:54.322Z",
+   "result": "PASS 21/21",
+   "checks": [
+    {
+     "name": "pending: homepage renders Reveal CTA",
+     "pass": true
+    },
+    {
+     "name": "pending: consent banner shown",
+     "pass": true
+    },
+    {
+     "name": "pending: zero Google requests",
+     "pass": true
+    },
+    {
+     "name": "rejected: zero Google requests (incl. SPA nav + reload)",
+     "pass": true
+    },
+    {
+     "name": "rejected: stored choice analytics=false",
+     "pass": true
+    },
+    {
+     "name": "discover: example renders",
+     "pass": true
+    },
+    {
+     "name": "discover: zero Google requests, no gtag",
+     "pass": true
+    },
+    {
+     "name": "granted: no Google request before consent click",
+     "pass": true
+    },
+    {
+     "name": "granted: tag loaded once with correct ID",
+     "pass": true
+    },
+    {
+     "name": "granted: page_view collected",
+     "pass": true
+    },
+    {
+     "name": "granted: all hits use measurement ID",
+     "pass": true
+    },
+    {
+     "name": "granted: no synthetic marker/query/raw values anywhere in collector traffic",
+     "pass": true
+    },
+    {
+     "name": "granted: dl has no query string",
+     "pass": true
+    },
+    {
+     "name": "granted: first page_view is canonical / (no early automatic raw hit)",
+     "pass": true
+    },
+    {
+     "name": "granted: titles are reviewed fixed titles, not document.title",
+     "pass": true
+    },
+    {
+     "name": "granted: collector responded 2xx",
+     "pass": true
+    },
+    {
+     "name": "granted: ads personalization off (npa=1)",
+     "pass": true
+    },
+    {
+     "name": "pricing: monthly enrollment unavailable message shown",
+     "pass": true
+    },
+    {
+     "name": "withdrawn: ga-disable flag true",
+     "pass": true
+    },
+    {
+     "name": "withdrawn: analytics cookies cleared",
+     "pass": true
+    },
+    {
+     "name": "withdrawn: zero collector hits after withdrawal (nav + back + reload)",
+     "pass": true
+    }
+   ]
+  },
+  "googleRequestsByContext": {
+   "pending": 0,
+   "rejected": 0,
+   "discover": 0,
+   "granted-withdrawn": 5
+  },
+  "sanitizedEvents": [
+   {
+    "context": "granted-withdrawn",
+    "stage": "granted",
+    "at": "2026-11-26T19:58:16.882Z",
+    "en": "page_view",
+    "tid": "G-NRT31062LW",
+    "dl": "https://ifyoumind.com/",
+    "dt": "Explore examples",
+    "dr": "",
+    "gcs": "G101",
+    "npa": "1"
+   },
+   {
+    "context": "granted-withdrawn",
+    "stage": "granted",
+    "at": "2026-11-26T19:58:27.688Z",
+    "en": "page_view",
+    "tid": "G-NRT31062LW",
+    "dl": "https://ifyoumind.com/pricing",
+    "dt": "Pricing",
+    "dr": "https://ifyoumind.com/",
+    "gcs": "G101",
+    "npa": "1"
+   },
+   {
+    "context": "granted-withdrawn",
+    "stage": "granted",
+    "at": "2026-11-26T19:59:40.765Z",
+    "en": "page_view",
+    "tid": "G-NRT31062LW",
+    "dl": "https://ifyoumind.com/",
+    "dt": "Explore examples",
+    "dr": "",
+    "gcs": "G101",
+    "npa": "1"
+   },
+   {
+    "context": "granted-withdrawn",
+    "stage": "granted",
+    "at": "2026-11-26T19:59:51.587Z",
+    "en": "page_view",
+    "tid": "G-NRT31062LW",
+    "dl": "https://ifyoumind.com/pricing",
+    "dt": "Pricing",
+    "dr": "https://ifyoumind.com/",
+    "gcs": "G101",
+    "npa": "1"
+   },
+   {
+    "context": "granted-withdrawn",
+    "stage": "granted",
+    "at": "2026-11-26T19:59:57.554Z",
+    "en": "page_view",
+    "tid": "G-NRT31062LW",
+    "dl": "https://ifyoumind.com/",
+    "dt": "Explore examples",
+    "dr": "https://ifyoumind.com/pricing",
+    "gcs": "G101",
+    "npa": "1"
+   },
+   {
+    "context": "granted-withdrawn",
+    "stage": "granted",
+    "at": "2026-11-26T20:00:02.600Z",
+    "en": "page_view",
+    "tid": "G-NRT31062LW",
+    "dl": "https://ifyoumind.com/privacy-policy",
+    "dt": "Privacy policy",
+    "dr": "https://ifyoumind.com/",
+    "gcs": "G101",
+    "npa": "1"
+   },
+   {
+    "context": "granted-withdrawn",
+    "stage": "granted",
+    "at": "2026-11-26T20:01:08.039Z",
+    "en": "page_view",
+    "tid": "G-NRT31062LW",
+    "dl": "https://ifyoumind.com/",
+    "dt": "Explore examples",
+    "dr": "",
+    "gcs": "G101",
+    "npa": "1"
+   },
+   {
+    "context": "granted-withdrawn",
+    "stage": "granted",
+    "at": "2026-11-26T20:01:18.854Z",
+    "en": "page_view",
+    "tid": "G-NRT31062LW",
+    "dl": "https://ifyoumind.com/pricing",
+    "dt": "Pricing",
+    "dr": "https://ifyoumind.com/",
+    "gcs": "G101",
+    "npa": "1"
+   },
+   {
+    "context": "granted-withdrawn",
+    "stage": "granted",
+    "at": "2026-11-26T20:01:24.827Z",
+    "en": "page_view",
+    "tid": "G-NRT31062LW",
+    "dl": "https://ifyoumind.com/",
+    "dt": "Explore examples",
+    "dr": "https://ifyoumind.com/pricing",
+    "gcs": "G101",
+    "npa": "1"
+   },
+   {
+    "context": "granted-withdrawn",
+    "stage": "granted",
+    "at": "2026-11-26T20:01:29.866Z",
+    "en": "page_view",
+    "tid": "G-NRT31062LW",
+    "dl": "https://ifyoumind.com/privacy-policy",
+    "dt": "Privacy policy",
+    "dr": "https://ifyoumind.com/",
+    "gcs": "G101",
+    "npa": "1"
+   }
+  ],
+  "parameterKeysObserved": [
+   "_ee",
+   "_et",
+   "_eu",
+   "_fv",
+   "_nsi",
+   "_p",
+   "_s",
+   "_ss",
+   "_tu",
+   "are",
+   "cid",
+   "dl",
+   "dma",
+   "dma_cps",
+   "dr",
+   "dt",
+   "en",
+   "frm",
+   "gcd",
+   "gcs",
+   "gtm",
+   "ir",
+   "ngs",
+   "npa",
+   "pscdl",
+   "rcb",
+   "sct",
+   "seg",
+   "sid",
+   "sr",
+   "tag_exp",
+   "tfd",
+   "tid",
+   "uaa",
+   "uab",
+   "uafvl",
+   "uam",
+   "uamb",
+   "uap",
+   "uapv",
+   "uaw",
+   "ul",
+   "v"
+  ],
+  "syntheticMarkerTransmitted": false
+ },
+ "ga4Receipt": {
+  "realtime": "PENDING founder confirmation (expected ~10 page_view, 3 synthetic visitors, 19:58-20:01 UTC)",
+  "debugView": "NOT_EXECUTED",
+  "verified": false
+ },
+ "rollback": {
+  "target": "08500dca665abbab",
+  "executed": false,
+  "available": true
+ },
+ "notChanged": [
+  "master",
+  "PR merges",
+  "Functions",
+  "Firestore/Storage rules",
+  "Stripe/billing",
+  "subscription enrollment",
+  "GA4 settings",
+  "customer data"
+ ]
+}

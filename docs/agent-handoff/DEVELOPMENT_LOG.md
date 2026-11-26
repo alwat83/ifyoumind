@@ -1016,3 +1016,36 @@ Coordination: rollbackevidence committed/pushedcce90dc1onPR129; newcorrective dr
 - **Production:** unchanged. Last public read-only check earlier today: Nov 23 rollback content, zero Google requests.
 - **Artifact:** unchanged. `release-artifacts/ga4-hosting-b9151c6/hosting-browser.tar.gz`, SHA256 `bce09996…`.
 - **To unblock:** run the package steps from an executor authenticated to `ifyoumind-473fe`. Either a local Claude Code or Firebase CLI session signed in to the owner account, or a cloud environment where a Google credential can be saved.
+
+
+## November 26, 2026 — GA4 Hosting-only production deploy executed (local credentialed session)
+
+**Status: deployed. Live privacy checks passed. GA4 Realtime receipt NOT yet verified.**
+
+- **Release:** Hosting version **`d47dcec2093b625f`** (FINALIZED), release **`1795723013497000`**, at 2026-11-26T19:56:53.497Z. Hosting only, run once from the exact frozen archive `release-artifacts/ga4-hosting-b9151c6/hosting-browser.tar.gz` (SHA256 `bce09996…`, 66/66 manifest). No rebuild, no merge, no Functions or rules deploy. Deployed from the release branch at `1d698587`, whose `firebase.json` (`49d17f6d…`) matches the live and tested sources.
+- **Preflight (authenticated, Firebase CLI):**
+  - Live was `08500dca665abbab` / `1795476390936000` with no drift.
+  - 35 Functions ACTIVE and unchanged, including `claimVerifiedPurchase` (`00001-jul`).
+  - Public subscription enrollment closed. The existing single allowlist entry is unchanged since Nov 22 and matches the recorded baseline.
+  - Headers and CSP present.
+  - **Enhanced Measurement OFF** was verified manually by the founder in the GA4 Admin UI. The Admin API readback was unavailable: the CLI token got 403 for scope.
+- **Post-deploy integrity:**
+  - 66/66 served files match the manifest. The only additions are the 2 files Firebase adds itself (`/__/firebase/init.*`).
+  - 35 Functions unchanged. Headers and CSP intact.
+- **Live privacy, synthetic only, final run 21/21 PASS (20:00:46–20:01:54Z):**
+  - Zero Google requests while consent is pending, after rejection (including navigation and reload), and on private Discovery.
+  - After Allow: tag `G-NRT31062LW` loaded once. Every `page_view` had a canonical `dl` (`/`, `/pricing`, `/privacy-policy`), a fixed `dt` and `npa=1`. No query string, synthetic marker or early automatic hit.
+  - Withdrawal: the GA disable flag was set, cookies were cleared, and there were zero hits afterwards.
+  - Two earlier runs stopped on test-navigation selectors before reaching withdrawal. Their granted-stage hits were also sanitized. No assertion was relaxed.
+- **GA4 receipt:** Realtime is **pending founder confirmation** (expected about 10 synthetic `page_view` events, 19:58–20:01 UTC). DebugView not executed.
+- **Rollback:** not needed so far. `08500dca665abbab` remains available.
+- **Record:** [`DEPLOYMENT_RECORD.json`](../../release-artifacts/ga4-hosting-b9151c6/DEPLOYMENT_RECORD.json). Provider/agent: Anthropic / Claude Code, in a local session on the founder's machine.
+- **Next:**
+  1. Founder confirms Realtime receipt; then mark it receipt-verified.
+  2. Monitor real consented traffic for sanitized payloads.
+  3. Keep PRs #128–#130 unmerged until a reviewed master reconciliation; a master push redeploys everything.
+
+- **Session notes:**
+  - The first local preflight stopped before deploy because the GA4 Admin API returned 403 for the Firebase CLI token's scopes. The founder then verified Enhanced Measurement OFF manually and authorized resuming.
+  - The founder's working tree (`codex/fred-economic-indicators`) has a `firebase.json` missing the Hosting headers/CSP (61 lines). Deploying from that tree would have stripped them, so the deploy ran from an isolated worktree of this release branch.
+  - Live tests used Playwright 1.56.0 with headless Chromium 1228, against the real site with no mocks. All requests were synthetic; there were no purchases and no customer data.

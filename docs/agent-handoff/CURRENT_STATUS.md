@@ -1,5 +1,19 @@
 # ifYouMind — Current development status
 
+## November 26, 2026 — GA4 candidate: verification GO, production deploy awaiting founder GO
+
+Claude Code verified PR #130 HEAD `b9151c64`:
+- Fast web tests 194/194.
+- Real-tag transport suite **9/9 in one clean run** with a fresh public tag capture.
+- Payloads sanitized; zero hits before consent or after rejection.
+
+The Hosting-only artifact `release-artifacts/ga4-hosting-b9151c6/` (tar SHA256 `bce09996…`, 66 files) was compared with live production:
+- Live still serves the Nov 23 GA4-OFF rollback content, with zero Google requests.
+- The diff against live source `a71cad82` is the GA4 consent stack only.
+- Config and rules are unchanged.
+
+**Not deployed.** Remaining: founder production GO and a Firebase-credentialed deployer, who must also do the authenticated Functions, enrollment and Enhanced Measurement readback. Do **not** release by merging to master, because that triggers the full backend workflow.
+
 ## November 23, 2026 — GA4 local correction prepared after verified rollback
 
 [Draft corrective PR130](https://github.com/alwat83/ifyoumind/pull/130) is stacked on PR129; no master merge or analytics deployment.

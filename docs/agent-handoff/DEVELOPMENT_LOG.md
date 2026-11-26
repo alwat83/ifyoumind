@@ -982,3 +982,22 @@ OpenAI/Codex, codex/ga4-url-privacy-repair based oncce90dc1rollbackevidence; imp
 IsolatedbuildPASS/existingSCSSwarnings; exactcommitted194fastPASS incl3new;20adapter/policyPASSoverlap.9uniquebrowsercasespassafterselectedreruns, notsingleclean9-run: initial4pass/2fail/1interrupted/2notrun; targeteddesktopstored+mobilefirst+narrow3PASS. Earlymissingbuild/PrivacyPricinglinkfixturefailurescorrectedwithBackhome/noassertionrelaxation. Sandboxedbuild134andwatcherfailure190/191preserved; normalaccessbuild, watcher8andweb191then194PASS. Frozennegativeactual-tagtestEXPECTEDFAILrawquery/title; noauto-retry, no realcollection. Repeatability/physicalSafari/VoiceOver/Linux/Realtimeunverified; allfrozenhashesretained. Productionstill08500/release1795476390936000/all35backendunchanged afterauthorizedrollback; nofurtherdeploy/Googleedit/paidAPI/payment/customerwrite. DetailedPRIVACY_REPAIR.md/privacy-repair.json; draftcorrectivereviewonly, noactivationapprovalinferred. Next3:reviewfix/timinglimits; separatelyprepareexactnewartifact; separatelyauthorizeboundedlivecollectorcheck. Businessimpactprivacy-safeacquisitionmeasurement, nogenuinevisitor/revenueoutcomesclaimed.
 
 Coordination: rollbackevidence committed/pushedcce90dc1onPR129; newcorrective draftPR130 openedstackedonthatcodexbranch(avoidsmaster-triggeredActions). Correctionimplementationc28fa8bd, evidence76134938; no source rebuild/artifactreplacement aftervalidation. ExistingNotionhub andPR129 receive restoredproductionandPR130links; sourceandruntimeunchanged byfinaldocumentationfollowup.
+
+
+## November 26, 2026 — GA4 corrected candidate verified; Hosting-only package prepared (not deployed)
+
+**Provider/agent: Anthropic / Claude Code (cloud session).** This is the first recorded non-OpenAI contribution to ifYouMind. Base: PR #130 HEAD `b9151c64`.
+- **Builds and fast tests:** fresh `npm ci`; production build PASS; full `npm run build` PASS. Fast web tests 194/0/0; focused GA4 tests 20/20 (these overlap the 194).
+- **Real-tag transport suite:** first attempt 9/9 failed on a browser-launch mismatch (Playwright 1.56 vs installed Chromium 1243), before any assertion ran. Rerun with only the executable path overridden, spec untouched: **9/9 in one clean run, 0 retries**.
+- **Payloads:** canonical `dl` and reviewed `dt` only, no early automatic hit. Reject and provider-failure runs sent zero hits.
+- **Tag capture:** fresh public capture, SHA256 `288c9555…`, a newer Google build than Nov 23's. Kept outside Git.
+- **Artifact:** deterministic Hosting-only `release-artifacts/ga4-hosting-b9151c6/hosting-browser.tar.gz`, SHA256 `bce09996…`, 66 files. Manifest verified after extraction.
+- **Comparison with live production (public, read-only):** live still serves the Nov 23 rollback content and makes zero Google requests. 26 files are byte-identical; `/discover/` content is identical and only renamed.
+- **Source diff from the live source `a71cad82`:** the GA4 consent stack only. `firebase.json` and all rules are unchanged.
+- **Warning:** a master merge triggers the full backend deploy workflow.
+- **Not done:**
+  - No authenticated Firebase or GA4 readback: this session has no credentials.
+  - No deploy.
+  - No hosted CI.
+  - No Safari or VoiceOver testing.
+- **Next:** founder production GO, then a credentialed Hosting-only deploy of this exact tarball and the bounded live collector check. Steps are in `release-artifacts/ga4-hosting-b9151c6/RELEASE_PACKAGE.md`.

@@ -18,8 +18,18 @@ test('from a brief, the $79 jump keeps the decision context and stays on Pricing
   const target = `/pricing?offer=report&projectId=${user.projectIds[0]}`;
   await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent(target)}`);
   await expect(page.getByRole('button', { name: 'Buy Decision Report' })).toBeVisible();
+  await expect(page.getByText('You’re choosing the full $79 report for your saved decision. It’s the first option below.')).toBeVisible();
+  const order = await page.evaluate(() => [...document.querySelectorAll('section.offer-section h2')].map(h => h.textContent.trim()));
+  expect(order).toEqual(['Start free, or pay once', 'Monthly subscriptions']);
   await page.getByRole('link', { name: /One-time report · \$79/ }).click();
   await expect(page).toHaveURL(new RegExp(`/pricing\\?offer=report&projectId=${user.projectIds[0]}$`));
   await expect(page.getByRole('article', { name: 'One-time Decision Report' })).toBeFocused();
   await expect(page.getByRole('button', { name: 'Buy Decision Report' })).toBeInViewport();
+});
+
+test('a brief labels its Census figures as current estimates, not live data', async ({ page, fixtures }) => {
+  const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
+  await signInThroughUi(page, user, `/login?returnUrl=${encodeURIComponent(`/decisions/${user.projectIds[0]}`)}`);
+  await expect(page.getByText('Current Census data', { exact: true })).toBeVisible();
+  await expect(page.getByText('Live data', { exact: true })).toHaveCount(0);
 });

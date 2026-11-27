@@ -1,6 +1,6 @@
 import { SiteFooterComponent } from '../site-footer.component';
 import { JourneyNavigationComponent } from '../journey-navigation.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgTemplateOutlet } from '@angular/common';
 import { Component, DestroyRef, NgZone, OnInit, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -13,7 +13,7 @@ import { MarketIntelligenceService } from './market-intelligence.service';
 @Component({
   selector:'app-pricing',
   standalone:true,
-  imports:[SiteFooterComponent,JourneyNavigationComponent,CommonModule,RouterLink],
+  imports:[SiteFooterComponent,NgTemplateOutlet,JourneyNavigationComponent,CommonModule,RouterLink],
   templateUrl:'./pricing.component.html',
   styleUrls:['./pricing.component.scss'],
 })

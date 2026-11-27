@@ -67,7 +67,9 @@ test('pricing publishes monthly plans while checkout remains eligibility-gated',
   const free=pricingHtml.indexOf('<h3>Free</h3>');
   const oneTime=pricingHtml.indexOf('One-time Decision Report</h3>');
   assert.ok(monthly>=0&&monthly<free&&free<oneTime);
-  assert.match(pricingHtml,/<section class="offer-section monthly-offers" aria-labelledby="monthly-title"/);
+  assert.match(pricingHtml,/<section class="offer-section monthly-offers" \[class\.unavailable\]="!showMonthlyPlans" aria-labelledby="monthly-title"/);
+  // Rendered order: monthly plans lead only when this account can enrol; otherwise free and one-time lead.
+  assert.match(pricingHtml,/\*ngTemplateOutlet="showMonthlyPlans \? monthlyOffers : payOnceOffers"[\s\S]*\*ngTemplateOutlet="showMonthlyPlans \? payOnceOffers : monthlyOffers"/);
   assert.match(pricingHtml,/Monthly enrollment is currently unavailable/);
   assert.match(pricingHtml,/\*ngIf="!showMonthlyPlans"[^>]*type="button"[^>]*disabled/);
   assert.match(pricingHtml,/\*ngIf="showMonthlyPlans && projectId"/);
@@ -101,7 +103,7 @@ test('consumer homepage preserves the Business entry point and plan-ready offer'
   assert.match(landingHtml,/routerLink="\/sample-report"/);
   assert.match(read('src/app/intelligence/home-discovery-examples.ts'),/action: 'View the Full Sample Report'/);
   assert.match(landingHtml,/three comparison cities, a sourced market analysis and an action plan/);
-  assert.match(pricingHtml,/more comparisons, sourced analysis, and an action plan/);
+  assert.match(pricingHtml,/up to three cities, sourced analysis and an action plan/);
   assert.match(reportHtml,/evidence boundaries/);
   assert.ok(landingHtml.indexOf('id="try"')<landingHtml.indexOf('id="business"'),'consumer discovery leads; Business remains available');
 });

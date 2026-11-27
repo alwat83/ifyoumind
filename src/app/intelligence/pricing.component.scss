@@ -32,6 +32,10 @@ a { color: var(--iy-accent); text-decoration: underline; text-underline-offset: 
 .action { @include product.secondary; display: inline-flex; justify-content: center; align-items: center; margin-top: auto; padding: 10px 20px; min-height: 48px; text-decoration: none; text-align: center; cursor: pointer; }
 .action:disabled { color: var(--iy-muted); background: transparent; border-color: var(--iy-line); cursor: not-allowed; }
 .start-plans { margin-top: 16px; }
+.decision-context { margin: 16px 0 0; max-width: 62ch; color: var(--iy-ink); font-size: 15px; }
+/* Closed enrollment: plans stay listed for reference but read as secondary to what can be bought today. */
+.monthly-offers.unavailable .plans { background: transparent; border-top: 1px solid var(--iy-line); padding: 24px 0 0; }
+.monthly-offers.unavailable .featured .price { font-size: 44px; color: var(--iy-ink); }
 .subscription-terms, .scope-note, .existing-subscriber, .billing-note { margin: 20px 0 0; max-width: 88ch; color: var(--iy-muted); font-size: 14px; line-height: 1.6; }
 .scope-note { padding-top: 24px; border-top: 1px solid var(--iy-line); margin-top: 32px; }
 .existing-subscriber a { display: inline; }

@@ -127,7 +127,7 @@ test('clearing consent in another tab immediately withdraws collection', async (
 test('pending consent never obstructs registration, pricing or private Discovery controls', async ({ page }) => {
     const loads = await setup(page);
     await page.goto('/login');
-    await page.getByRole('link', { name: 'Create a free account', exact: true }).click();
+    await page.locator('.auth-card').getByRole('link', { name: 'Create a free account', exact: true }).click();
     await expect(page.getByLabel('Name', { exact: true })).toBeVisible();
     await page.getByLabel('Name', { exact: true }).focus();
     await page.keyboard.press('Tab');

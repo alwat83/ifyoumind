@@ -16,7 +16,7 @@ test('homepage navigation reaches sign-in and registration', async ({ page }) =>
   if (await page.locator('.mobile-navigation').isVisible()) {
     await page.locator('summary').filter({ hasText: 'Menu' }).click();
   }
-  await page.getByRole('link', { name: 'Sign In', exact: true }).click();
+  await page.locator('app-journey-navigation').getByRole('link', { name: 'Sign in', exact: true }).click();
   await expect(page).toHaveURL(/\/login$/);
   await page.goto('/');
   await page.getByRole('link', { name: 'View a Sample Report', exact: true }).click();

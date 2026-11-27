@@ -6,3 +6,4 @@ h1 { @include product.title; }
 article { max-width:72ch; }
 // Links inside running text need more than colour to stand out (WCAG 1.4.1).
 article a { text-decoration: underline; text-underline-offset: 2px; }
+.legal-header { display:block; width:min(var(--iy-wide),100% - 2 * var(--iy-gutter)); margin:0 auto; }

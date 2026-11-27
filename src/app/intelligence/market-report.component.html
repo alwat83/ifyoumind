@@ -1,5 +1,5 @@
 <main class="report-shell">
-  <app-journey-navigation class="no-print" current="reports" example="cities"></app-journey-navigation>
+  <app-journey-navigation class="no-print" [current]="sampleMode ? 'cities' : 'saved'" [accountLabel]="navAccount()"></app-journey-navigation>
   <aside *ngIf="sampleMode" class="state no-print sample-intro">
     <ng-container *ngIf="project; else sampleIntroduction">
       <strong>This is a sample report.</strong> An example question, with sourced Census evidence.
@@ -313,3 +313,4 @@
     </footer>
   </article>
 </main>
+<app-site-footer class="no-print" [accountLabel]="navAccount()"></app-site-footer>

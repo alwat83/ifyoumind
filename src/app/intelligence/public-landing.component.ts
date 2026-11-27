@@ -1,3 +1,4 @@
+import { SiteFooterComponent } from '../site-footer.component';
 import { JourneyNavigationComponent } from '../journey-navigation.component';
 import { AfterRenderRef, AfterViewInit, Component, HostListener, Injector, OnDestroy, afterNextRender, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -11,7 +12,7 @@ import { HOME_EXAMPLES, StatementVerdict } from './home-discovery-examples';
 @Component({
   selector: 'app-public-landing',
   standalone: true,
-  imports:[JourneyNavigationComponent,RouterLink],
+  imports:[SiteFooterComponent,JourneyNavigationComponent,RouterLink],
   templateUrl: './public-landing.component.html',
   styleUrls: [
     './public-landing.component.scss',
@@ -110,12 +111,6 @@ export class PublicLandingComponent implements AfterViewInit, OnDestroy {
   }
 
   evidenceToggled(evidence:HTMLDetailsElement):void{if(evidence.open)this.analytics.evidenceRevealed(this.example.id);}
-
-  showSources(evidence: HTMLDetailsElement): void {
-    this.revealed = true;
-    evidence.open = true;
-    this.moveTo(document.getElementById('data-sources'));
-  }
 
   private moveTo(target: HTMLElement | null): void {
     this.pending?.destroy();

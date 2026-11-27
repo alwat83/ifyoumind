@@ -1,6 +1,6 @@
 <div class="landing">
   <a class="skip-link" href="#try">Skip to content</a>
-  <app-journey-navigation class="shell" current="explore" [compact]="true" [example]="example.id" [accountLabel]="viewer()?.emailVerified ? 'Account' : 'Sign In'"></app-journey-navigation>
+  <app-journey-navigation class="shell" [accountLabel]="viewer()?.emailVerified ? 'Account' : 'Sign In'"></app-journey-navigation>
 
   <main>
     <section id="try" class="shell hero" aria-labelledby="hero-title" tabindex="-1">
@@ -173,17 +173,5 @@
     </section>
   </main>
 
-  <footer class="shell site-footer">
-    <a routerLink="/" class="wordmark" aria-label="ifYouMind home">ifyoumind</a>
-    <nav aria-label="Footer">
-      <a href="/discover/">Understand Your Bills</a>
-      <a href="/guides/">Guides</a>
-      <a routerLink="/pricing">Pricing</a>
-      <a href="#data-sources" (click)="showSources(evidence)">Data Sources</a>
-      <a routerLink="/privacy-policy">Privacy</a>
-      <a routerLink="/terms-of-conduct">Terms</a>
-      <a href="mailto:support&#64;ifyoumind.com?subject=Organization%20inquiry">For Organizations</a>
-      <a href="mailto:support&#64;ifyoumind.com">support&#64;ifyoumind.com</a>
-    </nav>
-  </footer>
+  <app-site-footer class="shell" [accountLabel]="viewer()?.emailVerified ? 'Account' : 'Sign In'"></app-site-footer>
 </div>

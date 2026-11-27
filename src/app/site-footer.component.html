@@ -1,0 +1,32 @@
+<footer class="site-footer" (click)="follow($event)">
+  <div class="footer-brand">
+    <a href="/" class="wordmark" aria-label="ifYouMind home">ifyoumind</a>
+    <p>Bill checks run in your browser. City reports cite every figure.</p>
+  </div>
+  <nav aria-label="Try ifYouMind">
+    <h2>Try it</h2>
+    <a *ngFor="let link of links" [href]="link.href">{{ link.label }}</a>
+  </nav>
+  <nav aria-label="Your account">
+    <h2>Your account</h2>
+    <ng-container *ngIf="signedIn; else signedOut">
+      <a href="/decisions">Your decisions</a>
+      <a href="/account">Account</a>
+    </ng-container>
+    <ng-template #signedOut>
+      <a href="/login">Sign in</a>
+      <a href="/register">Create a free account</a>
+    </ng-template>
+  </nav>
+  <nav aria-label="Trust and help">
+    <h2>Trust &amp; help</h2>
+    <a href="/privacy-policy">Privacy</a>
+    <a href="/terms-of-conduct">Terms</a>
+    <a href="/privacy-policy#analytics">Analytics choices</a>
+    <a href="mailto:support&#64;ifyoumind.com">Contact support</a>
+  </nav>
+  <p class="footer-note">
+    <span>Support: <span class="mail">support&#64;ifyoumind.com</span></span>
+    <span>Teams and organizations: <a href="mailto:support&#64;ifyoumind.com?subject=Organization%20inquiry">email us</a></span>
+  </p>
+</footer>

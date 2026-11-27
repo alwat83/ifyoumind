@@ -57,8 +57,9 @@ test('forgot password sends a reset email without revealing whether the account 
 
 test('sign-up links the Terms and the Privacy Policy', async ({ page }) => {
   await page.goto('/register');
-  await expect(page.getByRole('link', { name: 'Terms' })).toHaveAttribute('href', '/terms-of-conduct');
-  await expect(page.getByRole('link', { name: 'Privacy Policy' })).toHaveAttribute('href', '/privacy-policy');
+  const card = page.locator('.auth-card');
+  await expect(card.getByRole('link', { name: 'Terms' })).toHaveAttribute('href', '/terms-of-conduct');
+  await expect(card.getByRole('link', { name: 'Privacy Policy' })).toHaveAttribute('href', '/privacy-policy');
 });
 
 test('the homepage shows a real sample finding and claims no uploaded-data analysis', async ({ page }) => {
@@ -74,7 +75,7 @@ test('the homepage shows a real sample finding and claims no uploaded-data analy
   await expect(page.getByRole('link', { name: 'View the Full Sample Report', exact: true })).toHaveAttribute('href', '/sample-report');
   await expect(card).toContainText(/city-level estimates/i);
   await expect(card).toContainText('Check local demand, competition, and rent');
-  await page.getByRole('link', { name: 'Understand Your Bills', exact: true }).click();
+  await page.locator('.site-footer').getByRole('link', { name: 'Check a bill', exact: true }).click();
   await expect(page.getByText('Your bills stay in this browser tab.', { exact: true })).toBeVisible();
   await expect(page.getByText('Type the numbers from two bills, or use one of two supported CSV formats. No PDFs, scans or other file types.', { exact: true })).toBeVisible();
 });

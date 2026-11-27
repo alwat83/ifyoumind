@@ -206,7 +206,7 @@ test('primary action opens property-tax findings and the secondary discovery lin
   await expect(page.getByRole('table')).toContainText('4200.00');
   await expect(page.getByRole('table')).toContainText('4620.00');
   await page.goto('/');
-  await page.getByRole('link', { name: /Understand Your Bills/ }).click();
+  await page.getByRole('contentinfo').getByRole('link', { name: 'Check a bill', exact: true }).click();
   await expect(page).toHaveURL(origin + '/discover/');
   await page.getByRole('button', { name: 'Try electricity example', exact: true }).click();
   await expect(page.locator('.finding')).toHaveCount(5);
@@ -232,7 +232,9 @@ test('example query allowlist and private offline discovery are preserved', asyn
 test('homepage navigation, guides, legal pages and report offers lead to existing destinations', async ({ page, request }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'Compare cities' }).click();
-  await page.getByRole('link', { name: 'Data Sources', exact: true }).click();
+  // Sources live with the evidence; the footer no longer carries a homepage-only "Data Sources" link.
+  await expect(page.getByRole('link', { name: 'Data Sources', exact: true })).toHaveCount(0);
+  await page.locator('#business').getByText('Show the evidence', { exact: true }).click();
   await expect(page.locator('#data-sources')).toBeVisible();
   await expect(page.locator('#data-sources').getByRole('link', { name: 'U.S. Census ACS' })).toBeVisible();
   await expect(page.getByRole('link', { name: 'View the Full Sample Report' })).toHaveAttribute('href', '/sample-report');
@@ -244,6 +246,9 @@ test('homepage navigation, guides, legal pages and report offers lead to existin
   await expect(footer.getByRole('link', { name: 'Pricing' })).toHaveAttribute('href', '/pricing');
   await expect(footer.getByRole('link', { name: 'Terms', exact: true })).toHaveAttribute('href', '/terms-of-conduct');
   await expect(footer.getByRole('link', { name: 'Privacy', exact: true })).toHaveAttribute('href', '/privacy-policy');
+  await expect(footer.getByRole('link', { name: 'Analytics choices', exact: true })).toHaveAttribute('href', '/privacy-policy#analytics');
+  await expect(footer.getByRole('link', { name: 'email us', exact: true })).toHaveAttribute('href', 'mailto:support@ifyoumind.com?subject=Organization%20inquiry');
+  await expect(footer).toContainText('support@ifyoumind.com');
 });
 
 test('keyboard opens the compact menu, Escape restores focus, and text spacing preserves actions', async ({ page }) => {
@@ -261,9 +266,12 @@ test('keyboard opens the compact menu, Escape restores focus, and text spacing p
   await page.keyboard.press('Enter');
   await expect(menu).toHaveAttribute('open', '');
   await page.keyboard.press('Tab');
-  await expect(menu.getByRole('link', { name: 'Explore examples' })).toBeFocused();
-  await expect(menu.getByRole('link', { name: 'Sample report' })).toHaveAttribute('href', '/sample-report');
-  await expect(menu.getByRole('link', { name: 'Sign In' })).toHaveAttribute('href', '/login');
+  await expect(menu.getByRole('link', { name: 'Check a bill' })).toBeFocused();
+  await expect(menu.getByRole('link', { name: 'Check a bill' })).toHaveAttribute('href', '/discover/');
+  await expect(menu.getByRole('link', { name: 'Compare cities' })).toHaveAttribute('href', '/sample-report');
+  await expect(menu.getByRole('link', { name: 'Guides' })).toHaveAttribute('href', '/guides/');
+  await expect(menu.getByRole('link', { name: 'Pricing' })).toHaveAttribute('href', '/pricing');
+  await expect(menu.getByRole('link', { name: 'Sign in' })).toHaveAttribute('href', '/login');
   await page.keyboard.press('Escape');
   await expect(menu).not.toHaveAttribute('open');
   await expect(summary).toBeFocused();

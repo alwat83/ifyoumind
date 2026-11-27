@@ -1,3 +1,4 @@
+import { SiteFooterComponent } from '../../site-footer.component';
 import { JourneyNavigationComponent } from '../../journey-navigation.component';
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -9,7 +10,7 @@ import { Auth, sendEmailVerification, signOut } from '@angular/fire/auth';
 @Component({
   selector: 'app-verify-email',
   standalone: true,
-  imports:[JourneyNavigationComponent,CommonModule, RouterModule],
+  imports:[SiteFooterComponent,JourneyNavigationComponent,CommonModule, RouterModule],
   templateUrl: './verify-email.component.html',
   styleUrls: ['./verify-email.component.scss'],
 })

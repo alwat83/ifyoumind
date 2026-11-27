@@ -50,7 +50,9 @@ for (const category of ['tax', 'electricity']) {
     const navigation = page.locator('app-journey-navigation');
     const menu = navigation.locator('.mobile-navigation');
     if (await menu.isVisible()) await menu.locator('summary').click();
-    await expect(navigation.getByRole('link', { name: 'Explore examples', exact: true })).toHaveAttribute('href', `/?example=${category}#business`);
+    await expect(navigation.getByRole('link', { name: 'Check a bill', exact: true })).toHaveAttribute('aria-current', 'page');
+    // The way back to this example now lives with the bill tool, not in the site header.
+    await expect(page.getByRole('link', { name: 'Back to examples', exact: true })).toHaveAttribute('href', `/?example=${category}#business`);
   });
 }
 

@@ -1,3 +1,4 @@
+import { SiteFooterComponent } from '../site-footer.component';
 import { JourneyNavigationComponent } from '../journey-navigation.component';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
@@ -11,7 +12,7 @@ import { ProductAnalyticsService } from './product-analytics.service';
 @Component({
   selector:'app-account',
   standalone:true,
-  imports:[JourneyNavigationComponent,CommonModule,FormsModule,RouterLink],
+  imports:[SiteFooterComponent,JourneyNavigationComponent,CommonModule,FormsModule,RouterLink],
   templateUrl:'./account.component.html',
   styleUrls:['./account.component.scss'],
 })

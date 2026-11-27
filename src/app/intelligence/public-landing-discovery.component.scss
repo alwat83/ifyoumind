@@ -1,16 +1,4 @@
-.question-options { margin-top:32px; display:flex; gap:32px; flex-wrap:wrap; border-top:1px solid var(--iy-studio-line); }
-.question-options>p { padding-block:20px; color:var(--iy-muted); font-size:13px; }
-.question-option { min-width:44px; min-height:60px; padding:0; border:0; border-bottom:2px solid transparent; background:none; color:var(--iy-muted); font:500 13px/1.4 var(--iy-body); cursor:pointer; }
-.question-option[aria-pressed='true'] { color:var(--iy-ink); border-color:var(--iy-periwinkle); }
-.question-option:hover { color:var(--iy-ink); }
-.finding { display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1fr); column-gap:56px; padding:0 0 22px; }
-.example-label { color:var(--iy-muted); font-size:11px; letter-spacing:.1em; text-transform:uppercase; }
 .example-label span { color:var(--iy-periwinkle); }
-.finding h2 { grid-column:1; margin:14px 0 24px; font-size:clamp(25px,3vw,38px); font-weight:500; line-height:1.15; letter-spacing:-.035em; text-wrap:balance; }
-.conclusion { grid-column:2; grid-row:1 / span 3; min-width:0; }
-.conclusion strong { display:block; color:var(--iy-periwinkle); font:400 clamp(84px,11vw,156px)/.95 var(--iy-display); letter-spacing:-.04em; }
-.conclusion>span { display:block; max-width:32ch; margin-top:10px; color:var(--iy-ink); font-size:18px; line-height:1.45; }
-.finding-note { grid-column:1; max-width:43ch; color:var(--iy-muted); font-size:15px; }
 .discovery-next { display:grid; gap:20px; }
 .home-evidence { flex:1 1 200px; min-width:0; }
 .home-evidence summary { display:inline-flex; gap:14px; align-items:center; min-height:48px; color:var(--iy-ink); font-weight:600; font-size:14px; cursor:pointer; }

@@ -13,10 +13,10 @@ test.beforeEach(async ({ page }) => {
 
 test(prefix + 'homepage, Discovery and evidence keep the editorial visual identity', async ({ page }) => {
   await page.goto('/');
-  const heroAction = page.getByRole('button', { name: 'Reveal what changed', exact: true });
+  const heroAction = page.getByRole('button', { name: /mostly school charges/ });
   await compare(page, 'homepage', heroAction, { fullPage: true });
   await heroAction.click();
-  await compare(page, 'homepage-revealed', page.locator('.conclusion strong'), { fullPage: true });
+  await compare(page, 'homepage-revealed', page.locator('.statement-check:not([hidden]) .check-finding'), { fullPage: true });
   await page.goto('/discover/');
   const tax = page.getByRole('button', { name: 'Try property tax example' });
   await compare(page, 'discovery', tax, { fullPage: true });

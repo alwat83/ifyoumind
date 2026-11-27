@@ -90,10 +90,12 @@ test('stored grant, example and evidence emit only reviewed events, never raw UR
   await page.goto('https://ifyoumind.com/?question=synthetic-private&accountId=PrivateFixture&amount=90000');
   await expect.poll(() => views(r).length).toBe(1);
   expect(views(r)[0]).toMatchObject({ location: 'https://ifyoumind.com/', title: 'Explore examples' });
-  await page.getByRole('button', { name: 'Reveal what changed', exact: true }).click();
+  await page.getByRole('button', { name: /mostly school charges/ }).click();
   await page.getByText('Show the evidence', { exact: true }).click();
-  await expect.poll(() => r.wire.filter(x => x.name === 'free_tax_example_viewed').length).toBe(1);
-  await expect.poll(() => r.wire.filter(x => x.name === 'evidence_revealed').length).toBe(1);
+  // The tag batches hits for about five seconds after the first queued event. The old Reveal button's smooth
+  // scroll used to absorb about a second of this before the next step; the statement check does not scroll.
+  await expect.poll(() => r.wire.filter(x => x.name === 'free_tax_example_viewed').length, { timeout: 10000 }).toBe(1);
+  await expect.poll(() => r.wire.filter(x => x.name === 'evidence_revealed').length, { timeout: 10000 }).toBe(1);
   await page.getByText('Hide the evidence', { exact: true }).click();
   await page.getByText('Show the evidence', { exact: true }).click();
   await page.waitForTimeout(1200);
@@ -106,7 +108,7 @@ test('rejection and provider failure never cause collection or block the finding
   const r = await replay(page, context, { blockTag: true });
   await page.goto('https://ifyoumind.com/?question=synthetic-private');
   await page.getByRole('button', { name: 'Reject analytics', exact: true }).click();
-  await page.getByRole('button', { name: 'Reveal what changed', exact: true }).click();
+  await page.getByRole('button', { name: /mostly school charges/ }).click();
   await expect(page.locator('#discovery-result')).toContainText('$420');
   expect(r.loads).toEqual([]); expect(r.wire).toEqual([]);
   await page.goto('https://ifyoumind.com/privacy-policy');

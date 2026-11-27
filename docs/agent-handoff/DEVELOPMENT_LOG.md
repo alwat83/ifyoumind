@@ -1049,3 +1049,16 @@ Coordination: rollbackevidence committed/pushedcce90dc1onPR129; newcorrective dr
   - The first local preflight stopped before deploy because the GA4 Admin API returned 403 for the Firebase CLI token's scopes. The founder then verified Enhanced Measurement OFF manually and authorized resuming.
   - The founder's working tree (`codex/fred-economic-indicators`) has a `firebase.json` missing the Hosting headers/CSP (61 lines). Deploying from that tree would have stripped them, so the deploy ran from an isolated worktree of this release branch.
   - Live tests used Playwright 1.56.0 with headless Chromium 1228, against the real site with no mocks. All requests were synthetic; there were no purchases and no customer data.
+
+
+## November 26, 2026 — GA4 milestone still OPEN: Realtime pending; withdrawal wording gap found
+
+- **Realtime:** GA4 Realtime receipt for release `1795723013497000` is **still pending founder confirmation**. Do not mark the analytics milestone closed.
+- **Withdrawal batching (existing behaviour, not a CSS-release blocker):** Google's tag holds events for about 5s.
+  - Events recorded *under consent* just before a withdrawal are still delivered after it.
+  - Nothing recorded after withdrawal is sent.
+  - No supported way to discard the queue was found; a consent "denied" update flushes it instead.
+  - Recommended: a separate wording-only PR for the preferences dialog and Privacy Policy, after founder/counsel approval.
+  - [Assessment and evidence](../marketing/ga4/withdrawal-batching/ASSESSMENT.md).
+- **Mobile CTA fix:** draft [PR #132](https://github.com/alwat83/ifyoumind/pull/132), CSS only. Copy follow-up: draft [PR #133](https://github.com/alwat83/ifyoumind/pull/133), stacked. Neither is merged or deployed.
+- **Provider/agent:** Anthropic / Claude Code, local session.

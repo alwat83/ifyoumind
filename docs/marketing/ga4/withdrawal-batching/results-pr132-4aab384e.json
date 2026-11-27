@@ -1,0 +1,106 @@
+{
+ "E1_batchDelay": {
+  "triggeredAt": 8779,
+  "hits": [
+   {
+    "at": 13836,
+    "en": "free_tax_example_viewed",
+    "dl": "https://ifyoumind.com/",
+    "gcs": "G101",
+    "cid": "present"
+   }
+  ]
+ },
+ "E2_withdrawStay": {
+  "triggeredAt": 8780,
+  "withdrawnAt": 9655,
+  "disabled": true,
+  "hits": [
+   {
+    "at": 13821,
+    "en": "free_tax_example_viewed",
+    "dl": "https://ifyoumind.com/",
+    "gcs": "G101",
+    "cid": "present"
+   },
+   {
+    "at": 13822,
+    "en": "page_view",
+    "dl": "https://ifyoumind.com/privacy-policy",
+    "gcs": "G101",
+    "cid": "present"
+   }
+  ]
+ },
+ "E3_withdrawUnload": {
+  "triggeredAt": 8776,
+  "withdrawnAt": 9669,
+  "hits": [
+   {
+    "at": 9989,
+    "en": "free_tax_example_viewed",
+    "dl": "https://ifyoumind.com/",
+    "gcs": "G101",
+    "cid": "present"
+   },
+   {
+    "at": 9990,
+    "en": "page_view",
+    "dl": "https://ifyoumind.com/privacy-policy",
+    "gcs": "G101",
+    "cid": "present"
+   }
+  ]
+ },
+ "E4_withdrawHidden": {
+  "triggeredAt": 8758,
+  "withdrawnAt": 9653,
+  "hits": [
+   {
+    "at": 10033,
+    "en": "free_tax_example_viewed",
+    "dl": "https://ifyoumind.com/",
+    "gcs": "G101",
+    "cid": "present"
+   },
+   {
+    "at": 10033,
+    "en": "page_view",
+    "dl": "https://ifyoumind.com/privacy-policy",
+    "gcs": "G101",
+    "cid": "present"
+   }
+  ]
+ },
+ "E5_deniedThenUnload": {
+  "triggeredAt": 8800,
+  "withdrawnAt": 9680,
+  "hits": [
+   {
+    "at": 9318,
+    "en": "free_tax_example_viewed",
+    "dl": "https://ifyoumind.com/",
+    "gcs": "G101",
+    "cid": "present"
+   },
+   {
+    "at": 9319,
+    "en": "page_view",
+    "dl": "https://ifyoumind.com/privacy-policy",
+    "gcs": "G100",
+    "cid": "present"
+   }
+  ]
+ },
+ "E6_controlNoQueue": {
+  "hits": [
+   {
+    "at": 9539,
+    "en": "page_view",
+    "dl": "https://ifyoumind.com/privacy-policy",
+    "gcs": "G101",
+    "cid": "present"
+   }
+  ]
+ }
+}

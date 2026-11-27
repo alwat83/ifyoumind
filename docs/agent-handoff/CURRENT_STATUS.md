@@ -1,5 +1,25 @@
 # ifYouMind — Current development status
 
+## November 27, 2026 — Wow 4.0 B+ implementation candidate (draft PR #136; not merged, not deployed)
+
+- **Decision:** the founder selected B+ "Check the claim" and gave a conditional implementation GO: draft PR only, no merge or deploy.
+- **PR:** [#136](https://github.com/alwat83/ifyoumind/pull/136), branch `claude/bplus-claim-check` (`1cd6ea6b` code, `0f4fa5a4` evidence). It is based on `abb82dd0`, the source of live `f0250d10c22751a7`.
+- **Change:** the hero is now the promise plus one example card with three preset statements. Each statement opens its cells and calculation, then a computed verdict (Supported / Not supported / Can't tell). Verdicts come from `home-bill-examples.json` cells and the public city sample. There are no new events, storage, consent, Functions, auth, billing or Instagram changes.
+- **QA (local, built app with the real pending banner):**
+  - Statements clear the banner by 59–245 px at 8 viewports and are hit-tested; targets are at least 44 px.
+  - axe: 0 violations.
+  - GA4 replay: the event semantics are unchanged.
+  - `test:discover`: 84/84.
+  - `consent-layout`: 7/7.
+  - Unit tests: 194/194.
+  - Evidence: `docs/design/wow4/bplus-implementation/`.
+- **Open:**
+  - Hosted emulator QA run 46019862214.
+  - The 3-second test with five cold visitors was **not run**; the protocol is ready.
+  - The founder must confirm that B+ supersedes the Nov 20 "Reveal what changed" decision.
+  - #133 stays separate; B+ would supersede it.
+- **Provider/agent:** Anthropic / Claude Code, local session.
+
 ## November 27, 2026 — "Guess the line" campaign approved and hosted; ready to publish (static only)
 
 - **Approval:** the founder approved the carousel (Tue Dec 1) and product Reel (Thu Dec 3), with captions, alt text and disclosures as shown on the private review page.

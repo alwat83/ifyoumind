@@ -1,0 +1,22 @@
+[
+ {
+  "id": "01-quiz",
+  "alt": "Quiz slide with made-up figures: \"This tax bill went up $420. Which line did most of it?\" Three choices: A, County. B, School. C, Municipal. Swipe for the answer."
+ },
+ {
+  "id": "02-total",
+  "alt": "Same home, two years, made-up figures: total property tax was $4,200 in 2024 and $4,620 in 2025, up $420, about 10 percent."
+ },
+ {
+  "id": "03-answer",
+  "alt": "The answer is B, School. Increase by line in the made-up example: County plus $90, School plus $240, Municipal plus $90. $90 plus $240 plus $90 equals $420."
+ },
+ {
+  "id": "04-meaning",
+  "alt": "School tax was 57.1 percent of the $420 increase in this made-up example. That shows where to look first. It does not show the bill is wrong; an assessment notice and local tax rates explain why it changed."
+ },
+ {
+  "id": "05-try",
+  "alt": "Find the line that moved. Explore the free property-tax example at ifyoumind.com. No account needed for the example."
+ }
+]

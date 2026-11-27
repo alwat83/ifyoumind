@@ -1,0 +1,98 @@
+{
+ "schema": "ifyoumind-social-manifest/1",
+ "batch_id": "2026-12-guess-the-line",
+ "status": "awaiting_founder_approval",
+ "account": "@ifyoumindapp",
+ "note": "Not hosted and not published. After founder approval: host via the static-asset workflow (docs/marketing/social/PUBLISHING.md), merge these posts into the live manifest with status ready_to_publish, then the Windsor automation publishes once and records media id + permalink.",
+ "posts": [
+  {
+   "post_id": "2026-12-01-tue-carousel-guess-the-line",
+   "format": "carousel",
+   "proposed_local_date": "2026-12-01",
+   "caption": "Quick quiz 👇 This tax bill went up $420. Which line did most of it: A) County, B) School or C) Municipal?\n\nDrop your guess in the comments, then swipe for the answer.\n\nIn this made-up example, one line explains 57% of the increase. That tells you where to look first. It doesn't mean the bill is wrong: your assessment notice and local tax rates explain why a line changed.\n\nTry the free property-tax example at ifyoumind.com. No account needed.\n\nIllustrative example with made-up figures. Not tax advice.\n\n#propertytax #homeowners #taxbill #personalfinance #budgeting #financialliteracy #moneytips #homeownership",
+   "media": [
+    {
+     "file": "ifyoumind-2026-12-01-tuesday-carousel-01-3488fe54.jpg",
+     "proposed_url": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/ifyoumind-2026-12-01-tuesday-carousel-01-3488fe54.jpg",
+     "sha256": "3488fe542f5923f45c9b19eab0f9860ddf5bc3f9d1857ea277acc7f92b6dd4c9",
+     "bytes": 182959,
+     "width": 1080,
+     "height": 1350,
+     "content_type": "image/jpeg",
+     "alt_text": "Quiz slide with made-up figures: \"This tax bill went up $420. Which line did most of it?\" Three choices: A, County. B, School. C, Municipal. Swipe for the answer."
+    },
+    {
+     "file": "ifyoumind-2026-12-01-tuesday-carousel-02-e3533622.jpg",
+     "proposed_url": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/ifyoumind-2026-12-01-tuesday-carousel-02-e3533622.jpg",
+     "sha256": "e353362251fe72e72460292dc03c622f616db7f1780e150ed1e410a41d6dd791",
+     "bytes": 176892,
+     "width": 1080,
+     "height": 1350,
+     "content_type": "image/jpeg",
+     "alt_text": "Same home, two years, made-up figures: total property tax was $4,200 in 2024 and $4,620 in 2025, up $420, about 10 percent."
+    },
+    {
+     "file": "ifyoumind-2026-12-01-tuesday-carousel-03-32f63950.jpg",
+     "proposed_url": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/ifyoumind-2026-12-01-tuesday-carousel-03-32f63950.jpg",
+     "sha256": "32f639506bbd6330780dc4d2fc1e0459e2de4cb8e73c75ae06c239621ad794fa",
+     "bytes": 126788,
+     "width": 1080,
+     "height": 1350,
+     "content_type": "image/jpeg",
+     "alt_text": "The answer is B, School. Increase by line in the made-up example: County plus $90, School plus $240, Municipal plus $90. $90 plus $240 plus $90 equals $420."
+    },
+    {
+     "file": "ifyoumind-2026-12-01-tuesday-carousel-04-8e540bd5.jpg",
+     "proposed_url": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/ifyoumind-2026-12-01-tuesday-carousel-04-8e540bd5.jpg",
+     "sha256": "8e540bd5f73f9f327476f4c548e8d832cc1855a8fa99675a8f9d37410f0482b4",
+     "bytes": 163698,
+     "width": 1080,
+     "height": 1350,
+     "content_type": "image/jpeg",
+     "alt_text": "School tax was 57.1 percent of the $420 increase in this made-up example. That shows where to look first. It does not show the bill is wrong; an assessment notice and local tax rates explain why it changed."
+    },
+    {
+     "file": "ifyoumind-2026-12-01-tuesday-carousel-05-018ae4ec.jpg",
+     "proposed_url": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/ifyoumind-2026-12-01-tuesday-carousel-05-018ae4ec.jpg",
+     "sha256": "018ae4ecf5c171478e9d6dbf67d6c5ef7da642bcaa1bf5bbf4e654885e58e919",
+     "bytes": 147806,
+     "width": 1080,
+     "height": 1350,
+     "content_type": "image/jpeg",
+     "alt_text": "Find the line that moved. Explore the free property-tax example at ifyoumind.com. No account needed for the example."
+    }
+   ],
+   "data_source": "src/app/intelligence/home-bill-examples.json (illustrative tax fixture; build.cjs asserts every figure)",
+   "disclosure": "ILLUSTRATIVE EXAMPLE · MADE-UP FIGURES · Not a customer result. Not tax advice or a finding that any bill is wrong. (every slide)"
+  },
+  {
+   "post_id": "2026-12-03-thu-reel-product",
+   "format": "reel",
+   "proposed_local_date": "2026-12-03",
+   "caption": "$420 more in property tax. Where did it go?\n\nOne tap on the free example shows it: school taxes explain $240 of the increase. Then the evidence shows every number and where it came from, so you can check the math yourself.\n\nThis is a real screen recording of ifYouMind using a made-up example, not a customer's bill. Not tax advice.\n\nTry it at ifyoumind.com. No account needed.\n\n#propertytax #homeowners #personalfinance #taxbill #financialliteracy #budgeting",
+   "alt_text": "Screen recording of the ifYouMind website on a phone. A made-up property-tax example shows a $420 increase; one tap reveals that school taxes account for $240 of it; opening the evidence shows the year-by-year table and calculations. Ends with a card: Find the line that moved, try the free example at ifyoumind.com.",
+   "media": [
+    {
+     "file": "ifyoumind-2026-12-03-thursday-reel-d607738f.mp4",
+     "proposed_url": "https://ifyoumind.com/assets/marketing/social/instagram/reels/ifyoumind-2026-12-03-thursday-reel-d607738f.mp4",
+     "sha256": "d607738fd89275f14d79895f5e4cca27291a8ebfb8f9a526fd6f3e3646777546",
+     "bytes": 1450339,
+     "width": 1080,
+     "height": 1920,
+     "duration_s": 17.83,
+     "codec": "H.264 High 4.1 / AAC 48 kHz stereo (silent) / 30 fps / faststart",
+     "content_type": "video/mp4"
+    }
+   ],
+   "cover": {
+    "file": "ifyoumind-2026-12-03-thursday-reel-cover-91fcf692.jpg",
+    "proposed_url": "https://ifyoumind.com/assets/marketing/social/instagram/reels/ifyoumind-2026-12-03-thursday-reel-cover-91fcf692.jpg",
+    "sha256": "91fcf692ecba4b833a3d996a874afcd175821aeb25c6930f055608f7b391b355",
+    "width": 1080,
+    "height": 1920,
+    "content_type": "image/jpeg"
+   },
+   "footage": "Genuine screen recording of live ifyoumind.com (Hosting ab3e2779), illustrative example only, analytics consent rejected, 0 Google requests; overlays added in edit, product footage unaltered"
+  }
+ ]
+}

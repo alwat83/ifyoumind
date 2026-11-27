@@ -1155,3 +1155,30 @@ Coordination: rollbackevidence committed/pushedcce90dc1onPR129; newcorrective dr
 - **Publication:** not performed by this executor. The Windsor automation publishes each post once and records the media ID and permalink in issue #131.
 - **Source:** branch `claude/social-assets-2026-11-24` (`abb82dd0`). Campaign doc: `docs/marketing/social/2026-12-CAMPAIGN.md`.
 - **Provider/agent:** Anthropic / Claude Code, local session.
+
+## 2026-11-27 — Wow 4.0 B+ homepage released (Hosting only)
+
+**Provider/agent:** Anthropic / Claude Code, local session.
+
+**Status: deployed and production-verified.** Release `1795794838704000`, version `68aa040cad8b4294`, at 2026-11-27T15:53:58.704Z. Rollback target `f0250d10c22751a7`; rollback was not needed.
+
+- **What changed:** the homepage hero is now the B+ statement check: the promise, one example card, three preset statements, then source cells, calculation and a computed verdict. The founder decision supersedes the Nov 20 "Reveal what changed" CTA. PR [#136](https://github.com/alwat83/ifyoumind/pull/136) source `62d92c6d` is draft and unmerged.
+- **Package:** `release-artifacts/wow4-bplus-62d92c6d/` on `claude/release-bplus-62d92c6d`. Archive `65cb3eba…`, 82 files, frozen and not rebuilt. Compared with live, only the landing chunk changed.
+- **Preflight:** Enhanced Measurement OFF was confirmed by the founder in GA4 Admin just before deploy (the agent can't read Admin). Live was `f0250d10`, with no in-flight versions. 82/82 file hashes. 35 Functions unchanged. Enrollment `65c3faa285`. Headers. CSP `ee8df606908ccf85`. Consent precheck 7/7.
+- **Post-deploy:**
+  - 82/82 served files match.
+  - 35 Functions, enrollment, headers and CSP unchanged.
+  - The homepage smoke at 8 viewports with the real banner passed: statements clear by 59–245 px; keyboard, reduced motion and axe 0; 0 Google requests.
+  - 9/9 verdicts and calculations and 3/3 deep links are correct.
+  - **Privacy suite 21/21.**
+  - 22 social files and the manifest are unchanged, and 15/15 scheduled campaign media URLs return 200 with matching sha256.
+- **Analytics:** a GA4 breakpoint is recorded in `docs/marketing/ga4/MEASUREMENT_GUIDE.md` section 0, covering the revised `free_tax_example_viewed` meaning and the QA exclusion window 15:55:39–15:56:47Z.
+- **Hosted QA:** exact head 252/14. The 14 failures are stale `visual-journeys` snapshots, identical on the production control.
+- **Open:**
+  - The 3-second comprehension test with five cold visitors.
+  - Physical iPhone check.
+  - Snapshot baseline maintenance.
+  - Merging PR #136 to master is separately authorized.
+  - #133 stays separate.
+- **Provider/agent:** Anthropic / Claude Code, local session.
+

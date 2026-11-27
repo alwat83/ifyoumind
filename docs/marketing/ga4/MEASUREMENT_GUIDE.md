@@ -4,6 +4,19 @@
 **Property:** ifYouMind — Production `565380927` · stream `16394318092` · `G-NRT31062LW`.
 **Prepared:** 2026-11-27 by Anthropic / Claude Code.
 
+## 0. Measurement breakpoint: Wow 4.0 B+ homepage (2026-11-27 15:53:58.704 UTC)
+
+Hosting version `68aa040cad8b4294` (release `1795794838704000`) replaced the "Reveal what changed" button with the B+ statement check. Event names and the consent behaviour are unchanged, but **two definitions shift**. Treat this time as a **breakpoint**: annotate it in GA4, and analyse before and after as separate periods. Never join them into one trend.
+
+- **`free_tax_example_viewed` (revised meaning).** It now fires when the visitor **checks a tax statement** (the first of three preset statements), presses the **Property taxes** button, or arrives on a tax deep link. Before, it fired on the "Reveal what changed" click, the tab or deep links. It still means "saw the tax example", but the main trigger is now a choice between three statements, not one generic button. A change in its rate is therefore a design effect, not a like-for-like comparison.
+- **`evidence_revealed`** still fires only when "Show the evidence" is opened. Each statement check now shows its cells and calculation inline **without** this event, so its rate may fall. A fall is not a regression signal.
+- **`free_electricity_example_viewed`** is unchanged. Cities still send no event.
+- Which statement was picked, and which verdict was shown, are **not measured**. Measuring them would need new tracking and separate review.
+- The post-fix "before" period (04:20:46 → 15:53:58 UTC on Nov 27, about 11.5 hours) is too short for any before/after claim.
+- **No conversion improvement is claimed** without visitor data.
+
+**Exclude** 2026-11-27 15:55:39–15:56:47 UTC: the 21-check production privacy suite (synthetic marker `ga4b9151c6mwz5xvb4`) produced synthetic consented hits.
+
 ## 1. Live baseline
 | | |
 |---|---|
@@ -28,7 +41,7 @@ Earlier Nov 23 QA hits are recorded in `production-release.json`.
 | Event | Sent when (consent granted) | Not sent | Parameters |
 |---|---|---|---|
 | `page_view` | Every SPA route view of an allowlisted page. One per view; the automatic first page view is suppressed | Pending or rejected consent; private Discovery (`/discover/`) | `page_location` is canonical with **no query or hash**: `/?example=tax#business` is reported as `https://ifyoumind.com/`. `page_title` is a fixed label, e.g. "Explore examples", "Pricing", "Privacy policy". Allowlisted campaign labels are attached when present |
-| `free_tax_example_viewed` | The homepage tax example is shown, by **any** of: (a) the **Reveal what changed** button; (b) the **Property taxes** example tab; (c) **arriving** on `/?example=tax` or `/#business` (for example the menu's example link `/?example=tax#business`), which auto-reveals; (d) granting consent **after** revealing on the same page | More than once per page view (deduplicated per page view; it can fire again after navigating away and back) | none |
+| `free_tax_example_viewed` | **From 2026-11-27 15:53:58 UTC, see section 0.** Before that: the homepage tax example is shown, by **any** of: (a) the **Reveal what changed** button; (b) the **Property taxes** example tab; (c) **arriving** on `/?example=tax` or `/#business` (for example the menu's example link `/?example=tax#business`), which auto-reveals; (d) granting consent **after** revealing on the same page | More than once per page view (deduplicated per page view; it can fire again after navigating away and back) | none |
 | `evidence_revealed` | "Show the evidence" is opened on the homepage | More than once per example per page view | `example` = `tax` \| `electricity` \| `cities` |
 
 **`free_tax_example_viewed` is not a Reveal-button click.** Because of (b) and (c), read it as **"saw the tax example"**. URLs are canonicalized, so GA4 cannot tell how the example was reached.

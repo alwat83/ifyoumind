@@ -42,6 +42,13 @@ The founder authorizes a separate complete consumer redesign based on PR #118, w
 
 **Founder selection — November 20:** use Concept A's question-led opening in PR #119, combining B's immediate in-page answer reveal. Preserve “Reveal what changed,” Midnight Slate, evidence before the direct private CSV continuation, reduced motion and the broader bill/city supporting promise. This authorizes implementation in the existing draft, not merging, deployment or commercial/provider changes. [Selected direction and actual review evidence](docs/design/midnight-slate/first-five-seconds/REVIEW.md). Do not restart A/B/C exploration or substitute the earlier B recommendation.
 
+**Founder selection — November 27 (Wow 4.0, supersedes the November 20 CTA decision):** B+ "Check the claim" is the homepage interaction. The visitor picks one of three preset statements about a labelled example, sees the source cells and calculation, then a verdict computed from that example's values (Supported / Not supported / Can't tell from these numbers). **The November 20 instruction to preserve "Reveal what changed" no longer applies.** The rest of that decision stands: the question-led example, Midnight Slate, evidence before the private CSV continuation, reduced motion and the bill/city promise.
+- Statements must stay preset and labelled as such, with no free-text claim checking.
+- No causal wording.
+- Verdicts must be computed from the example data, never hardcoded.
+- Deployed Hosting-only 2026-11-27 15:53:58Z, version `68aa040cad8b4294` (PR #136, source `62d92c6d`).
+- No conversion improvement is claimed without visitor data. PR #133 stays separate and unreleased.
+
 ## Founder product vision — automatic discovery, October23,2026
 
 **Mission:** make AI-driven data discovery accessible to everyday people, including people who have no AI or prompting experience. **Core promise: “You bring the data. We’ll find the story.”** The defining future experience is user-provided information followed by automatic, useful, evidence-backed findings before the user knows what to ask. This is product direction, not a claim of live arbitrary uploads or AI analysis.

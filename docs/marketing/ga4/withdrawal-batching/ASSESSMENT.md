@@ -12,6 +12,18 @@ Google's tag holds events in memory for about **5 seconds** before sending them 
 
 The common trigger is ordinary. A visitor opens the Privacy page and withdraws within about 5 seconds. That page's own `page_view`, recorded on arrival while consent was granted, is then delivered after the withdrawal (E6 below).
 
+## Two different things, kept apart
+
+| | A. Recorded **before** withdrawal, sent **after** | B. Recorded **after** withdrawal |
+|---|---|---|
+| Happens? | **Yes**, within the tag's ~5s batch window | **No.** 0 events in every experiment, including 20s of further interaction, navigation and reload |
+| Consent state on the hit | `gcs=G101` (granted at recording time) | n/a |
+| Content | Allowlisted event, canonical URL, fixed title, pre-withdrawal client ID | n/a |
+| Matches "stops future collection"? | Yes. No new activity is collected | Yes |
+| Matches "cannot undo information already sent" / "already collected by Google"? | **No, not fully.** The data wasn't yet sent when the visitor withdrew, and the wording implies it won't be | n/a |
+
+**Verdict:** behaviour A is not collection after withdrawal. It is delivery after withdrawal of data recorded under valid consent. That **doesn't break** our "stops future collection" promise, but it **does fall short** of the expectation our wording sets: the dialog's "already sent" implies unsent data stays unsent. That makes it a disclosure gap, not a consent failure. Behaviour B, the serious case, does not occur.
+
 ## Evidence
 Experiments E1–E6, run on **both** production `d47dcec2` and PR #132 `4aab384e`. The results are identical.
 
@@ -49,8 +61,8 @@ No supported mechanism was found.
 - **Removing the tag script, or reloading:** doesn't clear in-memory timers, and unloading triggers a flush (E3).
 - **Intercepting `navigator.sendBeacon`/`fetch`:** this would patch the vendor's transport at runtime. It's fragile across tag updates, and the GA4 work explicitly avoided vendor patches. Not recommended.
 
-## Does it need a separate corrective PR?
-**Yes, a small wording-only PR, kept separate from #132.** Proposed text, for founder (ideally counsel) approval, because it changes consent wording:
+## Smallest corrective action
+**A wording-only PR, kept separate from #132 and #134. Not prepared yet; it needs founder (and ideally counsel) sign-off on consent text.** It touches two templates and no analytics code, so production GA4 behaviour is unchanged. Alternative: the founder formally accepts the current wording and records why. Proposed text, for founder (ideally counsel) approval, because it changes consent wording:
 - **Dialog:** "Withdrawing consent stops new analytics collection and clears analytics cookies. Activity from the few seconds before you withdraw may still be sent, and information already sent can't be undone."
 - **Policy:** "Withdrawal stops new collection and removes analytics cookies. Activity recorded in the few seconds before withdrawal may still be delivered, and withdrawal does not remove information already collected by Google."
 

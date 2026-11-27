@@ -1,5 +1,23 @@
 # ifYouMind — Current development status
 
+## November 27, 2026 — Approved social assets hosted (static only); Instagram publication still blocked
+
+- **Hosting:** release `1795754199503000`, version `ab3e2779ba205697` (04:36:39Z), under the issue #131 standing authorization (static assets only).
+  - The application files are **byte-identical** to `4315f71c`, so the GA4/consent behaviour and measurement baseline are unchanged.
+  - Added: 5 Tuesday carousel and 3 Saturday Story JPEGs. All 8/8 match the approved checksums in issue #131.
+  - Added: `assets/marketing/social/manifest.json`, the discovery URL for automation.
+  - 75/75 served files verified. 35 Functions, enrollment, headers and CSP unchanged.
+  - Baseline tag: `hosting-live-ab3e2779ba205697`.
+- **Source:** branch `claude/social-assets-2026-11-24`, files under `public/assets/marketing/social/`, so future builds keep them. Contract: `docs/marketing/social/PUBLISHING.md`. Receipt: [issue #131 comment](https://github.com/alwat83/ifyoumind/issues/131#issuecomment-7210019091).
+- **Tuesday carousel: NOT published.**
+  - The exact approved caption isn't recorded anywhere this executor can read.
+  - Windsor.ai isn't connected to this executor, so the duplicate check and publish are unavailable.
+- **Thursday Reel:**
+  - Genuine product-screen footage captured: 1080×1920 frames of the live site's illustrative example, no analytics; preview WebM kept in the repo.
+  - Still needs an H.264 MP4 encode (no full ffmpeg here), an edit against the approved concept, a caption and founder review. Not hosted.
+- **Saturday Story:** assets hosted. Publication needs the Windsor automation. The link sticker may need adding in-app.
+- **Provider/agent:** Anthropic / Claude Code, local session.
+
 ## November 27, 2026 — Stabilization and measurement readiness (no production change)
 
 - **Production baseline frozen:** Hosting `4315f71caa9b7cd1` / release `1795753246113000`, preserved as git tag `hosting-live-4315f71caa9b7cd1`. No rebuild or redeploy.

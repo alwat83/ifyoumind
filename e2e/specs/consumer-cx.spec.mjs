@@ -2,16 +2,14 @@
 import { test, expect, signInThroughUi, expectAccessible } from '../support/test.mjs';
 import { FIXTURES } from '../support/fixtures.mjs';
 
-test('Account names the data tool honestly and explains how to request a copy or deletion', async ({ page, fixtures }) => {
+test('Account names the data tool honestly and makes no unsupported export or deletion promise', async ({ page, fixtures }) => {
   const user = await fixtures(FIXTURES.VERIFIED);
   await signInThroughUi(page, user, '/login?returnUrl=%2Faccount');
   await expect(page).toHaveURL(/\/account$/);
   await expect(page.getByRole('link', { name: 'Manage my data' })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Your saved datasets' })).toHaveAttribute('href', '/data');
-  const request = page.locator('#data-request');
-  await expect(request).toContainText('To get a copy of your account data, or to delete your account');
-  await expect(request).toContainText(user.email);
-  await expect(request.getByRole('link', { name: 'support@ifyoumind.com' })).toHaveAttribute('href', /^mailto:support@ifyoumind\.com\?subject=Account%20data%20request$/);
+  // Export and deletion are not self-serve yet (see docs); Account must not imply that they are.
+  await expect(page.locator('main')).not.toContainText(/delete your account|copy of your (account )?data/i);
   await expectAccessible(page);
 });
 

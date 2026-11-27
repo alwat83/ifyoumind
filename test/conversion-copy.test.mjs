@@ -73,7 +73,8 @@ test('pricing publishes monthly plans while checkout remains eligibility-gated',
   assert.match(pricingHtml,/\*ngIf="showMonthlyPlans && projectId"/);
   assert.match(pricingHtml,/Legacy Pro/);
   assert.doesNotMatch(pricingHtml,/Get Pro access|request\('pro'\)/);
-  assert.match(landingHtml,/routerLink="\/pricing">Pricing/);
+  assert.match(landingHtml,/<app-site-footer/);
+  assert.match(read('src/app/journey-navigation.component.ts'),/label: 'Pricing', href: '\/pricing'/);
   const marketHtml=read('src/app/intelligence/market-intelligence.component.html');
   assert.match(marketHtml,/routerLink="\/pricing" \[queryParams\]="\{projectId:project\?\.id\}">View report pricing/);
 });
@@ -105,10 +106,12 @@ test('consumer homepage preserves the Business entry point and plan-ready offer'
   assert.ok(landingHtml.indexOf('id="try"')<landingHtml.indexOf('id="business"'),'consumer discovery leads; Business remains available');
 });
 
-test('support email is visible text, plus the privacy link, in the homepage footer',()=>{
-  const footer=landingHtml.slice(landingHtml.indexOf('<footer'));
-  assert.ok(footer.includes('<a href="mailto:support&#64;ifyoumind.com">support&#64;ifyoumind.com</a>'),'email is escaped for the Angular template compiler');
-  assert.ok(footer.includes('routerLink="/privacy-policy"'));
+test('support email is visible text, plus the privacy link, in the shared footer on the homepage',()=>{
+  assert.match(landingHtml,/<app-site-footer/);
+  const footer=read('src/app/site-footer.component.html');
+  assert.ok(footer.includes('<span class="mail">support&#64;ifyoumind.com</span>'),'email is visible text, escaped for the Angular template compiler');
+  assert.ok(footer.includes('<a href="mailto:support&#64;ifyoumind.com">Contact support</a>'));
+  assert.ok(footer.includes('<a href="/privacy-policy">Privacy</a>'));
 });
 
 test('register page says what happens next for email and Google sign-ups',()=>{

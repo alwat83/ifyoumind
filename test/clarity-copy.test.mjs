@@ -17,7 +17,9 @@ test('Q4: the report counts sources cited and no longer shows a "coverage" score
 
 test('Q5: pricing buttons say what happens, and the prices are unchanged', () => {
   const home = read('../src/app/intelligence/public-landing.component.html');
-  assert.match(home, /routerLink="\/pricing">Pricing/);
+  // Pricing is reachable from the shared header and footer on every page, including the homepage.
+  assert.match(home, /<app-site-footer/);
+  assert.match(read('../src/app/journey-navigation.component.ts'), /label: 'Pricing', href: '\/pricing'/);
   assert.match(home, /routerLink="\/sample-report"/);
   // Signed-out visitors start at account creation with the brief as the return path.
   assert.match(home, /\[routerLink\]="viewer\(\) \? '\/decide' : '\/register'"[^>]*returnUrl: '\/decide\?type=business'[^>]*>Start a Free Brief/);

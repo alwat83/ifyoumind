@@ -67,7 +67,7 @@ export class PublicLandingComponent implements AfterViewInit, OnDestroy {
     this.moveTo(target);
   }
 
-  /** Opens one preset statement's check. Same analytics as the old reveal: the example's finding is now visible. */
+  /** Opens one preset statement's check. Same analytics as the old reveal: the example's finding is now shown. */
   check(index: number, button: HTMLElement): void {
     this.revealed = true;
     this.selected = index;

@@ -36,3 +36,14 @@ Build B. It borrows A's one-line product statement and C's inline citation.
 - **Implementation:** one focused PR that replaces only the tax hero. The guess calls the existing reveal, which fires the approved `free_tax_example_viewed`, so there's no new tracking. The consent banner, layout and focus tests are kept.
 - **Release:** a separate Hosting-only release. It supersedes the PR #133 copy test.
 - **Measurement:** compare against the post-fix baseline using the existing events (see `docs/marketing/ga4/MEASUREMENT_GUIDE.md`).
+
+## B+ refinement: "Check the claim" (2026-11-27)
+
+Prototype: `prototypes/bplus-check.html`. Renders: `renders/bplus/`. Checks: `tools/` (Playwright; GET-only against the live site to capture the pending consent banner with computed styles).
+
+- The guess becomes a claim and the reveal becomes a check: cells light up, the math appears, then the verdict (Supported / Not supported / Can't tell from this data).
+- The `<h1>` is the product promise ("Find what changed between two bills, with the proof."). Tabs cover Tax bill, Electricity and Two cities; every figure and limit comes from the live examples (`home-bill-examples.json`, `HOME_EXAMPLES`).
+- Returning visitors: no new persistence. The header "Compare your own CSVs" link and non-locking claims replace any stored skip.
+- Measured with the real banner injected: header link, 3 tabs and 3 claims are all clear at 390×664 (461/532), 375×553 (379/421) and 320×568 (402/412). Claims are at least 44 px; tabs are 36 px on short phones.
+- Design-judgment score: 37/40 (B 35, C 31, A 29, live 23). Not a visitor result.
+- Risk: "Pick a claim" must not imply free-text claim checking; buttons say "Compare your own…".

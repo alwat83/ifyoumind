@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ifYouMind — Direction B+: Check the claim (prototype)</title>
+<meta name="description" content="ifYouMind compares two bills or datasets, finds what changed, and shows the exact cells behind every answer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+/* B+: the guess becomes a claim, and the reveal becomes a check. Evidence first, verdict last.
+   Example figures: tax and electricity are made up; cities are the public Census sample already on ifyoumind.com. */
+:root{--page:#090D17;--panel:#101A27;--raise:#162330;--line:#33485A;--ink:#F1F7FA;--muted:#A8BAC9;--cyan:#58D5E8;--blue:#7C9CFF;--yes:#8AE2C4;--no:#F2CF8A;--cant:#B9C6FF;
+--serif:"Instrument Serif",Georgia,serif;--sans:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:ui-monospace,Menlo,Consolas,monospace;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-padding-bottom:var(--consent-banner-height,0px);scroll-padding-top:8px}
+html,body{margin:0;background:var(--page);color:var(--ink);font:16px/1.5 var(--sans)}
+body{background:radial-gradient(70% 50% at 85% 0%,#122B36 0%,var(--page) 65%)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-left,0px)) 40px}
+header{display:flex;justify-content:space-between;align-items:center;min-height:64px;gap:12px}
+.brand{font-weight:700;font-size:22px;letter-spacing:-.04em}
+.own{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border:1px solid var(--line);border-radius:10px;color:var(--ink);text-decoration:none;font-weight:600;font-size:14px;white-space:nowrap}
+.own:hover{border-color:var(--blue)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:56px;align-items:start;padding:40px 0 32px}
+.hero>div:first-child{padding-top:56px}
+h1{margin:0;font-size:clamp(30px,5.2vw,64px);line-height:1.02;letter-spacing:-.04em;text-wrap:balance}
+h1 em{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.01em;color:var(--cyan)}
+.lede{margin:18px 0 0;color:var(--muted);font-size:clamp(16px,1.5vw,19px);max-width:40ch}
+.lede b{color:var(--ink);font-weight:600}
+.trust{margin:14px 0 0;font-size:14px;color:var(--muted)}
+/* The checker */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:18px 18px 14px;box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.tabs{display:flex;gap:6px;margin:0 0 14px;padding:0;list-style:none}
+.tab{min-height:40px;padding:0 12px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--muted);font:600 13px var(--sans);cursor:pointer}
+.tab[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--page)}
+.ex{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.ex .lbl{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan)}
+.ex .fig{font-variant-numeric:tabular-nums;color:var(--muted);font-size:14px}
+.big{display:flex;align-items:baseline;gap:12px;margin:4px 0 0}
+.big .n{font-family:var(--serif);font-size:clamp(52px,7vw,84px);line-height:.95;letter-spacing:-.02em}
+.big .s{color:var(--muted);font-size:15px;max-width:22ch;line-height:1.3}
+.ask{margin:12px 0 10px;font-weight:600;font-size:17px}
+.claims{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.claim{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:50px;padding:8px 14px;border-radius:12px;border:2px solid var(--line);background:var(--raise);color:var(--ink);font:600 16px/1.25 var(--sans);text-align:left;cursor:pointer}
+.claim:hover{border-color:var(--blue)}
+.claim[aria-expanded=true]{border-color:var(--cyan)}
+.claim .q{flex:1}
+.tag{flex:none;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
+.tag.yes{color:var(--yes);border-color:var(--yes)}.tag.no{color:var(--no);border-color:var(--no)}.tag.cant{color:var(--cant);border-color:var(--cant)}
+.check{display:none;margin:8px 0 4px;padding:14px;border-radius:12px;background:var(--page);border:1px solid var(--line);scroll-margin-bottom:calc(var(--consent-banner-height,0px) + 12px)}
+.check.open{display:block}
+.mini{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:14px}
+.mini th,.mini td{padding:6px 6px;text-align:right;border-bottom:1px solid #22313f}
+.mini th:first-child,.mini td:first-child{text-align:left}
+.mini th{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.mini td{transition:background .3s,color .3s}
+.mini td .ref{margin-left:6px;font:11px var(--mono);color:#6F8496}
+.mini td.lit{background:rgba(88,213,232,.18);color:var(--ink)}
+.mini td.lit .ref{color:var(--cyan)}
+.math{list-style:none;margin:10px 0 0;padding:0;font:13px/1.5 var(--mono);color:var(--ink)}
+.math li{opacity:0;transform:translateY(4px);transition:opacity .3s,transform .3s}
+.math li.on{opacity:1;transform:none}
+.math code{color:var(--cyan)}
+.verdict{margin:0 0 10px}
+.verdict .tag.wait{color:var(--muted);border-style:dashed}
+.verdict .finding,.verdict .limit{opacity:.18;transition:opacity .35s}
+.verdict.on .finding,.verdict.on .limit{opacity:1}
+.go{opacity:0;transition:opacity .35s}.check.done .go{opacity:1}
+.verdict .tag{font-size:12px}
+.finding{margin:6px 0 0;font-family:var(--serif);font-size:clamp(24px,3vw,30px);line-height:1.12}
+.finding b{font-family:var(--sans);color:var(--cyan);font-size:.82em}
+.limit{margin:8px 0 0;color:var(--muted);font-size:14px}
+.go{display:inline-flex;align-items:center;min-height:48px;margin-top:12px;padding:0 18px;border-radius:10px;background:var(--blue);color:var(--page);font-weight:700;text-decoration:none}
+.more{margin:12px 0 0;font-size:13px;color:var(--muted)}
+.disc{margin:14px 0 0;font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mob{display:none;margin:8px 0 0;color:var(--muted);font-size:15px}
+.claim[aria-expanded=true] .tag{display:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+@media (max-width:860px){.hero{grid-template-columns:1fr;gap:18px;padding:14px 0 24px}.hero>div:first-child{padding-top:0}.lede{display:none}.trust{display:none}.mob{display:block}}
+@media (max-width:420px){.wrap{padding-left:16px;padding-right:16px}header{min-height:56px}.own{min-height:40px;font-size:13px;padding:0 12px}h1{font-size:30px}
+ .card{padding:14px 12px 12px;border-radius:14px}.tabs{margin-bottom:10px}.big .n{font-size:56px}.ask{font-size:16px;margin:8px 0}}
+/* Short phones: keep the tabs and all three claims above a pending consent banner. */
+@media (max-width:420px) and (max-height:700px){header{min-height:48px}.hero{padding-top:4px;gap:12px}h1{font-size:26px}.mob{font-size:14px;margin-top:4px}.tab{min-height:36px}.ex .fig{font-size:12px}.pick{display:none}.big .n{font-size:44px}.big .s{font-size:13px}.ask{margin:6px 0}.claims{gap:6px}.claim{min-height:44px;font-size:15px;padding:6px 12px}}
+@media (max-width:420px) and (max-height:600px){h1{font-size:23px}.mob{display:none}.card{padding-top:10px}.tabs{margin-bottom:6px}.big{margin:0}header{min-height:44px}.card{padding-top:8px}.tabs{gap:4px}.tab{padding:0 10px}.big .n{font-size:30px}.claims{gap:5px}.ask{margin:4px 0 6px}.big .s{display:none}.ask{font-size:15px}.claim{font-size:14px;min-height:44px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="brand">ifyoumind</div><a class="own" href="#">Compare your own CSVs</a></header>
+<main class="hero">
+  <div>
+    <h1>Find what changed between two bills, <em>with the proof.</em></h1>
+    <p class="mob">Every answer shows the exact numbers it used.</p>
+    <p class="lede">ifYouMind compares two CSVs, like this year's bill and last year's, or two cities' public data. It tells you what changed and <b>cites the exact cells</b> behind every answer, and what the data can't tell you.</p>
+    <p class="trust">Free examples, no sign-up. Your own CSV is read in your browser and never uploaded.</p>
+  </div>
+  <section class="card" aria-labelledby="ask">
+    <div class="tabs" role="group" aria-label="Example">
+      <button class="tab" type="button" data-ex="tax" aria-pressed="true">Tax bill</button>
+      <button class="tab" type="button" data-ex="elec" aria-pressed="false">Electricity</button>
+      <button class="tab" type="button" data-ex="city" aria-pressed="false">Two cities</button>
+    </div>
+    <div class="ex"><span class="lbl" id="lbl"></span><span class="fig" id="fig"></span></div>
+    <div class="big"><span class="n" id="n" aria-hidden="true"></span><span class="s" id="s"></span></div>
+    <p class="ask" id="ask"></p>
+    <ul class="claims" id="claims"></ul>
+    <p class="more" id="more" hidden></p>
+    <p class="disc" id="disc"></p>
+  </section>
+</main>
+</div>
+<p class="sr" aria-live="polite" id="live"></p>
+<script>
+const EX={
+ tax:{lbl:'Made-up tax bill',fig:'2024 → 2025',n:'+$420',s:'$4,200 last year, $4,620 this year.',ask:'Why did it go up?',
+  cols:['Line','2024','2025','Change'],rows:[['County','B','$900','$990','+$90'],['School','C','$2,400','$2,640','+$240'],['Municipal','D','$900','$990','+$90'],['Total','E','$4,200','$4,620','+$420']],
+  disc:'Made-up figures. Not a customer result. Not tax advice.',cta:'Compare your own tax bills',
+  claims:[
+   {t:'School tax caused most of it.',v:'yes',lit:['C','E'],f:'School added <b>$240</b> of the $420.',m:[['C3 − C2','$2,640 − $2,400 = +$240'],['E3 − E2','$4,620 − $4,200 = +$420'],['','($240 ÷ $420) × 100 = 57.1%']]},
+   {t:'County added the most.',v:'no',lit:['B','C'],f:'County added <b>$90</b>. School added $240.',m:[['B3 − B2','$990 − $900 = +$90'],['C3 − C2','$2,640 − $2,400 = +$240']]},
+   {t:'The bill was calculated wrong.',v:'cant',lit:['E'],f:'Two bills show what changed, not whether the total is right.',m:[['E3 − E2','$4,620 − $4,200 = +$420']],l:'To check the total, look up your assessed value and local tax rates.'}]},
+ elec:{lbl:'Made-up power bills',fig:'Jul 2025 → Jul 2026',n:'+21%',s:'$120.00 last July, $145.20 this July.',ask:'Why is it higher?',
+  cols:['Line','Jul 2025','Jul 2026','Change'],rows:[['Total billed','J','$120.00','$145.20','+21%'],['Energy used','E','600 kWh','660 kWh','+10%']],
+  disc:'Made-up figures, 31 billing days each. Not a customer result.',cta:'Compare your own power bills',
+  claims:[
+   {t:'I used more electricity.',v:'yes',lit:['E'],f:'True, but only <b>10%</b> more.',m:[['E3 − E2','660 kWh − 600 kWh = +60 kWh'],['','(60 ÷ 600) × 100 = 10%']]},
+   {t:'The bill rose about as much as my use.',v:'no',lit:['J','E'],f:'The bill rose <b>21%</b>. Use rose 10%.',m:[['J3 − J2','$145.20 − $120.00 = +$25.20'],['','($25.20 ÷ $120.00) × 100 = 21%'],['E3 − E2','(60 ÷ 600) × 100 = 10%']]},
+   {t:'My rate went up.',v:'cant',lit:['J','E'],f:'Something besides usage changed. Two totals can’t say what.',m:[['J3 − J2','+21% billed'],['E3 − E2','+10% used']],l:'Check the itemized charges to see why the bill rose faster than energy use.'}]},
+ city:{lbl:'Public Census sample',fig:'Austin vs Charlotte',n:'$11,590',s:'gap in median household income estimates.',ask:'What does the data say?',
+  cols:['','Austin, TX','Charlotte, NC',''],rows:[['Population','P','979,539','903,844',''],['Median household income','I','$93,658','$82,068',''],['Population change','G','+3.0%','+5.4%','']],
+  disc:'Public Census estimates from the sample report on ifyoumind.com.',cta:'Compare places in the full sample report',
+  claims:[
+   {t:'Austin households earn more.',v:'yes',lit:['I'],f:'Austin’s estimate is <b>$11,590</b> higher.',m:[['','$93,658 − $82,068 = $11,590']]},
+   {t:'Austin is growing faster.',v:'no',lit:['G'],f:'Charlotte grew more: <b>+5.4%</b> vs +3.0%.',m:[['','5.4% − 3.0% = 2.4 percentage points']]},
+   {t:'Austin is the better spot for a coffee shop.',v:'cant',lit:['I','G'],f:'Income and growth point in different directions.',m:[['','Income: Austin higher'],['','Growth: Charlotte higher']],l:'Check local demand, competition and rent before choosing a site.'}]}
+};
+const VERDICT={yes:'Supported',no:'Not supported',cant:'Can’t tell from this data'};
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let cur='tax', timers=[];
+const $=id=>document.getElementById(id);
+function render(key){
+  cur=key; const e=EX[key]; timers.forEach(clearTimeout);
+  document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-pressed',String(t.dataset.ex===key)));
+  $('lbl').textContent=e.lbl; $('fig').textContent=e.fig; $('n').textContent=e.n; $('s').textContent=e.s; $('ask').innerHTML=e.ask+'<span class="pick"> Pick a claim to check.</span>'; $('disc').textContent=e.disc;
+  $('more').hidden=true;
+  $('claims').innerHTML=e.claims.map((c,i)=>`<li><button class="claim" type="button" aria-expanded="false" aria-controls="ck${i}" data-i="${i}"><span class="q">“${c.t}”</span><span class="tag" hidden></span></button>
+   <div class="check" id="ck${i}" role="region" aria-label="Check of: ${c.t}">
+    <div class="verdict"><span class="tag wait">Checking the cells…</span><p class="finding">${c.f}</p>${c.l?`<p class="limit">${c.l}</p>`:''}</div>
+    <table class="mini"><thead><tr>${e.cols.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${e.rows.map(r=>`<tr data-c="${r[1]}"><td>${r[0]}</td><td>${r[2]}${key!=='city'?`<span class="ref">${r[1]}2</span>`:''}</td><td>${r[3]}${key!=='city'?`<span class="ref">${r[1]}3</span>`:''}</td>${r[4]!==''?`<td>${r[4]}</td>`:'<td></td>'}</tr>`).join('')}</tbody></table>
+    <ol class="math">${c.m.map(([a,b])=>`<li>${a?`<code>${a}</code> `:''}${b}</li>`).join('')}</ol>
+    <a class="go" href="#">${e.cta}</a>
+   </div></li>`).join('');
+}
+function open(btn){
+  const e=EX[cur], i=+btn.dataset.i, c=e.claims[i], panel=$('ck'+i);
+  timers.forEach(clearTimeout); timers=[];
+  document.querySelectorAll('.claim').forEach(b=>{b.setAttribute('aria-expanded','false');$(b.getAttribute('aria-controls')).classList.remove('open')});
+  btn.setAttribute('aria-expanded','true'); panel.classList.add('open');
+  const cells=[...panel.querySelectorAll('tbody tr')].filter(r=>c.lit.includes(r.dataset.c)).flatMap(r=>[...r.children].slice(1,3));
+  const lines=[...panel.querySelectorAll('.math li')], verdict=panel.querySelector('.verdict');
+  [...panel.querySelectorAll('td')].forEach(td=>td.classList.remove('lit')); lines.forEach(l=>l.classList.remove('on')); verdict.classList.remove('on'); panel.classList.remove('done'); const vt=verdict.querySelector('.tag'); vt.className='tag wait'; vt.textContent='Checking the cells\u2026';
+  if(innerWidth<=860) btn.scrollIntoView({block:'start',behavior:RM?'auto':'smooth'}); else if(panel.getBoundingClientRect().top+160>innerHeight) panel.scrollIntoView({block:'center',behavior:RM?'auto':'smooth'});
+  const step=RM?0:170; let t=0;
+  cells.forEach(td=>timers.push(setTimeout(()=>td.classList.add('lit'),t+=step)));
+  lines.forEach(li=>timers.push(setTimeout(()=>li.classList.add('on'),t+=step*1.6)));
+  timers.push(setTimeout(()=>{verdict.classList.add('on');panel.classList.add('done');vt.className='tag '+c.v;vt.textContent=VERDICT[c.v];const tag=btn.querySelector('.tag');tag.hidden=false;tag.className='tag '+c.v;tag.textContent=VERDICT[c.v];
+    $('live').textContent=VERDICT[c.v]+'. '+panel.querySelector('.finding').textContent;
+    const done=document.querySelectorAll('.claim .tag:not([hidden])').length, others=Object.keys(EX).filter(k=>k!==cur).map(k=>document.querySelector(`.tab[data-ex="${k}"]`).textContent.toLowerCase());
+    $('more').hidden=false; $('more').textContent=done<3?`${done} of 3 checked. Try another claim, or switch to ${others.join(' or ')}.`:`All three checked. Each answer came from the cells shown, including the one the data can’t settle.`;
+  },t+=step*2));
+}
+document.addEventListener('click',ev=>{const b=ev.target.closest('.claim');if(b)return open(b);const t=ev.target.closest('.tab');if(t)render(t.dataset.ex);});
+render('tax');
+</script>
+</body>
+</html>

@@ -247,6 +247,7 @@ test('homepage navigation, guides, legal pages and report offers lead to existin
   await expect(footer.getByRole('link', { name: 'Terms', exact: true })).toHaveAttribute('href', '/terms-of-conduct');
   await expect(footer.getByRole('link', { name: 'Privacy', exact: true })).toHaveAttribute('href', '/privacy-policy');
   await expect(footer.getByRole('link', { name: 'Analytics choices', exact: true })).toHaveAttribute('href', '/privacy-policy#analytics');
+  await expect(footer.getByRole('link', { name: 'Sources & methodology', exact: true })).toHaveAttribute('href', '/guides/sources-and-methodology/');
   await expect(footer.getByRole('link', { name: 'email us', exact: true })).toHaveAttribute('href', 'mailto:support@ifyoumind.com?subject=Organization%20inquiry');
   await expect(footer).toContainText('support@ifyoumind.com');
 });
@@ -268,7 +269,7 @@ test('keyboard opens the compact menu, Escape restores focus, and text spacing p
   await page.keyboard.press('Tab');
   await expect(menu.getByRole('link', { name: 'Check a bill' })).toBeFocused();
   await expect(menu.getByRole('link', { name: 'Check a bill' })).toHaveAttribute('href', '/discover/');
-  await expect(menu.getByRole('link', { name: 'Compare cities' })).toHaveAttribute('href', '/sample-report');
+  await expect(menu.getByRole('link', { name: 'Compare cities' })).toHaveAttribute('href', '/?example=cities#business');
   await expect(menu.getByRole('link', { name: 'Guides' })).toHaveAttribute('href', '/guides/');
   await expect(menu.getByRole('link', { name: 'Pricing' })).toHaveAttribute('href', '/pricing');
   await expect(menu.getByRole('link', { name: 'Sign in' })).toHaveAttribute('href', '/login');

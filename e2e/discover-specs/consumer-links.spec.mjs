@@ -78,3 +78,20 @@ test('typing is offered from the CSV step, the example result and a deep link, a
   await expect(page.getByRole('textbox', { name: 'Later bill Currency' })).toHaveValue('USD');
   await expect(page.getByRole('textbox', { name: /^Earlier bill Charge/ })).toHaveValue('unknown');
 });
+
+// Founder decision (Nov 27): Compare cities opens the interactive city example; sources stay one footer link away.
+test('Compare cities opens the interactive city example and Sources & methodology is a footer destination', async ({ page }) => {
+  await page.goto('/pricing');
+  const footer = page.getByRole('contentinfo');
+  await footer.getByRole('link', { name: 'Compare cities', exact: true }).click();
+  await expect(page).toHaveURL(/\/\?example=cities#business$/);
+  await expect(page.getByRole('group', { name: 'Other examples' }).getByRole('button', { name: 'Compare cities', pressed: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Data Sources', exact: true })).toHaveCount(0);
+  await page.getByRole('contentinfo').getByRole('link', { name: 'Sources & methodology', exact: true }).click();
+  await expect(page).toHaveURL(/\/guides\/sources-and-methodology\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Sources and methodology');
+  for (const heading of ['Bill checks', 'Homepage examples', 'City briefs and Decision Reports']) await expect(page.getByRole('heading', { name: heading, level: 2 })).toBeVisible();
+  await expect(page.locator('main')).toContainText('have not been tested for statistical significance');
+  const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
+  expect(axe.violations.map(v => `${v.id}: ${v.nodes.length}`)).toEqual([]);
+});

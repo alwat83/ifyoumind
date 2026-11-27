@@ -85,8 +85,9 @@ test('Pricing leads with free and one-time choices and keeps closed monthly plan
   await expect(page.locator('.lede')).toHaveText('Checking a bill is free, needs no account and stays in your browser. Decision Reports compare U.S. cities for a move or a business: up to three cities, sourced analysis and an action plan.');
   const payOnce = page.getByRole('region', { name: 'Start free, or pay once' });
   const monthly = page.getByRole('region', { name: 'Monthly subscriptions' });
-  const order = await page.evaluate(() => [...document.querySelectorAll('section.offer-section h2')].map(h => h.textContent.trim()));
-  expect(order).toEqual(['Start free, or pay once', 'Monthly subscriptions']);
+  // The pay-once section renders once the signed-out state resolves; compare order only after both exist.
+  await expect(payOnce).toBeVisible();
+  await expect(page.locator('section.offer-section h2')).toHaveText(['Start free, or pay once', 'Monthly subscriptions']);
   await expect(payOnce).toContainText('type your numbers');
   await expect(monthly).toContainText('Monthly enrollment is currently unavailable.');
   for (const name of ['Starter', 'Plus']) await expect(monthly.getByRole('button', { name: `${name} enrollment currently unavailable` })).toBeDisabled();

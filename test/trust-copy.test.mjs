@@ -37,7 +37,7 @@ test('marketing copy makes no uploaded-data claim the reports do not support', (
   assert.match(landing,/Check local demand, competition, and rent/);
   assert.match(landing,/href="\/discover\/">Understand Your Bills/);
   const discovery=read('../src/app/discovery/unified-discovery.component.html');
-  assert.match(discovery,/Two supported CSV formats today\. No PDFs, scans or other file types/);
+  assert.match(discovery,/Type the numbers from two bills, or use one of two supported CSV formats\. No PDFs, scans or other file types/);
   assert.match(discovery,/Your bills stay in this browser tab/);
   assert.match(discovery,/We don’t upload or store them/);
   const home=read('../src/app/intelligence/consumer-home.component.html');

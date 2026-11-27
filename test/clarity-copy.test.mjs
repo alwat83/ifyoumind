@@ -19,7 +19,8 @@ test('Q5: pricing buttons say what happens, and the prices are unchanged', () =>
   const home = read('../src/app/intelligence/public-landing.component.html');
   assert.match(home, /routerLink="\/pricing">Pricing/);
   assert.match(home, /routerLink="\/sample-report"/);
-  assert.match(home, /routerLink="\/decide"[^>]*>Start a Free Brief/);
+  // Signed-out visitors start at account creation with the brief as the return path.
+  assert.match(home, /\[routerLink\]="viewer\(\) \? '\/decide' : '\/register'"[^>]*returnUrl: '\/decide\?type=business'[^>]*>Start a Free Brief/);
   const pricing = read('../src/app/intelligence/pricing.component.html');
   assert.match(pricing, /One full Decision Report\. A single charge with no renewal\./);
   assert.match(pricing, /<a[^>]*routerLink="\/decide" class="action">Start a free decision/);

@@ -1,0 +1,128 @@
+{
+ "schema": "ifyoumind-social-manifest/1",
+ "account": "@ifyoumindapp",
+ "platform": "instagram",
+ "schedule_local_days": [
+  "Mon",
+  "Tue",
+  "Thu",
+  "Sat"
+ ],
+ "rules": [
+  "Publish only posts whose status is ready_to_publish and whose caption is non-null and approved.",
+  "Verify each media sha256 and content_type by public GET before publishing.",
+  "Check recent account media for a matching post before publishing; publish exactly once; record media id and permalink in the project log.",
+  "Files are immutable: a changed asset gets a new filename and hash."
+ ],
+ "batches": [
+  {
+   "batch_id": "2026-11-24_30",
+   "source": "ifyoumind_social_review_nov24_30.zip (sha256 e37b14bdeb1f930cb469ee2ef747bd17cf7068f294402dec0b9c310fb92f5974); checksums approved in GitHub issue #131 comment 7139386776",
+   "posts": [
+    {
+     "post_id": "2026-11-24-tue-carousel",
+     "format": "carousel",
+     "scheduled_local_date": "2026-11-24",
+     "status": "blocked_caption_unverified",
+     "caption": null,
+     "caption_note": "Caption was approved in the ChatGPT conversation; exact text not available in the repository or asset package. Publisher must supply the approved text verbatim and record it here before publishing.",
+     "disclosure": "ILLUSTRATIVE EXAMPLE \u00b7 NOT A CUSTOMER RESULT; not tax advice or a determination of appeal eligibility (on every slide)",
+     "media": [
+      {
+       "url": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/ifyoumind-2026-11-24-tuesday-carousel-01-a75f88e8.jpg",
+       "sha256": "a75f88e84265882ec624b0f18899ad7a8a3abb84d1028b8fe80f808511bbaa04",
+       "bytes": 165825,
+       "width": 1080,
+       "height": 1350,
+       "content_type": "image/jpeg"
+      },
+      {
+       "url": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/ifyoumind-2026-11-24-tuesday-carousel-02-ace94ec0.jpg",
+       "sha256": "ace94ec0ad1863fc198749c7aef5684d96e02db9752e9db2e7352bb3cb98d97f",
+       "bytes": 178150,
+       "width": 1080,
+       "height": 1350,
+       "content_type": "image/jpeg"
+      },
+      {
+       "url": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/ifyoumind-2026-11-24-tuesday-carousel-03-13e4bf03.jpg",
+       "sha256": "13e4bf03fd2d24e5fef59ce0c4c07f12c4f2186e4e68183eebc4b4dbc5a5d8bc",
+       "bytes": 178484,
+       "width": 1080,
+       "height": 1350,
+       "content_type": "image/jpeg"
+      },
+      {
+       "url": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/ifyoumind-2026-11-24-tuesday-carousel-04-ce14c042.jpg",
+       "sha256": "ce14c042ca2135378b48ec02b0b2394d2222b5cccb59a3b9b02b553104ba6f12",
+       "bytes": 168312,
+       "width": 1080,
+       "height": 1350,
+       "content_type": "image/jpeg"
+      },
+      {
+       "url": "https://ifyoumind.com/assets/marketing/social/instagram/carousels/ifyoumind-2026-11-24-tuesday-carousel-05-e1e4f3fe.jpg",
+       "sha256": "e1e4f3fe32b25f86cea44ed8907e9571d4c6a7a61d74eea62cf0872455520c1f",
+       "bytes": 179494,
+       "width": 1080,
+       "height": 1350,
+       "content_type": "image/jpeg"
+      }
+     ],
+     "instagram_media_id": null,
+     "permalink": null
+    },
+    {
+     "post_id": "2026-11-26-thu-reel",
+     "format": "reel",
+     "scheduled_local_date": "2026-11-26",
+     "status": "blocked_needs_genuine_product_footage",
+     "caption": null,
+     "caption_note": "Existing material is a motion-graphic draft, not a recording of the product; it must not be published as product footage.",
+     "media": [],
+     "instagram_media_id": null,
+     "permalink": null
+    },
+    {
+     "post_id": "2026-11-28-sat-story",
+     "format": "story",
+     "frames": 3,
+     "scheduled_local_date": "2026-11-28",
+     "status": "assets_hosted_awaiting_publish_method",
+     "caption": null,
+     "caption_note": "Stories have no caption. Planned native link sticker to https://ifyoumind.com/ must be added in the Instagram app if the publishing API cannot add link stickers.",
+     "disclosure": "Illustrative examples (on every frame)",
+     "link_sticker": "https://ifyoumind.com/",
+     "media": [
+      {
+       "url": "https://ifyoumind.com/assets/marketing/social/instagram/stories/ifyoumind-2026-11-28-saturday-story-01-9494697d.jpg",
+       "sha256": "9494697d534cc929e3fdcccfdc9ac9827dd21d2c3e3b3c97d1be04d0157b7272",
+       "bytes": 166117,
+       "width": 1080,
+       "height": 1920,
+       "content_type": "image/jpeg"
+      },
+      {
+       "url": "https://ifyoumind.com/assets/marketing/social/instagram/stories/ifyoumind-2026-11-28-saturday-story-02-6469cb87.jpg",
+       "sha256": "6469cb87d73de1d50bbe6836d5749f4edce38a20d8c9c693b7ae5bb9ab27a0fd",
+       "bytes": 199259,
+       "width": 1080,
+       "height": 1920,
+       "content_type": "image/jpeg"
+      },
+      {
+       "url": "https://ifyoumind.com/assets/marketing/social/instagram/stories/ifyoumind-2026-11-28-saturday-story-03-e94fabd9.jpg",
+       "sha256": "e94fabd9c6b541509da926545093c6a760ba3259372ec03c1802f1d96e323c93",
+       "bytes": 176909,
+       "width": 1080,
+       "height": 1920,
+       "content_type": "image/jpeg"
+      }
+     ],
+     "instagram_media_id": null,
+     "permalink": null
+    }
+   ]
+  }
+ ]
+}

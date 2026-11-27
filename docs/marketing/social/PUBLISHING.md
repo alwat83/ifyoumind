@@ -31,4 +31,4 @@ Publish exactly once, then record `instagram_media_id` and `permalink` in the Gi
 | Nov 24–30 Tuesday carousel and Saturday Story | Hosted and verified (release `1795754199503000`) |
 | Tuesday carousel | Needs the verbatim approved caption |
 | Saturday Story | Link sticker must be added in the Instagram app if the publishing API can't add it |
-| Thursday Reel | Genuine footage captured (see `2026-11-26-thursday-reel-footage/`). Not yet edited, encoded to MP4, approved or hosted |
+| Thursday Reel | Genuine footage encoded as `2026-11-26-thursday-reel-footage/ifyoumind-2026-11-26-thursday-reel-footage.mp4`: H.264 High, 1080×1920, 30 fps, silent AAC, 14.8 s, SHA256 `07f1255b…`. It is raw product footage. It still needs an edit against the approved concept (text overlays or voice if wanted), a caption and founder approval before hosting under `instagram/reels/` |

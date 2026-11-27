@@ -114,7 +114,7 @@ export function summarizeEvidence(primaryIn:SummaryPlace,comparisonsIn:SummaryPl
   if(!comparisons.length){
     return {
       kind:'single_place',
-      headline:`These figures describe ${primary.location} on its own. Add a comparison place to see where it stands.`,
+      headline:`These figures describe ${primary.location} on its own. They don’t show how it compares with other places.`,
       findings:[],
       limits,
       method,

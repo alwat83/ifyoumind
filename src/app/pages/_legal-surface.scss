@@ -4,3 +4,5 @@
 nav { @include product.navigation; }
 h1 { @include product.title; }
 article { max-width:72ch; }
+// Links inside running text need more than colour to stand out (WCAG 1.4.1).
+article a { text-decoration: underline; text-underline-offset: 2px; }

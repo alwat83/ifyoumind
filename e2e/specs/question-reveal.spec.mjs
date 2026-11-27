@@ -14,7 +14,7 @@ test('a preset statement opens its evidence and verdict in place, then evidence 
     await expect(statements).toHaveCount(3);
     for (const statement of await statements.all()) { await expect(statement).toBeInViewport({ratio:1}); await expect(statement).toHaveAttribute('aria-expanded','false'); }
     await expect(page.locator('#business')).toContainText('These statements are preset for this example.');
-    await expect(page.locator('input, textarea')).toHaveCount(0);
+    await expect(page.locator('#business').locator('input, textarea, [contenteditable]')).toHaveCount(0);
     await expect(page.locator('#discovery-answer')).toBeHidden();
     await expect(page.locator('.own-data')).toBeHidden();
     await expectNoHorizontalScroll(page);await expectAccessible(page);

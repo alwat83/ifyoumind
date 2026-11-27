@@ -43,7 +43,7 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await page.evaluate(() => document.fonts.ready);
     expect(await page.evaluate(() => [...document.fonts]
       .filter(font => font.family.includes('Instrument Serif') && font.status === 'loaded').length)).toBeGreaterThanOrEqual(1);
-    await expect(page.locator('#try')).toContainText('Understand your bills. Compare U.S. cities. See the numbers behind each finding.');
+    await expect(page.locator('#try')).toContainText('ifYouMind turns your bills and local data into clear answers you can check.');
     const reports = page.getByRole('region', { name: 'Decision Reports', exact: true });
     await expect(reports.getByRole('link', { name: 'Start a Free Brief' })).toHaveAttribute('href', '/decide?type=business');
     await expect(reports).toContainText('The $79 one-time Decision Report adds up to three comparison cities, a sourced market analysis and an action plan.');

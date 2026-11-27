@@ -46,7 +46,7 @@
         <p class="context">{{ project?.concept }} · {{ project?.location }}<ng-container *ngIf="reportedSalary as salary"> · {{ salary }} annual salary (your input)</ng-container></p>
       </div>
       <div class="meta">
-        <span>{{ sampleMode ? 'Sample · live data' : project?.mode === 'demo' ? 'Demo data' : cityEvidence && !cityEvidence.primary ? 'Main-city evidence unavailable' : 'Live data' }}</span>
+        <span>{{ sampleMode ? 'Sample · current Census data' : project?.mode === 'demo' ? 'Demo data' : cityEvidence && !cityEvidence.primary ? 'Main-city evidence unavailable' : 'Current Census data' }}</span>
         <small>{{ project?.createdAt ? (project?.createdAt | date:'longDate') : '' }}</small>
       </div>
     </header>

@@ -78,3 +78,28 @@ test('typing is offered from the CSV step, the example result and a deep link, a
   await expect(page.getByRole('textbox', { name: 'Later bill Currency' })).toHaveValue('USD');
   await expect(page.getByRole('textbox', { name: /^Earlier bill Charge/ })).toHaveValue('unknown');
 });
+
+// Consumer audit P1: what can be bought today comes first; closed plans stay listed and labelled.
+test('Pricing leads with free and one-time choices and keeps closed monthly plans visible as unavailable', async ({ page }) => {
+  await page.goto('/pricing');
+  await expect(page.locator('.lede')).toHaveText('Checking a bill is free, needs no account and stays in your browser. Decision Reports compare U.S. cities for a move or a business: up to three cities, sourced analysis and an action plan.');
+  const payOnce = page.getByRole('region', { name: 'Start free, or pay once' });
+  const monthly = page.getByRole('region', { name: 'Monthly subscriptions' });
+  const order = await page.evaluate(() => [...document.querySelectorAll('section.offer-section h2')].map(h => h.textContent.trim()));
+  expect(order).toEqual(['Start free, or pay once', 'Monthly subscriptions']);
+  await expect(payOnce).toContainText('type your numbers');
+  await expect(monthly).toContainText('Monthly enrollment is currently unavailable.');
+  for (const name of ['Starter', 'Plus']) await expect(monthly.getByRole('button', { name: `${name} enrollment currently unavailable` })).toBeDisabled();
+  await expect(monthly).toContainText('$4.99');
+  await expect(monthly).toContainText('$9.99');
+  await expect(page.getByText(/Paid reports use public city and market evidence/)).toBeVisible();
+  const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
+  expect(axe.violations.map(v => `${v.id}: ${v.nodes.length}`)).toEqual([]);
+});
+
+test('the homepage offer separates the free bill check from paid city reports', async ({ page }) => {
+  await page.goto('/');
+  const reports = page.getByRole('region', { name: 'Decision Reports', exact: true });
+  await expect(reports).toContainText('Choosing between U.S. cities?');
+  await expect(reports).toContainText('Checking a bill stays free, needs no account and runs in your browser. Paid reports don’t analyze household bills.');
+});

@@ -1,0 +1,41 @@
+{
+ "Allow analytics": {
+  "afterLoadNoInteraction": [
+   "page_view"
+  ],
+  "page_view": 1,
+  "free_tax_example_viewed": 1,
+  "free_electricity_example_viewed": 1,
+  "evidence_revealed": [
+   "tax"
+  ],
+  "other": [],
+  "googleRequests": 3,
+  "utmInDl": false
+ },
+ "Reject analytics": {
+  "afterLoadNoInteraction": [],
+  "page_view": 0,
+  "free_tax_example_viewed": 0,
+  "free_electricity_example_viewed": 0,
+  "evidence_revealed": [],
+  "other": [],
+  "googleRequests": 0,
+  "utmInDl": false
+ },
+ "pending": {
+  "afterLoadNoInteraction": [],
+  "page_view": 0,
+  "free_tax_example_viewed": 0,
+  "free_electricity_example_viewed": 0,
+  "evidence_revealed": [],
+  "other": [],
+  "googleRequests": 0,
+  "utmInDl": false
+ },
+ "deepLink": {
+  "pressed": "Electricity bills",
+  "open": "“I used more electricity.”",
+  "status": ""
+ }
+}

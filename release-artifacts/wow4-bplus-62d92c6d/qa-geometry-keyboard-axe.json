@@ -1,0 +1,722 @@
+{
+ "geometry": [
+  {
+   "vp": "1280x800",
+   "bannerTop": 722,
+   "bannerH": 78,
+   "statementsBottom": 477,
+   "clearance": 245,
+   "statementTargets": [
+    "562x52",
+    "562x52",
+    "562x52"
+   ],
+   "statementsHit": true,
+   "exampleTargets": [
+    "126x44",
+    "126x44",
+    "129x44"
+   ],
+   "examplesAboveBanner": true,
+   "examplesHitWhenVisible": true,
+   "overflow": 0,
+   "google": 0,
+   "controls": [
+    {
+     "name": "“It’s mostly school charges.",
+     "w": 562,
+     "h": 52,
+     "top": 305,
+     "bottom": 357,
+     "hit": true
+    },
+    {
+     "name": "“County charges rose the mos",
+     "w": 562,
+     "h": 52,
+     "top": 365,
+     "bottom": 417,
+     "hit": true
+    },
+    {
+     "name": "“The bill was calculated wro",
+     "w": 562,
+     "h": 52,
+     "top": 425,
+     "bottom": 477,
+     "hit": true
+    },
+    {
+     "name": "Property taxes",
+     "w": 126,
+     "h": 44,
+     "top": 491,
+     "bottom": 535,
+     "hit": true
+    },
+    {
+     "name": "Electricity bills",
+     "w": 126,
+     "h": 44,
+     "top": 491,
+     "bottom": 535,
+     "hit": true
+    },
+    {
+     "name": "Compare cities",
+     "w": 129,
+     "h": 44,
+     "top": 491,
+     "bottom": 535,
+     "hit": true
+    }
+   ]
+  },
+  {
+   "vp": "390x844",
+   "bannerTop": 712,
+   "bannerH": 132,
+   "statementsBottom": 545,
+   "clearance": 167,
+   "statementTargets": [
+    "324x48",
+    "324x48",
+    "324x48"
+   ],
+   "statementsHit": true,
+   "exampleTargets": [
+    "122x44",
+    "122x44",
+    "125x44"
+   ],
+   "examplesAboveBanner": true,
+   "examplesHitWhenVisible": true,
+   "overflow": 0,
+   "google": 0,
+   "controls": [
+    {
+     "name": "“It’s mostly school charges.",
+     "w": 324,
+     "h": 48,
+     "top": 385,
+     "bottom": 433,
+     "hit": true
+    },
+    {
+     "name": "“County charges rose the mos",
+     "w": 324,
+     "h": 48,
+     "top": 441,
+     "bottom": 489,
+     "hit": true
+    },
+    {
+     "name": "“The bill was calculated wro",
+     "w": 324,
+     "h": 48,
+     "top": 497,
+     "bottom": 545,
+     "hit": true
+    },
+    {
+     "name": "Property taxes",
+     "w": 122,
+     "h": 44,
+     "top": 585,
+     "bottom": 629,
+     "hit": true
+    },
+    {
+     "name": "Electricity bills",
+     "w": 122,
+     "h": 44,
+     "top": 585,
+     "bottom": 629,
+     "hit": true
+    },
+    {
+     "name": "Compare cities",
+     "w": 125,
+     "h": 44,
+     "top": 635,
+     "bottom": 679,
+     "hit": true
+    }
+   ]
+  },
+  {
+   "vp": "414x715",
+   "bannerTop": 583,
+   "bannerH": 132,
+   "statementsBottom": 362,
+   "clearance": 221,
+   "statementTargets": [
+    "348x44",
+    "348x44",
+    "348x44"
+   ],
+   "statementsHit": true,
+   "exampleTargets": [
+    "122x44",
+    "122x44",
+    "125x44"
+   ],
+   "examplesAboveBanner": true,
+   "examplesHitWhenVisible": true,
+   "overflow": 0,
+   "google": 0,
+   "controls": [
+    {
+     "name": "“It’s mostly school charges.",
+     "w": 348,
+     "h": 44,
+     "top": 218,
+     "bottom": 262,
+     "hit": true
+    },
+    {
+     "name": "“County charges rose the mos",
+     "w": 348,
+     "h": 44,
+     "top": 268,
+     "bottom": 312,
+     "hit": true
+    },
+    {
+     "name": "“The bill was calculated wro",
+     "w": 348,
+     "h": 44,
+     "top": 318,
+     "bottom": 362,
+     "hit": true
+    },
+    {
+     "name": "Property taxes",
+     "w": 122,
+     "h": 44,
+     "top": 402,
+     "bottom": 446,
+     "hit": true
+    },
+    {
+     "name": "Electricity bills",
+     "w": 122,
+     "h": 44,
+     "top": 402,
+     "bottom": 446,
+     "hit": true
+    },
+    {
+     "name": "Compare cities",
+     "w": 125,
+     "h": 44,
+     "top": 452,
+     "bottom": 496,
+     "hit": true
+    }
+   ]
+  },
+  {
+   "vp": "390x664",
+   "bannerTop": 532,
+   "bannerH": 132,
+   "statementsBottom": 362,
+   "clearance": 170,
+   "statementTargets": [
+    "324x44",
+    "324x44",
+    "324x44"
+   ],
+   "statementsHit": true,
+   "exampleTargets": [
+    "122x44",
+    "122x44",
+    "125x44"
+   ],
+   "examplesAboveBanner": true,
+   "examplesHitWhenVisible": true,
+   "overflow": 0,
+   "google": 0,
+   "controls": [
+    {
+     "name": "“It’s mostly school charges.",
+     "w": 324,
+     "h": 44,
+     "top": 218,
+     "bottom": 262,
+     "hit": true
+    },
+    {
+     "name": "“County charges rose the mos",
+     "w": 324,
+     "h": 44,
+     "top": 268,
+     "bottom": 312,
+     "hit": true
+    },
+    {
+     "name": "“The bill was calculated wro",
+     "w": 324,
+     "h": 44,
+     "top": 318,
+     "bottom": 362,
+     "hit": true
+    },
+    {
+     "name": "Property taxes",
+     "w": 122,
+     "h": 44,
+     "top": 402,
+     "bottom": 446,
+     "hit": true
+    },
+    {
+     "name": "Electricity bills",
+     "w": 122,
+     "h": 44,
+     "top": 402,
+     "bottom": 446,
+     "hit": true
+    },
+    {
+     "name": "Compare cities",
+     "w": 125,
+     "h": 44,
+     "top": 452,
+     "bottom": 496,
+     "hit": true
+    }
+   ]
+  },
+  {
+   "vp": "375x667",
+   "bannerTop": 535,
+   "bannerH": 132,
+   "statementsBottom": 362,
+   "clearance": 173,
+   "statementTargets": [
+    "309x44",
+    "309x44",
+    "309x44"
+   ],
+   "statementsHit": true,
+   "exampleTargets": [
+    "122x44",
+    "122x44",
+    "125x44"
+   ],
+   "examplesAboveBanner": true,
+   "examplesHitWhenVisible": true,
+   "overflow": 0,
+   "google": 0,
+   "controls": [
+    {
+     "name": "“It’s mostly school charges.",
+     "w": 309,
+     "h": 44,
+     "top": 218,
+     "bottom": 262,
+     "hit": true
+    },
+    {
+     "name": "“County charges rose the mos",
+     "w": 309,
+     "h": 44,
+     "top": 268,
+     "bottom": 312,
+     "hit": true
+    },
+    {
+     "name": "“The bill was calculated wro",
+     "w": 309,
+     "h": 44,
+     "top": 318,
+     "bottom": 362,
+     "hit": true
+    },
+    {
+     "name": "Property taxes",
+     "w": 122,
+     "h": 44,
+     "top": 402,
+     "bottom": 446,
+     "hit": true
+    },
+    {
+     "name": "Electricity bills",
+     "w": 122,
+     "h": 44,
+     "top": 402,
+     "bottom": 446,
+     "hit": true
+    },
+    {
+     "name": "Compare cities",
+     "w": 125,
+     "h": 44,
+     "top": 452,
+     "bottom": 496,
+     "hit": true
+    }
+   ]
+  },
+  {
+   "vp": "375x553",
+   "bannerTop": 421,
+   "bannerH": 132,
+   "statementsBottom": 362,
+   "clearance": 59,
+   "statementTargets": [
+    "309x44",
+    "309x44",
+    "309x44"
+   ],
+   "statementsHit": true,
+   "exampleTargets": [
+    "122x44",
+    "122x44",
+    "125x44"
+   ],
+   "examplesAboveBanner": false,
+   "examplesHitWhenVisible": true,
+   "overflow": 0,
+   "google": 0,
+   "controls": [
+    {
+     "name": "“It’s mostly school charges.",
+     "w": 309,
+     "h": 44,
+     "top": 218,
+     "bottom": 262,
+     "hit": true
+    },
+    {
+     "name": "“County charges rose the mos",
+     "w": 309,
+     "h": 44,
+     "top": 268,
+     "bottom": 312,
+     "hit": true
+    },
+    {
+     "name": "“The bill was calculated wro",
+     "w": 309,
+     "h": 44,
+     "top": 318,
+     "bottom": 362,
+     "hit": true
+    },
+    {
+     "name": "Property taxes",
+     "w": 122,
+     "h": 44,
+     "top": 402,
+     "bottom": 446,
+     "hit": false
+    },
+    {
+     "name": "Electricity bills",
+     "w": 122,
+     "h": 44,
+     "top": 402,
+     "bottom": 446,
+     "hit": false
+    },
+    {
+     "name": "Compare cities",
+     "w": 125,
+     "h": 44,
+     "top": 452,
+     "bottom": 496,
+     "hit": false
+    }
+   ]
+  },
+  {
+   "vp": "360x640",
+   "bannerTop": 503,
+   "bannerH": 137,
+   "statementsBottom": 362,
+   "clearance": 141,
+   "statementTargets": [
+    "294x44",
+    "294x44",
+    "294x44"
+   ],
+   "statementsHit": true,
+   "exampleTargets": [
+    "122x44",
+    "122x44",
+    "125x44"
+   ],
+   "examplesAboveBanner": true,
+   "examplesHitWhenVisible": true,
+   "overflow": 0,
+   "google": 0,
+   "controls": [
+    {
+     "name": "“It’s mostly school charges.",
+     "w": 294,
+     "h": 44,
+     "top": 218,
+     "bottom": 262,
+     "hit": true
+    },
+    {
+     "name": "“County charges rose the mos",
+     "w": 294,
+     "h": 44,
+     "top": 268,
+     "bottom": 312,
+     "hit": true
+    },
+    {
+     "name": "“The bill was calculated wro",
+     "w": 294,
+     "h": 44,
+     "top": 318,
+     "bottom": 362,
+     "hit": true
+    },
+    {
+     "name": "Property taxes",
+     "w": 122,
+     "h": 44,
+     "top": 402,
+     "bottom": 446,
+     "hit": true
+    },
+    {
+     "name": "Electricity bills",
+     "w": 122,
+     "h": 44,
+     "top": 402,
+     "bottom": 446,
+     "hit": true
+    },
+    {
+     "name": "Compare cities",
+     "w": 125,
+     "h": 44,
+     "top": 452,
+     "bottom": 496,
+     "hit": true
+    }
+   ]
+  },
+  {
+   "vp": "320x568",
+   "bannerTop": 412,
+   "bannerH": 156,
+   "statementsBottom": 350,
+   "clearance": 62,
+   "statementTargets": [
+    "254x44",
+    "254x44",
+    "254x44"
+   ],
+   "statementsHit": true,
+   "exampleTargets": [
+    "118x44",
+    "118x44",
+    "121x44"
+   ],
+   "examplesAboveBanner": false,
+   "examplesHitWhenVisible": true,
+   "overflow": 0,
+   "google": 0,
+   "controls": [
+    {
+     "name": "“It’s mostly school charges.",
+     "w": 254,
+     "h": 44,
+     "top": 206,
+     "bottom": 250,
+     "hit": true
+    },
+    {
+     "name": "“County charges rose the mos",
+     "w": 254,
+     "h": 44,
+     "top": 256,
+     "bottom": 300,
+     "hit": true
+    },
+    {
+     "name": "“The bill was calculated wro",
+     "w": 254,
+     "h": 44,
+     "top": 306,
+     "bottom": 350,
+     "hit": true
+    },
+    {
+     "name": "Property taxes",
+     "w": 118,
+     "h": 44,
+     "top": 391,
+     "bottom": 435,
+     "hit": false
+    },
+    {
+     "name": "Electricity bills",
+     "w": 118,
+     "h": 44,
+     "top": 391,
+     "bottom": 435,
+     "hit": false
+    },
+    {
+     "name": "Compare cities",
+     "w": 121,
+     "h": 44,
+     "top": 441,
+     "bottom": 485,
+     "hit": false
+    }
+   ]
+  }
+ ],
+ "tap": [
+  {
+   "vp": "1280x800",
+   "expanded": "true",
+   "verdictVisible": true,
+   "findingVisible": true,
+   "status": "Supported by these numbers. School charges added $240 of the $420 increase."
+  },
+  {
+   "vp": "390x844",
+   "expanded": "true",
+   "verdictVisible": true,
+   "findingVisible": true,
+   "status": "Supported by these numbers. School charges added $240 of the $420 increase."
+  },
+  {
+   "vp": "414x715",
+   "expanded": "true",
+   "verdictVisible": true,
+   "findingVisible": true,
+   "status": "Supported by these numbers. School charges added $240 of the $420 increase."
+  },
+  {
+   "vp": "390x664",
+   "expanded": "true",
+   "verdictVisible": true,
+   "findingVisible": true,
+   "status": "Supported by these numbers. School charges added $240 of the $420 increase."
+  },
+  {
+   "vp": "375x667",
+   "expanded": "true",
+   "verdictVisible": true,
+   "findingVisible": true,
+   "status": "Supported by these numbers. School charges added $240 of the $420 increase."
+  },
+  {
+   "vp": "375x553",
+   "expanded": "true",
+   "verdictVisible": true,
+   "findingVisible": true,
+   "status": "Supported by these numbers. School charges added $240 of the $420 increase."
+  },
+  {
+   "vp": "360x640",
+   "expanded": "true",
+   "verdictVisible": true,
+   "findingVisible": true,
+   "status": "Supported by these numbers. School charges added $240 of the $420 increase."
+  },
+  {
+   "vp": "320x568",
+   "expanded": "true",
+   "verdictVisible": true,
+   "findingVisible": true,
+   "status": "Supported by these numbers. School charges added $240 of the $420 increase."
+  }
+ ],
+ "keyboard": {
+  "390x664": {
+   "order": [
+    "skip-link:Skip to content",
+    "brand:ifyoumind",
+    ":Menu ☰",
+    "statement:“It’s mostly school charges.”",
+    "statement:“County charges rose the most.",
+    "statement:“The bill was calculated wrong"
+   ],
+   "ours": [
+    {
+     "cls": "statement",
+     "name": "“It’s mostly school charges.”",
+     "outline": true,
+     "visible": true
+    },
+    {
+     "cls": "statement",
+     "name": "“County charges rose the most.",
+     "outline": true,
+     "visible": true
+    },
+    {
+     "cls": "statement",
+     "name": "“The bill was calculated wrong",
+     "outline": true,
+     "visible": true
+    }
+   ],
+   "after": {
+    "focusStays": true,
+    "expanded": "true",
+    "panelShown": true,
+    "status": "Can’t tell from these numbers. Two bills show what changed, not whether the total is correct.",
+    "anim": "_ngcontent-ng-c2560490466_check-in",
+    "opacity": "1"
+   }
+  },
+  "1280x800": {
+   "order": [
+    "skip-link:Skip to content",
+    "brand:ifyoumind",
+    "quick-saved:Your decisions",
+    ":Menu ☰",
+    "statement:“It’s mostly school charges.”",
+    "statement:“County charges rose the most.",
+    "statement:“The bill was calculated wrong"
+   ],
+   "ours": [
+    {
+     "cls": "statement",
+     "name": "“It’s mostly school charges.”",
+     "outline": true,
+     "visible": true
+    },
+    {
+     "cls": "statement",
+     "name": "“County charges rose the most.",
+     "outline": true,
+     "visible": true
+    },
+    {
+     "cls": "statement",
+     "name": "“The bill was calculated wrong",
+     "outline": true,
+     "visible": true
+    }
+   ],
+   "after": {
+    "focusStays": true,
+    "expanded": "true",
+    "panelShown": true,
+    "status": "Can’t tell from these numbers. Two bills show what changed, not whether the total is correct.",
+    "anim": "none",
+    "opacity": "1"
+   }
+  }
+ },
+ "axe": {
+  "1280x800": [],
+  "390x664": []
+ },
+ "motion": {}
+}

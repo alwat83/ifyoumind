@@ -1,5 +1,34 @@
 # ifYouMind — Current development status
 
+## November 27, 2026 — Keyboard-focus accessibility fix (WCAG 2.2 SC 2.4.11) DEPLOYED (Hosting only); production verified
+
+**Status: deployed and production-verified. Hosting version `4315f71caa9b7cd1`, release `1795753246113000` (2026-11-27T04:20:46Z).**
+
+- **What changed:** [PR #134](https://github.com/alwat83/ifyoumind/pull/134) (draft, unmerged). The consent banner publishes its height, and `html { scroll-padding-bottom }` uses it, so keyboard focus scrolls clear of the pending banner. No visual, consent or analytics change.
+- **Artifact:** frozen `release-artifacts/focus-not-obscured-d1e815f7/hosting-browser.tar.gz`, SHA256 `304c82f3…`, 66/66 files.
+  - Source `d1e815f7`; release commit `04d6f022` on `claude/release-focus-d1e815f7`. Not rebuilt.
+  - Founder GO given. Enhanced Measurement OFF reconfirmed by the founder.
+- **Preflight (04:20:33Z), all PASS:**
+  - Live was `e0240db8`.
+  - 35 Functions unchanged.
+  - Enrollment fingerprint unchanged.
+  - Headers present; Discovery CSP hash unchanged.
+- **Post-deploy, all PASS:**
+  - 66/66 served files match. 35 Functions unchanged. Enrollment, headers and CSP unchanged.
+  - **Registration keyboard-focus sweep at 7 short viewports: 0 of 28 stops hidden** (the previous release had 11 fully hidden).
+  - Mobile CTA geometry identical to `e0240db8`.
+  - **Production privacy suite 21/21.**
+- **Hosted QA:** [run 45934856587](https://github.com/alwat83/ifyoumind/actions/runs/45934856587): 252/14, with the 14 identical to the deployed-source control (stale visual baselines). `ga4.spec` 28/28.
+- **Rollback:** not needed. Target `e0240db8dd77d42a` remains available.
+- **Record:** `release-artifacts/focus-not-obscured-d1e815f7/DEPLOYMENT_RECORD.json`.
+- **Provider/agent:** Anthropic / Claude Code, local session.
+- **Open items:**
+  - **GA4 Realtime event-level receipt is still unverified** (synthetic events Nov 26 19:58–20:01Z, Nov 27 03:26Z and 04:22Z).
+  - Physical iOS Safari focus check not done.
+  - PR #133 waits for a post-layout baseline.
+  - Issue #135 is under review.
+  - CI visual baselines need maintenance.
+
 ## November 27, 2026 — Mobile CTA / consent-banner fix DEPLOYED (Hosting only); production verified
 
 **Status: deployed and production-verified. Hosting version `e0240db8dd77d42a`, release `1795749887100000` (2026-11-27T03:24:47Z).**

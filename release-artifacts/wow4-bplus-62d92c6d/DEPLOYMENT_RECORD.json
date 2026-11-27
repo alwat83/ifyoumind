@@ -1,0 +1,31 @@
+{
+  "status": "DEPLOYED_VERIFIED",
+  "scope": "Hosting only, once; founder GO 2026-11-27 (Wow 4.0 B+ supersedes the Nov 20 'Reveal what changed' CTA decision)",
+  "provider": "Anthropic / Claude Code (local session)",
+  "source": "62d92c6dd87c56fdd59e785746ca5d8d817d7d1e (PR #136 head)",
+  "releaseBranch": "claude/release-bplus-62d92c6d",
+  "release": "sites/ifyoumind-473fe/channels/live/releases/1795794838704000",
+  "version": "68aa040cad8b4294",
+  "releaseTime": "2026-11-27T15:53:58.704Z",
+  "previousVersion": "f0250d10c22751a7",
+  "package": { "sha256": "65cb3ebacb7ce4fb71503150ae8eafe5e5d366c9bb1cfb2a4981f763b06483e4", "manifestSha256": "bca9c3c5b2431248aeee7439a2bb3482ea3bd3b8f5a040566befff84f5d4e815", "files": 82, "rebuiltAtDeploy": false },
+  "preflight": {
+    "at": "2026-11-27T15:53:46Z",
+    "enhancedMeasurement": "OFF, confirmed by the founder in GA4 Admin just before deploy (agent cannot read Admin: API scope denied). Local replay of the live tag: no automatic scroll/click/history events.",
+    "live": "f0250d10c22751a7 PASS; no in-flight versions",
+    "archive": "65cb3eba… and 82/82 file hashes OK",
+    "functions": "35 unchanged", "enrollment": "65c3faa285 on 5 functions", "headers": "PASS", "discoveryCsp": "ee8df606908ccf85",
+    "consentPrecheck": "7/7", "sourceChangesAfterVerification": "none", "firebaseJson": "49d17f6d…"
+  },
+  "postDeploy": {
+    "servedFiles": "82/82 match MANIFEST.sha256",
+    "functions": "35 unchanged", "enrollment": "unchanged", "headers": "PASS", "discoveryCsp": "ee8df606908ccf85",
+    "homepageSmoke": "8 viewports with the real pending banner: 3 statements clear by 59-245px, >=44px, hit-tested; tap shows verdict; keyboard focus and outlines; reduced motion; axe 0 (1280x800, 390x664); 0 Google requests",
+    "verdicts": "9/9 statements (verdict, finding, calculation, cells) and 3/3 deep links correct",
+    "privacySuite": "21/21 (synthetic marker ga4b9151c6mwz5xvb4, 15:55:39Z-15:56:47Z; exclude from analysis)",
+    "socialAssets": "22 files + manifest byte-identical; 15/15 scheduled campaign media URLs 200 with matching sha256; Dec 1 carousel and Dec 3 Reel still ready_to_publish"
+  },
+  "ga4Breakpoint": "2026-11-27T15:53:58.704Z: free_tax_example_viewed now fires on the first tax statement check (or the Property taxes button / deep links) instead of the 'Reveal what changed' click; evidence_revealed exposure falls because checks show cells inline",
+  "rollback": { "target": "f0250d10c22751a7", "executed": false },
+  "notClaimed": "No conversion improvement is claimed; visitor data is required."
+}

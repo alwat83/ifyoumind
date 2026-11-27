@@ -1,5 +1,18 @@
 # ifYouMind — Current development status
 
+## November 27, 2026 — Stabilization and measurement readiness (no production change)
+
+- **Production baseline frozen:** Hosting `4315f71caa9b7cd1` / release `1795753246113000`, preserved as git tag `hosting-live-4315f71caa9b7cd1`. No rebuild or redeploy.
+- **Measurement guide:** [MEASUREMENT_GUIDE.md](../marketing/ga4/MEASUREMENT_GUIDE.md), using existing events only.
+  - The post-fix baseline starts 2026-11-27 04:20:46 UTC.
+  - QA windows to exclude are listed in the guide.
+  - `free_tax_example_viewed` means "saw the tax example". It is not a Reveal click: the example tab and deep links also fire it.
+  - Opt-in limits are documented.
+- **GA4 Realtime event-level confirmation is still OPEN.** Realtime shows only the last 30 minutes, so the past synthetic events can't be confirmed there any more.
+  - Option A: hour-level exploration evidence.
+  - Option B: a separately authorized live synthetic run while the founder watches Realtime.
+- **Unchanged and separate:** PR #133 unreleased until the baseline is adequate; issue #135; CI baseline maintenance.
+
 ## November 27, 2026 — Keyboard-focus accessibility fix (WCAG 2.2 SC 2.4.11) DEPLOYED (Hosting only); production verified
 
 **Status: deployed and production-verified. Hosting version `4315f71caa9b7cd1`, release `1795753246113000` (2026-11-27T04:20:46Z).**

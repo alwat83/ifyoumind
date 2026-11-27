@@ -1,0 +1,37 @@
+{
+ "status": "DEPLOYED_VERIFIED",
+ "scope": "static social assets only (issue #131 standing authorization); creative founder-approved 2026-11-27",
+ "provider": "Anthropic / Claude Code (local session)",
+ "release": "sites/ifyoumind-473fe/channels/live/releases/1795757265775000",
+ "version": "f0250d10c22751a7",
+ "releaseTime": "2026-11-27T05:27:45.775Z",
+ "previousVersion": "ab3e2779ba205697",
+ "package": {
+  "sha256": "f3c8becd845fe930dc291bfffc444c93847d9c80c3495a6aa9df17e4bfa3c0d1",
+  "manifestSha256": "1788c609c675ef352ac22cb81d8d47d369119049d52cd98bee4ff121c4e91c2c",
+  "files": 82,
+  "composition": "74 live files unchanged + updated social manifest.json + 7 approved files"
+ },
+ "preflight": {
+  "at": "2026-11-27T05:27:17Z",
+  "live": "ab3e2779ba205697",
+  "liveFiles": "75/75",
+  "functions": "35 unchanged",
+  "enrollment": "unchanged",
+  "headersCsp": "PASS",
+  "newPathsBefore": "404"
+ },
+ "postDeploy": {
+  "servedFiles": "82/82",
+  "newMedia": "7/7 200, correct content type, sha256 and dimensions; MP4 range request 206",
+  "manifest": "both posts ready_to_publish",
+  "functions": "35 unchanged",
+  "headers": "PASS; Discovery CSP unchanged",
+  "appBytes": "unchanged"
+ },
+ "rollback": {
+  "target": "ab3e2779ba205697",
+  "executed": false
+ },
+ "publication": "NOT published by this executor. Windsor automation to publish once on 2026-12-01 (carousel) and 2026-12-03 (Reel) after duplicate check and record media id + permalink."
+}

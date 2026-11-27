@@ -145,7 +145,7 @@ app-root {
   .metrics strong{font-size:18px}
 }
 
-html { background: var(--iy-page); color-scheme: dark; }
+html { background: var(--iy-page); color-scheme: dark; scroll-padding-bottom: var(--consent-banner-height, 0px); }
 body { margin: 0; background: var(--iy-page); color: var(--iy-ink); }
 :where(button, a, input, textarea, select, summary) { -webkit-tap-highlight-color: transparent; }
 @media (prefers-reduced-motion: reduce) {

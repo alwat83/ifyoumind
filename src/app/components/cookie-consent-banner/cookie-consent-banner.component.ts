@@ -26,16 +26,26 @@ export class CookieConsentBannerComponent {
   @ViewChild('banner') set banner(value: ElementRef<HTMLElement> | undefined) {
     this.resize?.disconnect();
     this.host.nativeElement.style.height = '0px';
-    if (!value || !isPlatformBrowser(this.platformId)) return;
-    // Reserve the fixed banner's actual height so bottom-of-page controls remain reachable.
-    const reserve = () => this.host.nativeElement.style.height = `${value.nativeElement.getBoundingClientRect().height}px`;
+    if (!isPlatformBrowser(this.platformId)) return;
+    document.documentElement.style.setProperty('--consent-banner-height', '0px');
+    if (!value) return;
+    // Reserve the fixed banner's actual height so bottom-of-page controls remain reachable,
+    // and expose it so keyboard focus scrolls controls clear of the banner (WCAG 2.4.11).
+    const reserve = () => {
+      const height = `${value.nativeElement.getBoundingClientRect().height}px`;
+      this.host.nativeElement.style.height = height;
+      document.documentElement.style.setProperty('--consent-banner-height', height);
+    };
     reserve();
     this.resize = new ResizeObserver(reserve);
     this.resize.observe(value.nativeElement);
   }
 
   constructor() {
-    this.destroy.onDestroy(() => this.resize?.disconnect());
+    this.destroy.onDestroy(() => {
+      this.resize?.disconnect();
+      if (isPlatformBrowser(this.platformId)) document.documentElement.style.setProperty('--consent-banner-height', '0px');
+    });
     if (isPlatformBrowser(this.platformId)) {
       this.cookieService.consentStatus$.pipe(takeUntilDestroyed()).subscribe(() => this.showBanner = this.cookieService.needsConsent());
     }

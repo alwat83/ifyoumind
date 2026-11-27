@@ -1,0 +1,127 @@
+{
+ "status": "DEPLOYED_VERIFIED",
+ "provider": "Anthropic / Claude Code (local session on founder machine, Firebase CLI authenticated)",
+ "authorization": "Founder GO 2026-11-27 (Hosting-only, single release). Enhanced Measurement OFF re-verified by founder in GA4 Admin UI (API readback unavailable: 403 scope).",
+ "source": "4aab384ecd026fafe147161b03165f73a0025d84",
+ "releaseCommit": "adab31b484382a39081dcc696e7f5b97d5655ae5",
+ "artifact": {
+  "sha256": "2f68a554ec35624967b63f5c2ca93402364abd975c640cb5d655ad1f2739ada5",
+  "manifestSha256": "c24ed36763308e01fd1af4b3d1f295c46b6df752bb5871d9be6a62f0614e5aaf",
+  "stagedHashes": "66/66",
+  "rebuilt": false,
+  "firebaseJsonSha256": "49d17f6d0f9671f2509586d22beaf4e1fffd9905089cbbd0b7522ff90de9002f"
+ },
+ "preflight": {
+  "at": "2026-11-27T03:24:30Z",
+  "liveVersion": "d47dcec2093b625f",
+  "liveRelease": "1795723013497000",
+  "functions": "35 ACTIVE, 0 changed",
+  "enrollment": "public closed; single allowlist fingerprint 65c3faa285 on same 5 functions; empty on 23",
+  "headersCsp": "PASS",
+  "result": "PASS"
+ },
+ "deploy": {
+  "command": "firebase deploy --only hosting --project ifyoumind-473fe",
+  "startedAt": "2026-11-27T03:24:42Z",
+  "completedAt": "2026-11-27T03:24:47Z",
+  "release": "sites/ifyoumind-473fe/channels/live/releases/1795749887100000",
+  "version": "e0240db8dd77d42a",
+  "versionStatus": "FINALIZED",
+  "releaseTime": "2026-11-27T03:24:47.100Z"
+ },
+ "postDeploy": {
+  "servedFiles": "66/66 match manifest (HTML via cleanUrls 301 target)",
+  "functions": "35, 0 changed (re-confirmed 03:27:10Z)",
+  "headers": "PASS on /, /pricing, /discover/; Discovery CSP hash unchanged from preflight",
+  "mobileCta": {
+   "390x844": "gap 246",
+   "390x664": "gap 66",
+   "375x667": "gap 69",
+   "375x553": "gap 8",
+   "360x640": "gap 13",
+   "320x568": "gap 25",
+   "all": "CTA fully above banner; 3 controls visible >=44px; Allow/Reject equal width; no overflow; Reveal shows $420; consent unset; 0 Google requests",
+   "1280x800": "CTA gap 410, Reveal works, 0 Google requests; desktop banner intentionally unchanged (124/131/80 px buttons, as before release) - harness equal-width rule is phone-only, not a regression"
+  },
+  "privacySuite": {
+   "window": [
+    "2026-11-27T03:25:53.937Z",
+    "2026-11-27T03:27:02.066Z"
+   ],
+   "result": "PASS 21/21",
+   "googleRequests": {
+    "pending": 0,
+    "rejected": 0,
+    "discover": 0,
+    "granted-withdrawn": 5
+   },
+   "sanitizedEvents": [
+    {
+     "stage": "granted",
+     "at": "2026-11-27T03:26:15.765Z",
+     "en": "page_view",
+     "tid": "G-NRT31062LW",
+     "dl": "https://ifyoumind.com/",
+     "dt": "Explore examples",
+     "gcs": "G101",
+     "npa": "1"
+    },
+    {
+     "stage": "granted",
+     "at": "2026-11-27T03:26:26.871Z",
+     "en": "page_view",
+     "tid": "G-NRT31062LW",
+     "dl": "https://ifyoumind.com/pricing",
+     "dt": "Pricing",
+     "gcs": "G101",
+     "npa": "1"
+    },
+    {
+     "stage": "granted",
+     "at": "2026-11-27T03:26:32.562Z",
+     "en": "page_view",
+     "tid": "G-NRT31062LW",
+     "dl": "https://ifyoumind.com/",
+     "dt": "Explore examples",
+     "gcs": "G101",
+     "npa": "1"
+    },
+    {
+     "stage": "granted",
+     "at": "2026-11-27T03:26:37.609Z",
+     "en": "page_view",
+     "tid": "G-NRT31062LW",
+     "dl": "https://ifyoumind.com/privacy-policy",
+     "dt": "Privacy policy",
+     "gcs": "G101",
+     "npa": "1"
+    }
+   ],
+   "syntheticMarkerTransmitted": false
+  }
+ },
+ "rollback": {
+  "target": "d47dcec2093b625f",
+  "executed": false,
+  "available": true,
+  "preGa4Fallback": "08500dca665abbab"
+ },
+ "notChanged": [
+  "master",
+  "Functions",
+  "Firestore/Storage rules",
+  "Stripe/billing",
+  "enrollment",
+  "GA4 configuration",
+  "customer data",
+  "PR #133",
+  "PR #134",
+  "issue #135"
+ ],
+ "openItems": [
+  "GA4 Realtime receipt for release 1795723013497000 and these synthetic events: founder reported GA4 shows collection in the past 48h; explicit Realtime confirmation of the synthetic page_view events still requested",
+  "Post-layout baseline collection for PR #133",
+  "PR #134 accessibility fix awaiting review",
+  "Issue #135 withdrawal wording review"
+ ]
+}

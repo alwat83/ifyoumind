@@ -67,7 +67,7 @@ test('vendor initialization cannot use the document URL/title; SPA views stay sa
   await page.getByRole('button', { name: 'Allow analytics', exact: true }).click();
   await expect.poll(() => views(r).length).toBe(1);
   expect(views(r)[0]).toMatchObject({ location: 'https://ifyoumind.com/privacy-policy', title: 'Privacy policy' });
-  await page.getByRole('link', { name: 'Back to home', exact: true }).click();
+  await page.locator('app-journey-navigation').getByRole('link', { name: 'ifYouMind home', exact: true }).click();
   await expect.poll(() => views(r).length).toBe(2);
   expect(views(r)[1]).toMatchObject({ location: 'https://ifyoumind.com/', title: 'Explore examples' });
   await page.getByRole('link', { name: 'Pricing', exact: true }).last().click();
@@ -116,7 +116,7 @@ test('rejection and provider failure never cause collection or block the finding
   await page.getByRole('dialog').getByLabel('Allow optional analytics', { exact: true }).check();
   await page.getByRole('dialog').getByRole('button', { name: 'Save preferences', exact: true }).click();
   await expect.poll(() => r.loads.length).toBe(1);
-  await page.getByRole('link', { name: 'Back to home', exact: true }).click();
+  await page.locator('app-journey-navigation').getByRole('link', { name: 'ifYouMind home', exact: true }).click();
   await page.getByRole('link', { name: 'Pricing', exact: true }).last().click();
   await expect(page).toHaveURL('https://ifyoumind.com/pricing');
   expect(r.wire).toEqual([]);

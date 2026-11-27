@@ -68,7 +68,7 @@ test('sign-up verifies by email; the link opened in another browser keeps the $7
 test('signing up from a city comparison keeps context through email verification', async ({ page, fixtures }) => {
   await page.goto('/decide?type=compare&question=private');
   await expect(page).toHaveURL(/\/login\?/);
-  await page.getByRole('link', { name: 'Create a free account' }).click();
+  await page.locator('.auth-card').getByRole('link', { name: 'Create a free account' }).click();
   expect(new URL(page.url()).searchParams.get('returnUrl')).toBe('/decide?type=compare');
 
   const email = fixtureEmail('T02-email-signup', newRunId());

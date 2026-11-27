@@ -45,7 +45,7 @@ test('guide tables are labelled, scrollable regions with column headers',()=>{
 });
 
 test('external links are marked noopener and nothing links to an unknown internal path',()=>{
-  const known=new Set(['/','/register','/sample-report','/privacy-policy','/terms-of-conduct','/guides/',...guides.map(g=>g.path)]);
+  const known=new Set(['/','/?example=cities','/register','/login','/pricing','/discover/','/sample-report','/privacy-policy','/terms-of-conduct','/guides/',...guides.map(g=>g.path)]);
   for(const guide of guides){
     const html=guidePage(guide);
     for(const [,href] of html.matchAll(/href="(\/[^"#]*)"/g)){

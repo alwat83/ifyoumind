@@ -20,7 +20,7 @@ test('integrated public pages: pricing, report, guides, accessibility and approv
     if (path === '/') {
       await expect(page.locator('.site-footer').getByRole('link', { name: 'Pricing', exact: true })).toHaveAttribute('href', '/pricing');
       await expect(page.getByRole('link', { name: 'View a Sample Report', exact: true })).toHaveAttribute('href', '/sample-report');
-      await expect(page.getByRole('link', { name: 'Guides', exact: true })).toHaveAttribute('href', '/guides/');
+      await expect(page.locator('.site-footer').getByRole('link', { name: 'Guides', exact: true })).toHaveAttribute('href', '/guides/');
       await expect(page.locator('a[href*="/life/quick-compare"]')).toHaveCount(0);
     }
     await expectNoHorizontalScroll(page);

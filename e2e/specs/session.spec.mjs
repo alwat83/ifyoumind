@@ -18,13 +18,9 @@ test('signed-in readers can go home and return to their decisions with the same 
   await signInThroughUi(page, user);
   await page.getByRole('link', { name: 'ifYouMind home', exact: true }).first().click();
   await expect(page).toHaveURL(/\/$/);
-  const shortcut = page.locator('.quick-saved');
-  let decisions = shortcut;
-  if (!(await shortcut.isVisible())) {
-    const menu = page.locator('.mobile-navigation summary');
-    if (await menu.isVisible()) await menu.click();
-    decisions = page.getByRole('link', { name: 'Your decisions', exact: true });
-  }
+  const menu = page.locator('.mobile-navigation summary');
+  if (await menu.isVisible()) await menu.click();
+  const decisions = page.locator('app-journey-navigation').getByRole('link', { name: 'Your decisions', exact: true });
   await expect(decisions).toHaveAttribute('href', '/decisions');
   await decisions.click();
   await expect(page).toHaveURL(/\/decisions$/);

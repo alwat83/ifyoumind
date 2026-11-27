@@ -1,3 +1,5 @@
+import { SiteFooterComponent } from '../../site-footer.component';
+import { JourneyNavigationComponent } from '../../journey-navigation.component';
 import { CookiePreferencesService } from '../../services/cookie-preferences.service';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
@@ -5,7 +7,7 @@ import { RouterLink } from '@angular/router';
 @Component({
   selector:'app-privacy-policy',
   standalone:true,
-  imports:[RouterLink],
+  imports:[SiteFooterComponent,JourneyNavigationComponent,RouterLink],
   templateUrl:'./privacy-policy.component.html',
   styleUrl:'./privacy-policy.component.scss',
 })

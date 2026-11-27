@@ -1,3 +1,4 @@
+import { SiteFooterComponent } from '../../site-footer.component';
 import { AnalyticsService } from '../../services/analytics.service';
 import { JourneyNavigationComponent } from '../../journey-navigation.component';
 import { Component, inject } from '@angular/core';
@@ -23,7 +24,7 @@ export const FIRST_DECISION_QUERY={type:'business'};
 @Component({
   selector:'app-register',
   standalone:true,
-  imports:[JourneyNavigationComponent,CommonModule,FormsModule,RouterModule],
+  imports:[SiteFooterComponent,JourneyNavigationComponent,CommonModule,FormsModule,RouterModule],
   templateUrl:'./register.component.html',
   styleUrls:['./register.component.scss'],
 })

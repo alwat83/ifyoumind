@@ -2,8 +2,11 @@ import {
   ApplicationConfig,
   provideZoneChangeDetection,
   importProvidersFrom,
+  inject,
 } from '@angular/core';
+import { SITE_NAVIGATE } from './site-navigation';
 import {
+  Router,
   provideRouter,
   withInMemoryScrolling,
   withRouterConfig,
@@ -30,6 +33,7 @@ export const appConfig: ApplicationConfig = {
         anchorScrolling: 'enabled',
       }),
     ),
+    { provide: SITE_NAVIGATE, useFactory: () => { const router = inject(Router); return (url: string) => void router.navigateByUrl(url); } },
     // importProvidersFrom(JoyrideModule.forRoot()),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => {

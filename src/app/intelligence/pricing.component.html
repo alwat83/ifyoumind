@@ -86,3 +86,4 @@
 
   <p *ngIf="!loading" class="billing-note">Secure checkout is handled by Stripe.</p>
 </main>
+<app-site-footer [accountLabel]="signedIn ? 'Account' : 'Sign In'"></app-site-footer>

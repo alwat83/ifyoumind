@@ -1,3 +1,4 @@
+import { SiteFooterComponent } from '../../site-footer.component';
 import { AnalyticsService } from '../../services/analytics.service';
 import { JourneyNavigationComponent } from '../../journey-navigation.component';
 import { Component, inject } from '@angular/core';
@@ -17,7 +18,7 @@ import {
 @Component({
   selector:'app-login',
   standalone:true,
-  imports:[JourneyNavigationComponent,CommonModule,FormsModule,RouterModule],
+  imports:[SiteFooterComponent,JourneyNavigationComponent,CommonModule,FormsModule,RouterModule],
   templateUrl:'./login.component.html',
   styleUrls:['./login.component.scss'],
 })

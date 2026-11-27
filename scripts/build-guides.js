@@ -60,9 +60,11 @@ function shell({ title, description, canonical, type, jsonLd, main }) {
     <nav class="nav" aria-label="Main">
       <a class="brand" href="/">ifYouMind</a>
       <div class="nav-links">
-        <a href="/guides/">Guides</a>
-        <a href="/sample-report">Sample report</a>
-        <a class="nav-cta" href="/register">Try it free</a>
+        <a href="/discover/">Check a bill</a>
+        <a href="/?example=cities#business">Compare cities</a>
+        <a href="/guides/" aria-current="page">Guides</a>
+        <a href="/pricing">Pricing</a>
+        <a class="nav-cta" href="/login">Sign in</a>
       </div>
     </nav>
   </header>
@@ -70,8 +72,10 @@ function shell({ title, description, canonical, type, jsonLd, main }) {
 ${main}
   </main>
   <footer class="site-footer">
-    <p><a class="brand" href="/">ifYouMind</a> · Evidence for real decisions. Business city reports available today.</p>
-    <p><a href="/guides/">Guides</a> · <a href="/sample-report">Sample report</a> · <a href="/privacy-policy">Privacy</a> · <a href="/terms-of-conduct">Terms</a></p>
+    <p><a class="brand" href="/">ifYouMind</a> · Bill checks run in your browser. City reports cite every figure.</p>
+    <p>Try it: <a href="/discover/">Check a bill</a> · <a href="/?example=cities#business">Compare cities</a> · <a href="/guides/">Guides</a> · <a href="/pricing">Pricing</a></p>
+    <p>Your account: <a href="/login">Sign in</a> · <a href="/register">Create a free account</a></p>
+    <p>Trust &amp; help: <a href="/privacy-policy">Privacy</a> · <a href="/terms-of-conduct">Terms</a> · <a href="/guides/sources-and-methodology/">Sources &amp; methodology</a> · <a href="/privacy-policy#analytics">Analytics choices</a> · <a href="mailto:support@ifyoumind.com">Contact support</a> (support@ifyoumind.com) · Teams and organizations: <a href="mailto:support@ifyoumind.com?subject=Organization%20inquiry">email us</a></p>
   </footer>
 </body>
 </html>

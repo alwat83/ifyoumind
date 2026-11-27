@@ -35,7 +35,7 @@ test('marketing copy makes no uploaded-data claim the reports do not support', (
   assert.doesNotMatch(landing,/about the same/i, 'small gaps are flagged as uncertain, never declared equal');
   assert.match(landing,/city-level estimates/i);
   assert.match(landing,/Check local demand, competition, and rent/);
-  assert.match(landing,/href="\/discover\/">Understand Your Bills/);
+  assert.match(read('../src/app/journey-navigation.component.ts'),/label: 'Check a bill', href: '\/discover\/'/);
   const discovery=read('../src/app/discovery/unified-discovery.component.html');
   assert.match(discovery,/Type the numbers from two bills, or use one of two supported CSV formats\. No PDFs, scans or other file types/);
   assert.match(discovery,/Your bills stay in this browser tab/);

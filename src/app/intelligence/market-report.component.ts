@@ -1,3 +1,4 @@
+import { SiteFooterComponent } from '../site-footer.component';
 import { JourneyNavigationComponent } from '../journey-navigation.component';
 import { CommonModule, Location } from '@angular/common';
 import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild, computed, inject } from '@angular/core';
@@ -18,7 +19,7 @@ import { buildCityDecisionCase, CityDecisionCase } from './city-decision-case';
 @Component({
   selector:'app-market-report',
   standalone:true,
-  imports:[CommonModule,RouterLink,MarketAnalysisComponent,JourneyNavigationComponent],
+  imports:[SiteFooterComponent,CommonModule,RouterLink,MarketAnalysisComponent,JourneyNavigationComponent],
   templateUrl:'./market-report.component.html',
   styleUrls:['./market-report.component.scss','./market-report-offers.component.scss','./market-report-findings.component.scss','./market-report-mobile.component.scss','./sample-report-state.component.scss'],
 })
@@ -32,6 +33,8 @@ export class MarketReportComponent implements OnInit, OnDestroy {
   /** Public sample at /sample-report: full report, no account, no purchase UI. */
   readonly sampleMode=this.route.snapshot.data['sample']===true;
   private readonly sampleUser=this.sampleMode?toSignal(user(inject(Auth))):undefined;
+  /** Header and footer account state: private reports are signed in; the public sample follows Auth. */
+  readonly navAccount=computed(():'Account'|'Sign In'=>!this.sampleMode||this.sampleUser?.()?'Account':'Sign In');
   readonly sampleEntry=computed(()=>{
     const account=this.sampleUser?.();
     if(account===undefined)return null;

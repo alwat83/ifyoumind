@@ -1,3 +1,4 @@
+import { SiteFooterComponent } from '../site-footer.component';
 import { JourneyNavigationComponent } from '../journey-navigation.component';
 import { Location, NgTemplateOutlet } from '@angular/common';
 import { Component, ElementRef, OnDestroy, OnInit, inject } from '@angular/core';
@@ -26,7 +27,7 @@ interface DecisionDraft {
 @Component({
   selector: 'app-decision-flow',
   standalone: true,
-  imports:[JourneyNavigationComponent,FormsModule, NgTemplateOutlet, RouterLink],
+  imports:[SiteFooterComponent,JourneyNavigationComponent,FormsModule, NgTemplateOutlet, RouterLink],
   templateUrl: './decision-flow.component.html',
   styleUrl: './decision-flow.component.scss',
 })

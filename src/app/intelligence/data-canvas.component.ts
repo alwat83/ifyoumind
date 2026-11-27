@@ -1,3 +1,4 @@
+import { SiteFooterComponent } from '../site-footer.component';
 import { JourneyNavigationComponent } from '../journey-navigation.component';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
@@ -9,7 +10,7 @@ import { UniversalAnalysis, UniversalAnalysisRun, UniversalDataService, Universa
 @Component({
   selector: 'app-data-canvas',
   standalone: true,
-  imports:[JourneyNavigationComponent,CommonModule, FormsModule, RouterLink],
+  imports:[SiteFooterComponent,JourneyNavigationComponent,CommonModule, FormsModule, RouterLink],
   templateUrl: './data-canvas.component.html',
   styleUrls: ['./data-canvas.component.scss'],
 })

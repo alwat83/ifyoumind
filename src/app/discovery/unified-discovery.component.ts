@@ -1,3 +1,4 @@
+import { SiteFooterComponent } from '../site-footer.component';
 import { JourneyNavigationComponent } from '../journey-navigation.component';
 import {CommonModule,DOCUMENT,NgComponentOutlet} from '@angular/common';
 import {Component,ElementRef,HostListener,Injector,OnInit,ViewChild,inject} from '@angular/core';
@@ -7,7 +8,7 @@ import {EXAMPLE_CSV,LABELS,analyzeTax,parseTaxCsv,usd} from './tax-discovery';
 
 const taxExampleInput=parseTaxCsv(EXAMPLE_CSV);
 
-@Component({selector:'app-unified-discovery',standalone:true,imports:[CommonModule,NgComponentOutlet,JourneyNavigationComponent],templateUrl:'./unified-discovery.component.html',host:{'[class.public-discovery]':'publicEntry'},styleUrls:['./unified-discovery.component.scss']})
+@Component({selector:'app-unified-discovery',standalone:true,imports:[SiteFooterComponent,CommonModule,NgComponentOutlet,JourneyNavigationComponent],templateUrl:'./unified-discovery.component.html',host:{'[class.public-discovery]':'publicEntry'},styleUrls:['./unified-discovery.component.scss']})
 export class UnifiedDiscoveryComponent implements OnInit {
  readonly publicEntry=inject(PUBLIC_DISCOVERY);
  readonly journeyComponent=TaxDiscoveryComponent;

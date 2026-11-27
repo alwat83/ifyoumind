@@ -1,0 +1,16 @@
+@use './product-design' as product;
+:host { display:block; width:min(var(--iy-wide),100% - 2 * var(--iy-gutter)); margin-inline:auto; font-family:var(--iy-body); }
+* { box-sizing:border-box; }
+.site-footer { display:grid; grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr)); gap:24px 40px; padding-block:40px 32px; border-top:1px solid var(--iy-line); color:var(--iy-muted); }
+.wordmark { @include product.wordmark; display:inline-flex; align-items:center; min-height:44px; color:var(--iy-ink); text-decoration:none; }
+.footer-brand p { margin:4px 0 0; max-width:30ch; font-size:13px; line-height:1.5; }
+nav { display:flex; flex-direction:column; min-width:0; }
+h2 { margin:0 0 6px; font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--iy-muted); }
+nav a { display:inline-flex; align-items:center; min-height:44px; color:var(--iy-ink); font-size:14px; text-decoration:none; }
+a:hover { text-decoration:underline; text-underline-offset:5px; }
+.footer-note { grid-column:1 / -1; display:flex; flex-wrap:wrap; gap:4px 24px; margin:0; padding-top:16px; border-top:1px solid var(--iy-line); font-size:13px; }
+.footer-note .mail { user-select:all; }
+.footer-note a { color:var(--iy-accent); text-decoration:underline; text-underline-offset:3px; display:inline-flex; align-items:center; min-height:24px; }
+@include product.focus;
+@media (max-width:850px) { .site-footer { grid-template-columns:repeat(2,minmax(0,1fr)); } .footer-brand { grid-column:1 / -1; } }
+@media (max-width:360px) { .site-footer { grid-template-columns:minmax(0,1fr); } }

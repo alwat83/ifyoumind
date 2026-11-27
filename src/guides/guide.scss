@@ -76,3 +76,8 @@ th:first-child{background:var(--iy-panel)}
 h1 { @include product.title; font-size:clamp(44px,6vw,72px); }
 .guide-list li { border:0; border-bottom:1px solid var(--iy-line); border-radius:0; background:none; padding:24px 0; }
 .cta { border:0; border-left:2px solid var(--iy-periwinkle); padding:28px; background:var(--iy-panel); }
+
+// Shared consumer navigation: every link is a 44 px target; the current section is marked.
+.nav-links a { display: inline-flex; align-items: center; min-height: var(--iy-touch); }
+.nav-links a[aria-current="page"] { color: var(--iy-ink); text-decoration: underline; text-underline-offset: 6px; }
+.site-footer a { display: inline-flex; align-items: center; min-height: 24px; }

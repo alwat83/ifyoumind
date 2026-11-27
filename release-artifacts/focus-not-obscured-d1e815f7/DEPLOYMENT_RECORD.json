@@ -1,0 +1,149 @@
+{
+ "status": "DEPLOYED_VERIFIED",
+ "provider": "Anthropic / Claude Code (local session on founder machine, Firebase CLI authenticated)",
+ "authorization": "Founder GO 2026-11-27 for one Hosting-only release of PR #134 package; Enhanced Measurement OFF reconfirmed by founder (API readback unavailable: 403 scope).",
+ "source": "d1e815f774eefbddc3ad67412d5603b85c69a37b",
+ "releaseCommit": "04d6f022a1f6c70dee770dbc58713cba13da29bd",
+ "artifact": {
+  "sha256": "304c82f35cc3eaff1fb95611460ba9223fd92e630535dcf53f9e792b6465075f",
+  "manifestSha256": "d9a9bf13ba56138c852b8a5ec901c5a1661874a3dc65db75b9b452c23973368c",
+  "stagedHashes": "66/66",
+  "rebuilt": false,
+  "firebaseJsonSha256": "49d17f6d0f9671f2509586d22beaf4e1fffd9905089cbbd0b7522ff90de9002f"
+ },
+ "preflight": {
+  "at": "2026-11-27T04:20:33Z",
+  "liveVersion": "e0240db8dd77d42a",
+  "liveRelease": "1795749887100000",
+  "functions": "35 ACTIVE, 0 changed",
+  "enrollment": "fingerprint 65c3faa285 on same 5 functions",
+  "headers": "PASS /, /pricing, /discover/",
+  "discoveryCspSha256Prefix": "ee8df606908ccf85",
+  "result": "PASS"
+ },
+ "deploy": {
+  "command": "firebase deploy --only hosting --project ifyoumind-473fe",
+  "startedAt": "2026-11-27T04:20:41Z",
+  "completedAt": "2026-11-27T04:20:46Z",
+  "release": "sites/ifyoumind-473fe/channels/live/releases/1795753246113000",
+  "version": "4315f71caa9b7cd1",
+  "versionStatus": "FINALIZED",
+  "releaseTime": "2026-11-27T04:20:46.113Z"
+ },
+ "postDeploy": {
+  "servedFiles": "66/66 match manifest",
+  "functions": "35, 0 changed (re-confirmed 2026-11-27T04:23:35Z)",
+  "enrollment": "unchanged (65c3faa285 on 5)",
+  "headers": "PASS; Discovery CSP hash unchanged (ee8df606908ccf85)",
+  "registrationFocusSweep": {
+   "viewports": [
+    "414x715",
+    "390x664",
+    "375x667",
+    "375x553",
+    "360x640",
+    "320x568",
+    "320x460"
+   ],
+   "stopsChecked": 28,
+   "fullyHidden": 0,
+   "partial": 0,
+   "previousRelease": "11 fully hidden",
+   "consentUnset": true,
+   "googleRequests": 0
+  },
+  "mobileCta": {
+   "390x844": "gap 246",
+   "390x664": "gap 66",
+   "375x667": "gap 69",
+   "375x553": "gap 8",
+   "360x640": "gap 13",
+   "320x568": "gap 25",
+   "1280x800": "gap 410",
+   "result": "PASS, identical to e0240db8; equal-width Allow/Reject on phones; no overflow; Reveal works; 0 Google requests"
+  },
+  "privacySuite": {
+   "window": [
+    "2026-11-27T04:22:04.513Z",
+    "2026-11-27T04:23:12.603Z"
+   ],
+   "result": "PASS 21/21",
+   "googleRequests": {
+    "pending": 0,
+    "rejected": 0,
+    "discover": 0,
+    "granted-withdrawn": 5
+   },
+   "sanitizedEvents": [
+    {
+     "stage": "granted",
+     "at": "2026-11-27T04:22:26.237Z",
+     "en": "page_view",
+     "tid": "G-NRT31062LW",
+     "dl": "https://ifyoumind.com/",
+     "dt": "Explore examples",
+     "gcs": "G101",
+     "npa": "1"
+    },
+    {
+     "stage": "granted",
+     "at": "2026-11-27T04:22:37.077Z",
+     "en": "page_view",
+     "tid": "G-NRT31062LW",
+     "dl": "https://ifyoumind.com/pricing",
+     "dt": "Pricing",
+     "gcs": "G101",
+     "npa": "1"
+    },
+    {
+     "stage": "granted",
+     "at": "2026-11-27T04:22:43.038Z",
+     "en": "page_view",
+     "tid": "G-NRT31062LW",
+     "dl": "https://ifyoumind.com/",
+     "dt": "Explore examples",
+     "gcs": "G101",
+     "npa": "1"
+    },
+    {
+     "stage": "granted",
+     "at": "2026-11-27T04:22:48.095Z",
+     "en": "page_view",
+     "tid": "G-NRT31062LW",
+     "dl": "https://ifyoumind.com/privacy-policy",
+     "dt": "Privacy policy",
+     "gcs": "G101",
+     "npa": "1"
+    }
+   ],
+   "syntheticMarkerTransmitted": false
+  }
+ },
+ "rollback": {
+  "target": "e0240db8dd77d42a",
+  "executed": false,
+  "available": true,
+  "furtherFallbacks": [
+   "d47dcec2093b625f",
+   "08500dca665abbab"
+  ]
+ },
+ "notChanged": [
+  "master",
+  "Functions",
+  "Firestore/Storage rules",
+  "Stripe/billing",
+  "enrollment",
+  "GA4 configuration",
+  "customer data",
+  "PR #133",
+  "issue #135"
+ ],
+ "openItems": [
+  "GA4 Realtime event-level receipt for synthetic events (Nov 26 19:58-20:01Z, Nov 27 03:26Z and 04:22Z) still unverified",
+  "Physical iOS Safari focus check not performed (Chromium only)",
+  "PR #133 awaiting post-layout baseline",
+  "Issue #135 withdrawal wording review",
+  "CI stale visual baselines / flaky session.spec maintenance"
+ ]
+}

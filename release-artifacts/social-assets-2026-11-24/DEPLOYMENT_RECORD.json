@@ -1,0 +1,47 @@
+{
+ "status": "DEPLOYED_VERIFIED",
+ "scope": "static social assets only (issue #131 standing authorization, reaffirmed 2026-11-27)",
+ "provider": "Anthropic / Claude Code (local session)",
+ "release": "sites/ifyoumind-473fe/channels/live/releases/1795754199503000",
+ "version": "ab3e2779ba205697",
+ "releaseTime": "2026-11-27T04:36:39.503Z",
+ "previousVersion": "4315f71caa9b7cd1",
+ "package": {
+  "sha256": "a0460624f4316e1b7eaecd5048cbc86903cefe305990874df1bbcd73eae1d9bb",
+  "manifestSha256": "355b6b0b9c48ba552607719031b28c7f0afc8c875346cebf57d9f7922246cbdb",
+  "files": 75,
+  "composition": "66 live 4315f71c files byte-identical (no rebuild) + 8 approved JPEGs + manifest.json"
+ },
+ "source": {
+  "zip": "ifyoumind_social_review_nov24_30.zip",
+  "zipSha256": "e37b14bdeb1f930cb469ee2ef747bd17cf7068f294402dec0b9c310fb92f5974",
+  "approvedChecksums": "issue #131 comment 7139386776",
+  "match": "8/8"
+ },
+ "preflight": {
+  "at": "2026-11-27T04:36:08Z",
+  "live": "4315f71caa9b7cd1",
+  "liveFiles": "66/66 match baseline",
+  "functions": "35 unchanged",
+  "enrollment": "unchanged",
+  "headersCsp": "PASS",
+  "newPathsBefore": "404 (no collision)"
+ },
+ "postDeploy": {
+  "servedFiles": "75/75",
+  "jpegs": "8/8 200 image/jpeg, approved sha256 and dimensions",
+  "manifest": "200 application/json",
+  "functions": "35 unchanged",
+  "headers": "PASS; Discovery CSP hash ee8df606908ccf85 unchanged",
+  "appBytes": "identical to 4315f71c, so GA4/consent behavior unchanged; privacy suite not re-run to avoid extra synthetic collection"
+ },
+ "rollback": {
+  "target": "4315f71caa9b7cd1",
+  "executed": false
+ },
+ "publication": {
+  "tuesdayCarousel": "NOT published - exact approved caption unavailable; Windsor.ai not available to this executor",
+  "saturdayStory": "assets hosted; not published",
+  "thursdayReel": "genuine footage captured, not edited/approved/hosted"
+ }
+}

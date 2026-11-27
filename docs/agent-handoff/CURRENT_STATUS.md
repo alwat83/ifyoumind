@@ -1,5 +1,35 @@
 # ifYouMind — Current development status
 
+## November 27, 2026 — Mobile CTA / consent-banner fix DEPLOYED (Hosting only); production verified
+
+**Status: deployed and production-verified. Hosting version `e0240db8dd77d42a`, release `1795749887100000` (2026-11-27T03:24:47Z).**
+
+- **What changed:** CSS only, from [PR #132](https://github.com/alwat83/ifyoumind/pull/132) (draft, unmerged).
+  - The phone consent banner is compact: equal-width Allow/Reject, 44px+ targets, safe-area insets.
+  - Hero spacing is tighter only on screens ≤600px tall.
+  - Consent wording, defaults and analytics are unchanged.
+- **Artifact:** frozen `release-artifacts/mobile-cta-4aab384e/hosting-browser.tar.gz`, SHA256 `2f68a554…`, 66/66 files.
+  - Source `4aab384e`; release commit `adab31b4` on `claude/release-mobile-cta-4aab384e`. Not rebuilt.
+  - Founder GO given 2026-11-27. Enhanced Measurement OFF was re-verified by the founder in GA4 Admin.
+- **Preflight (03:24:30Z), all PASS:**
+  - Live was `d47dcec2`.
+  - 35 Functions unchanged.
+  - Enrollment fingerprint unchanged.
+  - Headers and CSP present.
+- **Post-deploy, all PASS:**
+  - 66/66 served files match. 35 Functions unchanged. Headers and Discovery CSP intact.
+  - The CTA sits fully above the banner at 390×664, 375×553, 360×640 and 320×568. All three were obscured or tight before.
+  - **Production privacy suite 21/21.**
+- **Hosted QA:** [run 45928002433](https://github.com/alwat83/ifyoumind/actions/runs/45928002433) on `4aab384e`: 251 passed / 15 failed, `ga4.spec` 28/28. The [control on b9151c64](https://github.com/alwat83/ifyoumind/actions/runs/45929693032) had the identical 251/15: 14 stale visual baselines and a flaky `session.spec`. Not caused by #132.
+- **Rollback:** not needed. Target `d47dcec2093b625f` remains available.
+- **Record:** `release-artifacts/mobile-cta-4aab384e/DEPLOYMENT_RECORD.json`.
+- **Provider/agent:** Anthropic / Claude Code, local session.
+- **Open items:**
+  - **GA4 Realtime event-level receipt is still unverified.** The founder reported GA4 shows active collection in the last 48h. That is *not* event-level evidence for the synthetic events: Nov 26 19:58–20:01Z (~10 `page_view`) and Nov 27 03:26Z (4 `page_view`).
+  - PR #133 (copy): unreleased until a post-layout baseline exists.
+  - PR #134 (WCAG 2.4.11 focus fix): release candidate prepared.
+  - Issue #135 (withdrawal wording): awaiting review.
+
 ## November 26, 2026 — GA4 milestone still OPEN: Realtime pending; withdrawal wording gap found
 
 - **Realtime:** GA4 Realtime receipt for release `1795723013497000` is **still pending founder confirmation**. Do not mark the analytics milestone closed.

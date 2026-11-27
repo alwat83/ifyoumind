@@ -69,7 +69,7 @@ Screenshots are in [`screenshots/`](screenshots/), named `before-*` and `after-*
 | **New** `e2e/analytics-activation-specs/consent-layout.spec.mjs`, 5 short viewports | 5/5 on this build. **Fails on the deployed baseline** at 375×553, 360×640 and 320×568, so it detects the regression |
 | Real-tag offline transport suite, 3 cases × 1280/390/320 | 9/9, assertions unchanged. Freshly captured public tag kept outside Git |
 | Offline consent flows at 375×553, 320×568 and 390×664 | 42/42 (details below) |
-| Emulator suite `e2e/ga4.config.mjs` | **Not run.** firebase-tools needs Java 21 and this machine has an older JDK |
+| Hosted CI `authenticated-qa.yml` (Java 21 emulators), [run 45928002433](https://github.com/alwat83/ifyoumind/actions/runs/45928002433) on `4aab384e` | 251 passed / 15 failed / 0 skipped. **`ga4.spec.mjs` 28/28** (desktop and mobile). The 15 failures are not caused by this PR; see below |
 
 The offline consent flows served the build under the production hostname with Google's real captured tag. Every collector request was recorded and answered locally. They checked:
 - Keyboard order Allow → Reject → Manage, with a visible focus outline.
@@ -78,12 +78,21 @@ The offline consent flows served the build under the production hostname with Go
 - Allow: `page_view` and `free_tax_example_viewed` with the canonical URL, the fixed title, and no query or private values.
 - Reopened preferences show the box checked. Withdrawal sets the disable flag, stores false, and sends zero further hits.
 
+**Java 21 / emulator coverage.** firebase-tools needs Java 21, and this Mac has an older JDK, so the emulator suite couldn't run locally. Instead of installing software, I dispatched the repository's existing `authenticated-qa.yml` workflow on the exact PR head. It uses no secrets, deploys nothing, and Actions minutes are free for this public repo.
+- All 28 setup, build, rules, commerce, entitlement and Discovery steps passed.
+- The emulator GA4 consent suite passed 28/28, including "pending consent never obstructs registration…" and "preferences support keyboard focus…".
+
+**The 15 CI failures are pre-existing.** A control run of the same workflow on the deployed source `b9151c64` ([run 45929693032](https://github.com/alwat83/ifyoumind/actions/runs/45929693032)) also had **251 passed / 15 failed**, with identical per-suite counts:
+- 14 are the same `visual-journeys` screenshot comparisons. The baselines are stale: 80–98% of pixels differ and page heights don't match, including desktop pages this PR can't affect.
+- 1 is `session.spec` "Your decisions" strict-mode duplicate link. It's flaky: it failed on mobile in the control and on desktop here. This PR changes no markup.
+- Refreshing those baselines and fixing that selector is separate maintenance. Nothing in this PR needs to change.
+
 **Existing behaviour found during testing (in production now; not changed or caused here):**
 - Google's tag batches events for a few seconds.
 - If a visitor withdraws consent within that window and then leaves the page, events recorded *while consent was granted* are delivered at unload.
 - Nothing recorded after withdrawal is sent.
 - Both the deployed baseline and this build pass 42/42 once each step waits for the batch to flush, and both show the late delivery without the wait.
-- **Recommendation:** a separate privacy review of whether withdrawal should also discard the tag's pending batch. Analytics initialization is protected, so this PR doesn't touch it.
+- **Assessed separately**, on the GA4 evidence branch: [`docs/marketing/ga4/withdrawal-batching/ASSESSMENT.md`](https://github.com/alwat83/ifyoumind/blob/claude/trusting-fermi-7qh9l5/docs/marketing/ga4/withdrawal-batching/ASSESSMENT.md). Verdict: a disclosure gap, not collection after withdrawal. Recommended fix: a wording-only PR after founder/counsel sign-off. Not a blocker for this CSS release.
 
 ## Copy proposal (not shipped; the founder chooses)
 Current line: "Understand your bills. Compare U.S. cities. See the numbers behind each finding."
@@ -95,6 +104,26 @@ Current line: "Understand your bills. Compare U.S. cities. See the numbers behin
 | 3 | ifYouMind turns everyday numbers into clear answers you can check. | Yes, 2 lines (2 at 320 as well) | Shortest and broadest, but "everyday numbers" is vaguer than "your bills". |
 
 Previews of the recommended option are in `screenshots/copy-opt1-*.png`, and option 3 in `copy-opt3-390x664.png`. They were injected into the page for review only and aren't in the source. The headline, the CTA and the "Illustrative numbers, not proof that a bill is wrong" note are unchanged in every option.
+
+## Related items kept out of this PR
+- **Copy:** founder-selected option 1 is in draft [PR #133](https://github.com/alwat83/ifyoumind/pull/133), stacked on this PR. Release it only after this fix has a post-change baseline.
+- **Accessibility, existing in production:** on `/register`, with the banner pending, keyboard focus on Email (and Password at 390×664) is fully hidden behind the banner on phones. That fails WCAG 2.2 SC 2.4.11 (AA). This PR's smaller banner reduces the overlap but doesn't fix it. The fix is in separate draft [PR #134](https://github.com/alwat83/ifyoumind/pull/134): banner-height scroll padding, independent of this PR, with no visual change at rest.
+
+## Release recommendation (Hosting only)
+**GO to request production authorization** for a Hosting-only release of this PR's exact build. No privacy, accessibility or configuration regression was found:
+- Consent wording, defaults and analytics behaviour are unchanged. Every consent and transport suite passes, and the withdrawal-batching behaviour is identical with and without this PR.
+- `firebase.json`, rules and Functions are untouched. The built output differs from production only in the main bundle, the landing chunk and the HTML pages that reference them.
+
+Conditions:
+1. Package an exact artifact from `4aab384e` with a SHA256 manifest.
+2. Run the same authenticated preflight. Live must be `d47dcec2093b625f`, all 35 Functions unchanged, enrollment unchanged.
+3. Deploy only from an isolated worktree with the release `firebase.json`.
+4. After deploy, recheck short-viewport CTA visibility and run the live consent/withdrawal suite.
+5. Rollback target: `d47dcec2093b625f`.
+
+**Strongly recommended:** release #134 with or right after this PR. It fixes an existing AA failure on the same banner.
+
+**Not blockers for this release, but still open:** GA4 Realtime receipt for release `1795723013497000` needs founder confirmation, and the withdrawal-wording decision is pending.
 
 ## Separate conversion opportunity (not in this PR)
 After the reveal, the next action is "Compare my tax CSV", which means preparing a redacted CSV. That's unlikely from a phone during an Instagram visit. The $79 Decision Report (city and business decisions) isn't connected to the tax story. Treat this as a separate product decision.

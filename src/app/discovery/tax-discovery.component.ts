@@ -14,8 +14,11 @@ export class TaxDiscoveryComponent implements OnInit, OnDestroy {
   @Input() embedded=false;
   @Input() startWithExample=false;
   @Input() startAtFile=false;
+  /** Opens the existing two-row editor empty, for people who have paper bills rather than a CSV. */
+  @Input() startTyping=false;
   ngOnInit():void {
     if(this.startWithExample)this.tryExample();
+    else if(this.startTyping)this.typeOwn();
     else if(this.startAtFile)setTimeout(()=>this.fileInput?.nativeElement.focus());
   }
   ngOnDestroy():void {this.clear(false);}
@@ -40,7 +43,7 @@ export class TaxDiscoveryComponent implements OnInit, OnDestroy {
   rows:Record<string,string>[]=[this.blank(),this.blank()];
   columns:string[]=[...this.fields];
   analysis:TaxAnalysis|null=null;
-  source:'none'|'example'|'csv'='none';
+  source:'none'|'example'|'csv'|'typed'='none';
   edited=false;
   editorOpen=false;
   reading=false;
@@ -53,6 +56,16 @@ export class TaxDiscoveryComponent implements OnInit, OnDestroy {
   get ready():TaxAnalysis|null{return this.analysis?.status==='ready'?this.analysis:null;}
   trackRow(index:number):number{return index;}
   focusCsv():void {this.fileInput?.nativeElement.focus();}
+  /** Row names people recognise. Typed bills keep the same grid (row 2 = earlier) so evidence cells still match. */
+  rowLabel(index:number):string{return this.source==='typed'?(index===0?'Earlier bill':'Later bill'):`CSV row ${index+2}`;}
+  typeOwn():void {
+    this.clear(false);
+    // Electricity: units and currency are fixed by the format; an unknown charge split needs no extra amounts.
+    const start=():Record<string,string>=>this.isElectricity?{...this.blank(),unit:'kWh',currency:'USD',charge_basis:'unknown'}:this.blank();
+    this.rows=[start(),start()];this.columns=[...this.fields];this.source='typed';this.editorOpen=true;
+    this.status='Type the amounts from your two bills, then show what changed. Nothing leaves this browser tab.';
+    setTimeout(()=>(document.querySelector('#editor input') as HTMLInputElement|null)?.focus());
+  }
   tryExample():void {
     this.clear(false);
     const input=this.parse(this.exampleCsv);

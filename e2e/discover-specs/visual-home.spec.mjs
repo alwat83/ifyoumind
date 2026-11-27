@@ -50,7 +50,7 @@ test('homepage fits six reference widths with the flagship result and an actiona
       .filter(font => font.family.includes('Instrument Serif') && font.status === 'loaded').length)).toBeGreaterThanOrEqual(1);
     await expect(page.locator('#try')).toContainText('Understand your bills. Compare U.S. cities. See the numbers behind each finding.');
     const reports = page.getByRole('region', { name: 'Decision Reports', exact: true });
-    await expect(reports.getByRole('link', { name: 'Start a Free Brief' })).toHaveAttribute('href', '/decide?type=business');
+    await expect(reports.getByRole('link', { name: 'Start a Free Brief' })).toHaveAttribute('href', '/register?returnUrl=%2Fdecide%3Ftype%3Dbusiness');
     await expect(reports).toContainText('The $79 one-time Decision Report adds up to three comparison cities, a sourced market analysis and an action plan.');
     await expect(reports.getByRole('link', { name: 'View a Sample Report' })).toHaveAttribute('href', '/sample-report');
     await expect(feature.getByRole('button', { pressed: true })).toHaveText('Property taxes');

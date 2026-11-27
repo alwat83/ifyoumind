@@ -32,3 +32,49 @@ test('legal pages: support links are distinguishable and retention periods read 
   await page.goto('/privacy-policy');
   await expect(page.locator('main')).toContainText('retained for up to 180 days, with analytics cookies configured for 30 days');
 });
+
+// Consumer audit P1: people with paper bills can type two bills without building a CSV. Browser-local only.
+test('a visitor can type two property-tax bills and get the same evidence-backed findings', async ({ page }) => {
+  const requests = [];
+  // Typed values never leave the tab: no request other than same-origin static GETs.
+  page.on('request', r => { if (r.method() !== 'GET' || !r.url().startsWith(origin + '/')) requests.push(`${r.method()} ${r.url()}`); });
+  await page.goto('/discover/');
+  await page.getByRole('button', { name: 'Type my property tax bills' }).click();
+  const editor = page.locator('#editor');
+  await expect(editor.getByRole('heading', { name: 'Type the amounts from your two bills.' })).toBeVisible();
+  await expect(editor.getByRole('group', { name: 'Earlier bill' })).toBeVisible();
+  await expect(editor.getByRole('textbox', { name: 'Earlier bill Tax year' })).toBeFocused();
+  await expect(page.getByText('Your numbers, on this device.')).toBeVisible();
+  const values = { 'Tax year': ['2024', '2025'], County: ['900', '990'], School: ['2400', '2640'], Municipal: ['900', '990'], 'Total billed': ['4200', '4620'] };
+  for (const [label, [earlier, later]] of Object.entries(values)) {
+    await editor.getByRole('textbox', { name: new RegExp(`^Earlier bill ${label}`) }).fill(earlier);
+    await editor.getByRole('textbox', { name: new RegExp(`^Later bill ${label}`) }).fill(later);
+  }
+  await editor.getByRole('button', { name: 'Show what changed' }).click();
+  await expect(page.locator('.finding')).toHaveCount(3);
+  await expect(page.getByRole('heading', { name: 'Here’s what changed.' })).toBeFocused();
+  await page.getByText('Show source cells & calculation').first().click();
+  await expect(page.getByText(/Your typed numbers · Cells use the CSV layout/).first()).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Edit my numbers' })).toBeVisible();
+  const axe = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa']).analyze();
+  expect(axe.violations.map(v => `${v.id}: ${v.nodes.length}`)).toEqual([]);
+  await page.getByRole('button', { name: 'Clear my data' }).first().click();
+  await expect(page.locator('.finding')).toHaveCount(0);
+  expect(requests).toEqual([]);
+});
+
+test('typing is offered from the CSV step, the example result and a deep link, and explains missing values', async ({ page }) => {
+  await page.goto('/discover/?example=tax&input=csv');
+  await page.getByRole('button', { name: 'Type the numbers from your two bills' }).click();
+  await expect(page.getByRole('textbox', { name: 'Earlier bill Tax year' })).toBeFocused();
+  await page.locator('#editor').getByRole('button', { name: 'Show what changed' }).click();
+  await expect(page.getByRole('alert').filter({ hasText: 'No findings yet' })).toContainText('We need two complete annual statements.');
+  await expect(page.locator('#editor')).toBeVisible();
+  await page.goto('/discover/?example=tax');
+  await page.getByRole('button', { name: 'Type my two bills' }).click();
+  await expect(page.getByRole('textbox', { name: 'Earlier bill Tax year' })).toBeFocused();
+  await page.goto('/discover/?example=electricity&input=type');
+  await expect(page.getByRole('textbox', { name: 'Earlier bill Usage unit' })).toHaveValue('kWh');
+  await expect(page.getByRole('textbox', { name: 'Later bill Currency' })).toHaveValue('USD');
+  await expect(page.getByRole('textbox', { name: /^Earlier bill Charge/ })).toHaveValue('unknown');
+});

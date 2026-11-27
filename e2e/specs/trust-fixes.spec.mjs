@@ -76,5 +76,5 @@ test('the homepage shows a real sample finding and claims no uploaded-data analy
   await expect(card).toContainText('Check local demand, competition, and rent');
   await page.getByRole('link', { name: 'Understand Your Bills', exact: true }).click();
   await expect(page.getByText('Your bills stay in this browser tab.', { exact: true })).toBeVisible();
-  await expect(page.getByText('Two supported CSV formats today. No PDFs, scans or other file types.', { exact: true })).toBeVisible();
+  await expect(page.getByText('Type the numbers from two bills, or use one of two supported CSV formats. No PDFs, scans or other file types.', { exact: true })).toBeVisible();
 });

@@ -67,7 +67,7 @@ test('public discovery works offline after load and retains keyboard evidence ac
 test('public navigation and Business registration presentation remain reachable',async({page,request})=>{
  await page.goto('/discover/');expect((await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze()).violations).toEqual([]);await expect(page.getByRole('link',{name:'Business sample report',exact:true})).toHaveAttribute('href','/sample-report');await expect(page.getByRole('link',{name:'Privacy policy',exact:true})).toHaveAttribute('href','/privacy-policy');
  for(const path of ['/register','/login','/sample-report','/guides/'])expect((await request.get(path)).status()).toBe(200);
- await page.goto('/register');await expect(page.getByRole('heading',{name:'Build your market analysis.'})).toBeVisible();await expect(page.getByRole('textbox',{name:'Email',exact:true})).toBeVisible();
+ await page.goto('/register');await expect(page.getByRole('heading',{name:'Start your free city brief.'})).toBeVisible();await expect(page.getByRole('textbox',{name:'Email',exact:true})).toBeVisible();
  await page.goto('/privacy-policy');await expect(page.getByRole('heading',{name:'Browser-local bill discovery'})).toBeVisible();await expect(page.locator('body')).toContainText('separately from registered Business');
  await page.goto('/');await expect(page.locator('.site-footer').getByRole('link',{name:'Pricing',exact:true})).toHaveAttribute('href','/pricing');
 });

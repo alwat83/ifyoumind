@@ -1,5 +1,26 @@
 # ifYouMind — Current development status
 
+## November 27, 2026 — Wow 4.0 B+ release candidate frozen (Hosting-only; NOT deployed)
+
+- **Source:** PR #136 head `62d92c6d`. Release branch `claude/release-bplus-62d92c6d` (`1a31380c`) adds only `release-artifacts/wow4-bplus-62d92c6d/`.
+- **Package:** `hosting-browser.tar.gz` `65cb3ebacb7ce4fb71503150ae8eafe5e5d366c9bb1cfb2a4981f763b06483e4`, 82 files. Reproducible across two clean builds.
+- **Compared with live `f0250d10c22751a7`:** only the landing chunk changes. The 22 social files and the manifest are byte-identical. (Today's toolchain renames hashed bundles even for identical content; a control rebuild of `abb82dd0` matches live 82/82 once names are normalized.)
+- **Hosted QA:**
+  - Exact head: [46024575457](https://github.com/alwat83/ifyoumind/actions/runs/46024575457), 252 passed / 14 failed.
+  - Production control: [46023828620](https://github.com/alwat83/ifyoumind/actions/runs/46023828620), 251/15.
+  - The 14 are the same stale `visual-journeys` snapshots. `session.spec` is flaky. No B+ regressions.
+- **Preflight (15:22Z):** 35 Functions unchanged; enrollment `65c3faa285`; headers; CSP `ee8df606908ccf85`.
+- **Decisions:**
+  - Wow 4.0 supersedes the Nov 20 "Reveal what changed" decision; AGENTS.md to be updated on merge.
+  - The GA4 `free_tax_example_viewed` trigger and `evidence_revealed` exposure shift; treat the release as a measurement breakpoint.
+  - #133 is superseded but kept separate.
+- **Rollback:** `f0250d10c22751a7`.
+- **Still open:**
+  - The 3-second comprehension test with five cold visitors has not been run.
+  - Physical iPhone check.
+  - Separate snapshot-baseline maintenance.
+- **Provider/agent:** Anthropic / Claude Code, local session.
+
 ## November 27, 2026 — Wow 4.0 B+ implementation candidate (draft PR #136; not merged, not deployed)
 
 - **Decision:** the founder selected B+ "Check the claim" and gave a conditional implementation GO: draft PR only, no merge or deploy.

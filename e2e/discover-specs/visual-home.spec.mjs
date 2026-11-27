@@ -30,14 +30,19 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await page.setViewportSize({ width, height });
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
-    await expect(page.getByRole('heading', { level: 1 })).toHaveText('Your tax bill went up.Where did the extra $420 go?');
-    const heroAction = page.getByRole('button', { name: 'Reveal what changed', exact: true });
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText('See what changed in your bills, and the numbers behind it.');
+    const heroAction = page.getByRole('button', { name: /mostly school charges/ });
     await expect(heroAction).toBeVisible();
     if (width >= 375) await expect(heroAction).toBeInViewport({ ratio: 1 });
     await expect(heroAction).toHaveAttribute('aria-expanded', 'false');
-    await expect(page.locator('.revealed-content')).toBeHidden();
+    await expect(page.locator('#discovery-answer')).toBeHidden();
     await expect(page.locator('.hero-art')).toHaveCount(0);
-    await expect(page.locator('.hero-intro').getByRole('button')).toHaveCount(1);
+    await expect(page.locator('.hero-copy').getByRole('button')).toHaveCount(0);
+    await expect(page.locator('.statement')).toHaveCount(3);
+    const feature = page.locator('#business');
+    await expect(feature.locator('.example-label')).toBeInViewport({ ratio: 1 });
+    await expect(feature.getByRole('heading', { name: 'Why did my property taxes go up?', exact: true })).toBeInViewport({ ratio: 1 });
+    await expect(feature.getByText('+$420', { exact: true })).toBeInViewport({ ratio: 1 });
     await heroAction.click();
     await expect(heroAction).toHaveAttribute('aria-expanded', 'true');
     await page.evaluate(() => document.fonts.ready);
@@ -48,22 +53,19 @@ test('homepage fits six reference widths with the flagship result and an actiona
     await expect(reports.getByRole('link', { name: 'Start a Free Brief' })).toHaveAttribute('href', '/decide?type=business');
     await expect(reports).toContainText('The $79 one-time Decision Report adds up to three comparison cities, a sourced market analysis and an action plan.');
     await expect(reports.getByRole('link', { name: 'View a Sample Report' })).toHaveAttribute('href', '/sample-report');
-    const feature = page.locator('#business');
     await expect(feature.getByRole('button', { pressed: true })).toHaveText('Property taxes');
-    await expect(feature.locator('.example-label')).toBeInViewport({ ratio: 1 });
-    await expect(feature.getByRole('heading', { name: 'Why did my property taxes go up?', exact: true })).toBeInViewport({ ratio: 1 });
-    await expect(feature.locator('.finding')).toContainText('$420 more than the year before.');
-    await expect(feature.locator('.finding-note')).toContainText('School taxes rose by $240');
-    await expect(feature.locator('.finding-note')).toContainText('Two bills alone can’t tell you whether you paid too much.');
-    await expect(feature.getByText('$420', { exact: true })).toBeInViewport({ ratio: 1 });
-    await expect(feature.getByText('more than the year before.', { exact: true })).toBeVisible();
+    const check = feature.locator('.statement-check:not([hidden])');
+    await expect(check).toContainText('Supported by these numbers');
+    await expect(check).toContainText('School charges added $240 of the $420 increase.');
+    await expect(check.getByRole('table', { name: 'Source cells used' })).toContainText('2640.00');
+    await expect(check).toContainText('($240.00 ÷ $420.00) × 100 = 57.1%');
     const summary = feature.locator('.home-evidence summary');
     await expect(summary).toHaveText('Show the evidence', { useInnerText: true });
     await expect(summary).toBeVisible();
-    await expect(feature.getByRole('table')).toHaveCount(0);
+    await expect(feature.locator('.home-evidence').getByRole('table')).toHaveCount(0);
     await expect(feature.locator('.home-evidence')).not.toHaveAttribute('open');
     await expect(feature.getByRole('link', { name: 'Open the full tax example' })).toHaveAttribute('href', '/discover/?example=tax');
-    const targets = feature.locator('.question-option, summary');
+    const targets = feature.locator('.question-option, .statement, summary');
     for (const { width: w, height: h } of await targets.evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().toJSON()))) {
       expect(w).toBeGreaterThanOrEqual(44);
       expect(h).toBeGreaterThanOrEqual(44);
@@ -80,14 +82,15 @@ test('homepage fits six reference widths with the flagship result and an actiona
   }
 });
 
-test('the three examples replace the finding, reset evidence and announce the new answer', async ({ page }, info) => {
+test('the three examples replace the statements, reset evidence and announce the new example', async ({ page }, info) => {
   for (const [width, height] of sizesByProject[info.project.name]) {
     await page.setViewportSize({ width, height });
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto('/');
-    await page.getByRole('button', { name: 'Reveal what changed', exact: true }).click();
-    await expect(page.locator('.revealed-content')).toBeVisible();
-    await expect(page.locator('#business')).toBeFocused();
+    const first = page.getByRole('button', { name: /mostly school charges/ });
+    await first.click();
+    await expect(page.locator('#discovery-answer')).toBeVisible();
+    await expect(first).toBeFocused();
     const feature = page.locator('#business');
     const city = feature.getByRole('button', { name: 'Compare cities', exact: true });
     const electricity = feature.getByRole('button', { name: 'Electricity bills', exact: true });
@@ -129,13 +132,17 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await expect(tax).toHaveAttribute('aria-pressed', 'false');
     await expect(evidence).not.toHaveAttribute('open');
     await expect(summary).toHaveText('Show the evidence', { useInnerText: true });
-    await expect(announcement).toContainText('The bill rose 21% and electricity use rose 10%.');
+    await expect(announcement).toContainText('Electricity bills. Did my bill rise faster than my energy use?');
+    await expect(feature.locator('.statement[aria-expanded="true"]')).toHaveCount(0);
     // Check after the updated answer has painted, not only before a queued focus move.
     await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
     await expect(electricity).toBeFocused();
     await expect(feature.locator('.example-label')).toBeVisible();
-    await expect(feature.locator('.finding')).toContainText('+21% in total billed, compared with +10% in electricity use.');
-    await expect(feature.locator('.finding-note')).toHaveText('Check the individual charges to see what else changed.');
+    await expect(feature.locator('.example-figure')).toContainText('+21%');
+    await feature.getByRole('button', { name: /explains all of it/ }).click();
+    await expect(feature.locator('.statement-check:not([hidden])')).toContainText('Not supported by these numbers');
+    await expect(feature.locator('.statement-check:not([hidden])')).toContainText('The bill rose +21%; energy use rose +10%.');
+    await expect(announcement).toContainText('Not supported by these numbers. The bill rose +21%; energy use rose +10%.');
     await expect(feature.getByRole('link', { name: 'Explore the electricity example' })).toHaveAttribute('href', '/discover/?example=electricity');
     await expect(page).toHaveURL(origin + '/');
     await noOverflow(page);
@@ -153,10 +160,12 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await city.click();
     await expect(feature.getByRole('button', { pressed: true })).toHaveText('Compare cities');
     await expect(evidence).not.toHaveAttribute('open');
-    await expect(announcement).toContainText('median household income estimate is $11,590 higher');
+    await expect(announcement).toContainText('Compare cities. How do Austin and Charlotte compare?');
     await expect(feature.getByText('Public Census sample', { exact: true })).toBeVisible();
     await expect(feature.getByRole('heading', { name: 'How do Austin and Charlotte compare?' })).toBeVisible();
-    await expect(feature.locator('.finding-note')).toContainText('checking local demand, competition, and rent');
+    await feature.getByRole('button', { name: /better for a coffee shop/ }).click();
+    await expect(feature.locator('.statement-check:not([hidden])')).toContainText('Can’t tell from these numbers');
+    await expect(feature.locator('.statement-check:not([hidden])')).toContainText('Check local demand, competition, and rent before choosing a site.');
     await expect(feature.getByRole('link', { name: 'View the Full Sample Report' })).toHaveAttribute('href', '/sample-report');
     await summary.click();
     const table = evidence.getByRole('table', { name: 'City estimates from the public Business sample' });
@@ -178,7 +187,7 @@ test('the three examples replace the finding, reset evidence and announce the ne
     await tax.click();
     await expect(feature.getByRole('button', { pressed: true })).toHaveText('Property taxes');
     await expect(evidence).not.toHaveAttribute('open');
-    await expect(announcement).toContainText('School taxes rose by $240 and accounted for most of the increase.');
+    await expect(announcement).toContainText('Property taxes. Why did my property taxes go up?');
     await expect(fullTax).toBeVisible();
     await expect(feature.getByRole('heading', { name: 'Why did my property taxes go up?' })).toBeVisible();
   }
@@ -258,7 +267,7 @@ test('keyboard opens the compact menu, Escape restores focus, and text spacing p
   await page.keyboard.press('Escape');
   await expect(menu).not.toHaveAttribute('open');
   await expect(summary).toBeFocused();
-  await page.getByRole('button', { name: 'Reveal what changed', exact: true }).click();
+  await page.getByRole('button', { name: /mostly school charges/ }).click();
   expect(await page.locator('.hero .example-link').evaluate(node => getComputedStyle(node).transitionDuration)).toBe('0s');
   await page.addStyleTag({ content: '*{line-height:1.5!important;letter-spacing:.12em!important;word-spacing:.16em!important}p{margin-bottom:2em!important}' });
   await page.setViewportSize({ width: 320, height: 568 });

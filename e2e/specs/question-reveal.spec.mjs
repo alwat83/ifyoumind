@@ -1,46 +1,45 @@
 import { test, expect, expectAccessible, expectNoHorizontalScroll } from '../support/test.mjs';
 
-test('the question reveals an immediate supported answer in place, then evidence and private input', async ({ page }, info) => {
+// B+ homepage: the visitor picks one of three preset statements about the example; the card shows the source
+// cells and calculations, then a verdict computed from the example's own values. Nothing is typed or uploaded.
+test('a preset statement opens its evidence and verdict in place, then evidence and private input', async ({ page }, info) => {
   for (const width of info.project.name === 'mobile' ? [320,390] : [820,1280,1440]) {
     await page.setViewportSize({width,height:width===320?568:width===390?844:900});
     await page.emulateMedia({reducedMotion:'reduce'});
     await page.goto('/');await page.evaluate(()=>document.fonts.ready);
-    const action=page.getByRole('button',{name:'Reveal what changed',exact:true});
-    await expect(action).toBeInViewport({ratio:1});await expect(action).toHaveAttribute('aria-expanded','false');
-    await expect(page.locator('.hero-label')).toContainText('Made-up figures');
-    await expect(page.locator('.hero-entry')).toContainText('Compare U.S. cities');
-    const composition = await page.locator('.hero-intro').evaluate(intro => {
-      const question = intro.querySelector('h1 em');
-      const lines = [];
-      const walker = document.createTreeWalker(question, NodeFilter.SHOW_TEXT);
-      let node;
-      while ((node = walker.nextNode())) {
-        for (const word of node.textContent.matchAll(/\S+/g)) {
-          const range = document.createRange();
-          range.setStart(node, word.index); range.setEnd(node, word.index + word[0].length);
-          const top = range.getBoundingClientRect().top, last = lines.at(-1);
-          if (last && Math.abs(last.top - top) < 3) last.words.push(word[0]);
-          else lines.push({ top, words: [word[0]] });
-        }
-      }
-      const contentBottom = Math.max(...[...intro.children].map(child => child.getBoundingClientRect().bottom));
-      return { lines: lines.map(line => line.words), emptyTail: intro.getBoundingClientRect().bottom - contentBottom };
-    });
-    expect(composition.lines.every(line => line.length >= 2), `orphaned question at ${width}px: ${JSON.stringify(composition.lines)}`).toBe(true);
-    expect(composition.emptyTail, `unnecessary empty hero height at ${width}px`).toBeLessThanOrEqual(64);
-    await expect(page.locator('.revealed-content')).toBeHidden();
+    await expect(page.getByRole('heading',{level:1})).toHaveText('See what changed in your bills, and the numbers behind it.');
+    await expect(page.locator('#business .example-label')).toHaveText('Made-up example');
+    await expect(page.locator('#try')).toContainText('Compare U.S. cities');
+    const statements=page.locator('.statement');
+    await expect(statements).toHaveCount(3);
+    for (const statement of await statements.all()) { await expect(statement).toBeInViewport({ratio:1}); await expect(statement).toHaveAttribute('aria-expanded','false'); }
+    await expect(page.locator('#business')).toContainText('These statements are preset for this example.');
+    await expect(page.locator('#business').locator('input, textarea, [contenteditable]')).toHaveCount(0);
+    await expect(page.locator('#discovery-answer')).toBeHidden();
     await expect(page.locator('.own-data')).toBeHidden();
     await expectNoHorizontalScroll(page);await expectAccessible(page);
     const url=page.url(),requests=[];page.on('request',r=>requests.push(r.url()));
-    await action.focus();await page.keyboard.press('Enter');
-    await expect(page).toHaveURL(url);await expect(action).toHaveAttribute('aria-expanded','true');
-    await expect(page.locator('#business')).toBeFocused();
-    await expect(page.locator('.conclusion strong')).toHaveText('$420');
-    await expect(page.locator('.conclusion strong')).toBeInViewport({ratio:1});
-    await expect(page.locator('.finding-note')).toContainText('School taxes rose by $240');
-    await expect(page.locator('.finding-note')).toContainText('can’t tell you whether you paid too much');
-    await expect(page.locator('.revealed-content')).toHaveCSS('animation-name','none');
-    await action.click();await expect(page.locator('#business')).toBeFocused();await expect(page.locator('.conclusion strong')).toHaveCount(1);
+    const first=page.getByRole('button',{name:/mostly school charges/});
+    await first.focus();await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(url);await expect(first).toHaveAttribute('aria-expanded','true');await expect(first).toBeFocused();
+    const check=page.locator('#'+await first.getAttribute('aria-controls'));
+    await expect(check).toBeVisible();
+    await expect(check.locator('.verdict')).toHaveText('Supported by these numbers');
+    await expect(check.locator('.check-finding')).toHaveText('School charges added $240 of the $420 increase.');
+    await expect(check.locator('.check-finding')).toBeInViewport({ratio:1});
+    await expect(check.getByRole('table',{name:'Source cells used'})).toContainText('C3');
+    await expect(check.getByRole('table',{name:'Source cells used'})).toContainText('2640.00');
+    await expect(check).toContainText('($240.00 ÷ $420.00) × 100 = 57.1%');
+    await expect(check.locator('.check-finding')).toHaveCSS('animation-name','none');
+    await expect(page.getByRole('status')).toHaveText('Supported by these numbers. School charges added $240 of the $420 increase.');
+    // Not supported and can't-tell verdicts come from the same values; only one check is open at a time.
+    const county=page.getByRole('button',{name:/County charges rose the most/});await county.click();
+    await expect(first).toHaveAttribute('aria-expanded','false');await expect(first).toContainText('Supported by these numbers');
+    await expect(page.locator('.statement-check:not([hidden]) .verdict')).toHaveText('Not supported by these numbers');
+    await page.getByRole('button',{name:/calculated wrong/}).click();
+    await expect(page.locator('.statement-check:not([hidden]) .verdict')).toHaveText('Can’t tell from these numbers');
+    await expect(page.locator('.statement-check:not([hidden])')).toContainText('look up your assessed value and local tax rates');
+    await expect(page.locator('.statement-check:not([hidden])')).toHaveCount(1);
     const proof=page.locator('.home-evidence');await proof.locator('summary').focus();await page.keyboard.press('Enter');
     await expect(proof).toHaveAttribute('open','');await expect(proof).toContainText('57.1%');
     await expect(proof).toContainText('4200.00');await expect(proof).toContainText('4620.00');
@@ -53,16 +52,18 @@ test('the question reveals an immediate supported answer in place, then evidence
   }
 });
 
-test('public example deep links preserve category and safe recovery without another reveal',async({page})=>{
- for(const [query,expected]of[['?example=tax#business','$420'],['?example=electricity#business','+21%'],['?example=private-test-marker#business','$420']]){
-  await page.goto('/'+query);await expect(page.locator('.revealed-content')).toBeVisible();
-  await expect(page.locator('.conclusion strong')).toHaveText(expected);
+test('public example deep links preserve category, open the first check and recover safely',async({page})=>{
+ for(const [query,expected,finding]of[['?example=tax#business','+$420','School charges added $240'],['?example=electricity#business','+21%','Energy use rose +10%.'],['?example=private-test-marker#business','+$420','School charges added $240']]){
+  await page.goto('/'+query);await expect(page.locator('#discovery-answer')).toBeVisible();
+  await expect(page.locator('.example-figure strong')).toHaveText(expected);
+  await expect(page.locator('.statement-check:not([hidden]) .check-finding')).toContainText(finding);
   await expect(page.locator('body')).not.toContainText('private-test-marker');
  }
  await page.emulateMedia({reducedMotion:'no-preference'});
- await page.goto('/');await page.getByRole('button',{name:'Reveal what changed',exact:true}).click();
- await expect(page.locator('.revealed-content')).toHaveCSS('animation-duration','0.24s');
+ await page.goto('/');await page.getByRole('button',{name:/mostly school charges/}).click();
+ await expect(page.locator('.statement-check:not([hidden]) .check-finding')).toHaveCSS('animation-name',/check-in/);
  await page.goto('/?example=cities#business');await expect(page.locator('.finding h2')).toHaveText('How do Austin and Charlotte compare?');
  await expect(page.locator('.home-evidence')).not.toHaveAttribute('open');
- await page.getByRole('button',{name:'Property taxes',exact:true}).click();await expect(page.locator('.conclusion strong')).toHaveText('$420');
+ await page.getByRole('button',{name:'Property taxes',exact:true}).click();await expect(page.locator('.example-figure strong')).toHaveText('+$420');
+ await expect(page.locator('.statement[aria-expanded="true"]')).toHaveCount(0);
 });

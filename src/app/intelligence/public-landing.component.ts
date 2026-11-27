@@ -6,7 +6,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AnalyticsService } from '../services/analytics.service';
 import { CookieService } from '../services/cookie.service';
 import { Subscription } from 'rxjs';
-import { HOME_EXAMPLES } from './home-discovery-examples';
+import { HOME_EXAMPLES, StatementVerdict } from './home-discovery-examples';
 
 @Component({
   selector: 'app-public-landing',
@@ -18,6 +18,7 @@ import { HOME_EXAMPLES } from './home-discovery-examples';
     './public-landing-visual-offers.component.scss',
     './public-landing-discovery.component.scss',
     './public-landing-visual-mobile.component.scss',
+    './public-landing-check.component.scss',
   ],
 })
 export class PublicLandingComponent implements AfterViewInit, OnDestroy {
@@ -31,6 +32,14 @@ export class PublicLandingComponent implements AfterViewInit, OnDestroy {
   example = this.examples.find(option => option.id === this.route.snapshot.queryParamMap.get('example')) ?? this.examples[0];
   revealed = this.route.snapshot.fragment === 'business' || this.examples.some(option => option.id === this.route.snapshot.queryParamMap.get('example'));
   discoveryAnnouncement = '';
+  /** Index of the open statement check, if any. Deep links open the first statement, as the old reveal showed the finding. */
+  selected: number | null = this.revealed ? 0 : null;
+  private readonly checked = new Set<string>();
+  readonly verdictLabels: Record<StatementVerdict, string> = {
+    supported: 'Supported by these numbers',
+    'not-supported': 'Not supported by these numbers',
+    'cannot-tell': 'Can’t tell from these numbers',
+  };
   private pending: AfterRenderRef | undefined;
   private readonly injector = inject(Injector);
 
@@ -52,16 +61,52 @@ export class PublicLandingComponent implements AfterViewInit, OnDestroy {
 
   reveal(target: HTMLElement | null): void {
     this.revealed = true;
+    this.selected ??= 0;
     this.analytics.exampleViewed(this.example.id);
-    this.discoveryAnnouncement = `${this.example.label}. ${this.example.takeaway}`;
+    this.discoveryAnnouncement = this.statementAnnouncement(this.selected);
     this.moveTo(target);
   }
 
-  chooseExample(example: typeof HOME_EXAMPLES[number], evidence: HTMLDetailsElement, target: HTMLElement): void {
-    const wasRevealed = this.revealed;
+  /** Opens one preset statement's check. Same analytics as the old reveal: the example's finding is now shown. */
+  check(index: number, button: HTMLElement): void {
+    this.revealed = true;
+    this.selected = index;
+    this.checked.add(this.example.id + ':' + index);
+    this.analytics.exampleViewed(this.example.id);
+    this.discoveryAnnouncement = this.statementAnnouncement(index);
+    if (!window.matchMedia('(max-width: 740px)').matches) return;
+    this.pending?.destroy();
+    this.pending = afterNextRender({ write: () => {
+      const panel = button.nextElementSibling;
+      if (!panel || panel.getBoundingClientRect().top + 120 <= window.innerHeight - this.bannerHeight()) return;
+      button.scrollIntoView({ block: 'start', behavior: this.motion() });
+    } }, { injector: this.injector });
+  }
+
+  verdictShown(index: number): boolean {
+    return this.checked.has(this.example.id + ':' + index) && this.selected !== index;
+  }
+
+  chooseExample(example: typeof HOME_EXAMPLES[number], evidence: HTMLDetailsElement): void {
     evidence.open = false;
     this.example = example;
-    this.reveal(wasRevealed ? null : target);
+    this.selected = null;
+    this.revealed = true;
+    this.analytics.exampleViewed(example.id);
+    this.discoveryAnnouncement = `${example.title}. ${example.question} Choose a statement to see what the numbers show.`;
+  }
+
+  private statementAnnouncement(index: number): string {
+    const statement = this.example.statements[index];
+    return `${this.verdictLabels[statement.verdict]}. ${statement.finding}`;
+  }
+
+  private bannerHeight(): number {
+    return parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--consent-banner-height')) || 0;
+  }
+
+  private motion(): ScrollBehavior {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth';
   }
 
   evidenceToggled(evidence:HTMLDetailsElement):void{if(evidence.open)this.analytics.evidenceRevealed(this.example.id);}
@@ -79,7 +124,7 @@ export class PublicLandingComponent implements AfterViewInit, OnDestroy {
     this.pending = afterNextRender({ write: () => {
       if (!target?.isConnected || (document.activeElement !== origin && document.activeElement !== document.body)) return;
       target.focus({ preventScroll: true });
-      target.scrollIntoView({ block: 'start', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+      target.scrollIntoView({ block: 'start', behavior: this.motion() });
     } }, { injector: this.injector });
   }
 }

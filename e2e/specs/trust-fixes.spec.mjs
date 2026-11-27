@@ -63,8 +63,8 @@ test('sign-up links the Terms and the Privacy Policy', async ({ page }) => {
 
 test('the homepage shows a real sample finding and claims no uploaded-data analysis', async ({ page }) => {
   await page.goto('/');
-  await expect(page.locator('.hero-label')).toContainText('Made-up figures');
-  await page.getByRole('button', { name: 'Reveal what changed', exact: true }).click();
+  await expect(page.locator('#business .example-label')).toHaveText('Made-up example');
+  await page.getByRole('button', { name: /mostly school charges/ }).click();
   const card = page.locator('#business');
   await expect(card.getByText('Made-up example', { exact: true })).toBeVisible();
   await card.getByRole('button', { name: 'Compare cities', exact: true }).click();

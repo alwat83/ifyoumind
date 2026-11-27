@@ -23,7 +23,7 @@ test('production-flag path remains consent-gated with sanitized SPA views and pr
   });
   const views = () => page.evaluate(() => (window.__gaCalls || []).filter(a => a[0] === 'event' && a[1] === 'page_view'));
   await page.goto('https://ifyoumind.com/?question=private-synthetic&amount=90000&utm_source=instagram');
-  await expect(page.getByRole('button', { name: 'Reveal what changed' })).toBeVisible();
+  await expect(page.getByRole('button', { name: /mostly school charges/ })).toBeVisible();
   expect(await page.evaluate(() => typeof window.__IFYOUMIND_ANALYTICS_TEST__)).toBe('undefined');
   expect(tagLoads).toEqual([]);
   await expectAccessible(page); await expectNoHorizontalScroll(page);

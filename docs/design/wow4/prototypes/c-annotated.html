@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ifYouMind — Direction C: The bill that explains itself (prototype)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Direction C: one physical-feeling statement, scrubbed between years; ifYouMind writes verifiable margin notes. Synthetic fixture data. */
+:root{--page:#090D17;--line:#33485A;--ink:#F1F7FA;--muted:#A8BAC9;--cyan:#58D5E8;--blue:#7C9CFF;
+--paper:#EEF3F6;--paper-ink:#0B1320;--paper-muted:#55687A;--paper-line:#C9D5DE;--note:#0A6F80;--mark:rgba(88,213,232,.28);
+--serif:"Instrument Serif",Georgia,serif;--sans:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,monospace;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;background:var(--page);color:var(--ink);font:16px/1.5 var(--sans)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-left,0px)) 56px}
+header{display:flex;justify-content:space-between;align-items:center;min-height:64px}
+.brand{font-weight:700;font-size:22px;letter-spacing:-.04em}.tag{font-size:13px;color:var(--muted)}
+.intro{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end;margin-top:28px}
+h1{margin:0;font-size:clamp(36px,5.4vw,68px);line-height:1;letter-spacing:-.04em;text-wrap:balance}
+h1 em{font-family:var(--serif);font-weight:400;font-style:italic;letter-spacing:-.01em;color:var(--cyan)}
+.lede{margin:14px 0 0;color:var(--muted);max-width:44ch;font-size:clamp(16px,1.5vw,19px)}
+.stage{margin-top:30px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:0;align-items:start}
+.paper{background:var(--paper);color:var(--paper-ink);border-radius:6px;padding:28px 30px 24px;box-shadow:0 30px 80px rgba(0,0,0,.45);position:relative;font-variant-numeric:tabular-nums}
+.paper::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:10px;background:radial-gradient(circle at 6px -1px,transparent 6px,var(--paper) 6.5px) 0 0/14px 10px repeat-x}
+.ph{display:flex;justify-content:space-between;align-items:baseline;border-bottom:2px solid var(--paper-ink);padding-bottom:10px}
+.ph b{font-size:15px;letter-spacing:.06em;text-transform:uppercase}.ph span{font-family:var(--mono);font-size:13px;color:var(--paper-muted)}
+.year{font-family:var(--serif);font-size:44px;line-height:1}
+table{width:100%;border-collapse:collapse;margin-top:8px;font-family:var(--mono);font-size:16px}
+td{padding:12px 6px;border-bottom:1px solid var(--paper-line)}td.c{color:var(--paper-muted);font-size:12px;width:44px}td.n{text-align:right}
+tr.tot td{border-bottom:0;border-top:2px solid var(--paper-ink);font-weight:600}
+tr.anno{display:none}tr.anno td{border:0;padding:0 6px 10px;font-family:var(--serif);font-style:italic;font-size:22px;line-height:1.2;color:var(--note)}tr.anno small{display:block;font-family:var(--mono);font-style:normal;font-size:11px;color:var(--paper-muted)}
+tr.hl td{background:linear-gradient(var(--mark),var(--mark)) no-repeat 0 0/var(--hl,0%) 100%}
+.fine{margin:14px 0 0;font-size:11px;color:var(--paper-muted);font-family:var(--sans)}
+.margin{padding:0 0 0 28px;position:relative}
+.note{font-family:var(--serif);font-style:italic;font-size:clamp(22px,2.2vw,28px);line-height:1.2;color:var(--ink);opacity:0;transform:translateX(-6px);transition:opacity .35s,transform .35s;border-left:2px solid var(--cyan);padding:4px 0 4px 16px;margin-bottom:18px}
+.note small{display:block;font-family:var(--mono);font-style:normal;font-size:12px;color:var(--muted);margin-top:6px}
+.note.on{opacity:1;transform:none}
+.note.k{font-size:clamp(28px,3vw,40px)}.note.k b{font-family:var(--sans);font-style:normal;color:var(--cyan);font-size:.8em}
+.scrub{margin-top:26px;display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;max-width:640px}
+.scrub label{font-family:var(--mono);font-size:14px;color:var(--muted)}
+input[type=range]{width:100%;accent-color:var(--cyan);height:44px;cursor:grab}
+input[type=range]:focus-visible{outline:3px solid var(--cyan);outline-offset:4px;border-radius:6px}
+.hint{margin:6px 0 0;font-size:14px;color:var(--muted)}
+.after{margin-top:26px;display:none;gap:12px;flex-wrap:wrap}.after.on{display:flex}
+.cta{display:inline-flex;align-items:center;min-height:52px;padding:0 22px;border-radius:10px;background:var(--blue);color:var(--page);font-weight:700;text-decoration:none}
+.cta.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}.cta:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+.disc{margin-top:28px;font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:860px){tr.anno.on{display:table-row}#n1{display:none}.lede{display:none}.intro{grid-template-columns:1fr}.stage{grid-template-columns:1fr}.margin{padding:22px 0 0}.paper{padding:22px 18px}table{font-size:14px}td{padding:10px 4px}.scrub{position:sticky;bottom:0;background:linear-gradient(transparent,var(--page) 30%);padding:18px 0 max(10px,env(safe-area-inset-bottom,0px));margin-top:10px;z-index:2}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="brand">ifyoumind</div><div class="tag">Free · no sign-up</div></header>
+<div class="intro">
+  <div>
+    <h1>Your bill changed. <em>We'll mark what moved.</em></h1>
+    <p class="lede">ifYouMind reads two statements, writes the answer in the margin, and cites the exact numbers it used.</p>
+  </div>
+</div>
+<div class="stage">
+  <article class="paper" aria-label="Made-up property-tax statement">
+    <div class="ph"><b>Property tax statement</b><span>Made-up example</span></div>
+    <p class="year" id="year" aria-live="polite">2024</p>
+    <table><tbody>
+      <tr><td class="c">B</td><td>County</td><td class="n" data-a="900" data-b="990">$900</td></tr>
+      <tr id="school" class="hl"><td class="c">C</td><td>School</td><td class="n" data-a="2400" data-b="2640">$2,400</td></tr>
+      <tr class="anno" id="inl"><td></td><td colspan="2">School moved most: +$240, 57.1% of the rise.<small>C3 − C2 · ($240 ÷ $420) × 100</small></td></tr>
+      <tr><td class="c">D</td><td>Municipal</td><td class="n" data-a="900" data-b="990">$900</td></tr>
+      <tr class="tot"><td class="c">E</td><td>Total billed</td><td class="n" data-a="4200" data-b="4620">$4,200</td></tr>
+    </tbody></table>
+    <p class="fine">Illustrative example with made-up figures. Columns are cells in the example CSV (row 2 = 2024, row 3 = 2025). Not tax advice.</p>
+  </article>
+  <aside class="margin" aria-live="polite">
+    <p class="note k" id="n1">School moved most: <b>+$240</b><small>C3 − C2 = $2,640 − $2,400</small></p>
+    <p class="note" id="n2">That's 57.1% of the $420 rise.<small>($240 ÷ $420) × 100 · E3 − E2 = $420</small></p>
+    <p class="note" id="n3">County and Municipal: +$90 each.<small>B3 − B2 · D3 − D2</small></p>
+    <p class="note" id="n4">Where to look, not proof of a mistake.<small>Your assessment notice and local rates explain why.</small></p>
+  </aside>
+</div>
+<div class="scrub"><label for="t">2024</label><input id="t" type="range" min="0" max="100" value="0" step="1" aria-label="Move from the 2024 statement to the 2025 statement"><label for="t">2025</label></div>
+<p class="hint" id="hint">Drag to 2025, or use the arrow keys.</p>
+<div class="after" id="after"><a class="cta" href="#">Mark up your own bill</a><a class="cta alt" href="#">Try electricity</a></div>
+<p class="disc">Your own CSV is read in your browser and never uploaded. Example figures are made up; not a customer result.</p>
+</div>
+<script>
+const t=document.getElementById('t'), cells=[...document.querySelectorAll('td.n')], fmt=v=>'$'+Math.round(v).toLocaleString('en-US');
+const notes=['n1','n2','n3','n4'].map(id=>document.getElementById(id)), school=document.getElementById('school');
+function draw(){const k=t.value/100;cells.forEach(c=>{const a=+c.dataset.a,b=+c.dataset.b;c.textContent=fmt(a+(b-a)*k)});
+ document.getElementById('year').textContent=k<.5?'2024':'2025';school.style.setProperty('--hl',Math.min(100,k*140)+'%');
+ notes.forEach((n,i)=>n.classList.toggle('on',k>=.55+i*.12));document.getElementById('inl').classList.toggle('on',k>=.55);document.getElementById('after').classList.toggle('on',k>=.95);
+ if(k>=.95)document.getElementById('hint').textContent='Every note cites the cells it came from.';}
+t.addEventListener('input',draw);draw();
+</script>
+</body>
+</html>

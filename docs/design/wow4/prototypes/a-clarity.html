@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ifYouMind — Direction A: Clarity (prototype)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap">
+<style>
+/* Direction A: say what it is, then one button turns two statements into an answer. Synthetic fixture data. */
+:root{--page:#090D17;--panel:#101A27;--raise:#162330;--line:#33485A;--ink:#F1F7FA;--muted:#A8BAC9;--cyan:#58D5E8;--blue:#7C9CFF;--warn:#F2CF8A;--warn-bg:#30291B;
+--serif:"Instrument Serif",Georgia,serif;--sans:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0;background:var(--page);color:var(--ink);font:16px/1.55 var(--sans)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 max(20px,env(safe-area-inset-left,0px))}
+header{display:flex;justify-content:space-between;align-items:center;min-height:68px;border-bottom:1px solid var(--line)}
+.brand{font-weight:700;font-size:24px;letter-spacing:-.04em}.tag{font-size:13px;color:var(--muted)}
+.hero{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;padding:56px 0 48px}
+h1{font-size:clamp(40px,5.6vw,76px);line-height:1;letter-spacing:-.04em;margin:0;text-wrap:balance}
+h1 em{font-family:var(--serif);font-style:normal;font-weight:400;letter-spacing:-.01em;color:var(--cyan)}
+.lede{margin-top:20px;font-size:clamp(17px,1.6vw,20px);color:var(--muted);max-width:34ch}
+.uses{margin:22px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}.uses li{font-size:13px;border:1px solid var(--line);border-radius:99px;padding:5px 12px;color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;position:relative}
+.card .lbl{font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.stmts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.stmt{background:var(--page);border:1px solid var(--line);border-radius:10px;padding:14px;font-variant-numeric:tabular-nums}
+.stmt h3{margin:0 0 8px;font-size:13px;color:var(--muted);font-weight:600}
+.row{display:flex;justify-content:space-between;font-size:14px;padding:5px 0;border-bottom:1px dashed #22313f}.row:last-child{border:0;font-weight:700}
+.row .d{display:none;color:var(--cyan);font-weight:700}
+.go{margin-top:16px;width:100%;min-height:56px;border:0;border-radius:10px;background:var(--blue);color:var(--page);font:700 18px var(--sans);cursor:pointer}
+.go:focus-visible,.link:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+.answer{display:none;margin-top:16px}
+.done .answer{display:block;animation:rise .45s ease-out both}
+.diff{display:none;width:100%;border-collapse:collapse;margin-top:14px;font-size:15px;font-variant-numeric:tabular-nums}.diff th,.diff td{padding:9px 6px;border-bottom:1px solid var(--line);text-align:right}.diff th:first-child,.diff td:first-child{text-align:left}.diff th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}.diff tr.hi td{background:rgba(88,213,232,.1);font-weight:700}.diff td.ch{color:var(--cyan);font-weight:700}.done .stmts{display:none}.done .diff{display:table;animation:rise .4s ease-out both}
+.done .row.hi{background:rgba(88,213,232,.08)}
+.big{font-family:var(--serif);font-size:clamp(30px,3.4vw,40px);line-height:1.1}
+.big b{font-family:var(--sans);font-size:.82em;color:var(--cyan)}
+.math{margin-top:12px}.math summary{cursor:pointer;font-weight:600;font-size:15px}.math p{margin:8px 0;font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}
+.math code{font:13px ui-monospace,Menlo,monospace;color:var(--ink)}
+.next{display:flex;flex-wrap:wrap;gap:16px;margin-top:14px}.link{color:var(--cyan);font-weight:600;text-decoration:none}
+.disc{margin-top:16px;font-size:12px;color:var(--muted)}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:860px){.hero{grid-template-columns:1fr;gap:28px;padding:32px 0}.lede{max-width:none}}
+@media (max-width:360px){.stmts{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="brand">ifyoumind</div><div class="tag">Free examples · no sign-up</div></header>
+<main class="hero">
+  <div>
+    <h1>Know <em>why</em> a bill changed.</h1>
+    <p class="lede">ifYouMind compares two of your statements and tells you which line moved, with the math to check it.</p>
+    <ul class="uses" aria-label="What you can compare"><li>Property tax</li><li>Electricity</li><li>U.S. cities</li></ul>
+  </div>
+  <section class="card" id="card" aria-labelledby="ex-title">
+    <p class="lbl" id="ex-title">Try it · made-up property-tax example</p>
+    <div class="stmts">
+      <div class="stmt"><h3>2024 statement</h3><div class="row"><span>County</span><span>$900</span></div><div class="row hi"><span>School</span><span>$2,400</span></div><div class="row"><span>Municipal</span><span>$900</span></div><div class="row"><span>Total</span><span>$4,200</span></div></div>
+      <div class="stmt"><h3>2025 statement</h3><div class="row"><span>County</span><span>$990 <span class="d">+90</span></span></div><div class="row hi"><span>School</span><span>$2,640 <span class="d">+240</span></span></div><div class="row"><span>Municipal</span><span>$990 <span class="d">+90</span></span></div><div class="row"><span>Total</span><span>$4,620 <span class="d">+420</span></span></div></div>
+    </div>
+    <table class="diff" aria-label="Comparison"><thead><tr><th>Line</th><th>2024</th><th>2025</th><th>Change</th></tr></thead><tbody><tr><td>County</td><td>$900</td><td>$990</td><td class="ch">+$90</td></tr><tr class="hi"><td>School</td><td>$2,400</td><td>$2,640</td><td class="ch">+$240</td></tr><tr><td>Municipal</td><td>$900</td><td>$990</td><td class="ch">+$90</td></tr><tr><td><b>Total</b></td><td>$4,200</td><td>$4,620</td><td class="ch">+$420</td></tr></tbody></table>
+    <button class="go" id="go" type="button">Compare the two</button>
+    <div class="answer" id="answer" role="status" aria-live="polite">
+      <p class="big">School tax explains <b>$240</b> of the $420 rise.</p>
+      <p class="disc" style="margin-top:6px">That's 57.1%. It shows where to look, not that the bill is wrong.</p>
+      <details class="math"><summary>Show the math</summary>
+        <p><code>C3 − C2</code> School: $2,640 − $2,400 = +$240</p>
+        <p><code>E3 − E2</code> Total: $4,620 − $4,200 = +$420</p>
+        <p>($240 ÷ $420) × 100 = 57.1%</p>
+        <p>Cells come from the made-up example CSV.</p>
+      </details>
+      <div class="next"><a class="link" href="#">Compare your own CSV →</a><a class="link" href="#" style="color:var(--muted)">Try electricity</a></div>
+    </div>
+    <p class="disc">Made-up figures. Not a customer result. Not tax advice.</p>
+  </section>
+</main>
+</div>
+<script>
+document.getElementById('go').addEventListener('click',e=>{const c=document.getElementById('card');c.classList.add('done');e.target.hidden=true;document.getElementById('answer').focus?.();});
+</script>
+</body>
+</html>

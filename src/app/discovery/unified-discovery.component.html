@@ -17,7 +17,7 @@
     <article class="choice tax" aria-labelledby="tax-title">
       <p class="kicker">{{ publicEntry ? 'Made-up example' : 'Year to year · Made-up example' }}</p>
       <h2 id="tax-title">{{ publicEntry ? 'What changed in the example?' : 'Property tax discovery' }}</h2>
-      <div class="actions"><button class="primary" type="button" (click)="choose('tax')" aria-label="Try property tax example">{{ publicEntry ? 'Try property tax example' : 'Try example' }} <span aria-hidden="true">↗</span></button><button class="quiet" type="button" (click)="choose('tax',false)" aria-label="Use a property tax CSV">Use my CSV</button></div>
+      <div class="actions"><button class="primary" type="button" (click)="choose('tax')" aria-label="Try property tax example">{{ publicEntry ? 'Try property tax example' : 'Try example' }} <span aria-hidden="true">↗</span></button><button *ngIf="publicEntry" class="quiet" type="button" (click)="choose('tax',false,true)" aria-label="Type my property tax bills">Type my bills</button><button class="quiet" type="button" (click)="choose('tax',false)" aria-label="Use a property tax CSV">Use my CSV</button></div>
       <ng-container *ngIf="publicEntry && taxExample.status === 'ready' && taxExample.delta > 0; else taxDescription">
         <p class="first-answer"><span>The bill went up by</span>&ngsp;<strong>{{ usd(taxExample.delta) }}</strong>&ngsp;<span *ngIf="schoolTaxChange > 0">School tax accounted for <strong>{{ usd(schoolTaxChange) }}</strong> of the increase.</span></p>
         <p>Two bills alone can’t tell you whether you paid too much. Start by checking your county’s assessment notice and exemptions.</p>
@@ -31,7 +31,7 @@
       <p class="kicker">{{ publicEntry ? 'Another made-up example' : 'Use versus cost · Made-up example' }}</p>
       <h2 id="electricity-title">{{ publicEntry ? 'Why did the electricity bill go up?' : 'Electricity bill discovery' }}</h2>
       <p>{{ publicEntry ? 'See whether the example used more electricity and how the charges changed.' : 'More energy used, or a bigger bill? Look closer.' }}</p>
-      <div class="actions"><button [class]="publicEntry ? 'secondary' : 'primary'" type="button" (click)="choose('electricity')" aria-label="Try electricity example">{{ publicEntry ? 'Try electricity example' : 'Try example' }} <span aria-hidden="true">↗</span></button><button class="quiet" type="button" (click)="choose('electricity',false)" aria-label="Use an electricity CSV">Use my CSV</button></div>
+      <div class="actions"><button [class]="publicEntry ? 'secondary' : 'primary'" type="button" (click)="choose('electricity')" aria-label="Try electricity example">{{ publicEntry ? 'Try electricity example' : 'Try example' }} <span aria-hidden="true">↗</span></button><button *ngIf="publicEntry" class="quiet" type="button" (click)="choose('electricity',false,true)" aria-label="Type my electricity bills">Type my bills</button><button class="quiet" type="button" (click)="choose('electricity',false)" aria-label="Use an electricity CSV">Use my CSV</button></div>
       <p *ngIf="!publicEntry" class="format">Two compatible bills · kWh / USD · one supported CSV format</p>
     </article>
   </div>
@@ -40,7 +40,7 @@
 <ng-container *ngIf="category && childInjector"><ng-container *ngComponentOutlet="journeyComponent; injector:childInjector; inputs:journeyInputs"></ng-container></ng-container>
 <footer class="shell-footer">
   <p><strong>Your bills stay in this browser tab.</strong> We don’t upload or store them.</p>
-  <p>Two supported CSV formats today. No PDFs, scans or other file types.</p>
+  <p>Type the numbers from two bills, or use one of two supported CSV formats. No PDFs, scans or other file types.</p>
   <details><summary>Privacy and supported files</summary><p>Remove names, addresses, account and meter or parcel identifiers before choosing a file. Each experience shows its exact CSV format and comparison rules. Calculations use the values you provide; no AI or external comparison is performed. Clearing, changing bill type or leaving the page discards data from this experience. Browser and device memory are outside its control.</p></details>
   <p *ngIf="publicEntry" class="local"><a [href]="examplesHref">Back to examples</a> · <a href="/sample-report">Business sample report</a> · <a href="/privacy-policy">Privacy policy</a></p><p *ngIf="!publicEntry" class="local">Local founder review only. Existing Business reports and pricing are unchanged.</p>
 </footer>

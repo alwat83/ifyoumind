@@ -51,6 +51,10 @@ test('homepage free brief keeps its return path and pricing opens publicly', asy
   const user = await fixtures(FIXTURES.FREE_WITH_DECISION, { decisions: 1 });
   await page.goto('/');
   await page.getByRole('link', { name: 'Start a Free Brief', exact: true }).click();
+  // A signed-out visitor starts at account creation, not a "welcome back" sign-in page.
+  await expect(page).toHaveURL(url => url.pathname === '/register' && url.searchParams.get('returnUrl') === '/decide?type=business');
+  await expect(page.getByRole('heading', { name: 'Start your free city brief.' })).toBeVisible();
+  await page.getByRole('link', { name: 'Sign in', exact: true }).click();
   await expect(page).toHaveURL(url => url.pathname === '/login' && url.searchParams.get('returnUrl') === '/decide?type=business');
   await expect(page.getByLabel('Email', { exact: true })).toBeVisible();
   const briefSignIn = page.url();

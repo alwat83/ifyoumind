@@ -165,7 +165,8 @@
           <p class="report-boundary">For city and business decisions. Bill comparisons stay free and browser-local.</p>
           <div class="report-links">
             <a routerLink="/sample-report" class="button">View a Sample Report <svg class="icon" aria-hidden="true"><use href="/images/home/icons.svg#arrow"/></svg></a>
-            <a routerLink="/decide" [queryParams]="{ type: 'business' }" class="text-link">Start a Free Brief</a>
+            <!-- Signed-out visitors create an account first; returning visitors can switch to Sign in there. -->
+            <a [routerLink]="viewer() ? '/decide' : '/register'" [queryParams]="viewer() ? { type: 'business' } : { returnUrl: '/decide?type=business' }" class="text-link">Start a Free Brief</a>
           </div>
         </div>
       </div>

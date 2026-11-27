@@ -18,7 +18,7 @@ export class UnifiedDiscoveryComponent implements OnInit {
  private readonly document=inject(DOCUMENT);
  category:'tax'|'electricity'|null=null;
  childInjector:Injector|null=null;
- journeyInputs={embedded:true,startWithExample:false,startAtFile:false};
+ journeyInputs={embedded:true,startWithExample:false,startAtFile:false,startTyping:false};
  message='';
  @ViewChild(NgComponentOutlet) outlet?:NgComponentOutlet<TaxDiscoveryComponent>;
  @ViewChild('entryHeading') entryHeading?:ElementRef<HTMLElement>;
@@ -32,13 +32,14 @@ export class UnifiedDiscoveryComponent implements OnInit {
   if(!this.publicEntry)return;
   const query=new URLSearchParams(this.document.location?.search||'');
   const example=query.get('example');
-  if(example==='electricity'||example==='tax')this.choose(example,query.get('input')!=='csv');
+  const input=query.get('input');
+  if(example==='electricity'||example==='tax')this.choose(example,input!=='csv'&&input!=='type',input==='type');
  }
- choose(category:'tax'|'electricity',example=true):void {
+ choose(category:'tax'|'electricity',example=true,typing=false):void {
   // Clear before destroying a journey; pending reads cannot repopulate its replacement.
   this.current?.clear(false);
   this.childInjector=Injector.create({parent:this.parentInjector,providers:[{provide:ELECTRICITY_MODE,useValue:category==='electricity'}]});
-  this.journeyInputs={embedded:true,startWithExample:example,startAtFile:!example};
+  this.journeyInputs={embedded:true,startWithExample:example,startAtFile:!example&&!typing,startTyping:typing};
   this.category=category;this.message='';
  }
  home(announce=true):void {

@@ -9,7 +9,7 @@
   <section class="auth-card" aria-labelledby="verify-title">
     <p class="eyebrow">One quick step</p>
     <h1 id="verify-title">Check your email to continue.</h1>
-    <p class="sub">We sent a link to <strong>{{ email }}</strong>. Open it, then come back here. Your market analysis starts right after.</p>
+    <p class="sub">We sent a link to <strong>{{ email }}</strong>. Open it, then come back here. Your free city brief starts right after.</p>
     <button type="button" class="primary" (click)="continueIfVerified()" [disabled]="isChecking">
       {{ isChecking ? 'Checking…' : "I've verified, continue" }}
     </button>

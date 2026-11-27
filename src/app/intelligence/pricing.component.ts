@@ -42,6 +42,20 @@ export class PricingComponent implements OnInit {
     { offer: 'plus' as const, name: 'Plus', price: '9.99', allowance: '3 full Decision Reports' },
   ];
 
+  /**
+   * In-page jump to the one-time offer. A bare "#one-time" href resolves against <base href="/">
+   * and opened the homepage, so scroll here instead without a router navigation (no extra page_view).
+   */
+  jumpToOneTime(event:MouseEvent):void{
+    if(event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+    const target=document.getElementById('one-time');
+    if(!target)return;
+    event.preventDefault();
+    const reduce=window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    target.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    target.focus({preventScroll:true});
+  }
+
   ngOnInit():void{
     this.destroyRef.onDestroy(() => { this.viewerUid = undefined; });
     user(this.auth).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(viewer => this.zone.run(() => {

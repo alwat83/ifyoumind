@@ -69,6 +69,9 @@ test('a single place is described, never ranked', () => {
   const s=summarizeEvidence(austin,[]);
   assert.equal(s.kind,'single_place');
   assert.deepEqual(s.findings,[]);
+  // The brief has no control to add a place, so the headline must not ask the reader to add one.
+  assert.doesNotMatch(s.headline,/\badd\b/i);
+  assert.match(s.headline,/on its own/);
 });
 
 test('direction is exact; the small-gap flag is separate and stated in sizes', () => {

@@ -12,7 +12,7 @@
           <a *ngIf="signedIn; else freeExample" routerLink="/decide" class="action">Start a free decision</a>
           <ng-template #freeExample><a href="/discover/?example=tax" class="action">Try a free example</a></ng-template>
         </ng-template>
-      <a class="one-time-jump" href="#one-time">One-time report · ${{ status?.pricing?.reportOneTimeUsd ?? 79 }}</a>
+      <a class="one-time-jump" href="/pricing#one-time" (click)="jumpToOneTime($event)">One-time report · ${{ status?.pricing?.reportOneTimeUsd ?? 79 }}</a>
     </div>
   </header>
 
@@ -62,8 +62,8 @@
         <p>Property-tax and electricity examples, plus supported CSV comparisons. Bill files stay in your browser. No account needed.</p>
         <p>With an account: up to three saved city Decision Briefs each month, with one comparison city.</p>
       </article>
-      <article class="plan" id="one-time">
-        <h3>One-time Decision Report</h3>
+      <article class="plan" id="one-time" tabindex="-1" aria-labelledby="one-time-title">
+        <h3 id="one-time-title">One-time Decision Report</h3>
         <p class="price">${{ status?.pricing?.reportOneTimeUsd ?? 79 }}<small>one time</small></p>
         <p>One full Decision Report. A single charge with no renewal.</p>
         <p>For a city or business decision. The same full report scope as a monthly credit, without a subscription.</p>

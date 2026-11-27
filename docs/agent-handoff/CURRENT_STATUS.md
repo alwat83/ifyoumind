@@ -1,5 +1,17 @@
 # ifYouMind — Current development status
 
+## November 27, 2026 — "Guess the line" campaign approved and hosted; ready to publish (static only)
+
+- **Approval:** the founder approved the carousel (Tue Dec 1) and product Reel (Thu Dec 3), with captions, alt text and disclosures as shown on the private review page.
+- **Hosting:** release `1795757265775000`, version `f0250d10c22751a7` (05:27:45Z).
+  - 74 live files unchanged, plus the updated social manifest and 7 approved files.
+  - 82/82 served files match. 35 Functions, headers and CSP unchanged. The app bytes are unchanged, so the measurement baseline is unaffected.
+  - Baseline tag: `hosting-live-f0250d10c22751a7`.
+- **Manifest:** both posts are `ready_to_publish` in https://ifyoumind.com/assets/marketing/social/manifest.json, batch `2026-12-guess-the-line`.
+- **Publication:** not performed by this executor. The Windsor automation publishes each post once and records the media ID and permalink in issue #131.
+- **Source:** branch `claude/social-assets-2026-11-24` (`abb82dd0`). Campaign doc: `docs/marketing/social/2026-12-CAMPAIGN.md`.
+- **Provider/agent:** Anthropic / Claude Code, local session.
+
 ## November 27, 2026 — Approved social assets hosted (static only); Instagram publication still blocked
 
 - **Hosting:** release `1795754199503000`, version `ab3e2779ba205697` (04:36:39Z), under the issue #131 standing authorization (static assets only).

@@ -1,5 +1,47 @@
 # ifYouMind — Current development status
 
+## November 27, 2026 — Consumer audit remediation: 4 stacked draft PRs (committed; NOT merged, NOT deployed)
+
+**Status: committed as drafts.** #137 → #138 → #139 → #140 are stacked on #136 (`claude/bplus-claim-check`, the source of live `68aa040cad8b4294`). Nothing has been merged or deployed.
+
+- **#137 `claude/cx-p0-links` (P0):**
+  - Fixes the Pricing "$79" jump link, whose `#one-time` resolved to the homepage.
+  - Account's "Manage my data", which opened a CSV import tool, is now "Your saved datasets", with an email route for copy and deletion requests.
+  - The one-city brief no longer asks for a place it can't add.
+  - Terms link contrast; Privacy "180 days" spacing.
+  - **Verified:** no export or deletion capability exists in the app or Functions.
+- **#138 `claude/cx-p1-entry`:**
+  - Homepage "Start a Free Brief" sends signed-out visitors to `/register` with the same return path. The guard, allowlist and verification link are unchanged.
+  - Register and verify copy name the city job.
+  - "Type my bills" exposes the existing editor, which stays browser-local.
+- **#139 `claude/cx-p1-nav`:**
+  - **Header** on every surface: Check a bill · Compare cities · Guides · Pricing + Sign in / Your decisions · Account.
+  - **Shared footer** grouped as Try it / Your account / Trust & help, plus a support and organizations line. "Data Sources" is removed.
+  - Router-backed links inside the app (a `SITE_NAVIGATE` token); the `/discover/` island stays Router-free.
+- **#140 `claude/cx-p1-pricing`:**
+  - Pay-once offers first while enrollment is closed; monthly plans stay listed and disabled.
+  - Free-vs-paid copy on Pricing and the homepage report section.
+  - "Current Census data" replaces "Live data".
+- **Local tests:** unit tests 194/194; Hosting suite 105/105; unified, discovery and electricity suites pass; full emulator suite 258/258 at the top of the stack; GA4 transport replay 9/9.
+  - **Pre-existing flake:** `homepage-release:4` [mobile] (axe during the verdict fade) also fails 2/6 on the deployed base.
+- **Hosted QA:** dispatched at the stack top, run 46052086999.
+- **GA4:** no event, parameter, title or consent change.
+  - Signed-out "Start a Free Brief" now leads to `/register`.
+  - The footer "Data Sources" trigger for `evidence_revealed` is gone.
+  - In-app header clicks are SPA navigations.
+  - Record a breakpoint if released.
+- **Founder decisions before merge:**
+  - Support handles data copy and deletion requests.
+  - "Compare cities" → `/sample-report`, or the homepage city example?
+  - Drop "Data Sources" from the footer?
+  - Closed monthly plans: listed after the one-time offer, or hidden?
+  - Release timing against the B+ measurement window.
+- **Out of scope, recorded:**
+  - `universal-data.ts:48` tells users to "Delete one" dataset with no delete capability (a Functions change).
+  - `/growth` shows consumers a "Founder growth" title.
+  - The analyst data tools (`/data`, `/ask`, `/advanced`) still sit in the consumer dashboard.
+- **Provider/agent:** Anthropic / Claude Code, local session. Audit page: claude.ai artifact (private to the founder).
+
 ## November 27, 2026 — Wow 4.0 B+ homepage DEPLOYED (Hosting only); production verified
 
 **Status: deployed and production-verified.** Release `1795794838704000`, version `68aa040cad8b4294`, at 2026-11-27T15:53:58.704Z. Rollback target `f0250d10c22751a7`; rollback was not needed.
